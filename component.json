@@ -1,0 +1,21 @@
+{
+  "name": "mdast-lint",
+  "version": "0.0.0",
+  "description": "Lint markdown with mdast",
+  "license": "MIT",
+  "keywords": [
+    "markdown",
+    "lint",
+    "validate",
+    "mdast"
+  ],
+  "repository": "wooorm/mdast-lint",
+  "dependencies": {
+    "wooorm/mdast-range": "^0.4.0",
+    "wooorm/mdast-zone": "^0.2.1"
+  },
+  "scripts": [
+    "index.js",
+    "lib/**/*.js"
+  ]
+}

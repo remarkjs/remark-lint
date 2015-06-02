@@ -1,0 +1,37 @@
+{
+  "name": "mdast-lint",
+  "main": "mdast-lint.js",
+  "description": "Lint markdown with mdast",
+  "license": "MIT",
+  "keywords": [
+    "markdown",
+    "lint",
+    "validate",
+    "mdast"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/mdast-lint.git"
+  },
+  "authors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "ignore": [
+    ".*",
+    "*.log",
+    "*.png",
+    "*.svg",
+    "*.md",
+    "build/",
+    "components/",
+    "coverage/",
+    "node_modules/",
+    "script/",
+    "test/",
+    "build.js",
+    "example.js",
+    "index.js",
+    "component.json",
+    "package.json"
+  ]
+}

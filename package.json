@@ -1,0 +1,63 @@
+{
+  "name": "mdast-lint",
+  "version": "0.0.0",
+  "description": "Lint markdown with mdast",
+  "license": "MIT",
+  "keywords": [
+    "markdown",
+    "lint",
+    "validate",
+    "mdast"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/mdast-lint.git"
+  },
+  "author": {
+    "name": "Titus Wormer",
+    "email": "tituswormer@gmail.com"
+  },
+  "dependencies": {
+    "mdast-range": "^0.4.0",
+    "mdast-zone": "^0.2.1"
+  },
+  "files": [
+    "index.js",
+    "lib/",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "mdast": ">=0.21.0"
+  },
+  "devDependencies": {
+    "browserify": "^10.0.0",
+    "dox": "^0.8.0",
+    "eslint": "^0.22.0",
+    "esmangle": "^1.0.0",
+    "istanbul": "^0.3.0",
+    "jscs": "^1.0.0",
+    "jscs-jsdoc": "^1.0.0",
+    "mdast": "^0.21.0",
+    "mdast-github": "^0.3.0",
+    "mdast-toc": "^0.4.1",
+    "mdast-usage": "^0.2.0",
+    "mocha": "^2.0.0"
+  },
+  "scripts": {
+    "test-api": "mocha --check-leaks test/index.js",
+    "test-coveralls": "istanbul cover _mocha --report lcovonly -- --check-leaks test/index.js",
+    "test-coverage": "istanbul cover _mocha -- --check-leaks test/index.js",
+    "test-travis": "npm run test-coveralls",
+    "test": "npm run test-api",
+    "lint-api": "eslint index.js lib test",
+    "lint-style": "jscs --reporter inline index.js lib test",
+    "lint": "npm run lint-api && npm run lint-style",
+    "make": "npm run lint && npm run test-coverage",
+    "build-rules": "node script/build-rule-documentation.js",
+    "build-md": "mdast . LICENSE --output",
+    "build-bundle": "browserify index.js -s mdast > mdast.js",
+    "postbuild-bundle": "esmangle mdast.js > mdast.min.js",
+    "build": "npm run build-rules && npm run build-md && npm run build-bundle",
+    "prepublish": "npm run build"
+  }
+}

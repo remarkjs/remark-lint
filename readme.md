@@ -73,8 +73,8 @@ mdast -u mdast-lint example.md
 #
 ```
 
-See [doc/rules.md](doc/rules.md) to see what those warnings are, and how to
-turn them off.
+See [doc/rules.md](doc/rules.md) for what those warnings are (and how to
+turn them off).
 
 ## Programmatic
 

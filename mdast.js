@@ -3741,19 +3741,28 @@ module.exports = noMultipleToplevelHeadings;
  * @module no-shell-dollars
  * @fileoverview
  *   Warn when shell code is prefixed by dollar-characters.
+ *
+ *   Ignored indented code blocks and fenced code blocks without language
+ *   flag.
  * @example
  *   <!-- Invalid: -->
- *       $ echo a
- *       $ echo a > file
+ *   ```bash
+ *   $ echo a
+ *   $ echo a > file
+ *   ```
  *
  *   <!-- Valid: -->
- *       echo a
- *       echo a > file
+ *   ```sh
+ *   echo a
+ *   echo a > file
+ *   ```
  *
  *   <!-- Also valid: -->
- *       $ echo a
- *       a
- *       $ echo a > file
+ *   ```zsh
+ *   $ echo a
+ *   a
+ *   $ echo a > file
+ *   ```
  */
 
 'use strict';
@@ -3799,7 +3808,7 @@ function noShellDollars(ast, file, preferred, done) {
         var value = node.value;
         var warn;
 
-        if (position.isGenerated(node)) {
+        if (!language || position.isGenerated(node)) {
             return;
         }
 
@@ -3807,7 +3816,7 @@ function noShellDollars(ast, file, preferred, done) {
          * Check both known shell-code and unknown code.
          */
 
-        if (!language || flags.indexOf(language) !== -1) {
+        if (flags.indexOf(language) !== -1) {
             warn = value.length && value.split('\n').every(function (line) {
                 return Boolean(!line.trim() || line.match(/^\s*\$\s*/));
             });

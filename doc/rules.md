@@ -861,22 +861,31 @@ be null or undefined in order to be ignored.
 
 ### no-shell-dollars
 
-```md
+````md
   <!-- Invalid: -->
-      $ echo a
-      $ echo a > file
+  ```bash
+  $ echo a
+  $ echo a > file
+  ```
 
   <!-- Valid: -->
-      echo a
-      echo a > file
+  ```sh
+  echo a
+  echo a > file
+  ```
 
   <!-- Also valid: -->
-      $ echo a
-      a
-      $ echo a > file
-```
+  ```zsh
+  $ echo a
+  a
+  $ echo a > file
+  ```
+````
 
   Warn when shell code is prefixed by dollar-characters.
+
+  Ignored indented code blocks and fenced code blocks without language
+  flag.
 
 ### no-shortcut-reference-image
 

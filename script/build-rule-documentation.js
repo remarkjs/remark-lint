@@ -104,6 +104,34 @@ children.push({
 });
 
 /*
+ * Add `reset` docs.
+ */
+
+children.push({
+    'type': 'heading',
+    'depth': 3,
+    'children': [{
+        'type': 'text',
+        'value': 'reset'
+    }]
+}, {
+    'type': 'paragraph',
+    'children': [{
+        'type': 'text',
+        'value': 'By default, all rules are turned on unless explicitly\n' +
+            'set to `false`. When `reset: true`, the opposite is true:\n' +
+            'all rules are turned off, unless when given a non-nully and\n' +
+            'non-false value.'
+    }]
+}, {
+    'type': 'paragraph',
+    'children': [{
+        'type': 'text',
+        'value': 'Options: `boolean`, default: `false`.'
+    }]
+});
+
+/*
  * Add rules.
  */
 

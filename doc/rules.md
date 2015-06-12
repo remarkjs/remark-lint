@@ -8,6 +8,7 @@ fix their warnings.
 
 *   [Rules](#rules)
 
+    *   [reset](#reset)
     *   [blockquote-indentation](#blockquote-indentation)
     *   [code-block-style](#code-block-style)
     *   [definition-case](#definition-case)
@@ -55,7 +56,6 @@ fix their warnings.
     *   [no-tabs](#no-tabs)
     *   [ordered-list-marker-style](#ordered-list-marker-style)
     *   [ordered-list-marker-value](#ordered-list-marker-value)
-    *   [reset](#reset)
     *   [rule-style](#rule-style)
     *   [strong-marker](#strong-marker)
     *   [table-cell-padding](#table-cell-padding)
@@ -68,6 +68,15 @@ fix their warnings.
 Remember that rules can always be turned off by
 passing false. In addition, when reset is given, values can
 be null or undefined in order to be ignored.
+
+### reset
+
+By default, all rules are turned on unless explicitly
+set to `false`. When `reset: true`, the opposite is true:
+all rules are turned off, unless when given a non-nully and
+non-false value.
+
+Options: `boolean`, default: `false`.
 
 ### blockquote-indentation
 
@@ -1020,12 +1029,6 @@ be null or undefined in order to be ignored.
   relative to the starting point.  When set to `'single'`, bullets should
   be the same as the relative starting point.  When set to `'one'`, bullets
   should always be `1`.
-
-### reset
-
-By default, all rules are turned on unless explicitly set to `false`.
-When `reset: true`, the opposite is true: all rules are turned off,
-unless when given a non-nully and non-false value.
 
 ### rule-style
 

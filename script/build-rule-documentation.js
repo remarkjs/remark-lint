@@ -19,6 +19,7 @@ var dox = require('dox');
 var mdast = require('mdast');
 var toc = require('mdast-toc');
 var rules = require('../lib/rules');
+var metaRules = require('../lib/rules/meta');
 
 function find(tags, key) {
     var value = null;
@@ -135,21 +136,43 @@ children.push({
  * Add rules.
  */
 
-Object.keys(rules).sort().forEach(function (ruleId) {
-    var filePath = path.join('lib', 'rules', ruleId + '.js');
-    var code = fs.readFileSync(filePath, 'utf-8');
-    var tags = dox.parseComments(code)[0].tags;
-    var description = find(tags, 'fileoverview');
-    var example = find(tags, 'example');
+Object.keys(rules)
+.concat(Object.keys(metaRules))
+.sort()
+.forEach(function (ruleId) {
+    var description;
+    var filePath;
+    var example;
+    var code;
+    var rule;
+    var tags;
 
-    if (!description) {
-        throw new Error(ruleId + ' is missing a `@fileoverview`');
-    } else {
-        description = description.string;
-    }
+    try {
+        filePath = path.join('lib', 'rules', ruleId + '.js');
+        code = fs.readFileSync(filePath, 'utf-8');
+        tags = dox.parseComments(code)[0].tags;
+        description = find(tags, 'fileoverview');
+        example = find(tags, 'example');
 
-    if (example) {
-        example = example.string;
+        if (!description) {
+            throw new Error(ruleId + ' is missing a `@fileoverview`');
+        } else {
+            description = description.string;
+        }
+
+        if (example) {
+            example = example.string;
+        }
+
+    } catch (e) {
+        // Handle file-less rules
+        if (e.code === 'ENOENT') {
+            rule = metaRules[ruleId];
+            description = rule.description;
+            example = rule.example;
+        } else {
+            throw e;
+        }
     }
 
     children.push({

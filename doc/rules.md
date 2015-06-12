@@ -8,6 +8,7 @@ fix their warnings.
 
 *   [Rules](#rules)
 
+    *   [externals](#externals)
     *   [reset](#reset)
     *   [blockquote-indentation](#blockquote-indentation)
     *   [code-block-style](#code-block-style)
@@ -69,10 +70,27 @@ Remember that rules can always be turned off by
 passing false. In addition, when reset is given, values can
 be null or undefined in order to be ignored.
 
+### externals
+
+````md
+    <!-- Load more rules -->
+    ```json
+    {
+      "externals": ["foo", "bar", "baz"]
+    }
+    ```
+````
+
+Externals contains a list of extra rules to load.
+These are, or refer to, an object mapping `ruleId`s to rules.
+
+Note that in node.js, a string can be given (a module
+name or a file), but in the browser an object must be passed in.
+
 ### reset
 
 ````md
-  <!-- Explicitly activate rules: -->
+    <!-- Explicitly activate rules: -->
     ```json
     {
       "reset": true,

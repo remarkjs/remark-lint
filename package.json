@@ -55,8 +55,8 @@
     "make": "npm run lint && npm run test-coverage",
     "build-rules": "node script/build-rule-documentation.js",
     "build-md": "mdast . LICENSE --output",
-    "build-bundle": "browserify index.js -s mdast > mdast.js",
-    "postbuild-bundle": "esmangle mdast.js > mdast.min.js",
+    "build-bundle": "browserify index.js --bare -s mdastLint > mdast-lint.js",
+    "postbuild-bundle": "esmangle mdast-lint.js > mdast-lint.min.js",
     "build": "npm run build-rules && npm run build-md && npm run build-bundle",
     "prepublish": "npm run build"
   }

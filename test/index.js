@@ -206,6 +206,60 @@ describe('mdast-lint', function () {
     });
 });
 
+/*
+ * Validate external rules.
+ */
+
+describe('External', function () {
+    describe('Load external rules with require', function () {
+        assertFile('lorem-invalid.md', [
+            'lorem-invalid.md:1:1: Do not use lorem'
+        ], null, {
+            'external': ['test/external']
+        });
+    });
+
+    describe('Load external rules with require and without `.js` extension', function () {
+        assertFile('lorem-invalid.md', [
+            'lorem-invalid.md:1:1: Do not use lorem'
+        ], null, {
+            'external': ['test/external/index']
+        });
+    });
+
+    describe('Load external rules with require and with `.js` extension', function () {
+        assertFile('lorem-invalid.md', [
+            'lorem-invalid.md:1:1: Do not use lorem'
+        ], null, {
+            'external': ['test/external/index.js']
+        });
+    });
+
+    describe('Load local external rules', function () {
+        it('should fail on invalid external rules', function () {
+            assert.throws(function () {
+                process('lorem-valid.md', {
+                    'external': ['mdast']
+                });
+            });
+        });
+    });
+
+    describe('Load external rules by passing in', function () {
+        var external = require('./external');
+
+        assertFile('lorem-invalid.md', [
+            'lorem-invalid.md:1:1: Do not use lorem'
+        ], null, {
+            'external': [external]
+        });
+    });
+});
+
+/*
+ * Validate inline en- and disabling.
+ */
+
 describe('Comments', function () {
     describe('Disable and re-enable rules based on markers', function () {
         assertFile('comments-disable.md', [

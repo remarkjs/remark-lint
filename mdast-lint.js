@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mdast = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mdastLint = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib');
@@ -94,9 +94,19 @@ module.exports = attacher;
 
 var range = require('mdast-range');
 var zone = require('mdast-zone');
-var rules = require('./rules');
+var internals = require('./rules');
 var sort = require('./sort');
 var filter = require('./filter');
+
+/*
+ * Needed for plug-in resolving.
+ */
+
+var path = require('path');
+var fs = require('fs');
+var exists = fs && fs.existsSync;
+var resolve = path && path.resolve;
+var cwd = process && process.cwd();
 
 /**
  * Factory to create a plugin from a rule.
@@ -166,6 +176,78 @@ function attachFactory(id, rule, options) {
 }
 
 /**
+ * Require an external.  Checks, in this order:
+ *
+ * -  `$cwd/$pathlike`;
+ * -  `$cwd/$pathlike.js`;
+ * -  `$cwd/node_modules/$pathlike`;
+ * -  `$pathlike`.
+ *
+ * Where `$cwd` is the current working directory.
+ *
+ * @example
+ *   var plugin = findPlugin('foo');
+ *
+ * @throws {Error} - Fails when `pathlike` cannot be
+ *   resolved.
+ * @param {string} pathlike - Reference to external.
+ * @return {Object} - Result of `require`ing external.
+ */
+function loadExternal(pathlike) {
+    var local = resolve(cwd, pathlike);
+    var current = resolve(cwd, 'node_modules', pathlike);
+    var plugin;
+
+    if (exists(local) || exists(local + '.js')) {
+        plugin = local;
+    /* istanbul ignore else - for globals */
+    } else if (exists(current)) {
+        plugin = current;
+    } else {
+        plugin = pathlike;
+    }
+
+    return require(plugin);
+}
+
+/**
+ * Load all externals.  Merges them into a single rule
+ * object.
+ *
+ * In node, accepts externals as strings, otherwise,
+ * externals should be a list of objects.
+ *
+ * @param {Array.<string|Object>} externals
+ * @return {Array.<Object>}
+ * @throws {Error} - When an external cannot be resolved.
+ */
+function loadExternals(externals) {
+    var index = -1;
+    var rules = {};
+    var external;
+    var ruleId;
+    var mapping = externals ? externals.concat() : [];
+    var length;
+
+    mapping.push(internals);
+    length = mapping.length;
+
+    while (++index < length) {
+        external = mapping[index];
+
+        if (typeof external === 'string') {
+            external = loadExternal(external);
+        }
+
+        for (ruleId in external) {
+            rules[ruleId] = external[ruleId];
+        }
+    }
+
+    return rules;
+}
+
+/**
  * Lint attacher.
  *
  * By default, all rules are turned on unless explicitly
@@ -185,6 +267,7 @@ function attachFactory(id, rule, options) {
 function lint(mdast, options) {
     var settings = options || {};
     var reset = settings.reset;
+    var rules = loadExternals(settings.external);
     var id;
     var setting;
 
@@ -322,7 +405,7 @@ function lint(mdast, options) {
 
 module.exports = lint;
 
-},{"./filter":2,"./rules":18,"./sort":58,"mdast-range":64,"mdast-zone":65}],4:[function(require,module,exports){
+},{"./filter":2,"./rules":18,"./sort":58,"fs":undefined,"mdast-range":64,"mdast-zone":65,"path":undefined}],4:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.

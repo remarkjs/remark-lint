@@ -19,7 +19,13 @@ var dox = require('dox');
 var mdast = require('mdast');
 var toc = require('mdast-toc');
 var rules = require('../lib/rules');
-var metaRules = require('../lib/rules/meta');
+var additional = require('./additional.json');
+
+/*
+ * Methods.
+ */
+
+var exists = fs.existsSync;
 
 function find(tags, key) {
     var value = null;
@@ -105,50 +111,21 @@ children.push({
 });
 
 /*
- * Add `reset` docs.
- */
-
-children.push({
-    'type': 'heading',
-    'depth': 3,
-    'children': [{
-        'type': 'text',
-        'value': 'reset'
-    }]
-}, {
-    'type': 'paragraph',
-    'children': [{
-        'type': 'text',
-        'value': 'By default, all rules are turned on unless explicitly\n' +
-            'set to `false`. When `reset: true`, the opposite is true:\n' +
-            'all rules are turned off, unless when given a non-nully and\n' +
-            'non-false value.'
-    }]
-}, {
-    'type': 'paragraph',
-    'children': [{
-        'type': 'text',
-        'value': 'Options: `boolean`, default: `false`.'
-    }]
-});
-
-/*
  * Add rules.
  */
 
-Object.keys(rules)
-.concat(Object.keys(metaRules))
-.sort()
+Object.keys(additional).sort()
+.concat(Object.keys(rules).sort())
 .forEach(function (ruleId) {
     var description;
     var filePath;
     var example;
     var code;
-    var rule;
     var tags;
 
-    try {
-        filePath = path.join('lib', 'rules', ruleId + '.js');
+    filePath = path.join('lib', 'rules', ruleId + '.js');
+
+    if (exists(filePath)) {
         code = fs.readFileSync(filePath, 'utf-8');
         tags = dox.parseComments(code)[0].tags;
         description = find(tags, 'fileoverview');
@@ -156,23 +133,13 @@ Object.keys(rules)
 
         if (!description) {
             throw new Error(ruleId + ' is missing a `@fileoverview`');
-        } else {
-            description = description.string;
         }
 
-        if (example) {
-            example = example.string;
-        }
-
-    } catch (e) {
-        // Handle file-less rules
-        if (e.code === 'ENOENT') {
-            rule = metaRules[ruleId];
-            description = rule.description;
-            example = rule.example;
-        } else {
-            throw e;
-        }
+        description = description.string;
+        example = example && example.string;
+    } else {
+        description = additional[ruleId].description;
+        example = additional[ruleId].example;
     }
 
     children.push({

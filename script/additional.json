@@ -1,0 +1,6 @@
+{
+  "reset": {
+    "description": "By default, all rules are turned on unless explicitly set to `false`.\nWhen `reset: true`, the opposite is true: all rules are turned off,\nunless when given a non-nully and non-false value.\n\nOptions: `boolean`, default: `false`.",
+    "example": "    <!-- Explicitly activate rules: -->\n    ```json\n    {\n      \"reset\": true,\n      \"final-newline\": true\n    }\n    ```\n"
+  }
+}

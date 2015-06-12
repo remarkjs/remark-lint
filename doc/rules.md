@@ -71,10 +71,19 @@ be null or undefined in order to be ignored.
 
 ### reset
 
-By default, all rules are turned on unless explicitly
-set to `false`. When `reset: true`, the opposite is true:
-all rules are turned off, unless when given a non-nully and
-non-false value.
+````md
+  <!-- Explicitly activate rules: -->
+    ```json
+    {
+      "reset": true,
+      "final-newline": true
+    }
+    ```
+````
+
+By default, all rules are turned on unless explicitly set to `false`.
+When `reset: true`, the opposite is true: all rules are turned off,
+unless when given a non-nully and non-false value.
 
 Options: `boolean`, default: `false`.
 

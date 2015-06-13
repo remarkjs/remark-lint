@@ -1,4 +1,4 @@
-# ![mdast-lint](http://i61.tinypic.com/2eeh36g.png)
+# ![mdast-lint](https://cdn.rawgit.com/wooorm/mdast-lint/master/logo.svg)
 
 [![Build Status](https://img.shields.io/travis/wooorm/mdast-lint.svg?style=flat)](https://travis-ci.org/wooorm/mdast-lint) [![Coverage Status](https://img.shields.io/coveralls/wooorm/mdast-lint.svg?style=flat)](https://coveralls.io/r/wooorm/mdast-lint?branch=master)
 
@@ -37,7 +37,7 @@ CommonJS, and globals.
 
 ## Command line
 
-![](http://i60.tinypic.com/125gtn9.png "Example how mdast-lint looks on screen")
+![Example how mdast-lint looks on screen](https://cdn.rawgit.com/wooorm/mdast-lint/master/screen-shot.png)
 
 Use mdast-lint together with mdast:
 

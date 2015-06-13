@@ -5,7 +5,11 @@ This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?qu
 
 <http://this-link-is-fine.com>
 
+[foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
+
 <http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables>
+
+![foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
 
 | An | exception | is | line | length | in | long | tables | because | those | can’t | just |
 | -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |

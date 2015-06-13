@@ -2302,7 +2302,7 @@ module.exports = maximumHeadingLength;
  *   Options: `number`, default: `80`.
  *
  *   Ignores nodes which cannot be wrapped, such as heasings, tables,
- *   code, and links.
+ *   code, link, and images.
  * @example
  *   <!-- Valid, when set to `40` -->
  *   Alpha bravo charlie delta echo.
@@ -2407,8 +2407,7 @@ function maximumLineLength(ast, file, preferred, done) {
      * there’s white-space after it, they are not
      * whitelisted.
      */
-
-    visit(ast, 'link', function (node, pos, parent) {
+    function validateLink(node, pos, parent) {
         var next = parent.children[pos + 1];
         var initial = start(node);
         var final = end(node);
@@ -2444,7 +2443,10 @@ function maximumLineLength(ast, file, preferred, done) {
         }
 
         whitelist(initial.line - 1, final.line);
-    });
+    }
+
+    visit(ast, 'link', validateLink);
+    visit(ast, 'image', validateLink);
 
     /*
      * Iterate over every line, and warn for

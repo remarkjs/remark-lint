@@ -598,7 +598,7 @@ Options: `boolean`, default: `false`.
   Options: `number`, default: `80`.
 
   Ignores nodes which cannot be wrapped, such as heasings, tables,
-  code, and links.
+  code, link, and images.
 
 ### no-auto-link-without-protocol
 

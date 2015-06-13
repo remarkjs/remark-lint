@@ -2,7 +2,8 @@
   "plugins": [
     "./",
     "github",
-    "toc"
+    "toc",
+    "yaml-config"
   ],
   "settings": {
     "bullet": "*"

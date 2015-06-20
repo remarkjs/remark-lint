@@ -213,7 +213,7 @@ describe('mdast-lint', function () {
 describe('External', function () {
     describe('Load external rules with require', function () {
         assertFile('lorem-invalid.md', [
-            'lorem-invalid.md:1:1: Do not use lorem'
+            'lorem-invalid.md:1:6: Do not use lorem'
         ], null, {
             'external': ['test/external']
         });
@@ -221,7 +221,7 @@ describe('External', function () {
 
     describe('Load external rules with require and without `.js` extension', function () {
         assertFile('lorem-invalid.md', [
-            'lorem-invalid.md:1:1: Do not use lorem'
+            'lorem-invalid.md:1:6: Do not use lorem'
         ], null, {
             'external': ['test/external/index']
         });
@@ -229,7 +229,7 @@ describe('External', function () {
 
     describe('Load external rules with require and with `.js` extension', function () {
         assertFile('lorem-invalid.md', [
-            'lorem-invalid.md:1:1: Do not use lorem'
+            'lorem-invalid.md:1:6: Do not use lorem'
         ], null, {
             'external': ['test/external/index.js']
         });
@@ -249,7 +249,7 @@ describe('External', function () {
         var external = require('./external');
 
         assertFile('lorem-invalid.md', [
-            'lorem-invalid.md:1:1: Do not use lorem'
+            'lorem-invalid.md:1:6: Do not use lorem'
         ], null, {
             'external': [external]
         });
@@ -1626,13 +1626,13 @@ describe('Rules', function () {
             assertFile('link-title-style-missing.md', [], settings);
 
             assertFile('link-title-style-single.md', [
-                'link-title-style-single.md:1:1: Titles should use `"` as a quote',
+                'link-title-style-single.md:1:44: Titles should use `"` as a quote',
                 'link-title-style-single.md:3:45: Titles should use `"` as a quote',
                 'link-title-style-single.md:5:45: Titles should use `"` as a quote'
             ], settings);
 
             assertFile('link-title-style-parentheses.md', [
-                'link-title-style-parentheses.md:1:1: Titles should use `"` as a quote',
+                'link-title-style-parentheses.md:1:44: Titles should use `"` as a quote',
                 'link-title-style-parentheses.md:3:45: Titles should use `"` as a quote',
                 'link-title-style-parentheses.md:5:45: Titles should use `"` as a quote'
             ], settings);
@@ -1643,13 +1643,13 @@ describe('Rules', function () {
             assertFile('link-title-style-missing.md', [], settings);
 
             assertFile('link-title-style-double.md', [
-                'link-title-style-double.md:1:1: Titles should use `\'` as a quote',
+                'link-title-style-double.md:1:44: Titles should use `\'` as a quote',
                 'link-title-style-double.md:3:45: Titles should use `\'` as a quote',
                 'link-title-style-double.md:5:45: Titles should use `\'` as a quote'
             ], settings);
 
             assertFile('link-title-style-parentheses.md', [
-                'link-title-style-parentheses.md:1:1: Titles should use `\'` as a quote',
+                'link-title-style-parentheses.md:1:44: Titles should use `\'` as a quote',
                 'link-title-style-parentheses.md:3:45: Titles should use `\'` as a quote',
                 'link-title-style-parentheses.md:5:45: Titles should use `\'` as a quote'
             ], settings);
@@ -1660,13 +1660,13 @@ describe('Rules', function () {
             assertFile('link-title-style-missing.md', [], settings);
 
             assertFile('link-title-style-double.md', [
-                'link-title-style-double.md:1:1: Titles should use `()` as a quote',
+                'link-title-style-double.md:1:44: Titles should use `()` as a quote',
                 'link-title-style-double.md:3:45: Titles should use `()` as a quote',
                 'link-title-style-double.md:5:45: Titles should use `()` as a quote'
             ], settings);
 
             assertFile('link-title-style-single.md', [
-                'link-title-style-single.md:1:1: Titles should use `()` as a quote',
+                'link-title-style-single.md:1:44: Titles should use `()` as a quote',
                 'link-title-style-single.md:3:45: Titles should use `()` as a quote',
                 'link-title-style-single.md:5:45: Titles should use `()` as a quote'
             ], settings);
@@ -1682,7 +1682,6 @@ describe('Rules', function () {
             assertFile('no-duplicate-definitions-valid.md', []);
         });
     });
-
 
     describeRule('fenced-code-marker', function () {
         describeSetting(true, function () {

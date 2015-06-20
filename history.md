@@ -5,6 +5,17 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.3.0 / 2015-06-20
+==================
+
+*   Add checkbox-content-indent rule ([7b55519](https://github.com/wooorm/mdast-lint/commit/7b55519))
+*   Fix dot-files from being read as fixtures ([ecbec2c](https://github.com/wooorm/mdast-lint/commit/ecbec2c))
+*   Add checkbox-character-style rule ([7ed4579](https://github.com/wooorm/mdast-lint/commit/7ed4579))
+*   Fix tests for invalid position given my mdast-range ([55d1128](https://github.com/wooorm/mdast-lint/commit/55d1128))
+*   Add missing jsdoc comment ([63b83b9](https://github.com/wooorm/mdast-lint/commit/63b83b9))
+*   Update eslint ([a3b0829](https://github.com/wooorm/mdast-lint/commit/a3b0829))
+*   Update mdast, mdast-yaml-config ([52bac04](https://github.com/wooorm/mdast-lint/commit/52bac04))
+
 0.2.0 / 2015-06-13
 ==================
 

@@ -11,6 +11,7 @@ fix their warnings.
     *   [externals](#externals)
     *   [reset](#reset)
     *   [blockquote-indentation](#blockquote-indentation)
+    *   [checkbox-character-style](#checkbox-character-style)
     *   [code-block-style](#code-block-style)
     *   [definition-case](#definition-case)
     *   [definition-spacing](#definition-spacing)
@@ -130,6 +131,49 @@ Options: `boolean`, default: `false`.
 
   The default value, `consistent`, detects the first used indentation
   and will warn when other blockquotes use a different indentation.
+
+### checkbox-character-style
+
+```md
+  <!-- Note: the double guillemet (`»`) and middle-dots represent a tab -->
+
+  <!-- Valid by default, `'consistent'`, or `{'checked': 'x'}` -->
+  - [x] List item
+  - [x] List item
+
+  <!-- Valid by default, `'consistent'`, or `{'checked': 'X'}` -->
+  - [X] List item
+  - [X] List item
+
+  <!-- Valid by default, `'consistent'`, or `{'unchecked': ' '}` -->
+  - [ ] List item
+  - [ ] List item
+
+  <!-- Valid by default, `'consistent'`, or `{'unchecked': '»'}` -->
+  - [»···] List item
+  - [»···] List item
+
+  <!-- Always invalid -->
+  - [x] List item
+  - [X] List item
+  - [ ] List item
+  - [»···] List item
+```
+
+  Warn when list item checkboxes violate a given style.
+
+  The default value, `consistent`, detects the first used checked
+  and unchecked checkbox styles, and will warn when a subsequent
+  checkboxes uses a different style.
+
+  These values can also be passed in as an object, such as:
+
+```json
+{
+   "checked": 'x',
+   "unchecked": ' '
+}
+```
 
 ### code-block-style
 

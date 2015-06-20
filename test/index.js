@@ -1725,6 +1725,83 @@ describe('Rules', function () {
             ]);
         });
     });
+
+    describeRule('checkbox-character-style', function () {
+        describeSetting(true, function () {
+            assertFile('checkbox-character-style-lower-x.md', []);
+            assertFile('checkbox-character-style-upper-x.md', []);
+            assertFile('checkbox-character-style-space.md', []);
+            assertFile('checkbox-character-style-tab.md', []);
+        });
+
+        describeSetting({
+            'checked': '@'
+        }, function () {
+            assertFile('empty.md', [
+                'empty.md:1:1: Invalid checked checkbox marker `@`: use either `\'x\'`, or `\'X\'`'
+            ]);
+        });
+
+        describeSetting({
+            'unchecked': '@'
+        }, function () {
+            assertFile('empty.md', [
+                'empty.md:1:1: Invalid unchecked checkbox marker `@`: use either `\'\\t\'`, or `\' \'`'
+            ]);
+        });
+
+        describeSetting({
+            'checked': 'X'
+        }, function () {
+            assertFile('checkbox-character-style-lower-x.md', [
+                'checkbox-character-style-lower-x.md:1:6-1:7: Checked checkboxes should use `X` as a marker',
+                'checkbox-character-style-lower-x.md:3:4-3:5: Checked checkboxes should use `X` as a marker',
+                'checkbox-character-style-lower-x.md:5:5-5:6: Checked checkboxes should use `X` as a marker',
+                'checkbox-character-style-lower-x.md:7:6-7:7: Checked checkboxes should use `X` as a marker'
+            ]);
+
+            assertFile('checkbox-character-style-upper-x.md', []);
+        });
+
+        describeSetting({
+            'checked': 'x'
+        }, function () {
+            assertFile('checkbox-character-style-lower-x.md', []);
+
+            assertFile('checkbox-character-style-upper-x.md', [
+                'checkbox-character-style-upper-x.md:1:6-1:7: Checked checkboxes should use `x` as a marker',
+                'checkbox-character-style-upper-x.md:3:4-3:5: Checked checkboxes should use `x` as a marker',
+                'checkbox-character-style-upper-x.md:5:5-5:6: Checked checkboxes should use `x` as a marker',
+                'checkbox-character-style-upper-x.md:7:6-7:7: Checked checkboxes should use `x` as a marker'
+            ]);
+        });
+
+        describeSetting({
+            'unchecked': ' '
+        }, function () {
+            assertFile('checkbox-character-style-space.md', []);
+
+            assertFile('checkbox-character-style-tab.md', [
+                'checkbox-character-style-tab.md:1:6-1:7: Unchecked checkboxes should use ` ` as a marker',
+                'checkbox-character-style-tab.md:3:4-3:5: Unchecked checkboxes should use ` ` as a marker',
+                'checkbox-character-style-tab.md:5:5-5:6: Unchecked checkboxes should use ` ` as a marker',
+                'checkbox-character-style-tab.md:7:6-7:7: Unchecked checkboxes should use ` ` as a marker'
+            ]);
+        });
+
+        describeSetting({
+            'unchecked': '\t'
+        }, function () {
+            assertFile('checkbox-character-style-space.md', [
+                'checkbox-character-style-space.md:1:6-1:7: Unchecked checkboxes should use `\t` as a marker',
+                'checkbox-character-style-space.md:3:4-3:5: Unchecked checkboxes should use `\t` as a marker',
+                'checkbox-character-style-space.md:5:5-5:6: Unchecked checkboxes should use `\t` as a marker',
+                'checkbox-character-style-space.md:7:6-7:7: Unchecked checkboxes should use `\t` as a marker'
+            ]);
+
+            assertFile('checkbox-character-style-tab.md', []);
+        });
+    });
 });
 
 /*

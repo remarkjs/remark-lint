@@ -1822,7 +1822,11 @@ var nonnode = [
 ];
 
 describe('mdast-lint with generated nodes', function () {
-    fs.readdirSync(join(__dirname, 'fixtures')).forEach(function (filePath) {
+    fs.readdirSync(join(__dirname, 'fixtures'))
+    .filter(function (filePath) {
+        return filePath.charAt(0) !== '.';
+    })
+    .forEach(function (filePath) {
         it(filePath, function () {
             var messages = process(filePath, null, null, true);
 

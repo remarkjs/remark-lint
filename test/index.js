@@ -1802,6 +1802,20 @@ describe('Rules', function () {
             assertFile('checkbox-character-style-tab.md', []);
         });
     });
+
+    describeRule('checkbox-content-indent', function () {
+        describeSetting(true, function () {
+            assertFile('checkbox-content-indent-invalid.md', [
+                'checkbox-content-indent-invalid.md:1:7-1:8: Checkboxes should be followed by a single character',
+                'checkbox-content-indent-invalid.md:3:7-3:9: Checkboxes should be followed by a single character',
+                'checkbox-content-indent-invalid.md:5:7-5:8: Checkboxes should be followed by a single character',
+                'checkbox-content-indent-invalid.md:7:9-7:11: Checkboxes should be followed by a single character',
+                'checkbox-content-indent-invalid.md:9:9-9:11: Checkboxes should be followed by a single character'
+            ]);
+
+            assertFile('checkbox-content-indent-valid.md', []);
+        });
+    });
 });
 
 /*

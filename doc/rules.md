@@ -12,6 +12,7 @@ fix their warnings.
     *   [reset](#reset)
     *   [blockquote-indentation](#blockquote-indentation)
     *   [checkbox-character-style](#checkbox-character-style)
+    *   [checkbox-content-indent](#checkbox-content-indent)
     *   [code-block-style](#code-block-style)
     *   [definition-case](#definition-case)
     *   [definition-spacing](#definition-spacing)
@@ -174,6 +175,24 @@ Options: `boolean`, default: `false`.
    "unchecked": ' '
 }
 ```
+
+### checkbox-content-indent
+
+```md
+  <!-- Valid: -->
+  - [ ] List item
+  +  [x] List item
+  *   [X] List item
+  -    [ ] List item
+
+  <!-- Invalid: -->
+  - [ ] List item
+  + [x]  List item
+  * [X]   List item
+  - [ ]    List item
+```
+
+  Warn when list item checkboxes are followed by too much white-space.
 
 ### code-block-style
 

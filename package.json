@@ -32,14 +32,14 @@
   "devDependencies": {
     "browserify": "^10.0.0",
     "dox": "^0.8.0",
-    "eslint": "^0.23.0",
+    "eslint": "^0.24.0",
     "esmangle": "^1.0.0",
     "istanbul": "^0.3.0",
     "jscs": "^1.0.0",
     "jscs-jsdoc": "^1.0.0",
     "mdast": "^0.23.0",
     "mdast-github": "^0.3.0",
-    "mdast-toc": "^0.4.1",
+    "mdast-toc": "^0.5.0",
     "mdast-yaml-config": "^0.2.0",
     "mocha": "^2.0.0"
   },

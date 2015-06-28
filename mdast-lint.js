@@ -217,8 +217,10 @@ function loadExternal(pathlike) {
  * In node, accepts externals as strings, otherwise,
  * externals should be a list of objects.
  *
- * @param {Array.<string|Object>} externals
- * @return {Array.<Object>}
+ * @param {Array.<string|Object>} externals - List of
+ *   paths to look for externals (only works in Node),
+ *   or a list of rule objects.
+ * @return {Array.<Object>} - Rule object.
  * @throws {Error} - When an external cannot be resolved.
  */
 function loadExternals(externals) {
@@ -448,7 +450,7 @@ var position = require('../utilities/position');
 /**
  * Get the indent of a blockquote.
  *
- * @param {Node} node
+ * @param {Node} node - Node to test.
  * @return {number} - Indentation.
  */
 function check(node) {
@@ -2629,7 +2631,7 @@ var end = position.end;
  * Check if `node` is applicable, as in, if it should be
  * ignored.
  *
- * @param {Node} node
+ * @param {Node} node - Node to test.
  * @return {boolean} - Whether or not `node` should be
  *   ignored.
  */
@@ -2809,7 +2811,7 @@ var PROTOCOL = /^[a-z][a-z+.-]+:\/?/i;
 /**
  * Assert `node`s reference starts with a protocol.
  *
- * @param {Node} node
+ * @param {Node} node - Node to test.
  * @return {boolean}
  */
 function hasProtocol(node) {
@@ -3994,7 +3996,7 @@ var position = require('../utilities/position');
 /**
  * Check if `node` is an applicable block-level node.
  *
- * @param {Node} node
+ * @param {Node} node - Node to test.
  * @return {boolean} - Whether or not `node` is applicable.
  */
 function isApplicable(node) {
@@ -4753,7 +4755,7 @@ var end = position.end;
 /**
  * Warn when a given style is invalid.
  *
- * @param {*} style
+ * @param {*} style - `*`, `_`, ` ` (space), or `-`.
  * @return {boolean} - Whether or not `style` is a
  *   valid rule style.
  */
@@ -5577,7 +5579,7 @@ var end = positionFactory('end');
 /**
  * Detect if a node is generated.
  *
- * @param {Node} node
+ * @param {Node} node - Node to test.
  * @return {boolean} - Whether or not `node` is generated.
  */
 function isGenerated(node) {
@@ -5619,7 +5621,7 @@ module.exports = position;
  * Get the value of `node`.  Checks, `value`,
  * `alt`, and `title`, in that order.
  *
- * @param {Node} node
+ * @param {Node} node - Node to get the internal value of.
  * @return {string} - Textual representation.
  */
 function valueOf(node) {
@@ -5633,7 +5635,7 @@ function valueOf(node) {
  * does not expose plain-text fields, `toString` will
  * recursivly try its children.
  *
- * @param {Node} node
+ * @param {Node} node - Node to transform to a string.
  * @return {string} - Textual representation.
  */
 function toString(node) {
@@ -5663,8 +5665,10 @@ module.exports = toString;
 /**
  * Walk forwards.
  *
- * @param {Array.<*>} values
- * @param {function(*, number): boolean} callback
+ * @param {Array.<*>} values - Things to iterate over,
+ *   forwards.
+ * @param {function(*, number): boolean} callback - Function
+ *   to invoke.
  * @return {boolean} - False if iteration stopped.
  */
 function forwards(values, callback) {
@@ -5683,8 +5687,10 @@ function forwards(values, callback) {
 /**
  * Walk backwards.
  *
- * @param {Array.<*>} values
- * @param {function(*, number): boolean} callback
+ * @param {Array.<*>} values - Things to iterate over,
+ *   backwards.
+ * @param {function(*, number): boolean} callback - Function
+ *   to invoke.
  * @return {boolean} - False if iteration stopped.
  */
 function backwards(values, callback) {

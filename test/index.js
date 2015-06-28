@@ -277,8 +277,8 @@ describe('Comments', function () {
 
     describe('Inline comments', function () {
         assertFile('comments-inline.md', [
-            'comments-inline.md:1:28-1:34: Do not use HTML in markdown',
-            'comments-inline.md:1:46-1:53: Do not use HTML in markdown'
+            'comments-inline.md:1:32-1:38: Do not use HTML in markdown',
+            'comments-inline.md:1:50-1:57: Do not use HTML in markdown'
         ], null, {
             'reset': true
         });
@@ -699,7 +699,7 @@ describe('Rules', function () {
                 'no-missing-blank-lines-invalid.md:16:1-16:18: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:17:1-17:20: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:18:1-18:15: Missing blank line before block node',
-                'no-missing-blank-lines-invalid.md:19:1-19:13: Missing blank line before block node'
+                'no-missing-blank-lines-invalid.md:21:1-21:13: Missing blank line before block node'
             ]);
 
             assertFile('no-missing-blank-lines-valid.md', []);

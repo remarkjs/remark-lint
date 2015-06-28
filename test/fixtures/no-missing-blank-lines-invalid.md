@@ -16,4 +16,6 @@ fenced code
     indented code
 A normal paragraph.
 <div>foo</div>
+
+fooo
 > blockquote

@@ -1,1 +1,1 @@
-<!--lint enable no-html--> <span>This is HTML</span>.
+Foo <!--lint enable no-html--> <span>This is HTML</span>.

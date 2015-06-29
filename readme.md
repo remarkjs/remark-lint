@@ -143,21 +143,6 @@ but the third is re-enabled):
 ### Hello
 ```
 
-## Combining with other plug-ins
-
-As noted above, **mdast-lint** is just an **mdast** plugin.  Meaning, you
-can use other plug-ins together with it.  Such as [mdast-toc](https://github.com/wooorm/mdast-toc),
-which will generate a table of contents for you.
-
-However, these plug-ins will generate new nodes in the syntax tree, nodes
-which previously weren’t available: thus, they have no positional information,
-and **mdast-lint** cannot warn you about them.
-
-Therefore, you need to do two things:
-
-*   Process the files twice (this is similar to how LaTeX works);
-*   Ensure **mdast-lint** runs before the plug-in’s which generate content.
-
 ## Using mdast to fix your markdown
 
 One of **mdast**’s cool parts is that it compiles to very clean, and highly

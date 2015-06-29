@@ -10,16 +10,17 @@ module.exports = require('./lib');
  * @module Filter
  * @fileoverview mdast plug-in used internally by
  *   mdast-lint to filter ruleId’s by enabled and disabled
- *   ranges.
+ *   ranges, or by gaps.
  * @todo Externalise into its own repository.
  */
 
 'use strict';
 
+var position = require('./utilities/position');
+var visit = require('./utilities/visit');
+
 /**
- * Sort all `file`s messages by line/column.  Note that
- * this works as a plugin, and will also sort warnings
- * added by other plug-ins before `mdast-lint` was added.
+ * Remove warnings which are disabled, or are in gaps.
  *
  * @param {Node} ast - Root node.
  * @param {File} file - Virtual file.
@@ -28,6 +29,19 @@ function transformer(ast, file) {
     if (!file || !file.messages || !file.messages.length) {
         return;
     }
+
+    visit(ast, function (node) {
+        var start = position.start(node);
+        var end = position.end(node);
+
+        if (!start || start.offset === undefined) {
+            // console.log('start: ', start, node);
+        }
+
+        if (!end || end.offset === undefined) {
+            // console.log('end: ', end, node);
+        }
+    });
 
     file.messages = file.messages.filter(function (message) {
         var ranges = file.lintRanges[message.ruleId];
@@ -77,7 +91,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{}],3:[function(require,module,exports){
+},{"./utilities/position":63,"./utilities/visit":65}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.

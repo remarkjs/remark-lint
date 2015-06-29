@@ -11,9 +11,10 @@
 
 var fs = require('fs');
 var path = require('path');
+var assert = require('assert');
 var mdast = require('mdast');
 var File = require('mdast/lib/file');
-var assert = require('assert');
+var toc = require('mdast-toc');
 var lint = require('..');
 var plural = require('../lib/utilities/plural');
 var clean = require('./clean');
@@ -252,6 +253,41 @@ describe('External', function () {
             'lorem-invalid.md:1:6: Do not use lorem'
         ], null, {
             'external': [external]
+        });
+    });
+});
+
+
+/*
+ * Validate gaps are ignored.
+ */
+
+describe('Gaps', function () {
+    it('should supports gaps in a document', function (done) {
+        var file = toFile('gaps-toc-internal.md');
+        var processor = mdast().use(toc).use(lint);
+
+        file.quiet = true;
+
+        processor.process(file, function (err) {
+            assert(file.messages.length === 0);
+
+            done(err);
+        });
+
+        // assertFile('gaps-toc-final.md', []);
+    });
+
+    it('should supports gaps at the end of a document', function (done) {
+        var file = toFile('gaps-toc-final.md');
+        var processor = mdast().use(toc).use(lint);
+
+        file.quiet = true;
+
+        processor.process(file, function (err) {
+            assert(file.messages.length === 0);
+
+            done(err);
         });
     });
 });

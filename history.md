@@ -5,6 +5,12 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.4.0 / 2015-06-29
+==================
+
+*   Add gap support ([136e760](https://github.com/wooorm/mdast-lint/commit/136e760))
+*   Update mdast ([2d122e4](https://github.com/wooorm/mdast-lint/commit/2d122e4))
+
 0.3.0 / 2015-06-20
 ==================
 

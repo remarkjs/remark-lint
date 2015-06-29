@@ -20,7 +20,6 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/mda
 *   [Programmatic](#programmatic)
 *   [Rules](#rules)
 *   [Configuring mdast-lint](#configuring-mdast-lint)
-*   [Combining with other plug-ins](#combining-with-other-plug-ins)
 *   [Using mdast to fix your markdown](#using-mdast-to-fix-your-markdown)
 *   [License](#license)
 

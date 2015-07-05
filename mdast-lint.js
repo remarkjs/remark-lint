@@ -26,27 +26,65 @@ var visit = require('./utilities/visit');
  * @param {File} file - Virtual file.
  */
 function transformer(ast, file) {
+    var lastNode = ast.children[ast.children.length - 1];
+    var gaps = [];
+    var offset = 0;
+    var isGap = false;
+
     if (!file || !file.messages || !file.messages.length) {
         return;
+    }
+
+    /**
+     * Patch a new position.
+     *
+     * @param {number?} [latest] - Last found position.
+     */
+    function update(latest) {
+        if (latest === undefined) {
+            isGap = true;
+
+            return;
+        }
+
+        if (offset > latest) {
+            return;
+        }
+
+        if (isGap) {
+            gaps.push({
+                'start': offset,
+                'end': latest
+            });
+
+            isGap = false;
+        }
+
+        offset = latest;
     }
 
     visit(ast, function (node) {
         var start = position.start(node);
         var end = position.end(node);
 
-        if (!start || start.offset === undefined) {
-            // console.log('start: ', start, node);
-        }
+        update(start && start.offset);
 
-        if (!end || end.offset === undefined) {
-            // console.log('end: ', end, node);
+        if (!node.children) {
+            update(end && end.offset);
         }
     });
+
+    if (offset === position.end(lastNode).offset) {
+        update();
+        update(file.toString().length - 1);
+    }
 
     file.messages = file.messages.filter(function (message) {
         var ranges = file.lintRanges[message.ruleId];
         var index = ranges && ranges.length;
+        var gapIndex = gaps.length;
         var length = -1;
+        var pos;
         var range;
 
         if (!message.line) {
@@ -55,6 +93,17 @@ function transformer(ast, file) {
 
         if (!message.column) {
             message.column = 1;
+        }
+
+        pos = file.positionToOffset(message);
+
+        while (gapIndex--) {
+            if (
+                gaps[gapIndex].start <= pos &&
+                gaps[gapIndex].end > pos
+            ) {
+                return false;
+            }
         }
 
         while (--index > length) {

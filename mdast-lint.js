@@ -141,7 +141,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],3:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -471,7 +471,7 @@ function lint(mdast, options) {
 
 module.exports = lint;
 
-},{"./filter":2,"./rules":20,"fs":undefined,"mdast-message-sort":61,"mdast-range":62,"mdast-zone":67,"path":undefined}],4:[function(require,module,exports){
+},{"./filter":2,"./rules":20,"fs":undefined,"mdast-message-sort":60,"mdast-range":61,"mdast-zone":66,"path":undefined}],4:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -581,7 +581,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
 
 module.exports = blockquoteIndentation;
 
-},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],5:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65,"plur":67}],5:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -766,7 +766,7 @@ function checkboxCharacterStyle(ast, file, preferred, done) {
 
 module.exports = checkboxCharacterStyle;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],6:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],6:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -865,7 +865,7 @@ function checkboxContentIndent(ast, file, preferred, done) {
 
 module.exports = checkboxContentIndent;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],7:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],7:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1000,7 +1000,7 @@ function codeBlockStyle(ast, file, preferred, done) {
 
 module.exports = codeBlockStyle;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],8:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],8:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1076,7 +1076,7 @@ function definitionCase(ast, file, preferred, done) {
 
 module.exports = definitionCase;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],9:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],9:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1152,7 +1152,7 @@ function definitionSpacing(ast, file, preferred, done) {
 
 module.exports = definitionSpacing;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],10:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],10:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1238,7 +1238,7 @@ function emphasisMarker(ast, file, preferred, done) {
 
 module.exports = emphasisMarker;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],11:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],11:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1345,7 +1345,7 @@ function fencedCodeFlag(ast, file, preferred, done) {
 
 module.exports = fencedCodeFlag;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],12:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],12:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1461,7 +1461,7 @@ function fencedCodeMarker(ast, file, preferred, done) {
 
 module.exports = fencedCodeMarker;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],13:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],13:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1585,7 +1585,7 @@ function finalDefinition(ast, file, preferred, done) {
 
 module.exports = finalDefinition;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],15:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],15:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1679,7 +1679,7 @@ function firstHeadingLevel(ast, file, preferred, done) {
 
 module.exports = firstHeadingLevel;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],17:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],17:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1741,7 +1741,7 @@ function hardBreakSpaces(ast, file, preferred, done) {
 
 module.exports = hardBreakSpaces;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],18:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],18:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1806,7 +1806,7 @@ function headingIncrement(ast, file, preferred, done) {
 
 module.exports = headingIncrement;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],19:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],19:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1906,7 +1906,7 @@ function headingStyle(ast, file, preferred, done) {
 
 module.exports = headingStyle;
 
-},{"mdast-util-heading-style":63,"mdast-util-position":64,"mdast-util-visit":66}],20:[function(require,module,exports){
+},{"mdast-util-heading-style":62,"mdast-util-position":63,"mdast-util-visit":65}],20:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2119,7 +2119,7 @@ function linkTitleStyle(ast, file, preferred, done) {
 
 module.exports = linkTitleStyle;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],22:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],22:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2198,7 +2198,7 @@ function listItemBulletIndent(ast, file, preferred, done) {
 
 module.exports = listItemBulletIndent;
 
-},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],23:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],23:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2312,7 +2312,7 @@ function listItemContentIndent(ast, file, preferred, done) {
 
 module.exports = listItemContentIndent;
 
-},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],24:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],24:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2462,7 +2462,7 @@ function listItemIndent(ast, file, preferred, done) {
 
 module.exports = listItemIndent;
 
-},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],25:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],25:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2582,7 +2582,7 @@ function listItemSpacing(ast, file, preferred, done) {
 
 module.exports = listItemSpacing;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],26:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],26:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2643,7 +2643,7 @@ function maximumHeadingLength(ast, file, preferred, done) {
 
 module.exports = maximumHeadingLength;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],27:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],27:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2829,7 +2829,7 @@ function maximumLineLength(ast, file, preferred, done) {
 
 module.exports = maximumLineLength;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],28:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],28:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2915,7 +2915,7 @@ function noAutoLinkWithoutProtocol(ast, file, preferred, done) {
 
 module.exports = noAutoLinkWithoutProtocol;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],29:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],29:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3001,7 +3001,7 @@ function noBlockquoteWithoutCaret(ast, file, preferred, done) {
 
 module.exports = noBlockquoteWithoutCaret;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],30:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],30:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3131,7 +3131,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
 
 module.exports = noConsecutiveBlankLines;
 
-},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],31:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],31:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3208,7 +3208,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
 
 module.exports = noDuplicateDefinitions;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],32:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],32:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3283,7 +3283,7 @@ function noDuplicateHeadings(ast, file, preferred, done) {
 
 module.exports = noDuplicateHeadings;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],33:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],33:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3366,7 +3366,7 @@ function noEmphasisAsHeading(ast, file, preferred, done) {
 
 module.exports = noEmphasisAsHeading;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],34:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3677,7 +3677,7 @@ function noHeadingContentIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingContentIndent;
 
-},{"../utilities/plural":60,"mdast-util-heading-style":63,"mdast-util-position":64,"mdast-util-visit":66}],40:[function(require,module,exports){
+},{"mdast-util-heading-style":62,"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],40:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3780,7 +3780,7 @@ function noHeadingIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingIndent;
 
-},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],41:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],41:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3853,7 +3853,7 @@ function noHeadingPunctuation(ast, file, preferred, done) {
 
 module.exports = noHeadingPunctuation;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],42:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],42:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3900,7 +3900,7 @@ function html(ast, file, preferred, done) {
 
 module.exports = html;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],43:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],43:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3970,7 +3970,7 @@ function noInlinePadding(ast, file, preferred, done) {
 
 module.exports = noInlinePadding;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],44:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],44:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4034,7 +4034,7 @@ function noLiteralURLs(ast, file, preferred, done) {
 
 module.exports = noLiteralURLs;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],45:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],45:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4117,7 +4117,7 @@ function noMissingBlankLines(ast, file, preferred, done) {
 
 module.exports = noMissingBlankLines;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],46:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],46:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4179,7 +4179,7 @@ function noMultipleToplevelHeadings(ast, file, preferred, done) {
 
 module.exports = noMultipleToplevelHeadings;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],47:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],47:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4282,7 +4282,7 @@ function noShellDollars(ast, file, preferred, done) {
 
 module.exports = noShellDollars;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],48:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],48:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4338,7 +4338,7 @@ function noShortcutReferenceImage(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceImage;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],49:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],49:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4394,7 +4394,7 @@ function noShortcutReferenceLink(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceLink;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],50:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],50:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4456,7 +4456,7 @@ function noTableIndentation(ast, file, preferred, done) {
 
 module.exports = noTableIndentation;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],51:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],51:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4624,7 +4624,7 @@ function orderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerStyle;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],53:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],53:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4782,7 +4782,7 @@ function orderedListMarkerValue(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerValue;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],54:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],54:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4881,7 +4881,7 @@ function ruleStyle(ast, file, preferred, done) {
 
 module.exports = ruleStyle;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],55:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],55:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4965,7 +4965,7 @@ function strongMarker(ast, file, preferred, done) {
 
 module.exports = strongMarker;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],56:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],56:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5143,7 +5143,7 @@ function tableCellPadding(ast, file, preferred, done) {
 
 module.exports = tableCellPadding;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],57:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],57:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5245,7 +5245,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
 
 module.exports = tablePipeAlignment;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],58:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],58:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5322,7 +5322,7 @@ function tablePipes(ast, file, preferred, done) {
 
 module.exports = tablePipes;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],59:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],59:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5445,42 +5445,7 @@ function unorderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = unorderedListMarkerStyle;
 
-},{"mdast-util-position":64,"mdast-util-visit":66}],60:[function(require,module,exports){
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Plural
- * @fileoverview Simple functional utility to pluralise
- *   a word based on a count.
- */
-
-'use strict';
-
-/**
- * Simple utility to pluralise `word`, by adding `'s'`,
- * when the given `count` is not `1`.
- *
- * @example
- *   plural('foo', 0); // 'foos'
- *   plural('foo', 1); // 'foo'
- *   plural('foo', 2); // 'foos'
- *
- * @param {string} word - Singular form.
- * @param {number} count - Relative number.
- * @return {string} - Original word with an `s` on the end
- *   if count is not one.
- */
-function plural(word, count) {
-    return (count === 1 ? word : word + 's');
-}
-
-/*
- * Expose.
- */
-
-module.exports = plural;
-
-},{}],61:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-visit":65}],60:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5527,7 +5492,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 /**
@@ -5716,7 +5681,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{}],63:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5806,7 +5771,7 @@ function style(node, relative) {
 
 module.exports = style;
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5910,7 +5875,7 @@ position.generated = generated;
 
 module.exports = position;
 
-},{}],65:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5953,7 +5918,7 @@ function toString(node) {
 
 module.exports = toString;
 
-},{}],66:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -6068,7 +6033,7 @@ function visit(tree, type, callback, reverse) {
 
 module.exports = visit;
 
-},{}],67:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 'use strict';
 
 /*
@@ -6446,6 +6411,22 @@ function wrapper(options) {
  */
 
 module.exports = wrapper;
+
+},{}],67:[function(require,module,exports){
+'use strict';
+module.exports = function (str, plural, count) {
+	if (typeof plural === 'number') {
+		count = plural;
+
+		plural = (str.replace(/(?:s|x|z|ch|sh)$/i, '$&e').replace(/y$/i, 'ie') + 's')
+			.replace(/i?e?s$/i, function (m) {
+				var isTailLowerCase = str.slice(-1) === str.slice(-1).toLowerCase();
+				return isTailLowerCase ? m.toLowerCase() : m.toUpperCase();
+			});
+	}
+
+	return count === 1 ? str : plural;
+};
 
 },{}]},{},[1])(1)
 });

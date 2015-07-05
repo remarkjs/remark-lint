@@ -31,7 +31,7 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/mda
 npm install mdast-lint
 ```
 
-**mdast-lint** is also available for bower, component, duo, and for AMD,
+**mdast-lint** is also available for bower, duo, and for AMD,
 CommonJS, and globals.
 
 ## Command line

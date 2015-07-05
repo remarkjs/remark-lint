@@ -508,7 +508,7 @@ module.exports = lint;
 
 var visit = require('mdast-util-visit');
 var toString = require('mdast-util-to-string');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 var position = require('mdast-util-position');
 
 /**
@@ -2144,7 +2144,7 @@ module.exports = linkTitleStyle;
 
 var visit = require('mdast-util-visit');
 var position = require('mdast-util-position');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 
 /*
  * Methods.
@@ -2225,7 +2225,7 @@ module.exports = listItemBulletIndent;
 
 var visit = require('mdast-util-visit');
 var position = require('mdast-util-position');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 
 /*
  * Methods.
@@ -2362,7 +2362,7 @@ module.exports = listItemContentIndent;
 
 var visit = require('mdast-util-visit');
 var position = require('mdast-util-position');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 
 /*
  * Methods.
@@ -3030,7 +3030,7 @@ module.exports = noBlockquoteWithoutCaret;
 
 var visit = require('mdast-util-visit');
 var position = require('mdast-util-position');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 
 /*
  * Constants.
@@ -3588,7 +3588,7 @@ module.exports = noFileNameOuterDashes;
 
 var visit = require('mdast-util-visit');
 var style = require('mdast-util-heading-style');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 var position = require('mdast-util-position');
 
 /*
@@ -3716,7 +3716,7 @@ module.exports = noHeadingContentIndent;
  */
 
 var visit = require('mdast-util-visit');
-var plural = require('../utilities/plural');
+var plural = require('plur');
 var position = require('mdast-util-position');
 
 /*

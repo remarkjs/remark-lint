@@ -11,6 +11,7 @@
   ],
   "repository": "wooorm/mdast-lint",
   "dependencies": {
+    "sindresorhus/plur": "^2.0.0",
     "wooorm/mdast-message-sort": "^0.1.0",
     "wooorm/mdast-range": "^0.4.0",
     "wooorm/mdast-util-heading-style": "^0.1.0",

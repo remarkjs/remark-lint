@@ -16,7 +16,7 @@ var mdast = require('mdast');
 var File = require('mdast/lib/file');
 var toc = require('mdast-toc');
 var lint = require('..');
-var plural = require('../lib/utilities/plural');
+var plural = require('plur');
 var clean = require('./clean');
 
 /*

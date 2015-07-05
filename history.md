@@ -5,6 +5,12 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.4.1 / 2015-07-05
+==================
+
+*   Remove component support ([58d7e6b](https://github.com/wooorm/mdast-lint/commit/58d7e6b))
+*   Refactor to externalise `lib/utilities/` ([eb78529](https://github.com/wooorm/mdast-lint/commit/eb78529))
+
 0.4.0 / 2015-06-29
 ==================
 

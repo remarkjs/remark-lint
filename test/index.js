@@ -274,8 +274,6 @@ describe('Gaps', function () {
 
             done(err);
         });
-
-        // assertFile('gaps-toc-final.md', []);
     });
 
     it('should supports gaps at the end of a document', function (done) {

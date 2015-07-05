@@ -18,7 +18,12 @@
     "email": "tituswormer@gmail.com"
   },
   "dependencies": {
+    "mdast-message-sort": "^0.1.0",
     "mdast-range": "^0.4.0",
+    "mdast-util-heading-style": "^0.1.0",
+    "mdast-util-position": "^0.2.0",
+    "mdast-util-to-string": "^0.1.0",
+    "mdast-util-visit": "^0.1.1",
     "mdast-zone": "^0.2.1"
   },
   "files": [

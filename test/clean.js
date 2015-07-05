@@ -13,7 +13,7 @@
  * Dpendencies.
  */
 
-var visit = require('../lib/utilities/visit');
+var visit = require('mdast-util-visit');
 
 /**
  * Delete the `position` key for each node.

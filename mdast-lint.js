@@ -16,8 +16,8 @@ module.exports = require('./lib');
 
 'use strict';
 
-var position = require('./utilities/position');
-var visit = require('./utilities/visit');
+var position = require('mdast-util-position');
+var visit = require('mdast-util-visit');
 
 /**
  * Remove warnings which are disabled, or are in gaps.
@@ -41,7 +41,7 @@ function transformer(ast, file) {
      * @param {number?} [latest] - Last found position.
      */
     function update(latest) {
-        if (latest === undefined) {
+        if (latest === undefined || latest === null) {
             isGap = true;
 
             return;
@@ -73,6 +73,7 @@ function transformer(ast, file) {
             update(end && end.offset);
         }
     });
+
 
     if (offset === position.end(lastNode).offset) {
         update();
@@ -140,7 +141,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"./utilities/position":63,"./utilities/visit":65}],3:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -157,8 +158,8 @@ module.exports = attacher;
 
 var range = require('mdast-range');
 var zone = require('mdast-zone');
+var sort = require('mdast-message-sort');
 var internals = require('./rules');
-var sort = require('./sort');
 var filter = require('./filter');
 
 /*
@@ -470,7 +471,7 @@ function lint(mdast, options) {
 
 module.exports = lint;
 
-},{"./filter":2,"./rules":20,"./sort":60,"fs":undefined,"mdast-range":66,"mdast-zone":67,"path":undefined}],4:[function(require,module,exports){
+},{"./filter":2,"./rules":20,"fs":undefined,"mdast-message-sort":61,"mdast-range":62,"mdast-zone":67,"path":undefined}],4:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -505,10 +506,10 @@ module.exports = lint;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var toString = require('../utilities/to-string');
+var visit = require('mdast-util-visit');
+var toString = require('mdast-util-to-string');
 var plural = require('../utilities/plural');
-var position = require('../utilities/position');
+var position = require('mdast-util-position');
 
 /**
  * Get the indent of a blockquote.
@@ -548,7 +549,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
         var diff;
         var word;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -580,7 +581,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
 
 module.exports = blockquoteIndentation;
 
-},{"../utilities/plural":62,"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],5:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],5:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -632,8 +633,8 @@ module.exports = blockquoteIndentation;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -715,7 +716,7 @@ function checkboxCharacterStyle(ast, file, preferred, done) {
 
         if (
             node.checked !== Boolean(node.checked) ||
-            position.isGenerated(node)
+            position.generated(node)
         ) {
             return;
         }
@@ -765,7 +766,7 @@ function checkboxCharacterStyle(ast, file, preferred, done) {
 
 module.exports = checkboxCharacterStyle;
 
-},{"../utilities/position":63,"../utilities/visit":65}],6:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],6:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -792,8 +793,8 @@ module.exports = checkboxCharacterStyle;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -824,7 +825,7 @@ function checkboxContentIndent(ast, file, preferred, done) {
 
         if (
             node.checked !== Boolean(node.checked) ||
-            position.isGenerated(node)
+            position.generated(node)
         ) {
             return;
         }
@@ -864,7 +865,7 @@ function checkboxContentIndent(ast, file, preferred, done) {
 
 module.exports = checkboxContentIndent;
 
-},{"../utilities/position":63,"../utilities/visit":65}],7:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],7:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -909,8 +910,8 @@ module.exports = checkboxContentIndent;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -962,7 +963,7 @@ function codeBlockStyle(ast, file, preferred, done) {
         var initial = start(node).offset;
         var final = end(node).offset;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return null;
         }
 
@@ -999,7 +1000,7 @@ function codeBlockStyle(ast, file, preferred, done) {
 
 module.exports = codeBlockStyle;
 
-},{"../utilities/position":63,"../utilities/visit":65}],8:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],8:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1020,8 +1021,8 @@ module.exports = codeBlockStyle;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Expressions.
@@ -1052,7 +1053,7 @@ function definitionCase(ast, file, preferred, done) {
         var end = position.end(node).offset;
         var label;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1075,7 +1076,7 @@ function definitionCase(ast, file, preferred, done) {
 
 module.exports = definitionCase;
 
-},{"../utilities/position":63,"../utilities/visit":65}],9:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],9:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1096,8 +1097,8 @@ module.exports = definitionCase;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Expressions.
@@ -1128,7 +1129,7 @@ function definitionSpacing(ast, file, preferred, done) {
         var end = position.end(node).offset;
         var label;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1151,7 +1152,7 @@ function definitionSpacing(ast, file, preferred, done) {
 
 module.exports = definitionSpacing;
 
-},{"../utilities/position":63,"../utilities/visit":65}],10:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],10:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1181,8 +1182,8 @@ module.exports = definitionSpacing;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Map of valid markers.
@@ -1215,7 +1216,7 @@ function emphasisMarker(ast, file, preferred, done) {
     visit(ast, 'emphasis', function (node) {
         var marker = file.toString().charAt(position.start(node).offset);
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1237,7 +1238,7 @@ function emphasisMarker(ast, file, preferred, done) {
 
 module.exports = emphasisMarker;
 
-},{"../utilities/position":63,"../utilities/visit":65}],11:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],11:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1285,8 +1286,8 @@ module.exports = emphasisMarker;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -1322,7 +1323,7 @@ function fencedCodeFlag(ast, file, preferred, done) {
     visit(ast, 'code', function (node) {
         var value = contents.slice(start(node).offset, end(node).offset);
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1344,7 +1345,7 @@ function fencedCodeFlag(ast, file, preferred, done) {
 
 module.exports = fencedCodeFlag;
 
-},{"../utilities/position":63,"../utilities/visit":65}],12:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],12:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1392,8 +1393,8 @@ module.exports = fencedCodeFlag;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Map of valid markers.
@@ -1428,7 +1429,7 @@ function fencedCodeMarker(ast, file, preferred, done) {
     visit(ast, 'code', function (node) {
         var marker = contents.substr(position.start(node).offset, 4);
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1460,7 +1461,7 @@ function fencedCodeMarker(ast, file, preferred, done) {
 
 module.exports = fencedCodeMarker;
 
-},{"../utilities/position":63,"../utilities/visit":65}],13:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],13:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1534,8 +1535,8 @@ module.exports = fileExtension;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -1562,7 +1563,7 @@ function finalDefinition(ast, file, preferred, done) {
          * Ignore generated nodes.
          */
 
-        if (node.type === 'root' || position.isGenerated(node)) {
+        if (node.type === 'root' || position.generated(node)) {
             return;
         }
 
@@ -1584,7 +1585,7 @@ function finalDefinition(ast, file, preferred, done) {
 
 module.exports = finalDefinition;
 
-},{"../utilities/position":63,"../utilities/visit":65}],15:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],15:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1649,8 +1650,8 @@ module.exports = finalNewline;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when the first heading has a level other than `1`.
@@ -1662,7 +1663,7 @@ var position = require('../utilities/position');
  */
 function firstHeadingLevel(ast, file, preferred, done) {
     visit(ast, 'heading', function (node) {
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return null;
         }
 
@@ -1678,7 +1679,7 @@ function firstHeadingLevel(ast, file, preferred, done) {
 
 module.exports = firstHeadingLevel;
 
-},{"../utilities/position":63,"../utilities/visit":65}],17:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],17:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1703,8 +1704,8 @@ module.exports = firstHeadingLevel;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when too many spaces are used to create a
@@ -1722,7 +1723,7 @@ function hardBreakSpaces(ast, file, preferred, done) {
         var start = position.start(node).offset;
         var end = position.end(node).offset;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1740,7 +1741,7 @@ function hardBreakSpaces(ast, file, preferred, done) {
 
 module.exports = hardBreakSpaces;
 
-},{"../utilities/position":63,"../utilities/visit":65}],18:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],18:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1765,8 +1766,8 @@ module.exports = hardBreakSpaces;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when headings increment with more than 1 level at
@@ -1785,7 +1786,7 @@ function headingIncrement(ast, file, preferred, done) {
     visit(ast, 'heading', function (node) {
         var depth = node.depth;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1805,7 +1806,7 @@ function headingIncrement(ast, file, preferred, done) {
 
 module.exports = headingIncrement;
 
-},{"../utilities/position":63,"../utilities/visit":65}],19:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],19:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1858,9 +1859,9 @@ module.exports = headingIncrement;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var style = require('../utilities/heading-style');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var style = require('mdast-util-heading-style');
+var position = require('mdast-util-position');
 
 /*
  * Types.
@@ -1883,7 +1884,7 @@ function headingStyle(ast, file, preferred, done) {
     preferred = TYPES.indexOf(preferred) === -1 ? null : preferred;
 
     visit(ast, 'heading', function (node) {
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -1905,7 +1906,7 @@ function headingStyle(ast, file, preferred, done) {
 
 module.exports = headingStyle;
 
-},{"../utilities/heading-style":61,"../utilities/position":63,"../utilities/visit":65}],20:[function(require,module,exports){
+},{"mdast-util-heading-style":63,"mdast-util-position":64,"mdast-util-visit":66}],20:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2016,8 +2017,8 @@ module.exports = {
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Map of valid markers.
@@ -2070,7 +2071,7 @@ function linkTitleStyle(ast, file, preferred, done) {
         var character;
         var pos;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -2118,7 +2119,7 @@ function linkTitleStyle(ast, file, preferred, done) {
 
 module.exports = linkTitleStyle;
 
-},{"../utilities/position":63,"../utilities/visit":65}],22:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],22:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2141,8 +2142,8 @@ module.exports = linkTitleStyle;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 var plural = require('../utilities/plural');
 
 /*
@@ -2171,7 +2172,7 @@ function listItemBulletIndent(ast, file, preferred, done) {
             var final = start(head).offset;
             var indent;
 
-            if (position.isGenerated(node)) {
+            if (position.generated(node)) {
                 return;
             }
 
@@ -2197,7 +2198,7 @@ function listItemBulletIndent(ast, file, preferred, done) {
 
 module.exports = listItemBulletIndent;
 
-},{"../utilities/plural":62,"../utilities/position":63,"../utilities/visit":65}],23:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],23:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2222,8 +2223,8 @@ module.exports = listItemBulletIndent;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 var plural = require('../utilities/plural');
 
 /*
@@ -2254,7 +2255,7 @@ function listItemContentIndent(ast, file, preferred, done) {
             var diff;
             var word;
 
-            if (position.isGenerated(item)) {
+            if (position.generated(item)) {
                 return;
             }
 
@@ -2311,7 +2312,7 @@ function listItemContentIndent(ast, file, preferred, done) {
 
 module.exports = listItemContentIndent;
 
-},{"../utilities/plural":62,"../utilities/position":63,"../utilities/visit":65}],24:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],24:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2359,8 +2360,8 @@ module.exports = listItemContentIndent;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 var plural = require('../utilities/plural');
 
 /*
@@ -2406,7 +2407,7 @@ function listItemIndent(ast, file, preferred, done) {
         var isOrdered = node.ordered;
         var offset = node.start || 1;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -2461,7 +2462,7 @@ function listItemIndent(ast, file, preferred, done) {
 
 module.exports = listItemIndent;
 
-},{"../utilities/plural":62,"../utilities/position":63,"../utilities/visit":65}],25:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],25:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2503,8 +2504,8 @@ module.exports = listItemIndent;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -2529,7 +2530,7 @@ function listItemSpacing(ast, file, preferred, done) {
         var indent = start(node).column;
         var type;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -2581,7 +2582,7 @@ function listItemSpacing(ast, file, preferred, done) {
 
 module.exports = listItemSpacing;
 
-},{"../utilities/position":63,"../utilities/visit":65}],26:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],26:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2607,9 +2608,9 @@ module.exports = listItemSpacing;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var toString = require('../utilities/to-string');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var toString = require('mdast-util-to-string');
+var position = require('mdast-util-position');
 
 /**
  * Warn when headings are too long.
@@ -2624,7 +2625,7 @@ function maximumHeadingLength(ast, file, preferred, done) {
     preferred = isNaN(preferred) || typeof preferred !== 'number' ? 60 : preferred;
 
     visit(ast, 'heading', function (node) {
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -2642,7 +2643,7 @@ function maximumHeadingLength(ast, file, preferred, done) {
 
 module.exports = maximumHeadingLength;
 
-},{"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],27:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],27:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2680,8 +2681,8 @@ module.exports = maximumHeadingLength;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -2745,7 +2746,7 @@ function maximumLineLength(ast, file, preferred, done) {
         var initial = applicable && start(node).line;
         var final = applicable && end(node).line;
 
-        if (!applicable || position.isGenerated(node)) {
+        if (!applicable || position.generated(node)) {
             return;
         }
 
@@ -2771,7 +2772,7 @@ function maximumLineLength(ast, file, preferred, done) {
          * Nothing to whitelist when generated.
          */
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -2828,7 +2829,7 @@ function maximumLineLength(ast, file, preferred, done) {
 
 module.exports = maximumLineLength;
 
-},{"../utilities/position":63,"../utilities/visit":65}],28:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],28:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2851,9 +2852,9 @@ module.exports = maximumLineLength;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var toString = require('../utilities/to-string');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var toString = require('mdast-util-to-string');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -2896,7 +2897,7 @@ function noAutoLinkWithoutProtocol(ast, file, preferred, done) {
         var initial = start(node).column;
         var final = end(node).column;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -2914,7 +2915,7 @@ function noAutoLinkWithoutProtocol(ast, file, preferred, done) {
 
 module.exports = noAutoLinkWithoutProtocol;
 
-},{"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],29:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],29:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2939,8 +2940,8 @@ module.exports = noAutoLinkWithoutProtocol;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when blank lines without carets are found in a
@@ -2959,7 +2960,7 @@ function noBlockquoteWithoutCaret(ast, file, preferred, done) {
         var start = position.start(node).line;
         var indent = node.position && node.position.indent;
 
-        if (position.isGenerated(node) || !indent || !indent.length) {
+        if (position.generated(node) || !indent || !indent.length) {
             return;
         }
 
@@ -3000,7 +3001,7 @@ function noBlockquoteWithoutCaret(ast, file, preferred, done) {
 
 module.exports = noBlockquoteWithoutCaret;
 
-},{"../utilities/position":63,"../utilities/visit":65}],30:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],30:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3027,8 +3028,8 @@ module.exports = noBlockquoteWithoutCaret;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 var plural = require('../utilities/plural');
 
 /*
@@ -3069,7 +3070,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
     visit(ast, function (node) {
         var children = node.children;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3088,7 +3089,11 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
                 var prev = children[index - 1];
                 var max = MAX;
 
-                if (!prev) {
+                if (
+                    !prev ||
+                    position.generated(prev) ||
+                    position.generated(child)
+                ) {
                     return;
                 }
 
@@ -3126,7 +3131,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
 
 module.exports = noConsecutiveBlankLines;
 
-},{"../utilities/plural":62,"../utilities/position":63,"../utilities/visit":65}],31:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],31:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3149,8 +3154,8 @@ module.exports = noConsecutiveBlankLines;
  * Dependencies.
  */
 
-var position = require('../utilities/position');
-var visit = require('../utilities/visit');
+var position = require('mdast-util-position');
+var visit = require('mdast-util-visit');
 
 /**
  * Warn when definitions with equal content are found.
@@ -3174,7 +3179,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
         var duplicate = map[node.identifier];
         var pos;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3203,7 +3208,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
 
 module.exports = noDuplicateDefinitions;
 
-},{"../utilities/position":63,"../utilities/visit":65}],32:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],32:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3230,9 +3235,9 @@ module.exports = noDuplicateDefinitions;
  * Dependencies.
  */
 
-var position = require('../utilities/position');
-var visit = require('../utilities/visit');
-var toString = require('../utilities/to-string');
+var position = require('mdast-util-position');
+var visit = require('mdast-util-visit');
+var toString = require('mdast-util-to-string');
 
 /**
  * Warn when headings with equal content are found.
@@ -3252,7 +3257,7 @@ function noDuplicateHeadings(ast, file, preferred, done) {
         var duplicate = map[value];
         var pos;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3278,7 +3283,7 @@ function noDuplicateHeadings(ast, file, preferred, done) {
 
 module.exports = noDuplicateHeadings;
 
-},{"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],33:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],33:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3307,9 +3312,9 @@ module.exports = noDuplicateHeadings;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var toString = require('../utilities/to-string');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var toString = require('mdast-util-to-string');
+var position = require('mdast-util-position');
 
 /**
  * Warn when a section (a new paragraph) is introduced
@@ -3328,7 +3333,7 @@ function noEmphasisAsHeading(ast, file, preferred, done) {
         var next = parent.children[index + 1];
         var value;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3361,7 +3366,7 @@ function noEmphasisAsHeading(ast, file, preferred, done) {
 
 module.exports = noEmphasisAsHeading;
 
-},{"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],34:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3581,10 +3586,10 @@ module.exports = noFileNameOuterDashes;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var style = require('../utilities/heading-style');
+var visit = require('mdast-util-visit');
+var style = require('mdast-util-heading-style');
 var plural = require('../utilities/plural');
-var position = require('../utilities/position');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -3616,7 +3621,7 @@ function noHeadingContentIndent(ast, file, preferred, done) {
         var word;
         var index;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3672,7 +3677,7 @@ function noHeadingContentIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingContentIndent;
 
-},{"../utilities/heading-style":61,"../utilities/plural":62,"../utilities/position":63,"../utilities/visit":65}],40:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-heading-style":63,"mdast-util-position":64,"mdast-util-visit":66}],40:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3710,9 +3715,9 @@ module.exports = noHeadingContentIndent;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
+var visit = require('mdast-util-visit');
 var plural = require('../utilities/plural');
-var position = require('../utilities/position');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -3740,7 +3745,7 @@ function noHeadingIndent(ast, file, preferred, done) {
         var character;
         var diff;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3775,7 +3780,7 @@ function noHeadingIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingIndent;
 
-},{"../utilities/plural":62,"../utilities/position":63,"../utilities/visit":65}],41:[function(require,module,exports){
+},{"../utilities/plural":60,"mdast-util-position":64,"mdast-util-visit":66}],41:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3810,9 +3815,9 @@ module.exports = noHeadingIndent;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
-var toString = require('../utilities/to-string');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
+var toString = require('mdast-util-to-string');
 
 /**
  * Warn when headings end in some characters.
@@ -3828,7 +3833,7 @@ function noHeadingPunctuation(ast, file, preferred, done) {
     visit(ast, 'heading', function (node) {
         var value = toString(node);
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3848,7 +3853,7 @@ function noHeadingPunctuation(ast, file, preferred, done) {
 
 module.exports = noHeadingPunctuation;
 
-},{"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],42:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],42:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3872,8 +3877,8 @@ module.exports = noHeadingPunctuation;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when HTML nodes are used.
@@ -3885,7 +3890,7 @@ var position = require('../utilities/position');
  */
 function html(ast, file, preferred, done) {
     visit(ast, 'html', function (node) {
-        if (!position.isGenerated(node) && !/^\s*<!--/.test(node.value)) {
+        if (!position.generated(node) && !/^\s*<!--/.test(node.value)) {
             file.warn('Do not use HTML in markdown', node);
         }
     });
@@ -3895,7 +3900,7 @@ function html(ast, file, preferred, done) {
 
 module.exports = html;
 
-},{"../utilities/position":63,"../utilities/visit":65}],43:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],43:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3919,9 +3924,9 @@ module.exports = html;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
-var toString = require('../utilities/to-string');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
+var toString = require('mdast-util-to-string');
 
 /**
  * Warn when inline nodes are padded with spaces between
@@ -3937,7 +3942,7 @@ function noInlinePadding(ast, file, preferred, done) {
         var type = node.type;
         var contents;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -3965,7 +3970,7 @@ function noInlinePadding(ast, file, preferred, done) {
 
 module.exports = noInlinePadding;
 
-},{"../utilities/position":63,"../utilities/to-string":64,"../utilities/visit":65}],44:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-to-string":65,"mdast-util-visit":66}],44:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3986,8 +3991,8 @@ module.exports = noInlinePadding;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -4011,7 +4016,7 @@ function noLiteralURLs(ast, file, preferred, done) {
         var initial = start(node).column;
         var final = end(node).column;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4029,7 +4034,7 @@ function noLiteralURLs(ast, file, preferred, done) {
 
 module.exports = noLiteralURLs;
 
-},{"../utilities/position":63,"../utilities/visit":65}],45:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],45:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4053,8 +4058,8 @@ module.exports = noLiteralURLs;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Check if `node` is an applicable block-level node.
@@ -4089,7 +4094,7 @@ function noMissingBlankLines(ast, file, preferred, done) {
     visit(ast, function (node, index, parent) {
         var next = parent && parent.children[index + 1];
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4112,7 +4117,7 @@ function noMissingBlankLines(ast, file, preferred, done) {
 
 module.exports = noMissingBlankLines;
 
-},{"../utilities/position":63,"../utilities/visit":65}],46:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],46:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4137,8 +4142,8 @@ module.exports = noMissingBlankLines;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when multiple top-level headings are used.
@@ -4154,7 +4159,7 @@ function noMultipleToplevelHeadings(ast, file, preferred, done) {
     visit(ast, 'heading', function (node) {
         var pos;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4174,7 +4179,7 @@ function noMultipleToplevelHeadings(ast, file, preferred, done) {
 
 module.exports = noMultipleToplevelHeadings;
 
-},{"../utilities/position":63,"../utilities/visit":65}],47:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],47:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4211,8 +4216,8 @@ module.exports = noMultipleToplevelHeadings;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * List of shell script file extensions (also used as code
@@ -4248,7 +4253,7 @@ function noShellDollars(ast, file, preferred, done) {
         var value = node.value;
         var warn;
 
-        if (!language || position.isGenerated(node)) {
+        if (!language || position.generated(node)) {
             return;
         }
 
@@ -4277,7 +4282,7 @@ function noShellDollars(ast, file, preferred, done) {
 
 module.exports = noShellDollars;
 
-},{"../utilities/position":63,"../utilities/visit":65}],48:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],48:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4302,8 +4307,8 @@ module.exports = noShellDollars;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when shortcut reference images are used.
@@ -4315,7 +4320,7 @@ var position = require('../utilities/position');
  */
 function noShortcutReferenceImage(ast, file, preferred, done) {
     visit(ast, 'imageReference', function (node) {
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4333,7 +4338,7 @@ function noShortcutReferenceImage(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceImage;
 
-},{"../utilities/position":63,"../utilities/visit":65}],49:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],49:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4358,8 +4363,8 @@ module.exports = noShortcutReferenceImage;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when shortcut reference links are used.
@@ -4371,7 +4376,7 @@ var position = require('../utilities/position');
  */
 function noShortcutReferenceLink(ast, file, preferred, done) {
     visit(ast, 'linkReference', function (node) {
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4389,7 +4394,7 @@ function noShortcutReferenceLink(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceLink;
 
-},{"../utilities/position":63,"../utilities/visit":65}],50:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],50:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4414,8 +4419,8 @@ module.exports = noShortcutReferenceLink;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /**
  * Warn when a table has a too much indentation.
@@ -4429,7 +4434,7 @@ function noTableIndentation(ast, file, preferred, done) {
     visit(ast, 'table', function (node) {
         var contents = file.toString();
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4451,7 +4456,7 @@ function noTableIndentation(ast, file, preferred, done) {
 
 module.exports = noTableIndentation;
 
-},{"../utilities/position":63,"../utilities/visit":65}],51:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],51:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4536,8 +4541,8 @@ module.exports = noTabs;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -4590,7 +4595,7 @@ function orderedListMarkerStyle(ast, file, preferred, done) {
             var final = start(head).offset;
             var marker;
 
-            if (position.isGenerated(item)) {
+            if (position.generated(item)) {
                 return;
             }
 
@@ -4619,7 +4624,7 @@ function orderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerStyle;
 
-},{"../utilities/position":63,"../utilities/visit":65}],53:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],53:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4670,8 +4675,8 @@ module.exports = orderedListMarkerStyle;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -4750,7 +4755,7 @@ function orderedListMarkerValue(ast, file, preferred, done) {
              * Ignore generated nodes.
              */
 
-            if (position.isGenerated(item)) {
+            if (position.generated(item)) {
                 return;
             }
 
@@ -4777,7 +4782,7 @@ function orderedListMarkerValue(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerValue;
 
-},{"../utilities/position":63,"../utilities/visit":65}],54:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],54:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4805,8 +4810,8 @@ module.exports = orderedListMarkerValue;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -4852,7 +4857,7 @@ function ruleStyle(ast, file, preferred, done) {
         var final = end(node).offset;
         var hr;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -4876,7 +4881,7 @@ function ruleStyle(ast, file, preferred, done) {
 
 module.exports = ruleStyle;
 
-},{"../utilities/position":63,"../utilities/visit":65}],55:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],55:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4906,8 +4911,8 @@ module.exports = ruleStyle;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Map of valid markers.
@@ -4937,7 +4942,7 @@ function strongMarker(ast, file, preferred, done) {
         visit(ast, 'strong', function (node) {
             var marker = file.toString().charAt(position.start(node).offset);
 
-            if (position.isGenerated(node)) {
+            if (position.generated(node)) {
                 return;
             }
 
@@ -4960,7 +4965,7 @@ function strongMarker(ast, file, preferred, done) {
 
 module.exports = strongMarker;
 
-},{"../utilities/position":63,"../utilities/visit":65}],56:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],56:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4997,8 +5002,8 @@ module.exports = strongMarker;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -5046,7 +5051,7 @@ function tableCellPadding(ast, file, preferred, done) {
         var type;
         var warning;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -5123,7 +5128,7 @@ function tableCellPadding(ast, file, preferred, done) {
         warning = 'Cell should be ' + type + ', isn’t';
 
         positions.forEach(function (diff, index) {
-            if (diff !== style && diff !== undefined) {
+            if (diff !== style && diff !== undefined && diff !== null) {
                 file.warn(warning, locations[index]);
             }
         });
@@ -5138,7 +5143,7 @@ function tableCellPadding(ast, file, preferred, done) {
 
 module.exports = tableCellPadding;
 
-},{"../utilities/position":63,"../utilities/visit":65}],57:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],57:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5163,8 +5168,8 @@ module.exports = tableCellPadding;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -5188,7 +5193,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
         var offset;
         var line;
 
-        if (position.isGenerated(node)) {
+        if (position.generated(node)) {
             return;
         }
 
@@ -5199,7 +5204,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
         function check(initial, final, index) {
             var pos = initial + contents.slice(initial, final).indexOf('|') - offset + 1;
 
-            if (indices[index] === undefined) {
+            if (indices[index] === undefined || indices[index] === null) {
                 indices[index] = pos;
             } else if (pos !== indices[index]) {
                 file.warn('Misaligned table fence', {
@@ -5240,7 +5245,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
 
 module.exports = tablePipeAlignment;
 
-},{"../utilities/position":63,"../utilities/visit":65}],58:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],58:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5265,8 +5270,8 @@ module.exports = tablePipeAlignment;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -5294,7 +5299,7 @@ function tablePipes(ast, file, preferred, done) {
             var initial = contents.slice(start(row).offset, start(head).offset);
             var final = contents.slice(end(tail).offset, end(row).offset);
 
-            if (position.isGenerated(row)) {
+            if (position.generated(row)) {
                 return;
             }
 
@@ -5317,7 +5322,7 @@ function tablePipes(ast, file, preferred, done) {
 
 module.exports = tablePipes;
 
-},{"../utilities/position":63,"../utilities/visit":65}],59:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],59:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5356,8 +5361,8 @@ module.exports = tablePipes;
  * Dependencies.
  */
 
-var visit = require('../utilities/visit');
-var position = require('../utilities/position');
+var visit = require('mdast-util-visit');
+var position = require('mdast-util-position');
 
 /*
  * Methods.
@@ -5411,7 +5416,7 @@ function unorderedListMarkerStyle(ast, file, preferred, done) {
             var final = start(head).offset;
             var marker;
 
-            if (position.isGenerated(item)) {
+            if (position.generated(item)) {
                 return;
             }
 
@@ -5440,134 +5445,7 @@ function unorderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = unorderedListMarkerStyle;
 
-},{"../utilities/position":63,"../utilities/visit":65}],60:[function(require,module,exports){
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Sort
- * @fileoverview mdast plug-in used internally by
- *   mdast-lint to sort warnings.
- * @todo Externalise into its own repository.
- */
-
-'use strict';
-
-/**
- * Sort all `file`s messages by line/column.  Note that
- * this works as a plugin, and will also sort warnings
- * added by other plug-ins before `mdast-lint` was added.
- *
- * @param {Node} ast - Root node.
- * @param {File} file - Virtual file.
- */
-function transformer(ast, file) {
-    file.messages.sort(function (a, b) {
-        /* istanbul ignore if - Useful when externalised */
-        if (a.line === undefined || b.line === undefined) {
-            return -1;
-        }
-
-        return a.line === b.line ? a.column - b.column : a.line - b.line;
-    });
-}
-
-/**
- * Return `transformer`.
- *
- * @return {Function} - See `transformer`.
- */
-function attacher() {
-    return transformer;
-}
-
-/*
- * Expose.
- */
-
-module.exports = attacher;
-
-},{}],61:[function(require,module,exports){
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module headingStyle
- * @fileoverview Utility to check which style a heading
- *   node is in.
- */
-
-'use strict';
-
-/*
- * Dependencies.
- */
-
-var end = require('./position').end;
-
-/**
- * Get the probable style of an atx-heading, depending on
- * preferred style.
- *
- * @example
- *   consolidate(1, 'setext') // 'atx'
- *   consolidate(1, 'atx') // 'atx'
- *   consolidate(3, 'setext') // 'setext'
- *   consolidate(3, 'atx') // 'atx'
- *
- * @param {number} depth
- * @param {string?} relative
- * @return {string?} - Type.
- */
-function consolidate(depth, relative) {
-    return depth < 3 ? 'atx' :
-        relative === 'atx' || relative === 'setext' ? relative : null;
-}
-
-/**
- * Check the style of a heading.
- *
- * @param {Node} node
- * @param {string?} relative - heading type which we'd wish
- *   this to be.
- * @return {string?} - Type, either `'atx-closed'`,
- *   `'atx'`, or `'setext'`.
- */
-function style(node, relative) {
-    var last = node.children[node.children.length - 1];
-    var depth = node.depth;
-
-    /*
-     * This can only occur for atx and `'atx-closed'`
-     * headings.  This might incorrectly match `'atx'`
-     * headings with lots of trailing white space as an
-     * `'atx-closed'` heading.
-     */
-
-    if (!last) {
-        if (end(node).column < depth * 2) {
-            return consolidate(depth, relative);
-        }
-
-        return 'atx-closed';
-    }
-
-    if (end(last).line + 1 === end(node).line) {
-        return 'setext';
-    }
-
-    if (end(last).column + depth < end(node).column) {
-        return 'atx-closed';
-    }
-
-    return consolidate(depth, relative);
-}
-
-/*
- * Expose.
- */
-
-module.exports = style;
-
-},{"./position":63}],62:[function(require,module,exports){
+},{"mdast-util-position":64,"mdast-util-visit":66}],60:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5602,235 +5480,54 @@ function plural(word, count) {
 
 module.exports = plural;
 
-},{}],63:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Position
- * @fileoverview Utility to get either the starting or the
- *   ending position of a node, and if its generated
- *   or not.
+ * @module mdast-message-sort
+ * @fileoverview mdast plug-in to sort messages by line/column.
  */
 
 'use strict';
 
 /**
- * Factory to get a position at `type`.
+ * Sort all `file`s messages by line/column.
  *
- * @param {string} type - Either `'start'` or `'end'`.
- * @return {function(Node): Object}
+ * @private
+ * @param {Node} ast - Root node.
+ * @param {File} file - Virtual file.
  */
-function positionFactory(type) {
-    /**
-     * Fet a position in `node` at a bound `type`.
-     *
-     * @param {Node} node
-     * @return {Object}
-     */
-    return function (node) {
-        return (node && node.position && node.position[type]) || {};
-    };
-}
-
-/*
- * Getters.
- */
-
-var start = positionFactory('start');
-var end = positionFactory('end');
-
-/**
- * Detect if a node is generated.
- *
- * @param {Node} node - Node to test.
- * @return {boolean} - Whether or not `node` is generated.
- */
-function isGenerated(node) {
-    var initial = start(node);
-    var final = end(node);
-
-    return initial.line === undefined || initial.column === undefined ||
-        final.line === undefined || final.column === undefined;
-}
-
-/*
- * Exports.
- */
-
-var position = {
-    'start': start,
-    'end': end,
-    'isGenerated': isGenerated
-};
-
-/*
- * Expose.
- */
-
-module.exports = position;
-
-},{}],64:[function(require,module,exports){
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module ToString
- * @fileoverview Utility to get the plain text content
- *   of a node.
- */
-
-'use strict';
-
-/**
- * Get the value of `node`.  Checks, `value`,
- * `alt`, and `title`, in that order.
- *
- * @param {Node} node - Node to get the internal value of.
- * @return {string} - Textual representation.
- */
-function valueOf(node) {
-    return node &&
-        (node.value ? node.value :
-        (node.alt ? node.alt : node.title)) || '';
+function transformer(ast, file) {
+    file.messages.sort(function (a, b) {
+        return a.line === undefined || a.line === null ?
+            -1 :
+            b.line === undefined || b.line === null ?
+                1 :
+                a.line - b.line || a.column - b.column;
+    });
 }
 
 /**
- * Returns the text content of a node.  If the node itself
- * does not expose plain-text fields, `toString` will
- * recursivly try its children.
+ * Return `transformer`.
  *
- * @param {Node} node - Node to transform to a string.
- * @return {string} - Textual representation.
+ * @example
+ *   mdast.use(attacher).process(doc, function (err, res, file) {
+ *     console.log(file.messages)
+ *   });
+ *
+ * @return {Function} - See `transformer`.
  */
-function toString(node) {
-    return valueOf(node) ||
-        (node.children && node.children.map(toString).join('')) ||
-        '';
+function attacher() {
+    return transformer;
 }
 
 /*
  * Expose.
  */
 
-module.exports = toString;
+module.exports = attacher;
 
-},{}],65:[function(require,module,exports){
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Visit
- * @fileoverview Utility to recursivly walk over mdast
- *   nodes.
- * @todo Externalise into its own repository.
- */
-
-'use strict';
-
-/**
- * Walk forwards.
- *
- * @param {Array.<*>} values - Things to iterate over,
- *   forwards.
- * @param {function(*, number): boolean} callback - Function
- *   to invoke.
- * @return {boolean} - False if iteration stopped.
- */
-function forwards(values, callback) {
-    var index = -1;
-    var length = values.length;
-
-    while (++index < length) {
-        if (callback(values[index], index) === false) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-/**
- * Walk backwards.
- *
- * @param {Array.<*>} values - Things to iterate over,
- *   backwards.
- * @param {function(*, number): boolean} callback - Function
- *   to invoke.
- * @return {boolean} - False if iteration stopped.
- */
-function backwards(values, callback) {
-    var index = values.length;
-    var length = -1;
-
-    while (--index > length) {
-        /* istanbul ignore if - Not used yet... */
-        if (callback(values[index], index) === false) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-/**
- * Visit.
- *
- * @param {Node} tree - Root node
- * @param {string} [type] - Optional node type.
- * @param {function(node): boolean?} callback - Invoked
- *   with each found node.  Can return `false` to stop
- *   iteration.
- * @param {boolean} [reverse] - By default, `visit` will
- *   walk forwards, when `reverse` is `true`, `visit`
- *   walks backwards.
- */
-function visit(tree, type, callback, reverse) {
-    var iterate;
-    var one;
-    var all;
-
-    if (typeof type === 'function') {
-        reverse = callback;
-        callback = type;
-        type = null;
-    }
-
-    iterate = reverse ? backwards : forwards;
-
-    /**
-     * Visit `children` in `parent`.
-     */
-    all = function (children, parent) {
-        return iterate(children, function (child, index) {
-            return one(child, index, parent);
-        });
-    };
-
-    /**
-     * Visit a single node.
-     */
-    one = function (node, position, parent) {
-        var result;
-
-        if (!type || node.type === type) {
-            result = callback(node, position || 0, parent || null);
-        }
-
-        if (node.children && result !== false) {
-            return all(node.children, node);
-        }
-
-        return result;
-    };
-
-    one(tree);
-}
-
-/*
- * Expose.
- */
-
-module.exports = visit;
-
-},{}],66:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 'use strict';
 
 /**
@@ -6018,6 +5715,358 @@ function attacher() {
  */
 
 module.exports = attacher;
+
+},{}],63:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer. All rights reserved.
+ * @module mdast-util-heading-style
+ * @fileoverview Utility to get the style of a heading.
+ */
+
+'use strict';
+
+/**
+ * Get the probable style of an atx-heading, depending on
+ * preferred style.
+ *
+ * @example
+ *   consolidate(1, 'setext') // 'atx'
+ *   consolidate(1, 'atx') // 'atx'
+ *   consolidate(3, 'setext') // 'setext'
+ *   consolidate(3, 'atx') // 'atx'
+ *
+ * @private
+ * @param {number} depth - Depth of heading.
+ * @param {string?} relative - Preferred style.
+ * @return {string?} - Type.
+ */
+function consolidate(depth, relative) {
+    return depth < 3 ? 'atx' :
+        relative === 'atx' || relative === 'setext' ? relative : null;
+}
+
+/**
+ * Check the style of a heading.
+ *
+ * @example
+ *   style(); // null
+ *
+ *   style(mdast.parse('# foo').children[0]); // 'atx'
+ *
+ *   style(mdast.parse('# foo #').children[0]); // 'atx-closed'
+ *
+ *   style(mdast.parse('foo\n===').children[0]); // 'setext'
+ *
+ * @param {Node} node - Node to check.
+ * @param {string?} relative - Heading type which we'd wish
+ *   this to be.
+ * @return {string?} - Type, either `'atx-closed'`,
+ *   `'atx'`, or `'setext'`.
+ */
+function style(node, relative) {
+    var last = node.children[node.children.length - 1];
+    var depth = node.depth;
+    var pos = node && node.position && node.position.end;
+    var final = last && last.position && last.position.end;
+
+    if (!pos) {
+        return null;
+    }
+
+    /*
+     * This can only occur for atx and `'atx-closed'`
+     * headings.  This might incorrectly match `'atx'`
+     * headings with lots of trailing white space as an
+     * `'atx-closed'` heading.
+     */
+
+    if (!last) {
+        if (pos.column - 1 <= depth * 2) {
+            return consolidate(depth, relative);
+        }
+
+        return 'atx-closed';
+    }
+
+    if (final.line + 1 === pos.line) {
+        return 'setext';
+    }
+
+    if (final.column + depth < pos.column) {
+        return 'atx-closed';
+    }
+
+    return consolidate(depth, relative);
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = style;
+
+},{}],64:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer. All rights reserved.
+ * @module mdast-util-position
+ * @fileoverview Utility to get either the starting or the
+ *   ending position of a node, and if its generated or not.
+ */
+
+'use strict';
+
+/**
+ * Factory to get a position at `type`.
+ *
+ * @example
+ *   positionFactory('start'); // Function
+ *
+ *   positionFactory('end'); // Function
+ *
+ * @param {string} type - Either `'start'` or `'end'`.
+ * @return {function(Node): Object}
+ */
+function positionFactory(type) {
+    /**
+     * Get a position in `node` at a bound `type`.
+     *
+     * @example
+     *   // When bound to `start`.
+     *   start({
+     *     start: {
+     *       line: 1,
+     *       column: 1
+     *     }
+     *   }); // {line: 1, column: 1}
+     *
+     *   // When bound to `end`.
+     *   end({
+     *     end: {
+     *       line: 1,
+     *       column: 2
+     *     }
+     *   }); // {line: 1, column: 2}
+     *
+     * @param {Node} node - Node to check.
+     * @return {Object} - Position at `type` in `node`, or
+     *   an empty object.
+     */
+    return function (node) {
+        var pos = (node && node.position && node.position[type]) || {};
+
+        return {
+            'line': pos.line || null,
+            'column': pos.column || null,
+            'indent': pos.indent || null,
+            'offset': isNaN(pos.offset) ? null : pos.offset
+        };
+    };
+}
+
+/*
+ * Getters.
+ */
+
+var position = {
+    'start': positionFactory('start'),
+    'end': positionFactory('end')
+};
+
+/**
+ * Detect if a node was available in the original document.
+ *
+ * @example
+ *   generated(); // true
+ *
+ *   generated({
+ *     start: {
+ *       line: 1,
+ *       column: 1
+ *     },
+ *     end: {
+ *       line: 1,
+ *       column: 2
+ *     }
+ *   }); // false
+ *
+ * @param {Node} node - Node to test.
+ * @return {boolean} - Whether or not `node` is generated.
+ */
+function generated(node) {
+    var initial = position.start(node);
+    var final = position.end(node);
+
+    return initial.line === null || initial.column === null ||
+        final.line === null || final.column === null;
+}
+
+position.generated = generated;
+
+/*
+ * Expose.
+ */
+
+module.exports = position;
+
+},{}],65:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer. All rights reserved.
+ * @module mdast-util-to-string
+ * @fileoverview Utility to get the text value of a node.
+ */
+
+'use strict';
+
+/**
+ * Get the value of `node`.  Checks, `value`,
+ * `alt`, and `title`, in that order.
+ *
+ * @param {Node} node - Node to get the internal value of.
+ * @return {string} - Textual representation.
+ */
+function valueOf(node) {
+    return node &&
+        (node.value ? node.value :
+        (node.alt ? node.alt : node.title)) || '';
+}
+
+/**
+ * Returns the text content of a node.  If the node itself
+ * does not expose plain-text fields, `toString` will
+ * recursivly try its children.
+ *
+ * @param {Node} node - Node to transform to a string.
+ * @return {string} - Textual representation.
+ */
+function toString(node) {
+    return valueOf(node) ||
+        (node.children && node.children.map(toString).join('')) ||
+        '';
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = toString;
+
+},{}],66:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer. All rights reserved.
+ * @module mdast-util-visit
+ * @fileoverview Utility to recursively walk over mdast nodes.
+ */
+
+'use strict';
+
+/**
+ * Walk forwards.
+ *
+ * @param {Array.<*>} values - Things to iterate over,
+ *   forwards.
+ * @param {function(*, number): boolean} callback - Function
+ *   to invoke.
+ * @return {boolean} - False if iteration stopped.
+ */
+function forwards(values, callback) {
+    var index = -1;
+    var length = values.length;
+
+    while (++index < length) {
+        if (callback(values[index], index) === false) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Walk backwards.
+ *
+ * @param {Array.<*>} values - Things to iterate over,
+ *   backwards.
+ * @param {function(*, number): boolean} callback - Function
+ *   to invoke.
+ * @return {boolean} - False if iteration stopped.
+ */
+function backwards(values, callback) {
+    var index = values.length;
+    var length = -1;
+
+    while (--index > length) {
+        if (callback(values[index], index) === false) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Visit.
+ *
+ * @param {Node} tree - Root node
+ * @param {string} [type] - Node type.
+ * @param {function(node): boolean?} callback - Invoked
+ *   with each found node.  Can return `false` to stop.
+ * @param {boolean} [reverse] - By default, `visit` will
+ *   walk forwards, when `reverse` is `true`, `visit`
+ *   walks backwards.
+ */
+function visit(tree, type, callback, reverse) {
+    var iterate;
+    var one;
+    var all;
+
+    if (typeof type === 'function') {
+        reverse = callback;
+        callback = type;
+        type = null;
+    }
+
+    iterate = reverse ? backwards : forwards;
+
+    /**
+     * Visit `children` in `parent`.
+     */
+    all = function (children, parent) {
+        return iterate(children, function (child, index) {
+            return child && one(child, index, parent);
+        });
+    };
+
+    /**
+     * Visit a single node.
+     */
+    one = function (node, index, parent) {
+        var result;
+
+        index = index || (parent ? 0 : null);
+
+        if (!type || node.type === type) {
+            result = callback(node, index, parent || null);
+        }
+
+        if (node.children && result !== false) {
+            return all(node.children, node);
+        }
+
+        return result;
+    };
+
+    one(tree);
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = visit;
 
 },{}],67:[function(require,module,exports){
 'use strict';

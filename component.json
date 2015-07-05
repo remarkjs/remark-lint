@@ -11,7 +11,12 @@
   ],
   "repository": "wooorm/mdast-lint",
   "dependencies": {
+    "wooorm/mdast-message-sort": "^0.1.0",
     "wooorm/mdast-range": "^0.4.0",
+    "wooorm/mdast-util-heading-style": "^0.1.0",
+    "wooorm/mdast-util-position": "^0.2.0",
+    "wooorm/mdast-util-to-string": "^0.1.0",
+    "wooorm/mdast-util-visit": "^0.1.1",
     "wooorm/mdast-zone": "^0.2.1"
   },
   "scripts": [

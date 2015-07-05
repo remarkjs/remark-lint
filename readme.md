@@ -9,7 +9,7 @@ sure less refactoring is needed afterwards. What is quality? That’s up to you,
 but the defaults are sensible :ok_hand:.
 
 **mdast-lint** has lots of tests.  Supports Node, io.js, and the browser.
-100% coverage.  50+ rules.  It’s build on [**mdast**](https://github.com/wooorm/mdast),
+100% coverage.  50+ rules.  It’s built on [**mdast**](https://github.com/wooorm/mdast),
 a powerful markdown processor powered by [plugins](https://github.com/wooorm/mdast/blob/master/doc/plugins.md)
 (such as this one).
 

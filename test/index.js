@@ -967,7 +967,7 @@ describe('Rules', function () {
                 'table-cell-padding-mixed.md:13:28: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:17:10: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:17:14: Cell should be padded, isn’t',
-                'table-cell-padding-mixed.md:17:24: Cell should be padded, isn’t',
+                'table-cell-padding-mixed.md:17:25: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:17:28: Cell should be padded, isn’t'
             ]);
         });
@@ -986,9 +986,9 @@ describe('Rules', function () {
                 'table-cell-padding-padded.md:9:8: Cell should be compact, isn’t',
                 'table-cell-padding-padded.md:9:11: Cell should be compact, isn’t',
                 'table-cell-padding-padded.md:9:16: Cell should be compact, isn’t',
-                'table-cell-padding-padded.md:9:19: Cell should be compact, isn’t',
+                'table-cell-padding-padded.md:9:20: Cell should be compact, isn’t',
                 'table-cell-padding-padded.md:9:24: Cell should be compact, isn’t',
-                'table-cell-padding-padded.md:9:27: Cell should be compact, isn’t',
+                'table-cell-padding-padded.md:9:29: Cell should be compact, isn’t',
                 'table-cell-padding-padded.md:9:32: Cell should be compact, isn’t'
             ]);
 
@@ -1043,7 +1043,7 @@ describe('Rules', function () {
                 'table-cell-padding-compact.md:9:12: Cell should be padded, isn’t',
                 'table-cell-padding-compact.md:9:15: Cell should be padded, isn’t',
                 'table-cell-padding-compact.md:9:18: Cell should be padded, isn’t',
-                'table-cell-padding-compact.md:9:21: Cell should be padded, isn’t',
+                'table-cell-padding-compact.md:9:22: Cell should be padded, isn’t',
                 'table-cell-padding-compact.md:9:25: Cell should be padded, isn’t'
             ]);
 
@@ -1069,7 +1069,7 @@ describe('Rules', function () {
                 'table-cell-padding-mixed.md:7:2: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:7:9: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:7:13: Cell should be padded, isn’t',
-                'table-cell-padding-mixed.md:7:23: Cell should be padded, isn’t',
+                'table-cell-padding-mixed.md:7:24: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:7:27: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:13:10: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:13:15: Cell should be padded, isn’t',
@@ -1077,7 +1077,7 @@ describe('Rules', function () {
                 'table-cell-padding-mixed.md:13:28: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:17:10: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:17:14: Cell should be padded, isn’t',
-                'table-cell-padding-mixed.md:17:24: Cell should be padded, isn’t',
+                'table-cell-padding-mixed.md:17:25: Cell should be padded, isn’t',
                 'table-cell-padding-mixed.md:17:28: Cell should be padded, isn’t'
             ]);
         });

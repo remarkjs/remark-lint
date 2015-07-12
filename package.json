@@ -32,9 +32,6 @@
     "lib/",
     "LICENSE"
   ],
-  "peerDependencies": {
-    "mdast": ">=0.26.2"
-  },
   "devDependencies": {
     "browserify": "^10.0.0",
     "dox": "^0.8.0",

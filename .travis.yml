@@ -7,10 +7,3 @@ node_js:
 - iojs
 after_script: npm install coveralls@2.10.0 && cat ./coverage/lcov.info | coveralls
 sudo: false
-deploy:
-  provider: npm
-  email: tituswormer@gmail.com
-  api_key:
-    secure: RRFADEM2MqAGSifLPgqAcFU1jMYpIV9JWSaoYfs0X+V/YOWGVThvLAikzsjFVAkHIB8DQC6V0gYRGEBjUfJe1uJeRQ9xYB3uJbgsRrSauWtrPhj57MtH/TeeFjx83lIi0CyEo5s9kQ5lV+vmhrOWPGjoAjTw/g89xj8qzL0IQrQopsGHpQTkAGmt7zTyeZK0TpC6XevsPdzWrk5xwHJVHtGZ9sOlV4Dhc0x2T7OpfPQxjNy2bZ0l6bS9VCItUNvJM6wMc4dsY+Y97GmxvJxSXCkmFujRf7bNWRfdzKV3IndJ91oVtaos9T2kIzkJfApm8jgwgXWWz9TSUS/1wIGqewBWXQjSQG6TWFYycxN5Tp6eMw/7fVIsefjObi6AT3qPcZakSQ186pPR4QXEkjPxuVzxkfgREsIqPKUrTSy0J5jQbDauIrUZD7tzOgRef/VaMAf/RIuQXxh2GwXGI3+1ozOCk1Qqaiih78faIavqCKn78lfau+nklYUrqQghPIDs4zQTs6Z7MuxLMy7LD7KF3QM+XqNugpbqu/JYdcWvvaUZYjo0RzzLw+dYHnORMcR8FJ9eyrPRVVuCxbgI3wHNRVQQPCT7ySBXTO6oF/wipEAWO3dSvBse1jxFDl/WF2W/3u9lobkkOZM+/iSYO8z9T0sT6Y/88YKA0Gq1rcr58kU=
-  on:
-    repo: wooorm/mdast-lint

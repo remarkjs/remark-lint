@@ -63,7 +63,6 @@
     "build-md": "mdast . LICENSE --output --quiet",
     "build-bundle": "browserify index.js --bare -s mdastLint > mdast-lint.js",
     "postbuild-bundle": "esmangle mdast-lint.js > mdast-lint.min.js",
-    "build": "npm run build-rules && npm run build-md && npm run build-bundle",
-    "prepublish": "npm run build"
+    "build": "npm run build-rules && npm run build-md && npm run build-bundle"
   }
 }

@@ -5,6 +5,11 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.4.2 / 2015-07-12
+==================
+
+*   Remove peer-dependencies ([8d70fcf](https://github.com/wooorm/mdast-lint/commit/8d70fcf))
+
 0.4.1 / 2015-07-05
 ==================
 

@@ -549,7 +549,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
         var diff;
         var word;
 
-        if (position.generated(node)) {
+        if (position.generated(node) || !node.children.length) {
             return;
         }
 
@@ -5495,30 +5495,11 @@ module.exports = attacher;
 },{}],61:[function(require,module,exports){
 'use strict';
 
-/**
- * Visit.
- *
- * @param {Node} tree
- * @param {function(node)} callback
+/*
+ * Dependencies.
  */
-function visit(tree, callback) {
-    /**
-     * Visit a single node.
-     */
-    function one(node) {
-        callback(node);
 
-        var children = node.children;
-        var index = -1;
-        var length = children ? children.length : 0;
-
-        while (++index < length) {
-            one(children[index]);
-        }
-    }
-
-    one(tree);
-}
+var visit = require('mdast-util-visit');
 
 /**
  * Calculate offsets for `lines`.
@@ -5681,7 +5662,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{}],62:[function(require,module,exports){
+},{"mdast-util-visit":65}],62:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -6037,6 +6018,12 @@ module.exports = visit;
 'use strict';
 
 /*
+ * Dependencies.
+ */
+
+var visit = require('mdast-util-visit');
+
+/*
  * Methods.
  */
 
@@ -6117,32 +6104,6 @@ function marker(name) {
             '\\s*' +
         ')'
     );
-}
-
-/**
- * Visit.
- *
- * @param {Node} tree
- * @param {function(node, parent)} callback
- */
-function visit(tree, callback) {
-    /**
-     * Visit one node.
-     *
-     * @param {Node} node
-     * @param {number} index
-     */
-    function one(node, index) {
-        var parent = this || null;
-
-        callback(node, parent, index);
-
-        if (node.children) {
-            node.children.forEach(one, node);
-        }
-    }
-
-    one(tree);
 }
 
 /**
@@ -6302,10 +6263,10 @@ function run(settings) {
      * Passed intto `visit`.
      *
      * @param {Node} node
-     * @param {Node} parent
      * @param {number} index
+     * @param {Node} parent
      */
-    function gather(node, parent, index) {
+    function gather(node, index, parent) {
         var result = test(node);
         var type = result && result.type;
 
@@ -6412,7 +6373,7 @@ function wrapper(options) {
 
 module.exports = wrapper;
 
-},{}],67:[function(require,module,exports){
+},{"mdast-util-visit":65}],67:[function(require,module,exports){
 'use strict';
 module.exports = function (str, plural, count) {
 	if (typeof plural === 'number') {

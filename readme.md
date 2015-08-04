@@ -21,6 +21,7 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/mda
 *   [Rules](#rules)
 *   [Configuring mdast-lint](#configuring-mdast-lint)
 *   [Using mdast to fix your markdown](#using-mdast-to-fix-your-markdown)
+*   [Editor Integrations](#editor-integrations)
 *   [License](#license)
 
 ## Installation
@@ -151,6 +152,12 @@ aligned.
 
 **mdast** should be able to fix most of your styling issues automatically,
 and I strongly suggest checking out how it can make your life easier :+1:
+
+## Editor Integrations
+
+Currently, **mdast-lint** is integrated with Atom through [**leipert/linter-markdown**](https://atom.io/packages/linter-markdown).
+
+I’m very interested in more integrations. Let me know if I can help.
 
 ## License
 

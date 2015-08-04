@@ -5,6 +5,13 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.4.3 / 2015-08-04
+==================
+
+*   Fix failure on block-quotes without children ([a9aaff7](https://github.com/wooorm/mdast-lint/commit/a9aaff7))
+*   Update mdast dev-dependency ([34df79c](https://github.com/wooorm/mdast-lint/commit/34df79c))
+*   Add vfile as a dev-dependency ([84d1ce3](https://github.com/wooorm/mdast-lint/commit/84d1ce3))
+
 0.4.2 / 2015-07-12
 ==================
 

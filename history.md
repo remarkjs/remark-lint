@@ -5,6 +5,12 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.4.4 / 2015-08-05
+==================
+
+*   Remove maximum-line-length warnings on definitions ([1119ca8](https://github.com/wooorm/mdast-lint/commit/1119ca8))
+*   Add `linter-markdown` to `readme.md` ([7de8847](https://github.com/wooorm/mdast-lint/commit/7de8847))
+
 0.4.3 / 2015-08-04
 ==================
 

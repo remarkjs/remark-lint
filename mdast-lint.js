@@ -1060,7 +1060,7 @@ function definitionCase(ast, file, preferred, done) {
         label = contents.slice(start, end).match(LABEL)[1];
 
         if (label !== label.toLowerCase()) {
-            file.warn('Do not use uppper-case characters in definition labels', node);
+            file.warn('Do not use upper-case characters in definition labels', node);
         }
     }
 

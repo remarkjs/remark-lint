@@ -1130,7 +1130,7 @@ describe('Rules', function () {
     describeRule('definition-case', function () {
         describeSetting(true, function () {
             assertFile('definition-case-invalid.md', [
-                'definition-case-invalid.md:3:1-3:59: Do not use uppper-case characters in definition labels'
+                'definition-case-invalid.md:3:1-3:59: Do not use upper-case characters in definition labels'
             ]);
 
             assertFile('definition-case-valid.md', []);

@@ -18,3 +18,7 @@ This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?qu
 The following is also fine, because there is no white-space.
 
 <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>.
+
+In addition, definitions are also fine:
+
+[foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>

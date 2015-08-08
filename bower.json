@@ -29,7 +29,6 @@
     "script/",
     "test/",
     "build.js",
-    "example.js",
     "index.js",
     "component.json",
     "package.json"

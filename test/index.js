@@ -32,7 +32,7 @@ var dirname = path.dirname;
 /**
  * Create a `File` from a `filePath`.
  *
- * @param {string} filePath
+ * @param {string} filePath - Path to file.
  * @return {File}
  */
 function toFile(filePath) {
@@ -51,7 +51,7 @@ function toFile(filePath) {
 /**
  * Shortcut.
  *
- * @param {string} filePath
+ * @param {string} filePath - Path to `file`.
  * @param {Object?} options - Passed to `mdast-lint`
  * @param {Object?} settings - Passed to `mdast`
  * @param {boolean?} shouldClean - Uses `clean` plugin,
@@ -256,7 +256,6 @@ describe('External', function () {
         });
     });
 });
-
 
 /*
  * Validate gaps are ignored.

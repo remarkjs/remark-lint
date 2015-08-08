@@ -74,7 +74,6 @@ function transformer(ast, file) {
         }
     });
 
-
     if (offset === position.end(lastNode).offset) {
         update();
         update(file.toString().length - 1);
@@ -346,8 +345,8 @@ function lint(mdast, options) {
     /**
      * Get the latest state of a rule.
      *
-     * @param {string} ruleId
-     * @param {File} [file]
+     * @param {string} ruleId - Unique rule name.
+     * @param {File} [file] - File (optional)
      */
     function getState(ruleId, file) {
         var ranges = file && file.lintRanges && file.lintRanges[ruleId];
@@ -368,7 +367,7 @@ function lint(mdast, options) {
     /**
      * Store settings on `file`.
      *
-     * @param {File} file
+     * @param {File} file - Virtual file.
      */
     function store(file) {
         var ranges = file.lintRanges;
@@ -408,8 +407,8 @@ function lint(mdast, options) {
     /**
      * Handle a new-found marker.
      *
-     * @param {Object} marker
-     * @param {Object} parser
+     * @param {Object} marker - Marker context.
+     * @param {Object} parser - Parser instance.
      */
     function onparse(marker, parser) {
         var file = parser.file;
@@ -955,7 +954,7 @@ function codeBlockStyle(ast, file, preferred, done) {
     /**
      * Get the style of `node`.
      *
-     * @param {Node} node
+     * @param {Node} node - Node.
      * @return {string?} - `'fenced'`, `'indented'`, or
      *   `null`.
      */
@@ -1046,7 +1045,7 @@ function definitionCase(ast, file, preferred, done) {
      * Validate a node, either a normal definition or
      * a footnote definition.
      *
-     * @param {Node} node
+     * @param {Node} node - Node.
      */
     function validate(node) {
         var start = position.start(node).offset;
@@ -1122,7 +1121,7 @@ function definitionSpacing(ast, file, preferred, done) {
      * Validate a node, either a normal definition or
      * a footnote definition.
      *
-     * @param {Node} node
+     * @param {Node} node - Node.
      */
     function validate(node) {
         var start = position.start(node).offset;
@@ -2064,7 +2063,7 @@ function linkTitleStyle(ast, file, preferred, done) {
     /**
      * Validate a single node.
      *
-     * @param {Node} node
+     * @param {Node} node - Node.
      */
     function validate(node) {
         var last = end(node).offset - 1;
@@ -2096,7 +2095,6 @@ function linkTitleStyle(ast, file, preferred, done) {
         if (!(character in MARKERS)) {
             return;
         }
-
 
         if (!preferred) {
             preferred = character;
@@ -2727,8 +2725,8 @@ function maximumLineLength(ast, file, preferred, done) {
     /**
      * Whitelist from `initial` to `final`, zero-based.
      *
-     * @param {number} initial
-     * @param {number} final
+     * @param {number} initial - Start.
+     * @param {number} final - End.
      */
     function whitelist(initial, final) {
         initial--;
@@ -2760,9 +2758,9 @@ function maximumLineLength(ast, file, preferred, done) {
      * there’s white-space after it, they are not
      * whitelisted.
      *
-     * @param {Node} node
-     * @param {number} pos
-     * @param {Node} parent
+     * @param {Node} node - Node.
+     * @param {number} pos - Position of `node` in `parent`.
+     * @param {Node} parent - Parent of `node`.
      */
     function validateLink(node, pos, parent) {
         var next = parent.children[pos + 1];
@@ -3052,10 +3050,10 @@ var MAX = 2;
 function noConsecutiveBlankLines(ast, file, preferred, done) {
     /**
      * Compare the difference between `start` and `end`,
-     * and warn when that difference exceens `max`.
+     * and warn when that difference exceeds `max`.
      *
-     * @param {Position} start
-     * @param {Position} end
+     * @param {Position} start - Initial.
+     * @param {Position} end - Final.
      */
     function compare(start, end, max) {
         var diff = end.line - start.line;
@@ -3174,7 +3172,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
     /**
      * Check `node`.
      *
-     * @param {Node} node
+     * @param {Node} node - Node.
      */
     function validate(node) {
         var duplicate = map[node.identifier];
@@ -4272,7 +4270,6 @@ function noShellDollars(ast, file, preferred, done) {
             }
         }
     });
-
 
     done();
 }

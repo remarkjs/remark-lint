@@ -27,6 +27,13 @@ var additional = require('./additional.json');
 
 var exists = fs.existsSync;
 
+/**
+ * Find the first tag in `tags` with a type set to `key`.
+ *
+ * @param {Array.<Object>} tags - List of tags.
+ * @param {string} key - Type of tag.
+ * @return {Object?} - Tag, when found.
+ */
 function find(tags, key) {
     var value = null;
 

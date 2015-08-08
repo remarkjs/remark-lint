@@ -17,7 +17,7 @@ module.exports = require('./lib');
 'use strict';
 
 var position = require('mdast-util-position');
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 
 /**
  * Remove warnings which are disabled, or are in gaps.
@@ -140,7 +140,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],3:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -505,7 +505,7 @@ module.exports = lint;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 var plural = require('plur');
 var position = require('mdast-util-position');
@@ -580,7 +580,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
 
 module.exports = blockquoteIndentation;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65,"plur":67}],5:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65,"plur":67}],5:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -632,7 +632,7 @@ module.exports = blockquoteIndentation;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -765,7 +765,7 @@ function checkboxCharacterStyle(ast, file, preferred, done) {
 
 module.exports = checkboxCharacterStyle;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],6:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],6:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -792,7 +792,7 @@ module.exports = checkboxCharacterStyle;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -864,7 +864,7 @@ function checkboxContentIndent(ast, file, preferred, done) {
 
 module.exports = checkboxContentIndent;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],7:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],7:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -909,7 +909,7 @@ module.exports = checkboxContentIndent;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -999,7 +999,7 @@ function codeBlockStyle(ast, file, preferred, done) {
 
 module.exports = codeBlockStyle;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],8:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],8:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1020,7 +1020,7 @@ module.exports = codeBlockStyle;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -1075,7 +1075,7 @@ function definitionCase(ast, file, preferred, done) {
 
 module.exports = definitionCase;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],9:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],9:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1096,7 +1096,7 @@ module.exports = definitionCase;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -1151,7 +1151,7 @@ function definitionSpacing(ast, file, preferred, done) {
 
 module.exports = definitionSpacing;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],10:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],10:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1181,7 +1181,7 @@ module.exports = definitionSpacing;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -1237,7 +1237,7 @@ function emphasisMarker(ast, file, preferred, done) {
 
 module.exports = emphasisMarker;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],11:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],11:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1285,7 +1285,7 @@ module.exports = emphasisMarker;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -1344,7 +1344,7 @@ function fencedCodeFlag(ast, file, preferred, done) {
 
 module.exports = fencedCodeFlag;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],12:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],12:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1392,7 +1392,7 @@ module.exports = fencedCodeFlag;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -1460,7 +1460,7 @@ function fencedCodeMarker(ast, file, preferred, done) {
 
 module.exports = fencedCodeMarker;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],13:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],13:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1534,7 +1534,7 @@ module.exports = fileExtension;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -1584,7 +1584,7 @@ function finalDefinition(ast, file, preferred, done) {
 
 module.exports = finalDefinition;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],15:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],15:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1649,7 +1649,7 @@ module.exports = finalNewline;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -1678,7 +1678,7 @@ function firstHeadingLevel(ast, file, preferred, done) {
 
 module.exports = firstHeadingLevel;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],17:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],17:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1703,7 +1703,7 @@ module.exports = firstHeadingLevel;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -1740,7 +1740,7 @@ function hardBreakSpaces(ast, file, preferred, done) {
 
 module.exports = hardBreakSpaces;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],18:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],18:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1765,7 +1765,7 @@ module.exports = hardBreakSpaces;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -1805,7 +1805,7 @@ function headingIncrement(ast, file, preferred, done) {
 
 module.exports = headingIncrement;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],19:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],19:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1858,7 +1858,7 @@ module.exports = headingIncrement;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var style = require('mdast-util-heading-style');
 var position = require('mdast-util-position');
 
@@ -1905,7 +1905,7 @@ function headingStyle(ast, file, preferred, done) {
 
 module.exports = headingStyle;
 
-},{"mdast-util-heading-style":62,"mdast-util-position":63,"mdast-util-visit":65}],20:[function(require,module,exports){
+},{"mdast-util-heading-style":62,"mdast-util-position":63,"unist-util-visit":65}],20:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2016,7 +2016,7 @@ module.exports = {
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -2117,7 +2117,7 @@ function linkTitleStyle(ast, file, preferred, done) {
 
 module.exports = linkTitleStyle;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],22:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],22:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2140,7 +2140,7 @@ module.exports = linkTitleStyle;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 var plural = require('plur');
 
@@ -2196,7 +2196,7 @@ function listItemBulletIndent(ast, file, preferred, done) {
 
 module.exports = listItemBulletIndent;
 
-},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],23:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],23:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2221,7 +2221,7 @@ module.exports = listItemBulletIndent;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 var plural = require('plur');
 
@@ -2310,7 +2310,7 @@ function listItemContentIndent(ast, file, preferred, done) {
 
 module.exports = listItemContentIndent;
 
-},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],24:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],24:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2358,7 +2358,7 @@ module.exports = listItemContentIndent;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 var plural = require('plur');
 
@@ -2460,7 +2460,7 @@ function listItemIndent(ast, file, preferred, done) {
 
 module.exports = listItemIndent;
 
-},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],25:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],25:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2502,7 +2502,7 @@ module.exports = listItemIndent;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -2580,7 +2580,7 @@ function listItemSpacing(ast, file, preferred, done) {
 
 module.exports = listItemSpacing;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],26:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],26:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2606,7 +2606,7 @@ module.exports = listItemSpacing;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 var position = require('mdast-util-position');
 
@@ -2641,7 +2641,7 @@ function maximumHeadingLength(ast, file, preferred, done) {
 
 module.exports = maximumHeadingLength;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],27:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],27:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2679,7 +2679,7 @@ module.exports = maximumHeadingLength;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -2828,7 +2828,7 @@ function maximumLineLength(ast, file, preferred, done) {
 
 module.exports = maximumLineLength;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],28:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],28:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2851,7 +2851,7 @@ module.exports = maximumLineLength;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 var position = require('mdast-util-position');
 
@@ -2914,7 +2914,7 @@ function noAutoLinkWithoutProtocol(ast, file, preferred, done) {
 
 module.exports = noAutoLinkWithoutProtocol;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],29:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],29:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2939,7 +2939,7 @@ module.exports = noAutoLinkWithoutProtocol;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -3000,7 +3000,7 @@ function noBlockquoteWithoutCaret(ast, file, preferred, done) {
 
 module.exports = noBlockquoteWithoutCaret;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],30:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],30:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3027,7 +3027,7 @@ module.exports = noBlockquoteWithoutCaret;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 var plural = require('plur');
 
@@ -3130,7 +3130,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
 
 module.exports = noConsecutiveBlankLines;
 
-},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],31:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],31:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3154,7 +3154,7 @@ module.exports = noConsecutiveBlankLines;
  */
 
 var position = require('mdast-util-position');
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 
 /**
  * Warn when definitions with equal content are found.
@@ -3207,7 +3207,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
 
 module.exports = noDuplicateDefinitions;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],32:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],32:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3235,7 +3235,7 @@ module.exports = noDuplicateDefinitions;
  */
 
 var position = require('mdast-util-position');
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 
 /**
@@ -3282,7 +3282,7 @@ function noDuplicateHeadings(ast, file, preferred, done) {
 
 module.exports = noDuplicateHeadings;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],33:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],33:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3311,7 +3311,7 @@ module.exports = noDuplicateHeadings;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 var position = require('mdast-util-position');
 
@@ -3365,7 +3365,7 @@ function noEmphasisAsHeading(ast, file, preferred, done) {
 
 module.exports = noEmphasisAsHeading;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],34:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3585,7 +3585,7 @@ module.exports = noFileNameOuterDashes;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var style = require('mdast-util-heading-style');
 var plural = require('plur');
 var position = require('mdast-util-position');
@@ -3676,7 +3676,7 @@ function noHeadingContentIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingContentIndent;
 
-},{"mdast-util-heading-style":62,"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],40:[function(require,module,exports){
+},{"mdast-util-heading-style":62,"mdast-util-position":63,"unist-util-visit":65,"plur":67}],40:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3714,7 +3714,7 @@ module.exports = noHeadingContentIndent;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var plural = require('plur');
 var position = require('mdast-util-position');
 
@@ -3779,7 +3779,7 @@ function noHeadingIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingIndent;
 
-},{"mdast-util-position":63,"mdast-util-visit":65,"plur":67}],41:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],41:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3814,7 +3814,7 @@ module.exports = noHeadingIndent;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 var toString = require('mdast-util-to-string');
 
@@ -3852,7 +3852,7 @@ function noHeadingPunctuation(ast, file, preferred, done) {
 
 module.exports = noHeadingPunctuation;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],42:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],42:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3876,7 +3876,7 @@ module.exports = noHeadingPunctuation;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -3899,7 +3899,7 @@ function html(ast, file, preferred, done) {
 
 module.exports = html;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],43:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],43:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3923,7 +3923,7 @@ module.exports = html;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 var toString = require('mdast-util-to-string');
 
@@ -3969,7 +3969,7 @@ function noInlinePadding(ast, file, preferred, done) {
 
 module.exports = noInlinePadding;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"mdast-util-visit":65}],44:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],44:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3990,7 +3990,7 @@ module.exports = noInlinePadding;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -4033,7 +4033,7 @@ function noLiteralURLs(ast, file, preferred, done) {
 
 module.exports = noLiteralURLs;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],45:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],45:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4057,7 +4057,7 @@ module.exports = noLiteralURLs;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -4116,7 +4116,7 @@ function noMissingBlankLines(ast, file, preferred, done) {
 
 module.exports = noMissingBlankLines;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],46:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],46:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4141,7 +4141,7 @@ module.exports = noMissingBlankLines;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -4178,7 +4178,7 @@ function noMultipleToplevelHeadings(ast, file, preferred, done) {
 
 module.exports = noMultipleToplevelHeadings;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],47:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],47:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4215,7 +4215,7 @@ module.exports = noMultipleToplevelHeadings;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -4280,7 +4280,7 @@ function noShellDollars(ast, file, preferred, done) {
 
 module.exports = noShellDollars;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],48:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],48:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4305,7 +4305,7 @@ module.exports = noShellDollars;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -4336,7 +4336,7 @@ function noShortcutReferenceImage(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceImage;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],49:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],49:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4361,7 +4361,7 @@ module.exports = noShortcutReferenceImage;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -4392,7 +4392,7 @@ function noShortcutReferenceLink(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceLink;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],50:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],50:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4417,7 +4417,7 @@ module.exports = noShortcutReferenceLink;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /**
@@ -4454,7 +4454,7 @@ function noTableIndentation(ast, file, preferred, done) {
 
 module.exports = noTableIndentation;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],51:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],51:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4539,7 +4539,7 @@ module.exports = noTabs;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -4622,7 +4622,7 @@ function orderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerStyle;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],53:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],53:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4673,7 +4673,7 @@ module.exports = orderedListMarkerStyle;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -4780,7 +4780,7 @@ function orderedListMarkerValue(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerValue;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],54:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],54:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4808,7 +4808,7 @@ module.exports = orderedListMarkerValue;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -4879,7 +4879,7 @@ function ruleStyle(ast, file, preferred, done) {
 
 module.exports = ruleStyle;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],55:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],55:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4909,7 +4909,7 @@ module.exports = ruleStyle;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -4963,7 +4963,7 @@ function strongMarker(ast, file, preferred, done) {
 
 module.exports = strongMarker;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],56:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],56:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5000,7 +5000,7 @@ module.exports = strongMarker;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -5141,7 +5141,7 @@ function tableCellPadding(ast, file, preferred, done) {
 
 module.exports = tableCellPadding;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],57:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],57:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5166,7 +5166,7 @@ module.exports = tableCellPadding;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -5243,7 +5243,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
 
 module.exports = tablePipeAlignment;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],58:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],58:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5268,7 +5268,7 @@ module.exports = tablePipeAlignment;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -5320,7 +5320,7 @@ function tablePipes(ast, file, preferred, done) {
 
 module.exports = tablePipes;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],59:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],59:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5359,7 +5359,7 @@ module.exports = tablePipes;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 var position = require('mdast-util-position');
 
 /*
@@ -5443,7 +5443,7 @@ function unorderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = unorderedListMarkerStyle;
 
-},{"mdast-util-position":63,"mdast-util-visit":65}],60:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":65}],60:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5497,7 +5497,7 @@ module.exports = attacher;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 
 /**
  * Calculate offsets for `lines`.
@@ -5660,7 +5660,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"mdast-util-visit":65}],62:[function(require,module,exports){
+},{"unist-util-visit":65}],62:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5901,7 +5901,7 @@ module.exports = toString;
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
- * @module mdast-util-visit
+ * @module unist-util-visit
  * @fileoverview Utility to recursively walk over mdast nodes.
  */
 
@@ -6019,7 +6019,7 @@ module.exports = visit;
  * Dependencies.
  */
 
-var visit = require('mdast-util-visit');
+var visit = require('unist-util-visit');
 
 /*
  * Methods.
@@ -6371,7 +6371,7 @@ function wrapper(options) {
 
 module.exports = wrapper;
 
-},{"mdast-util-visit":65}],67:[function(require,module,exports){
+},{"unist-util-visit":65}],67:[function(require,module,exports){
 'use strict';
 module.exports = function (str, plural, count) {
 	if (typeof plural === 'number') {

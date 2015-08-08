@@ -17,7 +17,7 @@
     "wooorm/mdast-util-heading-style": "^0.1.0",
     "wooorm/mdast-util-position": "^0.2.0",
     "wooorm/mdast-util-to-string": "^0.1.0",
-    "wooorm/mdast-util-visit": "^0.1.1",
+    "wooorm/unist-util-visit": "^1.0.0",
     "wooorm/mdast-zone": "^0.2.1"
   },
   "scripts": [

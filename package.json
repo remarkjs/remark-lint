@@ -23,7 +23,7 @@
     "mdast-util-heading-style": "^0.1.0",
     "mdast-util-position": "^0.2.0",
     "mdast-util-to-string": "^0.1.0",
-    "mdast-util-visit": "^0.1.1",
+    "unist-util-visit": "^1.0.0",
     "mdast-zone": "^0.2.1",
     "plur": "^2.0.0"
   },

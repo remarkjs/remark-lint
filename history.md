@@ -5,6 +5,11 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+0.4.5 / 2015-08-08
+==================
+
+*   Fix typo in definition-case warning ([490ac16](https://github.com/wooorm/mdast-lint/commit/490ac16))
+
 0.4.4 / 2015-08-05
 ==================
 

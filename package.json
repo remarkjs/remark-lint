@@ -43,9 +43,8 @@
   },
   "scripts": {
     "test-api": "mocha --check-leaks test/index.js",
-    "test-coveralls": "istanbul cover _mocha --report lcovonly -- --check-leaks test/index.js",
-    "test-coverage": "istanbul cover _mocha -- --check-leaks test/index.js",
-    "test-travis": "npm run test-coveralls",
+    "test-coverage": "istanbul cover _mocha -- test/index.js",
+    "test-travis": "npm run test-coverage",
     "test": "npm run test-api",
     "lint-api": "eslint .",
     "lint-style": "jscs . --reporter inline",

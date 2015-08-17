@@ -1,6 +1,6 @@
 # ![mdast-lint](https://cdn.rawgit.com/wooorm/mdast-lint/master/logo.svg)
 
-[![Build Status](https://img.shields.io/travis/wooorm/mdast-lint.svg?style=flat)](https://travis-ci.org/wooorm/mdast-lint) [![Coverage Status](https://img.shields.io/coveralls/wooorm/mdast-lint.svg?style=flat)](https://coveralls.io/r/wooorm/mdast-lint?branch=master)
+[![Build Status](https://img.shields.io/travis/wooorm/mdast-lint.svg)](https://travis-ci.org/wooorm/mdast-lint) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/mdast-lint.svg)](https://codecov.io/github/wooorm/mdast-lint)
 
 **mdast-lint** is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will

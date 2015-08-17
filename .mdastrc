@@ -1,10 +1,11 @@
 {
   "output": true,
   "plugins": [
-    "./",
+    "comment-config",
     "github",
     "toc",
-    "comment-config"
+    "./",
+    "validate-links"
   ],
   "settings": {
     "bullet": "*"

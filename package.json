@@ -37,6 +37,7 @@
     "mdast-comment-config": "^1.0.0",
     "mdast-github": "^0.3.0",
     "mdast-toc": "^0.5.0",
+    "mdast-validate-links": "^0.3.1",
     "mocha": "^2.0.0",
     "vfile": "^1.0.0"
   },

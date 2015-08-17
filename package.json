@@ -9,28 +9,21 @@
     "validate",
     "mdast"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wooorm/mdast-lint.git"
-  },
-  "author": {
-    "name": "Titus Wormer",
-    "email": "tituswormer@gmail.com"
-  },
+  "repository": "wooorm/mdast-lint",
+  "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
-    "mdast-message-sort": "^0.1.0",
-    "mdast-range": "^0.4.0",
-    "mdast-util-heading-style": "^0.1.0",
-    "mdast-util-position": "^0.2.0",
-    "mdast-util-to-string": "^0.1.0",
+    "mdast-range": "^1.0.0",
+    "mdast-util-heading-style": "^1.0.0",
+    "mdast-util-position": "^1.0.0",
+    "mdast-util-to-string": "^1.0.0",
+    "mdast-zone": "^1.0.0",
+    "plur": "^2.0.0",
     "unist-util-visit": "^1.0.0",
-    "mdast-zone": "^0.2.1",
-    "plur": "^2.0.0"
+    "vfile-sort": "^1.0.0"
   },
   "files": [
     "index.js",
-    "lib/",
-    "LICENSE"
+    "lib/"
   ],
   "devDependencies": {
     "browserify": "^11.0.0",
@@ -40,10 +33,10 @@
     "istanbul": "^0.3.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
-    "mdast": "^0.28.0",
+    "mdast": "^1.0.0",
+    "mdast-comment-config": "^1.0.0",
     "mdast-github": "^0.3.0",
     "mdast-toc": "^0.5.0",
-    "mdast-yaml-config": "^0.2.0",
     "mocha": "^2.0.0",
     "vfile": "^1.0.0"
   },
@@ -58,7 +51,7 @@
     "lint": "npm run lint-api && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
     "build-rules": "node script/build-rule-documentation.js",
-    "build-md": "mdast . LICENSE --output --quiet",
+    "build-md": "mdast . --quiet",
     "build-bundle": "browserify index.js --bare -s mdastLint > mdast-lint.js",
     "postbuild-bundle": "esmangle mdast-lint.js > mdast-lint.min.js",
     "build": "npm run build-rules && npm run build-md && npm run build-bundle"

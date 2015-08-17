@@ -12,13 +12,13 @@
   "repository": "wooorm/mdast-lint",
   "dependencies": {
     "sindresorhus/plur": "^2.0.0",
-    "wooorm/mdast-message-sort": "^0.1.0",
-    "wooorm/mdast-range": "^0.4.0",
-    "wooorm/mdast-util-heading-style": "^0.1.0",
-    "wooorm/mdast-util-position": "^0.2.0",
-    "wooorm/mdast-util-to-string": "^0.1.0",
+    "wooorm/mdast-range": "^1.0.0",
+    "wooorm/mdast-util-heading-style": "^1.0.0",
+    "wooorm/mdast-util-position": "^1.0.0",
+    "wooorm/mdast-util-to-string": "^1.0.0",
     "wooorm/unist-util-visit": "^1.0.0",
-    "wooorm/mdast-zone": "^0.2.1"
+    "wooorm/mdast-zone": "^1.0.0",
+    "wooorm/vfile-sort": "^1.0.0"
   },
   "scripts": [
     "index.js",

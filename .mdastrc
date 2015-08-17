@@ -1,9 +1,10 @@
 {
+  "output": true,
   "plugins": [
     "./",
     "github",
     "toc",
-    "yaml-config"
+    "comment-config"
   ],
   "settings": {
     "bullet": "*"

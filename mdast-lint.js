@@ -140,7 +140,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],3:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -155,9 +155,9 @@ module.exports = attacher;
  * Dependencies.
  */
 
+var sort = require('vfile-sort');
 var range = require('mdast-range');
 var zone = require('mdast-zone');
-var sort = require('mdast-message-sort');
 var internals = require('./rules');
 var filter = require('./filter');
 
@@ -452,16 +452,18 @@ function lint(mdast, options) {
     }));
 
     /*
-     * Sort messages.
-     */
-
-    mdast.use(sort);
-
-    /*
      * Filter.
      */
 
     mdast.use(filter);
+
+    /**
+     * Transformer sort messages.
+     */
+    return function (node, file, next) {
+        sort(file);
+        next();
+    };
 }
 
 /*
@@ -470,7 +472,7 @@ function lint(mdast, options) {
 
 module.exports = lint;
 
-},{"./filter":2,"./rules":20,"fs":undefined,"mdast-message-sort":60,"mdast-range":61,"mdast-zone":66,"path":undefined}],4:[function(require,module,exports){
+},{"./filter":2,"./rules":20,"fs":undefined,"mdast-range":60,"mdast-zone":64,"path":undefined,"vfile-sort":67}],4:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -580,7 +582,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
 
 module.exports = blockquoteIndentation;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65,"plur":67}],5:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"plur":65,"unist-util-visit":66}],5:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -765,7 +767,7 @@ function checkboxCharacterStyle(ast, file, preferred, done) {
 
 module.exports = checkboxCharacterStyle;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],6:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],6:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -864,7 +866,7 @@ function checkboxContentIndent(ast, file, preferred, done) {
 
 module.exports = checkboxContentIndent;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],7:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],7:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -999,7 +1001,7 @@ function codeBlockStyle(ast, file, preferred, done) {
 
 module.exports = codeBlockStyle;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],8:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],8:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1075,7 +1077,7 @@ function definitionCase(ast, file, preferred, done) {
 
 module.exports = definitionCase;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],9:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],9:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1151,7 +1153,7 @@ function definitionSpacing(ast, file, preferred, done) {
 
 module.exports = definitionSpacing;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],10:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],10:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1237,7 +1239,7 @@ function emphasisMarker(ast, file, preferred, done) {
 
 module.exports = emphasisMarker;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],11:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],11:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1344,7 +1346,7 @@ function fencedCodeFlag(ast, file, preferred, done) {
 
 module.exports = fencedCodeFlag;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],12:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],12:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1460,7 +1462,7 @@ function fencedCodeMarker(ast, file, preferred, done) {
 
 module.exports = fencedCodeMarker;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],13:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],13:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1584,7 +1586,7 @@ function finalDefinition(ast, file, preferred, done) {
 
 module.exports = finalDefinition;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],15:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],15:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1678,7 +1680,7 @@ function firstHeadingLevel(ast, file, preferred, done) {
 
 module.exports = firstHeadingLevel;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],17:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],17:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1740,7 +1742,7 @@ function hardBreakSpaces(ast, file, preferred, done) {
 
 module.exports = hardBreakSpaces;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],18:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],18:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1805,7 +1807,7 @@ function headingIncrement(ast, file, preferred, done) {
 
 module.exports = headingIncrement;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],19:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],19:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -1905,7 +1907,7 @@ function headingStyle(ast, file, preferred, done) {
 
 module.exports = headingStyle;
 
-},{"mdast-util-heading-style":62,"mdast-util-position":63,"unist-util-visit":65}],20:[function(require,module,exports){
+},{"mdast-util-heading-style":61,"mdast-util-position":62,"unist-util-visit":66}],20:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2117,7 +2119,7 @@ function linkTitleStyle(ast, file, preferred, done) {
 
 module.exports = linkTitleStyle;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],22:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],22:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2196,7 +2198,7 @@ function listItemBulletIndent(ast, file, preferred, done) {
 
 module.exports = listItemBulletIndent;
 
-},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],23:[function(require,module,exports){
+},{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],23:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2310,7 +2312,7 @@ function listItemContentIndent(ast, file, preferred, done) {
 
 module.exports = listItemContentIndent;
 
-},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],24:[function(require,module,exports){
+},{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],24:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2460,7 +2462,7 @@ function listItemIndent(ast, file, preferred, done) {
 
 module.exports = listItemIndent;
 
-},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],25:[function(require,module,exports){
+},{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],25:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2580,7 +2582,7 @@ function listItemSpacing(ast, file, preferred, done) {
 
 module.exports = listItemSpacing;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],26:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],26:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2641,7 +2643,7 @@ function maximumHeadingLength(ast, file, preferred, done) {
 
 module.exports = maximumHeadingLength;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],27:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],27:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2828,7 +2830,7 @@ function maximumLineLength(ast, file, preferred, done) {
 
 module.exports = maximumLineLength;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],28:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],28:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -2914,7 +2916,7 @@ function noAutoLinkWithoutProtocol(ast, file, preferred, done) {
 
 module.exports = noAutoLinkWithoutProtocol;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],29:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],29:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3000,7 +3002,7 @@ function noBlockquoteWithoutCaret(ast, file, preferred, done) {
 
 module.exports = noBlockquoteWithoutCaret;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],30:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],30:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3130,7 +3132,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
 
 module.exports = noConsecutiveBlankLines;
 
-},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],31:[function(require,module,exports){
+},{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],31:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3207,7 +3209,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
 
 module.exports = noDuplicateDefinitions;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],32:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],32:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3282,7 +3284,7 @@ function noDuplicateHeadings(ast, file, preferred, done) {
 
 module.exports = noDuplicateHeadings;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],33:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],33:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3365,7 +3367,7 @@ function noEmphasisAsHeading(ast, file, preferred, done) {
 
 module.exports = noEmphasisAsHeading;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],34:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3676,7 +3678,7 @@ function noHeadingContentIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingContentIndent;
 
-},{"mdast-util-heading-style":62,"mdast-util-position":63,"unist-util-visit":65,"plur":67}],40:[function(require,module,exports){
+},{"mdast-util-heading-style":61,"mdast-util-position":62,"plur":65,"unist-util-visit":66}],40:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3779,7 +3781,7 @@ function noHeadingIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingIndent;
 
-},{"mdast-util-position":63,"unist-util-visit":65,"plur":67}],41:[function(require,module,exports){
+},{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],41:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3852,7 +3854,7 @@ function noHeadingPunctuation(ast, file, preferred, done) {
 
 module.exports = noHeadingPunctuation;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],42:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],42:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3899,7 +3901,7 @@ function html(ast, file, preferred, done) {
 
 module.exports = html;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],43:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],43:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -3969,7 +3971,7 @@ function noInlinePadding(ast, file, preferred, done) {
 
 module.exports = noInlinePadding;
 
-},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":65}],44:[function(require,module,exports){
+},{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],44:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4033,7 +4035,7 @@ function noLiteralURLs(ast, file, preferred, done) {
 
 module.exports = noLiteralURLs;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],45:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],45:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4116,7 +4118,7 @@ function noMissingBlankLines(ast, file, preferred, done) {
 
 module.exports = noMissingBlankLines;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],46:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],46:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4178,7 +4180,7 @@ function noMultipleToplevelHeadings(ast, file, preferred, done) {
 
 module.exports = noMultipleToplevelHeadings;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],47:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],47:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4280,7 +4282,7 @@ function noShellDollars(ast, file, preferred, done) {
 
 module.exports = noShellDollars;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],48:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],48:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4336,7 +4338,7 @@ function noShortcutReferenceImage(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceImage;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],49:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],49:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4392,7 +4394,7 @@ function noShortcutReferenceLink(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceLink;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],50:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],50:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4454,7 +4456,7 @@ function noTableIndentation(ast, file, preferred, done) {
 
 module.exports = noTableIndentation;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],51:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],51:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4622,7 +4624,7 @@ function orderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerStyle;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],53:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],53:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4780,7 +4782,7 @@ function orderedListMarkerValue(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerValue;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],54:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],54:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4879,7 +4881,7 @@ function ruleStyle(ast, file, preferred, done) {
 
 module.exports = ruleStyle;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],55:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],55:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4963,7 +4965,7 @@ function strongMarker(ast, file, preferred, done) {
 
 module.exports = strongMarker;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],56:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],56:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5141,7 +5143,7 @@ function tableCellPadding(ast, file, preferred, done) {
 
 module.exports = tableCellPadding;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],57:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],57:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5243,7 +5245,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
 
 module.exports = tablePipeAlignment;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],58:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],58:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5320,7 +5322,7 @@ function tablePipes(ast, file, preferred, done) {
 
 module.exports = tablePipes;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],59:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],59:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -5443,54 +5445,15 @@ function unorderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = unorderedListMarkerStyle;
 
-},{"mdast-util-position":63,"unist-util-visit":65}],60:[function(require,module,exports){
+},{"mdast-util-position":62,"unist-util-visit":66}],60:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module mdast-message-sort
- * @fileoverview mdast plug-in to sort messages by line/column.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:range
+ * @fileoverview Patch index-based range on mdast nodes.
  */
 
-'use strict';
-
-/**
- * Sort all `file`s messages by line/column.
- *
- * @private
- * @param {Node} ast - Root node.
- * @param {File} file - Virtual file.
- */
-function transformer(ast, file) {
-    file.messages.sort(function (a, b) {
-        return a.line === undefined || a.line === null ?
-            -1 :
-            b.line === undefined || b.line === null ?
-                1 :
-                a.line - b.line || a.column - b.column;
-    });
-}
-
-/**
- * Return `transformer`.
- *
- * @example
- *   mdast.use(attacher).process(doc, function (err, res, file) {
- *     console.log(file.messages)
- *   });
- *
- * @return {Function} - See `transformer`.
- */
-function attacher() {
-    return transformer;
-}
-
-/*
- * Expose.
- */
-
-module.exports = attacher;
-
-},{}],61:[function(require,module,exports){
 'use strict';
 
 /*
@@ -5502,7 +5465,7 @@ var visit = require('unist-util-visit');
 /**
  * Calculate offsets for `lines`.
  *
- * @param {Array.<string>} lines
+ * @param {Array.<string>} lines - Lines to compile.
  * @return {Array.<number>}
  */
 function toOffsets(lines) {
@@ -5521,7 +5484,7 @@ function toOffsets(lines) {
 /**
  * Add an offset based on `offsets` to `position`.
  *
- * @param {Object} position
+ * @param {Object} position - Position.
  */
 function addRange(position, fn) {
     position.offset = fn(position);
@@ -5597,10 +5560,10 @@ function offsetToPositionFactory(offsets) {
 }
 
 /**
- * Add ranges for `doc` to `ast`.
+ * Add ranges for `ast`.
  *
- * @param {Node} ast
- * @param {File} file
+ * @param {Node} ast - Context to patch.
+ * @param {VFile} file - Virtual file.
  */
 function transformer(ast, file) {
     var contents = String(file).split('\n');
@@ -5660,12 +5623,12 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"unist-util-visit":65}],62:[function(require,module,exports){
+},{"unist-util-visit":66}],61:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
- * @module mdast-util-heading-style
- * @fileoverview Utility to get the style of a heading.
+ * @module mdast:util:heading-style
+ * @fileoverview Utility to get the style of an mdast heading.
  */
 
 'use strict';
@@ -5750,11 +5713,11 @@ function style(node, relative) {
 
 module.exports = style;
 
-},{}],63:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
- * @module mdast-util-position
+ * @module mdast:util:position
  * @fileoverview Utility to get either the starting or the
  *   ending position of a node, and if its generated or not.
  */
@@ -5854,11 +5817,11 @@ position.generated = generated;
 
 module.exports = position;
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
- * @module mdast-util-to-string
+ * @module mdast:util:to-string
  * @fileoverview Utility to get the text value of a node.
  */
 
@@ -5897,12 +5860,389 @@ function toString(node) {
 
 module.exports = toString;
 
-},{}],65:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
+'use strict';
+
+/*
+ * Dependencies.
+ */
+
+var visit = require('unist-util-visit');
+
+/*
+ * Methods.
+ */
+
+var splice = [].splice;
+
+/*
+ * Expression for parsing parameters.
+ */
+
+var PARAMETERS = new RegExp(
+    '\\s*' +
+    '(' +
+        '[-a-z09_]+' +
+    ')' +
+    '(?:' +
+        '=' +
+        '(?:' +
+            '"' +
+            '(' +
+                '(?:' +
+                    '\\\\[\\s\\S]' +
+                    '|' +
+                    '[^"]' +
+                ')+' +
+            ')' +
+            '"' +
+            '|' +
+            '\'' +
+            '(' +
+                '(?:' +
+                    '\\\\[\\s\\S]' +
+                    '|' +
+                    '[^\']' +
+                ')+' +
+            ')' +
+            '\'' +
+            '|' +
+            '(' +
+                '(?:' +
+                    '\\\\[\\s\\S]' +
+                    '|' +
+                    '[^"\'\\s]' +
+                ')+' +
+            ')' +
+        ')' +
+    ')?' +
+    '\\s*',
+    'gi'
+);
+
+/**
+ * Create an expression which matches a marker.
+ *
+ * @param {string} name - Plug-in name.
+ * @return {RegExp}
+ */
+function marker(name) {
+    return new RegExp(
+        '(' +
+            '\\s*' +
+            '<!--' +
+            '\\s*' +
+            '(' +
+                name +
+            ')' +
+            '\\s*' +
+            '(' +
+                'start' +
+                '|' +
+                'end' +
+            ')?' +
+            '\\s*' +
+            '(' +
+                '[\\s\\S]*?' +
+            ')' +
+            '\\s*' +
+            '-->' +
+            '\\s*' +
+        ')'
+    );
+}
+
+/**
+ * Parse `value` into an object.
+ *
+ * @param {string} value - HTML comment.
+ * @return {Object}
+ */
+function parameters(value) {
+    var attributes = {};
+
+    value.replace(PARAMETERS, function ($0, $1, $2, $3, $4) {
+        var result = $2 || $3 || $4 || '';
+
+        if (result === 'true' || result === '') {
+            result = true;
+        } else if (result === 'false') {
+            result = false;
+        } else if (!isNaN(result)) {
+            result = Number(result);
+        }
+
+        attributes[$1] = result;
+
+        return '';
+    });
+
+    return attributes;
+}
+
+/**
+ * Factory to test if `node` matches `settings`.
+ *
+ * @param {Object} settings - Configuration.
+ * @param {Function} callback - Invoked iwht a matching
+ *   HTML node.
+ * @return {Function}
+ */
+function testFactory(settings, callback) {
+    var name = settings.name;
+    var expression = marker(name);
+
+    /**
+     * Test if `node` matches the bound settings.
+     *
+     * @param {MDASTNode} node - Node to check.
+     * @param {Parser|Compiler} [context] - Context class.
+     * @return {Object?}
+     */
+    function test(node, context) {
+        var value = node.value;
+        var match;
+        var result;
+
+        if (node.type !== 'html') {
+            return null;
+        }
+
+        match = value.match(expression);
+
+        if (
+            !match ||
+            match[1].length !== value.length ||
+            match[2] !== settings.name
+        ) {
+            return null;
+        }
+
+        result = {
+            'type': match[3] || 'marker',
+            'attributes': match[4] || '',
+            'parameters': parameters(match[4] || ''),
+            'node': node
+        };
+
+        if (callback) {
+            callback(result, context);
+        }
+
+        return result;
+    }
+
+    return test;
+}
+
+/**
+ * Parse factory.
+ *
+ * @param {Function} tokenize - Previous parser.
+ * @param {Object} settings - Configuration.
+ */
+function parse(tokenize, settings) {
+    var callback = settings.onparse;
+    var test = testFactory(settings, function (result, context) {
+        if (result.type === 'marker') {
+            callback(result, context);
+        }
+    });
+
+    /**
+     * Parse HTML.
+     *
+     * @return {Node}
+     */
+    return function () {
+        var node = tokenize.apply(this, arguments);
+
+        test(node, this);
+
+        return node;
+    };
+}
+
+/**
+ * Stringify factory.
+ *
+ * @param {Function} compile - Previous compiler.
+ * @param {Object} settings - Configuration.
+ */
+function stringify(compile, settings) {
+    var callback = settings.onstringify;
+    var test = testFactory(settings, function (result, context) {
+        if (result.type === 'marker') {
+            callback(result, context);
+        }
+    });
+
+    /**
+     * Stringify HTML.
+     *
+     * @param {MDASTHTMLNode} node - HTML node.
+     * @return {string}
+     */
+    return function (node) {
+        test(node, this);
+
+        return compile.apply(this, arguments);
+    };
+}
+
+/**
+ * Run factory.
+ *
+ * @param {Object} settings - Configuration.
+ */
+function run(settings) {
+    var callback = settings.onrun;
+    var test = testFactory(settings);
+    var nodes = [];
+    var start = null;
+    var scope = null;
+    var level = 0;
+    var position;
+
+    /**
+     * Gather one dimensional zones.
+     *
+     * Passed intto `visit`.
+     *
+     * @param {MDASTNode} node - node to check.
+     * @param {number} index - Position of `node` in
+     *   `parent`.
+     * @param {MDASTNode} parent - Parent of `node`.
+     */
+    function gather(node, index, parent) {
+        var result = test(node);
+        var type = result && result.type;
+
+        if (scope && parent === scope) {
+            if (type === 'start') {
+                level++;
+            }
+
+            if (type === 'end') {
+                level--;
+            }
+
+            if (type === 'end' && level === 0) {
+                nodes = callback(start, nodes, result, {
+                    'start': index - nodes.length - 1,
+                    'end': index,
+                    'parent': scope
+                });
+
+                if (nodes) {
+                    splice.apply(
+                        scope.children, [position, index + 1].concat(nodes)
+                    );
+                }
+
+                start = null;
+                scope = null;
+                position = null;
+                nodes = [];
+            } else {
+                nodes.push(node);
+            }
+        }
+
+        if (!scope && type === 'start') {
+            level = 1;
+            position = index;
+            start = result;
+            scope = parent;
+        }
+    }
+
+    /**
+     * Modify AST.
+     *
+     * @param {MDASTNode} node - Root node.
+     */
+    return function (node) {
+        visit(node, gather);
+    };
+}
+
+/**
+ * Modify mdast to invoke callbacks when HTML commnts are
+ * found.
+ *
+ * @param {MDAST} mdast - Instance.
+ * @param {Object?} [options] - Configuration.
+ * @return {Function?}
+ */
+function attacher(mdast, options) {
+    var blockTokenizers = mdast.Parser.prototype.blockTokenizers;
+    var inlineTokenizers = mdast.Parser.prototype.inlineTokenizers;
+    var stringifiers = mdast.Compiler.prototype;
+
+    if (options.onparse) {
+        blockTokenizers.html = parse(blockTokenizers.html, options);
+        inlineTokenizers.tag = parse(inlineTokenizers.tag, options);
+    }
+
+    if (options.onstringify) {
+        stringifiers.html = stringify(stringifiers.html, options);
+    }
+
+    if (options.onrun) {
+        return run(options);
+    }
+
+    return null;
+}
+
+/**
+ * Wrap `zone` to be passed into `mdast.use()`.
+ *
+ * Reason for this is that **mdast** only allows a single
+ * function to be `use`d once.
+ *
+ * @param {Object} options - Plugin configuration.
+ * @return {Function}
+ */
+function wrapper(options) {
+    if (!options || !options.name) {
+        throw new Error('Missing `name` in `options`');
+    }
+
+    return function (mdast) {
+        return attacher(mdast, options);
+    };
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = wrapper;
+
+},{"unist-util-visit":66}],65:[function(require,module,exports){
+'use strict';
+module.exports = function (str, plural, count) {
+	if (typeof plural === 'number') {
+		count = plural;
+
+		plural = (str.replace(/(?:s|x|z|ch|sh)$/i, '$&e').replace(/y$/i, 'ie') + 's')
+			.replace(/i?e?s$/i, function (m) {
+				var isTailLowerCase = str.slice(-1) === str.slice(-1).toLowerCase();
+				return isTailLowerCase ? m.toLowerCase() : m.toUpperCase();
+			});
+	}
+
+	return count === 1 ? str : plural;
+};
+
+},{}],66:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
- * @module unist-util-visit
- * @fileoverview Utility to recursively walk over mdast nodes.
+ * @module unist:util:visit
+ * @fileoverview Utility to recursively walk over unist nodes.
  */
 
 'use strict';
@@ -6012,380 +6352,56 @@ function visit(tree, type, callback, reverse) {
 
 module.exports = visit;
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module vfile:sort
+ * @fileoverview Sort VFile messages by line/column.
+ */
+
 'use strict';
 
-/*
- * Dependencies.
- */
-
-var visit = require('unist-util-visit');
-
-/*
- * Methods.
- */
-
-var splice = [].splice;
-
-/*
- * Expression for parsing parameters.
- */
-
-var PARAMETERS = new RegExp(
-    '\\s*' +
-    '(' +
-        '[-a-z09_]+' +
-    ')' +
-    '(?:' +
-        '=' +
-        '(?:' +
-            '"' +
-            '(' +
-                '(?:' +
-                    '\\\\[\\s\\S]' +
-                    '|' +
-                    '[^"]' +
-                ')+' +
-            ')' +
-            '"' +
-            '|' +
-            '\'' +
-            '(' +
-                '(?:' +
-                    '\\\\[\\s\\S]' +
-                    '|' +
-                    '[^\']' +
-                ')+' +
-            ')' +
-            '\'' +
-            '|' +
-            '(' +
-                '(?:' +
-                    '\\\\[\\s\\S]' +
-                    '|' +
-                    '[^"\'\\s]' +
-                ')+' +
-            ')' +
-        ')' +
-    ')?' +
-    '\\s*',
-    'gi'
-);
-
 /**
- * Create an expression which matches a marker.
+ * Compare a single property.
  *
- * @param {string} name
- * @return {RegExp}
+ * @param {VFileMessage} a - Original.
+ * @param {VFileMessage} b - Comparison.
+ * @param {string} property - Property to compare.
+ * @return {number}
  */
-function marker(name) {
-    return new RegExp(
-        '(' +
-            '\\s*' +
-            '<!--' +
-            '\\s*' +
-            '(' +
-                name +
-            ')' +
-            '\\s*' +
-            '(' +
-                'start' +
-                '|' +
-                'end' +
-            ')?' +
-            '\\s*' +
-            '(' +
-                '[\\s\\S]*?' +
-            ')' +
-            '\\s*' +
-            '-->' +
-            '\\s*' +
-        ')'
-    );
+function check(a, b, property) {
+    return (a[property] || 0) - (b[property] || 0);
 }
 
 /**
- * Parse `value` into an object.
+ * Comparator.
  *
- * @param {string} value
- * @return {Object}
+ * @param {VFileMessage} a - Original.
+ * @param {VFileMessage} b - Comparison.
+ * @return {number}
  */
-function parameters(value) {
-    var attributes = {};
-
-    value.replace(PARAMETERS, function ($0, $1, $2, $3, $4) {
-        var result = $2 || $3 || $4 || '';
-
-        if (result === 'true' || result === '') {
-            result = true;
-        } else if (result === 'false') {
-            result = false;
-        } else if (!isNaN(result)) {
-            result = Number(result);
-        }
-
-        attributes[$1] = result;
-
-        return '';
-    });
-
-    return attributes;
+function comparator(a, b) {
+    return check(a, b, 'line') || check(a, b, 'column') || -1;
 }
 
 /**
- * Factory to test if `node` matches `settings`.
+ * Sort all `file`s messages by line/column.
  *
- * @param {Object} settings
- * @param {function(Object)} callback
- * @return {Function}
+ * @param {VFile} file - Virtual file.
+ * @return {VFile} - `file`.
  */
-function testFactory(settings, callback) {
-    var name = settings.name;
-    var expression = marker(name);
-
-    /**
-     * Test if `node` matches the bound settings.
-     *
-     * @param {Node} node
-     * @param {Parser|Compiler} [context]
-     * @return {Object?}
-     */
-    function test(node, context) {
-        var value = node.value;
-        var match;
-        var result;
-
-        if (node.type !== 'html') {
-            return null;
-        }
-
-        match = value.match(expression);
-
-        if (
-            !match ||
-            match[1].length !== value.length ||
-            match[2] !== settings.name
-        ) {
-            return null;
-        }
-
-        result = {
-            'type': match[3] || 'marker',
-            'attributes': match[4] || '',
-            'parameters': parameters(match[4] || ''),
-            'node': node
-        };
-
-        if (callback) {
-            callback(result, context);
-        }
-
-        return result;
-    }
-
-    return test;
-}
-
-/**
- * Parse factory.
- *
- * @param {Function} tokenize - Previous parser.
- * @param {Object} settings
- */
-function parse(tokenize, settings) {
-    var callback = settings.onparse;
-    var test = testFactory(settings, function (result, context) {
-        if (result.type === 'marker') {
-            callback(result, context);
-        }
-    });
-
-    /**
-     * Parse HTML.
-     *
-     * @return {Node}
-     */
-    return function () {
-        var node = tokenize.apply(this, arguments);
-
-        test(node, this);
-
-        return node;
-    };
-}
-
-/**
- * Stringify factory.
- *
- * @param {Function} compile - Previous compiler.
- * @param {Object} settings
- */
-function stringify(compile, settings) {
-    var callback = settings.onstringify;
-    var test = testFactory(settings, function (result, context) {
-        if (result.type === 'marker') {
-            callback(result, context);
-        }
-    });
-
-    /**
-     * Stringify HTML.
-     *
-     * @param {Object} node
-     * @return {string}
-     */
-    return function (node) {
-        test(node, this);
-
-        return compile.apply(this, arguments);
-    };
-}
-
-/**
- * Run factory.
- *
- * @param {Object} settings
- */
-function run(settings) {
-    var callback = settings.onrun;
-    var test = testFactory(settings);
-    var nodes = [];
-    var start = null;
-    var scope = null;
-    var level = 0;
-    var position;
-
-    /**
-     * Gather one dimensional zones.
-     *
-     * Passed intto `visit`.
-     *
-     * @param {Node} node
-     * @param {number} index
-     * @param {Node} parent
-     */
-    function gather(node, index, parent) {
-        var result = test(node);
-        var type = result && result.type;
-
-        if (scope && parent === scope) {
-            if (type === 'start') {
-                level++;
-            }
-
-            if (type === 'end') {
-                level--;
-            }
-
-            if (type === 'end' && level === 0) {
-                nodes = callback(start, nodes, result, {
-                    'start': index - nodes.length - 1,
-                    'end': index,
-                    'parent': scope
-                });
-
-                if (nodes) {
-                    splice.apply(
-                        scope.children, [position, index + 1].concat(nodes)
-                    );
-                }
-
-                start = null;
-                scope = null;
-                position = null;
-                nodes = [];
-            } else {
-                nodes.push(node);
-            }
-        }
-
-        if (!scope && type === 'start') {
-            level = 1;
-            position = index;
-            start = result;
-            scope = parent;
-        }
-    }
-
-    /**
-     * Modify AST.
-     *
-     * @param {Object} node
-     */
-    return function (node) {
-        visit(node, gather);
-    };
-}
-
-/**
- * Modify mdast to invoke callbacks when HTML commnts are
- * found.
- *
- * @param {MDAST} mdast
- * @param {Object?} options
- * @return {Function?}
- */
-function attacher(mdast, options) {
-    var blockTokenizers = mdast.Parser.prototype.blockTokenizers;
-    var inlineTokenizers = mdast.Parser.prototype.inlineTokenizers;
-    var stringifiers = mdast.Compiler.prototype;
-
-    if (options.onparse) {
-        blockTokenizers.html = parse(blockTokenizers.html, options);
-        inlineTokenizers.tag = parse(inlineTokenizers.tag, options);
-    }
-
-    if (options.onstringify) {
-        stringifiers.html = stringify(stringifiers.html, options);
-    }
-
-    if (options.onrun) {
-        return run(options);
-    }
-
-    return null;
-}
-
-/**
- * Wrap `zone` to be passed into `mdast.use()`.
- *
- * Reason for this is that **mdast** only allows a single
- * function to be `use`d once.
- *
- * @param {Object} options
- * @return {Function}
- */
-function wrapper(options) {
-    if (!options || !options.name) {
-        throw new Error('Missing `name` in `options`');
-    }
-
-    return function (mdast) {
-        return attacher(mdast, options);
-    };
+function sort(file) {
+    file.messages.sort(comparator);
+    return file;
 }
 
 /*
  * Expose.
  */
 
-module.exports = wrapper;
-
-},{"unist-util-visit":65}],67:[function(require,module,exports){
-'use strict';
-module.exports = function (str, plural, count) {
-	if (typeof plural === 'number') {
-		count = plural;
-
-		plural = (str.replace(/(?:s|x|z|ch|sh)$/i, '$&e').replace(/y$/i, 'ie') + 's')
-			.replace(/i?e?s$/i, function (m) {
-				var isTailLowerCase = str.slice(-1) === str.slice(-1).toLowerCase();
-				return isTailLowerCase ? m.toLowerCase() : m.toUpperCase();
-			});
-	}
-
-	return count === 1 ? str : plural;
-};
+module.exports = sort;
 
 },{}]},{},[1])(1)
 });

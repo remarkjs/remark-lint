@@ -895,27 +895,27 @@ module.exports = checkboxContentIndent;
  *   style, and will warn when a subsequent code-block uses a different
  *   style.
  * @example
- *     <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
- *        Hello
+ *   <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
+ *      Hello
  *
- *     ...
+ *   ...
  *
- *        World
+ *      World
  *
- *     <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
- *     ```
- *     Hello
- *     ```
- *     ...
- *     ```bar
- *     World
- *     ```
+ *   <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
+ *   ```
+ *   Hello
+ *   ```
+ *   ...
+ *   ```bar
+ *   World
+ *   ```
  *
- *     <!-- Always invalid -->
- *         Hello
- *     ...
- *     ```
- *     World
+ *   <!-- Always invalid -->
+ *       Hello
+ *   ...
+ *   ```
+ *   World
  *     ```
  */
 
@@ -1275,28 +1275,28 @@ module.exports = emphasisMarker;
  *   which signifies whether or not to warn for fenced code-blocks without
  *   languge flags.
  * @example
- *     <!-- Valid: -->
- *     ```hello
- *     world();
- *     ```
+ *   <!-- Valid: -->
+ *   ```hello
+ *   world();
+ *   ```
  *
- *     <!-- Valid: -->
- *        Hello
+ *   <!-- Valid: -->
+ *      Hello
  *
- *     <!-- Invalid: -->
- *     ```
- *     world();
- *     ```
+ *   <!-- Invalid: -->
+ *   ```
+ *   world();
+ *   ```
  *
- *     <!-- Valid when given `{allowEmpty: true}`: -->
- *     ```
- *     world();
- *     ```
+ *   <!-- Valid when given `{allowEmpty: true}`: -->
+ *   ```
+ *   world();
+ *   ```
  *
- *     <!-- Invalid when given `["world"]`: -->
- *     ```hello
- *     world();
- *     ```
+ *   <!-- Invalid when given `["world"]`: -->
+ *   ```hello
+ *   world();
+ *   ```
  */
 
 'use strict';
@@ -1379,32 +1379,32 @@ module.exports = fencedCodeFlag;
  *   marker style, and will warn when a subsequent fenced code uses a
  *   different style.
  * @example
- *     <!-- Valid by default and `` '`' ``: -->
- *     ```foo
- *     bar();
- *     ```
+ *   <!-- Valid by default and `` '`' ``: -->
+ *   ```foo
+ *   bar();
+ *   ```
  *
- *     ```
- *     baz();
- *     ```
+ *   ```
+ *   baz();
+ *   ```
  *
- *     <!-- Valid by default and `'~'`: -->
- *     ~~~foo
- *     bar();
- *     ~~~
+ *   <!-- Valid by default and `'~'`: -->
+ *   ~~~foo
+ *   bar();
+ *   ~~~
  *
- *     ~~~
- *     baz();
- *     ~~~
+ *   ~~~
+ *   baz();
+ *   ~~~
  *
- *     <!-- Always invalid: -->
- *     ~~~foo
- *     bar();
- *     ~~~
+ *   <!-- Always invalid: -->
+ *   ~~~foo
+ *   bar();
+ *   ~~~
  *
- *     ```
- *     baz();
- *     ```
+ *   ```
+ *   baz();
+ *   ```
  */
 
 'use strict';

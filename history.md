@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+1.0.0 / 2015-08-17
+==================
+
+*   Update dependencies ([4936d35](https://github.com/wooorm/mdast-lint/commit/4936d35))
+
 0.4.5 / 2015-08-08
 ==================
 

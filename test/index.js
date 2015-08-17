@@ -1,7 +1,8 @@
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Test
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:lint:test
  * @fileoverview Tests for mdast-lint.
  */
 

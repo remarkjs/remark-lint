@@ -1,4 +1,12 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mdastLint = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:lint
+ * @fileoverview Lint markdown with mdast.
+ */
+
 'use strict';
 
 module.exports = require('./lib');
@@ -6,8 +14,9 @@ module.exports = require('./lib');
 },{"./lib":3}],2:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Filter
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:lint:filter
  * @fileoverview mdast plug-in used internally by
  *   mdast-lint to filter ruleId’s by enabled and disabled
  *   ranges, or by gaps.
@@ -143,8 +152,9 @@ module.exports = attacher;
 },{"mdast-util-position":62,"unist-util-visit":66}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Lint
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:lint:library
  * @fileoverview mdast plug-in providing warnings when
  *   detecting style violations.
  */
@@ -475,7 +485,8 @@ module.exports = lint;
 },{"./filter":2,"./rules":20,"fs":undefined,"mdast-range":60,"mdast-zone":64,"path":undefined,"vfile-sort":67}],4:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module blockquote-indentation
  * @fileoverview
  *   Warn when blockquotes are either indented too much or too little.
@@ -585,7 +596,8 @@ module.exports = blockquoteIndentation;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"plur":65,"unist-util-visit":66}],5:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module checkbox-character-style
  * @fileoverview
  *   Warn when list item checkboxes violate a given style.
@@ -770,7 +782,8 @@ module.exports = checkboxCharacterStyle;
 },{"mdast-util-position":62,"unist-util-visit":66}],6:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module checkbox-content-indent
  * @fileoverview
  *   Warn when list item checkboxes are followed by too much white-space.
@@ -869,7 +882,8 @@ module.exports = checkboxContentIndent;
 },{"mdast-util-position":62,"unist-util-visit":66}],7:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module code-block-style
  * @fileoverview
  *   Warn when code-blocks do not adhere to a given style.
@@ -1004,7 +1018,8 @@ module.exports = codeBlockStyle;
 },{"mdast-util-position":62,"unist-util-visit":66}],8:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module definition-case
  * @fileoverview
  *   Warn when definition labels are not lower-case.
@@ -1080,7 +1095,8 @@ module.exports = definitionCase;
 },{"mdast-util-position":62,"unist-util-visit":66}],9:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module definition-spacing
  * @fileoverview
  *   Warn when consecutive white space is used in a definition.
@@ -1156,7 +1172,8 @@ module.exports = definitionSpacing;
 },{"mdast-util-position":62,"unist-util-visit":66}],10:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module emphasis-marker
  * @fileoverview
  *   Warn for violating emphasis markers.
@@ -1242,7 +1259,8 @@ module.exports = emphasisMarker;
 },{"mdast-util-position":62,"unist-util-visit":66}],11:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module fenced-code-flag
  * @fileoverview
  *   Warn when fenced code blocks occur without language flag.
@@ -1349,7 +1367,8 @@ module.exports = fencedCodeFlag;
 },{"mdast-util-position":62,"unist-util-visit":66}],12:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module fenced-code-marker
  * @fileoverview
  *   Warn for violating fenced code markers.
@@ -1465,7 +1484,8 @@ module.exports = fencedCodeMarker;
 },{"mdast-util-position":62,"unist-util-visit":66}],13:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module file-extension
  * @fileoverview
  *   Warn when the document’s extension differs from the given preferred
@@ -1512,7 +1532,8 @@ module.exports = fileExtension;
 },{}],14:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module final-definition
  * @fileoverview
  *   Warn when definitions are not placed at the end of the file.
@@ -1589,7 +1610,8 @@ module.exports = finalDefinition;
 },{"mdast-util-position":62,"unist-util-visit":66}],15:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module final-newline
  * @fileoverview
  *   Warn when a newline at the end of a file is missing.
@@ -1629,7 +1651,8 @@ module.exports = finalNewline;
 },{}],16:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module first-heading-level
  * @fileoverview
  *   Warn when the first heading has a level other than `1`.
@@ -1683,7 +1706,8 @@ module.exports = firstHeadingLevel;
 },{"mdast-util-position":62,"unist-util-visit":66}],17:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module hard-break-spaces
  * @fileoverview
  *   Warn when too many spaces are used to create a hard break.
@@ -1745,7 +1769,8 @@ module.exports = hardBreakSpaces;
 },{"mdast-util-position":62,"unist-util-visit":66}],18:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module heading-increment
  * @fileoverview
  *   Warn when headings increment with more than 1 level at a time.
@@ -1810,7 +1835,8 @@ module.exports = headingIncrement;
 },{"mdast-util-position":62,"unist-util-visit":66}],19:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module heading-style
  * @fileoverview
  *   Warn when a heading does not conform to a given style.
@@ -1910,7 +1936,8 @@ module.exports = headingStyle;
 },{"mdast-util-heading-style":61,"mdast-util-position":62,"unist-util-visit":66}],20:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module Rules
  * @fileoverview Map of rule id’s to rules.
  */
@@ -1982,7 +2009,8 @@ module.exports = {
 },{"./blockquote-indentation":4,"./checkbox-character-style":5,"./checkbox-content-indent":6,"./code-block-style":7,"./definition-case":8,"./definition-spacing":9,"./emphasis-marker":10,"./fenced-code-flag":11,"./fenced-code-marker":12,"./file-extension":13,"./final-definition":14,"./final-newline":15,"./first-heading-level":16,"./hard-break-spaces":17,"./heading-increment":18,"./heading-style":19,"./link-title-style":21,"./list-item-bullet-indent":22,"./list-item-content-indent":23,"./list-item-indent":24,"./list-item-spacing":25,"./maximum-heading-length":26,"./maximum-line-length":27,"./no-auto-link-without-protocol":28,"./no-blockquote-without-caret":29,"./no-consecutive-blank-lines":30,"./no-duplicate-definitions":31,"./no-duplicate-headings":32,"./no-emphasis-as-heading":33,"./no-file-name-articles":34,"./no-file-name-consecutive-dashes":35,"./no-file-name-irregular-characters":36,"./no-file-name-mixed-case":37,"./no-file-name-outer-dashes":38,"./no-heading-content-indent":39,"./no-heading-indent":40,"./no-heading-punctuation":41,"./no-html":42,"./no-inline-padding":43,"./no-literal-urls":44,"./no-missing-blank-lines":45,"./no-multiple-toplevel-headings":46,"./no-shell-dollars":47,"./no-shortcut-reference-image":48,"./no-shortcut-reference-link":49,"./no-table-indentation":50,"./no-tabs":51,"./ordered-list-marker-style":52,"./ordered-list-marker-value":53,"./rule-style":54,"./strong-marker":55,"./table-cell-padding":56,"./table-pipe-alignment":57,"./table-pipes":58,"./unordered-list-marker-style":59}],21:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module link-title-style
  * @fileoverview
  *   Warn when link and definition titles occur with incorrect quotes.
@@ -2122,7 +2150,8 @@ module.exports = linkTitleStyle;
 },{"mdast-util-position":62,"unist-util-visit":66}],22:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module list-item-bullet-indent
  * @fileoverview
  *   Warn when list item bullets are indented.
@@ -2201,7 +2230,8 @@ module.exports = listItemBulletIndent;
 },{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],23:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module list-item-content-indent
  * @fileoverview
  *   Warn when the content of a list item has mixed indentation.
@@ -2315,7 +2345,8 @@ module.exports = listItemContentIndent;
 },{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],24:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module list-item-indent
  * @fileoverview
  *   Warn when the spacing between a list item’s bullet and its content
@@ -2465,7 +2496,8 @@ module.exports = listItemIndent;
 },{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],25:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module list-item-spacing
  * @fileoverview
  *   Warn when list looseness is incorrect, such as being tight
@@ -2585,7 +2617,8 @@ module.exports = listItemSpacing;
 },{"mdast-util-position":62,"unist-util-visit":66}],26:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module maximum-heading-length
  * @fileoverview
  *   Warn when headings are too long.
@@ -2646,7 +2679,8 @@ module.exports = maximumHeadingLength;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],27:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module maximum-line-length
  * @fileoverview
  *   Warn when lines are too long.
@@ -2833,7 +2867,8 @@ module.exports = maximumLineLength;
 },{"mdast-util-position":62,"unist-util-visit":66}],28:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-auto-link-without-protocol
  * @fileoverview
  *   Warn for angle-bracketed links without protocol.
@@ -2919,7 +2954,8 @@ module.exports = noAutoLinkWithoutProtocol;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],29:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-blockquote-without-caret
  * @fileoverview
  *   Warn when blank lines without carets are found in a blockquote.
@@ -3005,7 +3041,8 @@ module.exports = noBlockquoteWithoutCaret;
 },{"mdast-util-position":62,"unist-util-visit":66}],30:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-consecutive-blank-lines
  * @fileoverview
  *   Warn for too many consecutive blank lines.  Knows about the extra line
@@ -3135,7 +3172,8 @@ module.exports = noConsecutiveBlankLines;
 },{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],31:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-duplicate-definitions
  * @fileoverview
  *   Warn when duplicate definitions are found.
@@ -3212,7 +3250,8 @@ module.exports = noDuplicateDefinitions;
 },{"mdast-util-position":62,"unist-util-visit":66}],32:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-duplicate-headings
  * @fileoverview
  *   Warn when duplicate headings are found.
@@ -3287,7 +3326,8 @@ module.exports = noDuplicateHeadings;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],33:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-emphasis-as-heading
  * @fileoverview
  *   Warn when emphasis (including strong), instead of a heading, introduces
@@ -3370,7 +3410,8 @@ module.exports = noEmphasisAsHeading;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-file-name-articles
  * @fileoverview
  *   Warn when file name start with an article.
@@ -3408,7 +3449,8 @@ module.exports = noFileNameArticles;
 },{}],35:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-file-name-consecutive-dashes
  * @fileoverview
  *   Warn when file names contain consecutive dashes.
@@ -3444,7 +3486,8 @@ module.exports = noFileNameConsecutiveDashes;
 },{}],36:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-file-name-irregular-characters
  * @fileoverview
  *   Warn when file names contain irregular characters: characters other
@@ -3484,7 +3527,8 @@ module.exports = noFileNameIrregularCharacters;
 },{}],37:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-file-name-mixed-case
  * @fileoverview
  *   Warn when a file name uses mixed case: both upper- and lower case
@@ -3524,7 +3568,8 @@ module.exports = noFileNameMixedCase;
 },{}],38:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-file-name-outer-dashes
  * @fileoverview
  *   Warn when file names contain initial or final dashes.
@@ -3560,7 +3605,8 @@ module.exports = noFileNameOuterDashes;
 },{}],39:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-heading-content-indent
  * @fileoverview
  *   Warn when a heading’s content is indented.
@@ -3681,7 +3727,8 @@ module.exports = noHeadingContentIndent;
 },{"mdast-util-heading-style":61,"mdast-util-position":62,"plur":65,"unist-util-visit":66}],40:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-heading-indent
  * @fileoverview
  *   Warn when a heading is indented.
@@ -3784,7 +3831,8 @@ module.exports = noHeadingIndent;
 },{"mdast-util-position":62,"plur":65,"unist-util-visit":66}],41:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-heading-punctuation
  * @fileoverview
  *   Warn when a heading ends with a a group of characters.
@@ -3857,7 +3905,8 @@ module.exports = noHeadingPunctuation;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],42:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-html
  * @fileoverview
  *   Warn when HTML nodes are used.
@@ -3904,7 +3953,8 @@ module.exports = html;
 },{"mdast-util-position":62,"unist-util-visit":66}],43:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-inline-padding
  * @fileoverview
  *   Warn when inline nodes are padded with spaces between markers and
@@ -3974,7 +4024,8 @@ module.exports = noInlinePadding;
 },{"mdast-util-position":62,"mdast-util-to-string":63,"unist-util-visit":66}],44:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-literal-urls
  * @fileoverview
  *   Warn when URLs without angle-brackets are used.
@@ -4038,7 +4089,8 @@ module.exports = noLiteralURLs;
 },{"mdast-util-position":62,"unist-util-visit":66}],45:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-missing-blank-lines
  * @fileoverview
  *   Warn for missing blank lines before a block node.
@@ -4121,7 +4173,8 @@ module.exports = noMissingBlankLines;
 },{"mdast-util-position":62,"unist-util-visit":66}],46:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-multiple-toplevel-headings
  * @fileoverview
  *   Warn when multiple top-level headings are used.
@@ -4183,7 +4236,8 @@ module.exports = noMultipleToplevelHeadings;
 },{"mdast-util-position":62,"unist-util-visit":66}],47:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-shell-dollars
  * @fileoverview
  *   Warn when shell code is prefixed by dollar-characters.
@@ -4285,7 +4339,8 @@ module.exports = noShellDollars;
 },{"mdast-util-position":62,"unist-util-visit":66}],48:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-shortcut-reference-image
  * @fileoverview
  *   Warn when shortcut reference images are used.
@@ -4341,7 +4396,8 @@ module.exports = noShortcutReferenceImage;
 },{"mdast-util-position":62,"unist-util-visit":66}],49:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-shortcut-reference-link
  * @fileoverview
  *   Warn when shortcut reference links are used.
@@ -4397,7 +4453,8 @@ module.exports = noShortcutReferenceLink;
 },{"mdast-util-position":62,"unist-util-visit":66}],50:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-table-indentation
  * @fileoverview
  *   Warn when tables are indented.
@@ -4459,7 +4516,8 @@ module.exports = noTableIndentation;
 },{"mdast-util-position":62,"unist-util-visit":66}],51:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module no-tabs
  * @fileoverview
  *   Warn when hard-tabs instead of spaces
@@ -4509,7 +4567,8 @@ module.exports = noTabs;
 },{}],52:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module ordered-list-marker-style
  * @fileoverview
  *   Warn when the list-item marker style of ordered lists violate a given
@@ -4627,7 +4686,8 @@ module.exports = orderedListMarkerStyle;
 },{"mdast-util-position":62,"unist-util-visit":66}],53:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module ordered-list-marker-value
  * @fileoverview
  *   Warn when the list-item marker values of ordered lists violate a
@@ -4785,7 +4845,8 @@ module.exports = orderedListMarkerValue;
 },{"mdast-util-position":62,"unist-util-visit":66}],54:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module rule-style
  * @fileoverview
  *   Warn when the horizontal rules violate a given or detected style.
@@ -4884,7 +4945,8 @@ module.exports = ruleStyle;
 },{"mdast-util-position":62,"unist-util-visit":66}],55:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module blockquote-indentation
  * @fileoverview
  *   Warn for violating strong markers.
@@ -4968,7 +5030,8 @@ module.exports = strongMarker;
 },{"mdast-util-position":62,"unist-util-visit":66}],56:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module table-cell-padding
  * @fileoverview
  *   Warn when table cells are incorrectly padded.
@@ -5146,7 +5209,8 @@ module.exports = tableCellPadding;
 },{"mdast-util-position":62,"unist-util-visit":66}],57:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module table-pipe-alignment
  * @fileoverview
  *   Warn when table pipes are not aligned.
@@ -5248,7 +5312,8 @@ module.exports = tablePipeAlignment;
 },{"mdast-util-position":62,"unist-util-visit":66}],58:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module table-pipes
  * @fileoverview
  *   Warn when table rows are not fenced with pipes.
@@ -5325,7 +5390,8 @@ module.exports = tablePipes;
 },{"mdast-util-position":62,"unist-util-visit":66}],59:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
+ * @copyright 2015 Titus Wormer
+ * @license MIT
  * @module unordered-list-marker-style
  * @fileoverview
  *   Warn when the list-item marker style of unordered lists violate a given

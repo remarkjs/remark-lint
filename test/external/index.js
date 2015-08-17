@@ -1,7 +1,8 @@
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module External
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:lint:test:external
  * @fileoverview Map of example external rules.
  */
 

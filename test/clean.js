@@ -1,7 +1,8 @@
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer. All rights reserved.
- * @module Clean
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:lint:test:clean
  * @fileoverview mdast plug-in used to remove positional
  *   information from mdast’s syntax tree.
  * @todo Externalise into its own repository.

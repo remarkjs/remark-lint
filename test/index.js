@@ -309,6 +309,12 @@ describe('Comments', function () {
         });
     });
 
+    describe('Disable multiple rules at once', function () {
+        assertFile('comments-disable-multiple.md', [
+            'comments-disable-multiple.md:11:1-11:10: Do not use headings with similar content (5:1)'
+        ], null, {});
+    });
+
     describe('Inline comments', function () {
         assertFile('comments-inline.md', [
             'comments-inline.md:1:32-1:38: Do not use HTML in markdown',

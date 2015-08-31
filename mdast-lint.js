@@ -420,28 +420,18 @@ function lint(mdast, options) {
     }
 
     /**
-     * Handle a new-found marker.
+     * Handle a rule.
      *
+     * @param {VFile} file - Virtual file.
      * @param {Object} marker - Marker context.
-     * @param {Object} parser - Parser instance.
+     * @param {string} type - Type to toggle to.
+     * @param {*} ruleId - Rule to toggle.
      */
-    function onparse(marker, parser) {
-        var file = parser.file;
+    function toggle(file, marker, type, ruleId) {
         var scope = file.namespace('mdast-lint');
-        var attributes = marker.attributes.split(' ');
-        var type = attributes[0];
-        var ruleId = attributes[1];
         var markers;
         var currentState;
         var previousState;
-
-        store(file);
-
-        if (type !== 'disable' && type !== 'enable') {
-            file.fail('Unknown lint keyword `' + type + '`: use either `\'enable\'` or `\'disable\'`', marker.node);
-
-            return;
-        }
 
         if (!(ruleId in rules)) {
             file.fail('Unknown rule: cannot ' + type + ' `\'' + ruleId + '\'`', marker.node);
@@ -459,6 +449,33 @@ function lint(mdast, options) {
                 'state': currentState,
                 'position': marker.node.position.start
             });
+        }
+    }
+
+    /**
+     * Handle a new-found marker.
+     *
+     * @param {Object} marker - Marker context.
+     * @param {Object} parser - Parser instance.
+     */
+    function onparse(marker, parser) {
+        var file = parser.file;
+        var attributes = marker.attributes.split(' ');
+        var type = attributes[0];
+        var ids = attributes.slice(1);
+        var length = ids.length;
+        var index = -1;
+
+        if (type !== 'disable' && type !== 'enable') {
+            file.fail('Unknown lint keyword `' + type + '`: use either `\'enable\'` or `\'disable\'`', marker.node);
+
+            return;
+        }
+
+        store(file);
+
+        while (++index < length) {
+            toggle(file, marker, type, ids[index]);
         }
     }
 

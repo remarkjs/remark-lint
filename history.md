@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+1.1.0 / 2015-08-31
+==================
+
+*   Add en- and disabling multiple rules in one comment ([29976d0](https://github.com/wooorm/mdast-lint/commit/29976d0))
+*   Replace `vfile` patching of data with vfile-namespaces ([c1136a1](https://github.com/wooorm/mdast-lint/commit/c1136a1))
+
 1.0.0 / 2015-08-17
 ==================
 

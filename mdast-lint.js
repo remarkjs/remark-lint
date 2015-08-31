@@ -39,6 +39,7 @@ function transformer(ast, file) {
     var gaps = [];
     var offset = 0;
     var isGap = false;
+    var scope = file.namespace('mdast-lint').ranges;
 
     if (!file || !file.messages || !file.messages.length) {
         return;
@@ -89,7 +90,7 @@ function transformer(ast, file) {
     }
 
     file.messages = file.messages.filter(function (message) {
-        var ranges = file.lintRanges[message.ruleId];
+        var ranges = scope[message.ruleId];
         var index = ranges && ranges.length;
         var gapIndex = gaps.length;
         var length = -1;
@@ -210,12 +211,14 @@ function attachFactory(id, rule, options) {
          * @param {Function} next - Signal end.
          */
         function plugin(ast, file, next) {
+            var scope = file.namespace('mdast-lint');
+
             /*
              * Track new messages per file.
              */
 
-            if (file.lintIndex === undefined || file.lintIndex === null) {
-                file.lintIndex = file.messages.length;
+            if (scope.index === undefined || scope.index === null) {
+                scope.index = file.messages.length;
             }
 
             /**
@@ -226,10 +229,10 @@ function attachFactory(id, rule, options) {
             function done(err) {
                 var messages = file.messages;
 
-                while (file.lintIndex < messages.length) {
-                    messages[file.lintIndex].ruleId = id;
+                while (scope.index < messages.length) {
+                    messages[scope.index].ruleId = id;
 
-                    file.lintIndex++;
+                    scope.index++;
                 }
 
                 next(err);
@@ -359,7 +362,8 @@ function lint(mdast, options) {
      * @param {File} [file] - File (optional)
      */
     function getState(ruleId, file) {
-        var ranges = file && file.lintRanges && file.lintRanges[ruleId];
+        var scope = file && file.namespace('mdast-lint');
+        var ranges = scope && scope.ranges && scope.ranges[ruleId];
 
         if (ranges) {
             return ranges[ranges.length - 1].state;
@@ -380,7 +384,8 @@ function lint(mdast, options) {
      * @param {File} file - Virtual file.
      */
     function store(file) {
-        var ranges = file.lintRanges;
+        var scope = file.namespace('mdast-lint');
+        var ranges = scope.ranges;
         var ruleId;
 
         if (!ranges) {
@@ -396,7 +401,7 @@ function lint(mdast, options) {
                 }];
             }
 
-            file.lintRanges = ranges;
+            scope.ranges = ranges;
         }
     }
 
@@ -422,6 +427,7 @@ function lint(mdast, options) {
      */
     function onparse(marker, parser) {
         var file = parser.file;
+        var scope = file.namespace('mdast-lint');
         var attributes = marker.attributes.split(' ');
         var type = attributes[0];
         var ruleId = attributes[1];
@@ -443,7 +449,7 @@ function lint(mdast, options) {
             return;
         }
 
-        markers = file.lintRanges[ruleId];
+        markers = scope.ranges[ruleId];
 
         previousState = getState(ruleId, file);
         currentState = type === 'enable';

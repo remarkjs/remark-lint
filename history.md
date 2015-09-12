@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+1.1.1 / 2015-09-12
+==================
+
+*   Add support for camel-case properties ([35c4066](https://github.com/wooorm/mdast-lint/commit/35c4066))
+
 1.1.0 / 2015-08-31
 ==================
 

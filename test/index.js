@@ -29,6 +29,7 @@ var join = path.join;
 var basename = path.basename;
 var extname = path.extname;
 var dirname = path.dirname;
+var dequal = assert.deepEqual;
 
 /**
  * Create a `File` from a `filePath`.
@@ -205,6 +206,17 @@ describe('mdast-lint', function () {
             'reset': true,
             'file-extension': 'md'
         }).length === 1);
+    });
+
+    it('should accept camel-cased rules', function () {
+        dequal(process('maximum-line-length-valid.md', {
+            'reset': true,
+            'maximumLineLength': 20
+        }).map(String), [
+            'maximum-line-length-valid.md:1:81: Line must be at most 20 characters',
+            'maximum-line-length-valid.md:18:61: Line must be at most 20 characters',
+            'maximum-line-length-valid.md:22:40: Line must be at most 20 characters'
+        ]);
     });
 });
 

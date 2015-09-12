@@ -12,6 +12,7 @@
   "repository": "wooorm/mdast-lint",
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
+    "decamelize": "^1.0.0",
     "mdast-range": "^1.0.0",
     "mdast-util-heading-style": "^1.0.0",
     "mdast-util-position": "^1.0.0",

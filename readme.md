@@ -22,6 +22,7 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/mda
 *   [Configuring mdast-lint](#configuring-mdast-lint)
 *   [Using mdast to fix your markdown](#using-mdast-to-fix-your-markdown)
 *   [Editor Integrations](#editor-integrations)
+*   [Related](#related)
 *   [License](#license)
 
 ## Installation
@@ -37,7 +38,7 @@ CommonJS, and globals.
 
 ## Command line
 
-![Example how mdast-lint looks on screen](https://cdn.rawgit.com/wooorm/mdast-lint/master/screen-shot.png)
+![Example of how mdast-lint looks on screen](https://cdn.rawgit.com/wooorm/mdast-lint/master/screen-shot.png)
 
 Use mdast-lint together with mdast:
 
@@ -158,6 +159,11 @@ and I strongly suggest checking out how it can make your life easier :+1:
 Currently, **mdast-lint** is integrated with Atom through [**leipert/linter-markdown**](https://atom.io/packages/linter-markdown).
 
 I’m very interested in more integrations. Let me know if I can help.
+
+## Related
+
+*   [`mdast-validate-links`](https://github.com/wooorm/mdast-validate-links)
+    — Validate if links point to existing headings and files in markdown.
 
 ## License
 

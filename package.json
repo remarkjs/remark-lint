@@ -1,6 +1,6 @@
 {
   "name": "mdast-lint",
-  "version": "1.1.1",
+  "version": "2.0.0-alpha.1",
   "description": "Lint markdown with mdast",
   "license": "MIT",
   "keywords": [

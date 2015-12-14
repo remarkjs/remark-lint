@@ -2,6 +2,14 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.0.0-alpha.1 / 2015-12-14
+==========================
+
+*   Remove superfluous warnings after changes in mdast ([63cdcab](https://github.com/wooorm/mdast-lint/commit/63cdcab))
+*   Update dependencies for changes in mdast ([4537271](https://github.com/wooorm/mdast-lint/commit/4537271))
+*   Add list of related tools to `readme.md` ([50f350b](https://github.com/wooorm/mdast-lint/commit/50f350b))
+*   Refactor API docs ([ad6df51](https://github.com/wooorm/mdast-lint/commit/ad6df51))
+
 1.1.1 / 2015-09-12
 ==================
 

@@ -1266,8 +1266,6 @@ describe('Rules', function () {
     describeRule('list-item-content-indent', function () {
         describeSetting(true, function () {
             assertFile('list-item-content-indent-invalid.md', [
-                'list-item-content-indent-invalid.md:3:4: Don’t use mixed indentation for children, add 1 space',
-                'list-item-content-indent-invalid.md:9:4: Don’t use mixed indentation for children, add 1 space',
                 'list-item-content-indent-invalid.md:14:5: Don’t use mixed indentation for children, remove 1 space'
             ]);
 

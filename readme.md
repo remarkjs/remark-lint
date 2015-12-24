@@ -2,6 +2,14 @@
 
 [![Build Status](https://img.shields.io/travis/wooorm/remark-lint.svg)](https://travis-ci.org/wooorm/remark-lint) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg)](https://codecov.io/github/wooorm/remark-lint)
 
+> :warning: **mdast is currently being renamed to remark** :warning:
+> 
+> This means all plug-ins and relating projects change too, causing many
+> changes across the ecosystem. Expect the dust to settle in roughly a day.
+> 
+> See this project at the previous stable commit
+> [c4a51d1](https://github.com/wooorm/remark-github/commit/c4a51d1).
+
 **remark-lint** is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes

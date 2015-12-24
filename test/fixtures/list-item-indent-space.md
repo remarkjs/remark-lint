@@ -21,6 +21,8 @@ Baz:
 - item
   3
 
+Qux:
+
 1. item
    1
 

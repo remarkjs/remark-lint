@@ -744,8 +744,7 @@ describe('Rules', function () {
                 'no-missing-blank-lines-invalid.md:4:1-6:31: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:7:1-7:12: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:8:1-9:4: Missing blank line before block node',
-                'no-missing-blank-lines-invalid.md:10:1-10:11: Missing blank line before block node',
-                'no-missing-blank-lines-invalid.md:11:1-11:39: Missing blank line before block node',
+                'no-missing-blank-lines-invalid.md:10:1-11:39: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:12:1-12:4: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:13:1-15:4: Missing blank line before block node',
                 'no-missing-blank-lines-invalid.md:16:1-16:18: Missing blank line before block node',
@@ -1293,11 +1292,11 @@ describe('Rules', function () {
                 'list-item-indent-space.md:15:3: Incorrect list-item indent: add 2 spaces',
                 'list-item-indent-space.md:18:3: Incorrect list-item indent: add 2 spaces',
                 'list-item-indent-space.md:21:3: Incorrect list-item indent: add 2 spaces',
-                'list-item-indent-space.md:24:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:27:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:30:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:35:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:41:4: Incorrect list-item indent: add 1 space'
+                'list-item-indent-space.md:26:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:29:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:32:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:37:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:43:4: Incorrect list-item indent: add 1 space'
             ]);
 
             assertFile('list-item-indent-mixed.md', [
@@ -1357,10 +1356,10 @@ describe('Rules', function () {
                 'list-item-indent-space.md:15:3: Incorrect list-item indent: add 2 spaces',
                 'list-item-indent-space.md:18:3: Incorrect list-item indent: add 2 spaces',
                 'list-item-indent-space.md:21:3: Incorrect list-item indent: add 2 spaces',
-                'list-item-indent-space.md:24:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:27:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:30:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:41:4: Incorrect list-item indent: add 1 space'
+                'list-item-indent-space.md:26:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:29:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:32:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:43:4: Incorrect list-item indent: add 1 space'
             ]);
 
             assertFile('list-item-indent-mixed.md', []);

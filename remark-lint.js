@@ -3,8 +3,8 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint
- * @fileoverview Lint markdown with mdast.
+ * @module remark:lint
+ * @fileoverview Lint markdown with remark.
  */
 
 'use strict';
@@ -16,8 +16,8 @@ module.exports = require('./lib');
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint:filter
- * @fileoverview mdast plug-in used internally by
+ * @module remark:lint:filter
+ * @fileoverview remark plug-in used internally by
  *   remark-lint to filter ruleId’s by enabled and disabled
  *   ranges, or by gaps.
  * @todo Externalise into its own repository.
@@ -155,8 +155,8 @@ module.exports = attacher;
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint:library
- * @fileoverview mdast plug-in providing warnings when
+ * @module remark:lint:library
+ * @fileoverview remark plug-in providing warnings when
  *   detecting style violations.
  */
 
@@ -197,14 +197,14 @@ var cwd = process && process.cwd();
  */
 function attachFactory(id, rule, options) {
     /**
-     * Attach the rule to an mdast instance, unless `false`
+     * Attach the rule to a remark instance, unless `false`
      * is passed as an option.
      *
      * @return {Function?} - See `plugin` below.
      */
     function attach() {
         /**
-         * Attach the rule to an mdast instance, unless `false`
+         * Attach the rule to a remark instance, unless `false`
          * is passed as an option.
          *
          * @param {Node} ast - Root node.
@@ -353,15 +353,15 @@ function decamelizeSettings(source) {
  * a non-nully and non-false value.
  *
  * @example
- *   var processor = lint(mdast, {
+ *   var processor = lint(remark, {
  *     'html': false // Ignore HTML warnings.
  *   });
  *
- * @param {MDAST} mdast - Host object.
+ * @param {Remark} remark - Host object.
  * @param {Object?} options - Hash of rule names mapping to
  *   rule options.
  */
-function lint(mdast, options) {
+function lint(remark, options) {
     var settings = decamelizeSettings(options || {});
     var reset = settings.reset;
     var rules = loadExternals(settings.external);
@@ -372,7 +372,7 @@ function lint(mdast, options) {
      * Ensure offset information is added.
      */
 
-    mdast.use(range);
+    remark.use(range);
 
     /**
      * Get the latest state of a rule.
@@ -424,7 +424,7 @@ function lint(mdast, options) {
         }
     }
 
-    mdast.use(function () {
+    remark.use(function () {
         return function (ast, file) {
             store(file);
         };
@@ -435,7 +435,7 @@ function lint(mdast, options) {
      */
 
     for (id in rules) {
-        mdast.use(attachFactory(id, rules[id], settings[id]));
+        remark.use(attachFactory(id, rules[id], settings[id]));
     }
 
     /**
@@ -498,7 +498,7 @@ function lint(mdast, options) {
         }
     }
 
-    mdast.use(zone({
+    remark.use(zone({
         'name': 'lint',
         'onparse': onparse
     }));
@@ -507,7 +507,7 @@ function lint(mdast, options) {
      * Filter.
      */
 
-    mdast.use(filter);
+    remark.use(filter);
 
     /**
      * Transformer sort messages.
@@ -3953,7 +3953,7 @@ module.exports = noHeadingPunctuation;
  * @fileoverview
  *   Warn when HTML nodes are used.
  *
- *   Ignores comments, because they are used by this tool, mdast, and
+ *   Ignores comments, because they are used by this tool, remark, and
  *   because markdown doesn’t have native comments.
  * @example
  *   <!-- Invalid: -->

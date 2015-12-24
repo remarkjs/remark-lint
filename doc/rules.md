@@ -898,7 +898,7 @@ Options: `boolean`, default: `false`.
 
   Warn when HTML nodes are used.
 
-  Ignores comments, because they are used by this tool, mdast, and
+  Ignores comments, because they are used by this tool, remark, and
   because markdown doesn’t have native comments.
 
 ### no-inline-padding

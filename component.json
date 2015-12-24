@@ -1,6 +1,6 @@
 {
   "name": "remark-lint",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Lint markdown with remark",
   "license": "MIT",
   "keywords": [

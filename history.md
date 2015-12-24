@@ -2,6 +2,19 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.0.0 / 2015-12-24
+==================
+
+*   Add temporary warning to `readme.md` ([795877f](https://github.com/wooorm/remark-lint/commit/795877f))
+*   Rebuild distribution files ([8b88d8a](https://github.com/wooorm/remark-lint/commit/8b88d8a))
+*   Update fixtures for changes in remark ([237c12c](https://github.com/wooorm/remark-lint/commit/237c12c))
+*   Update `logo.svg` ([e027168](https://github.com/wooorm/remark-lint/commit/e027168))
+*   Rename `mdast-github` > `remark-github` ([811ce91](https://github.com/wooorm/remark-lint/commit/811ce91))
+*   Remove superfluous warnings after changes in mdast ([63cdcab](https://github.com/wooorm/remark-lint/commit/63cdcab))
+*   Update dependencies for changes in mdast ([4537271](https://github.com/wooorm/remark-lint/commit/4537271))
+*   Add list of related tools to `readme.md` ([50f350b](https://github.com/wooorm/remark-lint/commit/50f350b))
+*   Refactor API docs ([ad6df51](https://github.com/wooorm/remark-lint/commit/ad6df51))
+
 1.1.1 / 2015-09-12
 ==================
 

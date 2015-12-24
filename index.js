@@ -2,8 +2,8 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint
- * @fileoverview Lint markdown with mdast.
+ * @module remark:lint
+ * @fileoverview Lint markdown with remark.
  */
 
 'use strict';

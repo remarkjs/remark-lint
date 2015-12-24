@@ -3,7 +3,7 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint:script:build-rule-documentation
+ * @module remark:lint:script:build-rule-documentation
  * @fileoverview Creates documentation for all exposed
  *   rules.
  */

@@ -1,15 +1,15 @@
 {
-  "name": "mdast-lint",
+  "name": "remark-lint",
   "version": "1.1.1",
-  "description": "Lint markdown with mdast",
+  "description": "Lint markdown with remark",
   "license": "MIT",
   "keywords": [
     "markdown",
     "lint",
     "validate",
-    "mdast"
+    "remark"
   ],
-  "repository": "wooorm/mdast-lint",
+  "repository": "wooorm/remark-lint",
   "dependencies": {
     "sindresorhus/plur": "^2.0.0",
     "wooorm/mdast-range": "^1.0.0",

@@ -2,8 +2,8 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint:test
- * @fileoverview Tests for mdast-lint.
+ * @module remark:lint:test
+ * @fileoverview Tests for remark-lint.
  */
 
 'use strict';
@@ -54,7 +54,7 @@ function toFile(filePath) {
  * Shortcut.
  *
  * @param {string} filePath - Path to `file`.
- * @param {Object?} options - Passed to `mdast-lint`
+ * @param {Object?} options - Passed to `remark-lint`
  * @param {Object?} settings - Passed to `mdast`
  * @param {boolean?} shouldClean - Uses `clean` plugin,
  *   when truthy.
@@ -93,7 +93,7 @@ var currentRule = null;
 var currentSetting = null;
 
 /**
- * Describe a single mdast-lint rule.
+ * Describe a single remark-lint rule.
  *
  * @param {string} ruleId - Rule to turn on when testing.
  * @param {Function} description - Passed to `describe()`.
@@ -107,7 +107,7 @@ function describeRule(ruleId, description) {
 }
 
 /**
- * Describe how a single mdast-lint rule should behave
+ * Describe how a single remark-lint rule should behave
  * when given a certain `setting`.
  *
  * @param {*} setting - Passed to the rule.
@@ -131,7 +131,7 @@ function describeSetting(setting, description) {
  *   `test/fixtures/`.
  * @param {Array.<string>} messages - Assertions.
  * @param {Object?} settings - Passed to `mdast`.
- * @param {Object?} overwrite - Passed to `mdast-lint`
+ * @param {Object?} overwrite - Passed to `remark-lint`
  *   instead of constructing based on BDD-like tests.
  */
 function assertFile(filePath, messages, settings, overwrite) {
@@ -145,7 +145,7 @@ function assertFile(filePath, messages, settings, overwrite) {
         options = overwrite;
     } else {
         /*
-         * Construct mdast-lint options.
+         * Construct remark-lint options.
          */
 
         options = {};
@@ -184,7 +184,7 @@ function assertFile(filePath, messages, settings, overwrite) {
  * Basic tests.
  */
 
-describe('mdast-lint', function () {
+describe('remark-lint', function () {
     it('should work without `options`', function () {
         assert(process('file-extension-markdown.markdown').length === 1);
     });
@@ -253,7 +253,7 @@ describe('External', function () {
         it('should fail on invalid external rules', function () {
             assert.throws(function () {
                 process('lorem-valid.md', {
-                    'external': ['mdast']
+                    'external': ['remark']
                 });
             });
         });
@@ -1885,7 +1885,7 @@ var nonnode = [
     'no-file-name-irregular-characters'
 ];
 
-describe('mdast-lint with generated nodes', function () {
+describe('remark-lint with generated nodes', function () {
     fs.readdirSync(join(__dirname, 'fixtures'))
     .filter(function (filePath) {
         return filePath.charAt(0) !== '.';

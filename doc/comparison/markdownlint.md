@@ -2,9 +2,9 @@
 
 This table documents the similarity and difference between
 [**markdownlint**](https://github.com/mivok/markdownlint/blob/master/docs/RULES.md)
-rules and **mdast-lint**’s rules.
+rules and **remark-lint**’s rules.
 
-| markdownlint | mdast                         | note                                                                                     |
+| markdownlint | remark                        | note                                                                                     |
 | ------------ | ----------------------------- | ---------------------------------------------------------------------------------------- |
 | MD001        | heading-increment             |                                                                                          |
 | MD002        | first-heading-level           |                                                                                          |
@@ -30,14 +30,14 @@ rules and **mdast-lint**’s rules.
 | MD026        | no-heading-punctuation        |                                                                                          |
 | MD027        | blockquote-indentation        | Won’t warn when that’s your preferred, consistent style                                  |
 | MD028        | no-blockquote-without-caret   |                                                                                          |
-| MD029        | ordered-list-marker-value     | markdownlint defaults to `one`, whereas mdast-lint defaults to `ordered`                 |
+| MD029        | ordered-list-marker-value     | markdownlint defaults to `one`, whereas remark-lint defaults to `ordered`                |
 | MD030        | list-item-indent              |                                                                                          |
 | MD031        | no-missing-blank-lines        |                                                                                          |
 | MD032        | no-missing-blank-lines        |                                                                                          |
 | MD033        | no-html                       |                                                                                          |
 | MD034        | no-literal-urls               |                                                                                          |
 | MD035        | rule-style                    |                                                                                          |
-| MD036        | emphasis-heading              | mdast-lint only warns when the emphasis is followed by a colon, but that might change.   |
+| MD036        | emphasis-heading              | remark-lint only warns when the emphasis is followed by a colon, but that might change.  |
 | MD037        | no-inline-padding             |                                                                                          |
 | MD038        | no-inline-padding             |                                                                                          |
 | MD039        | no-inline-padding             |                                                                                          |

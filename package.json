@@ -1,15 +1,15 @@
 {
-  "name": "mdast-lint",
+  "name": "remark-lint",
   "version": "1.1.1",
-  "description": "Lint markdown with mdast",
+  "description": "Lint markdown with remark",
   "license": "MIT",
   "keywords": [
     "markdown",
     "lint",
     "validate",
-    "mdast"
+    "remark"
   ],
-  "repository": "wooorm/mdast-lint",
+  "repository": "wooorm/remark-lint",
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
     "decamelize": "^1.0.0",
@@ -17,7 +17,7 @@
     "mdast-util-heading-style": "^1.0.0",
     "mdast-util-position": "^1.0.0",
     "mdast-util-to-string": "^1.0.0",
-    "mdast-zone": "^2.0.0-alpha.1",
+    "mdast-zone": "^2.0.0",
     "plur": "^2.0.0",
     "unist-util-visit": "^1.0.0",
     "vfile-sort": "^1.0.0"
@@ -34,7 +34,7 @@
     "istanbul": "^0.3.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
-    "mdast": "^3.0.0-alpha.3",
+    "mdast": "^3.0.0-alpha.5",
     "mdast-comment-config": "^2.0.0-alpha.1",
     "mdast-github": "^2.0.0-alpha.1",
     "mdast-toc": "^1.0.0",
@@ -53,8 +53,8 @@
     "make": "npm run lint && npm run test-coverage",
     "build-rules": "node script/build-rule-documentation.js",
     "build-md": "mdast . --quiet",
-    "build-bundle": "browserify index.js --bare -s mdastLint > mdast-lint.js",
-    "postbuild-bundle": "esmangle mdast-lint.js > mdast-lint.min.js",
+    "build-bundle": "browserify index.js --bare -s remarkLint > remark-lint.js",
+    "postbuild-bundle": "esmangle remark-lint.js > remark-lint.min.js",
     "build": "npm run build-rules && npm run build-md && npm run build-bundle"
   }
 }

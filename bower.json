@@ -1,17 +1,17 @@
 {
-  "name": "mdast-lint",
-  "main": "mdast-lint.js",
-  "description": "Lint markdown with mdast",
+  "name": "remark-lint",
+  "main": "remark-lint.js",
+  "description": "Lint markdown with remark",
   "license": "MIT",
   "keywords": [
     "markdown",
     "lint",
     "validate",
-    "mdast"
+    "remark"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/wooorm/mdast-lint.git"
+    "url": "https://github.com/wooorm/remark-lint.git"
   },
   "authors": [
     "Titus Wormer <tituswormer@gmail.com>"

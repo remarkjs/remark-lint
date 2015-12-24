@@ -2,7 +2,7 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:lint:test:no-lorem
+ * @module remark:lint:test:no-lorem
  * @fileoverview
  *   Warn when `lorem` is used in a document.
  * @example

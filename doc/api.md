@@ -5,9 +5,9 @@
 Dependencies:
 
 ```javascript
-var mdast = require('mdast');
-var lint = require('mdast-lint');
-var processor = mdast().use(lint);
+var remark = require('remark');
+var lint = require('remark-lint');
+var processor = remark().use(lint);
 ```
 
 Example document.
@@ -49,10 +49,10 @@ processor.process(doc, function (err, file, res) {
 });
 ```
 
-## [mdast](https://github.com/wooorm/mdast#api).[use](https://github.com/wooorm/mdast#mdastuseplugin-options)(lint, options)
+## [remark](https://github.com/wooorm/remark#api).[use](https://github.com/wooorm/remark#remarkuseplugin-options)(lint, options)
 
-Adds warnings for style violations to a given [virtual file](https://github.com/wooorm/mdast/blob/master/doc/mdast.3.md#file)
-using mdast’s [warning API](https://github.com/wooorm/mdast/blob/master/doc/mdast.3.md#filewarnreason-position).
+Adds warnings for style violations to a given [virtual file](https://github.com/wooorm/remark/blob/master/doc/remark.3.md#file)
+using remark’s [warning API](https://github.com/wooorm/remark/blob/master/doc/remark.3.md#filewarnreason-position).
 
 When processing a file, these warnings are available at `file.messages`, and
 look as follows:

@@ -1,16 +1,16 @@
-# ![mdast-lint](https://cdn.rawgit.com/wooorm/mdast-lint/master/logo.svg)
+# ![remark-lint](https://cdn.rawgit.com/wooorm/remark-lint/master/logo.svg)
 
-[![Build Status](https://img.shields.io/travis/wooorm/mdast-lint.svg)](https://travis-ci.org/wooorm/mdast-lint) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/mdast-lint.svg)](https://codecov.io/github/wooorm/mdast-lint)
+[![Build Status](https://img.shields.io/travis/wooorm/remark-lint.svg)](https://travis-ci.org/wooorm/remark-lint) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg)](https://codecov.io/github/wooorm/remark-lint)
 
-**mdast-lint** is a markdown code style linter.  Another linter?  Yes.
+**remark-lint** is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes
 sure less refactoring is needed afterwards. What is quality? That’s up to you,
-but the defaults are sensible :ok_hand:.
+but the defaults are sensible :ok\_hand:.
 
-**mdast-lint** has lots of tests.  Supports Node, io.js, and the browser.
-100% coverage.  50+ rules.  It’s built on [**mdast**](https://github.com/wooorm/mdast),
-a powerful markdown processor powered by [plugins](https://github.com/wooorm/mdast/blob/master/doc/plugins.md)
+**remark-lint** has lots of tests.  Supports Node, io.js, and the browser.
+100% coverage.  50+ rules.  It’s built on [**remark**](https://github.com/wooorm/remark),
+a powerful markdown processor powered by [plugins](https://github.com/wooorm/remark/blob/master/doc/plugins.md)
 (such as this one).
 
 ## Table of Contents
@@ -19,8 +19,8 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/mda
 *   [Command line](#command-line)
 *   [Programmatic](#programmatic)
 *   [Rules](#rules)
-*   [Configuring mdast-lint](#configuring-mdast-lint)
-*   [Using mdast to fix your markdown](#using-mdast-to-fix-your-markdown)
+*   [Configuring remark-lint](#configuring-remark-lint)
+*   [Using remark to fix your markdown](#using-remark-to-fix-your-markdown)
 *   [Editor Integrations](#editor-integrations)
 *   [Related](#related)
 *   [License](#license)
@@ -30,20 +30,20 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/mda
 [npm](https://docs.npmjs.com/cli/install):
 
 ```bash
-npm install mdast-lint
+npm install remark-lint
 ```
 
-**mdast-lint** is also available for bower, duo, and for AMD,
+**remark-lint** is also available for bower, duo, and for AMD,
 CommonJS, and globals.
 
 ## Command line
 
-![Example of how mdast-lint looks on screen](https://cdn.rawgit.com/wooorm/mdast-lint/master/screen-shot.png)
+![Example of how remark-lint looks on screen](https://cdn.rawgit.com/wooorm/remark-lint/master/screen-shot.png)
 
-Use mdast-lint together with mdast:
+Use remark-lint together with remark:
 
 ```bash
-npm install --global mdast mdast-lint
+npm install --global remark remark-lint
 ```
 
 Let’s say `example.md` looks as follows:
@@ -54,10 +54,10 @@ Let’s say `example.md` looks as follows:
 -   World
 ```
 
-Then, to run **mdast-lint** on `example.md`:
+Then, to run **remark-lint** on `example.md`:
 
 ```bash
-mdast -u mdast-lint example.md
+remark -u remark-lint example.md
 #
 # Yields:
 #
@@ -79,7 +79,7 @@ turn them off).
 
 ## Programmatic
 
-[doc/api.md](doc/api.md) describes how to use **mdast-lint**’s
+[doc/api.md](doc/api.md) describes how to use **remark-lint**’s
 programatic interface in JavaScript.
 
 ## Rules
@@ -87,13 +87,13 @@ programatic interface in JavaScript.
 [doc/rules.md](doc/rules.md) describes all available rules, what they check
 for, examples of markdown they warn for, and how to fix their warnings.
 
-## Configuring mdast-lint
+## Configuring remark-lint
 
-**mdast-lint** is just an **mdast** plug-in.  Meaning, you can opt to
+**remark-lint** is just a **remark** plug-in.  Meaning, you can opt to
 configure using configuration files.  Read more about these files
-(`.mdastrc` or `package.json`) in [**mdast**’s docs](https://github.com/wooorm/mdast/blob/master/doc/mdastrc.5.md).
+(`.remarkrc` or `package.json`) in [**remark**’s docs](https://github.com/wooorm/remark/blob/master/doc/remarkrc.5.md).
 
-An example `.mdastrc` file could look as follows:
+An example `.remarkrc` file could look as follows:
 
 ```json
 {
@@ -112,8 +112,8 @@ An example `.mdastrc` file could look as follows:
 ```
 
 Where the object at `plugins.lint` is a map of `ruleId`s and their values.
-The object at `settings` determines how **mdast** parses (and compiles)
-markdown code.  Read more about the latter on [**mdast**’s readme](https://github.com/wooorm/mdast#mdastprocessvalue-options-done).
+The object at `settings` determines how **remark** parses (and compiles)
+markdown code.  Read more about the latter on [**remark**’s readme](https://github.com/wooorm/remark#remarkprocessvalue-options-done).
 
 In addition, you can also provide configuration comments to turn a rule
 on or off inside a file (note that you cannot change what a setting, such as
@@ -144,25 +144,25 @@ but the third is re-enabled):
 ### Hello
 ```
 
-## Using mdast to fix your markdown
+## Using remark to fix your markdown
 
-One of **mdast**’s cool parts is that it compiles to very clean, and highly
+One of **remark**’s cool parts is that it compiles to very clean, and highly
 cross-vendor supported markdown. It’ll ensure list items use a single bullet,
 emphasis and strong use a standard marker, and that your table fences are
 aligned.
 
-**mdast** should be able to fix most of your styling issues automatically,
+**remark** should be able to fix most of your styling issues automatically,
 and I strongly suggest checking out how it can make your life easier :+1:
 
 ## Editor Integrations
 
-Currently, **mdast-lint** is integrated with Atom through [**leipert/linter-markdown**](https://atom.io/packages/linter-markdown).
+Currently, **remark-lint** is integrated with Atom through [**leipert/linter-markdown**](https://atom.io/packages/linter-markdown).
 
 I’m very interested in more integrations. Let me know if I can help.
 
 ## Related
 
-*   [`mdast-validate-links`](https://github.com/wooorm/mdast-validate-links)
+*   [`remark-validate-links`](https://github.com/wooorm/remark-validate-links)
     — Validate if links point to existing headings and files in markdown.
 
 ## License

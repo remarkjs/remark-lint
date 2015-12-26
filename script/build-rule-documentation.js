@@ -17,8 +17,8 @@
 var fs = require('fs');
 var path = require('path');
 var dox = require('dox');
-var mdast = require('mdast');
-var toc = require('mdast-toc');
+var remark = require('remark');
+var toc = require('remark-toc');
 var rules = require('../lib/rules');
 var additional = require('./additional.json');
 
@@ -167,7 +167,7 @@ Object.keys(additional).sort()
         });
     }
 
-    children = children.concat(mdast().parse(description).children);
+    children = children.concat(remark().parse(description).children);
 });
 
 /*
@@ -183,10 +183,10 @@ var node = {
  * Add toc.
  */
 
-mdast().use(toc).run(node);
+remark().use(toc).run(node);
 
 /*
  * Write.
  */
 
-fs.writeFileSync('doc/rules.md', mdast().stringify(node));
+fs.writeFileSync('doc/rules.md', remark().stringify(node));

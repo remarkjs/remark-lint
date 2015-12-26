@@ -150,7 +150,7 @@ function attacher() {
 
 module.exports = attacher;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],3:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],3:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -168,7 +168,7 @@ module.exports = attacher;
 
 var decamelize = require('decamelize');
 var sort = require('vfile-sort');
-var range = require('mdast-range');
+var range = require('remark-range');
 var zone = require('mdast-zone');
 var internals = require('./rules');
 var filter = require('./filter');
@@ -524,7 +524,7 @@ function lint(remark, options) {
 
 module.exports = lint;
 
-},{"./filter":2,"./rules":20,"decamelize":60,"fs":undefined,"mdast-range":62,"mdast-zone":66,"path":undefined,"vfile-sort":69}],4:[function(require,module,exports){
+},{"./filter":2,"./rules":20,"decamelize":60,"fs":undefined,"mdast-zone":65,"path":undefined,"remark-range":67,"vfile-sort":69}],4:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -635,7 +635,7 @@ function blockquoteIndentation(ast, file, preferred, done) {
 
 module.exports = blockquoteIndentation;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"plur":67,"unist-util-visit":68}],5:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"plur":66,"unist-util-visit":68}],5:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -821,7 +821,7 @@ function checkboxCharacterStyle(ast, file, preferred, done) {
 
 module.exports = checkboxCharacterStyle;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],6:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],6:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -921,7 +921,7 @@ function checkboxContentIndent(ast, file, preferred, done) {
 
 module.exports = checkboxContentIndent;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],7:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],7:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1057,7 +1057,7 @@ function codeBlockStyle(ast, file, preferred, done) {
 
 module.exports = codeBlockStyle;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],8:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],8:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1134,7 +1134,7 @@ function definitionCase(ast, file, preferred, done) {
 
 module.exports = definitionCase;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],9:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],9:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1211,7 +1211,7 @@ function definitionSpacing(ast, file, preferred, done) {
 
 module.exports = definitionSpacing;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],10:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],10:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1298,7 +1298,7 @@ function emphasisMarker(ast, file, preferred, done) {
 
 module.exports = emphasisMarker;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],11:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],11:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1406,7 +1406,7 @@ function fencedCodeFlag(ast, file, preferred, done) {
 
 module.exports = fencedCodeFlag;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],12:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],12:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1523,7 +1523,7 @@ function fencedCodeMarker(ast, file, preferred, done) {
 
 module.exports = fencedCodeMarker;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],13:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],13:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1649,7 +1649,7 @@ function finalDefinition(ast, file, preferred, done) {
 
 module.exports = finalDefinition;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],15:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],15:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1745,7 +1745,7 @@ function firstHeadingLevel(ast, file, preferred, done) {
 
 module.exports = firstHeadingLevel;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],17:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],17:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1808,7 +1808,7 @@ function hardBreakSpaces(ast, file, preferred, done) {
 
 module.exports = hardBreakSpaces;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],18:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],18:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1874,7 +1874,7 @@ function headingIncrement(ast, file, preferred, done) {
 
 module.exports = headingIncrement;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],19:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],19:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -1975,7 +1975,7 @@ function headingStyle(ast, file, preferred, done) {
 
 module.exports = headingStyle;
 
-},{"mdast-util-heading-style":63,"mdast-util-position":64,"unist-util-visit":68}],20:[function(require,module,exports){
+},{"mdast-util-heading-style":62,"mdast-util-position":63,"unist-util-visit":68}],20:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2189,7 +2189,7 @@ function linkTitleStyle(ast, file, preferred, done) {
 
 module.exports = linkTitleStyle;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],22:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],22:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2269,7 +2269,7 @@ function listItemBulletIndent(ast, file, preferred, done) {
 
 module.exports = listItemBulletIndent;
 
-},{"mdast-util-position":64,"plur":67,"unist-util-visit":68}],23:[function(require,module,exports){
+},{"mdast-util-position":63,"plur":66,"unist-util-visit":68}],23:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2384,7 +2384,7 @@ function listItemContentIndent(ast, file, preferred, done) {
 
 module.exports = listItemContentIndent;
 
-},{"mdast-util-position":64,"plur":67,"unist-util-visit":68}],24:[function(require,module,exports){
+},{"mdast-util-position":63,"plur":66,"unist-util-visit":68}],24:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2535,7 +2535,7 @@ function listItemIndent(ast, file, preferred, done) {
 
 module.exports = listItemIndent;
 
-},{"mdast-util-position":64,"plur":67,"unist-util-visit":68}],25:[function(require,module,exports){
+},{"mdast-util-position":63,"plur":66,"unist-util-visit":68}],25:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2656,7 +2656,7 @@ function listItemSpacing(ast, file, preferred, done) {
 
 module.exports = listItemSpacing;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],26:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],26:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2718,7 +2718,7 @@ function maximumHeadingLength(ast, file, preferred, done) {
 
 module.exports = maximumHeadingLength;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"unist-util-visit":68}],27:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":68}],27:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2906,7 +2906,7 @@ function maximumLineLength(ast, file, preferred, done) {
 
 module.exports = maximumLineLength;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],28:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],28:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -2993,7 +2993,7 @@ function noAutoLinkWithoutProtocol(ast, file, preferred, done) {
 
 module.exports = noAutoLinkWithoutProtocol;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"unist-util-visit":68}],29:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":68}],29:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3080,7 +3080,7 @@ function noBlockquoteWithoutCaret(ast, file, preferred, done) {
 
 module.exports = noBlockquoteWithoutCaret;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],30:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],30:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3211,7 +3211,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
 
 module.exports = noConsecutiveBlankLines;
 
-},{"mdast-util-position":64,"plur":67,"unist-util-visit":68}],31:[function(require,module,exports){
+},{"mdast-util-position":63,"plur":66,"unist-util-visit":68}],31:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3289,7 +3289,7 @@ function noDuplicateDefinitions(ast, file, preferred, done) {
 
 module.exports = noDuplicateDefinitions;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],32:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],32:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3365,7 +3365,7 @@ function noDuplicateHeadings(ast, file, preferred, done) {
 
 module.exports = noDuplicateHeadings;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"unist-util-visit":68}],33:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":68}],33:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3449,7 +3449,7 @@ function noEmphasisAsHeading(ast, file, preferred, done) {
 
 module.exports = noEmphasisAsHeading;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"unist-util-visit":68}],34:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":68}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3766,7 +3766,7 @@ function noHeadingContentIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingContentIndent;
 
-},{"mdast-util-heading-style":63,"mdast-util-position":64,"plur":67,"unist-util-visit":68}],40:[function(require,module,exports){
+},{"mdast-util-heading-style":62,"mdast-util-position":63,"plur":66,"unist-util-visit":68}],40:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3870,7 +3870,7 @@ function noHeadingIndent(ast, file, preferred, done) {
 
 module.exports = noHeadingIndent;
 
-},{"mdast-util-position":64,"plur":67,"unist-util-visit":68}],41:[function(require,module,exports){
+},{"mdast-util-position":63,"plur":66,"unist-util-visit":68}],41:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3944,7 +3944,7 @@ function noHeadingPunctuation(ast, file, preferred, done) {
 
 module.exports = noHeadingPunctuation;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"unist-util-visit":68}],42:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":68}],42:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -3992,7 +3992,7 @@ function html(ast, file, preferred, done) {
 
 module.exports = html;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],43:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],43:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4063,7 +4063,7 @@ function noInlinePadding(ast, file, preferred, done) {
 
 module.exports = noInlinePadding;
 
-},{"mdast-util-position":64,"mdast-util-to-string":65,"unist-util-visit":68}],44:[function(require,module,exports){
+},{"mdast-util-position":63,"mdast-util-to-string":64,"unist-util-visit":68}],44:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4128,7 +4128,7 @@ function noLiteralURLs(ast, file, preferred, done) {
 
 module.exports = noLiteralURLs;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],45:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],45:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4212,7 +4212,7 @@ function noMissingBlankLines(ast, file, preferred, done) {
 
 module.exports = noMissingBlankLines;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],46:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],46:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4275,7 +4275,7 @@ function noMultipleToplevelHeadings(ast, file, preferred, done) {
 
 module.exports = noMultipleToplevelHeadings;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],47:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],47:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4378,7 +4378,7 @@ function noShellDollars(ast, file, preferred, done) {
 
 module.exports = noShellDollars;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],48:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],48:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4435,7 +4435,7 @@ function noShortcutReferenceImage(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceImage;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],49:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],49:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4492,7 +4492,7 @@ function noShortcutReferenceLink(ast, file, preferred, done) {
 
 module.exports = noShortcutReferenceLink;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],50:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],50:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4555,7 +4555,7 @@ function noTableIndentation(ast, file, preferred, done) {
 
 module.exports = noTableIndentation;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],51:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],51:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4725,7 +4725,7 @@ function orderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerStyle;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],53:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],53:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4884,7 +4884,7 @@ function orderedListMarkerValue(ast, file, preferred, done) {
 
 module.exports = orderedListMarkerValue;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],54:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],54:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4984,7 +4984,7 @@ function ruleStyle(ast, file, preferred, done) {
 
 module.exports = ruleStyle;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],55:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],55:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5069,7 +5069,7 @@ function strongMarker(ast, file, preferred, done) {
 
 module.exports = strongMarker;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],56:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],56:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5248,7 +5248,7 @@ function tableCellPadding(ast, file, preferred, done) {
 
 module.exports = tableCellPadding;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],57:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],57:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5351,7 +5351,7 @@ function tablePipeAlignment(ast, file, preferred, done) {
 
 module.exports = tablePipeAlignment;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],58:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],58:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5429,7 +5429,7 @@ function tablePipes(ast, file, preferred, done) {
 
 module.exports = tablePipes;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],59:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],59:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5553,7 +5553,7 @@ function unorderedListMarkerStyle(ast, file, preferred, done) {
 
 module.exports = unorderedListMarkerStyle;
 
-},{"mdast-util-position":64,"unist-util-visit":68}],60:[function(require,module,exports){
+},{"mdast-util-position":63,"unist-util-visit":68}],60:[function(require,module,exports){
 'use strict';
 module.exports = function (str, sep) {
 	if (typeof str !== 'string') {
@@ -5694,186 +5694,6 @@ module.exports={
 },{}],62:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer
- * @license MIT
- * @module mdast:range
- * @fileoverview Patch index-based range on mdast nodes.
- */
-
-'use strict';
-
-/* eslint-env commonjs */
-
-/*
- * Dependencies.
- */
-
-var visit = require('unist-util-visit');
-
-/**
- * Calculate offsets for `lines`.
- *
- * @param {Array.<string>} lines - Lines to compile.
- * @return {Array.<number>}
- */
-function toOffsets(lines) {
-    var total = 0;
-    var index = -1;
-    var length = lines.length;
-    var result = [];
-
-    while (++index < length) {
-        result[index] = total += lines[index].length + 1;
-    }
-
-    return result;
-}
-
-/**
- * Add an offset based on `offsets` to `position`.
- *
- * @param {Object} position - Position.
- */
-function addRange(position, fn) {
-    position.offset = fn(position);
-}
-
-/**
- * Factory to reverse an offset into a line--column
- * tuple.
- *
- * @param {Array.<number>} offsets - Offsets, as returned
- *   by `toOffsets()`.
- * @return {Function} - Bound method.
- */
-function positionToOffsetFactory(offsets) {
-    /**
-     * Calculate offsets for `lines`.
-     *
-     * @param {Object} position - Position.
-     * @return {Object} - Object with `line` and `colymn`
-     *   properties based on the bound `offsets`.
-     */
-    function positionToOffset(position) {
-        var line = position && position.line;
-        var column = position && position.column;
-
-        if (!isNaN(line) && !isNaN(column)) {
-            return ((offsets[line - 2] || 0) + column - 1) || 0;
-        }
-
-        return -1;
-    }
-
-    return positionToOffset;
-}
-
-/**
- * Factory to reverse an offset into a line--column
- * tuple.
- *
- * @param {Array.<number>} offsets - Offsets, as returned
- *   by `toOffsets()`.
- * @return {Function} - Bound method.
- */
-function offsetToPositionFactory(offsets) {
-    /**
-     * Calculate offsets for `lines`.
-     *
-     * @param {number} offset - Offset.
-     * @return {Object} - Object with `line` and `colymn`
-     *   properties based on the bound `offsets`.
-     */
-    function offsetToPosition(offset) {
-        var index = -1;
-        var length = offsets.length;
-
-        if (offset < 0) {
-            return {};
-        }
-
-        while (++index < length) {
-            if (offsets[index] > offset) {
-                return {
-                    'line': index + 1,
-                    'column': (offset - (offsets[index - 1] || 0)) + 1
-                };
-            }
-        }
-
-        return {};
-    }
-
-    return offsetToPosition;
-}
-
-/**
- * Add ranges for `ast`.
- *
- * @param {Node} ast - Context to patch.
- * @param {VFile} file - Virtual file.
- */
-function transformer(ast, file) {
-    var contents = String(file).split('\n');
-    var positionToOffset;
-
-    /*
-     * Invalid.
-     */
-
-    if (!file || typeof file.contents !== 'string') {
-        throw new Error('Missing `file` for mdast-range');
-    }
-
-    /*
-     * Construct.
-     */
-
-    contents = toOffsets(contents);
-    positionToOffset = positionToOffsetFactory(contents);
-
-    /*
-     * Expose methods.
-     */
-
-    file.offsetToPosition = offsetToPositionFactory(contents);
-    file.positionToOffset = positionToOffset;
-
-    /*
-     * Add `offset` on both `start` and `end`.
-     */
-
-    visit(ast, function (node) {
-        var position = node.position;
-
-        if (position && position.start) {
-            addRange(position.start, positionToOffset);
-        }
-
-        if (position && position.end) {
-            addRange(position.end, positionToOffset);
-        }
-    });
-}
-
-/**
- * Attacher.
- *
- * @return {Function} - `transformer`.
- */
-function attacher() {
-    return transformer;
-}
-
-/*
- * Expose.
- */
-
-module.exports = attacher;
-
-},{"unist-util-visit":68}],63:[function(require,module,exports){
-/**
- * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
  * @module mdast:util:heading-style
  * @fileoverview Utility to get the style of an mdast heading.
@@ -5961,7 +5781,7 @@ function style(node, relative) {
 
 module.exports = style;
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -6065,7 +5885,7 @@ position.generated = generated;
 
 module.exports = position;
 
-},{}],65:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -6108,7 +5928,7 @@ function toString(node) {
 
 module.exports = toString;
 
-},{}],66:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -6485,7 +6305,7 @@ function wrapper(options) {
 
 module.exports = wrapper;
 
-},{"unist-util-visit":68}],67:[function(require,module,exports){
+},{"unist-util-visit":68}],66:[function(require,module,exports){
 'use strict';
 var irregularPlurals = require('irregular-plurals');
 
@@ -6505,7 +6325,188 @@ module.exports = function (str, plural, count) {
 	return count === 1 ? str : plural;
 };
 
-},{"irregular-plurals":61}],68:[function(require,module,exports){
+},{"irregular-plurals":61}],67:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module remark:range
+ * @fileoverview Patch index-based range on mdast nodes.
+ */
+
+'use strict';
+
+/* eslint-env commonjs */
+
+/*
+ * Dependencies.
+ */
+
+var visit = require('unist-util-visit');
+
+/**
+ * Calculate offsets for `lines`.
+ *
+ * @param {Array.<string>} lines - Lines to compile.
+ * @return {Array.<number>} - List of offsets per line.
+ */
+function toOffsets(lines) {
+    var total = 0;
+    var index = -1;
+    var length = lines.length;
+    var result = [];
+
+    while (++index < length) {
+        result[index] = total += lines[index].length + 1;
+    }
+
+    return result;
+}
+
+/**
+ * Add an offset based on `offsets` to `position`.
+ *
+ * @param {Object} position - Position.
+ * @param {Function} fn - Calculator.
+ */
+function addRange(position, fn) {
+    position.offset = fn(position);
+}
+
+/**
+ * Factory to reverse an offset into a line--column
+ * tuple.
+ *
+ * @param {Array.<number>} offsets - Offsets, as returned
+ *   by `toOffsets()`.
+ * @return {Function} - Bound method.
+ */
+function positionToOffsetFactory(offsets) {
+    /**
+     * Calculate offsets for `lines`.
+     *
+     * @param {Object} position - Position.
+     * @return {Object} - Object with `line` and `colymn`
+     *   properties based on the bound `offsets`.
+     */
+    function positionToOffset(position) {
+        var line = position && position.line;
+        var column = position && position.column;
+
+        if (!isNaN(line) && !isNaN(column)) {
+            return ((offsets[line - 2] || 0) + column - 1) || 0;
+        }
+
+        return -1;
+    }
+
+    return positionToOffset;
+}
+
+/**
+ * Factory to reverse an offset into a line--column
+ * tuple.
+ *
+ * @param {Array.<number>} offsets - Offsets, as returned
+ *   by `toOffsets()`.
+ * @return {Function} - Bound method.
+ */
+function offsetToPositionFactory(offsets) {
+    /**
+     * Calculate offsets for `lines`.
+     *
+     * @param {number} offset - Offset.
+     * @return {Object} - Object with `line` and `colymn`
+     *   properties based on the bound `offsets`.
+     */
+    function offsetToPosition(offset) {
+        var index = -1;
+        var length = offsets.length;
+
+        if (offset < 0) {
+            return {};
+        }
+
+        while (++index < length) {
+            if (offsets[index] > offset) {
+                return {
+                    'line': index + 1,
+                    'column': (offset - (offsets[index - 1] || 0)) + 1
+                };
+            }
+        }
+
+        return {};
+    }
+
+    return offsetToPosition;
+}
+
+/**
+ * Add ranges for `ast`.
+ *
+ * @param {Node} ast - Context to patch.
+ * @param {VFile} file - Virtual file.
+ */
+function transformer(ast, file) {
+    var contents = String(file).split('\n');
+    var positionToOffset;
+
+    /*
+     * Invalid.
+     */
+
+    if (!file || typeof file.contents !== 'string') {
+        throw new Error('Missing `file` for remark-range');
+    }
+
+    /*
+     * Construct.
+     */
+
+    contents = toOffsets(contents);
+    positionToOffset = positionToOffsetFactory(contents);
+
+    /*
+     * Expose methods.
+     */
+
+    file.offsetToPosition = offsetToPositionFactory(contents);
+    file.positionToOffset = positionToOffset;
+
+    /*
+     * Add `offset` on both `start` and `end`.
+     */
+
+    visit(ast, function (node) {
+        var position = node.position;
+
+        if (position && position.start) {
+            addRange(position.start, positionToOffset);
+        }
+
+        if (position && position.end) {
+            addRange(position.end, positionToOffset);
+        }
+    });
+}
+
+/**
+ * Attacher.
+ *
+ * @return {Function} - `transformer`.
+ */
+function attacher() {
+    return transformer;
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = attacher;
+
+},{"unist-util-visit":68}],68:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.

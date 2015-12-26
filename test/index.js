@@ -13,9 +13,9 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var mdast = require('mdast');
+var remark = require('remark');
 var File = require('vfile');
-var toc = require('mdast-toc');
+var toc = require('remark-toc');
 var lint = require('..');
 var plural = require('plur');
 var clean = require('./clean');
@@ -55,14 +55,14 @@ function toFile(filePath) {
  *
  * @param {string} filePath - Path to `file`.
  * @param {Object?} options - Passed to `remark-lint`
- * @param {Object?} settings - Passed to `mdast`
+ * @param {Object?} settings - Passed to `remark`
  * @param {boolean?} shouldClean - Uses `clean` plugin,
  *   when truthy.
  * @return {Array.<Error>} - Messages.
  */
 function process(filePath, options, settings, shouldClean) {
     var file = toFile(filePath);
-    var processor = mdast();
+    var processor = remark();
 
     if (shouldClean) {
         processor.use(clean);
@@ -125,12 +125,12 @@ function describeSetting(setting, description) {
  * Assert the messages triggered when running a bound rule
  * with a bound setting on `filePath`, are the same as
  * `messages`.  Additionally accepts `settings` which are
- * given to `mdast`.
+ * given to `remark`.
  *
  * @param {string} filePath - Location of file in
  *   `test/fixtures/`.
  * @param {Array.<string>} messages - Assertions.
- * @param {Object?} settings - Passed to `mdast`.
+ * @param {Object?} settings - Passed to `remark`.
  * @param {Object?} overwrite - Passed to `remark-lint`
  *   instead of constructing based on BDD-like tests.
  */
@@ -277,7 +277,7 @@ describe('External', function () {
 describe('Gaps', function () {
     it('should supports gaps in a document', function (done) {
         var file = toFile('gaps-toc-internal.md');
-        var processor = mdast().use(toc).use(lint);
+        var processor = remark().use(toc).use(lint);
 
         file.quiet = true;
 
@@ -290,7 +290,7 @@ describe('Gaps', function () {
 
     it('should supports gaps at the end of a document', function (done) {
         var file = toFile('gaps-toc-final.md');
-        var processor = mdast().use(toc).use(lint);
+        var processor = remark().use(toc).use(lint);
 
         file.quiet = true;
 

@@ -33,7 +33,7 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/rem
 npm install remark-lint
 ```
 
-**remark-lint** is also available for bower, duo, and for AMD,
+**remark-lint** is also available for Duo, and for AMD,
 CommonJS, and globals.
 
 ## Command line

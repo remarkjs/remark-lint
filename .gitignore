@@ -1,6 +1,5 @@
 .DS_Store
 *.log
-bower_components/
 components/
 node_modules/
 coverage/

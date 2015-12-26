@@ -15,6 +15,8 @@
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Warn when `lorem` is used in a document.
  *

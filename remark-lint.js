@@ -9,6 +9,8 @@
 
 'use strict';
 
+/* eslint-env commonjs */
+
 module.exports = require('./lib');
 
 },{"./lib":3}],2:[function(require,module,exports){
@@ -24,6 +26,8 @@ module.exports = require('./lib');
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 var position = require('mdast-util-position');
 var visit = require('unist-util-visit');
@@ -162,6 +166,8 @@ module.exports = attacher;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -181,7 +187,13 @@ var path = require('path');
 var fs = require('fs');
 var exists = fs && fs.existsSync;
 var resolve = path && path.resolve;
-var cwd = process && process.cwd();
+var cwd;
+
+/* istanbul ignore else */
+if (typeof global !== 'undefined') {
+    /* global global */
+    cwd = global.process.cwd();
+}
 
 /**
  * Factory to create a plugin from a rule.
@@ -511,6 +523,10 @@ function lint(remark, options) {
 
     /**
      * Transformer sort messages.
+     *
+     * @param {Node} node - Syntax tree.
+     * @param {VFile} file - Virtual file.
+     * @param {Function} next - Completion handler.
      */
     return function (node, file, next) {
         sort(file);
@@ -555,6 +571,8 @@ module.exports = lint;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -683,6 +701,8 @@ module.exports = blockquoteIndentation;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -845,6 +865,8 @@ module.exports = checkboxCharacterStyle;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -963,6 +985,8 @@ module.exports = checkboxContentIndent;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -1075,6 +1099,8 @@ module.exports = codeBlockStyle;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -1151,6 +1177,8 @@ module.exports = definitionCase;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1237,6 +1265,8 @@ module.exports = definitionSpacing;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1342,6 +1372,8 @@ module.exports = emphasisMarker;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1451,6 +1483,8 @@ module.exports = fencedCodeFlag;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -1544,6 +1578,8 @@ module.exports = fencedCodeMarker;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Check file extensions.
  *
@@ -1594,6 +1630,8 @@ module.exports = fileExtension;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1664,6 +1702,8 @@ module.exports = finalDefinition;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Warn when the list-item marker style of unordered lists
  * violate a given style.
@@ -1711,6 +1751,8 @@ module.exports = finalNewline;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1766,6 +1808,8 @@ module.exports = firstHeadingLevel;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1829,6 +1873,8 @@ module.exports = hardBreakSpaces;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -1924,6 +1970,8 @@ module.exports = headingIncrement;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -1985,6 +2033,8 @@ module.exports = headingStyle;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Expose.
@@ -2083,6 +2133,8 @@ module.exports = {
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -2209,6 +2261,8 @@ module.exports = linkTitleStyle;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -2290,6 +2344,8 @@ module.exports = listItemBulletIndent;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -2428,6 +2484,8 @@ module.exports = listItemContentIndent;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -2574,6 +2632,8 @@ module.exports = listItemIndent;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -2679,6 +2739,8 @@ module.exports = listItemSpacing;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -2752,6 +2814,8 @@ module.exports = maximumHeadingLength;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -2926,6 +2990,8 @@ module.exports = maximumLineLength;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -2954,7 +3020,7 @@ var PROTOCOL = /^[a-z][a-z+.-]+:\/?/i;
  * Assert `node`s reference starts with a protocol.
  *
  * @param {Node} node - Node to test.
- * @return {boolean}
+ * @return {boolean} - Whether `node` has a protocol.
  */
 function hasProtocol(node) {
     return PROTOCOL.test(toString(node));
@@ -3014,6 +3080,8 @@ module.exports = noAutoLinkWithoutProtocol;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -3104,6 +3172,8 @@ module.exports = noBlockquoteWithoutCaret;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -3135,6 +3205,7 @@ function noConsecutiveBlankLines(ast, file, preferred, done) {
      *
      * @param {Position} start - Initial.
      * @param {Position} end - Final.
+     * @param {number} max - Threshold.
      */
     function compare(start, end, max) {
         var diff = end.line - start.line;
@@ -3231,6 +3302,8 @@ module.exports = noConsecutiveBlankLines;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -3313,6 +3386,8 @@ module.exports = noDuplicateDefinitions;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -3391,6 +3466,8 @@ module.exports = noDuplicateHeadings;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -3464,6 +3541,8 @@ module.exports = noEmphasisAsHeading;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Warn when file name start with an article.
  *
@@ -3503,6 +3582,8 @@ module.exports = noFileNameArticles;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Warn when file names contain consecutive dashes.
  *
@@ -3540,6 +3621,8 @@ module.exports = noFileNameConsecutiveDashes;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /**
  * Warn when file names contain characters other than
@@ -3582,6 +3665,8 @@ module.exports = noFileNameIrregularCharacters;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Warn when a file name uses mixed case: both upper- and
  * lower case characters.
@@ -3621,6 +3706,8 @@ module.exports = noFileNameMixedCase;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /**
  * Warn when file names contain initial or final dashes.
@@ -3670,6 +3757,8 @@ module.exports = noFileNameOuterDashes;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -3801,6 +3890,8 @@ module.exports = noHeadingContentIndent;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -3902,6 +3993,8 @@ module.exports = noHeadingIndent;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -3965,6 +4058,8 @@ module.exports = noHeadingPunctuation;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -4012,6 +4107,8 @@ module.exports = html;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -4081,6 +4178,8 @@ module.exports = noInlinePadding;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -4148,6 +4247,8 @@ module.exports = noLiteralURLs;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -4234,6 +4335,8 @@ module.exports = noMissingBlankLines;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -4308,6 +4411,8 @@ module.exports = noMultipleToplevelHeadings;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -4400,6 +4505,8 @@ module.exports = noShellDollars;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -4457,6 +4564,8 @@ module.exports = noShortcutReferenceImage;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -4513,6 +4622,8 @@ module.exports = noShortcutReferenceLink;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -4578,6 +4689,8 @@ module.exports = noTableIndentation;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /**
  * Warn when hard-tabs instead of spaces are used.
  *
@@ -4637,6 +4750,8 @@ module.exports = noTabs;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -4772,6 +4887,8 @@ module.exports = orderedListMarkerStyle;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -4909,6 +5026,8 @@ module.exports = orderedListMarkerValue;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -5011,6 +5130,8 @@ module.exports = ruleStyle;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -5103,6 +5224,8 @@ module.exports = strongMarker;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -5164,6 +5287,13 @@ function tableCellPadding(ast, file, preferred, done) {
          * Check a fence. Checks both its initial spacing
          * (between a cell and the fence), and its final
          * spacing (between the fence and the next cell).
+         *
+         * @param {number} initial - Starting index.
+         * @param {number} final - Closing index.
+         * @param {Node} cell - Table cell.
+         * @param {Node?} next - Following cell.
+         * @param {number} index - Position of `cell` in
+         *   its parent.
          */
         function check(initial, final, cell, next, index) {
             var fence = contents.slice(initial, final);
@@ -5270,6 +5400,8 @@ module.exports = tableCellPadding;
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -5306,6 +5438,11 @@ function tablePipeAlignment(ast, file, preferred, done) {
         /**
          * Check all pipes after each column are at
          * aligned.
+         *
+         * @param {number} initial - Starting index.
+         * @param {number} final - Closing index.
+         * @param {number} index - Position of cell in
+         *   its parent.
          */
         function check(initial, final, index) {
             var pos = initial + contents.slice(initial, final).indexOf('|') - offset + 1;
@@ -5372,6 +5509,8 @@ module.exports = tablePipeAlignment;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -5464,6 +5603,8 @@ module.exports = tablePipes;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.

@@ -10,8 +10,10 @@
 
 'use strict';
 
+/* eslint-env node */
+
 /*
- * Dpendencies.
+ * Dependencies.
  */
 
 var visit = require('unist-util-visit');

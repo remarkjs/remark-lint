@@ -8,7 +8,7 @@
 
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env node, mocha */
 
 var fs = require('fs');
 var path = require('path');
@@ -35,7 +35,7 @@ var dequal = assert.deepEqual;
  * Create a `File` from a `filePath`.
  *
  * @param {string} filePath - Path to file.
- * @return {File}
+ * @return {File} - Virtual file representation.
  */
 function toFile(filePath) {
     var extension = extname(filePath);

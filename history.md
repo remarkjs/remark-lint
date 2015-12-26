@@ -2,6 +2,14 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.0.1 / 2015-12-26
+==================
+
+*   Remove distribution files from source ([e012e19](https://github.com/wooorm/remark-lint/commit/e012e19))
+*   Remove support for bower ([690e38b](https://github.com/wooorm/remark-lint/commit/690e38b))
+*   Refactor npm test target ([de65cd7](https://github.com/wooorm/remark-lint/commit/de65cd7))
+*   Replace internal dependency of mdast > remark ([26e07c9](https://github.com/wooorm/remark-lint/commit/26e07c9))
+
 2.0.0 / 2015-12-24
 ==================
 

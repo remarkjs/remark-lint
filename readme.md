@@ -33,8 +33,9 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/rem
 npm install remark-lint
 ```
 
-**remark-lint** is also available for Duo, and for AMD,
-CommonJS, and globals.
+**remark-lint** is also available for [duo](http://duojs.org/#getting-started),
+and as an AMD, CommonJS, and globals module, [uncompressed and
+compressed](https://github.com/wooorm/remark-lint/releases).
 
 ## Command line
 

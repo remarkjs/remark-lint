@@ -6,3 +6,12 @@ node_js:
 - iojs
 sudo: false
 after_script: npm install codecov.io && cat ./coverage/lcov.info | codecov
+deploy:
+  provider: releases
+  api_key:
+    secure: zN1uPgyYdGX7KMJnPW8+vCvC/cti6rqBdeEaTE0AAV3r96iPmTzHT9JFnMMVhXQ7lrZ23R/kMTg4/wqhPtW6viTGT5bky5+IHp1w+g98e52XYOAV24YhUWGhTfzUr4L466PIPyOtcCIjkPcZMk8eLy2xFeu9CmpnEP3veYdmxZJH6JOm/YuATqJ+kpZpevnyGJ62mOzz/B5UW0IX05u9vnOh9aie8WoTI8Cgnl7h543P/cQsy9zMltI9neZRIW0o7/z9PwRzudUZFp5+7nu4vq2pShdnFV5VSM1li/o9F1ztdaXSkRvfO5Qfa8mj9XEHhw+HjLzTdJ1fGfcfjfbq9UFVbktARrHB/1kmt8EzJqxonJtZLov+LSbWcaTcNSnCpNuQgpolVUlb1YYzMPZtQGy/yUC4olqUc1Dyedji1To2nc+3On2nDixzMVz3FQ1T3FQngYLfpSn7CbpXyCYmWiZGdPXBStIM/vpFgNbpqrpCny4Hp6skcCfnDjUBA7lTn2sn0dH53tWUpK/acVUeT87dWJ7mpb4244ZJirUbFO2asKkApKph7a9kQYGQ0GUgHaTFlBf3AgiGyQmAem/cTofsFX5BumQZerQOrKro5WmOaqWmuwjf19UXJrPrzUBAf0h2Re/X5DzKxQ14C5JS6jwiTDh9PImlFhRG+5galmw=
+  file:
+    - "remark-lint.js"
+    - "remark-lint.min.js"
+  on:
+    tags: true

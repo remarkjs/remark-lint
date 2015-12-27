@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.0.2 / 2015-12-27
+==================
+
+*   Fix hard-break-spaces in indented blocks ([a427c59](https://github.com/wooorm/remark-lint/commit/a427c59))
+
 2.0.1 / 2015-12-26
 ==================
 

@@ -1214,7 +1214,8 @@ describe('Rules', function () {
     describeRule('hard-break-spaces', function () {
         describeSetting(true, function () {
             assertFile('hard-break-spaces-invalid.md', [
-                'hard-break-spaces-invalid.md:1:25-2:1: Use two spaces for hard line breaks'
+                'hard-break-spaces-invalid.md:1:25-2:1: Use two spaces for hard line breaks',
+                'hard-break-spaces-invalid.md:4:40-5:5: Use two spaces for hard line breaks'
             ]);
 
             assertFile('hard-break-spaces-valid.md', []);

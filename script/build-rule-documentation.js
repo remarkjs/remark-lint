@@ -70,15 +70,38 @@ children.push({
  * Add main description.
  */
 
-children.push({
-    'type': 'paragraph',
-    'children': [{
-        'type': 'text',
-        'value': 'This document describes all available rules, what they\n' +
-            'check for, examples of what they warn for, and how to\n' +
-            'fix their warnings.'
-    }]
-});
+children.push(
+    {
+        'type': 'paragraph',
+        'children': [{
+            'type': 'text',
+            'value': 'This document describes all available rules, what they\n' +
+                'check for, examples of what they warn for, and how to\n' +
+                'fix their warnings.'
+        }]
+    },
+    {
+        'type': 'paragraph',
+        'children': [
+            {
+                'type': 'text',
+                'value': 'See the readme for a '
+            },
+            {
+                'type': 'link',
+                'href': 'https://github.com/wooorm/remark-lint#list-of-external-rules',
+                'children': [{
+                    'type': 'text',
+                    'value': 'list of external rules'
+                }]
+            },
+            {
+                'type': 'text',
+                'value': '.'
+            }
+        ]
+    }
+);
 
 /*
  * Add the table-of-contents heading.

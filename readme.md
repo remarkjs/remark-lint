@@ -22,6 +22,7 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/rem
 *   [Configuring remark-lint](#configuring-remark-lint)
 *   [Using remark to fix your markdown](#using-remark-to-fix-your-markdown)
 *   [Editor Integrations](#editor-integrations)
+*   [List of External Rules](#list-of-external-rules)
 *   [Related](#related)
 *   [License](#license)
 
@@ -157,13 +158,33 @@ and I strongly suggest checking out how it can make your life easier :+1:
 
 ## Editor Integrations
 
-Currently, **remark-lint** is integrated with Atom through [**leipert/linter-markdown**](https://atom.io/packages/linter-markdown).
+Currently, **remark-lint** is integrated with Atom through [**linter-markdown**](https://atom.io/packages/linter-markdown).
 
 I’m very interested in more integrations. Let me know if I can help.
 
+## List of External Rules
+
+*   [`chcokr/mdast-lint-sentence-newline`](https://github.com/chcokr/mdast-lint-sentence-newline)
+    — Ensure sentences are followed by a newline;
+
+*   [`vhf/remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
+    — Ensure list items are in alphabetical order;
+
+*   [`vhf/remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
+    — Ensure a specific number of lines between blocks;
+
+*   [`vhf/remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
+    — Ensure links in lists of books follow a standard format;
+
+*   [`vhf/remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
+    — Ensure every heading is followed by content (forming a section);
+
+*   [`vhf/remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
+    — Ensure that the `href` of links has no trailing slash.
+
 ## Related
 
-*   [`remark-validate-links`](https://github.com/wooorm/remark-validate-links)
+*   [`wooorm/remark-validate-links`](https://github.com/wooorm/remark-validate-links)
     — Validate if links point to existing headings and files in markdown.
 
 ## License

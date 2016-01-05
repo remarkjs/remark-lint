@@ -3,8 +3,8 @@
     "description": "By default, all rules are turned on unless explicitly set to `false`.\nWhen `reset: true`, the opposite is true: all rules are turned off,\nunless when given a non-nully and non-false value.\n\nOptions: `boolean`, default: `false`.",
     "example": "<!-- Explicitly activate rules: -->\n```json\n{\n  \"reset\": true,\n  \"final-newline\": true\n}\n```\n"
   },
-  "externals": {
-    "description": "Externals contains a list of extra rules to load.\nThese are, or refer to, an object mapping `ruleId`s to rules.\n\nNote that in node.js, a string can be given (a module\nname or a file), but in the browser an object must be passed in.",
-    "example": "<!-- Load more rules -->\n```json\n{\n  \"externals\": [\"foo\", \"bar\", \"baz\"]\n}\n```\n"
+  "external": {
+    "description": "External contains a list of extra rules to load.\nThese are, or refer to, an object mapping `ruleId`s to rules.\n\nNote that in node.js, a string can be given (a module\nname or a file), but in the browser an object must be passed in.",
+    "example": "<!-- Load more rules -->\n```json\n{\n  \"external\": [\"foo\", \"bar\", \"baz\"]\n}\n```\n"
   }
 }

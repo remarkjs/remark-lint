@@ -10,7 +10,7 @@ See the readme for a [list of external rules](https://github.com/wooorm/remark-l
 
 *   [Rules](#rules)
 
-    *   [externals](#externals)
+    *   [external](#external)
     *   [reset](#reset)
     *   [blockquote-indentation](#blockquote-indentation)
     *   [checkbox-character-style](#checkbox-character-style)
@@ -74,18 +74,18 @@ Remember that rules can always be turned off by
 passing false. In addition, when reset is given, values can
 be null or undefined in order to be ignored.
 
-### externals
+### external
 
 ````md
         <!-- Load more rules -->
         ```json
         {
-          "externals": ["foo", "bar", "baz"]
+          "external": ["foo", "bar", "baz"]
         }
         ```
 ````
 
-Externals contains a list of extra rules to load.
+External contains a list of extra rules to load.
 These are, or refer to, an object mapping `ruleId`s to rules.
 
 Note that in node.js, a string can be given (a module
@@ -225,7 +225,7 @@ Options: `boolean`, default: `false`.
 
   Warn when code-blocks do not adhere to a given style.
 
-  Options: `string`, either `'consistent'`, `'fences'`, or `'indented'`,
+  Options: `string`, either `'consistent'`, `'fenced'`, or `'indented'`,
   default: `'consistent'`.
 
   The default value, `consistent`, detects the first used code-block

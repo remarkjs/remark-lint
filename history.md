@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.0.3 / 2016-01-06
+==================
+
+*   Fix silent warnings for invalid options ([aada8e8](https://github.com/wooorm/remark-lint/commit/aada8e8))
+*   Add list of external rules to `readme.md` ([298b33a](https://github.com/wooorm/remark-lint/commit/298b33a))
+
 2.0.2 / 2015-12-27
 ==================
 

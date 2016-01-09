@@ -40,7 +40,7 @@ compressed](https://github.com/wooorm/remark-lint/releases).
 
 ## Command line
 
-![Example of how remark-lint looks on screen](https://cdn.rawgit.com/wooorm/remark-lint/master/screen-shot.png)
+![Example of how remark-lint looks on screen](https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png)
 
 Use remark-lint together with remark:
 

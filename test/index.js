@@ -1733,6 +1733,16 @@ describe('Rules', function () {
         });
     });
 
+    describeRule('no-unused-definitions', function () {
+        describeSetting(true, function () {
+            assertFile('no-unused-definitions-invalid.md', [
+                'no-unused-definitions-invalid.md:1:1-1:27: Found unused definition'
+            ]);
+
+            assertFile('no-unused-definitions-valid.md', []);
+        });
+    });
+
     describeRule('fenced-code-marker', function () {
         describeSetting(true, function () {
             assertFile('fenced-code-marker-tick.md', []);

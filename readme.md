@@ -53,27 +53,21 @@ Let’s say `example.md` looks as follows:
 ```md
 * Hello
 
--   World
+[World][]
 ```
 
 Then, to run **remark-lint** on `example.md`:
 
 ```bash
-remark -u remark-lint example.md
+remark example.md -u remark-lint
 #
 # Yields:
 #
 # example.md
-#   1:3  warning  Incorrect list-item content indent: add 2 spaces  list-item-indent
-#   3:1  warning  Invalid ordered list item marker: should be `*`   unordered-list-marker-style
+#         1:3  warning  Incorrect list-item indent: add 2 spaces  list-item-indent
+#    3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
 #
-# ✖ 2 problems (0 errors, 2 warnings)
-#
-# *   Hello
-#
-#
-# *   World
-#
+# ⚠ 2 warnings
 ```
 
 See [doc/rules.md](doc/rules.md) for what those warnings are (and how to

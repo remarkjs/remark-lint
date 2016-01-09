@@ -59,6 +59,7 @@ See the readme for a [list of external rules](https://github.com/wooorm/remark-l
     *   [no-shortcut-reference-link](#no-shortcut-reference-link)
     *   [no-table-indentation](#no-table-indentation)
     *   [no-tabs](#no-tabs)
+    *   [no-undefined-references](#no-undefined-references)
     *   [no-unused-definitions](#no-unused-definitions)
     *   [ordered-list-marker-style](#ordered-list-marker-style)
     *   [ordered-list-marker-value](#ordered-list-marker-value)
@@ -1054,6 +1055,20 @@ Options: `boolean`, default: `false`.
 ```
 
   Warn when hard-tabs instead of spaces
+
+### no-undefined-references
+
+```md
+  <!-- Valid: -->
+  [foo][]
+
+  [foo]: https://example.com
+
+  <!-- Invalid: -->
+  [bar][]
+```
+
+  Warn when references to undefined definitions are found.
 
 ### no-unused-definitions
 

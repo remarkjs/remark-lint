@@ -1733,6 +1733,16 @@ describe('Rules', function () {
         });
     });
 
+    describeRule('no-undefined-references', function () {
+        describeSetting(true, function () {
+            assertFile('no-undefined-references-invalid.md', [
+                'no-undefined-references-invalid.md:1:1-1:8: Found reference to undefined definition'
+            ]);
+
+            assertFile('no-undefined-references-valid.md', []);
+        });
+    });
+
     describeRule('no-unused-definitions', function () {
         describeSetting(true, function () {
             assertFile('no-unused-definitions-invalid.md', [

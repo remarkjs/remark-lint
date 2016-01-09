@@ -2,6 +2,18 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.1.0 / 2016-01-09
+==================
+
+*   Update `readme.md` to reflect `screenshot.png` ([b2c4637](https://github.com/wooorm/remark-lint/commit/b2c4637))
+*   Rename `screen-shot.png` to `screenshot.png` ([9c48497](https://github.com/wooorm/remark-lint/commit/9c48497))
+*   Update `screen-shot.png` ([cf8ede7](https://github.com/wooorm/remark-lint/commit/cf8ede7))
+*   Add `no-undefined-references` rule ([8f6e055](https://github.com/wooorm/remark-lint/commit/8f6e055))
+*   Fix typo ([2c628f2](https://github.com/wooorm/remark-lint/commit/2c628f2))
+*   Add `no-unused-definitions` rule ([bde77ab](https://github.com/wooorm/remark-lint/commit/bde77ab))
+*   Update browserify ([43042ea](https://github.com/wooorm/remark-lint/commit/43042ea))
+*   Rename `sentence-newline` external rule to remark ([7ff9b74](https://github.com/wooorm/remark-lint/commit/7ff9b74))
+
 2.0.3 / 2016-01-06
 ==================
 

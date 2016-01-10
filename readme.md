@@ -158,7 +158,7 @@ I’m very interested in more integrations. Let me know if I can help.
 
 ## List of External Rules
 
-*   [`chcokr/remark-lint-sentence-newline`](https://github.com/chcokr/mdast-lint-sentence-newline)
+*   [`chcokr/remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
     — Ensure sentences are followed by a newline;
 
 *   [`vhf/remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)

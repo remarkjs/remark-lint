@@ -93,6 +93,9 @@ These are, or refer to, an object mapping `ruleId`s to rules.
 Note that in node.js, a string can be given (a module
 name or a file), but in the browser an object must be passed in.
 
+When using a globally installed remark-lint, globally installed external
+rules are also loaded.
+
 ### reset
 
 ````md

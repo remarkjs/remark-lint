@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.2.0 / 2016-01-13
+==================
+
+*   Add support for global externals when running globally ([589b4d7](https://github.com/wooorm/remark-lint/commit/589b4d7))
+
 2.1.0 / 2016-01-09
 ==================
 

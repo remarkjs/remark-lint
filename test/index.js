@@ -1297,7 +1297,17 @@ describe('Rules', function () {
                 'list-item-indent-space.md:29:4: Incorrect list-item indent: add 1 space',
                 'list-item-indent-space.md:32:4: Incorrect list-item indent: add 1 space',
                 'list-item-indent-space.md:37:4: Incorrect list-item indent: add 1 space',
-                'list-item-indent-space.md:43:4: Incorrect list-item indent: add 1 space'
+                'list-item-indent-space.md:43:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:54:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:55:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:56:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:57:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:58:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:59:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:60:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:61:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:62:4: Incorrect list-item indent: add 1 space',
+                'list-item-indent-space.md:63:4: Incorrect list-item indent: add 1 space'
             ]);
 
             assertFile('list-item-indent-mixed.md', [

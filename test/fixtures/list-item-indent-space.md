@@ -48,3 +48,16 @@ And an extra test for numbers:
 
 11. baz
     3
+
+And many items:
+
+1. One
+1. Two
+1. Three
+1. Four
+1. Five
+1. Six
+1. Seven
+1. Eight
+1. Nine
+1. Ten

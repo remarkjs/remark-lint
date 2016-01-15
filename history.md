@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.2.1 / 2016-01-15
+==================
+
+*   Fix `list-item-indent` for non-incremented lists ([`e708a1c`](https://github.com/wooorm/remark-lint/commit/e708a1c))
+
 2.2.0 / 2016-01-13
 ==================
 

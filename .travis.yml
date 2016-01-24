@@ -17,3 +17,4 @@ deploy:
     - "remark-lint.min.js"
   on:
     tags: true
+    node: '5.0'

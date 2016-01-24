@@ -161,8 +161,10 @@ I’m very interested in more integrations. Let me know if I can help.
 
 ## List of External Rules
 
-*   [`chcokr/remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
-    — Ensure sentences are followed by a newline;
+<!--
+This list is ordered based on the name without prefix, so
+excluding `remark-lint-no-` or `remark-lint-`
+-->
 
 *   [`vhf/remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
     — Ensure list items are in alphabetical order;
@@ -175,6 +177,9 @@ I’m very interested in more integrations. Let me know if I can help.
 
 *   [`vhf/remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
     — Ensure every heading is followed by content (forming a section);
+
+*   [`chcokr/remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
+    — Ensure sentences are followed by a newline;
 
 *   [`vhf/remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash.

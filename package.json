@@ -9,7 +9,11 @@
     "validate",
     "remark"
   ],
-  "repository": "wooorm/remark-lint",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/remark-lint.git"
+  },
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
     "decamelize": "^1.0.0",

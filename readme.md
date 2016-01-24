@@ -175,6 +175,10 @@ excluding `remark-lint-no-` or `remark-lint-`
 *   [`vhf/remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
     — Ensure links in lists of books follow a standard format;
 
+*   [`Qard/remark-lint-code`](https://github.com/Qard/remark-lint-code)
+    — Lint fenced code blocks by corresponding language tags,
+    currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint).
+
 *   [`vhf/remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
     — Ensure every heading is followed by content (forming a section);
 

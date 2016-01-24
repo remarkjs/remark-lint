@@ -16,6 +16,7 @@ var assert = require('assert');
 var remark = require('remark');
 var File = require('vfile');
 var toc = require('remark-toc');
+var github = require('remark-github');
 var lint = require('..');
 var plural = require('plur');
 var clean = require('./clean');
@@ -297,6 +298,24 @@ describe('Gaps', function () {
         processor.process(file, function (err) {
             assert(file.messages.length === 0);
 
+            done(err);
+        });
+    });
+});
+
+/*
+ * Validate only “real” links are warned about.
+ */
+
+describe('GitHub', function () {
+    it('should supports gaps in a document', function (done) {
+        var file = toFile('remark-github.md');
+        var processor = remark().use(github).use(lint);
+
+        file.quiet = true;
+
+        processor.process(file, function (err) {
+            assert(file.messages.length === 0);
             done(err);
         });
     });

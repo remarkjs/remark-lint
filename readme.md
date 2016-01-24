@@ -1,6 +1,7 @@
-# ![remark-lint](https://cdn.rawgit.com/wooorm/remark-lint/master/logo.svg)
+# ![remark-lint][logo]
 
-[![Build Status](https://img.shields.io/travis/wooorm/remark-lint.svg)](https://travis-ci.org/wooorm/remark-lint) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg)](https://codecov.io/github/wooorm/remark-lint)
+[![Build Status][travis-badge]][travis-ci]
+[![Coverage Status][coverage-badge]][coverage-ci]
 
 **remark-lint** is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will
@@ -9,8 +10,8 @@ sure less refactoring is needed afterwards. What is quality? That’s up to you,
 but the defaults are sensible :ok\_hand:.
 
 **remark-lint** has lots of tests.  Supports Node, io.js, and the browser.
-100% coverage.  50+ rules.  It’s built on [**remark**](https://github.com/wooorm/remark),
-a powerful markdown processor powered by [plugins](https://github.com/wooorm/remark/blob/master/doc/plugins.md)
+100% coverage.  50+ rules.  It’s built on [**remark**][remark],
+a powerful markdown processor powered by [plugins][remark-plugins]
 (such as this one).
 
 ## Table of Contents
@@ -28,19 +29,19 @@ a powerful markdown processor powered by [plugins](https://github.com/wooorm/rem
 
 ## Installation
 
-[npm](https://docs.npmjs.com/cli/install):
+[npm][npm-install]:
 
 ```bash
 npm install remark-lint
 ```
 
-**remark-lint** is also available for [duo](http://duojs.org/#getting-started),
+**remark-lint** is also available for [duo][duo-install],
 and as an AMD, CommonJS, and globals module, [uncompressed and
-compressed](https://github.com/wooorm/remark-lint/releases).
+compressed][releases].
 
 ## Command line
 
-![Example of how remark-lint looks on screen](https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png)
+![Example of how remark-lint looks on screen][screenshot]
 
 Use remark-lint together with remark:
 
@@ -70,24 +71,24 @@ remark example.md -u remark-lint
 # ⚠ 2 warnings
 ```
 
-See [doc/rules.md](doc/rules.md) for what those warnings are (and how to
+See [`doc/rules.md`][rules] for what those warnings are (and how to
 turn them off).
 
 ## Programmatic
 
-[doc/api.md](doc/api.md) describes how to use **remark-lint**’s
+[`doc/api.md`][api] describes how to use **remark-lint**’s
 programatic interface in JavaScript.
 
 ## Rules
 
-[doc/rules.md](doc/rules.md) describes all available rules, what they check
+[`doc/rules.md`][rules] describes all available rules, what they check
 for, examples of markdown they warn for, and how to fix their warnings.
 
 ## Configuring remark-lint
 
 **remark-lint** is just a **remark** plug-in.  Meaning, you can opt to
 configure using configuration files.  Read more about these files
-(`.remarkrc` or `package.json`) in [**remark**’s docs](https://github.com/wooorm/remark/blob/master/doc/remarkrc.5.md).
+(`.remarkrc` or `package.json`) in [**remark**’s docs][remarkrc].
 
 An example `.remarkrc` file could look as follows:
 
@@ -109,7 +110,8 @@ An example `.remarkrc` file could look as follows:
 
 Where the object at `plugins.lint` is a map of `ruleId`s and their values.
 The object at `settings` determines how **remark** parses (and compiles)
-markdown code.  Read more about the latter on [**remark**’s readme](https://github.com/wooorm/remark#remarkprocessvalue-options-done).
+markdown code.  Read more about the latter on [**remark**’s
+readme][remark-process].
 
 In addition, you can also provide configuration comments to turn a rule
 on or off inside a file (note that you cannot change what a setting, such as
@@ -152,7 +154,8 @@ and I strongly suggest checking out how it can make your life easier :+1:
 
 ## Editor Integrations
 
-Currently, **remark-lint** is integrated with Atom through [**linter-markdown**](https://atom.io/packages/linter-markdown).
+Currently, **remark-lint** is integrated with Atom through
+[**linter-markdown**][linter-markdown].
 
 I’m very interested in more integrations. Let me know if I can help.
 
@@ -183,4 +186,42 @@ I’m very interested in more integrations. Let me know if I can help.
 
 ## License
 
-[MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
+[MIT][license] © [Titus Wormer][author]
+
+<!-- Definitions -->
+
+[travis-badge]: https://img.shields.io/travis/wooorm/remark-lint.svg
+
+[travis-ci]: https://travis-ci.org/wooorm/remark-lint
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg
+
+[coverage-ci]: https://codecov.io/github/wooorm/remark-lint
+
+[npm-install]: https://docs.npmjs.com/cli/install
+
+[duo-install]: http://duojs.org/#getting-started
+
+[releases]: https://github.com/wooorm/remark-lint/releases
+
+[author]: http://wooorm.com
+
+[logo]: https://cdn.rawgit.com/wooorm/remark-lint/master/logo.svg
+
+[screenshot]: https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png
+
+[rules]: doc/rules.md
+
+[api]: doc/api.md
+
+[license]: LICENSE
+
+[remark]: https://github.com/wooorm/remark
+
+[remark-plugins]: https://github.com/wooorm/remark/blob/master/doc/plugins.md
+
+[remarkrc]: https://github.com/wooorm/remark/blob/master/doc/remarkrc.5.md
+
+[remark-process]: https://github.com/wooorm/remark#remarkprocessvalue-options-done
+
+[linter-markdown]: https://atom.io/packages/linter-markdown

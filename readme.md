@@ -96,10 +96,9 @@ An example `.remarkrc` file could look as follows:
 {
   "plugins": {
     "lint": {
-        "no-multiple-toplevel-headings": false,
-        "maximum-line-length": 79,
-        "emphasis-marker": "_",
-        "strong-marker": "*"
+      "no-multiple-toplevel-headings": false,
+      "list-item-indent": false,
+      "maximum-line-length": 79
     }
   },
   "settings": {
@@ -108,10 +107,32 @@ An example `.remarkrc` file could look as follows:
 }
 ```
 
-Where the object at `plugins.lint` is a map of `ruleId`s and their values.
-The object at `settings` determines how **remark** parses (and compiles)
-markdown code.  Read more about the latter on [**remark**’s
-readme][remark-process].
+Where the object at `plugins.lint` is a map of `ruleId`s and their values. The
+object at `settings` determines how **remark** parses (and compiles)
+markdown code. Read more about the latter on
+[**remark**’s readme][remark-process].
+
+Using our `example.md` from before:
+
+```md
+* Hello
+
+[World][]
+```
+
+We now run the below command _without_ the `-u remark-lint` since
+our `.remarkrc` includes the lint plugin.
+
+```bash
+remark example.md
+#
+# Yields:
+#
+# example.md
+#    3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
+#
+# ⚠ 2 warnings
+```
 
 In addition, you can also provide configuration comments to turn a rule
 on or off inside a file. Note that you cannot change what a setting,

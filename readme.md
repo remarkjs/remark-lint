@@ -108,10 +108,33 @@ An example `.remarkrc` file could look as follows:
 }
 ```
 
-Where the object at `plugins.lint` is a map of `ruleId`s and their values.
-The object at `settings` determines how **remark** parses (and compiles)
-markdown code.  Read more about the latter on [**remark**’s
-readme][remark-process].
+Where the object at `plugins.lint` is a map of `ruleId`s and their values. The
+object at `settings` determines how **remark** parses (and compiles)
+markdown code. Read more about the latter on
+[**remark**’s readme][remark-process].
+
+Using our `example.md` from before:
+
+```md
+* Hello
+
+[World][]
+```
+
+We now simply run the below command _without_ the `-u remark-lint` since
+our `.remarkrc` includes the lint plugin.
+
+```bash
+remark example.md
+#
+# Yields:
+#
+# example.md
+#         1:3  warning  Incorrect list-item indent: add 2 spaces  list-item-indent
+#    3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
+#
+# ⚠ 2 warnings
+```
 
 In addition, you can also provide configuration comments to turn a rule
 on or off inside a file. Note that you cannot change what a setting,

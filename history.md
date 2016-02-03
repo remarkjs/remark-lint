@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.3.1 / 2016-02-03
+==================
+
+*   Fix Travis deploy to GitHub Releases ([`203367c`](https://github.com/wooorm/remark-lint/commit/203367c))
+
 2.3.0 / 2016-02-03
 ==================
 

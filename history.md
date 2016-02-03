@@ -2,6 +2,13 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.3.0 / 2016-02-03
+==================
+
+*   Update support for configuration comments ([`870cb99`](https://github.com/wooorm/remark-lint/commit/870cb99))
+*   Fix literal URL and blank lines detection ([`b6309f0`](https://github.com/wooorm/remark-lint/commit/b6309f0))
+*   Add `remark-lint-code` to list of external rules ([`a81e82b`](https://github.com/wooorm/remark-lint/commit/a81e82b))
+
 2.2.1 / 2016-01-15
 ==================
 

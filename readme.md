@@ -114,8 +114,10 @@ markdown code.  Read more about the latter on [**remark**’s
 readme][remark-process].
 
 In addition, you can also provide configuration comments to turn a rule
-on or off inside a file (note that you cannot change what a setting, such as
-`maximum-line-length`, you’re either enabling or disabling warnings).
+on or off inside a file. Note that you cannot change what a setting,
+such as `maximum-line-length`, checks for, as you’re either enabling
+or disabling warnings). Read more about configuration comments in
+[**remark-message-control**][message-control]s documentation.
 
 The following file will warn twice for the duplicate headings:
 
@@ -234,3 +236,5 @@ excluding `remark-lint-no-` or `remark-lint-`
 [remark-process]: https://github.com/wooorm/remark#remarkprocessvalue-options-done
 
 [linter-markdown]: https://atom.io/packages/linter-markdown
+
+[message-control]: https://github.com/wooorm/remark-message-control#markers

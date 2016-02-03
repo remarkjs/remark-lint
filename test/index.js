@@ -357,7 +357,7 @@ describe('Comments', function () {
 
     describe('Invalid comments', function () {
         assertFile('comments-invalid-keyword.md', [
-            'comments-invalid-keyword.md:3:1-3:20: Unknown lint keyword `foo`: use either `\'enable\'` or `\'disable\'`'
+            'comments-invalid-keyword.md:3:1-3:20: Unknown keyword `foo`: expected `\'enable\'`, `\'disable\'`, or `\'ignore\'`'
         ], null, {
             'reset': true
         });

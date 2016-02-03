@@ -17,13 +17,13 @@
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
     "decamelize": "^1.0.0",
-    "remark-range": "^2.0.0",
     "mdast-util-heading-style": "^1.0.0",
     "mdast-util-position": "^1.0.0",
     "mdast-util-to-string": "^1.0.0",
-    "mdast-zone": "^2.0.0",
     "npm-prefix": "^1.1.1",
     "plur": "^2.0.0",
+    "remark-message-control": "^1.0.1",
+    "remark-range": "^2.0.0",
     "unist-util-visit": "^1.0.0",
     "vfile-sort": "^1.0.0"
   },

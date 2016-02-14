@@ -2,6 +2,13 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+3.0.0 / 2016-02-14
+==================
+
+*   Remove support for Duo ([`e55fb3a`](https://github.com/wooorm/remark-lint/commit/e55fb3a))
+*   Update for changes in remark@4.0.0 ([`7fde792`](https://github.com/wooorm/remark-lint/commit/7fde792))
+*   Add example for running remark with lint plugin ([`34d19b4`](https://github.com/wooorm/remark-lint/commit/34d19b4))
+
 2.3.1 / 2016-02-03
 ==================
 

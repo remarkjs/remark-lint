@@ -14,7 +14,10 @@
     "url": "https://github.com/wooorm/remark-lint.git"
   },
   "bugs": "https://github.com/wooorm/remark-lint/issues",
-  "author": "Titus Wormer <tituswormer@gmail.com>",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
   "dependencies": {
     "decamelize": "^1.0.0",
     "mdast-util-heading-style": "^1.0.0",

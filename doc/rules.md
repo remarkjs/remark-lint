@@ -178,8 +178,8 @@ Options: `boolean`, default: `false`.
 
 ```json
 {
-   "checked": 'x',
-   "unchecked": ' '
+   "checked": "x",
+   "unchecked": " "
 }
 ```
 

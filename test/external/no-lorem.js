@@ -17,6 +17,12 @@
 
 /* eslint-env commonjs */
 
+/*
+ * Dependencies.
+ */
+
+var vfileLocation = require('vfile-location');
+
 /**
  * Warn when `lorem` is used in a document.
  *
@@ -28,9 +34,10 @@
 function noLorem(ast, file, preferred, done) {
     var content = file.toString();
     var expression = /\blorem\b/gi;
+    var location = vfileLocation(file);
 
     while (expression.exec(content)) {
-        file.warn('Do not use lorem', file.offsetToPosition(expression.lastIndex));
+        file.warn('Do not use lorem', location.toPosition(expression.lastIndex));
     }
 
     done();

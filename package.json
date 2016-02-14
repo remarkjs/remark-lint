@@ -26,8 +26,8 @@
     "npm-prefix": "^1.1.1",
     "plur": "^2.0.0",
     "remark-message-control": "^1.0.1",
-    "remark-range": "^2.0.0",
     "unist-util-visit": "^1.0.0",
+    "vfile-location": "^2.0.0",
     "vfile-sort": "^1.0.0"
   },
   "files": [

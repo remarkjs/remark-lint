@@ -1171,6 +1171,8 @@ Options: `boolean`, default: `false`.
 
   Warn when the horizontal rules violate a given or detected style.
 
+  Note that horizontal rules are also called “thematic break”.
+
   Options: `string`, either a valid markdown rule, or `consistent`,
   default: `'consistent'`.
 

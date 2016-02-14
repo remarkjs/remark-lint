@@ -1658,9 +1658,9 @@ describe('Rules', function () {
 
         describeSetting(true, function () {
             assertFile('rule-style-invalid.md', [
-                'rule-style-invalid.md:7:1-7:10: Horizontal rules should use `* * * *`',
-                'rule-style-invalid.md:11:1-11:6: Horizontal rules should use `* * * *`',
-                'rule-style-invalid.md:15:1-15:5: Horizontal rules should use `* * * *`'
+                'rule-style-invalid.md:7:1-7:10: Rules should use `* * * *`',
+                'rule-style-invalid.md:11:1-11:6: Rules should use `* * * *`',
+                'rule-style-invalid.md:15:1-15:5: Rules should use `* * * *`'
             ]);
 
             assertFile('rule-style-valid.md', []);

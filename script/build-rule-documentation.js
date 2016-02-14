@@ -89,7 +89,7 @@ children.push(
             },
             {
                 'type': 'link',
-                'href': 'https://github.com/wooorm/remark-lint#list-of-external-rules',
+                'url': 'https://github.com/wooorm/remark-lint#list-of-external-rules',
                 'children': [{
                     'type': 'text',
                     'value': 'list of external rules'

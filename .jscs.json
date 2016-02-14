@@ -1,6 +1,5 @@
 {
   "excludeFiles": [
-    "components/",
     "coverage/",
     "node_modules/",
     "remark-lint.js",

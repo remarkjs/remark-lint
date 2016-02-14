@@ -1,7 +1,4 @@
 # `node_modules/` is already ignored.
 
-# Duo’s components include docs.
-components
-
 # Do not process fixtures.
 test

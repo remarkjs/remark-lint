@@ -703,8 +703,8 @@ describe('Rules', function () {
     describeRule('no-emphasis-as-heading', function () {
         describeSetting(true, function () {
             assertFile('no-emphasis-as-heading-invalid.md', [
-                'no-emphasis-as-heading-invalid.md:1:1-1:25: Don’t use emphasis to introduce a section, use a heading',
-                'no-emphasis-as-heading-invalid.md:5:1-5:21: Don’t use emphasis to introduce a section, use a heading'
+                'no-emphasis-as-heading-invalid.md:1:1-1:24: Don’t use emphasis to introduce a section, use a heading',
+                'no-emphasis-as-heading-invalid.md:5:1-5:20: Don’t use emphasis to introduce a section, use a heading'
             ]);
 
             assertFile('no-emphasis-as-heading-valid.md', []);

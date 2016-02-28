@@ -8,6 +8,9 @@ Open the flour sack.
 
 *And this is valid*
 
+* One
+* Two
+
 This is also valid:
 
     foo

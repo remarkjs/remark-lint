@@ -7,7 +7,7 @@
 Ensuring the markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes
 sure less refactoring is needed afterwards. What is quality? That’s up to you,
-but the defaults are sensible :ok\_hand:.
+but the defaults are sensible :ok_hand:.
 
 **remark-lint** has lots of tests.  Supports Node, io.js, and the browser.
 100% coverage.  50+ rules.  It’s built on [**remark**][remark],

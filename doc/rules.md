@@ -754,21 +754,18 @@ Options: `boolean`, default: `false`.
 
 ```md
   <!-- Valid: -->
-  # Foo:
+  # Foo
 
   Bar.
 
   <!-- Invalid: -->
-  *Foo:*
+  *Foo*
 
   Bar.
 ```
 
   Warn when emphasis (including strong), instead of a heading, introduces
   a paragraph.
-
-  Currently, only warns when a colon (`:`) is also included, maybe that
-  could be omitted.
 
 ### no-file-name-articles
 

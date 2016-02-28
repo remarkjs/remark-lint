@@ -1,7 +1,7 @@
-**How to make omelets:**
+**How to make omelets**
 
 Break an egg.
 
-*How to bake bread:*
+*How to bake bread*
 
 Open the flour sack.

@@ -8,67 +8,67 @@ See the readme for a [list of external rules](https://github.com/wooorm/remark-l
 
 ## Table of Contents
 
--   [Rules](#rules)
+*   [Rules](#rules)
 
-    -   [external](#external)
-    -   [reset](#reset)
-    -   [blockquote-indentation](#blockquote-indentation)
-    -   [checkbox-character-style](#checkbox-character-style)
-    -   [checkbox-content-indent](#checkbox-content-indent)
-    -   [code-block-style](#code-block-style)
-    -   [definition-case](#definition-case)
-    -   [definition-spacing](#definition-spacing)
-    -   [emphasis-marker](#emphasis-marker)
-    -   [fenced-code-flag](#fenced-code-flag)
-    -   [fenced-code-marker](#fenced-code-marker)
-    -   [file-extension](#file-extension)
-    -   [final-definition](#final-definition)
-    -   [final-newline](#final-newline)
-    -   [first-heading-level](#first-heading-level)
-    -   [hard-break-spaces](#hard-break-spaces)
-    -   [heading-increment](#heading-increment)
-    -   [heading-style](#heading-style)
-    -   [link-title-style](#link-title-style)
-    -   [list-item-bullet-indent](#list-item-bullet-indent)
-    -   [list-item-content-indent](#list-item-content-indent)
-    -   [list-item-indent](#list-item-indent)
-    -   [list-item-spacing](#list-item-spacing)
-    -   [maximum-heading-length](#maximum-heading-length)
-    -   [maximum-line-length](#maximum-line-length)
-    -   [no-auto-link-without-protocol](#no-auto-link-without-protocol)
-    -   [no-blockquote-without-caret](#no-blockquote-without-caret)
-    -   [no-consecutive-blank-lines](#no-consecutive-blank-lines)
-    -   [no-duplicate-definitions](#no-duplicate-definitions)
-    -   [no-duplicate-headings](#no-duplicate-headings)
-    -   [no-emphasis-as-heading](#no-emphasis-as-heading)
-    -   [no-file-name-articles](#no-file-name-articles)
-    -   [no-file-name-consecutive-dashes](#no-file-name-consecutive-dashes)
-    -   [no-file-name-irregular-characters](#no-file-name-irregular-characters)
-    -   [no-file-name-mixed-case](#no-file-name-mixed-case)
-    -   [no-file-name-outer-dashes](#no-file-name-outer-dashes)
-    -   [no-heading-content-indent](#no-heading-content-indent)
-    -   [no-heading-indent](#no-heading-indent)
-    -   [no-heading-punctuation](#no-heading-punctuation)
-    -   [no-html](#no-html)
-    -   [no-inline-padding](#no-inline-padding)
-    -   [no-literal-urls](#no-literal-urls)
-    -   [no-missing-blank-lines](#no-missing-blank-lines)
-    -   [no-multiple-toplevel-headings](#no-multiple-toplevel-headings)
-    -   [no-shell-dollars](#no-shell-dollars)
-    -   [no-shortcut-reference-image](#no-shortcut-reference-image)
-    -   [no-shortcut-reference-link](#no-shortcut-reference-link)
-    -   [no-table-indentation](#no-table-indentation)
-    -   [no-tabs](#no-tabs)
-    -   [no-undefined-references](#no-undefined-references)
-    -   [no-unused-definitions](#no-unused-definitions)
-    -   [ordered-list-marker-style](#ordered-list-marker-style)
-    -   [ordered-list-marker-value](#ordered-list-marker-value)
-    -   [rule-style](#rule-style)
-    -   [strong-marker](#strong-marker)
-    -   [table-cell-padding](#table-cell-padding)
-    -   [table-pipe-alignment](#table-pipe-alignment)
-    -   [table-pipes](#table-pipes)
-    -   [unordered-list-marker-style](#unordered-list-marker-style)
+    *   [external](#external)
+    *   [reset](#reset)
+    *   [blockquote-indentation](#blockquote-indentation)
+    *   [checkbox-character-style](#checkbox-character-style)
+    *   [checkbox-content-indent](#checkbox-content-indent)
+    *   [code-block-style](#code-block-style)
+    *   [definition-case](#definition-case)
+    *   [definition-spacing](#definition-spacing)
+    *   [emphasis-marker](#emphasis-marker)
+    *   [fenced-code-flag](#fenced-code-flag)
+    *   [fenced-code-marker](#fenced-code-marker)
+    *   [file-extension](#file-extension)
+    *   [final-definition](#final-definition)
+    *   [final-newline](#final-newline)
+    *   [first-heading-level](#first-heading-level)
+    *   [hard-break-spaces](#hard-break-spaces)
+    *   [heading-increment](#heading-increment)
+    *   [heading-style](#heading-style)
+    *   [link-title-style](#link-title-style)
+    *   [list-item-bullet-indent](#list-item-bullet-indent)
+    *   [list-item-content-indent](#list-item-content-indent)
+    *   [list-item-indent](#list-item-indent)
+    *   [list-item-spacing](#list-item-spacing)
+    *   [maximum-heading-length](#maximum-heading-length)
+    *   [maximum-line-length](#maximum-line-length)
+    *   [no-auto-link-without-protocol](#no-auto-link-without-protocol)
+    *   [no-blockquote-without-caret](#no-blockquote-without-caret)
+    *   [no-consecutive-blank-lines](#no-consecutive-blank-lines)
+    *   [no-duplicate-definitions](#no-duplicate-definitions)
+    *   [no-duplicate-headings](#no-duplicate-headings)
+    *   [no-emphasis-as-heading](#no-emphasis-as-heading)
+    *   [no-file-name-articles](#no-file-name-articles)
+    *   [no-file-name-consecutive-dashes](#no-file-name-consecutive-dashes)
+    *   [no-file-name-irregular-characters](#no-file-name-irregular-characters)
+    *   [no-file-name-mixed-case](#no-file-name-mixed-case)
+    *   [no-file-name-outer-dashes](#no-file-name-outer-dashes)
+    *   [no-heading-content-indent](#no-heading-content-indent)
+    *   [no-heading-indent](#no-heading-indent)
+    *   [no-heading-punctuation](#no-heading-punctuation)
+    *   [no-html](#no-html)
+    *   [no-inline-padding](#no-inline-padding)
+    *   [no-literal-urls](#no-literal-urls)
+    *   [no-missing-blank-lines](#no-missing-blank-lines)
+    *   [no-multiple-toplevel-headings](#no-multiple-toplevel-headings)
+    *   [no-shell-dollars](#no-shell-dollars)
+    *   [no-shortcut-reference-image](#no-shortcut-reference-image)
+    *   [no-shortcut-reference-link](#no-shortcut-reference-link)
+    *   [no-table-indentation](#no-table-indentation)
+    *   [no-tabs](#no-tabs)
+    *   [no-undefined-references](#no-undefined-references)
+    *   [no-unused-definitions](#no-unused-definitions)
+    *   [ordered-list-marker-style](#ordered-list-marker-style)
+    *   [ordered-list-marker-value](#ordered-list-marker-value)
+    *   [rule-style](#rule-style)
+    *   [strong-marker](#strong-marker)
+    *   [table-cell-padding](#table-cell-padding)
+    *   [table-pipe-alignment](#table-pipe-alignment)
+    *   [table-pipes](#table-pipes)
+    *   [unordered-list-marker-style](#unordered-list-marker-style)
 
 ## Rules
 
@@ -79,13 +79,12 @@ be null or undefined in order to be ignored.
 ### external
 
 ````md
-    <!-- Load more rules -->
-    ```json
-    {
-      "external": ["foo", "bar", "baz"]
-    }
-    ```
-
+        <!-- Load more rules -->
+        ```json
+        {
+          "external": ["foo", "bar", "baz"]
+        }
+        ```
 ````
 
 External contains a list of extra rules to load.
@@ -100,14 +99,13 @@ rules are also loaded.
 ### reset
 
 ````md
-    <!-- Explicitly activate rules: -->
-    ```json
-    {
-      "reset": true,
-      "final-newline": true
-    }
-    ```
-
+        <!-- Explicitly activate rules: -->
+        ```json
+        {
+          "reset": true,
+          "final-newline": true
+        }
+        ```
 ````
 
 By default, all rules are turned on unless explicitly set to `false`.
@@ -206,28 +204,28 @@ Options: `boolean`, default: `false`.
 ### code-block-style
 
 ````md
-      <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
-         Hello
+          <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
+             Hello
 
-      ...
+          ...
 
-         World
+             World
 
-      <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
-      ```
-      Hello
-      ```
-      ...
-      ```bar
-      World
-      ```
-
-      <!-- Always invalid -->
+          <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
+          ```
           Hello
-      ...
-      ```
-      World
-        ```
+          ```
+          ...
+          ```bar
+          World
+          ```
+
+          <!-- Always invalid -->
+              Hello
+          ...
+          ```
+          World
+            ```
 ````
 
   Warn when code-blocks do not adhere to a given style.
@@ -287,28 +285,28 @@ Options: `boolean`, default: `false`.
 ### fenced-code-flag
 
 ````md
-      <!-- Valid: -->
-      ```hello
-      world();
-      ```
+          <!-- Valid: -->
+          ```hello
+          world();
+          ```
 
-      <!-- Valid: -->
-         Hello
+          <!-- Valid: -->
+             Hello
 
-      <!-- Invalid: -->
-      ```
-      world();
-      ```
+          <!-- Invalid: -->
+          ```
+          world();
+          ```
 
-      <!-- Valid when given `{allowEmpty: true}`: -->
-      ```
-      world();
-      ```
+          <!-- Valid when given `{allowEmpty: true}`: -->
+          ```
+          world();
+          ```
 
-      <!-- Invalid when given `["world"]`: -->
-      ```hello
-      world();
-      ```
+          <!-- Invalid when given `["world"]`: -->
+          ```hello
+          world();
+          ```
 ````
 
   Warn when fenced code blocks occur without language flag.
@@ -326,32 +324,32 @@ Options: `boolean`, default: `false`.
 ### fenced-code-marker
 
 ````md
-      <!-- Valid by default and `` '`' ``: -->
-      ```foo
-      bar();
-      ```
+          <!-- Valid by default and `` '`' ``: -->
+          ```foo
+          bar();
+          ```
 
-      ```
-      baz();
-      ```
+          ```
+          baz();
+          ```
 
-      <!-- Valid by default and `'~'`: -->
-      ~~~foo
-      bar();
-      ~~~
+          <!-- Valid by default and `'~'`: -->
+          ~~~foo
+          bar();
+          ~~~
 
-      ~~~
-      baz();
-      ~~~
+          ~~~
+          baz();
+          ~~~
 
-      <!-- Always invalid: -->
-      ~~~foo
-      bar();
-      ~~~
+          <!-- Always invalid: -->
+          ~~~foo
+          bar();
+          ~~~
 
-      ```
-      baz();
-      ```
+          ```
+          baz();
+          ```
 ````
 
   Warn for violating fenced code markers.
@@ -756,18 +754,21 @@ Options: `boolean`, default: `false`.
 
 ```md
   <!-- Valid: -->
-  # Foo
+  # Foo:
 
   Bar.
 
   <!-- Invalid: -->
-  *Foo*
+  *Foo:*
 
   Bar.
 ```
 
   Warn when emphasis (including strong), instead of a heading, introduces
   a paragraph.
+
+  Currently, only warns when a colon (`:`) is also included, maybe that
+  could be omitted.
 
 ### no-file-name-articles
 
@@ -968,24 +969,24 @@ Options: `boolean`, default: `false`.
 ### no-shell-dollars
 
 ````md
-      <!-- Invalid: -->
-      ```bash
-      $ echo a
-      $ echo a > file
-      ```
+          <!-- Invalid: -->
+          ```bash
+          $ echo a
+          $ echo a > file
+          ```
 
-      <!-- Valid: -->
-      ```sh
-      echo a
-      echo a > file
-      ```
+          <!-- Valid: -->
+          ```sh
+          echo a
+          echo a > file
+          ```
 
-      <!-- Also valid: -->
-      ```zsh
-      $ echo a
-      a
-      $ echo a > file
-      ```
+          <!-- Also valid: -->
+          ```zsh
+          $ echo a
+          a
+          $ echo a > file
+          ```
 ````
 
   Warn when shell code is prefixed by dollar-characters.

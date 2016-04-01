@@ -493,6 +493,14 @@ describe('Rules', function () {
 
             assertFile('first-heading-level-valid.md', []);
         });
+
+        describeSetting(2, function () {
+            assertFile('first-heading-level-invalid-second.md', [
+                'first-heading-level-invalid-second.md:1:1-1:8: First heading level should be `2`'
+            ]);
+
+            assertFile('first-heading-level-valid-second.md', []);
+        });
     });
 
     describeRule('heading-increment', function () {

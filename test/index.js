@@ -493,6 +493,14 @@ describe('Rules', function () {
 
             assertFile('first-heading-level-valid.md', []);
         });
+
+        describeSetting(2, function () {
+            assertFile('first-heading-level-invalid-second.md', [
+                'first-heading-level-invalid-second.md:1:1-1:8: First heading level should be `2`'
+            ]);
+
+            assertFile('first-heading-level-valid-second.md', []);
+        });
     });
 
     describeRule('heading-increment', function () {
@@ -718,6 +726,14 @@ describe('Rules', function () {
             ]);
 
             assertFile('no-multiple-toplevel-headings-valid.md', []);
+        });
+
+        describeSetting(2, function () {
+            assertFile('no-multiple-toplevel-headings-invalid-second.md', [
+                'no-multiple-toplevel-headings-invalid-second.md:4:1-4:11: Don’t use multiple top level headings (4:1)'
+            ]);
+
+            assertFile('no-multiple-toplevel-headings-valid-second.md', []);
         });
     });
 

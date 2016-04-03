@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+3.1.0 / 2016-04-03
+==================
+
+*   Update main heading rules to accept preferred depth ([`7f4a51e`](https://github.com/wooorm/remark-lint/commit/7f4a51e))
+*   Remove `:` requirement for `no-emphasis-as-heading` ([`d54441e`](https://github.com/wooorm/remark-lint/commit/d54441e))
+
 3.0.0 / 2016-02-14
 ==================
 

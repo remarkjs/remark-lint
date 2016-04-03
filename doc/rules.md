@@ -952,18 +952,20 @@ Options: `boolean`, default: `false`.
 ### no-multiple-toplevel-headings
 
 ```md
-  <!-- Invalid: -->
+  <!-- Invalid, when set to `1` -->
   # Foo
 
   # Bar
 
-  <!-- Valid: -->
+  <!-- Valid, when set to `1` -->
   # Foo
 
   ## Bar
 ```
 
   Warn when multiple top-level headings are used.
+
+  Options: `number`, default: `1`.
 
 ### no-shell-dollars
 

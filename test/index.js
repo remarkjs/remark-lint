@@ -727,6 +727,14 @@ describe('Rules', function () {
 
             assertFile('no-multiple-toplevel-headings-valid.md', []);
         });
+
+        describeSetting(2, function () {
+            assertFile('no-multiple-toplevel-headings-invalid-second.md', [
+                'no-multiple-toplevel-headings-invalid-second.md:4:1-4:11: Don’t use multiple top level headings (4:1)'
+            ]);
+
+            assertFile('no-multiple-toplevel-headings-valid-second.md', []);
+        });
     });
 
     describeRule('no-literal-urls', function () {

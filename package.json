@@ -42,7 +42,7 @@
     "istanbul": "^0.4.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
-    "remark": "^4.0.0-alpha.4",
+    "remark": "^4.0.0",
     "remark-comment-config": "^3.0.0",
     "remark-github": "^4.0.1",
     "remark-toc": "^3.0.0",

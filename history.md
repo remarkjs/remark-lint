@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+3.2.0 / 2016-04-04
+==================
+
+*   Add support for global externals in Electron ([`2b31591`](https://github.com/wooorm/remark-lint/commit/2b31591))
+
 3.1.0 / 2016-04-03
 ==================
 

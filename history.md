@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+3.2.1 / 2016-04-26
+==================
+
+*   Fix incorrect error in `no-heading-content-indent` ([`1f2e9a8`](https://github.com/wooorm/remark-lint/commit/1f2e9a8))
+*   Fix CRLF line-endings in `hard-break-spaces` ([`31f5069`](https://github.com/wooorm/remark-lint/commit/31f5069))
+
 3.2.0 / 2016-04-04
 ==================
 

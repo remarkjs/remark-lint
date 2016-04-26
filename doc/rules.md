@@ -79,12 +79,12 @@ be null or undefined in order to be ignored.
 ### external
 
 ````md
-        <!-- Load more rules -->
-        ```json
-        {
-          "external": ["foo", "bar", "baz"]
-        }
-        ```
+            <!-- Load more rules -->
+            ```json
+            {
+              "external": ["foo", "bar", "baz"]
+            }
+            ```
 ````
 
 External contains a list of extra rules to load.
@@ -99,13 +99,13 @@ rules are also loaded.
 ### reset
 
 ````md
-        <!-- Explicitly activate rules: -->
-        ```json
-        {
-          "reset": true,
-          "final-newline": true
-        }
-        ```
+            <!-- Explicitly activate rules: -->
+            ```json
+            {
+              "reset": true,
+              "final-newline": true
+            }
+            ```
 ````
 
 By default, all rules are turned on unless explicitly set to `false`.
@@ -204,28 +204,28 @@ Options: `boolean`, default: `false`.
 ### code-block-style
 
 ````md
-          <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
-             Hello
+              <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
+                 Hello
 
-          ...
+              ...
 
-             World
+                 World
 
-          <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
-          ```
-          Hello
-          ```
-          ...
-          ```bar
-          World
-          ```
-
-          <!-- Always invalid -->
+              <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
+              ```
               Hello
-          ...
-          ```
-          World
-            ```
+              ```
+              ...
+              ```bar
+              World
+              ```
+
+              <!-- Always invalid -->
+                  Hello
+              ...
+              ```
+              World
+                ```
 ````
 
   Warn when code-blocks do not adhere to a given style.
@@ -285,28 +285,28 @@ Options: `boolean`, default: `false`.
 ### fenced-code-flag
 
 ````md
-          <!-- Valid: -->
-          ```hello
-          world();
-          ```
+              <!-- Valid: -->
+              ```hello
+              world();
+              ```
 
-          <!-- Valid: -->
-             Hello
+              <!-- Valid: -->
+                 Hello
 
-          <!-- Invalid: -->
-          ```
-          world();
-          ```
+              <!-- Invalid: -->
+              ```
+              world();
+              ```
 
-          <!-- Valid when given `{allowEmpty: true}`: -->
-          ```
-          world();
-          ```
+              <!-- Valid when given `{allowEmpty: true}`: -->
+              ```
+              world();
+              ```
 
-          <!-- Invalid when given `["world"]`: -->
-          ```hello
-          world();
-          ```
+              <!-- Invalid when given `["world"]`: -->
+              ```hello
+              world();
+              ```
 ````
 
   Warn when fenced code blocks occur without language flag.
@@ -324,32 +324,32 @@ Options: `boolean`, default: `false`.
 ### fenced-code-marker
 
 ````md
-          <!-- Valid by default and `` '`' ``: -->
-          ```foo
-          bar();
-          ```
+              <!-- Valid by default and `` '`' ``: -->
+              ```foo
+              bar();
+              ```
 
-          ```
-          baz();
-          ```
+              ```
+              baz();
+              ```
 
-          <!-- Valid by default and `'~'`: -->
-          ~~~foo
-          bar();
-          ~~~
+              <!-- Valid by default and `'~'`: -->
+              ~~~foo
+              bar();
+              ~~~
 
-          ~~~
-          baz();
-          ~~~
+              ~~~
+              baz();
+              ~~~
 
-          <!-- Always invalid: -->
-          ~~~foo
-          bar();
-          ~~~
+              <!-- Always invalid: -->
+              ~~~foo
+              bar();
+              ~~~
 
-          ```
-          baz();
-          ```
+              ```
+              baz();
+              ```
 ````
 
   Warn for violating fenced code markers.
@@ -970,24 +970,24 @@ Options: `boolean`, default: `false`.
 ### no-shell-dollars
 
 ````md
-          <!-- Invalid: -->
-          ```bash
-          $ echo a
-          $ echo a > file
-          ```
+              <!-- Invalid: -->
+              ```bash
+              $ echo a
+              $ echo a > file
+              ```
 
-          <!-- Valid: -->
-          ```sh
-          echo a
-          echo a > file
-          ```
+              <!-- Valid: -->
+              ```sh
+              echo a
+              echo a > file
+              ```
 
-          <!-- Also valid: -->
-          ```zsh
-          $ echo a
-          a
-          $ echo a > file
-          ```
+              <!-- Also valid: -->
+              ```zsh
+              $ echo a
+              a
+              $ echo a > file
+              ```
 ````
 
   Warn when shell code is prefixed by dollar-characters.

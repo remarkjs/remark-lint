@@ -7,3 +7,7 @@ Foo
 
 Bar
 =====
+
+<!-- Empty headers are fine -->
+
+#####

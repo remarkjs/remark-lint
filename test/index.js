@@ -1415,13 +1415,13 @@ describe('Rules', function () {
     describeRule('list-item-spacing', function () {
         describeSetting(true, function () {
             assertFile('list-item-spacing-tight-invalid.md', [
-                 'list-item-spacing-tight-invalid.md:2:1-3:1: List item should be tight, isn’t',
-                 'list-item-spacing-tight-invalid.md:4:1-5:1: List item should be tight, isn’t'
+                 'list-item-spacing-tight-invalid.md:2:1-3:1: Extraneous new line after list item',
+                 'list-item-spacing-tight-invalid.md:4:1-5:1: Extraneous new line after list item'
             ]);
 
             assertFile('list-item-spacing-loose-invalid.md', [
-                 'list-item-spacing-loose-invalid.md:2:9-3:1: List item should be loose, isn’t',
-                 'list-item-spacing-loose-invalid.md:3:11-4:1: List item should be loose, isn’t'
+                 'list-item-spacing-loose-invalid.md:2:9-3:1: Missing new line after list item',
+                 'list-item-spacing-loose-invalid.md:3:11-4:1: Missing new line after list item'
             ]);
 
             assertFile('list-item-spacing-tight-valid.md', []);

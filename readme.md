@@ -210,6 +210,9 @@ excluding `remark-lint-no-` or `remark-lint-`
 *   [`vhf/remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash.
 
+*   [`wemake-services/remark-lint-ending-period`](https://github.com/wemake-services/remark-lint-ending-period)
+    — Ensure that all list items are ended with the certain set of symbols.
+
 ## Related
 
 *   [`wooorm/remark-validate-links`](https://github.com/wooorm/remark-validate-links)

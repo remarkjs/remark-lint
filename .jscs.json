@@ -5,10 +5,15 @@
     "remark-lint.js",
     "remark-lint.min.js"
   ],
-  "preset": "yandex",
-  "requireQuotedKeysInObjects": true,
-  "disallowQuotedKeysInObjects": false,
+  "preset": "crockford",
+  "requireMultipleVarDecl": false,
+  "requireVarDeclFirst": false,
+  "disallowDanglingUnderscores": false,
   "maximumLineLength": false,
+  "requireQuotedKeysInObjects": true,
+  "disallowKeywords": [
+    "with"
+  ],
   "jsDoc": {
     "checkAnnotations": "jsdoc3",
     "checkParamExistence": true,

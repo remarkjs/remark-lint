@@ -12,3 +12,8 @@
 
 1. Foo
     1. Bar
+
+<!-- Checkboxes can be used incorrectly -->
+
+1. [x] Foo
+    1. Bar

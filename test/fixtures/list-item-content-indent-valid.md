@@ -12,3 +12,9 @@
 
 1. Foo
    1. Bar
+
+<!-- Checkboxes (and links) work OK -->
+
+*   [ ] [alpha](http://bravo.com)
+    *   [ ] charlie
+    *   [ ] delta

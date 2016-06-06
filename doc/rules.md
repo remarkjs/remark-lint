@@ -797,6 +797,14 @@ Options: `boolean`, default: `false`.
   Warn when file names contain irregular characters: characters other
   than alpha-numericals, dashes, and dots (full-stops).
 
+  Options: `RegExp` or `string`, default: `'\\.a-zA-Z0-9-'`.
+
+  If a string is given, it will be wrapped in
+  `new RegExp('[^' + preferred + ']')`.
+
+  Any match by the wrapped or given expressions triggers a
+  warning.
+
 ### no-file-name-mixed-case
 
 ```md

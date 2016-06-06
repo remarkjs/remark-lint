@@ -432,6 +432,18 @@ describe('Rules', function () {
                 'file-name characters.md:1:1: Do not use ` ` in a file name'
             ]);
         });
+
+        describeSetting(/[^\\.aeiou]/, function () {
+            assertFile('empty.md', [
+                'empty.md:1:1: Do not use `m` in a file name'
+            ]);
+        });
+
+        describeSetting('aeiou', function () {
+            assertFile('empty.md', [
+                'empty.md:1:1: Do not use `m` in a file name'
+            ]);
+        });
     });
 
     describeRule('no-file-name-consecutive-dashes', function () {

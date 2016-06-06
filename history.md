@@ -2,6 +2,14 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+4.0.0 / 2016-06-06
+==================
+
+*   Add support for setting allowed file-name characters (fd908a4)
+*   Fix parameters when using reset (b8f52a9)
+*   Update `list-item-spacing` message (d562d6e)
+*   Fix checkbox lists starting with links (019ff36)
+
 3.2.1 / 2016-04-26
 ==================
 
@@ -122,7 +130,7 @@
 0.4.3 / 2015-08-04
 ==================
 
-*   Fix failure on block-quotes without children ([`a9aaff7`](https://github.com/wooorm/remark-lint/commit/a9aaff7))
+*   Fix block-quotes without children ([`a9aaff7`](https://github.com/wooorm/remark-lint/commit/a9aaff7))
 *   Update mdast dev-dependency ([`34df79c`](https://github.com/wooorm/remark-lint/commit/34df79c))
 *   Add vfile as a dev-dependency ([`84d1ce3`](https://github.com/wooorm/remark-lint/commit/84d1ce3))
 

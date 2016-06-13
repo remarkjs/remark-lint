@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+4.0.1 / 2016-06-13
+==================
+
+*   Update docs ([`149a4a1`](https://github.com/wooorm/remark-lint/commit/149a4a1))
+*   Update dev-dependencies ([`59ce8b5`](https://github.com/wooorm/remark-lint/commit/59ce8b5))
+
 4.0.0 / 2016-06-06
 ==================
 

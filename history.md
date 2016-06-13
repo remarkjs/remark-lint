@@ -5,10 +5,10 @@
 4.0.0 / 2016-06-06
 ==================
 
-*   Add support for setting allowed file-name characters (fd908a4)
-*   Fix parameters when using reset (b8f52a9)
-*   Update `list-item-spacing` message (d562d6e)
-*   Fix checkbox lists starting with links (019ff36)
+*   Add support for setting allowed file-name characters ([`fd908a4`](https://github.com/wooorm/remark-lint/commit/fd908a4))
+*   Fix parameters when using reset ([`b8f52a9`](https://github.com/wooorm/remark-lint/commit/b8f52a9))
+*   Update `list-item-spacing` message ([`d562d6e`](https://github.com/wooorm/remark-lint/commit/d562d6e))
+*   Fix checkbox lists starting with links ([`019ff36`](https://github.com/wooorm/remark-lint/commit/019ff36))
 
 3.2.1 / 2016-04-26
 ==================

@@ -1,12 +1,16 @@
 {
   "output": true,
-  "plugins": [
-    "comment-config",
-    "github",
-    "toc",
-    "./",
-    "validate-links"
-  ],
+  "plugins": {
+    "comment-config": null,
+    "github": null,
+    "toc": {
+      "tight": true
+    },
+    "./": {
+      "no-missing-blank-lines": false
+    },
+    "validate-links": null
+  },
   "settings": {
     "bullet": "*"
   }

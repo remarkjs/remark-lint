@@ -9,7 +9,6 @@ See the readme for a [list of external rules](https://github.com/wooorm/remark-l
 ## Table of Contents
 
 *   [Rules](#rules)
-
     *   [external](#external)
     *   [reset](#reset)
     *   [blockquote-indentation](#blockquote-indentation)

@@ -219,6 +219,12 @@ describe('remark-lint', function () {
             'maximum-line-length-valid.md:22:40: Line must be at most 20 characters'
         ]);
     });
+
+    it('should work with carriage returns', function () {
+        dequal(process('carriage-returns.md').map(String), [
+            'carriage-returns.md:5:1-5:28: Missing blank line before block node'
+        ]);
+    });
 });
 
 /*

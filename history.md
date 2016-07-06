@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+4.0.2 / 2016-07-06
+==================
+
+*   Fix infinite loop when using carriage returns ([`7e92656`](https://github.com/wooorm/remark-lint/commit/7e92656))
+
 4.0.1 / 2016-06-13
 ==================
 

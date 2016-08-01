@@ -104,19 +104,6 @@ children.push(
 );
 
 /*
- * Add the table-of-contents heading.
- */
-
-children.push({
-    'type': 'heading',
-    'depth': 2,
-    'children': [{
-        'type': 'text',
-        'value': 'Table of Contents'
-    }]
-});
-
-/*
  * Add the rules heading.
  */
 
@@ -140,6 +127,19 @@ children.push({
         'value': 'Remember that rules can always be turned off by\n' +
             'passing false. In addition, when reset is given, values can\n' +
             'be null or undefined in order to be ignored.'
+    }]
+});
+
+/*
+ * Add the table-of-contents heading.
+ */
+
+children.push({
+    'type': 'heading',
+    'depth': 3,
+    'children': [{
+        'type': 'text',
+        'value': 'Table of Contents'
     }]
 });
 

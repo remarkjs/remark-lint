@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "decamelize": "^1.0.0",
+    "load-plugin": "^1.1.1",
     "mdast-util-heading-style": "^1.0.0",
     "mdast-util-to-string": "^1.0.0",
     "npm-prefix": "^1.1.1",

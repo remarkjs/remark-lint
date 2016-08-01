@@ -10,12 +10,7 @@
 
 'use strict';
 
-/* eslint-env node */
-
-/*
- * Dependencies.
- */
-
+/* Dependencies. */
 var visit = require('unist-util-visit');
 
 /**
@@ -24,9 +19,9 @@ var visit = require('unist-util-visit');
  * @param {Node} ast - Root node.
  */
 function transformer(ast) {
-    visit(ast, function (node) {
-        node.position = undefined;
-    });
+  visit(ast, function (node) {
+    node.position = undefined;
+  });
 }
 
 /**
@@ -35,7 +30,7 @@ function transformer(ast) {
  * @return {Function} - See `transformer`.
  */
 function attacher() {
-    return transformer;
+  return transformer;
 }
 
 /*

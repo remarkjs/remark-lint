@@ -1,1297 +1,2468 @@
+<!-- This file is generated -->
+
 # List of Rules
 
-This document describes all available rules, what they
-check for, examples of what they warn for, and how to
-fix their warnings.
+This document describes all (57)
+available rules, what they check for, examples of
+what they warn for, and how to fix their warnings.
 
-See the readme for a [list of external rules](https://github.com/wooorm/remark-lint#list-of-external-rules).
-
-## Rules
-
-Remember that rules can always be turned off by
-passing false. In addition, when reset is given, values can
-be null or undefined in order to be ignored.
-
-### Table of Contents
-
-*   [external](#external)
-*   [reset](#reset)
-*   [blockquote-indentation](#blockquote-indentation)
-*   [checkbox-character-style](#checkbox-character-style)
-*   [checkbox-content-indent](#checkbox-content-indent)
-*   [code-block-style](#code-block-style)
-*   [definition-case](#definition-case)
-*   [definition-spacing](#definition-spacing)
-*   [emphasis-marker](#emphasis-marker)
-*   [fenced-code-flag](#fenced-code-flag)
-*   [fenced-code-marker](#fenced-code-marker)
-*   [file-extension](#file-extension)
-*   [final-definition](#final-definition)
-*   [final-newline](#final-newline)
-*   [first-heading-level](#first-heading-level)
-*   [hard-break-spaces](#hard-break-spaces)
-*   [heading-increment](#heading-increment)
-*   [heading-style](#heading-style)
-*   [link-title-style](#link-title-style)
-*   [list-item-bullet-indent](#list-item-bullet-indent)
-*   [list-item-content-indent](#list-item-content-indent)
-*   [list-item-indent](#list-item-indent)
-*   [list-item-spacing](#list-item-spacing)
-*   [maximum-heading-length](#maximum-heading-length)
-*   [maximum-line-length](#maximum-line-length)
-*   [no-auto-link-without-protocol](#no-auto-link-without-protocol)
-*   [no-blockquote-without-caret](#no-blockquote-without-caret)
-*   [no-consecutive-blank-lines](#no-consecutive-blank-lines)
-*   [no-duplicate-definitions](#no-duplicate-definitions)
-*   [no-duplicate-headings](#no-duplicate-headings)
-*   [no-emphasis-as-heading](#no-emphasis-as-heading)
-*   [no-file-name-articles](#no-file-name-articles)
-*   [no-file-name-consecutive-dashes](#no-file-name-consecutive-dashes)
-*   [no-file-name-irregular-characters](#no-file-name-irregular-characters)
-*   [no-file-name-mixed-case](#no-file-name-mixed-case)
-*   [no-file-name-outer-dashes](#no-file-name-outer-dashes)
-*   [no-heading-content-indent](#no-heading-content-indent)
-*   [no-heading-indent](#no-heading-indent)
-*   [no-heading-punctuation](#no-heading-punctuation)
-*   [no-html](#no-html)
-*   [no-inline-padding](#no-inline-padding)
-*   [no-literal-urls](#no-literal-urls)
-*   [no-missing-blank-lines](#no-missing-blank-lines)
-*   [no-multiple-toplevel-headings](#no-multiple-toplevel-headings)
-*   [no-shell-dollars](#no-shell-dollars)
-*   [no-shortcut-reference-image](#no-shortcut-reference-image)
-*   [no-shortcut-reference-link](#no-shortcut-reference-link)
-*   [no-table-indentation](#no-table-indentation)
-*   [no-tabs](#no-tabs)
-*   [no-undefined-references](#no-undefined-references)
-*   [no-unused-definitions](#no-unused-definitions)
-*   [ordered-list-marker-style](#ordered-list-marker-style)
-*   [ordered-list-marker-value](#ordered-list-marker-value)
-*   [rule-style](#rule-style)
-*   [strong-marker](#strong-marker)
-*   [table-cell-padding](#table-cell-padding)
-*   [table-pipe-alignment](#table-pipe-alignment)
-*   [table-pipes](#table-pipes)
-*   [unordered-list-marker-style](#unordered-list-marker-style)
-
-### external
-
-````md
-        <!-- Load more rules -->
-        ```json
-        {
-          "external": ["foo", "bar", "baz"]
-        }
-        ```
-````
-
-External contains a list of extra rules to load.
-These are, or refer to, an object mapping `ruleId`s to rules.
-
-Note that in node.js, a string can be given (a module
-name or a file), but in the browser an object must be passed in.
-
-When using a globally installed remark-lint, globally installed external
-rules are also loaded.
-
-The prefix `remark-lint-` can be omitted.
-
-### reset
-
-````md
-        <!-- Explicitly activate rules: -->
-        ```json
-        {
-          "reset": true,
-          "final-newline": true
-        }
-        ```
-````
-
-By default, all rules are turned on unless explicitly set to `false`.
-When `reset: true`, the opposite is true: all rules are turned off,
-unless when given a non-nully and non-false value.
-
-Options: `boolean`, default: `false`.
-
-### blockquote-indentation
-
-```md
-  <!-- Valid, when set to `4`, invalid when set to `2` -->
-  >   Hello
-  ...
-  >   World
-
-  <!-- Valid, when set to `2`, invalid when set to `4` -->
-  > Hello
-  ...
-  > World
-
-  <!-- Always invalid -->
-  > Hello
-  ...
-  >   World
-```
-
-  Warn when blockquotes are either indented too much or too little.
-
-  Options: `number`, default: `'consistent'`.
-
-  The default value, `consistent`, detects the first used indentation
-  and will warn when other blockquotes use a different indentation.
-
-### checkbox-character-style
-
-```md
-  <!-- Note: the double guillemet (`»`) and middle-dots represent a tab -->
-
-  <!-- Valid by default, `'consistent'`, or `{'checked': 'x'}` -->
-  - [x] List item
-  - [x] List item
-
-  <!-- Valid by default, `'consistent'`, or `{'checked': 'X'}` -->
-  - [X] List item
-  - [X] List item
-
-  <!-- Valid by default, `'consistent'`, or `{'unchecked': ' '}` -->
-  - [ ] List item
-  - [ ] List item
-
-  <!-- Valid by default, `'consistent'`, or `{'unchecked': '»'}` -->
-  - [»···] List item
-  - [»···] List item
-
-  <!-- Always invalid -->
-  - [x] List item
-  - [X] List item
-  - [ ] List item
-  - [»···] List item
-```
-
-  Warn when list item checkboxes violate a given style.
-
-  The default value, `consistent`, detects the first used checked
-  and unchecked checkbox styles, and will warn when a subsequent
-  checkboxes uses a different style.
-
-  These values can also be passed in as an object, such as:
+Note: both camel-cased and dash-cases versions of rule id’s
+are supported in configuration objects:
 
 ```json
 {
-   "checked": "x",
-   "unchecked": " "
+  "final-newline": false
 }
 ```
 
-### checkbox-content-indent
+...is treated the same as:
 
-```md
-  <!-- Valid: -->
-  - [ ] List item
-  +  [x] List item
-  *   [X] List item
-  -    [ ] List item
-
-  <!-- Invalid: -->
-  - [ ] List item
-  + [x]  List item
-  * [X]   List item
-  - [ ]    List item
+```json
+{
+  "finalNewline": false
+}
 ```
 
-  Warn when list item checkboxes are followed by too much white-space.
+## Table of Contents
 
-### code-block-style
+-   [reset](#reset)
+-   [external](#external)
+-   [blockquote-indentation](#blockquote-indentation)
+-   [checkbox-character-style](#checkbox-character-style)
+-   [checkbox-content-indent](#checkbox-content-indent)
+-   [code-block-style](#code-block-style)
+-   [definition-case](#definition-case)
+-   [definition-spacing](#definition-spacing)
+-   [emphasis-marker](#emphasis-marker)
+-   [fenced-code-flag](#fenced-code-flag)
+-   [fenced-code-marker](#fenced-code-marker)
+-   [file-extension](#file-extension)
+-   [final-definition](#final-definition)
+-   [final-newline](#final-newline)
+-   [first-heading-level](#first-heading-level)
+-   [hard-break-spaces](#hard-break-spaces)
+-   [heading-increment](#heading-increment)
+-   [heading-style](#heading-style)
+-   [link-title-style](#link-title-style)
+-   [list-item-bullet-indent](#list-item-bullet-indent)
+-   [list-item-content-indent](#list-item-content-indent)
+-   [list-item-indent](#list-item-indent)
+-   [list-item-spacing](#list-item-spacing)
+-   [maximum-heading-length](#maximum-heading-length)
+-   [maximum-line-length](#maximum-line-length)
+-   [no-auto-link-without-protocol](#no-auto-link-without-protocol)
+-   [no-blockquote-without-caret](#no-blockquote-without-caret)
+-   [no-consecutive-blank-lines](#no-consecutive-blank-lines)
+-   [no-duplicate-definitions](#no-duplicate-definitions)
+-   [no-duplicate-headings](#no-duplicate-headings)
+-   [no-emphasis-as-heading](#no-emphasis-as-heading)
+-   [no-file-name-articles](#no-file-name-articles)
+-   [no-file-name-consecutive-dashes](#no-file-name-consecutive-dashes)
+-   [no-file-name-irregular-characters](#no-file-name-irregular-characters)
+-   [no-file-name-mixed-case](#no-file-name-mixed-case)
+-   [no-file-name-outer-dashes](#no-file-name-outer-dashes)
+-   [no-heading-content-indent](#no-heading-content-indent)
+-   [no-heading-indent](#no-heading-indent)
+-   [no-heading-punctuation](#no-heading-punctuation)
+-   [no-html](#no-html)
+-   [no-inline-padding](#no-inline-padding)
+-   [no-literal-urls](#no-literal-urls)
+-   [no-missing-blank-lines](#no-missing-blank-lines)
+-   [no-multiple-toplevel-headings](#no-multiple-toplevel-headings)
+-   [no-shell-dollars](#no-shell-dollars)
+-   [no-shortcut-reference-image](#no-shortcut-reference-image)
+-   [no-shortcut-reference-link](#no-shortcut-reference-link)
+-   [no-table-indentation](#no-table-indentation)
+-   [no-tabs](#no-tabs)
+-   [no-undefined-references](#no-undefined-references)
+-   [no-unused-definitions](#no-unused-definitions)
+-   [ordered-list-marker-style](#ordered-list-marker-style)
+-   [ordered-list-marker-value](#ordered-list-marker-value)
+-   [rule-style](#rule-style)
+-   [strong-marker](#strong-marker)
+-   [table-cell-padding](#table-cell-padding)
+-   [table-pipe-alignment](#table-pipe-alignment)
+-   [table-pipes](#table-pipes)
+-   [unordered-list-marker-style](#unordered-list-marker-style)
 
-````md
-          <!-- Valid, when set to `indented` or `consistent`, invalid when set to `fenced` -->
-             Hello
+## `reset`
 
-          ...
+By default, all rules are turned on unless explicitly
+set to `false`.  When `reset: true`, the opposite is
+`true`: all rules are turned off, unless when given a
+non-nully and non-false value.
 
-             World
+Options: `boolean`, default: `false`.
 
-          <!-- Valid, when set to `fenced` or `consistent`, invalid when set to `indented` -->
-          ```
-          Hello
-          ```
-          ...
-          ```bar
-          World
-          ```
+Explicitly activate rules:
 
-          <!-- Always invalid -->
-              Hello
-          ...
-          ```
-          World
-            ```
+```json
+{
+  "reset": true,
+  "final-newline": true
+}
+```
+
+## `external`
+
+External contains a list of extra rules to load.  These are,
+or refer to, an object mapping `ruleId`s to rules.
+
+Note that in Node.js, a `string` can be given (a module name
+or a file path), but in the browser an object must be passed
+in.
+
+When using a globally installed remark-lint, globally installed
+external rules are also loaded.
+
+The prefix `remark-lint-` can be omitted.
+
+```js
+{
+  external: ['no-empty-sections', './a-local-file.js']
+}
+```
+
+Read more about external rules in
+[`doc/external.md`](./external.md).
+
+## `blockquote-indentation`
+
+Warn when blockquotes are either indented too much or too little.
+
+Options: `number`, default: `'consistent'`.
+
+The default value, `consistent`, detects the first used indentation
+and will warn when other blockquotes use a different indentation.
+
+When this rule is `2`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--This file is also valid by default-->
+
+> Hello
+
+Paragraph.
+
+> World
+```
+
+When this rule is `4`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--This file is also valid by default-->
+
+>   Hello
+
+Paragraph.
+
+>   World
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+>  Hello
+
+Paragraph.
+
+>   World
+
+Paragraph.
+
+> World
+```
+
+```text
+5:3: Remove 1 space between blockquote and content
+9:3: Add 1 space between blockquote and content
+```
+
+## `checkbox-character-style`
+
+Warn when list item checkboxes violate a given style.
+
+The default value, `consistent`, detects the first used checked
+and unchecked checkbox styles, and will warn when a subsequent
+checkboxes uses a different style.
+
+These values can also be passed in as an object, such as:
+
+```js
+{checked: 'x', unchecked: ' '}
+```
+
+When this rule is `{ checked: 'x' }`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--This file is also valid by default-->
+
+- [x] List item
+- [x] List item
+```
+
+When this rule is `{ checked: 'X' }`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--This file is also valid by default-->
+
+- [X] List item
+- [X] List item
+```
+
+When this rule is `{ unchecked: ' ' }`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--This file is also valid by default-->
+
+- [ ] List item
+- [ ] List item
+- [ ]··
+- [ ]
+```
+
+When this rule is `{ unchecked: '\t' }`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid by default (note: `»` represents `\t`)-->
+
+- [»] List item
+- [»] List item
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!--Note: `»` represents `\t`-->
+
+- [x] List item
+- [X] List item
+- [ ] List item
+- [»] List item
+```
+
+```text
+4:4-4:5: Checked checkboxes should use `x` as a marker
+6:4-6:5: Unchecked checkboxes should use ` ` as a marker
+```
+
+When `{ unchecked: '!' }` is passed in, the following error is given:
+
+```text
+1:1: Invalid unchecked checkbox marker `!`: use either `'\t'`, or `' '`
+```
+
+When `{ checked: '!' }` is passed in, the following error is given:
+
+```text
+1:1: Invalid checked checkbox marker `!`: use either `'x'`, or `'X'`
+```
+
+## `checkbox-content-indent`
+
+Warn when list item checkboxes are followed by too much white-space.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+- [ ] List item
++  [x] List item
+*   [X] List item
+-    [ ] List item
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+- [ ] List item
++ [x]  List item
+* [X]   List item
+- [ ]    List item
+```
+
+```text
+2:7-2:8: Checkboxes should be followed by a single character
+3:7-3:9: Checkboxes should be followed by a single character
+4:7-4:10: Checkboxes should be followed by a single character
+```
+
+## `code-block-style`
+
+Warn when code-blocks do not adhere to a given style.
+
+Options: `string`, either `'consistent'`, `'fenced'`, or `'indented'`,
+default: `'consistent'`.
+
+The default value, `consistent`, detects the first used code-block
+style, and will warn when a subsequent code-block uses a different
+style.
+
+When this rule is `'indented'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- This is also valid when `'consistent'` -->
+
+    alpha();
+
+Paragraph.
+
+    bravo();
+```
+
+When this rule is `'indented'`, the following file
+`invalid.md` is **not** ok:
+
+````markdown
+    ```
+    alpha();
+    ```
+
+    Paragraph.
+
+    ```
+    bravo();
+    ```
 ````
 
-  Warn when code-blocks do not adhere to a given style.
-
-  Options: `string`, either `'consistent'`, `'fenced'`, or `'indented'`,
-  default: `'consistent'`.
-
-  The default value, `consistent`, detects the first used code-block
-  style, and will warn when a subsequent code-block uses a different
-  style.
-
-### definition-case
-
-```md
-  <!-- Valid -->
-  [example] http://example.com "Example Domain"
-
-  <!-- Invalid -->
-  ![Example] http://example.com/favicon.ico "Example image"
+```text
+1:1-3:4: Code blocks should be indented
+7:1-9:4: Code blocks should be indented
 ```
 
-  Warn when definition labels are not lower-case.
+When this rule is `'fenced'`, the following file
+`valid.md` is ok:
 
-### definition-spacing
+````markdown
+    <!-- This is also valid when `'consistent'` -->
 
-```md
-  <!-- Valid -->
-  [example domain] http://example.com "Example Domain"
+    ```
+    alpha();
+    ```
 
-  <!-- Invalid -->
-  ![example    image] http://example.com/favicon.ico "Example image"
-```
+    Paragraph.
 
-  Warn when consecutive white space is used in a definition.
-
-### emphasis-marker
-
-```md
-  <!-- Valid when set to `consistent` or `*` -->
-  *foo*
-  *bar*
-
-  <!-- Valid when set to `consistent` or `_` -->
-  _foo_
-  _bar_
-```
-
-  Warn for violating emphasis markers.
-
-  Options: `string`, either `'consistent'`, `'*'`, or `'_'`,
-  default: `'consistent'`.
-
-  The default value, `consistent`, detects the first used emphasis
-  style, and will warn when a subsequent emphasis uses a different
-  style.
-
-### fenced-code-flag
-
-````md
-          <!-- Valid: -->
-          ```hello
-          world();
-          ```
-
-          <!-- Valid: -->
-             Hello
-
-          <!-- Invalid: -->
-          ```
-          world();
-          ```
-
-          <!-- Valid when given `{allowEmpty: true}`: -->
-          ```
-          world();
-          ```
-
-          <!-- Invalid when given `["world"]`: -->
-          ```hello
-          world();
-          ```
+    ```
+    bravo();
+    ```
 ````
 
-  Warn when fenced code blocks occur without language flag.
+When this rule is `'fenced'`, the following file
+`invalid.md` is **not** ok:
 
-  Options: `Array.<string>` or `Object`.
+```markdown
+    alpha();
 
-  Providing an array, is a shortcut for just providing the `flags`
-  property on the object.
+Paragraph.
 
-  The object can have an array of flags which are deemed valid.
-  In addition it can have the property `allowEmpty` (`boolean`)
-  which signifies whether or not to warn for fenced code-blocks without
-  languge flags.
+    bravo();
+```
 
-### fenced-code-marker
+```text
+1:1-1:13: Code blocks should be fenced
+5:1-5:13: Code blocks should be fenced
+```
 
-````md
-          <!-- Valid by default and `` '`' ``: -->
-          ```foo
-          bar();
-          ```
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-          ```
-          baz();
-          ```
+````markdown
+    <!-- This is always invalid -->
 
-          <!-- Valid by default and `'~'`: -->
-          ~~~foo
-          bar();
-          ~~~
+        alpha();
 
-          ~~~
-          baz();
-          ~~~
+    Paragraph.
 
-          <!-- Always invalid: -->
-          ~~~foo
-          bar();
-          ~~~
-
-          ```
-          baz();
-          ```
+    ```
+    bravo();
+    ```
 ````
 
-  Warn for violating fenced code markers.
-
-  Options: `string`, either ``'`'``, or `'~'`, default: `'consistent'`.
-
-  The default value, `consistent`, detects the first used fenced code
-  marker style, and will warn when a subsequent fenced code uses a
-  different style.
-
-### file-extension
-
-```md
-  Invalid (when `'md'`): readme.mkd, readme.markdown, etc.
-  Valid (when `'md'`): readme, readme.md
+```text
+7:1-9:4: Code blocks should be indented
 ```
 
-  Warn when the document’s extension differs from the given preferred
-  extension.
+When `'invalid'` is passed in, the following error is given:
 
-  Does not warn when given documents have no file extensions (such as
-  `AUTHORS` or `LICENSE`).
-
-  Options: `string`, default: `'md'` — Expected file extension.
-
-### final-definition
-
-```md
-  <!-- Valid: -->
-  ...
-
-  [example] http://example.com "Example Domain"
-
-  <!-- Invalid: -->
-  ...
-
-  [example] http://example.com "Example Domain"
-
-  A trailing paragraph.
+```text
+1:1: Invalid code block style `invalid`: use either `'consistent'`, `'fenced'`, or `'indented'`
 ```
 
-  Warn when definitions are not placed at the end of the file.
+## `definition-case`
 
-### final-newline
+Warn when definition labels are not lower-case.
 
-  Warn when a newline at the end of a file is missing.
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  See [StackExchange](http://unix.stackexchange.com/questions/18743) for
-  why.
-
-### first-heading-level
-
-```md
-  <!-- Valid, when set to `1` -->
-  # Foo
-
-  ## Bar
-
-  <!-- Invalid, when set to `1` -->
-  ## Foo
-
-  # Bar
+```markdown
+[example]: http://example.com "Example Domain"
 ```
 
-  Warn when the first heading has a level other than a specified value.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-  Options: `number`, default: `1`.
-
-### hard-break-spaces
-
-```md
-  <!-- Note: the middle-dots represent spaces -->
-
-  <!-- Valid: -->
-  Lorem ipsum··
-  dolor sit amet
-
-  <!-- Invalid: -->
-  Lorem ipsum···
-  dolor sit amet.
+```markdown
+[Example]: http://example.com "Example Domain"
 ```
 
-  Warn when too many spaces are used to create a hard break.
-
-### heading-increment
-
-```md
-  <!-- Valid: -->
-  # Foo
-
-  ## Bar
-
-  <!-- Invalid: -->
-  # Foo
-
-  ### Bar
+```text
+1:1-1:47: Do not use upper-case characters in definition labels
 ```
 
-  Warn when headings increment with more than 1 level at a time.
+## `definition-spacing`
 
-### heading-style
+Warn when consecutive white space is used in a definition.
 
-```md
-  <!-- Valid when `consistent` or `atx` -->
-  # Foo
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  ## Bar
-
-  ### Baz
-
-  <!-- Valid when `consistent` or `atx-closed` -->
-  # Foo #
-
-  ## Bar #
-
-  ### Baz ###
-
-  <!-- Valid when `consistent` or `setext` -->
-  Foo
-  ===
-
-  Bar
-  ---
-
-  ### Baz
-
-  <!-- Invalid -->
-  Foo
-  ===
-
-  ## Bar
-
-  ### Baz ###
+```markdown
+[example domain]: http://example.com "Example Domain"
 ```
 
-  Warn when a heading does not conform to a given style.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-  Options: `string`, either `'consistent'`, `'atx'`, `'atx-closed'`,
-  or `'setext'`, default: `'consistent'`.
-
-  The default value, `consistent`, detects the first used heading
-  style, and will warn when a subsequent heading uses a different
-  style.
-
-### link-title-style
-
-```md
-  <!-- Valid when `consistent` or `"` -->
-  [Example](http://example.com "Example Domain")
-  [Example](http://example.com "Example Domain")
-
-  <!-- Valid when `consistent` or `'` -->
-  [Example](http://example.com 'Example Domain')
-  [Example](http://example.com 'Example Domain')
-
-  <!-- Valid when `consistent` or `()` -->
-  [Example](http://example.com (Example Domain))
-  [Example](http://example.com (Example Domain))
-
-  <!-- Always invalid -->
-  [Example](http://example.com "Example Domain")
-  [Example](http://example.com 'Example Domain')
-  [Example](http://example.com (Example Domain))
+```markdown
+[example    domain]: http://example.com "Example Domain"
 ```
 
-  Warn when link and definition titles occur with incorrect quotes.
-
-  Options: `string`, either `'consistent'`, `'"'`, `'\''`, or
-  `'()'`, default: `'consistent'`.
-
-  The default value, `consistent`, detects the first used quote
-  style, and will warn when a subsequent titles use a different
-  style.
-
-### list-item-bullet-indent
-
-```md
-  <!-- Valid -->
-  * List item
-  * List item
-
-  <!-- Invalid -->
-    * List item
-    * List item
+```text
+1:1-1:57: Do not use consecutive white-space in definition labels
 ```
 
-  Warn when list item bullets are indented.
+## `emphasis-marker`
 
-### list-item-content-indent
+Warn for violating emphasis markers.
 
-```md
-  <!-- Valid -->
-  *   List item
+Options: `string`, either `'consistent'`, `'*'`, or `'_'`,
+default: `'consistent'`.
 
-      *   Nested list item indented by 4 spaces
+The default value, `consistent`, detects the first used emphasis
+style, and will warn when a subsequent emphasis uses a different
+style.
 
-  <!-- Invalid -->
-  *   List item
+When this rule is `'*'`, the following file
+`valid.md` is ok:
 
-     *   Nested list item indented by 3 spaces
+```markdown
+*foo*
 ```
 
-  Warn when the content of a list item has mixed indentation.
+When this rule is `'*'`, the following file
+`invalid.md` is **not** ok:
 
-### list-item-indent
+```markdown
+_foo_
+```
 
-```md
-  <!-- Valid when `tab-size` -->
-  *   List
-      item.
+```text
+1:1-1:6: Emphasis should use `*` as a marker
+```
 
-  11. List
-      item.
+When this rule is `'_'`, the following file
+`valid.md` is ok:
 
-  <!-- Valid when `mixed` -->
-  * List item.
+```markdown
+_foo_
+```
 
-  11. List item
+When this rule is `'_'`, the following file
+`invalid.md` is **not** ok:
 
-  *   List
-      item.
+```markdown
+*foo*
+```
 
-  11. List
-      item.
+```text
+1:1-1:6: Emphasis should use `_` as a marker
+```
 
-  <!-- Valid when `space` -->
-  * List item.
+When this rule is `'consistent'`, the following file
+`invalid.md` is **not** ok:
 
-  11. List item
+```markdown
+<!-- This is never valid -->
 
-  * List
+*foo*
+_bar_
+```
+
+```text
+4:1-4:6: Emphasis should use `*` as a marker
+```
+
+When `'invalid'` is passed in, the following error is given:
+
+```text
+1:1: Invalid emphasis marker `invalid`: use either `'consistent'`, `'*'`, or `'_'`
+```
+
+## `fenced-code-flag`
+
+Warn when fenced code blocks occur without language flag.
+
+Options: `Array.<string>` or `Object`.
+
+Providing an array, is a shortcut for just providing the `flags`
+property on the object.
+
+The object can have an array of flags which are deemed valid.
+In addition it can have the property `allowEmpty` (`boolean`)
+which signifies whether or not to warn for fenced code-blocks without
+languge flags.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+````markdown
+    ```alpha
+    bravo();
+    ```
+````
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+````markdown
+    ```
+    alpha();
+    ```
+````
+
+```text
+1:1-3:4: Missing code-language flag
+```
+
+When this rule is `{ allowEmpty: true }`, the following file
+`valid.md` is ok:
+
+````markdown
+    ```
+    alpha();
+    ```
+````
+
+When this rule is `{ allowEmpty: false }`, the following file
+`invalid.md` is **not** ok:
+
+````markdown
+    ```
+    alpha();
+    ```
+````
+
+```text
+1:1-3:4: Missing code-language flag
+```
+
+When this rule is `[ 'alpha' ]`, the following file
+`valid.md` is ok:
+
+````markdown
+    ```alpha
+    bravo();
+    ```
+````
+
+When this rule is `[ 'charlie' ]`, the following file
+`invalid.md` is **not** ok:
+
+````markdown
+    ```alpha
+    bravo();
+    ```
+````
+
+```text
+1:1-3:4: Invalid code-language flag
+```
+
+## `fenced-code-marker`
+
+Warn for violating fenced code markers.
+
+Options: `string`, either ``'`'``, or `'~'`, default: `'consistent'`.
+
+The default value, `consistent`, detects the first used fenced code
+marker style, and will warn when a subsequent fenced code uses a
+different style.
+
+When this rule is ``'`'``, the following file
+`valid.md` is ok:
+
+````markdown
+    <!-- This is also valid by default. -->
+
+    ```alpha
+    bravo();
+    ```
+
+    ```
+    charlie();
+    ```
+````
+
+When this rule is `'~'`, the following file
+`valid.md` is ok:
+
+```markdown
+    <!-- This is also valid by default. -->
+
+    ~~~alpha
+    bravo();
+    ~~~
+
+    ~~~
+    charlie();
+    ~~~
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+````markdown
+    <!-- This is always invalid. -->
+
+    ```alpha
+    bravo();
+    ```
+
+    ~~~
+    charlie();
+    ~~~
+````
+
+```text
+7:1-9:4: Fenced code should use ` as a marker
+```
+
+When `'!'` is passed in, the following error is given:
+
+```text
+1:1: Invalid fenced code marker `!`: use either `'consistent'`, `` '`' ``, or `'~'`
+```
+
+## `file-extension`
+
+Warn when the document’s extension differs from the given preferred
+extension.
+
+Does not warn when given documents have no file extensions (such as
+`AUTHORS` or `LICENSE`).
+
+Options: `string`, default: `'md'` — Expected file extension.
+
+When this rule is turned on, the following file
+`readme.md` is ok:
+
+```markdown
+
+```
+
+When this rule is turned on, the following file
+`readme` is ok:
+
+```markdown
+
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Invalid extension: use `md`
+```
+
+When this rule is `'mkd'`, the following file
+`readme.mkd` is ok:
+
+```markdown
+
+```
+
+## `final-definition`
+
+Warn when definitions are not placed at the end of the file.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+Paragraph.
+
+[example]: http://example.com "Example Domain"
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+Paragraph.
+
+[example]: http://example.com "Example Domain"
+
+Another paragraph.
+```
+
+```text
+3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
+```
+
+## `final-newline`
+
+Warn when a newline at the end of a file is missing.
+
+See [StackExchange](http://unix.stackexchange.com/questions/18743) for
+why.
+
+## `first-heading-level`
+
+Warn when the first heading has a level other than a specified value.
+
+Options: `number`, default: `1`.
+
+When this rule is `1`, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- Also valid by default. -->
+
+# Alpha
+
+Paragraph.
+```
+
+When this rule is `1`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!-- Also invalid by default. -->
+
+## Bravo
+
+Paragraph.
+```
+
+```text
+3:1-3:9: First heading level should be `1`
+```
+
+When this rule is `2`, the following file
+`valid.md` is ok:
+
+```markdown
+## Bravo
+
+Paragraph.
+```
+
+When this rule is `2`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Bravo
+
+Paragraph.
+```
+
+```text
+1:1-1:8: First heading level should be `2`
+```
+
+## `hard-break-spaces`
+
+Warn when too many spaces are used to create a hard break.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Note: `·` represents ` `-->
+
+Lorem ipsum··
+dolor sit amet
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!--Note: `·` represents ` `-->
+
+Lorem ipsum···
+dolor sit amet.
+```
+
+```text
+3:12-4:1: Use two spaces for hard line breaks
+```
+
+## `heading-increment`
+
+Warn when headings increment with more than 1 level at a time.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+# Alpha
+
+## Bravo
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Charlie
+
+### Delta
+```
+
+```text
+3:1-3:10: Heading levels should increment by one level at a time
+```
+
+## `heading-style`
+
+Warn when a heading does not conform to a given style.
+
+Options: `string`, either `'consistent'`, `'atx'`, `'atx-closed'`,
+or `'setext'`, default: `'consistent'`.
+
+The default value, `consistent`, detects the first used heading
+style, and will warn when a subsequent heading uses a different
+style.
+
+When this rule is `'atx'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+# Alpha
+
+## Bravo
+
+### Charlie
+```
+
+When this rule is `'atx-closed'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+# Delta ##
+
+## Echo ##
+
+### Foxtrot ###
+```
+
+When this rule is `'setext'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+Golf
+====
+
+Hotel
+-----
+
+### India
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!--Always invalid.-->
+
+Juliett
+=======
+
+## Kilo
+
+### Lima ###
+```
+
+```text
+6:1-6:8: Headings should use setext
+8:1-8:13: Headings should use setext
+```
+
+## `link-title-style`
+
+Warn when link and definition titles occur with incorrect quotes.
+
+Options: `string`, either `'consistent'`, `'"'`, `'\''`, or
+`'()'`, default: `'consistent'`.
+
+The default value, `consistent`, detects the first used quote
+style, and will warn when a subsequent titles use a different
+style.
+
+When this rule is `'"'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+[Example](http://example.com "Example Domain")
+[Example](http://example.com "Example Domain")
+```
+
+When this rule is `'\''`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+[Example](http://example.com 'Example Domain')
+[Example](http://example.com 'Example Domain')
+```
+
+When this rule is `'()'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+[Example](http://example.com (Example Domain) )
+[Example](http://example.com (Example Domain) )
+```
+
+When this rule is `'()'`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!--Always invalid-->
+
+[Example](http://example.com (Example Domain))
+[Example](http://example.com 'Example Domain')
+```
+
+```text
+4:46: Titles should use `()` as a quote
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!--Always invalid-->
+
+[Example](http://example.com "Example Domain")
+[Example](http://example.com#without-title)
+[Example](http://example.com 'Example Domain')
+```
+
+```text
+5:46: Titles should use `"` as a quote
+```
+
+When `'.'` is passed in, the following error is given:
+
+```text
+1:1: Invalid link title style marker `.`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
+```
+
+## `list-item-bullet-indent`
+
+Warn when list item bullets are indented.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+Paragraph.
+
+* List item
+* List item
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+Paragraph.
+
+ * List item
+ * List item
+```
+
+```text
+3:3: Incorrect indentation before bullet: remove 1 space
+4:3: Incorrect indentation before bullet: remove 1 space
+```
+
+## `list-item-content-indent`
+
+Warn when the content of a list item has mixed indentation.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+1. [x] Alpha
+   1. Bravo
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+1. [x] Charlie
+    1. Delta
+```
+
+```text
+2:5: Don’t use mixed indentation for children, remove 1 space
+```
+
+## `list-item-indent`
+
+Warn when the spacing between a list item’s bullet and its content
+violates a given style.
+
+Options: `string`, either `'tab-size'`, `'mixed'`, or `'space'`,
+default: `'tab-size'`.
+
+When this rule is `'tab-size'`, the following file
+`valid.md` is ok:
+
+```markdown
+*   List
     item.
 
-  11. List
-      item.
+Paragraph.
+
+11. List
+    item.
+
+Paragraph.
+
+*   List
+    item.
+
+*   List
+    item.
 ```
 
-  Warn when the spacing between a list item’s bullet and its content
-  violates a given style.
+When this rule is `'mixed'`, the following file
+`valid.md` is ok:
 
-  Options: `string`, either `'tab-size'`, `'mixed'`, or `'space'`,
-  default: `'tab-size'`.
+```markdown
+* List item.
 
-### list-item-spacing
+Paragraph.
 
-```md
-  <!-- Valid: -->
-  -   Wrapped
-      item
+11. List item
 
-  -   item 2
+Paragraph.
 
-  -   item 3
+*   List
+    item.
 
-  <!-- Valid: -->
-  -   item 1
-  -   item 2
-  -   item 3
-
-  <!-- Invalid: -->
-  -   Wrapped
-      item
-  -   item 2
-  -   item 3
-
-  <!-- Invalid: -->
-  -   item 1
-
-  -   item 2
-
-  -   item 3
+*   List
+    item.
 ```
 
-  Warn when list looseness is incorrect, such as being tight
-  when it should be loose, and vice versa.
+When this rule is `'space'`, the following file
+`valid.md` is ok:
 
-### maximum-heading-length
+```markdown
+* List item.
 
-```md
-  <!-- Valid, when set to `40` -->
-  # Alpha bravo charlie delta echo
-  # ![Alpha bravo charlie delta echo](http://example.com/nato.png)
+Paragraph.
 
-  <!-- Invalid, when set to `40` -->
-  # Alpha bravo charlie delta echo foxtrot
+11. List item
+
+Paragraph.
+
+* List
+  item.
+
+* List
+  item.
 ```
 
-  Warn when headings are too long.
+When `'invalid'` is passed in, the following error is given:
 
-  Options: `number`, default: `60`.
-
-  Ignores markdown syntax, only checks the plain text content.
-
-### maximum-line-length
-
-```md
-  <!-- Valid, when set to `40` -->
-  Alpha bravo charlie delta echo.
-
-  Alpha bravo charlie delta echo [foxtrot](./foxtrot.html).
-
-  # Alpha bravo charlie delta echo foxtrot golf hotel.
-
-      # Alpha bravo charlie delta echo foxtrot golf hotel.
-
-  | A     | B     | C       | D     | E    | F       | F    | H     |
-  | ----- | ----- | ------- | ----- | ---- | ------- | ---- | ----- |
-  | Alpha | bravo | charlie | delta | echo | foxtrot | golf | hotel |
-
-  <!-- Invalid, when set to `40` -->
-  Alpha bravo charlie delta echo foxtrot golf.
-
-  Alpha bravo charlie delta echo [foxtrot](./foxtrot.html) golf.
+```text
+1:1: Invalid list-item indent style `invalid`: use either `'tab-size'`, `'space'`, or `'mixed'`
 ```
 
-  Warn when lines are too long.
+## `list-item-spacing`
 
-  Options: `number`, default: `80`.
+Warn when list looseness is incorrect, such as being tight
+when it should be loose, and vice versa.
 
-  Ignores nodes which cannot be wrapped, such as heasings, tables,
-  code, link, images, and definitions.
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-### no-auto-link-without-protocol
+```markdown
+A tight list:
 
-```md
-  <!-- Valid: -->
-  <http://www.example.com>
-  <mailto:foo@bar.com>
+-   item 1
+-   item 2
+-   item 3
 
-  <!-- Invalid: -->
-  <www.example.com>
-  <foo@bar.com>
+A loose list:
+
+-   Wrapped
+    item
+
+-   item 2
+
+-   item 3
 ```
 
-  Warn for angle-bracketed links without protocol.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-### no-blockquote-without-caret
+```markdown
+A tight list:
 
-```md
-  <!-- Valid: -->
-  > Foo...
-  >
-  > ...Bar.
+-   Wrapped
+    item
+-   item 2
+-   item 3
 
-  <!-- Invalid: -->
-  > Foo...
+A loose list:
 
-  > ...Bar.
+-   item 1
+
+-   item 2
+
+-   item 3
 ```
 
-  Warn when blank lines without carets are found in a blockquote.
-
-### no-consecutive-blank-lines
-
-```md
-  <!-- Valid: -->
-  Foo...
-
-  ...Bar.
-
-  <!-- Invalid: -->
-  Foo...
-
-
-  ...Bar.
+```text
+4:9-5:1: Missing new line after list item
+5:11-6:1: Missing new line after list item
+11:1-12:1: Extraneous new line after list item
+13:1-14:1: Extraneous new line after list item
 ```
 
-  Warn for too many consecutive blank lines.  Knows about the extra line
-  needed between a list and indented code, and two lists.
+## `maximum-heading-length`
 
-### no-duplicate-definitions
+Warn when headings are too long.
 
-```md
-  <!-- Valid: -->
-  [foo]: bar
-  [baz]: qux
+Options: `number`, default: `60`.
 
-  <!-- Invalid: -->
-  [foo]: bar
-  [foo]: qux
+Ignores markdown syntax, only checks the plain text content.
+
+When this rule is `40`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Alpha bravo charlie delta echo foxtrot golf hotel
 ```
 
-  Warn when duplicate definitions are found.
-
-### no-duplicate-headings
-
-```md
-  <!-- Valid: -->
-  # Foo
-
-  ## Bar
-
-  <!-- Invalid: -->
-  # Foo
-
-  ## Foo
-
-  ## [Foo](http://foo.com/bar)
+```text
+1:1-1:52: Use headings shorter than `40`
 ```
 
-  Warn when duplicate headings are found.
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-### no-emphasis-as-heading
+```markdown
+# Alpha bravo charlie delta echo foxtrot golf hotel
 
-```md
-  <!-- Valid: -->
-  # Foo
-
-  Bar.
-
-  <!-- Invalid: -->
-  *Foo*
-
-  Bar.
+# ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
 ```
 
-  Warn when emphasis (including strong), instead of a heading, introduces
-  a paragraph.
+## `maximum-line-length`
 
-### no-file-name-articles
+Warn when lines are too long.
 
-```md
-  Valid: article.md
-  Invalid: an-article.md, a-article.md, , the-article.md
+Options: `number`, default: `80`.
+
+Ignores nodes which cannot be wrapped, such as heasings, tables,
+code, link, images, and definitions.
+
+When this rule is `80`, the following file
+`valid.md` is ok:
+
+```markdown
+This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
+long.
+
+This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?query=variables>
+
+<http://this-link-is-fine.com>
+
+[foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
+
+<http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables>
+
+![foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
+
+| An | exception | is | line | length | in | long | tables | because | those | can’t | just |
+| -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |
+| be | helped    |    |      |        |    |      |        |         |       |       | .    |
+
+The following is also fine, because there is no white-space.
+
+<http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>.
+
+In addition, definitions are also fine:
+
+[foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>
 ```
 
-  Warn when file name start with an article.
+When this rule is `80`, the following file
+`invalid.md` is **not** ok:
 
-### no-file-name-consecutive-dashes
+```markdown
+This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+long.
 
-```md
-  Invalid: docs/plug--ins.md
-  Valid: docs/plug-ins.md
+Just like thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiis one.
+
+And this one is also very wrong: because the link starts aaaaaaafter the column: <http://line.com>
+
+<http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables> and such.
 ```
 
-  Warn when file names contain consecutive dashes.
-
-### no-file-name-irregular-characters
-
-```md
-  Invalid: plug_ins.md, plug ins.md.
-  Valid: plug-ins.md, plugins.md.
+```text
+4:86: Line must be at most 80 characters
+6:99: Line must be at most 80 characters
+8:97: Line must be at most 80 characters
 ```
 
-  Warn when file names contain irregular characters: characters other
-  than alpha-numericals, dashes, and dots (full-stops).
+## `no-auto-link-without-protocol`
 
-  Options: `RegExp` or `string`, default: `'\\.a-zA-Z0-9-'`.
+Warn for angle-bracketed links without protocol.
 
-  If a string is given, it will be wrapped in
-  `new RegExp('[^' + preferred + ']')`.
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  Any match by the wrapped or given expressions triggers a
-  warning.
-
-### no-file-name-mixed-case
-
-```md
-  Invalid: Readme.md
-  Valid: README.md, readme.md
+```markdown
+<http://www.example.com>
+<mailto:foo@bar.com>
 ```
 
-  Warn when a file name uses mixed case: both upper- and lower case
-  characters.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-### no-file-name-outer-dashes
-
-```md
-  Invalid: -readme.md, readme-.md
-  Valid: readme.md
+```markdown
+<www.example.com>
+<foo@bar.com>
 ```
 
-  Warn when file names contain initial or final dashes.
-
-### no-heading-content-indent
-
-```md
-  <!-- Note: the middle-dots represent spaces -->
-  <!-- Invalid: -->
-  #··Foo
-
-  ## Bar··##
-
-    ##··Baz
-
-  <!-- Valid: -->
-  #·Foo
-
-  ## Bar·##
-
-    ##·Baz
+```text
+2:1-2:14: All automatic links must start with a protocol
 ```
 
-  Warn when a heading’s content is indented.
+## `no-blockquote-without-caret`
 
-### no-heading-indent
+Warn when blank lines without carets are found in a blockquote.
 
-```md
-  <!-- Note: the middle-dots represent spaces -->
-  <!-- Invalid: -->
-  ···# Hello world
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  ·Foo
-  -----
-
-  ·# Hello world #
-
-  ···Bar
-  =====
-
-  <!-- Valid: -->
-  # Hello world
-
-  Foo
-  -----
-
-  # Hello world #
-
-  Bar
-  =====
+```markdown
+> Foo...
+>
+> ...Bar.
 ```
 
-  Warn when a heading is indented.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-### no-heading-punctuation
+```markdown
+> Foo...
 
-```md
-  <!-- Invalid: -->
-  # Hello:
-
-  # Hello?
-
-  # Hello!
-
-  # Hello,
-
-  # Hello;
-
-  <!-- Valid: -->
-  # Hello
+> ...Bar.
 ```
 
-  Warn when a heading ends with a a group of characters.
-  Defaults to `'.,;:!?'`.
-
-  Options: `string`, default: `'.,;:!?'`.
-
-  Note that these are added to a regex, in a group (`'[' + char + ']'`),
-  be careful for escapes and dashes.
-
-### no-html
-
-```md
-  <!-- Invalid: -->
-  <h1>Hello</h1>
-
-  <!-- Valid: -->
-  # Hello
+```text
+2:1: Missing caret in blockquote
 ```
 
-  Warn when HTML nodes are used.
+## `no-consecutive-blank-lines`
 
-  Ignores comments, because they are used by this tool, remark, and
-  because markdown doesn’t have native comments.
+Warn for too many consecutive blank lines.  Knows about the extra line
+needed between a list and indented code, and two lists.
 
-### no-inline-padding
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-```md
-  <!-- Invalid: -->
-  * Hello *, [ world ](http://foo.bar/baz)
+```markdown
+Foo...
 
-  <!-- Valid: -->
-  *Hello*, [world](http://foo.bar/baz)
+...Bar.
 ```
 
-  Warn when inline nodes are padded with spaces between markers and
-  content.
+When this rule is turned on, the following file
+`valid-for-code.md` is ok:
 
-  Warns for emphasis, strong, delete, image, and link.
+```markdown
+Paragraph.
 
-### no-literal-urls
+*   List
 
-```md
-  <!-- Invalid: -->
-  http://foo.bar/baz
 
-  <!-- Valid: -->
-  <http://foo.bar/baz>
+    bravo();
 ```
 
-  Warn when URLs without angle-brackets are used.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-### no-missing-blank-lines
+```markdown
+Foo...
 
-```md
-  <!-- Invalid: -->
-  # Foo
-  ## Bar
 
-  <!-- Valid: -->
-  # Foo
-
-  ## Bar
+...Bar.
 ```
 
-  Warn for missing blank lines before a block node.
-
-### no-multiple-toplevel-headings
-
-```md
-  <!-- Invalid, when set to `1` -->
-  # Foo
-
-  # Bar
-
-  <!-- Valid, when set to `1` -->
-  # Foo
-
-  ## Bar
+```text
+4:1: Remove 1 line before node
 ```
 
-  Warn when multiple top-level headings are used.
+## `no-duplicate-definitions`
 
-  Options: `number`, default: `1`.
+Warn when duplicate definitions are found.
 
-### no-shell-dollars
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-````md
-          <!-- Invalid: -->
-          ```bash
-          $ echo a
-          $ echo a > file
-          ```
+```markdown
+[foo]: bar
+[baz]: qux
+```
 
-          <!-- Valid: -->
-          ```sh
-          echo a
-          echo a > file
-          ```
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-          <!-- Also valid: -->
-          ```zsh
-          $ echo a
-          a
-          $ echo a > file
-          ```
+```markdown
+[foo]: bar
+[foo]: qux
+```
+
+```text
+2:1-2:11: Do not use definitions with the same identifier (1:1)
+```
+
+## `no-duplicate-headings`
+
+Warn when duplicate headings are found.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+# Foo
+
+## Bar
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Foo
+
+## Foo
+
+## [Foo](http://foo.com/bar)
+```
+
+```text
+3:1-3:7: Do not use headings with similar content (1:1)
+5:1-5:29: Do not use headings with similar content (3:1)
+```
+
+## `no-emphasis-as-heading`
+
+Warn when emphasis (including strong), instead of a heading, introduces
+a paragraph.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+# Foo
+
+Bar.
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+*Foo*
+
+Bar.
+```
+
+```text
+1:1-1:6: Don’t use emphasis to introduce a section, use a heading
+```
+
+## `no-file-name-articles`
+
+Warn when file name start with an article.
+
+When this rule is turned on, the following file
+`title.md` is ok:
+
+```markdown
+
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not start file names with `a`
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not start file names with `the`
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not start file names with `an`
+```
+
+## `no-file-name-consecutive-dashes`
+
+Warn when file names contain consecutive dashes.
+
+When this rule is turned on, the following file
+`plug-ins.md` is ok:
+
+```markdown
+
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not use consecutive dashes in a file name
+```
+
+## `no-file-name-irregular-characters`
+
+Warn when file names contain irregular characters: characters other
+than alpha-numericals, dashes, and dots (full-stops).
+
+Options: `RegExp` or `string`, default: `'\\.a-zA-Z0-9-'`.
+
+If a string is given, it will be wrapped in
+`new RegExp('[^' + preferred + ']')`.
+
+Any match by the wrapped or given expressions triggers a
+warning.
+
+When this rule is turned on, the following file
+`plug-ins.md` is ok:
+
+```markdown
+
+```
+
+When this rule is turned on, the following file
+`plugins.md` is ok:
+
+```markdown
+
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not use `_` in a file name
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not use ` ` in a file name
+```
+
+When `'\\.a-z0-9'` is passed in, the following error is given:
+
+```text
+1:1: Do not use `R` in a file name
+```
+
+## `no-file-name-mixed-case`
+
+Warn when a file name uses mixed case: both upper- and lower case
+characters.
+
+When this rule is turned on, the following file
+`README.md` is ok:
+
+```markdown
+
+```
+
+When this rule is turned on, the following file
+`readme.md` is ok:
+
+```markdown
+
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not mix casing in file names
+```
+
+## `no-file-name-outer-dashes`
+
+Warn when file names contain initial or final dashes.
+
+When this rule is turned on, the following file
+`readme.md` is ok:
+
+```markdown
+
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not use initial or final dashes in a file name
+```
+
+When turned on is passed in, the following error is given:
+
+```text
+1:1: Do not use initial or final dashes in a file name
+```
+
+## `no-heading-content-indent`
+
+Warn when a heading’s content is indented.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- Note: the middle-dots represent spaces -->
+
+#·Foo
+
+## Bar·##
+
+  ##·Baz
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!-- Note: the middle-dots represent spaces -->
+
+#··Foo
+
+## Bar··##
+
+  ##··Baz
+```
+
+```text
+3:4: Remove 1 space before this heading’s content
+5:7: Remove 1 space after this heading’s content
+7:7: Remove 1 space before this heading’s content
+```
+
+When this rule is turned on, the following file
+`empty-heading.md` is ok:
+
+```markdown
+#··
+```
+
+When this rule is turned on, the following file
+`tight.md` is **not** ok:
+
+```markdown
+In pedantic mode, headings without spacing can also be detected:
+
+##No spacing left, too much right··##
+```
+
+```text
+3:3: Add 1 space before this heading’s content
+3:34: Remove 1 space after this heading’s content
+```
+
+## `no-heading-indent`
+
+Warn when a heading is indented.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- Note: the middle-dots represent spaces -->
+
+#·Hello world
+
+Foo
+-----
+
+#·Hello world·#
+
+Bar
+=====
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!-- Note: the middle-dots represent spaces -->
+
+···# Hello world
+
+·Foo
+-----
+
+·# Hello world #
+
+···Bar
+=====
+```
+
+```text
+3:4: Remove 3 spaces before this heading
+5:2: Remove 1 space before this heading
+8:2: Remove 1 space before this heading
+10:4: Remove 3 spaces before this heading
+```
+
+## `no-heading-punctuation`
+
+Warn when a heading ends with a a group of characters.
+Defaults to `'.,;:!?'`.
+
+Options: `string`, default: `'.,;:!?'`.
+
+Note that these are added to a regex, in a group (`'[' + char + ']'`),
+be careful for escapes and dashes.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+# Hello
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Hello:
+
+# Hello?
+
+# Hello!
+
+# Hello,
+
+# Hello;
+```
+
+```text
+1:1-1:9: Don’t add a trailing `:` to headings
+3:1-3:9: Don’t add a trailing `?` to headings
+5:1-5:9: Don’t add a trailing `!` to headings
+7:1-7:9: Don’t add a trailing `,` to headings
+9:1-9:9: Don’t add a trailing `;` to headings
+```
+
+When this rule is `',;:!?'`, the following file
+`valid.md` is ok:
+
+```markdown
+# Hello...
+```
+
+## `no-html`
+
+Warn when HTML nodes are used.
+
+Ignores comments, because they are used by this tool, remark, and
+because markdown doesn’t have native comments.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+# Hello
+
+<!--Comments are also OK-->
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<h1>Hello</h1>
+```
+
+```text
+1:1-1:15: Do not use HTML in markdown
+```
+
+## `no-inline-padding`
+
+Warn when inline nodes are padded with spaces between markers and
+content.
+
+Warns for emphasis, strong, delete, image, and link.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+Alpha, *bravo*, _charlie_, [delta](http://echo.fox/trot)
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+Alpha, * bravo *, _ charlie _, [ delta ](http://echo.fox/trot)
+```
+
+```text
+1:8-1:17: Don’t pad `emphasis` with inner spaces
+1:19-1:30: Don’t pad `emphasis` with inner spaces
+1:32-1:63: Don’t pad `link` with inner spaces
+```
+
+## `no-literal-urls`
+
+Warn when URLs without angle-brackets are used.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+<http://foo.bar/baz>
+<mailto:qux@quux.com>
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+http://foo.bar/baz
+
+mailto:qux@quux.com
+```
+
+```text
+1:1-1:19: Don’t use literal URLs without angle brackets
+```
+
+## `no-missing-blank-lines`
+
+Warn for missing blank lines before a block node.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+# Foo
+
+## Bar
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Foo
+## Bar
+```
+
+```text
+2:1-2:7: Missing blank line before block node
+```
+
+## `no-multiple-toplevel-headings`
+
+Warn when multiple top-level headings are used.
+
+Options: `number`, default: `1`.
+
+When this rule is `1`, the following file
+`valid.md` is ok:
+
+```markdown
+# Foo
+
+## Bar
+```
+
+When this rule is `1`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+# Foo
+
+# Bar
+```
+
+```text
+3:1-3:6: Don’t use multiple top level headings (3:1)
+```
+
+## `no-shell-dollars`
+
+Warn when shell code is prefixed by dollar-characters.
+
+Ignored indented code blocks and fenced code blocks without language
+flag.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+````markdown
+    ```sh
+    echo a
+    echo a > file
+    ```
+
+    ```zsh
+    $ echo a
+    a
+    $ echo a > file
+    ```
 ````
 
-  Warn when shell code is prefixed by dollar-characters.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-  Ignored indented code blocks and fenced code blocks without language
-  flag.
+````markdown
+    ```bash
+    $ echo a
+    $ echo a > file
+    ```
+````
 
-### no-shortcut-reference-image
-
-```md
-  <!-- Invalid: -->
-  ![foo]
-
-  [foo]: http://foo.bar/baz.png
-
-  <!-- Valid: -->
-  ![foo][]
-
-  [foo]: http://foo.bar/baz.png
+```text
+1:1-4:4: Do not use dollar signs before shell-commands
 ```
 
-  Warn when shortcut reference images are used.
+## `no-shortcut-reference-image`
 
-### no-shortcut-reference-link
+Warn when shortcut reference images are used.
 
-```md
-  <!-- Invalid: -->
-  [foo]
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  [foo]: http://foo.bar/baz
+```markdown
+![foo][]
 
-  <!-- Valid: -->
-  [foo][]
-
-  [foo]: http://foo.bar/baz
+[foo]: http://foo.bar/baz.png
 ```
 
-  Warn when shortcut reference links are used.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-### no-table-indentation
+```markdown
+![foo]
 
-```md
-  <!-- Invalid: -->
-      | A     | B     |
-      | ----- | ----- |
-      | Alpha | Bravo |
-
-  <!-- Valid: -->
-  | A     | B     |
-  | ----- | ----- |
-  | Alpha | Bravo |
+[foo]: http://foo.bar/baz.png
 ```
 
-  Warn when tables are indented.
-
-### no-tabs
-
-```md
-  <!-- Note: the double guillemet (`»`) and middle-dots represent a tab -->
-  <!-- Invalid: -->
-  Foo»Bar
-
-  »···Foo
-
-  <!-- Valid: -->
-  Foo Bar
-
-      Foo
+```text
+1:1-1:7: Use the trailing [] on reference images
 ```
 
-  Warn when hard-tabs instead of spaces
+## `no-shortcut-reference-link`
 
-### no-undefined-references
+Warn when shortcut reference links are used.
 
-```md
-  <!-- Valid: -->
-  [foo][]
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  [foo]: https://example.com
+```markdown
+[foo][]
 
-  <!-- Invalid: -->
-  [bar][]
+[foo]: http://foo.bar/baz
 ```
 
-  Warn when references to undefined definitions are found.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-### no-unused-definitions
+```markdown
+[foo]
 
-```md
-  <!-- Valid: -->
-  [foo][]
-
-  [foo]: https://example.com
-
-  <!-- Invalid: -->
-  [bar]: https://example.com
+[foo]: http://foo.bar/baz
 ```
 
-  Warn when unused definitions are found.
-
-### ordered-list-marker-style
-
-```md
-  <!-- Valid when set to `consistent` or `.` -->
-  1.  Foo
-
-  2.  Bar
-
-  <!-- Valid when set to `consistent` or `)` -->
-  1)  Foo
-
-  2)  Bar
+```text
+1:1-1:6: Use the trailing [] on reference links
 ```
 
-  Warn when the list-item marker style of ordered lists violate a given
-  style.
+## `no-table-indentation`
 
-  Options: `string`, either `'consistent'`, `'.'`, or `')'`,
-  default: `'consistent'`.
+Warn when tables are indented.
 
-  Note that `)` is only supported in CommonMark.
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  The default value, `consistent`, detects the first used list
-  style, and will warn when a subsequent list uses a different
-  style.
+```markdown
+Paragraph.
 
-### ordered-list-marker-value
-
-```md
-  <!-- Valid when set to `one`: -->
-  1.  Foo
-  1.  Bar
-  1.  Baz
-
-  1.  Alpha
-  1.  Bravo
-  1.  Charlie
-
-  <!-- Valid when set to `single`: -->
-  1.  Foo
-  1.  Bar
-  1.  Baz
-
-  3.  Alpha
-  3.  Bravo
-  3.  Charlie
-
-  <!-- Valid when set to `ordered`: -->
-  1.  Foo
-  2.  Bar
-  3.  Baz
-
-  3.  Alpha
-  4.  Bravo
-  5.  Charlie
+| A     | B     |
+| ----- | ----- |
+| Alpha | Bravo |
 ```
 
-  Warn when the list-item marker values of ordered lists violate a
-  given style.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-  Options: `string`, either `'single'`, `'one'`, or `'ordered'`,
-  default: `'ordered'`.
+```markdown
+Paragraph.
 
-  When set to `'ordered'`, list-item bullets should increment by one,
-  relative to the starting point.  When set to `'single'`, bullets should
-  be the same as the relative starting point.  When set to `'one'`, bullets
-  should always be `1`.
-
-### rule-style
-
-```md
-  <!-- Valid when set to `consistent` or `* * *`: -->
-  * * *
-
-  * * *
-
-  <!-- Valid when set to `consistent` or `_______`: -->
-  _______
-
-  _______
+   | A     | B     |
+   | ----- | ----- |
+   | Alpha | Bravo |
 ```
 
-  Warn when the horizontal rules violate a given or detected style.
-
-  Note that horizontal rules are also called “thematic break”.
-
-  Options: `string`, either a valid markdown rule, or `consistent`,
-  default: `'consistent'`.
-
-### strong-marker
-
-```md
-  <!-- Valid when set to `consistent` or `*` -->
-  **foo**
-  **bar**
-
-  <!-- Valid when set to `consistent` or `_` -->
-  __foo__
-  __bar__
+```text
+3:1-3:21: Do not indent table rows
+5:1-5:21: Do not indent table rows
 ```
 
-  Warn for violating strong markers.
+## `no-tabs`
 
-  Options: `string`, either `'consistent'`, `'*'`, or `'_'`,
-  default: `'consistent'`.
+Warn when hard-tabs instead of spaces
 
-  The default value, `consistent`, detects the first used strong
-  style, and will warn when a subsequent strong uses a different
-  style.
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-### table-cell-padding
+```markdown
+Foo Bar
 
-```md
-  <!-- Valid when set to `consistent` or `padded` -->
-  | A     | B     |
-  | ----- | ----- |
-  | Alpha | Bravo |
-
-  <!-- Valid when set to `consistent` or `compact` -->
-  |A    |B    |
-  |-----|-----|
-  |Alpha|Bravo|
-
-  <!-- Invalid: -->
-  |   A    | B    |
-  |   -----| -----|
-  |   Alpha| Bravo|
+    Foo
 ```
 
-  Warn when table cells are incorrectly padded.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-  Options: `string`, either `'consistent'`, `'padded'`, or `'compact'`,
-  default: `'consistent'`.
+```markdown
+<!-- Note: the guillemets represent tabs -->
 
-  The default value, `consistent`, detects the first used cell padding
-  style, and will warn when a subsequent cells uses a different
-  style.
+»Here's one before a code block.
 
-### table-pipe-alignment
+Here's a tab:», and here is another:».
 
-```md
-  <!-- Valid: -->
-  | A     | B     |
-  | ----- | ----- |
-  | Alpha | Bravo |
+And this is in `inline»code`.
 
-  <!-- Invalid: -->
-  | A | B |
-  | -- | -- |
-  | Alpha | Bravo |
+>»This is in a block quote.
+
+*»And...
+
+»1.»in a list.
+
+And this is a tab as the last character.»
 ```
 
-  Warn when table pipes are not aligned.
-
-### table-pipes
-
-```md
-  <!-- Valid: -->
-  | A     | B     |
-  | ----- | ----- |
-  | Alpha | Bravo |
-
-  <!-- Invalid: -->
-  A     | B
-  ----- | -----
-  Alpha | Bravo
+```text
+3:1: Use spaces instead of hard-tabs
+5:14: Use spaces instead of hard-tabs
+5:37: Use spaces instead of hard-tabs
+7:23: Use spaces instead of hard-tabs
+9:2: Use spaces instead of hard-tabs
+11:2: Use spaces instead of hard-tabs
+13:1: Use spaces instead of hard-tabs
+13:4: Use spaces instead of hard-tabs
+15:41: Use spaces instead of hard-tabs
 ```
 
-  Warn when table rows are not fenced with pipes.
+## `no-undefined-references`
 
-### unordered-list-marker-style
+Warn when references to undefined definitions are found.
 
-```md
-  <!-- Valid when set to `consistent` or `-` -->
-  -   Foo
-  -   Bar
+When this rule is turned on, the following file
+`valid.md` is ok:
 
-  <!-- Valid when set to `consistent` or `*` -->
-  *   Foo
-  *   Bar
+```markdown
+[foo][]
 
-  <!-- Valid when set to `consistent` or `+` -->
-  +   Foo
-  +   Bar
-
-  <!-- Never valid: -->
-  +   Foo
-  -   Bar
+[foo]: https://example.com
 ```
 
-  Warn when the list-item marker style of unordered lists violate a given
-  style.
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
 
-  Options: `string`, either `'consistent'`, `'-'`, `'*'`, or `'*'`,
-  default: `'consistent'`.
+```markdown
+[bar][]
+```
 
-  The default value, `consistent`, detects the first used list
-  style, and will warn when a subsequent list uses a different
-  style.
+```text
+1:1-1:8: Found reference to undefined definition
+```
+
+## `no-unused-definitions`
+
+Warn when unused definitions are found.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+[foo][]
+
+[foo]: https://example.com
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+[bar]: https://example.com
+```
+
+```text
+1:1-1:27: Found unused definition
+```
+
+## `ordered-list-marker-style`
+
+Warn when the list-item marker style of ordered lists violate a given
+style.
+
+Options: `string`, either `'consistent'`, `'.'`, or `')'`,
+default: `'consistent'`.
+
+Note that `)` is only supported in CommonMark.
+
+The default value, `consistent`, detects the first used list
+style, and will warn when a subsequent list uses a different
+style.
+
+When this rule is `'.'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- This is also valid when `consistent`. -->
+
+1.  Foo
+
+2.  Bar
+```
+
+When this rule is `')'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- This is also valid when `consistent`.
+     But it does require commonmark. -->
+
+1)  Foo
+
+2)  Bar
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+1.  Foo
+
+2)  Bar
+```
+
+```text
+3:1-3:8: Marker style should be `.`
+```
+
+When `'!'` is passed in, the following error is given:
+
+```text
+1:1: Invalid ordered list-item marker style `!`: use either `'.'` or `')'`
+```
+
+## `ordered-list-marker-value`
+
+Warn when the list-item marker values of ordered lists violate a
+given style.
+
+Options: `string`, either `'single'`, `'one'`, or `'ordered'`,
+default: `'ordered'`.
+
+When set to `'ordered'`, list-item bullets should increment by one,
+relative to the starting point.  When set to `'single'`, bullets should
+be the same as the relative starting point.  When set to `'one'`, bullets
+should always be `1`.
+
+When this rule is `'one'`, the following file
+`valid.md` is ok:
+
+```markdown
+1.  Foo
+1.  Bar
+1.  Baz
+
+Paragraph.
+
+1.  Alpha
+1.  Bravo
+1.  Charlie
+```
+
+When this rule is `'one'`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+1.  Foo
+2.  Bar
+```
+
+```text
+2:1-2:8: Marker should be `1`, was `2`
+```
+
+When this rule is `'single'`, the following file
+`valid.md` is ok:
+
+```markdown
+1.  Foo
+1.  Bar
+1.  Baz
+
+Paragraph.
+
+3.  Alpha
+3.  Bravo
+3.  Charlie
+```
+
+When this rule is `'ordered'`, the following file
+`valid.md` is ok:
+
+```markdown
+1.  Foo
+2.  Bar
+3.  Baz
+
+Paragraph.
+
+3.  Alpha
+4.  Bravo
+5.  Charlie
+```
+
+When this rule is `'ordered'`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+1.  Foo
+1.  Bar
+```
+
+```text
+2:1-2:8: Marker should be `2`, was `1`
+```
+
+When `'invalid'` is passed in, the following error is given:
+
+```text
+1:1: Invalid ordered list-item marker value `invalid`: use either `'ordered'` or `'one'`
+```
+
+## `rule-style`
+
+Warn when the horizontal rules violate a given or detected style.
+
+Note that horizontal rules are also called “thematic break”.
+
+Options: `string`, either a valid markdown rule, or `consistent`,
+default: `'consistent'`.
+
+When this rule is `'* * *'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- This is also valid when `consistent`. -->
+
+* * *
+
+* * *
+```
+
+When this rule is `'_______'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!-- This is also valid when `consistent`. -->
+
+_______
+
+_______
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!-- Always invalid. -->
+
+***
+
+* * *
+```
+
+```text
+5:1-5:6: Rules should use `***`
+```
+
+When `'!!!'` is passed in, the following error is given:
+
+```text
+1:1: Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`
+```
+
+## `strong-marker`
+
+Warn for violating strong markers.
+
+Options: `string`, either `'consistent'`, `'*'`, or `'_'`,
+default: `'consistent'`.
+
+The default value, `consistent`, detects the first used strong
+style, and will warn when a subsequent strong uses a different
+style.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+**foo** and **bar**.
+```
+
+When this rule is turned on, the following file
+`also-valid.md` is ok:
+
+```markdown
+__foo__ and __bar__.
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+**foo** and __bar__.
+```
+
+```text
+1:13-1:20: Strong should use `*` as a marker
+```
+
+When this rule is `'*'`, the following file
+`valid.md` is ok:
+
+```markdown
+**foo**.
+```
+
+When this rule is `'_'`, the following file
+`valid.md` is ok:
+
+```markdown
+__foo__.
+```
+
+When `'!'` is passed in, the following error is given:
+
+```text
+1:1: Invalid strong marker `!`: use either `'consistent'`, `'*'`, or `'_'`
+```
+
+## `table-cell-padding`
+
+Warn when table cells are incorrectly padded.
+
+Options: `string`, either `'consistent'`, `'padded'`, or `'compact'`,
+default: `'consistent'`.
+
+The default value, `consistent`, detects the first used cell padding
+style, and will warn when a subsequent cells uses a different
+style.
+
+When this rule is `'padded'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+| A     | B     |
+| ----- | ----- |
+| Alpha | Bravo |
+```
+
+When this rule is `'compact'`, the following file
+`valid.md` is ok:
+
+```markdown
+<!--Also valid when `consistent`-->
+
+|A    |B    |
+|-----|-----|
+|Alpha|Bravo|
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+<!--Always invalid-->
+
+|   A    | B    |
+|   -----| -----|
+|   Alpha| Bravo|
+```
+
+```text
+3:5: Cell should be padded, isn’t
+3:9: Cell should be padded, isn’t
+3:16: Cell should be padded, isn’t
+```
+
+When `'invalid'` is passed in, the following error is given:
+
+```text
+1:1: Invalid table-cell-padding style `invalid`
+```
+
+## `table-pipe-alignment`
+
+Warn when table pipes are not aligned.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+| A     | B     |
+| ----- | ----- |
+| Alpha | Bravo |
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+| A | B |
+| -- | -- |
+| Alpha | Bravo |
+```
+
+```text
+3:9-3:10: Misaligned table fence
+3:17-3:18: Misaligned table fence
+```
+
+## `table-pipes`
+
+Warn when table rows are not fenced with pipes.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+| A     | B     |
+| ----- | ----- |
+| Alpha | Bravo |
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+A     | B
+----- | -----
+Alpha | Bravo
+```
+
+```text
+1:1: Missing initial pipe in table fence
+1:10: Missing final pipe in table fence
+3:1: Missing initial pipe in table fence
+3:14: Missing final pipe in table fence
+```
+
+## `unordered-list-marker-style`
+
+Warn when the list-item marker style of unordered lists violate a given
+style.
+
+Options: `string`, either `'consistent'`, `'-'`, `'*'`, or `'*'`,
+default: `'consistent'`.
+
+The default value, `consistent`, detects the first used list
+style, and will warn when a subsequent list uses a different
+style.
+
+When this rule is `'*'`, the following file
+`valid.md` is ok:
+
+```markdown
+* Foo
+```
+
+When this rule is `'-'`, the following file
+`valid.md` is ok:
+
+```markdown
+- Foo
+```
+
+When this rule is `'+'`, the following file
+`valid.md` is ok:
+
+```markdown
++ Foo
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+* Foo
+- Bar
++ Baz
+```
+
+```text
+2:1-2:6: Marker style should be `*`
+3:1-3:6: Marker style should be `*`
+```
+
+When `'!'` is passed in, the following error is given:
+
+```text
+1:1: Invalid unordered list-item marker style `!`: use either `'-'`, `'*'`, or `'+'`
+```

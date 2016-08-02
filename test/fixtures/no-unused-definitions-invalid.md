@@ -1,1 +1,0 @@
-[bar]: https://example.com

@@ -1,6 +1,7 @@
 .DS_Store
 *.log
 coverage/
+.nyc_output/
 node_modules/
 remark-lint.js
 remark-lint.min.js

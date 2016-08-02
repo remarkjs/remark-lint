@@ -1,7 +1,0 @@
-# Invalid
-
-Another heading
----------------
-
-Another
-=======

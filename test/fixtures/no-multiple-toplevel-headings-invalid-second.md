@@ -1,4 +1,0 @@
-Another heading
----------------
-
-## Another

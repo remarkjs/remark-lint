@@ -4,8 +4,6 @@
 [![Coverage Status][coverage-badge]][coverage-status]
 [![Chat][chat-badge]][chat]
 
-<!--lint disable list-item-spacing-->
-
 **remark-lint** is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes
@@ -20,7 +18,6 @@ processor powered by [plugins][remark-plugins] (such as this one).
 *   [Installation](#installation)
 *   [Command line](#command-line)
 *   [Programmatic](#programmatic)
-    *   [remark.use(lint\[, options\])](#remarkuselint-options)
 *   [Rules](#rules)
 *   [Configuring remark-lint](#configuring-remark-lint)
 *   [Using remark to fix your markdown](#using-remark-to-fix-your-markdown)
@@ -93,7 +90,6 @@ console.log(report(file));
 Now, running `node example.js` yields:
 
 ```txt
-<stdin>
         1:1  warning  Missing newline character at end of file  final-newline
    1:1-1:16  warning  First heading level should be `1`         first-heading-level
    1:1-1:16  warning  Don’t add a trailing `!` to headings      no-heading-punctuation
@@ -109,14 +105,18 @@ When processing a file, these warnings are available at `file.messages`, and
 look as follows:
 
 ```js
-{
-  file: '~/example.md',
+{ [1:1-1:16: First heading level should be `1`]
+  message: 'First heading level should be `1`',
+  name: '1:1-1:16',
+  file: '',
   reason: 'First heading level should be `1`',
   line: 1,
   column: 1,
-  location: Position { start: [Object], end: [Object] },
-  ruleId: 'first-heading-level',
+  location: {
+    start: { line: 1, column: 1, offset: 0 },
+    end: { line: 1, column: 16, offset: 15 } },
   fatal: false,
+  ruleId: 'first-heading-level',
   source: 'remark-lint' }
 ```
 
@@ -213,9 +213,19 @@ and I strongly suggest checking out how it can make your life easier :+1:
 Currently, **remark-lint** is integrated with Atom through
 [**linter-markdown**][linter-markdown].
 
+If you want to run all of **remark** from **Atom**, use
+[**linter-remark**][linter-remark].
+
+To run **remark**, optionally with **remark-lint** from **Gulp**, use
+[**gulp-remark**][gulp-remark].
+
 I’m very interested in more integrations.  Let me know if I can help.
 
 ## List of External Rules
+
+External rules can be loaded through the [`external` setting][external].
+
+Learn how to create and use external rules in [`doc/external.md`][doc-external].
 
 <!--
 This list is ordered based on the name without prefix, so
@@ -249,19 +259,19 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/remark-inline-links.svg
+[build-badge]: https://img.shields.io/travis/wooorm/remark-lint.svg
 
-[build-status]: https://travis-ci.org/wooorm/remark-inline-links
+[build-status]: https://travis-ci.org/wooorm/remark-lint
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-inline-links.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/remark-inline-links
+[coverage-status]: https://codecov.io/github/wooorm/remark-lint
 
 [chat-badge]: https://img.shields.io/gitter/room/wooorm/remark.svg
 
 [chat]: https://gitter.im/wooorm/remark
 
-[releases]: https://github.com/wooorm/remark-inline-links/releases
+[releases]: https://github.com/wooorm/remark-lint/releases
 
 [license]: LICENSE
 
@@ -290,3 +300,11 @@ excluding `remark-lint-no-` or `remark-lint-`
 [vfile]: https://github.com/wooorm/vfile
 
 [vfile-message]: https://github.com/wooorm/vfile#vfilemessage
+
+[linter-remark]: https://github.com/wooorm/linter-remark
+
+[gulp-remark]: https://github.com/denysdovhan/gulp-remark
+
+[external]: doc/rules.md#external
+
+[doc-external]: doc/external.md

@@ -2,6 +2,15 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+4.1.0 / 2016-08-02
+==================
+
+*   Add better external rule support, and refactor module ([`8dedd19`](https://github.com/wooorm/remark-lint/commit/8dedd19))
+*   Refactor code-style to use `xo` ([`60907ad`](https://github.com/wooorm/remark-lint/commit/60907ad))
+*   Add support for rules as any trough ware ([`d272ff2`](https://github.com/wooorm/remark-lint/commit/d272ff2))
+*   Add `load-plugin` to load external rules ([`31f82b2`](https://github.com/wooorm/remark-lint/commit/31f82b2))
+*   Update dependencies ([`5a70271`](https://github.com/wooorm/remark-lint/commit/5a70271))
+
 4.0.2 / 2016-07-06
 ==================
 

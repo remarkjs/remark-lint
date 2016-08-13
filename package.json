@@ -45,9 +45,9 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "chalk": "^1.1.3",
-    "dox": "^0.8.0",
+    "dox": "^0.9.0",
     "esmangle": "^1.0.0",
-    "nyc": "^7.1.0",
+    "nyc": "^8.0.0",
     "remark": "^5.0.0",
     "remark-cli": "^1.0.0",
     "remark-comment-config": "^4.0.0",

@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+4.2.0 / 2016-08-14
+==================
+
+*   Add option to allow tight lists in `no-missing-blank-lines` ([`a4085f2`](https://github.com/wooorm/remark-lint/commit/a4085f2))
+*   Add better description to `list-item-spacing` ([`d7abf05`](https://github.com/wooorm/remark-lint/commit/d7abf05))
+
 4.1.0 / 2016-08-02
 ==================
 

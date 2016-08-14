@@ -1790,7 +1790,11 @@ mailto:qux@quux.com
 
 ## `no-missing-blank-lines`
 
-Warn for missing blank lines before a block node.
+Warn when missing blank lines before a block node.
+
+This rule can be configured to allow tight list items
+without blank lines between their contents through
+`exceptTightLists: true` (default: false).
 
 When this rule is turned on, the following file
 `valid.md` is ok:
@@ -1799,6 +1803,12 @@ When this rule is turned on, the following file
 # Foo
 
 ## Bar
+
+- Paragraph
+
+  + List.
+
+Paragraph.
 ```
 
 When this rule is turned on, the following file
@@ -1807,6 +1817,29 @@ When this rule is turned on, the following file
 ```markdown
 # Foo
 ## Bar
+
+- Paragraph
+  + List.
+
+Paragraph.
+```
+
+```text
+2:1-2:7: Missing blank line before block node
+5:3-5:10: Missing blank line before block node
+```
+
+When this rule is `{ exceptTightLists: true }`, the following file
+`tight.md` is **not** ok:
+
+```markdown
+# Foo
+## Bar
+
+- Paragraph
+  + List.
+
+Paragraph.
 ```
 
 ```text

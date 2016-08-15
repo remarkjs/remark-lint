@@ -85,6 +85,42 @@ test('core', function (t) {
       });
   });
 
+  t.test('should support a list with a severity', function (st) {
+    st.plan(3);
+
+    remark()
+      .use(lint, {reset: true, finalNewline: [2]})
+      .process('.', function (err, file) {
+        st.ifErr(err, 'should not fail');
+        st.equal(
+          file.messages.join(),
+          '1:1: Missing newline character at end of file',
+          'should trigger fatally (1)'
+        );
+        st.equal(file.messages[0].fatal, true, 'should trigger fatally (2)');
+      });
+  });
+
+  t.test('should fail on invalid severities', function (st) {
+    st.throws(
+      function () {
+        remark().use(lint, {finalNewline: [3]});
+      },
+      /^Error: Invalid severity `3` for `final-newline`, expected 0, 1, or 2$/,
+      'should throw when too high'
+    );
+
+    st.throws(
+      function () {
+        remark().use(lint, {finalNewline: [-1]});
+      },
+      /^Error: Invalid severity `-1` for `final-newline`, expected 0, 1, or 2$/,
+      'should throw too low'
+    );
+
+    st.end();
+  });
+
   t.end();
 });
 

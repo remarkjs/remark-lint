@@ -6,7 +6,7 @@ This document describes all (57)
 available rules, what they check for, examples of
 what they warn for, and how to fix their warnings.
 
-Note: both camel-cased and dash-cases versions of rule id’s
+Both camel-cased and dash-cases versions of rule id’s
 are supported in configuration objects:
 
 ```json
@@ -20,6 +20,33 @@ are supported in configuration objects:
 ```json
 {
   "finalNewline": false
+}
+```
+
+Additionally, each rule can be configured with a severity
+instead of a boolean as well.  The following is handled the
+same as passing `false`:
+
+```json
+{
+  "final-newline": [0]
+}
+```
+
+...and passing `[1]` is as passing `true`.  To trigger an
+error instead of a warning, pass `2`:
+
+```json
+{
+  "final-newline": [2]
+}
+```
+
+It’s also possible to pass both a severity and configuration:
+
+```json
+{
+  "maximum-line-length": [2, 70]
 }
 ```
 

@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "decamelize": "^1.0.0",
-    "load-plugin": "^1.1.1",
+    "load-plugin": "^2.0.0",
     "mdast-util-heading-style": "^1.0.0",
     "mdast-util-to-string": "^1.0.0",
     "plur": "^2.0.0",

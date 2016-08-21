@@ -156,7 +156,7 @@ function rule(ast, file, setting) {
   visit(ast, 'code', function (node) {
     /* Emit a linting message, only for JS code though. */
     if (valid.indexOf(node.lang) !== -1 && node.lang !== pref) {
-      file.warn(
+      file.message(
         'JavaScript code blocks should use `' + pref + '` as a ' +
         'language flag, not `' + node.lang + '`',
         node

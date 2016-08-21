@@ -139,7 +139,7 @@ test('external rules', function (t) {
       path.join(__dirname, 'local-external.js')
     ],
     'external rules by relative file-path': [
-      path.relative(
+      './' + path.relative(
         process.cwd(),
         path.join(__dirname, 'local-external.js')
       )
@@ -228,15 +228,15 @@ function assertFixture(t, rule, fixture, basename, setting) {
   var options = {reset: true};
   var positionless = fixture.config.positionless;
 
-  file.quiet = true;
-
   options[ruleId] = setting;
 
   file.contents = preprocess(fixture.input || '');
 
   t.plan(positionless ? 1 : 2);
 
-  remark().use(lint, options).process(file, fixture.config);
+  try {
+    remark().use(lint, options).process(file, fixture.config);
+  } catch (err) {}
 
   file.messages.forEach(function (message) {
     if (message.ruleId !== ruleId) {
@@ -257,9 +257,11 @@ function assertFixture(t, rule, fixture, basename, setting) {
   if (!positionless) {
     file.messages = [];
 
-    remark().use(function () {
-      return removePosition;
-    }).use(lint, options).process(file);
+    try {
+      remark().use(function () {
+        return removePosition;
+      }).use(lint, options).process(file);
+    } catch (err) {}
 
     t.deepEqual(
       normalize(file.messages),

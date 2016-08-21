@@ -49,7 +49,7 @@
     "esmangle": "^1.0.0",
     "nyc": "^8.0.0",
     "remark": "^5.0.0",
-    "remark-cli": "^1.0.0",
+    "remark-cli": "^2.0.0",
     "remark-comment-config": "^4.0.0",
     "remark-github": "^5.0.0",
     "remark-lint-no-url-trailing-slash": "^2.0.0",

@@ -10,11 +10,11 @@ for markdown.
 
 ## Using external rules
 
-External rules can be used by passing their file-path or their name,
+External rules can be used in two ways:
+Either by passing their file-path or their name,
 in which case `remark-lint-` can be omitted, in an `external` array
-to **remark-lint**.  This only works in Node.js.
-
-Alternatively, load modules yourself and pass them in the `external` array too.
+to **remark-lint** (this only works in Node.js), or by loading
+modules yourself and pass them in the `external` array too.
 
 ### CLI
 
@@ -28,7 +28,8 @@ Create a `.remarkrc` file and add the following JSON:
     "lint": {
       "external": [
         "no-empty-sections"
-      ]
+      ],
+      "empty-sections": true
     }
   }
 }
@@ -62,7 +63,7 @@ That should show a report like:
 
 ```sh
 readme.md
-    5:1-5:5  warning  Remove empty section: "B (this section is empty!)"  empty-sections
+  5:1-5:5  warning  Remove empty section: "B (this section is empty!)"  empty-sections
 
 ⚠ 1 warning
 ```
@@ -85,7 +86,10 @@ var report = require('vfile-reporter');
 var doc = fs.readFileSync('example.md', 'utf8');
 
 remark()
-  .use(lint, {external: ['no-url-trailing-slash']})
+  .use(lint, {
+    external: ['no-url-trailing-slash'],
+    trailingSlash: true
+  })
   .process(doc, function (err, file) {
     console.log(report(err || file));
   });
@@ -131,7 +135,7 @@ a [virtual file][vfile], and a setting.
 
 The setting is never `true` or `false`, those are used later to filter
 messages.  Rules always run, even when they’re turned off, as they can
-be turned on from within markdown code through [comments][]
+be turned on from within markdown code through [comments][].
 
 An example, `./rules/code-js-flag.js`, is as follows:
 

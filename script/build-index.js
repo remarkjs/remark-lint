@@ -15,7 +15,9 @@ var chalk = require('chalk');
 var rules = require('./util/rules');
 
 /* Generate. */
-[path.join(process.cwd())].forEach(function (filePath) {
+[
+  path.join(process.cwd(), 'packages', 'remark-lint')
+].forEach(function (filePath) {
   var base = path.resolve(filePath, 'lib', 'rules.js');
   var doc = [];
 

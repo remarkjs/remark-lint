@@ -11,7 +11,7 @@ are supported in configuration objects:
 
 ```json
 {
-  "final-newline": false
+  "final-newline": true
 }
 ```
 
@@ -19,7 +19,7 @@ are supported in configuration objects:
 
 ```json
 {
-  "finalNewline": false
+  "finalNewline": true
 }
 ```
 
@@ -114,21 +114,8 @@ It’s also possible to pass both a severity and configuration:
 
 ## `reset`
 
-By default, all rules are turned on unless explicitly
-set to `false`.  When `reset: true`, the opposite is
-`true`: all rules are turned off, unless when given a
-non-nully and non-false value.
-
-Options: `boolean`, default: `false`.
-
-Explicitly activate rules:
-
-```json
-{
-  "reset": true,
-  "final-newline": true
-}
-```
+Since version 5.0.0, **reset** is no longer available, and
+it is now the default behavour.
 
 ## `external`
 
@@ -1139,7 +1126,7 @@ When `'invalid'` is passed in, the following error is given:
 Warn when list looseness is incorrect, such as being tight
 when it should be loose, and vice versa.
 
-According the [markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/),
+According to the [markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/),
 if one or more list-items in a list spans more than one line,
 the list is required to have blank lines between each item.
 And otherwise, there should not be blank lines between items.

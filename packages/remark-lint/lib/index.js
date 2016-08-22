@@ -29,9 +29,7 @@ var SOURCE = 'remark-lint';
 /**
  * Lint attacher.
  *
- * By default, all rules are turned on unless explicitly
- * set to `false`.  When `reset: true`, the opposite is
- * true: all rules are turned off, unless when given
+ * All rules are turned off, unless when given
  * a non-nully and non-false value.
  *
  * @example
@@ -46,7 +44,6 @@ var SOURCE = 'remark-lint';
 function lint(remark, options) {
   var settings = decamelizeSettings(options || {});
   var rules = loadExternals(settings.external);
-  var reset = options && options.reset;
   var enable = [];
   var disable = [];
   var known = [];
@@ -57,7 +54,7 @@ function lint(remark, options) {
   /* Add each rule. */
   for (id in rules) {
     known.push(id);
-    config = coerce(id, settings[id], reset);
+    config = coerce(id, settings[id]);
 
     (config[0] ? enable : disable).push(id);
 
@@ -75,7 +72,6 @@ function lint(remark, options) {
   remark.use(control, {
     name: 'lint',
     source: SOURCE,
-    reset: reset,
     known: known,
     enable: enable,
     disable: disable
@@ -187,8 +183,8 @@ function decamelizeSettings(source) {
 }
 
 /* Coerce a value to a severity--options tuple. */
-function coerce(name, value, reset) {
-  var def = reset ? 0 : 1;
+function coerce(name, value) {
+  var def = 0;
   var result;
 
   if (value == null) {

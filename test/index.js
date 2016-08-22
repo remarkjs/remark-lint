@@ -16,7 +16,7 @@ var test = require('tape');
 var vfile = require('to-vfile');
 var removePosition = require('unist-util-remove-position');
 var remark = require('remark');
-var lint = require('..');
+var lint = require('../packages/remark-lint');
 var rules = require('../script/util/rules');
 var rule = require('../script/util/rule');
 
@@ -38,7 +38,10 @@ test('core', function (t) {
     ].join('\n');
 
     remark()
-      .use(lint, {finalNewline: false})
+      .use(lint, {
+        noHeadingPunctuation: true,
+        noMultipleToplevelHeadings: true
+      })
       .process(doc, function (err) {
         st.ifErr(err, 'should not fail');
         st.deepEqual(
@@ -57,7 +60,7 @@ test('core', function (t) {
       st.ifErr(err, 'should not fail');
       st.deepEqual(
         file.messages.map(String),
-        ['1:1: Missing newline character at end of file'],
+        [],
         'should warn for missing new lines'
       );
     });
@@ -89,7 +92,7 @@ test('core', function (t) {
     st.plan(3);
 
     remark()
-      .use(lint, {reset: true, finalNewline: [2]})
+      .use(lint, {finalNewline: [2]})
       .process('.', function (err, file) {
         st.ifErr(err, 'should not fail');
         st.equal(
@@ -159,7 +162,8 @@ test('external rules', function (t) {
 
       remark()
         .use(lint, {
-          external: tests[label]
+          external: tests[label],
+          trailingSlash: true
         })
         .process(doc, function (err, file) {
           st.ifErr(err, 'should not fail');
@@ -174,7 +178,7 @@ test('external rules', function (t) {
 });
 
 test('rules', function (t) {
-  var all = rules(process.cwd());
+  var all = rules(path.join(process.cwd(), 'packages', 'remark-lint'));
 
   t.plan(all.length);
 
@@ -225,7 +229,7 @@ function assertFixture(t, rule, fixture, basename, setting) {
   var ruleId = rule.ruleId;
   var file = vfile(basename);
   var expected = fixture.output;
-  var options = {reset: true};
+  var options = {};
   var positionless = fixture.config.positionless;
 
   options[ruleId] = setting;

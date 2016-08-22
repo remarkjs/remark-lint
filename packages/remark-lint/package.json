@@ -1,0 +1,45 @@
+{
+  "name": "remark-lint",
+  "version": "4.2.0",
+  "description": "Lint markdown with remark",
+  "license": "MIT",
+  "keywords": [
+    "markdown",
+    "lint",
+    "validate",
+    "remark"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+    "Stephan Schneider <stephanschndr@gmail.com>",
+    "Ben Balter <ben.balter@github.com>",
+    "Danny Arnold <despair.blue@gmail.com>",
+    "Tony Brix <tony@brix.ninja>",
+    "Michael Mior <michael.mior@gmail.com>",
+    "Patrick Gilday <pcgilday@gmail.com>",
+    "Yoshua Wuyts <yoshuawuyts@gmail.com>",
+    "YJ Yang <chcokr@gmail.com>",
+    "Burak Yiğit Kaya <ben@byk.im>"
+  ],
+  "files": [
+    "index.js",
+    "lib/"
+  ],
+  "dependencies": {
+    "decamelize": "^1.0.0",
+    "load-plugin": "^2.0.0",
+    "mdast-util-heading-style": "^1.0.0",
+    "mdast-util-to-string": "^1.0.0",
+    "plur": "^2.0.0",
+    "remark-message-control": "^2.0.0",
+    "trough": "^1.0.0",
+    "unist-util-position": "^2.0.1",
+    "unist-util-visit": "^1.0.0",
+    "vfile-location": "^2.0.0",
+    "vfile-sort": "^1.0.0",
+    "wrapped": "^1.0.1"
+  }
+}

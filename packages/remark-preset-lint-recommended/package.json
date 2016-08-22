@@ -1,0 +1,23 @@
+{
+  "name": "remark-preset-lint-recommended",
+  "version": "0.0.0",
+  "description": "remark preset to configure remark-lint with settings that prevent mistakes or syntaxes that do not work correctly across vendors",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "preset",
+    "recommended"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "remark-lint": "^4.2.0"
+  }
+}

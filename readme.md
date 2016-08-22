@@ -7,8 +7,9 @@
 **remark-lint** is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes
-sure less refactoring is needed afterwards.  What is quality? That’s up to you,
-but the defaults are sensible :ok_hand:.
+sure less refactoring is needed afterwards.
+
+What is quality? That’s up to you, but there are sensible [presets][].
 
 **remark-lint** is built on [**remark**][remark], a powerful markdown
 processor powered by [plugins][remark-plugins] (such as this one).
@@ -22,6 +23,7 @@ processor powered by [plugins][remark-plugins] (such as this one).
 *   [Configuring remark-lint](#configuring-remark-lint)
 *   [Using remark to fix your markdown](#using-remark-to-fix-your-markdown)
 *   [Editor Integrations](#editor-integrations)
+*   [List of Presets](#list-of-presets)
 *   [List of External Rules](#list-of-external-rules)
 *   [Related](#related)
 *   [License](#license)
@@ -41,13 +43,28 @@ module, [uncompressed and compressed][releases].
 
 ![Example of how remark-lint looks on screen][screenshot]
 
-Use `remark-lint` together with [`remark-cli`][cli]:
+Use `remark-lint` together with [`remark-cli`][cli], and a
+[preset][preset-recommended].
 
 ```bash
-npm install --global remark-cli remark-lint
+npm install --save remark-cli remark-lint remark-preset-lint-recommended
 ```
 
-Let’s say `example.md` looks as follows:
+Then, configure **remark** in your `package.json`:
+
+```js
+  // ...
+  "scripts": {
+    "lint-md": "remark ."
+  },
+  // ...
+  "remarkConfig": {
+    "presets": ["lint-recommended"]
+  }
+  // ...
+```
+
+Let’s say there’s an `example.md`, which looks as follows:
 
 ```md
 * Hello
@@ -55,12 +72,12 @@ Let’s say `example.md` looks as follows:
 [World][]
 ```
 
-Now, running `remark example.md -u remark-lint` yields:
+Now, running our `lint-md` script with npm, `npm run lint-md`, yields:
 
 ```txt
 example.md
-        1:3  warning  Incorrect list-item indent: add 2 spaces  list-item-indent
-   3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
+       1:3  warning  Incorrect list-item indent: add 2 spaces  list-item-indent
+  3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
 ⚠ 2 warnings
 ```
 
@@ -82,7 +99,9 @@ var report = require('vfile-reporter');
 var remark = require('remark');
 var lint = require('remark-lint');
 
-var file = remark().use(lint).process('## Hello world!');
+var file = remark().use(lint, {
+  firstHeadingLevel: true
+}).process('## Hello world!');
 
 console.log(report(file));
 ```
@@ -90,11 +109,9 @@ console.log(report(file));
 Now, running `node example.js` yields:
 
 ```txt
-        1:1  warning  Missing newline character at end of file  final-newline
-   1:1-1:16  warning  First heading level should be `1`         first-heading-level
-   1:1-1:16  warning  Don’t add a trailing `!` to headings      no-heading-punctuation
+  1:1-1:16  warning  First heading level should be `1`  first-heading-level
 
-⚠ 3 warnings
+⚠ 1 warning
 ```
 
 ### `remark.use(lint[, options])`
@@ -136,18 +153,17 @@ An example `.remarkrc` file could look as follows:
 
 ```json
 {
+  "presets": ["lint-recommended"],
   "plugins": {
-    "remark-lint": {
-      "no-multiple-toplevel-headings": false,
-      "list-item-indent": false,
-      "maximum-line-length": 79
+    "lint": {
+      "list-item-indent": false
     }
   }
 }
 ```
 
-Where the object at `plugins['remark-lint']` is a map of `ruleId`s and
-their values.
+Where the object at `plugins.lint` is a map of `ruleId`s and
+their values, which precede over presets.
 
 Using our `example.md` from before:
 
@@ -157,8 +173,7 @@ Using our `example.md` from before:
 [World][]
 ```
 
-Now, running `remark example.md` (**without `-u remark-lint`** since
-our `.remarkrc` includes the lint plugin) yields:
+Now, running `npm run lint-md` yields:
 
 ```bash
 example.md
@@ -220,6 +235,16 @@ To run **remark**, optionally with **remark-lint** from **Gulp**, use
 [**gulp-remark**][gulp-remark].
 
 I’m very interested in more integrations.  Let me know if I can help.
+
+## List of Presets
+
+Presets can be loaded through the [`preset` setting][config-preset].
+
+*   [`remark-preset-lint-consistent`][preset-consistent]
+    — Rules that enforce consistency;
+*   [`remark-preset-lint-recommended`][preset-recommended]
+    — Rules that prevent mistakes or syntaxes that do not work
+    correctly across vendors.
 
 ## List of External Rules
 
@@ -308,3 +333,11 @@ excluding `remark-lint-no-` or `remark-lint-`
 [external]: doc/rules.md#external
 
 [doc-external]: doc/external.md
+
+[config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
+
+[preset-consistent]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-consistent
+
+[preset-recommended]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-recommended
+
+[presets]: #list-of-presets

@@ -7,7 +7,7 @@
  *   Warn when list looseness is incorrect, such as being tight
  *   when it should be loose, and vice versa.
  *
- *   According the [markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/),
+ *   According to the [markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/),
  *   if one or more list-items in a list spans more than one line,
  *   the list is required to have blank lines between each item.
  *   And otherwise, there should not be blank lines between items.

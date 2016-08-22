@@ -23,7 +23,9 @@ var rule = require('./util/rule');
 var markdown = remark().use(toc);
 
 /* Generate. */
-[path.join(process.cwd())].forEach(function (filePath) {
+[
+  path.join(process.cwd(), 'packages', 'remark-lint')
+].forEach(function (filePath) {
   var children = [];
   var all = rules(filePath);
   var root;
@@ -109,7 +111,7 @@ var markdown = remark().use(toc);
       '',
       '```json',
       '{',
-      '  "final-newline": false',
+      '  "final-newline": true',
       '}',
       '```',
       '',
@@ -117,7 +119,7 @@ var markdown = remark().use(toc);
       '',
       '```json',
       '{',
-      '  "finalNewline": false',
+      '  "finalNewline": true',
       '}',
       '```',
       '',
@@ -152,21 +154,8 @@ var markdown = remark().use(toc);
       '',
       '## `reset`',
       '',
-      'By default, all rules are turned on unless explicitly',
-      'set to `false`.  When `reset: true`, the opposite is',
-      '`true`: all rules are turned off, unless when given a',
-      'non-nully and non-false value.',
-      '',
-      'Options: `boolean`, default: `false`.',
-      '',
-      'Explicitly activate rules:',
-      '',
-      '```json',
-      '{',
-      '  "reset": true,',
-      '  "final-newline": true',
-      '}',
-      '```',
+      'Since version 5.0.0, **reset** is no longer available, and',
+      'it is now the default behavour.',
       '',
       '## `external`',
       '',
@@ -199,7 +188,7 @@ var markdown = remark().use(toc);
   markdown.run(root);
 
   fs.writeFileSync(
-    path.join(filePath, 'doc', 'rules.md'),
+    path.join(process.cwd(), 'doc', 'rules.md'),
     markdown.stringify(root)
   );
 

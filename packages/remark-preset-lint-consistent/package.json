@@ -1,6 +1,6 @@
 {
   "name": "remark-preset-lint-consistent",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "remark preset to configure remark-lint with settings that enforce consistency",
   "license": "MIT",
   "keywords": [
@@ -19,6 +19,6 @@
     "index.js"
   ],
   "dependencies": {
-    "remark-lint": "^4.2.0"
+    "remark-lint": "^5.0.0"
   }
 }

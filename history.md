@@ -2,6 +2,13 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+5.0.0 / 2016-08-22
+==================
+
+*   Make `reset` the default ([`f5c1227`](https://github.com/wooorm/remark-lint/commit/f5c1227))
+*   Update for changes in remark@6.0.0 ([`6196124`](https://github.com/wooorm/remark-lint/commit/6196124))
+*   Add support for passing severities ([`77709f5`](https://github.com/wooorm/remark-lint/commit/77709f5))
+
 4.2.0 / 2016-08-14
 ==================
 

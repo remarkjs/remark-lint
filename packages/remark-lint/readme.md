@@ -8,7 +8,7 @@
 [**remark**][remark], a powerful markdown processor powered by
 [plugins][].
 
-Read more about it on [GitHub »][repo]
+Read more about **remark-lint** on [the repo][repo].
 
 ## License
 

@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+5.0.1 / 2016-08-26
+==================
+
+*   Add `readme.md` to `remark-lint` package ([`bca9530`](https://github.com/wooorm/remark-lint/commit/bca9530))
+
 5.0.0 / 2016-08-22
 ==================
 

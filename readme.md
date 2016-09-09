@@ -306,7 +306,7 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 [remark]: https://github.com/wooorm/remark
 
-[logo]: https://cdn.rawgit.com/wooorm/remark-lint/master/logo.svg
+[logo]: https://cdn.rawgit.com/wooorm/remark-lint/b177ac6/logo.svg
 
 [screenshot]: https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png
 

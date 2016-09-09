@@ -16,7 +16,7 @@ Read more about **remark-lint** on [the repo][repo].
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/wooorm/remark-lint/master/logo.svg
+[logo]: https://cdn.rawgit.com/wooorm/remark-lint/b177ac6/logo.svg
 
 [build-badge]: https://img.shields.io/travis/wooorm/remark-lint.svg
 

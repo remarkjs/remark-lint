@@ -33,7 +33,7 @@ module.exports = noFileNameArticles;
  * @param {File} file - Virtual file.
  */
 function noFileNameArticles(ast, file) {
-  var match = file.stem && file.stem.match(/^(the|an?)\b/i);
+  var match = file.stem && file.stem.match(/^(the|teh|an?)\b/i);
 
   if (match) {
     file.message('Do not start file names with `' + match[0] + '`');

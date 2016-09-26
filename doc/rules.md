@@ -1461,6 +1461,12 @@ When turned on is passed in, the following error is given:
 When turned on is passed in, the following error is given:
 
 ```text
+1:1: Do not start file names with `teh`
+```
+
+When turned on is passed in, the following error is given:
+
+```text
 1:1: Do not start file names with `an`
 ```
 

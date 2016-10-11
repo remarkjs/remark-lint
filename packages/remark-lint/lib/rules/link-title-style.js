@@ -80,7 +80,7 @@ var MARKERS = {
   '"': true,
   '\'': true,
   ')': true,
-  'null': true
+  null: true
 };
 
 /**

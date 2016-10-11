@@ -70,7 +70,7 @@ module.exports = fencedCodeMarker;
 var MARKERS = {
   '`': true,
   '~': true,
-  'null': true
+  null: true
 };
 
 /**

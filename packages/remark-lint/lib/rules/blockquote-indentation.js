@@ -79,7 +79,7 @@ function blockquoteIndentation(ast, file, preferred) {
     var diff;
     var word;
 
-    if (position.generated(node) || !node.children.length) {
+    if (position.generated(node) || node.children.length === 0) {
       return;
     }
 

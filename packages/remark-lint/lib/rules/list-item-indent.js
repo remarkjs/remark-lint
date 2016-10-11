@@ -83,8 +83,8 @@ var start = position.start;
 /* Styles. */
 var STYLES = {
   'tab-size': true,
-  'mixed': true,
-  'space': true
+  mixed: true,
+  space: true
 };
 
 /**

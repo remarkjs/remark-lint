@@ -29,7 +29,7 @@
     "trim": "0.0.1",
     "unist-builder": "^1.0.2",
     "unist-util-remove-position": "^1.1.0",
-    "xo": "^0.16.0"
+    "xo": "^0.17.0"
   },
   "scripts": {
     "prepublish": "lerna bootstrap",
@@ -54,6 +54,7 @@
   "xo": {
     "space": true,
     "rules": {
+      "import/no-dynamic-require": "off",
       "guard-for-in": "off",
       "no-eq-null": "off",
       "eqeqeq": "off"

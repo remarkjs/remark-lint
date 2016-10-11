@@ -59,7 +59,7 @@ var STYLES = {
   '-': true,
   '*': true,
   '+': true,
-  'null': true
+  null: true
 };
 
 /**

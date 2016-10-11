@@ -17,14 +17,8 @@ var chalk = require('chalk');
 var remark = require('remark');
 var decamelize = require('decamelize-keys');
 var remote = require('../package.json').repository;
-var rules = require('./util/rules');
 
 var root = path.join(process.cwd(), 'packages');
-var core = path.join(root, 'remark-lint');
-
-rules = rules(core).map(function (fp) {
-  return path.basename(fp, path.extname(fp));
-});
 
 /* Generate. */
 fs

@@ -64,7 +64,7 @@ var start = position.start;
 var STYLES = {
   ')': true,
   '.': true,
-  'null': true
+  null: true
 };
 
 /**

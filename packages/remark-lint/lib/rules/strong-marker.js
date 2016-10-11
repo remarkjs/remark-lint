@@ -54,8 +54,8 @@ module.exports = strongMarker;
 /* Map of valid markers. */
 var MARKERS = {
   '*': true,
-  '_': true,
-  'null': true
+  _: true,
+  null: true
 };
 
 /**

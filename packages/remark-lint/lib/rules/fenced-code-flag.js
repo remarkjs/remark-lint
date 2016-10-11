@@ -109,7 +109,7 @@ function fencedCodeFlag(ast, file, preferred) {
     }
 
     if (node.lang) {
-      if (flags.length && flags.indexOf(node.lang) === -1) {
+      if (flags.length !== 0 && flags.indexOf(node.lang) === -1) {
         file.message('Invalid code-language flag', node);
       }
     } else if (/^ {0,3}([~`])\1{2,}/.test(value) && !allowEmpty) {

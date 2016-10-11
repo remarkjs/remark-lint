@@ -63,7 +63,7 @@ var markdown = remark().use(toc);
           u('text', ' is ')
         ];
 
-        if (fixture.output.length) {
+        if (fixture.output.length !== 0) {
           sentence.push(
             u('strong', [u('text', 'not')]),
             u('text', ' ')
@@ -87,7 +87,7 @@ var markdown = remark().use(toc);
           );
         }
 
-        if (fixture.output.length) {
+        if (fixture.output.length !== 0) {
           children.push(
             u('code', {lang: 'text'}, fixture.output.join('\n'))
           );

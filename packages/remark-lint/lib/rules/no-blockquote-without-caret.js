@@ -49,7 +49,7 @@ function noBlockquoteWithoutCaret(ast, file) {
     var start = position.start(node).line;
     var indent = node.position && node.position.indent;
 
-    if (position.generated(node) || !indent || !indent.length) {
+    if (position.generated(node) || !indent || indent.length === 0) {
       return;
     }
 

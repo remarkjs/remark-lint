@@ -50,6 +50,18 @@ It’s also possible to pass both a severity and configuration:
 }
 ```
 
+Lastly, strings can also be passed, instead of numbers:
+`off` instead of `0`, `warn` or `on` instead of `1`, and
+`error` instead of `2`.
+
+For example, as follows:
+
+```json
+{
+  "maximum-line-length": ["error", 70]
+}
+```
+
 ## Table of Contents
 
 -   [reset](#reset)
@@ -115,7 +127,7 @@ It’s also possible to pass both a severity and configuration:
 ## `reset`
 
 Since version 5.0.0, **reset** is no longer available, and
-it is now the default behavour.
+it is now the default behaviour.
 
 ## `external`
 
@@ -2408,6 +2420,17 @@ When this rule is turned on, the following file
 3:5: Cell should be padded, isn’t
 3:9: Cell should be padded, isn’t
 3:16: Cell should be padded, isn’t
+```
+
+When this rule is turned on, the following file
+`empty.md` is ok:
+
+```markdown
+<!-- Empty cells are always OK. -->
+
+| Alpha |         |
+| ----- | ------- |
+| Bravo | Charlie |
 ```
 
 When `'invalid'` is passed in, the following error is given:

@@ -186,6 +186,7 @@ function decamelizeSettings(source) {
 function coerce(name, value) {
   var def = 0;
   var result;
+  var level;
 
   if (value == null) {
     result = [def];
@@ -193,23 +194,42 @@ function coerce(name, value) {
     result = [value];
   } else if (
     typeof value === 'object' &&
-    (typeof value[0] === 'number' || typeof value[0] === 'boolean')
+    (
+      typeof value[0] === 'number' ||
+      typeof value[0] === 'boolean' ||
+      typeof value[0] === 'string'
+    )
   ) {
     result = value.concat();
   } else {
     result = [1, value];
   }
 
-  if (typeof result[0] === 'boolean') {
-    result[0] = result[0] ? 1 : 0;
+  level = result[0];
+
+  if (typeof level === 'boolean') {
+    level = level ? 1 : 0;
+  } else if (typeof level === 'string') {
+    if (level === 'off') {
+      level = 0;
+    } else if (level === 'on' || level === 'warn') {
+      level = 1;
+    } else if (level === 'error') {
+      level = 2;
+    } else {
+      level = 1;
+      result = [level, result];
+    }
   }
 
-  if (result[0] < 0 || result[0] > 2) {
+  if (level < 0 || level > 2) {
     throw new Error(
-      'Invalid severity `' + result[0] + '` for `' + name + '`, ' +
+      'Invalid severity `' + level + '` for `' + name + '`, ' +
       'expected 0, 1, or 2'
     );
   }
+
+  result[0] = level;
 
   return result;
 }

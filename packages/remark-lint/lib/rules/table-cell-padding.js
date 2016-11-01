@@ -190,7 +190,7 @@ function tableCellPadding(ast, file, preferred) {
     positions.forEach(function (diff, index) {
       var cell = cells[index];
 
-      if (cell && cell.children.length && diff !== style && diff !== undefined && diff !== null) {
+      if (cell && cell.children.length !== 0 && diff !== style && diff !== undefined && diff !== null) {
         file.message(warning, locations[index]);
       }
     });

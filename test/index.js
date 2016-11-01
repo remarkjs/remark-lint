@@ -104,6 +104,65 @@ test('core', function (t) {
       });
   });
 
+  t.test('should support a list with a string severity (`error`)', function (st) {
+    st.plan(3);
+
+    remark()
+      .use(lint, {finalNewline: ['error']})
+      .process('.', function (err, file) {
+        st.ifErr(err, 'should not fail');
+        st.equal(
+          file.messages.join(),
+          '1:1: Missing newline character at end of file',
+          'should trigger fatally (1)'
+        );
+        st.equal(file.messages[0].fatal, true, 'should trigger fatally (2)');
+      });
+  });
+
+  t.test('should support a list with a string severity (`on`)', function (st) {
+    st.plan(3);
+
+    remark()
+      .use(lint, {finalNewline: ['on']})
+      .process('.', function (err, file) {
+        st.ifErr(err, 'should not fail');
+        st.equal(
+          file.messages.join(),
+          '1:1: Missing newline character at end of file',
+          'should message'
+        );
+        st.equal(file.messages[0].fatal, false, 'should *not* trigger fatally');
+      });
+  });
+
+  t.test('should support a list with a string severity (`warn`)', function (st) {
+    st.plan(3);
+
+    remark()
+      .use(lint, {finalNewline: ['warn']})
+      .process('.', function (err, file) {
+        st.ifErr(err, 'should not fail');
+        st.equal(
+          file.messages.join(),
+          '1:1: Missing newline character at end of file',
+          'should message'
+        );
+        st.equal(file.messages[0].fatal, false, 'should *not* trigger fatally');
+      });
+  });
+
+  t.test('should support a list with a string severity (`off`)', function (st) {
+    st.plan(2);
+
+    remark()
+      .use(lint, {finalNewline: ['off']})
+      .process('.', function (err, file) {
+        st.ifErr(err, 'should not fail');
+        st.deepEqual(file.messages, [], 'should disable `final-newline`');
+      });
+  });
+
   t.test('should fail on invalid severities', function (st) {
     st.throws(
       function () {

@@ -46,6 +46,14 @@
  * @example {"name": "invalid.md", "label": "output", "setting": "invalid", "config": {"positionless": true}}
  *
  *   1:1: Invalid table-cell-padding style `invalid`
+ *
+ * @example {"name": "empty.md"}
+ *
+ *   <!-- Empty cells are always OK. -->
+ *
+ *   | Alpha |         |
+ *   | ----- | ------- |
+ *   | Bravo | Charlie |
  */
 
 'use strict';
@@ -92,6 +100,7 @@ function tableCellPadding(ast, file, preferred) {
     var contents = file.toString();
     var starts = [];
     var ends = [];
+    var cells;
     var locations;
     var positions;
     var style;
@@ -156,13 +165,7 @@ function tableCellPadding(ast, file, preferred) {
       style = 0;
     } else {
       style = null;
-    }
 
-    if (preferred === 'padded') {
-      style = 1;
-    } else if (preferred === 'compact') {
-      style = 0;
-    } else {
       positions.some(function (pos) {
         /* `some` skips non-existant indices, so
          * there's no need to check for `!isNaN`. */
@@ -172,17 +175,22 @@ function tableCellPadding(ast, file, preferred) {
       });
     }
 
-    locations = children[0].children.map(function (cell) {
+    cells = children[0].children;
+
+    locations = cells.map(function (cell) {
       return start(cell);
-    }).concat(children[0].children.map(function (cell) {
+    }).concat(cells.map(function (cell) {
       return end(cell);
     }));
 
+    cells = cells.concat(cells);
     type = style === 1 ? 'padded' : 'compact';
     warning = 'Cell should be ' + type + ', isn’t';
 
     positions.forEach(function (diff, index) {
-      if (diff !== style && diff !== undefined && diff !== null) {
+      var cell = cells[index];
+
+      if (cell && cell.children.length && diff !== style && diff !== undefined && diff !== null) {
         file.message(warning, locations[index]);
       }
     });

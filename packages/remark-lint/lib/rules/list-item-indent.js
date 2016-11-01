@@ -128,7 +128,7 @@ function listItemIndent(ast, file, preferred) {
       marker = contents.slice(initial, final);
 
       /* Support checkboxes. */
-      marker = marker.replace(/\[[x ]?\]\s*$/i, '');
+      marker = marker.replace(/\[[x ]?]\s*$/i, '');
 
       bulletSize = marker.trimRight().length;
       tab = Math.ceil(bulletSize / 4) * 4;

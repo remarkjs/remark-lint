@@ -49,7 +49,7 @@ module.exports = noFileNameIrregularCharacters;
  *   characters which should not be allowed.
  */
 function noFileNameIrregularCharacters(ast, file, preferred) {
-  var expression = preferred || /[^\\\.a-zA-Z0-9-]/;
+  var expression = preferred || /[^\\.a-zA-Z0-9-]/;
   var match;
 
   if (typeof expression === 'string') {

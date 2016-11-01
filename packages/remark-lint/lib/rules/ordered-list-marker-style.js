@@ -106,7 +106,7 @@ function orderedListMarkerStyle(ast, file, preferred) {
       marker = contents.slice(initial, final).replace(/\s|\d/g, '');
 
       /* Support checkboxes. */
-      marker = marker.replace(/\[[x ]?\]\s*$/i, '');
+      marker = marker.replace(/\[[x ]?]\s*$/i, '');
 
       if (!preferred) {
         preferred = marker;

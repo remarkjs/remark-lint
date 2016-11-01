@@ -29,7 +29,7 @@ var position = require('unist-util-position');
 module.exports = definitionCase;
 
 /* Expressions. */
-var LABEL = /^\s*\[((?:\\[\s\S]|[^\[\]])+)\]/;
+var LABEL = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/;
 
 /**
  * Warn when definitions are not placed at the end of the

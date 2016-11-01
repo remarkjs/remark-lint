@@ -101,7 +101,7 @@ function unorderedListMarkerStyle(ast, file, preferred) {
       marker = contents.slice(initial, final).replace(/\s/g, '');
 
       /* Support checkboxes. */
-      marker = marker.replace(/\[[x ]?\]\s*$/i, '');
+      marker = marker.replace(/\[[x ]?]\s*$/i, '');
 
       if (!preferred) {
         preferred = marker;

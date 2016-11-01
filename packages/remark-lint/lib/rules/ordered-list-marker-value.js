@@ -143,10 +143,10 @@ function orderedListMarkerValue(ast, file, preferred) {
         return;
       }
 
-      marker = contents.slice(initial, final).replace(/[\s\.\)]/g, '');
+      marker = contents.slice(initial, final).replace(/[\s.)]/g, '');
 
       /* Support checkboxes. */
-      marker = Number(marker.replace(/\[[x ]?\]\s*$/i, ''));
+      marker = Number(marker.replace(/\[[x ]?]\s*$/i, ''));
 
       if (marker !== shouldBe) {
         file.message('Marker should be `' + shouldBe + '`, was `' + marker + '`', item);

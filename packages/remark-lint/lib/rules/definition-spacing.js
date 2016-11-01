@@ -29,7 +29,7 @@ var position = require('unist-util-position');
 module.exports = definitionSpacing;
 
 /* Expressions. */
-var LABEL = /^\s*\[((?:\\[\s\S]|[^\[\]])+)\]/;
+var LABEL = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/;
 
 /**
  * Warn when consecutive white space is used in a

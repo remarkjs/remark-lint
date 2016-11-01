@@ -2,7 +2,7 @@
 
 # List of Rules
 
-This document describes all (58)
+This document describes all (59)
 available rules, what they check for, examples of
 what they warn for, and how to fix their warnings.
 
@@ -93,6 +93,7 @@ For example, as follows:
 -   [no-blockquote-without-caret](#no-blockquote-without-caret)
 -   [no-consecutive-blank-lines](#no-consecutive-blank-lines)
 -   [no-duplicate-definitions](#no-duplicate-definitions)
+-   [no-duplicate-headings-in-section](#no-duplicate-headings-in-section)
 -   [no-duplicate-headings](#no-duplicate-headings)
 -   [no-emphasis-as-heading](#no-emphasis-as-heading)
 -   [no-file-name-articles](#no-file-name-articles)
@@ -1390,6 +1391,48 @@ When this rule is turned on, the following file
 
 ```text
 2:1-2:11: Do not use definitions with the same identifier (1:1)
+```
+
+## `no-duplicate-headings-in-section`
+
+Warn when duplicate headings are found,
+but only when on the same level, “in”
+the same section.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+## Alpha
+
+### Bravo
+
+## Charlie
+
+### Bravo
+
+### Delta
+
+#### Bravo
+
+#### Echo
+
+##### Bravo
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+## Foxtrot
+
+### Golf
+
+### Golf
+```
+
+```text
+5:1-5:9: Do not use headings with similar content per section (3:1)
 ```
 
 ## `no-duplicate-headings`

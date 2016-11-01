@@ -28,6 +28,7 @@ module.exports = {
   'no-blockquote-without-caret': require('./rules/no-blockquote-without-caret.js'),
   'no-consecutive-blank-lines': require('./rules/no-consecutive-blank-lines.js'),
   'no-duplicate-definitions': require('./rules/no-duplicate-definitions.js'),
+  'no-duplicate-headings-in-section': require('./rules/no-duplicate-headings-in-section.js'),
   'no-duplicate-headings': require('./rules/no-duplicate-headings.js'),
   'no-emphasis-as-heading': require('./rules/no-emphasis-as-heading.js'),
   'no-file-name-articles': require('./rules/no-file-name-articles.js'),

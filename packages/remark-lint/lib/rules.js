@@ -43,6 +43,7 @@ module.exports = {
   'no-literal-urls': require('./rules/no-literal-urls.js'),
   'no-missing-blank-lines': require('./rules/no-missing-blank-lines.js'),
   'no-multiple-toplevel-headings': require('./rules/no-multiple-toplevel-headings.js'),
+  'no-reference-like-url': require('./rules/no-reference-like-url.js'),
   'no-shell-dollars': require('./rules/no-shell-dollars.js'),
   'no-shortcut-reference-image': require('./rules/no-shortcut-reference-image.js'),
   'no-shortcut-reference-link': require('./rules/no-shortcut-reference-link.js'),

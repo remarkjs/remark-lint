@@ -2,7 +2,7 @@
 
 # List of Rules
 
-This document describes all (57)
+This document describes all (58)
 available rules, what they check for, examples of
 what they warn for, and how to fix their warnings.
 
@@ -108,6 +108,7 @@ For example, as follows:
 -   [no-literal-urls](#no-literal-urls)
 -   [no-missing-blank-lines](#no-missing-blank-lines)
 -   [no-multiple-toplevel-headings](#no-multiple-toplevel-headings)
+-   [no-reference-like-url](#no-reference-like-url)
 -   [no-shell-dollars](#no-shell-dollars)
 -   [no-shortcut-reference-image](#no-shortcut-reference-image)
 -   [no-shortcut-reference-link](#no-shortcut-reference-link)
@@ -1904,6 +1905,32 @@ When this rule is `1`, the following file
 
 ```text
 3:1-3:6: Don’t use multiple top level headings (3:1)
+```
+
+## `no-reference-like-url`
+
+Warn when URLs are also defined identifiers.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+[Alpha](http://example.com).
+
+[bravo]: https://example.com
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+[Charlie](delta).
+
+[delta]: https://example.com
+```
+
+```text
+1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
 ```
 
 ## `no-shell-dollars`

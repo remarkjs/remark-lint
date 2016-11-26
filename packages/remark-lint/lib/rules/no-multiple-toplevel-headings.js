@@ -30,6 +30,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noMultipleToplevelHeadings;
@@ -49,7 +50,7 @@ function noMultipleToplevelHeadings(ast, file, preferred) {
   visit(ast, 'heading', function (node) {
     var pos;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

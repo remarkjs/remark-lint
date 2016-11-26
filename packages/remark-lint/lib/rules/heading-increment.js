@@ -27,7 +27,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = headingIncrement;
@@ -47,7 +47,7 @@ function headingIncrement(ast, file) {
   visit(ast, 'heading', function (node) {
     var depth = node.depth;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

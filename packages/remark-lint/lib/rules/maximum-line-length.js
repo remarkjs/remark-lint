@@ -61,6 +61,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = maximumLineLength;
@@ -92,7 +93,7 @@ function maximumLineLength(ast, file, preferred) {
     var initial = applicable && start(node).line;
     var final = applicable && end(node).line;
 
-    if (!applicable || position.generated(node)) {
+    if (!applicable || generated(node)) {
       return;
     }
 
@@ -147,7 +148,7 @@ function maximumLineLength(ast, file, preferred) {
     var final = end(node);
 
     /* Nothing to whitelist when generated. */
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

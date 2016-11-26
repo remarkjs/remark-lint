@@ -70,6 +70,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = fencedCodeFlag;
@@ -104,7 +105,7 @@ function fencedCodeFlag(ast, file, preferred) {
   visit(ast, 'code', function (node) {
     var value = contents.slice(start(node).offset, end(node).offset);
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

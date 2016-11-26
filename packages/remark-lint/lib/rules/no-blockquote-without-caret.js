@@ -29,6 +29,7 @@
 var vfileLocation = require('vfile-location');
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noBlockquoteWithoutCaret;
@@ -49,7 +50,7 @@ function noBlockquoteWithoutCaret(ast, file) {
     var start = position.start(node).line;
     var indent = node.position && node.position.indent;
 
-    if (position.generated(node) || !indent || indent.length === 0) {
+    if (generated(node) || !indent || indent.length === 0) {
       return;
     }
 

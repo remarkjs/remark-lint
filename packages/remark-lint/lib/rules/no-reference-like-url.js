@@ -26,7 +26,7 @@
 'use strict';
 
 /* Dependencies. */
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var visit = require('unist-util-visit');
 
 /* Expose. */
@@ -50,7 +50,7 @@ function noReferenceLikeURL(tree, file) {
 
   /* Find identifiers. */
   function find(node) {
-    if (!position.generated(node)) {
+    if (!generated(node)) {
       identifiers.push(node.identifier.toLowerCase());
     }
   }

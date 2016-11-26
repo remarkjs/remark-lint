@@ -43,6 +43,7 @@
 
 /* Dependencies. */
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 
@@ -65,7 +66,7 @@ function noDuplicateHeadingsInSection(tree, file) {
     stack[depth] = {};
     siblings[value] = node;
 
-    if (!position.generated(node) && duplicate && duplicate.type === 'heading') {
+    if (!generated(node) && duplicate && duplicate.type === 'heading') {
       pos = position.start(duplicate);
       file.message(
         'Do not use headings with similar content per section (' +

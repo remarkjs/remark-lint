@@ -31,6 +31,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var plural = require('plur');
 
 /* Expose. */
@@ -57,7 +58,7 @@ function listItemBulletIndent(ast, file) {
       var final = start(head).offset;
       var indent;
 
-      if (position.generated(node)) {
+      if (generated(node)) {
         return;
       }
 

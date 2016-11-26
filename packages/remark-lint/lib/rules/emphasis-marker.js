@@ -60,6 +60,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = emphasisMarker;
@@ -89,7 +90,7 @@ function emphasisMarker(ast, file, preferred) {
   visit(ast, 'emphasis', function (node) {
     var marker = file.toString().charAt(position.start(node).offset);
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

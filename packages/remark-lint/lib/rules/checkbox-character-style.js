@@ -75,6 +75,7 @@
 var vfileLocation = require('vfile-location');
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = checkboxCharacterStyle;
@@ -145,10 +146,7 @@ function checkboxCharacterStyle(ast, file, preferred) {
     var character;
 
     /* Exit early for items without checkbox. */
-    if (
-        node.checked !== Boolean(node.checked) ||
-        position.generated(node)
-    ) {
+    if (node.checked !== Boolean(node.checked) || generated(node)) {
       return;
     }
 

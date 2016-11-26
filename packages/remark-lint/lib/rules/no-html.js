@@ -28,7 +28,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = html;
@@ -43,7 +43,7 @@ module.exports = html;
  */
 function html(ast, file, preferred, done) {
   visit(ast, 'html', function (node) {
-    if (!position.generated(node) && !/^\s*<!--/.test(node.value)) {
+    if (!generated(node) && !/^\s*<!--/.test(node.value)) {
       file.message('Do not use HTML in markdown', node);
     }
   });

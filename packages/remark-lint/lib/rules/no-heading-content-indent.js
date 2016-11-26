@@ -55,6 +55,7 @@ var visit = require('unist-util-visit');
 var style = require('mdast-util-heading-style');
 var plural = require('plur');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noHeadingContentIndent;
@@ -86,7 +87,7 @@ function noHeadingContentIndent(ast, file) {
     var index;
     var char;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

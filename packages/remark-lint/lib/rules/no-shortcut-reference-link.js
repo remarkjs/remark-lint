@@ -27,7 +27,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noShortcutReferenceLink;
@@ -40,7 +40,7 @@ module.exports = noShortcutReferenceLink;
  */
 function noShortcutReferenceLink(ast, file) {
   visit(ast, 'linkReference', function (node) {
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

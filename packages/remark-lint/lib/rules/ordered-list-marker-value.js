@@ -79,6 +79,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = orderedListMarkerValue;
@@ -139,7 +140,7 @@ function orderedListMarkerValue(ast, file, preferred) {
       }
 
       /* Ignore generated nodes. */
-      if (position.generated(item)) {
+      if (generated(item)) {
         return;
       }
 

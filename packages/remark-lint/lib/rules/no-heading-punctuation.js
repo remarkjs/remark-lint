@@ -45,7 +45,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var toString = require('mdast-util-to-string');
 
 /* Expose. */
@@ -64,7 +64,7 @@ function noHeadingPunctuation(ast, file, preferred) {
   visit(ast, 'heading', function (node) {
     var value = toString(node);
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

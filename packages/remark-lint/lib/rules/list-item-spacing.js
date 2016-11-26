@@ -59,6 +59,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = listItemSpacing;
@@ -81,7 +82,7 @@ function listItemSpacing(ast, file) {
     var indent = start(node).column;
     var type;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

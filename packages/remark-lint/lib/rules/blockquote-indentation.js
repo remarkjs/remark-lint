@@ -59,6 +59,7 @@ var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 var plural = require('plur');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /**
  * Warn when a blockquote has a too large or too small
@@ -79,7 +80,7 @@ function blockquoteIndentation(ast, file, preferred) {
     var diff;
     var word;
 
-    if (position.generated(node) || node.children.length === 0) {
+    if (generated(node) || node.children.length === 0) {
       return;
     }
 

@@ -63,6 +63,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = tableCellPadding;
@@ -107,7 +108,7 @@ function tableCellPadding(ast, file, preferred) {
     var type;
     var warning;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

@@ -72,6 +72,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var plural = require('plur');
 
 /* Expose. */
@@ -110,7 +111,7 @@ function listItemIndent(ast, file, preferred) {
   visit(ast, 'list', function (node) {
     var items = node.children;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

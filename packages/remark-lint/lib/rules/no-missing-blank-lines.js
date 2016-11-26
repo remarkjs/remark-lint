@@ -57,6 +57,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noMissingBlankLines;
@@ -74,7 +75,7 @@ function noMissingBlankLines(ast, file, options) {
   visit(ast, function (node, index, parent) {
     var next = parent && parent.children[index + 1];
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

@@ -69,7 +69,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var style = require('mdast-util-heading-style');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = headingStyle;
@@ -92,7 +92,7 @@ function headingStyle(ast, file, preferred) {
   preferred = TYPES.indexOf(preferred) === -1 ? null : preferred;
 
   visit(ast, 'heading', function (node) {
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

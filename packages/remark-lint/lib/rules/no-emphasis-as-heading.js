@@ -28,7 +28,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noEmphasisAsHeading;
@@ -47,7 +47,7 @@ function noEmphasisAsHeading(ast, file) {
     var prev = parent.children[index - 1];
     var next = parent.children[index + 1];
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

@@ -48,6 +48,7 @@
 var visit = require('unist-util-visit');
 var plural = require('plur');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noHeadingIndent;
@@ -73,7 +74,7 @@ function noHeadingIndent(ast, file) {
     var character;
     var diff;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

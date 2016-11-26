@@ -41,6 +41,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var plural = require('plur');
 
 /* Expose. */
@@ -63,11 +64,11 @@ function noConsecutiveBlankLines(ast, file) {
     var head = children && children[0];
     var tail = children && children[children.length - 1];
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 
-    if (head && !position.generated(head)) {
+    if (head && !generated(head)) {
       /* Compare parent and first child. */
       compare(position.start(node), position.start(head), 0);
 
@@ -76,11 +77,7 @@ function noConsecutiveBlankLines(ast, file) {
         var prev = children[index - 1];
         var max = MAX;
 
-        if (
-          !prev ||
-          position.generated(prev) ||
-          position.generated(child)
-        ) {
+        if (!prev || generated(prev) || generated(child)) {
           return;
         }
 
@@ -95,7 +92,7 @@ function noConsecutiveBlankLines(ast, file) {
       });
 
       /* Compare parent and last child. */
-      if (tail !== head && !position.generated(tail)) {
+      if (tail !== head && !generated(tail)) {
         compare(position.end(node), position.end(tail), 1);
       }
     }

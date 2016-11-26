@@ -38,7 +38,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noShellDollars;
@@ -72,7 +72,7 @@ function noShellDollars(ast, file) {
     var value = node.value;
     var warn;
 
-    if (!language || position.generated(node)) {
+    if (!language || generated(node)) {
       return;
     }
 

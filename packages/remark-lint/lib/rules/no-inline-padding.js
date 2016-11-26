@@ -28,7 +28,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var toString = require('mdast-util-to-string');
 
 /* Expose. */
@@ -46,7 +46,7 @@ function noInlinePadding(ast, file) {
     var type = node.type;
     var contents;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

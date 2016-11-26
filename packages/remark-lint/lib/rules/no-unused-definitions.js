@@ -24,7 +24,7 @@
 'use strict';
 
 /* Dependencies. */
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var visit = require('unist-util-visit');
 
 /* Expose. */
@@ -61,7 +61,7 @@ function noUnusedDefinitions(ast, file) {
    * @param {Node} node - Node.
    */
   function find(node) {
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 
@@ -79,7 +79,7 @@ function noUnusedDefinitions(ast, file) {
   function mark(node) {
     var info = map[node.identifier.toUpperCase()];
 
-    if (position.generated(node) || !info) {
+    if (generated(node) || !info) {
       return;
     }
 

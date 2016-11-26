@@ -25,6 +25,7 @@
 
 /* Dependencies. */
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var visit = require('unist-util-visit');
 
 /* Expose. */
@@ -55,7 +56,7 @@ function noDuplicateDefinitions(ast, file) {
     var duplicate = map[node.identifier];
     var pos;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

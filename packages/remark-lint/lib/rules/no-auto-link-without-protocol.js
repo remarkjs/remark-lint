@@ -29,6 +29,7 @@
 var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noAutoLinkWithoutProtocol;
@@ -59,7 +60,7 @@ function noAutoLinkWithoutProtocol(ast, file) {
     var initial = start(node).column;
     var final = end(node).column;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

@@ -53,6 +53,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = orderedListMarkerStyle;
@@ -99,7 +100,7 @@ function orderedListMarkerStyle(ast, file, preferred) {
       var final = start(head).offset;
       var marker;
 
-      if (position.generated(item)) {
+      if (generated(item)) {
         return;
       }
 

@@ -33,6 +33,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = noTableIndentation;
@@ -47,7 +48,7 @@ function noTableIndentation(ast, file) {
   visit(ast, 'table', function (node) {
     var contents = file.toString();
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

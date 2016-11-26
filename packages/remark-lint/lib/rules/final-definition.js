@@ -30,6 +30,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = finalDefinition;
@@ -51,7 +52,7 @@ function finalDefinition(ast, file) {
     var line = start(node).line;
 
     /* Ignore generated nodes. */
-    if (node.type === 'root' || position.generated(node)) {
+    if (node.type === 'root' || generated(node)) {
       return;
     }
 

@@ -31,6 +31,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = tablePipes;
@@ -56,7 +57,7 @@ function tablePipes(ast, file) {
       var initial = contents.slice(start(row).offset, start(head).offset);
       var final = contents.slice(end(tail).offset, end(row).offset);
 
-      if (position.generated(row)) {
+      if (generated(row)) {
         return;
       }
 

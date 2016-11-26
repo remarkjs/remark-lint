@@ -29,6 +29,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = tablePipeAlignment;
@@ -50,7 +51,7 @@ function tablePipeAlignment(ast, file) {
     var offset;
     var line;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

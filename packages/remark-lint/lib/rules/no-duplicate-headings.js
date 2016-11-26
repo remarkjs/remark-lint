@@ -32,6 +32,7 @@
 
 /* Dependencies. */
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
 
@@ -54,7 +55,7 @@ function noDuplicateHeadings(ast, file) {
     var duplicate = map[value];
     var pos;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

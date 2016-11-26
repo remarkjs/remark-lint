@@ -49,7 +49,7 @@
 
 /* Dependencies. */
 var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = firstHeadingLevel;
@@ -65,7 +65,7 @@ function firstHeadingLevel(ast, file, preferred) {
   var style = preferred && preferred !== true ? preferred : 1;
 
   visit(ast, 'heading', function (node) {
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

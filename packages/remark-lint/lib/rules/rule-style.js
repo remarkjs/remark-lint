@@ -49,6 +49,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = ruleStyle;
@@ -80,7 +81,7 @@ function ruleStyle(ast, file, preferred) {
     var final = end(node).offset;
     var hr;
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

@@ -30,7 +30,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var toString = require('mdast-util-to-string');
-var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = maximumHeadingLength;
@@ -48,7 +48,7 @@ function maximumHeadingLength(ast, file, preferred) {
   preferred = isNaN(preferred) || typeof preferred !== 'number' ? 60 : preferred;
 
   visit(ast, 'heading', function (node) {
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

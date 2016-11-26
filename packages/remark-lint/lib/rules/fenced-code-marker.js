@@ -62,6 +62,7 @@
 /* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
+var generated = require('unist-util-generated');
 
 /* Expose. */
 module.exports = fencedCodeMarker;
@@ -93,7 +94,7 @@ function fencedCodeMarker(ast, file, preferred) {
   visit(ast, 'code', function (node) {
     var marker = contents.substr(position.start(node).offset, 4);
 
-    if (position.generated(node)) {
+    if (generated(node)) {
       return;
     }
 

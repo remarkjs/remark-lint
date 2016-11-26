@@ -36,9 +36,6 @@ processor powered by [plugins][remark-plugins] (such as this one).
 npm install remark-lint
 ```
 
-**remark-lint** is also available as an AMD, CommonJS, and globals
-module, [uncompressed and compressed][releases].
-
 ## Command line
 
 ![Example of how remark-lint looks on screen][screenshot]
@@ -99,9 +96,7 @@ var report = require('vfile-reporter');
 var remark = require('remark');
 var lint = require('remark-lint');
 
-var file = remark().use(lint, {
-  firstHeadingLevel: true
-}).process('## Hello world!');
+var file = remark().use(lint, {firstHeadingLevel: true}).process('## Hello world!');
 
 console.log(report(file));
 ```
@@ -295,8 +290,6 @@ excluding `remark-lint-no-` or `remark-lint-`
 [chat-badge]: https://img.shields.io/gitter/room/wooorm/remark.svg
 
 [chat]: https://gitter.im/wooorm/remark
-
-[releases]: https://github.com/wooorm/remark-lint/releases
 
 [license]: LICENSE
 

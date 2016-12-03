@@ -208,6 +208,8 @@ but the third is re-enabled):
 ### Hello
 ```
 
+> **Note**: You’ll need the blank lines between comments and other nodes!
+
 ## Using remark to fix your markdown
 
 One of **remark**’s cool parts is that it compiles to very clean, and highly

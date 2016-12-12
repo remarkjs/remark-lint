@@ -39,126 +39,98 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   3:5: Cell should be padded, isn’t
- *   3:9: Cell should be padded, isn’t
- *   3:16: Cell should be padded, isn’t
+ *   5:5: Cell should be padded with 1 space, not 3
+ *   5:10: Cell should be padded
+ *   5:17: Cell should be padded
+ *
+ * @example {"name": "invalid.md", "label": "input", "setting": "padded"}
+ *
+ *   | A    |    B |
+ *   | :----|----: |
+ *   | Alpha|Bravo |
+ *
+ * @example {"name": "invalid.md", "label": "output", "setting": "padded"}
+ *
+ *   3:8: Cell should be padded
+ *   3:9: Cell should be padded
+ *
+ * @example {"name": "invalid.md", "label": "input", "setting": "compact"}
+ *
+ *   |A    |     B|
+ *   |:----|-----:|
+ *   |Alpha|Bravo |
+ *
+ * @example {"name": "invalid.md", "label": "output", "setting": "compact"}
+ *
+ *   3:13: Cell should be compact
  *
  * @example {"name": "invalid.md", "label": "output", "setting": "invalid", "config": {"positionless": true}}
  *
  *   1:1: Invalid table-cell-padding style `invalid`
  *
- * @example {"name": "empty.md"}
+ * @example {"name": "empty-heading.md"}
  *
- *   <!-- Empty cells are always OK. -->
+ *   <!-- Empty heading cells are always OK. -->
  *
- *   | Alpha |         |
+ *   |       | Alpha   |
  *   | ----- | ------- |
  *   | Bravo | Charlie |
+ *
+ * @example {"name": "empty-body.md"}
+ *
+ *   <!-- Empty body cells are always OK. -->
+ *
+ *   | Alpha   | Bravo   |
+ *   | ------- | ------- |
+ *   | Charlie |         |
  */
 
 'use strict';
 
 /* eslint-disable max-params */
 
-/* Dependencies. */
 var visit = require('unist-util-visit');
 var position = require('unist-util-position');
 var generated = require('unist-util-generated');
 
-/* Expose. */
 module.exports = tableCellPadding;
 
-/* Methods. */
 var start = position.start;
 var end = position.end;
 
-/* Valid styles. */
 var STYLES = {
   null: true,
   padded: true,
   compact: true
 };
 
-/**
- * Warn when table cells are incorrectly padded.
- *
- * @param {Node} ast - Root node.
- * @param {File} file - Virtual file.
- * @param {string?} preferred - Either `padded` (for
- *   at least a space), `compact` (for no spaces when
- *   possible), or `consistent`, which defaults to the
- *   first found style.
- */
-function tableCellPadding(ast, file, preferred) {
+function tableCellPadding(tree, file, preferred) {
   preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
 
   if (STYLES[preferred] !== true) {
     file.fail('Invalid table-cell-padding style `' + preferred + '`');
   }
 
-  visit(ast, 'table', function (node) {
-    var children = node.children;
-    var contents = file.toString();
+  visit(tree, 'table', visitor);
+
+  return;
+
+  function visitor(node) {
+    var rows = node.children;
+    var contents = String(file);
     var starts = [];
     var ends = [];
-    var cells;
-    var locations;
-    var positions;
+    var cells = [];
     var style;
-    var type;
-    var warning;
+    var sizes;
 
     if (generated(node)) {
       return;
     }
 
-    /**
-     * Check a fence. Checks both its initial spacing
-     * (between a cell and the fence), and its final
-     * spacing (between the fence and the next cell).
-     *
-     * @param {number} initial - Starting index.
-     * @param {number} final - Closing index.
-     * @param {Node} cell - Table cell.
-     * @param {Node?} next - Following cell.
-     * @param {number} index - Position of `cell` in
-     *   its parent.
-     */
-    function check(initial, final, cell, next, index) {
-      var fence = contents.slice(initial, final);
-      var pos = fence.indexOf('|');
+    rows.forEach(eachRow);
 
-      if (
-        cell &&
-        pos !== -1 &&
-        (ends[index] === undefined || pos < ends[index])
-      ) {
-        ends[index] = pos;
-      }
-
-      if (next && pos !== -1) {
-        pos = fence.length - pos - 1;
-
-        if (starts[index + 1] === undefined || pos < starts[index + 1]) {
-          starts[index + 1] = pos;
-        }
-      }
-    }
-
-    children.forEach(function (row) {
-      var cells = row.children;
-
-      check(start(row).offset, start(cells[0]).offset, null, cells[0], -1);
-
-      cells.forEach(function (cell, index) {
-        var next = cells[index + 1] || null;
-        var final = start(next).offset || end(row).offset;
-
-        check(end(cell).offset, final, cell, next, index);
-      });
-    });
-
-    positions = starts.concat(ends);
+    sizes = inferSizes(node);
 
     if (preferred === 'padded') {
       style = 1;
@@ -166,34 +138,101 @@ function tableCellPadding(ast, file, preferred) {
       style = 0;
     } else {
       style = null;
-
-      positions.some(function (pos) {
-        /* `some` skips non-existant indices, so
-         * there's no need to check for `!isNaN`. */
-        style = Math.min(pos, 1);
-
-        return true;
-      });
+      starts.concat(ends).some(inferStyle);
     }
 
-    cells = children[0].children;
+    cells.forEach(checkCell);
 
-    locations = cells.map(function (cell) {
-      return start(cell);
-    }).concat(cells.map(function (cell) {
-      return end(cell);
-    }));
+    return;
 
-    cells = cells.concat(cells);
-    type = style === 1 ? 'padded' : 'compact';
-    warning = 'Cell should be ' + type + ', isn’t';
+    function eachRow(row) {
+      var children = row.children;
 
-    positions.forEach(function (diff, index) {
-      var cell = cells[index];
+      check(start(row).offset, start(children[0]).offset, null, children[0]);
+      ends.pop(); /* Ignore end before row. */
 
-      if (cell && cell.children.length !== 0 && diff !== style && diff !== undefined && diff !== null) {
-        file.message(warning, locations[index]);
+      children.forEach(eachCell);
+      starts.pop(); /* Ignore start after row */
+
+      function eachCell(cell, index) {
+        var next = children[index + 1] || null;
+        check(end(cell).offset, start(next).offset || end(row).offset, cell, next);
+        cells.push(cell);
       }
-    });
-  });
+    }
+
+    function inferStyle(pos) {
+      if (pos === undefined) {
+        return false;
+      }
+
+      style = Math.min(pos, 1);
+      return true;
+    }
+
+    function check(initial, final, prev, next) {
+      var fence = contents.slice(initial, final);
+      var pos = fence.indexOf('|');
+
+      ends.push(prev && pos !== -1 && prev.children.length !== 0 ? pos : undefined);
+      starts.push(next && next.children.length !== 0 ? fence.length - pos - 1 : undefined);
+    }
+
+    function checkCell(cell, index) {
+      /* Ignore, when compact, every cell except the biggest in the column. */
+      if (style === 0 && size(cell) < sizes[index % sizes.length]) {
+        return;
+      }
+
+      checkSide('start', cell, starts[index], index);
+      checkSide('end', cell, ends[index]);
+    }
+
+    function checkSide(side, cell, spacing, index) {
+      var message;
+
+      if (spacing === undefined || spacing === style) {
+        return;
+      }
+
+      message = 'Cell should be ';
+
+      if (style === 0) {
+        message += 'compact';
+      } else {
+        message += 'padded';
+
+        if (spacing > style) {
+          message += ' with 1 space, not ' + spacing;
+
+          /* May be right or center aligned. */
+          if (size(cell) < sizes[index % sizes.length]) {
+            return;
+          }
+        }
+      }
+
+      file.message(message, cell.position[side]);
+    }
+  }
+}
+
+function inferSizes(tree) {
+  var sizes = Array(tree.align.length);
+
+  tree.children.forEach(row);
+
+  return sizes;
+
+  function row(node) {
+    node.children.forEach(cell);
+  }
+
+  function cell(node, index) {
+    sizes[index] = Math.max(sizes[index] || 0, size(node));
+  }
+}
+
+function size(node) {
+  return end(node).offset - start(node).offset;
 }

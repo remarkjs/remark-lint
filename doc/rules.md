@@ -2464,6 +2464,20 @@ When this rule is `'padded'`, the following file
 | Alpha | Bravo |
 ```
 
+When this rule is `'padded'`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+| A    |    B |
+| :----|----: |
+| Alpha|Bravo |
+```
+
+```text
+3:8: Cell should be padded
+3:9: Cell should be padded
+```
+
 When this rule is `'compact'`, the following file
 `valid.md` is ok:
 
@@ -2473,6 +2487,19 @@ When this rule is `'compact'`, the following file
 |A    |B    |
 |-----|-----|
 |Alpha|Bravo|
+```
+
+When this rule is `'compact'`, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+|A    |     B|
+|:----|-----:|
+|Alpha|Bravo |
+```
+
+```text
+3:13: Cell should be compact
 ```
 
 When this rule is turned on, the following file
@@ -2487,20 +2514,31 @@ When this rule is turned on, the following file
 ```
 
 ```text
-3:5: Cell should be padded, isn’t
-3:9: Cell should be padded, isn’t
-3:16: Cell should be padded, isn’t
+5:5: Cell should be padded with 1 space, not 3
+5:10: Cell should be padded
+5:17: Cell should be padded
 ```
 
 When this rule is turned on, the following file
-`empty.md` is ok:
+`empty-heading.md` is ok:
 
 ```markdown
-<!-- Empty cells are always OK. -->
+<!-- Empty heading cells are always OK. -->
 
-| Alpha |         |
+|       | Alpha   |
 | ----- | ------- |
 | Bravo | Charlie |
+```
+
+When this rule is turned on, the following file
+`empty-body.md` is ok:
+
+```markdown
+<!-- Empty body cells are always OK. -->
+
+| Alpha   | Bravo   |
+| ------- | ------- |
+| Charlie |         |
 ```
 
 When `'invalid'` is passed in, the following error is given:

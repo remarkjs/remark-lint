@@ -297,9 +297,17 @@ function assertFixture(t, rule, fixture, basename, setting) {
 
   t.plan(positionless ? 1 : 2);
 
-  try {
-    remark().use(lint, options).process(file, fixture.config);
-  } catch (err) {}
+  remark().use(lint, options).process(file, fixture.config, function (err) {
+    if (err && err.source !== 'remark-lint') {
+      throw err;
+    }
+  });
+
+  t.deepEqual(
+    normalize(file.messages),
+    expected,
+    'should equal with position'
+  );
 
   file.messages.forEach(function (message) {
     if (message.ruleId !== ruleId) {
@@ -311,19 +319,16 @@ function assertFixture(t, rule, fixture, basename, setting) {
     }
   });
 
-  t.deepEqual(
-    normalize(file.messages),
-    expected,
-    'should equal with position'
-  );
-
   if (!positionless) {
     file.messages = [];
 
     try {
-      remark().use(function () {
-        return removePosition;
-      }).use(lint, options).process(file);
+      remark()
+        .use(function () {
+          return removePosition;
+        })
+        .use(lint, options)
+        .process(file);
     } catch (err) {}
 
     t.deepEqual(

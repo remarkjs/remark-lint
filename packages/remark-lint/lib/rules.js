@@ -38,6 +38,7 @@ module.exports = {
   'no-file-name-outer-dashes': require('./rules/no-file-name-outer-dashes.js'),
   'no-heading-content-indent': require('./rules/no-heading-content-indent.js'),
   'no-heading-indent': require('./rules/no-heading-indent.js'),
+  'no-heading-like-paragraph': require('./rules/no-heading-like-paragraph.js'),
   'no-heading-punctuation': require('./rules/no-heading-punctuation.js'),
   'no-html': require('./rules/no-html.js'),
   'no-inline-padding': require('./rules/no-inline-padding.js'),

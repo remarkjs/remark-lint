@@ -2,7 +2,7 @@
 
 # List of Rules
 
-This document describes all (59)
+This document describes all (60)
 available rules, what they check for, examples of
 what they warn for, and how to fix their warnings.
 
@@ -103,6 +103,7 @@ For example, as follows:
 -   [no-file-name-outer-dashes](#no-file-name-outer-dashes)
 -   [no-heading-content-indent](#no-heading-content-indent)
 -   [no-heading-indent](#no-heading-indent)
+-   [no-heading-like-paragraph](#no-heading-like-paragraph)
 -   [no-heading-punctuation](#no-heading-punctuation)
 -   [no-html](#no-html)
 -   [no-inline-padding](#no-inline-padding)
@@ -1736,6 +1737,32 @@ When this rule is turned on, the following file
 5:2: Remove 1 space before this heading
 8:2: Remove 1 space before this heading
 10:4: Remove 3 spaces before this heading
+```
+
+## `no-heading-like-paragraph`
+
+Warn for h7+ “headings”.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+###### Alpha
+
+Bravo.
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+####### Charlie
+
+Delta.
+```
+
+```text
+1:1-1:16: This looks like a heading but has too many hashes
 ```
 
 ## `no-heading-punctuation`

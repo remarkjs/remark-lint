@@ -31,6 +31,7 @@ module.exports = {
   'no-duplicate-headings-in-section': require('./rules/no-duplicate-headings-in-section.js'),
   'no-duplicate-headings': require('./rules/no-duplicate-headings.js'),
   'no-emphasis-as-heading': require('./rules/no-emphasis-as-heading.js'),
+  'no-empty-url': require('./rules/no-empty-url.js'),
   'no-file-name-articles': require('./rules/no-file-name-articles.js'),
   'no-file-name-consecutive-dashes': require('./rules/no-file-name-consecutive-dashes.js'),
   'no-file-name-irregular-characters': require('./rules/no-file-name-irregular-characters.js'),

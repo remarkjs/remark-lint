@@ -2,7 +2,7 @@
 
 # List of Rules
 
-This document describes all (60)
+This document describes all (61)
 available rules, what they check for, examples of
 what they warn for, and how to fix their warnings.
 
@@ -96,6 +96,7 @@ For example, as follows:
 -   [no-duplicate-headings-in-section](#no-duplicate-headings-in-section)
 -   [no-duplicate-headings](#no-duplicate-headings)
 -   [no-emphasis-as-heading](#no-emphasis-as-heading)
+-   [no-empty-url](#no-empty-url)
 -   [no-file-name-articles](#no-file-name-articles)
 -   [no-file-name-consecutive-dashes](#no-file-name-consecutive-dashes)
 -   [no-file-name-irregular-characters](#no-file-name-irregular-characters)
@@ -1490,6 +1491,33 @@ Bar.
 
 ```text
 1:1-1:6: Don’t use emphasis to introduce a section, use a heading
+```
+
+## `no-empty-url`
+
+Warn for empty URLs in links and images.
+
+When this rule is turned on, the following file
+`valid.md` is ok:
+
+```markdown
+[alpha](http://bravo.com).
+
+![charlie](http://delta.com/echo.png "foxtrott").
+```
+
+When this rule is turned on, the following file
+`invalid.md` is **not** ok:
+
+```markdown
+[golf]().
+
+![hotel]().
+```
+
+```text
+1:1-1:9: Don’t use links without URL
+3:1-3:11: Don’t use images without URL
 ```
 
 ## `no-file-name-articles`

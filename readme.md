@@ -257,7 +257,7 @@ excluding `remark-lint-no-` or `remark-lint-`
 *   [`vhf/remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
     — Ensure list items are in alphabetical order;
 *   [`RichardLitt/remark-lint-appropriate-heading](https://github.com/RichardLitt/remark-lint-appropriate-heading)
-    - Check that the top-level heading matches the directory name;
+    — Check that the top-level heading matches the directory name;
 *   [`vhf/remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
     — Ensure a specific number of lines between blocks;
 *   [`vhf/remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)

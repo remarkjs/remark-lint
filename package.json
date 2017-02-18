@@ -14,7 +14,7 @@
     "decamelize-keys": "^1.1.0",
     "dox": "^0.9.0",
     "esmangle": "^1.0.0",
-    "lerna": "2.0.0-beta.28",
+    "lerna": "2.0.0-beta.37",
     "nyc": "^10.0.0",
     "remark": "^6.0.0",
     "remark-cli": "^2.0.0",

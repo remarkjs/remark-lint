@@ -32,9 +32,8 @@ function ruleSync(filePath) {
   var tags;
   var name;
 
-  ruleId = ruleId.slice(0, ruleId.indexOf('.'));
-
-  code = fs.readFileSync(filePath, 'utf-8');
+  ruleId = ruleId.slice('remark-lint-'.length);
+  code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8');
   tags = dox.parseComments(code)[0].tags;
   description = find(tags, 'fileoverview');
   name = find(tags, 'module');

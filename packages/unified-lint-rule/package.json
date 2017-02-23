@@ -1,0 +1,24 @@
+{
+  "name": "unified-lint-rule",
+  "version": "0.0.0",
+  "description": "Create a linting rule for a unified processors",
+  "license": "MIT",
+  "keywords": [
+    "unified",
+    "lint",
+    "rule"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/unified-lint-rule",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "wrapped": "^1.0.1"
+  },
+  "xo": false
+}

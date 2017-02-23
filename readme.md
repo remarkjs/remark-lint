@@ -245,9 +245,7 @@ Presets can be loaded through the [`preset` setting][config-preset].
 
 ## List of External Rules
 
-External rules can be loaded through the [`external` setting][external].
-
-Learn how to create and use external rules in [`doc/external.md`][doc-external].
+External rules can be loaded just like normal rules.
 
 <!--
 This list is ordered based on the name without prefix, so
@@ -326,10 +324,6 @@ excluding `remark-lint-no-` or `remark-lint-`
 [linter-remark]: https://github.com/wooorm/linter-remark
 
 [gulp-remark]: https://github.com/denysdovhan/gulp-remark
-
-[external]: doc/rules.md#external
-
-[doc-external]: doc/external.md
 
 [config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
 

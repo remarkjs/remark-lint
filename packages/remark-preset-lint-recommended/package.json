@@ -18,6 +18,22 @@
     "index.js"
   ],
   "dependencies": {
-    "remark-lint": "^5.0.0"
-  }
+    "remark-lint": "^5.0.0",
+    "remark-lint-final-newline": "0.0.0",
+    "remark-lint-list-item-bullet-indent": "0.0.0",
+    "remark-lint-list-item-indent": "0.0.0",
+    "remark-lint-no-auto-link-without-protocol": "0.0.0",
+    "remark-lint-no-blockquote-without-caret": "0.0.0",
+    "remark-lint-no-literal-urls": "0.0.0",
+    "remark-lint-ordered-list-marker-style": "0.0.0",
+    "remark-lint-hard-break-spaces": "0.0.0",
+    "remark-lint-no-duplicate-definitions": "0.0.0",
+    "remark-lint-no-heading-content-indent": "0.0.0",
+    "remark-lint-no-inline-padding": "0.0.0",
+    "remark-lint-no-shortcut-reference-image": "0.0.0",
+    "remark-lint-no-shortcut-reference-link": "0.0.0",
+    "remark-lint-no-undefined-references": "0.0.0",
+    "remark-lint-no-unused-definitions": "0.0.0"
+  },
+  "xo": false
 }

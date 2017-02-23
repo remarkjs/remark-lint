@@ -1,0 +1,27 @@
+{
+  "name": "remark-lint-no-file-name-mixed-case",
+  "version": "0.0.0",
+  "description": "remark-lint rule to warn when file names use mixed case",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "file",
+    "name",
+    "case"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-file-name-mixed-case",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "unified-lint-rule": "0.0.0"
+  },
+  "xo": false
+}

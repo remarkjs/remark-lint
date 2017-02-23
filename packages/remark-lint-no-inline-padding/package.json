@@ -1,0 +1,29 @@
+{
+  "name": "remark-lint-no-inline-padding",
+  "version": "0.0.0",
+  "description": "remark-lint rule to warn when inline nodes are padded with spaces",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "inline",
+    "padding"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-inline-padding",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "mdast-util-to-string": "^1.0.2",
+    "unified-lint-rule": "0.0.0",
+    "unist-util-generated": "^1.1.0",
+    "unist-util-visit": "^1.1.1"
+  },
+  "xo": false
+}

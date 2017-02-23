@@ -26,22 +26,10 @@
     "Burak Yiğit Kaya <ben@byk.im>"
   ],
   "files": [
-    "index.js",
-    "lib/"
+    "index.js"
   ],
   "dependencies": {
-    "decamelize": "^1.0.0",
-    "load-plugin": "^2.0.0",
-    "mdast-util-heading-style": "^1.0.0",
-    "mdast-util-to-string": "^1.0.0",
-    "plur": "^2.0.0",
-    "remark-message-control": "^2.0.0",
-    "trough": "^1.0.0",
-    "unist-util-generated": "^1.1.0",
-    "unist-util-position": "^3.0.0",
-    "unist-util-visit": "^1.0.0",
-    "vfile-location": "^2.0.0",
-    "vfile-sort": "^2.0.0",
-    "wrapped": "^1.0.1"
-  }
+    "remark-message-control": "^4.0.0"
+  },
+  "xo": false
 }

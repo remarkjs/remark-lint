@@ -1,0 +1,30 @@
+{
+  "name": "remark-lint-table-cell-padding",
+  "version": "0.0.0",
+  "description": "remark-lint rule to warn when table cells are incorrectly padded",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "table",
+    "cell",
+    "padding"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-table-cell-padding",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "unified-lint-rule": "0.0.0",
+    "unist-util-generated": "^1.1.0",
+    "unist-util-position": "^3.0.0",
+    "unist-util-visit": "^1.1.1"
+  },
+  "xo": false
+}

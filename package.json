@@ -21,7 +21,7 @@
     "remark-comment-config": "^4.0.0",
     "remark-github": "^6.0.0",
     "remark-lint-no-url-trailing-slash": "^2.0.0",
-    "remark-toc": "^3.0.0",
+    "remark-toc": "^4.0.0",
     "remark-validate-links": "^5.0.0",
     "strip-indent": "^2.0.0",
     "tape": "^4.6.0",

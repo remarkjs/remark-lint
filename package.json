@@ -18,7 +18,7 @@
     "nyc": "^10.0.0",
     "remark": "^6.0.0",
     "remark-cli": "^2.0.0",
-    "remark-comment-config": "^4.0.0",
+    "remark-comment-config": "^5.0.0",
     "remark-github": "^6.0.0",
     "remark-lint-no-url-trailing-slash": "^2.0.0",
     "remark-toc": "^3.0.0",

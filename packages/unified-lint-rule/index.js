@@ -79,7 +79,6 @@ function coerce(name, value) {
       typeof value[0] === 'string'
     )
   ) {
-    console.log('val: ', value);
     result = value.concat();
   } else {
     result = [1, value];

@@ -56,7 +56,7 @@ Then, configure **remark** in your `package.json`:
   },
   // ...
   "remarkConfig": {
-    "presets": ["lint-recommended"]
+    "plugins": ["remark-preset-lint-recommended"]
   }
   // ...
 ```
@@ -86,7 +86,7 @@ turn them off).
 Use `remark-lint` together with [`remark`][api]:
 
 ```bash
-npm install remark remark-lint
+npm install remark remark-lint remark-lint-first-heading-level
 ```
 
 Let’s say `example.js` looks as follows:
@@ -95,8 +95,9 @@ Let’s say `example.js` looks as follows:
 var report = require('vfile-reporter');
 var remark = require('remark');
 var lint = require('remark-lint');
+var firstHeadingLevel = require('remark-lint-first-heading-level');
 
-var file = remark().use(lint, {firstHeadingLevel: true}).process('## Hello world!');
+var file = remark().use(lint).use(firstHeadingLevel).processSync('## Hello world!');
 
 console.log(report(file));
 ```
@@ -108,31 +109,6 @@ Now, running `node example.js` yields:
 
 ⚠ 1 warning
 ```
-
-### `remark.use(lint[, options])`
-
-Adds warnings for style violations to the processed [virtual file][vfile].
-
-When processing a file, these warnings are available at `file.messages`, and
-look as follows:
-
-```js
-{ [1:1-1:16: First heading level should be `1`]
-  message: 'First heading level should be `1`',
-  name: '1:1-1:16',
-  file: '',
-  reason: 'First heading level should be `1`',
-  line: 1,
-  column: 1,
-  location: {
-    start: { line: 1, column: 1, offset: 0 },
-    end: { line: 1, column: 16, offset: 15 } },
-  fatal: false,
-  ruleId: 'first-heading-level',
-  source: 'remark-lint' }
-```
-
-See [`VFileMessage`][vfile-message] for more information.
 
 ## Rules
 
@@ -148,12 +124,10 @@ An example `.remarkrc` file could look as follows:
 
 ```json
 {
-  "presets": ["lint-recommended"],
-  "plugins": {
-    "lint": {
-      "list-item-indent": false
-    }
-  }
+  "plugins": [
+    "remark-preset-lint-recommended",
+    ["remark-lint-list-item-indent", false]
+  ]
 }
 ```
 
@@ -316,10 +290,6 @@ excluding `remark-lint-no-` or `remark-lint-`
 [linter-markdown]: https://atom.io/packages/linter-markdown
 
 [message-control]: https://github.com/wooorm/remark-message-control#markers
-
-[vfile]: https://github.com/wooorm/vfile
-
-[vfile-message]: https://github.com/wooorm/vfile#vfilemessage
 
 [linter-remark]: https://github.com/wooorm/linter-remark
 

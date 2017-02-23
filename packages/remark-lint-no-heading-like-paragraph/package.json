@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-heading-like-paragraph",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "remark-lint rule to for too many hashes (h7+ “headings”)",
   "license": "MIT",
   "keywords": [
@@ -20,7 +20,7 @@
     "index.js"
   ],
   "dependencies": {
-    "unified-lint-rule": "0.0.0",
+    "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",
     "unist-util-visit": "^1.1.1"
   },

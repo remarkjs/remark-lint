@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-file-extension",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "remark-lint rule to warn when the file’s extension violates the given style",
   "license": "MIT",
   "keywords": [
@@ -21,7 +21,7 @@
     "index.js"
   ],
   "dependencies": {
-    "unified-lint-rule": "0.0.0"
+    "unified-lint-rule": "^1.0.0"
   },
   "xo": false
 }

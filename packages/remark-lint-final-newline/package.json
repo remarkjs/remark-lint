@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-final-newline",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "remark-lint rule to warn when a newline at the end of a file is missing",
   "license": "MIT",
   "keywords": [
@@ -21,7 +21,7 @@
     "index.js"
   ],
   "dependencies": {
-    "unified-lint-rule": "0.0.0"
+    "unified-lint-rule": "^1.0.0"
   },
   "xo": false
 }

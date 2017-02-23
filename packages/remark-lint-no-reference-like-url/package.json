@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-reference-like-url",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "remark-lint rule to warn when URLs are also defined identifiers",
   "license": "MIT",
   "keywords": [
@@ -21,7 +21,7 @@
     "index.js"
   ],
   "dependencies": {
-    "unified-lint-rule": "0.0.0",
+    "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",
     "unist-util-visit": "^1.1.1"
   },

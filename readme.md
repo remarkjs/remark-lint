@@ -112,8 +112,7 @@ Now, running `node example.js` yields:
 
 ## Rules
 
-[`doc/rules.md`][rules] describes all available rules, what they check
-for, examples of markdown they warn for, and how to fix their warnings.
+[`doc/rules.md`][rules] lists all available official rules.
 
 ## Configuring remark-lint
 

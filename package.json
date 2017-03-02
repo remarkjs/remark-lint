@@ -13,6 +13,7 @@
     "dox": "^0.9.0",
     "esmangle": "^1.0.0",
     "lerna": "2.0.0-beta.37",
+    "mdast-zone": "^3.0.0",
     "nyc": "^10.0.0",
     "parse-author": "^1.0.0",
     "remark": "^7.0.0",
@@ -27,16 +28,18 @@
     "trim": "0.0.1",
     "unist-builder": "^1.0.2",
     "unist-util-remove-position": "^1.1.0",
+    "vfile-reporter": "^3.0.0",
     "xo": "^0.17.0"
   },
   "scripts": {
     "prepublish": "lerna bootstrap",
-    "build-presets": "node script/build-presets.js",
-    "build-rules": "node script/build-rules.js",
+    "build-presets": "node script/build-presets",
+    "build-rules": "node script/build-rules",
+    "build-list": "node script/build-list-of-rules",
     "build-md": "remark . -qfo",
     "build-bundle": "browserify packages/remark-lint/index.js --bare -s remarkLint > remark-lint.js",
     "build-mangle": "esmangle remark-lint.js > remark-lint.min.js",
-    "build": "npm run build-presets && npm run build-rules && npm run build-md && npm run build-bundle && npm run build-mangle",
+    "build": "npm run build-presets && npm run build-rules && npm run build-list && npm run build-md && npm run build-bundle && npm run build-mangle",
     "lint": "xo",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
@@ -59,18 +62,5 @@
     "ignores": [
       "remark-lint.js"
     ]
-  },
-  "remarkConfig": {
-    "plugins": [
-      "./packages/remark-preset-lint-recommended",
-      "./packages/remark-preset-lint-consistent",
-      ["toc", {"tight": true, "maxDepth": 2}],
-      "comment-config",
-      "github",
-      "validate-links"
-    ],
-    "settings": {
-      "bullet": "*"
-    }
   }
 }

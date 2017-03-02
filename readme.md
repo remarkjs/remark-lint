@@ -240,8 +240,14 @@ excluding `remark-lint-no-` or `remark-lint-`
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint).
 *   [`vhf/remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
     — ⚠️ Ensure every heading is followed by content (forming a section);
+*   [`verekia/remark-lint-no-leading-spaces`](https://github.com/verekia/remark-lint-no-leading-spaces)
+    — ⚠️ Warn about leading white-space;
+*   [`wemake-services/remark-lint-list-item-punctuation`](https://github.com/verekia/remark-lint-list-item-punctuation)
+    — ⚠️ check if list items end in periods;
 *   [`chcokr/remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
     — ⚠️ Ensure sentences are followed by a newline;
+*   [`verekia/remark-lint-no-trailing-spaces`](https://github.com/verekia/remark-lint-no-trailing-spaces)
+    — ⚠️ Warn about trailing white-space;
 *   [`vhf/remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — ⚠️ Ensure that the `href` of links has no trailing slash.
 

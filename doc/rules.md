@@ -65,6 +65,10 @@ remark()
 
 ## List of Rules
 
+This lists contains all “official” rules, developed in this repository.
+For rules developed outside of this repo, view the [List of External
+Rules][external].
+
 <!--rules start-->
 
 *   [`blockquote-indentation`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) — warn when blockquotes are either indented too much or too little
@@ -130,3 +134,5 @@ remark()
 *   [`unordered-list-marker-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-unordered-list-marker-style) — warn when markers of unordered lists violate a given style
 
 <!--rules end-->
+
+[external]: https://github.com/wooorm/remark-lint#list-of-external-rules

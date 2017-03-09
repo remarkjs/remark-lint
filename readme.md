@@ -249,7 +249,7 @@ excluding `remark-lint-no-` or `remark-lint-`
 *   [`verekia/remark-lint-no-trailing-spaces`](https://github.com/verekia/remark-lint-no-trailing-spaces)
     — ⚠️ Warn about trailing white-space;
 *   [`vhf/remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
-    — ⚠️ Ensure that the `href` of links has no trailing slash.
+    — Ensure that the `href` of links has no trailing slash.
 
 ## Related
 

@@ -210,11 +210,12 @@ I’m very interested in more integrations.  Let me know if I can help.
 
 Presets can be loaded through the [`preset` setting][config-preset].
 
-*   [`remark-preset-lint-consistent`][preset-consistent]
-    — Rules that enforce consistency;
-*   [`remark-preset-lint-recommended`][preset-recommended]
-    — Rules that prevent mistakes or syntaxes that do not work
-    correctly across vendors.
+<!--presets start-->
+
+*   [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that enforce consistency
+*   [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
+
+<!--presets end-->
 
 ## List of External Rules
 
@@ -303,8 +304,6 @@ excluding `remark-lint-no-` or `remark-lint-`
 [gulp-remark]: https://github.com/denysdovhan/gulp-remark
 
 [config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
-
-[preset-consistent]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-consistent
 
 [preset-recommended]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-recommended
 

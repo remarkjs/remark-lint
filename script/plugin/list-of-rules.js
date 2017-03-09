@@ -1,32 +1,15 @@
 'use strict';
 
 var path = require('path');
-var vfile = require('to-vfile');
-var remark = require('remark');
 var zone = require('mdast-zone');
-var report = require('vfile-reporter');
 var u = require('unist-builder');
-var validateLinks = require('remark-validate-links');
-var config = require('../.remarkrc');
-var rules = require('./util/rules');
+var rules = require('../util/rules');
 
 var root = path.join(process.cwd(), 'packages');
-var fp = path.join('doc', 'rules.md');
 
-remark()
-  .use(config)
-  .use(plugin)
-  .use(validateLinks, false)
-  .process(vfile.readSync(fp), function (err, file) {
-    if (file) {
-      vfile.writeSync(file);
-      file.stored = true;
-    }
+module.exports = listOfRules;
 
-    console.error(report(err || file));
-  });
-
-function plugin() {
+function listOfRules() {
   return transformer;
 }
 

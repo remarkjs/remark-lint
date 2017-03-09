@@ -1,32 +1,15 @@
 'use strict';
 
 var path = require('path');
-var vfile = require('to-vfile');
-var remark = require('remark');
 var zone = require('mdast-zone');
-var report = require('vfile-reporter');
 var u = require('unist-builder');
-var validateLinks = require('remark-validate-links');
-var config = require('../.remarkrc');
-var presets = require('./util/presets');
+var presets = require('../util/presets');
 
 var root = path.join(process.cwd(), 'packages');
-var fp = path.join('readme.md');
 
-remark()
-  .use(config)
-  .use(plugin)
-  .use(validateLinks, false)
-  .process(vfile.readSync(fp), function (err, file) {
-    if (file) {
-      vfile.writeSync(file);
-      file.stored = true;
-    }
+module.exports = listOfPresets;
 
-    console.error(report(err || file));
-  });
-
-function plugin() {
+function listOfPresets() {
   return transformer;
 }
 

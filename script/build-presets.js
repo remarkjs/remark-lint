@@ -61,7 +61,7 @@ fs
         u('code', {lang: 'diff'}, [
           ' ...',
           ' "remarkConfig": {',
-          '+  "plugins": [' + pack.name + '"]',
+          '+  "plugins": ["' + pack.name + '"]',
           ' }',
           ' ...'
         ].join('\n')),

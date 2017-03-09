@@ -17,7 +17,7 @@ You probably want to use it on the CLI through a config file:
 ```diff
  ...
  "remarkConfig": {
-+  "plugins": [remark-preset-lint-consistent"]
++  "plugins": ["remark-preset-lint-consistent"]
  }
  ...
 ```

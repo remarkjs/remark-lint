@@ -1,66 +1,13 @@
-<!--This file is generated-->
+# unified-lint-rule
 
-# remark-lint-blockquote-indentation
+Create a simple linting rule for a unified processors.
 
-Warn when blockquotes are either indented too much or too little.
-
-Options: `number`, default: `'consistent'`.
-
-The default value, `consistent`, detects the first used indentation
-and will warn when other blockquotes use a different indentation.
+Each rule in **remark-lint** uses this project.  See [remark-lint](https://github.com/wooorm/remark-lint) for examples!
 
 ## Install
 
 ```sh
 npm install --save remark-lint-blockquote-indentation
-```
-
-## Example
-
-When this rule is `2`, the following file
-`valid.md` is ok:
-
-```markdown
-<!--This file is also valid by default-->
-
-> Hello
-
-Paragraph.
-
-> World
-```
-
-When this rule is `4`, the following file
-`valid.md` is ok:
-
-```markdown
-<!--This file is also valid by default-->
-
->   Hello
-
-Paragraph.
-
->   World
-```
-
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
-
-```markdown
->  Hello
-
-Paragraph.
-
->   World
-
-Paragraph.
-
-> World
-```
-
-```text
-5:3: Remove 1 space between blockquote and content
-9:3: Add 1 space between blockquote and content
 ```
 
 ## License

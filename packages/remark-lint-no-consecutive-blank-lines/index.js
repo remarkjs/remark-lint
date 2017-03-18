@@ -90,8 +90,6 @@ function noConsecutiveBlankLines(ast, file) {
     }
   }
 
-  return;
-
   /* Compare the difference between `start` and `end`,
    * and warn when that difference exceeds `max`. */
   function compare(start, end, max) {

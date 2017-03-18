@@ -79,7 +79,8 @@ function ruleSync(filePath) {
     name = info.name;
 
     if (!context) {
-      context = tests[setting] = [];
+      context = [];
+      tests[setting] = context;
     }
 
     if (!info.label) {

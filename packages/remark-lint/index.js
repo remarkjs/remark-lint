@@ -4,7 +4,7 @@ var control = require('remark-message-control');
 
 module.exports = lint;
 
-/* remark-lint.  This adds support for ignoring stuff from
+/* `remark-lint`.  This adds support for ignoring stuff from
  * messages (`<!--lint ignore-->`).
  * All rules are in their own packages and presets. */
 function lint() {

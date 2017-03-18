@@ -46,8 +46,6 @@ function noUnusedDefinitions(ast, file) {
     }
   }
 
-  return;
-
   function find(node) {
     if (generated(node)) {
       return;

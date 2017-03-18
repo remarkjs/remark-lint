@@ -36,8 +36,6 @@ function noDuplicateDefinitions(ast, file) {
   visit(ast, 'definition', validate);
   visit(ast, 'footnoteDefinition', validate);
 
-  return;
-
   function validate(node) {
     var duplicate = map[node.identifier];
     var pos;

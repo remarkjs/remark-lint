@@ -29,7 +29,7 @@
     "unist-builder": "^1.0.2",
     "unist-util-remove-position": "^1.1.0",
     "vfile-reporter": "^3.0.0",
-    "xo": "^0.17.0"
+    "xo": "^0.18.0"
   },
   "scripts": {
     "prepublish": "lerna bootstrap",
@@ -52,8 +52,8 @@
   },
   "xo": {
     "space": true,
+    "esnext": false,
     "rules": {
-      "import/no-dynamic-require": "off",
       "guard-for-in": "off",
       "no-eq-null": "off",
       "eqeqeq": "off"

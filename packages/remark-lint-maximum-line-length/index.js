@@ -95,8 +95,6 @@ function maximumLineLength(ast, file, preferred) {
     }
   }
 
-  return;
-
   function ignore(node) {
     var applicable = isIgnored(node);
     var initial = applicable && start(node).line;

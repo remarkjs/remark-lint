@@ -39,8 +39,6 @@ function noUndefinedReferences(ast, file) {
   visit(ast, 'linkReference', find);
   visit(ast, 'footnoteReference', find);
 
-  return;
-
   function mark(node) {
     if (!generated(node)) {
       map[node.identifier.toUpperCase()] = true;

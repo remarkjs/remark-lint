@@ -117,8 +117,6 @@ function codeBlockStyle(tree, file, preferred) {
 
   visit(tree, 'code', visitor);
 
-  return;
-
   function visitor(node) {
     var current = check(node);
 

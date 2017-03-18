@@ -107,8 +107,6 @@ function linkTitleStyle(ast, file, preferred) {
   visit(ast, 'image', validate);
   visit(ast, 'definition', validate);
 
-  return;
-
   function validate(node) {
     var last = end(node).offset - 1;
     var character;

@@ -36,8 +36,6 @@ function definitionCase(tree, file) {
   visit(tree, 'definition', validate);
   visit(tree, 'footnoteDefinition', validate);
 
-  return;
-
   /* Validate a node, either a normal definition or
    * a footnote definition. */
   function validate(node) {

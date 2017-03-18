@@ -36,8 +36,6 @@ function definitionSpacing(tree, file) {
   visit(tree, 'definition', validate);
   visit(tree, 'footnoteDefinition', validate);
 
-  return;
-
   function validate(node) {
     var start = position.start(node).offset;
     var end = position.end(node).offset;

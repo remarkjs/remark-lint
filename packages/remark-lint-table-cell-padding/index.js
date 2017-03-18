@@ -112,8 +112,6 @@ function tableCellPadding(tree, file, preferred) {
 
   visit(tree, 'table', visitor);
 
-  return;
-
   function visitor(node) {
     var rows = node.children;
     var contents = String(file);
@@ -141,8 +139,6 @@ function tableCellPadding(tree, file, preferred) {
     }
 
     cells.forEach(checkCell);
-
-    return;
 
     function eachRow(row) {
       var children = row.children;

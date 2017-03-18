@@ -39,8 +39,6 @@ function noReferenceLikeURL(tree, file) {
   visit(tree, 'image', check);
   visit(tree, 'link', check);
 
-  return;
-
   /* Find identifiers. */
   function find(node) {
     if (!generated(node)) {

@@ -17,7 +17,7 @@ You probably want to use it on the CLI through a config file:
 ```diff
  ...
  "remarkConfig": {
-+  "plugins": ["remark-preset-lint-consistent"]
+   "plugins": ["remark-preset-lint-consistent"]
  }
  ...
 ```
@@ -35,7 +35,7 @@ Or use this on the API:
  var report = require('vfile-reporter');
 
  var file = remark()
-+  .use(require('remark-preset-lint-consistent'))
+   .use(require('remark-preset-lint-consistent'))
    .processSync('_Emphasis_ and **importance**')
 
  console.error(report(file));

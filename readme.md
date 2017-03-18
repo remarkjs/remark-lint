@@ -40,8 +40,10 @@ npm install remark-lint
 
 ![Example of how remark-lint looks on screen][screenshot]
 
-Use `remark-lint` together with [`remark-cli`][cli], and a
-[preset][preset-recommended].
+To use `remark-lint` on the command line, you'll need these two items.
+
+* [`remark-cli`][cli]
+* [preset][preset-recommended].
 
 ```bash
 npm install --save remark-cli remark-lint remark-preset-lint-recommended
@@ -195,6 +197,8 @@ and I strongly suggest checking out how it can make your life easier :+1:
 
 ## Editor Integrations
 
+Currently, remark is integrated with Atom and Gulp.
+
 Currently, **remark-lint** is integrated with Atom through
 [**linter-markdown**][linter-markdown].
 
@@ -206,9 +210,14 @@ To run **remark**, optionally with **remark-lint** from **Gulp**, use
 
 I’m very interested in more integrations.  Let me know if I can help.
 
-## List of Presets
+## Configuring Editor presets
 
-Presets can be loaded through the [`preset` setting][config-preset].
+Configuring Editor presets can be done through the [`preset` setting][config-preset]. You can find this setting in
+
+*   [**Atom**][atom] through [**linter-markdown**][linter-markdown], load both of these through Atom > Config (actual UI location)
+  *   [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that enforce consistency
+  *   [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
+*   [**Gulp**][gulp] through [**gulp-remark**][gulp-remark], Gulf > Config (actual UI location).
 
 <!--presets start-->
 
@@ -263,9 +272,19 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 <!-- Definitions -->
 
+[api]: https://github.com/wooorm/remark/tree/master/packages/remark
+
+[atom]: https://atom.io/
+
+[author]: http://wooorm.com
+
 [build-badge]: https://img.shields.io/travis/wooorm/remark-lint.svg
 
 [build-status]: https://travis-ci.org/wooorm/remark-lint
+
+[cli]: https://github.com/wooorm/remark/tree/master/packages/remark-cli
+
+[config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg
 
@@ -275,36 +294,30 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 [chat]: https://gitter.im/wooorm/remark
 
-[license]: LICENSE
-
-[author]: http://wooorm.com
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[remark]: https://github.com/wooorm/remark
-
-[logo]: https://cdn.rawgit.com/wooorm/remark-lint/b177ac6/logo.svg
-
-[screenshot]: https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png
-
-[rules]: doc/rules.md
-
-[api]: https://github.com/wooorm/remark/tree/master/packages/remark
-
-[cli]: https://github.com/wooorm/remark/tree/master/packages/remark-cli
-
-[remark-plugins]: https://github.com/wooorm/remark/blob/master/doc/plugins.md
-
-[linter-markdown]: https://atom.io/packages/linter-markdown
-
-[message-control]: https://github.com/wooorm/remark-message-control#markers
-
-[linter-remark]: https://github.com/wooorm/linter-remark
+[gulp]: http://gulpjs.com/
 
 [gulp-remark]: https://github.com/denysdovhan/gulp-remark
 
-[config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
+[logo]: https://cdn.rawgit.com/wooorm/remark-lint/b177ac6/logo.svg
+
+[license]: LICENSE
+
+[linter-markdown]: https://atom.io/packages/linter-markdown
+
+[linter-remark]: https://github.com/wooorm/linter-remark
+
+[message-control]: https://github.com/wooorm/remark-message-control#markers
+
+[npm]: https://docs.npmjs.com/cli/install
 
 [preset-recommended]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-recommended
 
 [presets]: #list-of-presets
+
+[remark]: https://github.com/wooorm/remark
+
+[remark-plugins]: https://github.com/wooorm/remark/blob/master/doc/plugins.md
+
+[rules]: doc/rules.md
+
+[screenshot]: https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png

@@ -40,11 +40,10 @@ npm install remark-lint
 
 ![Example of how remark-lint looks on screen][screenshot]
 
-Use `remark-lint` together with [`remark-cli`][cli], and a
-[preset][preset-recommended].
+Use `remark-lint` with [`remark-cli`][cli], and a [preset][preset-recommended].
 
 ```bash
-npm install --save remark-cli remark-lint remark-preset-lint-recommended
+npm install --save remark-cli remark-preset-lint-recommended
 ```
 
 Then, configure **remark** in your `package.json`:

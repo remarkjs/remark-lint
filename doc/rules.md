@@ -84,7 +84,7 @@ Rules][external].
 *   [`final-definition`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-final-definition) — warn when definitions are not placed at the end of the file
 *   [`final-newline`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-final-newline) — warn when a newline at the end of a file is missing
 *   [`first-heading-level`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-first-heading-level) — warn when the first heading has a level other than a specified value
-*   [`hard-break-spaces`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-hard-break-spaces) — warn when blockquotes are either indented too much or too little
+*   [`hard-break-spaces`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
 *   [`heading-increment`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
 *   [`heading-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-heading-style) — warn when heading style violates the given style
 *   [`link-title-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
@@ -119,7 +119,7 @@ Rules][external].
 *   [`no-reference-like-url`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-reference-like-url) — warn when URLs are also defined identifiers
 *   [`no-shell-dollars`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-shell-dollars) — warn when shell code is prefixed by dollars
 *   [`no-shortcut-reference-image`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-image) — warn when shortcut reference images are used
-*   [`no-shortcut-reference-link`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) — warn when shortcut reference links are used
+*   [`no-shortcut-reference-link`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-link) — warn when shortcut reference links are used
 *   [`no-table-indentation`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-table-indentation) — warn when tables are indented
 *   [`no-tabs`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-tabs) — warn when hard tabs are used instead of spaces
 *   [`no-undefined-references`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-undefined-references) — warn when references to undefined definitions are found

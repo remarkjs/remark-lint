@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-hard-break-spaces",
   "version": "1.0.0",
-  "description": "remark-lint rule to warn when blockquotes are either indented too much or too little",
+  "description": "remark-lint rule to warn when too many spaces are used to create a hard break",
   "license": "MIT",
   "keywords": [
     "remark",

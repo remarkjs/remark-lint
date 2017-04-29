@@ -2,7 +2,9 @@
 
 # remark-preset-lint-recommended
 
-remark preset to configure remark-lint with rules that prevent mistakes or syntaxes that do not work correctly across vendors.
+remark preset to configure remark-lint with settings that
+prevent mistakes or syntaxes that do not work correctly
+across vendors.
 
 ## Install
 

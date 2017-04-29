@@ -1,11 +1,8 @@
 /**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module remark:preset:lint-recommended
- * @fileoverview remark preset to configure remark-lint with
- *   settings that prevent mistakes or syntaxes that do not
- *   work correctly across vendors.
+ * @fileoverview
+ *   remark preset to configure remark-lint with settings that
+ *   prevent mistakes or syntaxes that do not work correctly
+ *   across vendors.
  */
 
 'use strict';

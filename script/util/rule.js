@@ -14,6 +14,7 @@ var path = require('path');
 var dox = require('dox');
 var strip = require('strip-indent');
 var trim = require('trim');
+var find = require('./find');
 
 /* Expose. */
 module.exports = ruleSync;
@@ -57,7 +58,7 @@ function ruleSync(filePath) {
   result.tests = tests;
   result.filePath = filePath;
 
-  findAll(tags, 'example').map(strip).forEach(function (example) {
+  find.all(tags, 'example').map(strip).forEach(function (example) {
     var lines = example.split('\n');
     var value = strip(lines.slice(1).join('\n'));
     var info;
@@ -116,44 +117,4 @@ function ruleSync(filePath) {
   });
 
   return result;
-}
-
-/**
- * Find the first tag in `tags` with a type set to `key`.
- *
- * @param {Array.<Object>} tags - List of tags.
- * @param {string} key - Type of tag.
- * @return {Object?} - Tag, when found.
- */
-function find(tags, key) {
-  var value = null;
-
-  tags.some(function (tag) {
-    if (tag && tag.type === key) {
-      value = tag;
-
-      return true;
-    }
-
-    return false;
-  });
-
-  return value && value.string;
-}
-
-/**
- * Find the first tag in `tags` with a type set to `key`.
- *
- * @param {Array.<Object>} tags - List of tags.
- * @param {string} key - Type of tag.
- * @return {Object?} - Tag, when found.
- */
-function findAll(tags, key) {
-  return tags
-    .filter(function (tag) {
-      return tag && tag.type === key;
-    })
-    .map(function (tag) {
-      return tag.string;
-    });
 }

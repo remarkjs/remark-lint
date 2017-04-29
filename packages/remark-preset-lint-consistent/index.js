@@ -1,9 +1,6 @@
 /**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module remark:preset:lint-recommended
- * @fileoverview remark preset to configure remark-lint with
+ * @fileoverview
+ *   remark preset to configure remark-lint with
  *   settings that enforce consistency.
  */
 

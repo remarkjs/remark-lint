@@ -94,10 +94,9 @@ Let’s say `example.js` looks as follows:
 ```js
 var report = require('vfile-reporter');
 var remark = require('remark');
-var lint = require('remark-lint');
-var firstHeadingLevel = require('remark-lint-first-heading-level');
+var styleGuide = require('remark-preset-lint-markdown-style-guide');
 
-var file = remark().use(lint).use(firstHeadingLevel).processSync('## Hello world!');
+var file = remark().use(styleGuide).processSync('_Hello world_');
 
 console.log(report(file));
 ```
@@ -105,7 +104,7 @@ console.log(report(file));
 Now, running `node example.js` yields:
 
 ```txt
-  1:1-1:16  warning  First heading level should be `1`  first-heading-level
+  1:1-1:14  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
 
 ⚠ 1 warning
 ```

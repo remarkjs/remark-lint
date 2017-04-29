@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-shortcut-reference-link",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "remark-lint rule to warn when shortcut reference links are used",
   "license": "MIT",
   "keywords": [

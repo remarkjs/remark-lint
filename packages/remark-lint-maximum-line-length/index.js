@@ -8,7 +8,7 @@
  *
  *   Options: `number`, default: `80`.
  *
- *   Ignores nodes which cannot be wrapped, such as heasings, tables,
+ *   Ignores nodes which cannot be wrapped, such as headings, tables,
  *   code, link, images, and definitions.
  *
  * @example {"name": "valid.md", "config": {"positionless": true}}

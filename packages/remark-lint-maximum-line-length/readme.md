@@ -6,7 +6,7 @@ Warn when lines are too long.
 
 Options: `number`, default: `80`.
 
-Ignores nodes which cannot be wrapped, such as heasings, tables,
+Ignores nodes which cannot be wrapped, such as headings, tables,
 code, link, images, and definitions.
 
 ## Install

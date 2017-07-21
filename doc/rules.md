@@ -95,7 +95,7 @@ Rules][external].
 *   [`maximum-heading-length`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 *   [`maximum-line-length`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-maximum-line-length) — warn when lines are too long
 *   [`no-auto-link-without-protocol`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) — warn for angle-bracketed links without protocol
-*   [`no-blockquote-without-caret`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-caret) — warn when blank lines without carets are found in a blockquote
+*   [`no-blockquote-without-marker`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a blockquote
 *   [`no-consecutive-blank-lines`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
 *   [`no-duplicate-definitions`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-duplicate-definitions) — warn on duplicate definitions
 *   [`no-duplicate-headings`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-duplicate-headings) — warn on duplicate headings

@@ -17,7 +17,7 @@ module.exports.plugins = [
   [require('remark-lint-list-item-indent'), 'tab-size'],
   /* Differs or unsupported across vendors. */
   require('remark-lint-no-auto-link-without-protocol'),
-  require('remark-lint-no-blockquote-without-caret'),
+  require('remark-lint-no-blockquote-without-marker'),
   require('remark-lint-no-literal-urls'),
   [require('remark-lint-ordered-list-marker-style'), '.'],
   /* Mistakes. */

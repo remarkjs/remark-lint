@@ -2,9 +2,9 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-blockquote-without-caret
+ * @module no-blockquote-without-marker
  * @fileoverview
- *   Warn when blank lines without carets are found in a blockquote.
+ *   Warn when blank lines without markers (`>`) are found in a blockquote.
  *
  * @example {"name": "valid.md"}
  *
@@ -20,7 +20,7 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   2:1: Missing caret in blockquote
+ *   2:1: Missing marker in blockquote
  */
 
 'use strict';
@@ -31,9 +31,9 @@ var visit = require('unist-util-visit');
 var position = require('unist-util-position');
 var generated = require('unist-util-generated');
 
-module.exports = rule('remark-lint:no-blockquote-without-caret', noBlockquoteWithoutCaret);
+module.exports = rule('remark-lint:no-blockquote-without-marker', noBlockquoteWithoutMarker);
 
-function noBlockquoteWithoutCaret(ast, file) {
+function noBlockquoteWithoutMarker(ast, file) {
   var contents = file.toString();
   var location = vfileLocation(file);
   var last = contents.length;
@@ -71,7 +71,7 @@ function noBlockquoteWithoutCaret(ast, file) {
         }
       }
 
-      file.message('Missing caret in blockquote', {
+      file.message('Missing marker in blockquote', {
         line: line,
         column: column
       });

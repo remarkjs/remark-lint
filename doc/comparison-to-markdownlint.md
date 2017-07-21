@@ -29,7 +29,7 @@ rules and **remark-lint**’s rules.
 | MD025        | no-multiple-toplevel-headings | -                                                                                        |
 | MD026        | no-heading-punctuation        | -                                                                                        |
 | MD027        | blockquote-indentation        | Won’t warn when that’s your preferred, consistent style                                  |
-| MD028        | no-blockquote-without-caret   | -                                                                                        |
+| MD028        | no-blockquote-without-marker  | -                                                                                        |
 | MD029        | ordered-list-marker-value     | markdownlint defaults to `one`, whereas remark-lint defaults to `ordered`                |
 | MD030        | list-item-indent              | -                                                                                        |
 | MD031        | no-missing-blank-lines        | -                                                                                        |

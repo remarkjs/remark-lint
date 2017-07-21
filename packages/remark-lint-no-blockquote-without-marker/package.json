@@ -1,16 +1,17 @@
 {
-  "name": "remark-lint-no-blockquote-without-caret",
+  "name": "remark-lint-no-blockquote-without-marker",
   "version": "1.0.0",
-  "description": "remark-lint rule to warn when blank lines without carets are found in a blockquote",
+  "description": "remark-lint rule to warn when blank lines without markers (`>`) are found in a blockquote",
   "license": "MIT",
   "keywords": [
     "remark",
     "lint",
     "rule",
     "blockquote",
-    "caret"
+    "caret",
+    "marker"
   ],
-  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-caret",
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker",
   "bugs": "https://github.com/wooorm/remark-lint/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [

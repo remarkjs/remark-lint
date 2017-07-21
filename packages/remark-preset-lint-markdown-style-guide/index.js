@@ -155,7 +155,7 @@ module.exports.plugins = [
 
   /* http://www.cirosantilli.com/markdown-style-guide/#blockquotes */
   [require('remark-lint-blockquote-indentation'), 1],
-  require('remark-lint-no-blockquote-without-caret'),
+  require('remark-lint-no-blockquote-without-marker'),
 
   /* http://www.cirosantilli.com/markdown-style-guide/#unordered */
   [require('remark-lint-unordered-list-marker-style'), '-'],

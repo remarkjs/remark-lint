@@ -1,13 +1,13 @@
 <!--This file is generated-->
 
-# remark-lint-no-blockquote-without-caret
+# remark-lint-no-blockquote-without-marker
 
-Warn when blank lines without carets are found in a blockquote.
+Warn when blank lines without markers (`>`) are found in a blockquote.
 
 ## Install
 
 ```sh
-npm install --save remark-lint-no-blockquote-without-caret
+npm install --save remark-lint-no-blockquote-without-marker
 ```
 
 ## Example
@@ -31,7 +31,7 @@ When this rule is turned on, the following file
 ```
 
 ```text
-2:1: Missing caret in blockquote
+2:1: Missing marker in blockquote
 ```
 
 ## License

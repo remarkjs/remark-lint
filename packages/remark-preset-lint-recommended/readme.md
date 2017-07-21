@@ -53,7 +53,7 @@ This preset configures [remark-lint](https://github.com/wooorm/remark-lint) with
 | [`list-item-bullet-indent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-list-item-bullet-indent)             |              |
 | [`list-item-indent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-list-item-indent)                           | `'tab-size'` |
 | [`no-auto-link-without-protocol`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) |              |
-| [`no-blockquote-without-caret`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-caret)     |              |
+| [`no-blockquote-without-marker`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker)   |              |
 | [`no-literal-urls`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-literal-urls)                             |              |
 | [`ordered-list-marker-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-style)         | `'.'`        |
 | [`hard-break-spaces`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-hard-break-spaces)                         |              |

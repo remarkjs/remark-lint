@@ -210,9 +210,9 @@ Presets can be loaded through the [`preset` setting][config-preset].
 
 <!--presets start-->
 
-*   [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that enforce consistency
-*   [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
-*   [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
+*   [`remark-preset-lint-consistent`](packages/remark-preset-lint-consistent) — rules that enforce consistency
+*   [`remark-preset-lint-markdown-style-guide`](packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
+*   [`remark-preset-lint-recommended`](packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
 
 <!--presets end-->
 

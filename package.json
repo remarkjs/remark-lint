@@ -9,12 +9,12 @@
   ],
   "devDependencies": {
     "browserify": "^14.0.0",
-    "chalk": "^1.1.3",
+    "chalk": "^2.0.0",
     "dox": "^0.9.0",
     "esmangle": "^1.0.0",
-    "lerna": "2.0.0-beta.37",
+    "lerna": "2.0.0",
     "mdast-zone": "^3.0.0",
-    "nyc": "^10.0.0",
+    "nyc": "^11.0.0",
     "parse-author": "^2.0.0",
     "remark": "^8.0.0",
     "remark-cli": "^4.0.0",
@@ -28,7 +28,7 @@
     "trim": "0.0.1",
     "unist-builder": "^1.0.2",
     "unist-util-remove-position": "^1.1.0",
-    "vfile-reporter": "^3.0.0",
+    "vfile-reporter": "^4.0.0",
     "xo": "^0.18.0"
   },
   "scripts": {

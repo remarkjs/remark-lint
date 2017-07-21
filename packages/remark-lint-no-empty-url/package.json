@@ -22,11 +22,8 @@
     "index.js"
   ],
   "dependencies": {
-    "mdast-util-to-string": "^1.0.2",
-    "plur": "^2.1.2",
     "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",
-    "unist-util-position": "^3.0.0",
     "unist-util-visit": "^1.1.1"
   },
   "xo": false

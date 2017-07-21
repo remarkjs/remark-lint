@@ -9,7 +9,7 @@
     "consistent",
     "consistency"
   ],
-  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended",
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent",
   "bugs": "https://github.com/wooorm/remark-lint/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [

@@ -117,6 +117,7 @@ Rules][external].
 *   [`no-literal-urls`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-literal-urls) — warn when URLs without angle-brackets are used
 *   [`no-missing-blank-lines`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-missing-blank-lines) — warn when missing blank lines
 *   [`no-multiple-toplevel-headings`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-multiple-toplevel-headings) — warn when multiple top-level headings are used
+*   [`no-paragraph-content-indent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-paragraph-content-indent) — warn when the content in paragraphs are indented
 *   [`no-reference-like-url`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-reference-like-url) — warn when URLs are also defined identifiers
 *   [`no-shell-dollars`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-shell-dollars) — warn when shell code is prefixed by dollars
 *   [`no-shortcut-reference-image`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-image) — warn when shortcut reference images are used

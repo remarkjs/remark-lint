@@ -1,0 +1,32 @@
+{
+  "name": "remark-lint-linebreak-style",
+  "version": "0.0.0",
+  "description": "remark-lint rule to warn when linebreaks violate a given or detected style",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "linebreak",
+    "line",
+    "break",
+    "unix",
+    "windows",
+    "crlf",
+    "lf"
+  ],
+  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-linebreak-style",
+  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "unified-lint-rule": "^1.0.0",
+    "vfile-location": "^2.0.1"
+  },
+  "xo": false
+}

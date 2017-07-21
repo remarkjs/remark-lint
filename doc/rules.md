@@ -87,6 +87,7 @@ Rules][external].
 *   [`hard-break-spaces`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
 *   [`heading-increment`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
 *   [`heading-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-heading-style) — warn when heading style violates the given style
+*   [`linebreak-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-linebreak-style) — warn when linebreaks violate a given or detected style
 *   [`link-title-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
 *   [`list-item-bullet-indent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
 *   [`list-item-content-indent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation

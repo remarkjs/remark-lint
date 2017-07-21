@@ -283,19 +283,19 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
   var file = vfile(basename);
   var expected = fixture.output;
   var positionless = fixture.config.positionless;
+  var proc = remark().use(rule, setting).data('settings', fixture.config);
 
   file.contents = preprocess(fixture.input || '');
 
   t.plan(positionless ? 1 : 2);
 
-  remark()
-    .use(rule, setting)
-    .data('settings', fixture.config)
-    .processSync(file, function (err) {
-      if (err && err.source !== 'remark-lint') {
-        throw err;
-      }
-    });
+  try {
+    proc.runSync(proc.parse(file), file);
+  } catch (err) {
+    if (err && err.source !== 'remark-lint') {
+      throw err;
+    }
+  }
 
   t.deepEqual(
     normalize(file.messages),
@@ -345,5 +345,9 @@ function normalize(messages) {
 }
 
 function preprocess(value) {
-  return value.replace(/»/g, '\t').replace(/·/g, ' ');
+  return value
+    .replace(/·/g, ' ')
+    .replace(/»/g, '\t')
+    .replace(/␍␊\n?/g, '\r\n')
+    .replace(/␊\n?/g, '\n');
 }

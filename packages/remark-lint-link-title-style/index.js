@@ -123,6 +123,7 @@ function linkTitleStyle(ast, file, preferred) {
     while (last) {
       character = contents.charAt(last);
 
+      /* istanbul ignore if - remark before 8.0.0 */
       if (/\s/.test(character)) {
         last--;
       } else {

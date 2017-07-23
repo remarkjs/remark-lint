@@ -228,33 +228,33 @@ excluding `remark-lint-no-` or `remark-lint-`
 -->
 
 *   [`vhf/remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
-    — Ensure list items are in alphabetical order;
+    — Ensure list items are in alphabetical order
 *   [`RichardLitt/remark-lint-appropriate-heading`](https://github.com/RichardLitt/remark-lint-appropriate-heading)
-    — Check that the top-level heading matches the directory name;
+    — Check that the top-level heading matches the directory name
 *   [`vhf/remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
-    — Ensure a specific number of lines between blocks;
+    — Ensure a specific number of lines between blocks
 *   [`vhf/remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
-    — Ensure links in lists of books follow a standard format;
+    — Ensure links in lists of books follow a standard format
 *   [`Qard/remark-lint-code`](https://github.com/Qard/remark-lint-code)
     — Lint fenced code blocks by corresponding language tags,
-    currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint).
+    currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
 *   [`vhf/remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
-    — Ensure every heading is followed by content (forming a section);
+    — Ensure every heading is followed by content (forming a section)
 *   [`verekia/remark-lint-no-leading-spaces`](https://github.com/verekia/remark-lint-no-leading-spaces)
-    — ⚠️ Warn about leading white-space;
+    — ⚠️ Warn about leading white-space
 *   [`wemake-services/remark-lint-list-item-punctuation`](https://github.com/wemake-services/remark-lint-list-item-punctuation)
-    — ⚠️ check if list items end in periods;
+    — ⚠️ check if list items end in periods
 *   [`chcokr/remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
-    — ⚠️ Ensure sentences are followed by a newline;
+    — ⚠️ Ensure sentences are followed by a newline
 *   [`verekia/remark-lint-no-trailing-spaces`](https://github.com/verekia/remark-lint-no-trailing-spaces)
-    — ⚠️ Warn about trailing white-space;
+    — ⚠️ Warn about trailing white-space
 *   [`vhf/remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
-    — Ensure that the `href` of links has no trailing slash.
+    — Ensure that the `href` of links has no trailing slash
 
 ## Related
 
 *   [`wooorm/remark-validate-links`](https://github.com/wooorm/remark-validate-links)
-    — Validate if links point to existing headings and files in markdown.
+    — Validate if links point to existing headings and files in markdown
 
 ## License
 

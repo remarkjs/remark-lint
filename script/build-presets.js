@@ -1,14 +1,5 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module remark:lint:script:build-indices
- * @fileoverview Creates `index.js` files for rules.
- */
-
 'use strict';
 
-/* Dependencies. */
 var fs = require('fs');
 var path = require('path');
 var u = require('unist-builder');
@@ -22,7 +13,6 @@ var find = require('./util/find');
 
 var root = path.join(process.cwd(), 'packages');
 
-/* Generate. */
 fs
   .readdirSync(root)
   .filter(function (basename) {

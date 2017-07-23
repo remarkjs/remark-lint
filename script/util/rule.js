@@ -1,14 +1,5 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module remark:lint:script:rule
- * @fileoverview Get information for a rule.
- */
-
 'use strict';
 
-/* Dependencies. */
 var fs = require('fs');
 var path = require('path');
 var dox = require('dox');
@@ -16,14 +7,9 @@ var strip = require('strip-indent');
 var trim = require('trim');
 var find = require('./find');
 
-/* Expose. */
 module.exports = ruleSync;
 
-/**
- * Get information for a rule at `filePath`.
- *
- * @param {string} filePath - Path to rule.
- */
+/* Get information for a rule at `filePath`. */
 function ruleSync(filePath) {
   var ruleId = path.basename(filePath);
   var result = {};

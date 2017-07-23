@@ -1,14 +1,5 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module remark:lint:script:build-indices
- * @fileoverview Creates `index.js` files for rules.
- */
-
 'use strict';
 
-/* Dependencies. */
 var fs = require('fs');
 var path = require('path');
 var inspect = require('util').inspect;
@@ -22,7 +13,6 @@ var rule = require('./util/rule');
 
 var root = path.join(process.cwd(), 'packages');
 
-/* Generate. */
 rules(root).forEach(function (basename) {
   var base = path.resolve(root, basename);
   var pack = require(path.join(base, 'package.json'));

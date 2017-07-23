@@ -18,7 +18,16 @@ When this rule is `2`, the following file
 `valid.md` is ok:
 
 ```markdown
-## Bravo
+## Delta
+
+Paragraph.
+```
+
+When this rule is `2`, the following file
+`valid-html.md` is ok:
+
+```markdown
+<h2>Echo</h2>
 
 Paragraph.
 ```
@@ -27,13 +36,26 @@ When this rule is `2`, the following file
 `invalid.md` is **not** ok:
 
 ```markdown
-# Bravo
+# Foxtrot
 
 Paragraph.
 ```
 
 ```text
-1:1-1:8: First heading level should be `2`
+1:1-1:10: First heading level should be `2`
+```
+
+When this rule is `2`, the following file
+`invalid-html.md` is **not** ok:
+
+```markdown
+<h1>Golf</h1>
+
+Paragraph.
+```
+
+```text
+1:1-1:14: First heading level should be `2`
 ```
 
 When this rule is turned on, the following file
@@ -44,18 +66,47 @@ When this rule is turned on, the following file
 ```
 
 When this rule is turned on, the following file
+`valid-html.md` is ok:
+
+```markdown
+<h1>An HTML heading is also seen by this rule.</h1>
+```
+
+When this rule is turned on, the following file
+`valid-delayed.md` is ok:
+
+```markdown
+You can use markdown content before the heading.
+
+<div>Or non-heading HTML</div>
+
+<h1>So the first heading, be it HTML or markdown, is checked</h1>
+```
+
+When this rule is turned on, the following file
 `invalid.md` is **not** ok:
 
 ```markdown
-<!-- Also invalid by default. -->
-
 ## Bravo
 
 Paragraph.
 ```
 
 ```text
-3:1-3:9: First heading level should be `1`
+1:1-1:9: First heading level should be `1`
+```
+
+When this rule is turned on, the following file
+`invalid-html.md` is **not** ok:
+
+```markdown
+<h2>Charlie</h2>
+
+Paragraph.
+```
+
+```text
+1:1-1:17: First heading level should be `1`
 ```
 
 ## License

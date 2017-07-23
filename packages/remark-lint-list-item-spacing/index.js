@@ -12,6 +12,14 @@
  *   the list is required to have blank lines between each item.
  *   And otherwise, there should not be blank lines between items.
  *
+ *   By default, all items must be “loose” (a blank line must be between
+ *   them) if one or more items are multiline (span more than one line).
+ *   Otherwise, the list must be tight (no blank line must be between
+ *   items).
+ *
+ *   If you pass `{checkBlanks: true}`, all items must be “loose” if one or
+ *   more items contain blank lines.  Otherwise, the list must be tight.
+ *
  * @example {"name": "valid.md"}
  *
  *   A tight list:
@@ -52,6 +60,71 @@
  *   5:11-6:1: Missing new line after list item
  *   11:1-12:1: Extraneous new line after list item
  *   13:1-14:1: Extraneous new line after list item
+ *
+ * @example {"name": "valid.md", "setting": {"checkBlanks": true}}
+ *
+ *   A tight list:
+ *
+ *   -   item 1
+ *       - item 1.A
+ *   -   item 2
+ *       > Blockquote
+ *   -   item 3
+ *       ```js
+ *       code()
+ *       ```
+ *
+ *   A loose list:
+ *
+ *   -   item 1
+ *
+ *       - item 1.A
+ *
+ *   -   item 2
+ *
+ *       > Blockquote
+ *
+ *   -   item 3
+ *
+ *       ```js
+ *       code()
+ *       ```
+ *
+ * @example {"name": "invalid.md", "setting": {"checkBlanks": true}, "label": "input"}
+ *
+ *   A tight list:
+ *
+ *   -   item 1
+ *
+ *       - item 1.A
+ *   -   item 2
+ *
+ *       > Blockquote
+ *   -   item 3
+ *
+ *       ```js
+ *       code()
+ *       ```
+ *
+ *   A loose list:
+ *
+ *   -   item 1
+ *       - item 1.A
+ *
+ *   -   item 2
+ *       > Blockquote
+ *
+ *   -   item 3
+ *       ```js
+ *       code()
+ *       ```
+ *
+ * @example {"name": "invalid.md", "setting": {"checkBlanks": true}, "label": "output"}
+ *
+ *   5:15-6:1: Missing new line after list item
+ *   8:17-9:1: Missing new line after list item
+ *   19:1-20:1: Extraneous new line after list item
+ *   22:1-23:1: Extraneous new line after list item
  */
 
 'use strict';
@@ -66,7 +139,13 @@ module.exports = rule('remark-lint:list-item-spacing', listItemSpacing);
 var start = position.start;
 var end = position.end;
 
-function listItemSpacing(ast, file) {
+function listItemSpacing(ast, file, preferred) {
+  var blanks = Boolean(
+    preferred &&
+    typeof preferred === 'object' &&
+    preferred.checkBlanks
+  );
+
   visit(ast, 'list', visitor);
 
   function visitor(node) {
@@ -86,14 +165,39 @@ function listItemSpacing(ast, file) {
     items.forEach(warn);
 
     function infer(item) {
+      var fn = blanks ? inferBlankLine : inferMultiline;
+
+      if (fn(item)) {
+        isTightList = false;
+      }
+    }
+
+    function inferBlankLine(item) {
+      var children = item.children;
+      var length = children.length;
+      var index = 0;
+      var child = children[index];
+      var next;
+
+      while (++index < length) {
+        next = children[index];
+
+        /* All children in `listItem`s are block. */
+        if ((start(next).line - end(child).line) > 1) {
+          return true;
+        }
+
+        child = next;
+      }
+
+      return false;
+    }
+
+    function inferMultiline(item) {
       var content = item.children;
       var head = content[0];
       var tail = content[content.length - 1];
-      var isLoose = (end(tail).line - start(head).line) > 0;
-
-      if (isLoose) {
-        isTightList = false;
-      }
+      return (end(tail).line - start(head).line) > 0;
     }
 
     function warn(item, index) {

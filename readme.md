@@ -238,8 +238,14 @@ excluding `remark-lint-no-` or `remark-lint-`
 *   [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
     — Lint fenced code blocks by corresponding language tags,
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
+*   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
+    — Check that external links are alive
+*   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
+    — Enforce a limit of emoji per paragraph
 *   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
     — Ensure every heading is followed by content (forming a section)
+*   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
+    — Ensure headings have the appropriate length
 *   [`remark-lint-no-leading-spaces`](https://github.com/verekia/remark-lint-no-leading-spaces)
     — ⚠️ Warn about leading white-space
 *   [`remark-lint-list-item-punctuation`](https://github.com/wemake-services/remark-lint-list-item-punctuation)
@@ -250,6 +256,8 @@ excluding `remark-lint-no-` or `remark-lint-`
     — ⚠️ Warn about trailing white-space
 *   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash
+*   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
+    — Wrapper for write-good
 
 ## Related
 

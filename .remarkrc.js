@@ -1,4 +1,4 @@
-exports.settings = {bullet: '*'};
+exports.settings = {bullet: '*', paddedTable: false};
 
 exports.plugins = [
   require('./packages/remark-preset-lint-recommended'),

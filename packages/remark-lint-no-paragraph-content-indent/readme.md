@@ -27,6 +27,12 @@ Charlie.
 
 > Golf
 > Hotel.
+
+`india()`
+juliett.
+
+-   `kilo()`
+    lima.
 ```
 
 When this rule is turned on, the following file
@@ -46,6 +52,9 @@ Bravo
 
 > Golf
 > ·Hotel.
+
+-   `kilo()`
+    ·lima.
 ```
 
 ```text
@@ -54,6 +63,7 @@ Bravo
 7:3: Expected no indentation in paragraph content
 10:5: Expected no indentation in paragraph content
 13:3: Expected no indentation in paragraph content
+16:5: Expected no indentation in paragraph content
 ```
 
 ## License

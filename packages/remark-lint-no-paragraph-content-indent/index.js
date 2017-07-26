@@ -20,6 +20,14 @@
  *   > Golf
  *   > Hotel.
  *
+ *   `india()`
+ *   juliett.
+ *
+ *   -   `kilo()`
+ *       lima.
+ *
+ *   -   `mike()` - november.
+ *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   <!--Note: `·` represents ` `-->
@@ -36,6 +44,12 @@
  *   > Golf
  *   > ·Hotel.
  *
+ *   `india()`
+ *   ·juliett.
+ *
+ *   -   `kilo()`
+ *       ·lima.
+ *
  * @example {"name": "invalid.md", "label": "output"}
  *
  *   3:1: Expected no indentation in paragraph content
@@ -43,6 +57,8 @@
  *   7:3: Expected no indentation in paragraph content
  *   10:5: Expected no indentation in paragraph content
  *   13:3: Expected no indentation in paragraph content
+ *   16:1: Expected no indentation in paragraph content
+ *   19:5: Expected no indentation in paragraph content
  */
 
 'use strict';
@@ -59,34 +75,36 @@ function noParagraphContentIndent(tree, file) {
   visit(tree, 'paragraph', visitor);
 
   function visitor(node) {
-    var prev;
+    var first = true;
 
-    visit(node, 'text', check);
+    visit(node, check);
 
-    function check(node) {
-      var value = node.value;
+    function check(node, pos, parent) {
       var start = position.start(node);
-      var offset = start.column;
-      var index = value.indexOf('\n');
-      var line = 0;
-      var cumulative = 0;
+      var value;
+      var index;
+      var line;
+      var cumulative;
       var indent;
 
-      if (!start.line || !node.position.indent) {
+      if (!('value' in node)) {
         return;
       }
 
-      if (
-        (
-          prev === undefined ||
-          (prev && prev.value.charAt(prev.value.length - 1) === '\n')
-        ) &&
-        ws(value.charAt(0))
-      ) {
-        file.message(message, start);
+      if (!start.line || !node.position.indent) {
+        first = false;
+        return;
       }
 
-      prev = node;
+      if (first === true && ws(node.value.charAt(0))) {
+        file.message(message, node.position.start);
+      }
+
+      first = false;
+      value = node.value;
+      index = value.indexOf('\n');
+      line = 0;
+      cumulative = 0;
       indent = node.position.indent;
 
       while (index !== -1) {
@@ -97,15 +115,22 @@ function noParagraphContentIndent(tree, file) {
             message,
             {
               line: start.line + line + 1,
-              column: offset,
+              column: indent[line],
               offset: start.offset + index + cumulative
             }
           );
         }
 
         index = value.indexOf('\n', index + 1);
-        offset = indent[line];
         line++;
+      }
+
+      if (value.charAt(value.length - 1) === '\n') {
+        node = head(parent.children[pos + 1]);
+
+        if (node && ws(node.value.charAt(0))) {
+          file.message(message, node.position.start);
+        }
       }
     }
   }
@@ -113,4 +138,18 @@ function noParagraphContentIndent(tree, file) {
 
 function ws(character) {
   return character === ' ' || character === '\t';
+}
+
+function head(node) {
+  while (node && 'children' in node) {
+    node = node.children[0];
+  }
+
+  /* istanbul ignore if - shouldn’t happen by default, could happen for void
+   * nodes though. */
+  if (!node || !('value' in node)) {
+    return null;
+  }
+
+  return node;
 }

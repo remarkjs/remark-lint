@@ -33,6 +33,12 @@ juliett.
 
 -   `kilo()`
     lima.
+
+-   `mike()` - november.
+
+![image]() text
+
+![image reference][] text
 ```
 
 When this rule is turned on, the following file
@@ -53,8 +59,15 @@ Bravo
 > Golf
 > ·Hotel.
 
+`india()`
+·juliett.
+
 -   `kilo()`
     ·lima.
+
+![ image]() text
+
+![ image reference][] text
 ```
 
 ```text
@@ -63,7 +76,10 @@ Bravo
 7:3: Expected no indentation in paragraph content
 10:5: Expected no indentation in paragraph content
 13:3: Expected no indentation in paragraph content
-16:5: Expected no indentation in paragraph content
+16:1: Expected no indentation in paragraph content
+19:5: Expected no indentation in paragraph content
+21:1: Expected no indentation in paragraph content
+23:1: Expected no indentation in paragraph content
 ```
 
 ## License

@@ -28,6 +28,10 @@
  *
  *   -   `mike()` - november.
  *
+ *   ![image]() text
+ *
+ *   ![image reference][] text
+ *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   <!--Note: `·` represents ` `-->
@@ -50,6 +54,10 @@
  *   -   `kilo()`
  *       ·lima.
  *
+ *   ![ image]() text
+ *
+ *   ![ image reference][] text
+ *
  * @example {"name": "invalid.md", "label": "output"}
  *
  *   3:1: Expected no indentation in paragraph content
@@ -59,6 +67,8 @@
  *   13:3: Expected no indentation in paragraph content
  *   16:1: Expected no indentation in paragraph content
  *   19:5: Expected no indentation in paragraph content
+ *   21:1: Expected no indentation in paragraph content
+ *   23:1: Expected no indentation in paragraph content
  */
 
 'use strict';
@@ -87,7 +97,7 @@ function noParagraphContentIndent(tree, file) {
       var cumulative;
       var indent;
 
-      if (!('value' in node)) {
+      if (!applicable(node)) {
         return;
       }
 
@@ -96,12 +106,12 @@ function noParagraphContentIndent(tree, file) {
         return;
       }
 
-      if (first === true && ws(node.value.charAt(0))) {
+      if (first === true && ws(toString(node).charAt(0))) {
         file.message(message, node.position.start);
       }
 
       first = false;
-      value = node.value;
+      value = toString(node);
       index = value.indexOf('\n');
       line = 0;
       cumulative = 0;
@@ -128,7 +138,7 @@ function noParagraphContentIndent(tree, file) {
       if (value.charAt(value.length - 1) === '\n') {
         node = head(parent.children[pos + 1]);
 
-        if (node && ws(node.value.charAt(0))) {
+        if (node && ws(toString(node).charAt(0))) {
           file.message(message, node.position.start);
         }
       }
@@ -147,9 +157,17 @@ function head(node) {
 
   /* istanbul ignore if - shouldn’t happen by default, could happen for void
    * nodes though. */
-  if (!node || !('value' in node)) {
+  if (!node || !applicable(node)) {
     return null;
   }
 
   return node;
+}
+
+function applicable(node) {
+  return 'value' in node || 'alt' in node;
+}
+
+function toString(node) {
+  return 'value' in node ? node.value : node.alt;
 }

@@ -150,7 +150,7 @@ This preset configures [remark-lint](https://github.com/wooorm/remark-lint) with
 | [`no-multiple-toplevel-headings`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-multiple-toplevel-headings) |  |
 | [`maximum-heading-length`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-maximum-heading-length) |  |
 | [`no-heading-punctuation`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-heading-punctuation) | `':.'` |
-| [`blockquote-indentation`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) | `1` |
+| [`blockquote-indentation`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) | `2` |
 | [`no-blockquote-without-marker`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) |  |
 | [`unordered-list-marker-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-unordered-list-marker-style) | `'-'` |
 | [`ordered-list-marker-style`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-style) | `'.'` |

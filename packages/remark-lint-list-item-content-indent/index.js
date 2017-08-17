@@ -8,13 +8,13 @@
  *
  * @example {"name": "valid.md"}
  *
- *   1. [x] Alpha
- *      1. Bravo
+ *   1.·[x] Alpha
+ *   ···1. Bravo
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   1. [x] Charlie
- *       1. Delta
+ *   1.·[x] Charlie
+ *   ····1. Delta
  *
  * @example {"name": "invalid.md", "label": "output"}
  *

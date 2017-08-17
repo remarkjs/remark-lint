@@ -13,6 +13,7 @@ var lint = require('./packages/remark-lint');
 var noHeadingPunctuation = require('./packages/remark-lint-no-heading-punctuation');
 var noMultipleToplevelHeadings = require('./packages/remark-lint-no-multiple-toplevel-headings');
 var finalNewline = require('./packages/remark-lint-final-newline');
+var chars = require('./script/characters');
 
 test('core', function (t) {
   t.test('should work', function (st) {
@@ -345,9 +346,9 @@ function normalize(messages) {
 }
 
 function preprocess(value) {
-  return value
-    .replace(/·/g, ' ')
-    .replace(/»/g, '\t')
-    .replace(/␍␊\n?/g, '\r\n')
-    .replace(/␊\n?/g, '\n');
+  chars.forEach(function (char) {
+    value = value.replace(char.in, char.out);
+  });
+
+  return value;
 }

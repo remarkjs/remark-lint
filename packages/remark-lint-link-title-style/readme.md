@@ -4,95 +4,167 @@
 
 Warn when link and definition titles occur with incorrect quotes.
 
-Options: `string`, either `'consistent'`, `'"'`, `'\''`, or
-`'()'`, default: `'consistent'`.
+Options: `'consistent'`, `'"'`, `'\''`, or `'()'`, default: `'consistent'`.
 
-The default value, `consistent`, detects the first used quote
-style, and will warn when a subsequent titles use a different
-style.
+`'consistent'` detects the first used quote style and warns when subsequent
+titles use different styles.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-link-title-style
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `'"'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'"'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 [Example](http://example.com "Example Domain")
 [Example](http://example.com "Example Domain")
 ```
 
-When this rule is `'"'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'"'`.
+
+###### In
 
 ```markdown
 [Example]: http://example.com 'Example Domain'
 ```
 
+###### Out
+
 ```text
 1:47: Titles should use `"` as a quote
 ```
 
-When this rule is `'\''`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'\''`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 ![Example](http://example.com/image.png 'Example Domain')
 ![Example](http://example.com/image.png 'Example Domain')
 ```
 
-When this rule is `'()'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'()'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 [Example](http://example.com (Example Domain) )
 [Example](http://example.com (Example Domain) )
 ```
 
-When this rule is `'()'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'()'`.
+
+###### In
 
 ```markdown
-<!--Always invalid-->
-
 [Example](http://example.com (Example Domain))
 [Example](http://example.com 'Example Domain')
 ```
 
+###### Out
+
 ```text
-4:46: Titles should use `()` as a quote
+2:46: Titles should use `()` as a quote
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+##### `invalid.md`
+
+###### In
 
 ```markdown
-<!--Always invalid-->
-
 [Example](http://example.com "Example Domain")
 [Example](http://example.com#without-title)
 [Example](http://example.com 'Example Domain')
 ```
 
+###### Out
+
 ```text
-5:46: Titles should use `"` as a quote
+3:46: Titles should use `"` as a quote
 ```
 
-When `'.'` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `'.'`.
+
+###### Out
 
 ```text
 1:1: Invalid link title style marker `.`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-link-title-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-link-title-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-link-title-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-link-title-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

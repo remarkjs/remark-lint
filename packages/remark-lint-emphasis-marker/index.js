@@ -6,12 +6,10 @@
  * @fileoverview
  *   Warn for violating emphasis markers.
  *
- *   Options: `string`, either `'consistent'`, `'*'`, or `'_'`,
- *   default: `'consistent'`.
+ *   Options: `'consistent'`, `'*'`, or `'_'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used emphasis
- *   style, and will warn when a subsequent emphasis uses a different
- *   style.
+ *   `'consistent'` detects the first used emphasis style and warns when
+ *   subsequent emphasis use different styles.
  *
  * @example {"setting": "*", "name": "valid.md"}
  *
@@ -37,16 +35,14 @@
  *
  *   1:1-1:6: Emphasis should use `_` as a marker
  *
- * @example {"setting": "consistent", "name": "invalid.md", "label": "input"}
- *
- *   <!-- This is never valid -->
+ * @example {"name": "invalid.md", "label": "input"}
  *
  *   *foo*
  *   _bar_
  *
- * @example {"setting": "consistent", "name": "invalid.md", "label": "output"}
+ * @example {"name": "invalid.md", "label": "output"}
  *
- *   4:1-4:6: Emphasis should use `*` as a marker
+ *   2:1-2:6: Emphasis should use `*` as a marker
  *
  * @example {"setting": "invalid", "name": "invalid.md", "label": "output", "config": {"positionless": true}}
  *

@@ -7,18 +7,29 @@ Warn when lines are too long.
 Options: `number`, default: `80`.
 
 Ignores nodes which cannot be wrapped, such as headings, tables,
-code, link, images, and definitions.
+code, and definitions.
 
-## Install
+Ignores nodes which cannot be wrapped, such as headings, tables,
+code, and definitions.
 
-```sh
-npm install --save remark-lint-maximum-line-length
-```
+URLs in images and links are okay if they occur at or after the wrap,
+except when there’s white-space after them.
+
+## Presets
+
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `80`, the following file
-`invalid.md` is **not** ok:
+##### `invalid.md`
+
+When configured with `80`.
+
+###### In
 
 ```markdown
 This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -31,14 +42,17 @@ And this one is also very wrong: because the link starts aaaaaaafter the column:
 <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables> and such.
 ```
 
+###### Out
+
 ```text
 4:86: Line must be at most 80 characters
 6:99: Line must be at most 80 characters
 8:97: Line must be at most 80 characters
 ```
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
@@ -65,6 +79,53 @@ The following is also fine, because there is no white-space.
 In addition, definitions are also fine:
 
 [foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>
+```
+
+###### Out
+
+No messages.
+
+## Install
+
+```sh
+npm install remark-lint-maximum-line-length
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-maximum-line-length",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-maximum-line-length readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-maximum-line-length'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -4,27 +4,30 @@
 
 Warn when a heading does not conform to a given style.
 
-Options: `string`, either `'consistent'`, `'atx'`, `'atx-closed'`,
-or `'setext'`, default: `'consistent'`.
+Options: `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`,
+default: `'consistent'`.
 
-The default value, `consistent`, detects the first used heading
-style, and will warn when a subsequent heading uses a different
-style.
+`'consistent'` detects the first used heading style and warns when
+subsequent headings use different styles.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-heading-style
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `'atx'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'atx'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 # Alpha
 
 ## Bravo
@@ -32,12 +35,17 @@ When this rule is `'atx'`, the following file
 ### Charlie
 ```
 
-When this rule is `'atx-closed'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'atx-closed'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 # Delta ##
 
 ## Echo ##
@@ -45,12 +53,17 @@ When this rule is `'atx-closed'`, the following file
 ### Foxtrot ###
 ```
 
-When this rule is `'setext'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'setext'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 Golf
 ====
 
@@ -60,12 +73,15 @@ Hotel
 ### India
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
-<!--Always invalid.-->
-
 Juliett
 =======
 
@@ -74,9 +90,54 @@ Juliett
 ### Lima ###
 ```
 
+###### Out
+
 ```text
-6:1-6:8: Headings should use setext
-8:1-8:13: Headings should use setext
+4:1-4:8: Headings should use setext
+6:1-6:13: Headings should use setext
+```
+
+## Install
+
+```sh
+npm install remark-lint-heading-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-heading-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-heading-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-heading-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -4,29 +4,35 @@
 
 Warn when hard tabs are used instead of spaces.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-tabs
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
 Foo Bar
 
-    Foo
+····Foo
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
+
+Note: `»` represents a tab.
 
 ```markdown
-<!-- Note: the guillemets represent tabs -->
-
 »Here's one before a code block.
 
 Here's a tab:», and here is another:».
@@ -42,16 +48,61 @@ And this is in `inline»code`.
 And this is a tab as the last character.»
 ```
 
+###### Out
+
 ```text
-3:1: Use spaces instead of hard-tabs
-5:14: Use spaces instead of hard-tabs
-5:37: Use spaces instead of hard-tabs
-7:23: Use spaces instead of hard-tabs
+1:1: Use spaces instead of hard-tabs
+3:14: Use spaces instead of hard-tabs
+3:37: Use spaces instead of hard-tabs
+5:23: Use spaces instead of hard-tabs
+7:2: Use spaces instead of hard-tabs
 9:2: Use spaces instead of hard-tabs
-11:2: Use spaces instead of hard-tabs
-13:1: Use spaces instead of hard-tabs
-13:4: Use spaces instead of hard-tabs
-15:41: Use spaces instead of hard-tabs
+11:1: Use spaces instead of hard-tabs
+11:4: Use spaces instead of hard-tabs
+13:41: Use spaces instead of hard-tabs
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-tabs
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-tabs",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-tabs readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-tabs'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

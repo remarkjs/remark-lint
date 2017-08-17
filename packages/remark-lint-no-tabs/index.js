@@ -10,11 +10,9 @@
  *
  *   Foo Bar
  *
- *       Foo
+ *   ····Foo
  *
  * @example {"name": "invalid.md", "label": "input", "config": {"positionless": true}}
- *
- *   <!-- Note: the guillemets represent tabs -->
  *
  *   »Here's one before a code block.
  *
@@ -32,15 +30,15 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   3:1: Use spaces instead of hard-tabs
- *   5:14: Use spaces instead of hard-tabs
- *   5:37: Use spaces instead of hard-tabs
- *   7:23: Use spaces instead of hard-tabs
+ *   1:1: Use spaces instead of hard-tabs
+ *   3:14: Use spaces instead of hard-tabs
+ *   3:37: Use spaces instead of hard-tabs
+ *   5:23: Use spaces instead of hard-tabs
+ *   7:2: Use spaces instead of hard-tabs
  *   9:2: Use spaces instead of hard-tabs
- *   11:2: Use spaces instead of hard-tabs
- *   13:1: Use spaces instead of hard-tabs
- *   13:4: Use spaces instead of hard-tabs
- *   15:41: Use spaces instead of hard-tabs
+ *   11:1: Use spaces instead of hard-tabs
+ *   11:4: Use spaces instead of hard-tabs
+ *   13:41: Use spaces instead of hard-tabs
  */
 
 'use strict';

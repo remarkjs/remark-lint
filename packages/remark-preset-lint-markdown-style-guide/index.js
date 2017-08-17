@@ -10,15 +10,15 @@
  *   ###### `space-sentence`
  *
  *   Both `space-sentence:1` and `space-sentence:2` are not supported
- *   by **remark-lint**.  You could set-up
- *   [remark-retext](https://github.com/wooorm/remark-retext) with
- *   [retext-sentence-spacing](https://github.com/wooorm/retext-sentence-spacing)
+ *   by `remark-lint`.  You could set-up
+ *   [`remark-retext`](https://github.com/wooorm/remark-retext) with
+ *   [`retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
  *   to check this though.
  *
  *   ###### `wrap`
  *
  *   `wrap:inner-sentence` and `wrap:sentence` are not supported by
- *   **remark-lint**.
+ *   `remark-lint`.
  *
  *   The default is `wrap:space`.  To use `wrap:no`, turn off
  *   `remark-lint-maximum-line-length` like so:
@@ -26,8 +26,8 @@
  *   ```diff
  *    "plugins": [
  *      ...
- *      "remark-preset-lint-markdown-style-guide",
- *   +  ["remark-lint-maximum-line-length", false]
+ *      "preset-lint-markdown-style-guide",
+ *   +  ["lint-maximum-line-length", false]
  *      ...
  *    ]
  *   ```
@@ -40,8 +40,8 @@
  *   ```diff
  *    "plugins": [
  *      ...
- *      "remark-preset-lint-markdown-style-guide",
- *   +  ["remark-lint-heading-style", "setext"]
+ *      "preset-lint-markdown-style-guide",
+ *   +  ["lint-heading-style", "setext"]
  *      ...
  *    ]
  *   ```
@@ -55,8 +55,8 @@
  *   ```diff
  *    "plugins": [
  *      ...
- *      "remark-preset-lint-markdown-style-guide",
- *   +  ["remark-lint-unordered-list-marker-style", "*"]
+ *      "preset-lint-markdown-style-guide",
+ *   +  ["lint-unordered-list-marker-style", "*"]
  *      ...
  *    ]
  *   ```
@@ -69,8 +69,8 @@
  *   ```diff
  *    "plugins": [
  *      ...
- *      "remark-preset-lint-markdown-style-guide",
- *   +  ["remark-lint-list-item-indent", "space"]
+ *      "preset-lint-markdown-style-guide",
+ *   +  ["lint-list-item-indent", "space"]
  *      ...
  *    ]
  *   ```
@@ -83,8 +83,8 @@
  *   ```diff
  *    "plugins": [
  *      ...
- *      "remark-preset-lint-markdown-style-guide",
- *   +  ["remark-lint-code-block-style", "indented"]
+ *      "preset-lint-markdown-style-guide",
+ *   +  ["lint-code-block-style", "indented"]
  *      ...
  *    ]
  *   ```

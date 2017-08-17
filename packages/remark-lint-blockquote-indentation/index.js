@@ -4,16 +4,14 @@
  * @license MIT
  * @module blockquote-indentation
  * @fileoverview
- *   Warn when blockquotes are either indented too much or too little.
+ *   Warn when blockquotes are indented too much or too little.
  *
- *   Options: `number`, default: `'consistent'`.
+ *   Options: `number` or `'consistent'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used indentation
- *   and will warn when other blockquotes use a different indentation.
+ *   `'consistent'` detects the first used indentation and will warn when
+ *   other blockquotes use a different indentation.
  *
  * @example {"name": "valid.md", "setting": 4}
- *
- *   <!--This file is also valid by default-->
  *
  *   >   Hello
  *
@@ -22,8 +20,6 @@
  *   >   World
  *
  * @example {"name": "valid.md", "setting": 2}
- *
- *   <!--This file is also valid by default-->
  *
  *   > Hello
  *

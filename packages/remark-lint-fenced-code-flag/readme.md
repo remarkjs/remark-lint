@@ -2,90 +2,166 @@
 
 # remark-lint-fenced-code-flag
 
-Warn when fenced code blocks occur without language flag.
+Check fenced code-block flags.
 
-Options: `Array.<string>` or `Object`.
+Options: `Array.<string>` or `Object`, optional.
 
-Providing an array, is a shortcut for just providing the `flags`
-property on the object.
+Providing an array is as passing `{flags: Array}`.
 
-The object can have an array of flags which are deemed valid.
-In addition it can have the property `allowEmpty` (`boolean`)
-which signifies whether or not to warn for fenced code-blocks without
-languge flags.
+The object can have an array of `'flags'` which are deemed valid.
+In addition it can have the property `allowEmpty` (`boolean`, default:
+`false`) which signifies whether or not to warn for fenced code-blocks
+without language flags.
+
+## Presets
+
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
+
+## Example
+
+##### `valid.md`
+
+###### In
+
+````markdown
+        ```alpha
+        bravo();
+        ```
+````
+
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
+
+````markdown
+        ```
+        alpha();
+        ```
+````
+
+###### Out
+
+```text
+1:1-3:4: Missing code-language flag
+```
+
+##### `valid.md`
+
+When configured with `{ allowEmpty: true }`.
+
+###### In
+
+````markdown
+        ```
+        alpha();
+        ```
+````
+
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `{ allowEmpty: false }`.
+
+###### In
+
+````markdown
+        ```
+        alpha();
+        ```
+````
+
+###### Out
+
+```text
+1:1-3:4: Missing code-language flag
+```
+
+##### `valid.md`
+
+When configured with `[ 'alpha' ]`.
+
+###### In
+
+````markdown
+        ```alpha
+        bravo();
+        ```
+````
+
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `[ 'charlie' ]`.
+
+###### In
+
+````markdown
+        ```alpha
+        bravo();
+        ```
+````
+
+###### Out
+
+```text
+1:1-3:4: Invalid code-language flag
+```
 
 ## Install
 
 ```sh
-npm install --save remark-lint-fenced-code-flag
+npm install remark-lint-fenced-code-flag
 ```
 
-## Example
+## Usage
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+You probably want to use it on the CLI through a config file:
 
-````markdown
-        ```alpha
-        bravo();
-        ```
-````
-
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
-
-````markdown
-        ```
-        alpha();
-        ```
-````
-
-```text
-1:1-3:4: Missing code-language flag
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-fenced-code-flag",
+     ...
+   ]
+ }
+ ...
 ```
 
-When this rule is `{ allowEmpty: true }`, the following file
-`valid.md` is ok:
+Or use it on the CLI directly
 
-````markdown
-        ```
-        alpha();
-        ```
-````
-
-When this rule is `{ allowEmpty: false }`, the following file
-`invalid.md` is **not** ok:
-
-````markdown
-        ```
-        alpha();
-        ```
-````
-
-```text
-1:1-3:4: Missing code-language flag
+```sh
+remark -u lint -u lint-fenced-code-flag readme.md
 ```
 
-When this rule is `[ 'alpha' ]`, the following file
-`valid.md` is ok:
+Or use this on the API:
 
-````markdown
-        ```alpha
-        bravo();
-        ```
-````
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
 
-When this rule is `[ 'charlie' ]`, the following file
-`invalid.md` is **not** ok:
-
-````markdown
-        ```alpha
-        bravo();
-        ```
-````
-
-```text
-1:1-3:4: Invalid code-language flag
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-fenced-code-flag'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -12,7 +12,7 @@
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   [example    domain]: http://example.com "Example Domain"
+ *   [example····domain]: http://example.com "Example Domain"
  *
  * @example {"name": "invalid.md", "label": "output"}
  *

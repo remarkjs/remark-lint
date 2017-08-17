@@ -4,17 +4,16 @@
  * @license MIT
  * @module fenced-code-flag
  * @fileoverview
- *   Warn when fenced code blocks occur without language flag.
+ *   Check fenced code-block flags.
  *
- *   Options: `Array.<string>` or `Object`.
+ *   Options: `Array.<string>` or `Object`, optional.
  *
- *   Providing an array, is a shortcut for just providing the `flags`
- *   property on the object.
+ *   Providing an array is as passing `{flags: Array}`.
  *
- *   The object can have an array of flags which are deemed valid.
- *   In addition it can have the property `allowEmpty` (`boolean`)
- *   which signifies whether or not to warn for fenced code-blocks without
- *   languge flags.
+ *   The object can have an array of `'flags'` which are deemed valid.
+ *   In addition it can have the property `allowEmpty` (`boolean`, default:
+ *   `false`) which signifies whether or not to warn for fenced code-blocks
+ *   without language flags.
  *
  * @example {"name": "valid.md"}
  *

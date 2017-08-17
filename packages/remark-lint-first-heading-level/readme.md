@@ -6,16 +6,17 @@ Warn when the first heading has a level other than a specified value.
 
 Options: `number`, default: `1`.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-first-heading-level
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is `2`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `2`.
+
+###### In
 
 ```markdown
 ## Delta
@@ -23,8 +24,15 @@ When this rule is `2`, the following file
 Paragraph.
 ```
 
-When this rule is `2`, the following file
-`valid-html.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid-html.md`
+
+When configured with `2`.
+
+###### In
 
 ```markdown
 <h2>Echo</h2>
@@ -32,8 +40,15 @@ When this rule is `2`, the following file
 Paragraph.
 ```
 
-When this rule is `2`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `2`.
+
+###### In
 
 ```markdown
 # Foxtrot
@@ -41,12 +56,17 @@ When this rule is `2`, the following file
 Paragraph.
 ```
 
+###### Out
+
 ```text
 1:1-1:10: First heading level should be `2`
 ```
 
-When this rule is `2`, the following file
-`invalid-html.md` is **not** ok:
+##### `invalid-html.md`
+
+When configured with `2`.
+
+###### In
 
 ```markdown
 <h1>Golf</h1>
@@ -54,26 +74,39 @@ When this rule is `2`, the following file
 Paragraph.
 ```
 
+###### Out
+
 ```text
 1:1-1:14: First heading level should be `2`
 ```
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 # The default is to expect a level one heading
 ```
 
-When this rule is turned on, the following file
-`valid-html.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid-html.md`
+
+###### In
 
 ```markdown
 <h1>An HTML heading is also seen by this rule.</h1>
 ```
 
-When this rule is turned on, the following file
-`valid-delayed.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid-delayed.md`
+
+###### In
 
 ```markdown
 You can use markdown content before the heading.
@@ -83,8 +116,13 @@ You can use markdown content before the heading.
 <h1>So the first heading, be it HTML or markdown, is checked</h1>
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 ## Bravo
@@ -92,12 +130,15 @@ When this rule is turned on, the following file
 Paragraph.
 ```
 
+###### Out
+
 ```text
 1:1-1:9: First heading level should be `1`
 ```
 
-When this rule is turned on, the following file
-`invalid-html.md` is **not** ok:
+##### `invalid-html.md`
+
+###### In
 
 ```markdown
 <h2>Charlie</h2>
@@ -105,8 +146,53 @@ When this rule is turned on, the following file
 Paragraph.
 ```
 
+###### Out
+
 ```text
 1:1-1:17: First heading level should be `1`
+```
+
+## Install
+
+```sh
+npm install remark-lint-first-heading-level
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-first-heading-level",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-first-heading-level readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-first-heading-level'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

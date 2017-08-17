@@ -2,55 +2,105 @@
 
 # remark-lint-no-file-name-irregular-characters
 
-Warn when file names contain irregular characters: characters other
-than alpha-numericals, dashes, and dots (full-stops).
+Warn when file names contain irregular characters: characters other than
+alpha-numericals, dashes, and dots (full-stops).
 
 Options: `RegExp` or `string`, default: `'\\.a-zA-Z0-9-'`.
 
 If a string is given, it will be wrapped in
 `new RegExp('[^' + preferred + ']')`.
 
-Any match by the wrapped or given expressions triggers a
-warning.
+Any match by the wrapped or given expressions creates a message.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-file-name-irregular-characters
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`plug-ins.md` is ok:
+##### `plug-ins.md`
 
-```markdown
+###### Out
 
-```
+No messages.
 
-When this rule is turned on, the following file
-`plugins.md` is ok:
+##### `plugins.md`
 
-```markdown
+###### Out
 
-```
+No messages.
 
-When turned on is passed in, the following error is given:
+##### `plug_ins.md`
+
+###### Out
 
 ```text
 1:1: Do not use `_` in a file name
 ```
 
-When turned on is passed in, the following error is given:
+##### `plug ins.md`
+
+###### Out
 
 ```text
 1:1: Do not use ` ` in a file name
 ```
 
-When `'\\.a-z0-9'` is passed in, the following error is given:
+##### `README.md`
+
+When configured with `'\\.a-z0-9'`.
+
+###### Out
 
 ```text
 1:1: Do not use `R` in a file name
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-file-name-irregular-characters
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-file-name-irregular-characters",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-file-name-irregular-characters readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-file-name-irregular-characters'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

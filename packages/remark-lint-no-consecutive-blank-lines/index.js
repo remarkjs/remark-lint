@@ -10,7 +10,7 @@
  * @example {"name": "valid.md"}
  *
  *   Foo...
- *
+ *   ␊
  *   ...Bar.
  *
  * @example {"name": "valid-for-code.md"}
@@ -18,15 +18,15 @@
  *   Paragraph.
  *
  *   *   List
- *
- *
+ *   ␊
+ *   ␊
  *       bravo();
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   Foo...
- *
- *
+ *   ␊
+ *   ␊
  *   ...Bar.
  *
  * @example {"name": "invalid.md", "label": "output"}

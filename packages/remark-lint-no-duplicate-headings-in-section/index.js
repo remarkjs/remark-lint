@@ -4,9 +4,8 @@
  * @license MIT
  * @module no-duplicate-headings-in-section
  * @fileoverview
- *   Warn when duplicate headings are found,
- *   but only when on the same level, “in”
- *   the same section.
+ *   Warn when duplicate headings are found, but only when on the same level,
+ *   “in” the same section.
  *
  * @example {"name": "valid.md"}
  *

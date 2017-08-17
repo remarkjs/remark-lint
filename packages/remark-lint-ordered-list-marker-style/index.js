@@ -7,19 +7,14 @@
  *   Warn when the list-item marker style of ordered lists violate a given
  *   style.
  *
- *   Options: `string`, either `'consistent'`, `'.'`, or `')'`,
- *   default: `'consistent'`.
+ *   Options: `'consistent'`, `'.'`, or `')'`, default: `'consistent'`.
  *
- *   Note that `)` is only supported in CommonMark.
+ *   `'consistent'` detects the first used list style and warns when subsequent
+ *   lists use different styles.
  *
- *   The default value, `consistent`, detects the first used list
- *   style, and will warn when a subsequent list uses a different
- *   style.
+ *   Note: `)` is only supported in CommonMark.
  *
  * @example {"name": "valid.md"}
- *
- *   By default (`consistent`), if one style used throughout the file,
- *   that’s OK.
  *
  *   1.  Foo
  *
@@ -38,8 +33,7 @@
  *
  * @example {"name": "valid.md", "setting": ")", "config": {"commonmark": true}}
  *
- *   <!-- This is also valid when `consistent`.
- *        But it does require commonmark. -->
+ *   <!-- This requires commonmark. -->
  *
  *   1)  Foo
  *

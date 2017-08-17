@@ -6,12 +6,10 @@
  * @fileoverview
  *   Warn for violating strong markers.
  *
- *   Options: `string`, either `'consistent'`, `'*'`, or `'_'`,
- *   default: `'consistent'`.
+ *   Options: `'consistent'`, `'*'`, or `'_'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used strong
- *   style, and will warn when a subsequent strong uses a different
- *   style.
+ *   `'consistent'` detects the first used strong style and warns when subsequent
+ *   strongs use different styles.
  *
  * @example {"name": "valid.md"}
  *

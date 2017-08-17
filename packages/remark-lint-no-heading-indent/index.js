@@ -8,8 +8,6 @@
  *
  * @example {"name": "valid.md"}
  *
- *   <!-- Note: the middle-dots represent spaces -->
- *
  *   #·Hello world
  *
  *   Foo
@@ -21,8 +19,6 @@
  *   =====
  *
  * @example {"name": "invalid.md", "label": "input"}
- *
- *   <!-- Note: the middle-dots represent spaces -->
  *
  *   ···# Hello world
  *
@@ -36,10 +32,10 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   3:4: Remove 3 spaces before this heading
- *   5:2: Remove 1 space before this heading
- *   8:2: Remove 1 space before this heading
- *   10:4: Remove 3 spaces before this heading
+ *   1:4: Remove 3 spaces before this heading
+ *   3:2: Remove 1 space before this heading
+ *   6:2: Remove 1 space before this heading
+ *   8:4: Remove 3 spaces before this heading
  */
 
 'use strict';

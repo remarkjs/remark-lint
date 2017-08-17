@@ -4,16 +4,15 @@
 
 Warn for empty URLs in links and images.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-empty-url
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 [alpha](http://bravo.com).
@@ -21,8 +20,13 @@ When this rule is turned on, the following file
 ![charlie](http://delta.com/echo.png "foxtrott").
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 [golf]().
@@ -30,9 +34,54 @@ When this rule is turned on, the following file
 ![hotel]().
 ```
 
+###### Out
+
 ```text
 1:1-1:9: Don’t use links without URL
 3:1-3:11: Don’t use images without URL
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-empty-url
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-empty-url",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-empty-url readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-empty-url'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -7,65 +7,62 @@
  *   Warn when the spacing between a list item’s bullet and its content
  *   violates a given style.
  *
- *   Options: `string`, either `'tab-size'`, `'mixed'`, or `'space'`,
- *   default: `'tab-size'`.
+ *   Options: `'tab-size'`, `'mixed'`, or `'space'`, default: `'tab-size'`.
  *
  * @example {"name": "valid.md"}
  *
- *   The below style is called `tab-size`.
- *
- *   *   List
- *       item.
+ *   *···List
+ *   ····item.
  *
  *   Paragraph.
  *
- *   11. List
- *       item.
+ *   11.·List
+ *   ····item.
  *
  *   Paragraph.
  *
- *   *   List
- *       item.
+ *   *···List
+ *   ····item.
  *
- *   *   List
- *       item.
+ *   *···List
+ *   ····item.
  *
  * @example {"name": "valid.md", "setting": "mixed"}
  *
- *   * List item.
+ *   *·List item.
  *
  *   Paragraph.
  *
- *   11. List item
+ *   11.·List item
  *
  *   Paragraph.
  *
- *   *   List
- *       item.
+ *   *···List
+ *   ····item.
  *
- *   *   List
- *       item.
+ *   *···List
+ *   ····item.
  *
  * @example {"name": "valid.md", "setting": "space"}
  *
- *   * List item.
+ *   *·List item.
  *
  *   Paragraph.
  *
- *   11. List item
+ *   11.·List item
  *
  *   Paragraph.
  *
- *   * List
- *     item.
+ *   *·List
+ *   ··item.
  *
- *   * List
- *     item.
+ *   *·List
+ *   ··item.
  *
  * @example {"name": "invalid.md", "setting": "space", "label": "input"}
  *
- *   *   List
- *       item.
+ *   *···List
+ *   ····item.
  *
  * @example {"name": "invalid.md", "setting": "space", "label": "output"}
  *
@@ -73,8 +70,8 @@
  *
  * @example {"name": "invalid.md", "setting": "tab-size", "label": "input"}
  *
- *   * List
- *     item.
+ *   *·List
+ *   ··item.
  *
  * @example {"name": "invalid.md", "setting": "tab-size", "label": "output"}
  *
@@ -82,7 +79,7 @@
  *
  * @example {"name": "invalid.md", "setting": "mixed", "label": "input"}
  *
- *   *   List item.
+ *   *···List item.
  *
  * @example {"name": "invalid.md", "setting": "mixed", "label": "output"}
  *

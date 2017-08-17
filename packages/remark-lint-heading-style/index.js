@@ -6,16 +6,13 @@
  * @fileoverview
  *   Warn when a heading does not conform to a given style.
  *
- *   Options: `string`, either `'consistent'`, `'atx'`, `'atx-closed'`,
- *   or `'setext'`, default: `'consistent'`.
+ *   Options: `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`,
+ *   default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used heading
- *   style, and will warn when a subsequent heading uses a different
- *   style.
+ *   `'consistent'` detects the first used heading style and warns when
+ *   subsequent headings use different styles.
  *
  * @example {"name": "valid.md", "setting": "atx"}
- *
- *   <!--Also valid when `consistent`-->
  *
  *   # Alpha
  *
@@ -25,8 +22,6 @@
  *
  * @example {"name": "valid.md", "setting": "atx-closed"}
  *
- *   <!--Also valid when `consistent`-->
- *
  *   # Delta ##
  *
  *   ## Echo ##
@@ -34,8 +29,6 @@
  *   ### Foxtrot ###
  *
  * @example {"name": "valid.md", "setting": "setext"}
- *
- *   <!--Also valid when `consistent`-->
  *
  *   Golf
  *   ====
@@ -47,8 +40,6 @@
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   <!--Always invalid.-->
- *
  *   Juliett
  *   =======
  *
@@ -58,8 +49,8 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   6:1-6:8: Headings should use setext
- *   8:1-8:13: Headings should use setext
+ *   4:1-4:8: Headings should use setext
+ *   6:1-6:13: Headings should use setext
  */
 
 'use strict';

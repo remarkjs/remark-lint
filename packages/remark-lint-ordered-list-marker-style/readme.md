@@ -5,30 +5,30 @@
 Warn when the list-item marker style of ordered lists violate a given
 style.
 
-Options: `string`, either `'consistent'`, `'.'`, or `')'`,
-default: `'consistent'`.
+Options: `'consistent'`, `'.'`, or `')'`, default: `'consistent'`.
 
-Note that `)` is only supported in CommonMark.
+`'consistent'` detects the first used list style and warns when subsequent
+lists use different styles.
 
-The default value, `consistent`, detects the first used list
-style, and will warn when a subsequent list uses a different
-style.
+Note: `)` is only supported in CommonMark.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-ordered-list-marker-style
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
+| [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
-By default (`consistent`), if one style used throughout the file,
-that’s OK.
-
 1.  Foo
 
 
@@ -39,8 +39,13 @@ Unordered lists are not affected by this rule.
 * Foo
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 1.  Foo
@@ -48,12 +53,17 @@ When this rule is turned on, the following file
 2)  Bar
 ```
 
+###### Out
+
 ```text
 3:1-3:8: Marker style should be `.`
 ```
 
-When this rule is `'.'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'.'`.
+
+###### In
 
 ```markdown
 1.  Foo
@@ -61,22 +71,79 @@ When this rule is `'.'`, the following file
 2.  Bar
 ```
 
-When this rule is `')'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `')'`.
+
+###### In
 
 ```markdown
-<!-- This is also valid when `consistent`.
-     But it does require commonmark. -->
+<!-- This requires commonmark. -->
 
 1)  Foo
 
 2)  Bar
 ```
 
-When `'!'` is passed in, the following error is given:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'!'`.
+
+###### Out
 
 ```text
 1:1: Invalid ordered list-item marker style `!`: use either `'.'` or `')'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-ordered-list-marker-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-ordered-list-marker-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-ordered-list-marker-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-ordered-list-marker-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

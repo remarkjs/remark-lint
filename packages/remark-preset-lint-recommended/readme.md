@@ -6,46 +6,9 @@ remark preset to configure remark-lint with settings that
 prevent mistakes or syntaxes that do not work correctly
 across vendors.
 
-## Install
-
-npm:
-
-```sh
-npm install remark-preset-lint-recommended
-```
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- ...
- "remarkConfig": {
-+  "plugins": ["remark-preset-lint-recommended"]
- }
- ...
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u remark-preset-lint-recommended readme.md
-```
-
-Or use this on the API:
-
-```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
-
- var file = remark()
-+  .use(require('remark-preset-lint-recommended'))
-   .processSync('_Emphasis_ and **importance**')
-
- console.error(report(file));
-```
-
 ## Rules
 
-This preset configures [remark-lint](https://github.com/wooorm/remark-lint) with the following rules:
+This preset configures [`remark-lint`](https://github.com/wooorm/remark-lint) with the following rules:
 
 | Rule | Setting |
 | ---- | ------- |
@@ -64,3 +27,46 @@ This preset configures [remark-lint](https://github.com/wooorm/remark-lint) with
 | [`no-shortcut-reference-link`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-link) |  |
 | [`no-undefined-references`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-undefined-references) |  |
 | [`no-unused-definitions`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-unused-definitions) |  |
+
+## Install
+
+npm:
+
+```sh
+npm install remark-preset-lint-recommended
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
++  "plugins": ["preset-lint-recommended"]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u preset-lint-recommended readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
++  .use(require('remark-preset-lint-recommended'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
+```
+
+## License
+
+[MIT](https://github.com/wooorm/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)

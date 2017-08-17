@@ -2,47 +2,92 @@
 
 # remark-lint-file-extension
 
-Warn when the document’s extension differs from the given preferred
-extension.
+Warn when the file extension differ from the preferred extension.
 
 Does not warn when given documents have no file extensions (such as
 `AUTHORS` or `LICENSE`).
 
 Options: `string`, default: `'md'` — Expected file extension.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-file-extension
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`readme.md` is ok:
+##### `readme.md`
 
-```markdown
+###### Out
 
-```
+No messages.
 
-When this rule is turned on, the following file
-`readme` is ok:
+##### `readme`
 
-```markdown
+###### Out
 
-```
+No messages.
 
-When turned on is passed in, the following error is given:
+##### `readme.mkd`
+
+###### Out
 
 ```text
 1:1: Invalid extension: use `md`
 ```
 
-When this rule is `'mkd'`, the following file
-`readme.mkd` is ok:
+##### `readme.mkd`
 
-```markdown
+When configured with `'mkd'`.
 
+###### Out
+
+No messages.
+
+## Install
+
+```sh
+npm install remark-lint-file-extension
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-file-extension",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-file-extension readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-file-extension'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

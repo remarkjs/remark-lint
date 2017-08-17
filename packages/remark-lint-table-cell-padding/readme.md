@@ -4,34 +4,43 @@
 
 Warn when table cells are incorrectly padded.
 
-Options: `string`, either `'consistent'`, `'padded'`, or `'compact'`,
-default: `'consistent'`.
+Options: `'consistent'`, `'padded'`, or `'compact'`, default: `'consistent'`.
 
-The default value, `consistent`, detects the first used cell padding
-style, and will warn when a subsequent cells uses a different
-style.
+`'consistent'` detects the first used cell padding style and warns when
+subsequent cells use different styles.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-table-cell-padding
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `'padded'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'padded'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 | A     | B     |
 | ----- | ----- |
 | Alpha | Bravo |
 ```
 
-When this rule is `'padded'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'padded'`.
+
+###### In
 
 ```markdown
 | A    |    B |
@@ -39,24 +48,34 @@ When this rule is `'padded'`, the following file
 | Alpha|Bravo |
 ```
 
+###### Out
+
 ```text
 3:8: Cell should be padded
 3:9: Cell should be padded
 ```
 
-When this rule is `'compact'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'compact'`.
+
+###### In
 
 ```markdown
-<!--Also valid when `consistent`-->
-
 |A    |B    |
 |-----|-----|
 |Alpha|Bravo|
 ```
 
-When this rule is `'compact'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'compact'`.
+
+###### In
 
 ```markdown
 |A    |     B|
@@ -64,29 +83,33 @@ When this rule is `'compact'`, the following file
 |Alpha|Bravo |
 ```
 
+###### Out
+
 ```text
 3:13: Cell should be compact
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+##### `invalid.md`
+
+###### In
 
 ```markdown
-<!--Always invalid-->
-
 |   A    | B    |
 |   -----| -----|
 |   Alpha| Bravo|
 ```
 
+###### Out
+
 ```text
-5:5: Cell should be padded with 1 space, not 3
-5:10: Cell should be padded
-5:17: Cell should be padded
+3:5: Cell should be padded with 1 space, not 3
+3:10: Cell should be padded
+3:17: Cell should be padded
 ```
 
-When this rule is turned on, the following file
-`empty-heading.md` is ok:
+##### `empty-heading.md`
+
+###### In
 
 ```markdown
 <!-- Empty heading cells are always OK. -->
@@ -96,8 +119,13 @@ When this rule is turned on, the following file
 | Bravo | Charlie |
 ```
 
-When this rule is turned on, the following file
-`empty-body.md` is ok:
+###### Out
+
+No messages.
+
+##### `empty-body.md`
+
+###### In
 
 ```markdown
 <!-- Empty body cells are always OK. -->
@@ -107,10 +135,61 @@ When this rule is turned on, the following file
 | Charlie |         |
 ```
 
-When `'invalid'` is passed in, the following error is given:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'invalid'`.
+
+###### Out
 
 ```text
 1:1: Invalid table-cell-padding style `invalid`
+```
+
+## Install
+
+```sh
+npm install remark-lint-table-cell-padding
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-table-cell-padding",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-table-cell-padding readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-table-cell-padding'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

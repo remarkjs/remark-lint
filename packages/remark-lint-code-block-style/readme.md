@@ -4,27 +4,29 @@
 
 Warn when code-blocks do not adhere to a given style.
 
-Options: `string`, either `'consistent'`, `'fenced'`, or `'indented'`,
-default: `'consistent'`.
+Options: `'consistent'`, `'fenced'`, or `'indented'`, default: `'consistent'`.
 
-The default value, `consistent`, detects the first used code-block
-style, and will warn when a subsequent code-block uses a different
-style.
+`'consistent'` detects the first used code-block style and warns when
+subsequent code-blocks uses different styles.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-code-block-style
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `'indented'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'indented'`.
+
+###### In
 
 ```markdown
-<!-- This is also valid when `'consistent'` -->
-
     alpha();
 
 Paragraph.
@@ -32,8 +34,15 @@ Paragraph.
     bravo();
 ```
 
-When this rule is `'indented'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'indented'`.
+
+###### In
 
 ````markdown
         ```
@@ -46,18 +55,21 @@ When this rule is `'indented'`, the following file
         bravo();
         ```
 ````
+
+###### Out
 
 ```text
 1:1-3:4: Code blocks should be indented
 7:1-9:4: Code blocks should be indented
 ```
 
-When this rule is `'fenced'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'fenced'`.
+
+###### In
 
 ````markdown
-        <!-- This is also valid when `'consistent'` -->
-
         ```
         alpha();
         ```
@@ -69,8 +81,15 @@ When this rule is `'fenced'`, the following file
         ```
 ````
 
-When this rule is `'fenced'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'fenced'`.
+
+###### In
 
 ```markdown
     alpha();
@@ -80,17 +99,18 @@ Paragraph.
     bravo();
 ```
 
+###### Out
+
 ```text
 1:1-1:13: Code blocks should be fenced
 5:1-5:13: Code blocks should be fenced
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+##### `invalid.md`
+
+###### In
 
 ````markdown
-        <!-- This is always invalid -->
-
             alpha();
 
         Paragraph.
@@ -100,14 +120,63 @@ When this rule is turned on, the following file
         ```
 ````
 
+###### Out
+
 ```text
-7:1-9:4: Code blocks should be indented
+5:1-7:4: Code blocks should be indented
 ```
 
-When `'invalid'` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `'invalid'`.
+
+###### Out
 
 ```text
 1:1: Invalid code block style `invalid`: use either `'consistent'`, `'fenced'`, or `'indented'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-code-block-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-code-block-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-code-block-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-code-block-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

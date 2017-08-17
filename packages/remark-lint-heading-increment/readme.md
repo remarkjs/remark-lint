@@ -4,16 +4,19 @@
 
 Warn when headings increment with more than 1 level at a time.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-heading-increment
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 # Alpha
@@ -21,8 +24,13 @@ When this rule is turned on, the following file
 ## Bravo
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 # Charlie
@@ -30,8 +38,53 @@ When this rule is turned on, the following file
 ### Delta
 ```
 
+###### Out
+
 ```text
 3:1-3:10: Heading levels should increment by one level at a time
+```
+
+## Install
+
+```sh
+npm install remark-lint-heading-increment
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-heading-increment",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-heading-increment readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-heading-increment'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

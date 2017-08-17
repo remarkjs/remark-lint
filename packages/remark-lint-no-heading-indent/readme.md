@@ -4,20 +4,19 @@
 
 Warn when a heading is indented.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-heading-indent
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-<!-- Note: the middle-dots represent spaces -->
-
 #·Hello world
 
 Foo
@@ -29,12 +28,17 @@ Bar
 =====
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-<!-- Note: the middle-dots represent spaces -->
-
 ···# Hello world
 
 ·Foo
@@ -46,11 +50,56 @@ When this rule is turned on, the following file
 =====
 ```
 
+###### Out
+
 ```text
-3:4: Remove 3 spaces before this heading
-5:2: Remove 1 space before this heading
-8:2: Remove 1 space before this heading
-10:4: Remove 3 spaces before this heading
+1:4: Remove 3 spaces before this heading
+3:2: Remove 1 space before this heading
+6:2: Remove 1 space before this heading
+8:4: Remove 3 spaces before this heading
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-heading-indent
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-heading-indent",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-heading-indent readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-heading-indent'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -7,8 +7,7 @@
  *   Warn when the list-item marker values of ordered lists violate a
  *   given style.
  *
- *   Options: `string`, either `'single'`, `'one'`, or `'ordered'`,
- *   default: `'ordered'`.
+ *   Options: `'single'`, `'one'`, or `'ordered'`, default: `'ordered'`.
  *
  *   When set to `'ordered'`, list-item bullets should increment by one,
  *   relative to the starting point.  When set to `'single'`, bullets should

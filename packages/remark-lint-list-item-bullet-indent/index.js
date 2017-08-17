@@ -17,8 +17,8 @@
  *
  *   Paragraph.
  *
- *    * List item
- *    * List item
+ *   ·* List item
+ *   ·* List item
  *
  * @example {"name": "invalid.md", "label": "output"}
  *

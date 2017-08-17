@@ -5,24 +5,26 @@
 Warn when the list-item marker values of ordered lists violate a
 given style.
 
-Options: `string`, either `'single'`, `'one'`, or `'ordered'`,
-default: `'ordered'`.
+Options: `'single'`, `'one'`, or `'ordered'`, default: `'ordered'`.
 
 When set to `'ordered'`, list-item bullets should increment by one,
 relative to the starting point.  When set to `'single'`, bullets should
 be the same as the relative starting point.  When set to `'one'`, bullets
 should always be `1`.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-ordered-list-marker-value
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 The default value is `ordered`, so unless changed, the below
@@ -43,8 +45,15 @@ Unordered lists are not affected by this rule.
 *   Anton
 ```
 
-When this rule is `'one'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'one'`.
+
+###### In
 
 ```markdown
 1.  Foo
@@ -58,20 +67,32 @@ Paragraph.
 1.  Charlie
 ```
 
-When this rule is `'one'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'one'`.
+
+###### In
 
 ```markdown
 1.  Foo
 2.  Bar
 ```
 
+###### Out
+
 ```text
 2:1-2:8: Marker should be `1`, was `2`
 ```
 
-When this rule is `'single'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'single'`.
+
+###### In
 
 ```markdown
 1.  Foo
@@ -85,8 +106,15 @@ Paragraph.
 3.  Charlie
 ```
 
-When this rule is `'ordered'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'ordered'`.
+
+###### In
 
 ```markdown
 1.  Foo
@@ -100,22 +128,78 @@ Paragraph.
 5.  Charlie
 ```
 
-When this rule is `'ordered'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'ordered'`.
+
+###### In
 
 ```markdown
 1.  Foo
 1.  Bar
 ```
 
+###### Out
+
 ```text
 2:1-2:8: Marker should be `2`, was `1`
 ```
 
-When `'invalid'` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `'invalid'`.
+
+###### Out
 
 ```text
 1:1: Invalid ordered list-item marker value `invalid`: use either `'ordered'` or `'one'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-ordered-list-marker-value
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-ordered-list-marker-value",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-ordered-list-marker-value readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-ordered-list-marker-value'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

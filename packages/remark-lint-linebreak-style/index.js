@@ -6,10 +6,9 @@
  * @fileoverview
  *   Warn when linebreaks violate a given or detected style.
  *
- *   Options: `string`, either `'unix'` (for `\n`, denoted as ␊), `'windows'`
- *   (for `\r\n`, denoted as ␍␊), or `consistent` (to detect the first used
- *   linebreak in a file).
- *   Default: `'consistent'`.
+ *   Options: either `'unix'` (for `\n`, denoted as `␊`), `'windows'` (for `\r\n`,
+ *   denoted as `␍␊`), or `'consistent'` (to detect the first used linebreak in
+ *   a file).  Default: `'consistent'`.
  *
  * @example {"name": "valid-consistent-as-windows.md"}
  *
@@ -36,14 +35,6 @@
  * @example {"name": "invalid-windows.md", "label": "output", "setting": "windows"}
  *
  *   1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
- *
- * @example {"name": "valid-unix.md", "setting": "unix"}
- *
- *   Alpha␊
- *
- * @example {"name": "valid-windows.md", "setting": "windows"}
- *
- *   Alpha␍␊
  */
 
 'use strict';

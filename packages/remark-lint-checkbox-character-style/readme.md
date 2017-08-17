@@ -4,93 +4,174 @@
 
 Warn when list item checkboxes violate a given style.
 
-The default value, `consistent`, detects the first used checked
-and unchecked checkbox styles, and will warn when a subsequent
-checkboxes use a different style.
+Options: `Object` or `'consistent'`, default: `'consistent'`.
 
-These values can also be passed in as an object, such as:
+`'consistent'` detects the first used checked and unchecked checkbox
+styles and warns when subsequent checkboxes use different styles.
+
+Styles can also be passed in like so:
 
 ```js
-{checked: 'x', unchecked: ' '}
+{ checked: 'x', unchecked: ' ' }
 ```
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-checkbox-character-style
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
 
 ## Example
 
-When this rule is `{ checked: 'x' }`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `{ checked: 'x' }`.
+
+###### In
 
 ```markdown
-<!--This file is also valid by default-->
-
 - [x] List item
 - [x] List item
 ```
 
-When this rule is `{ checked: 'X' }`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `{ checked: 'X' }`.
+
+###### In
 
 ```markdown
-<!--This file is also valid by default-->
-
 - [X] List item
 - [X] List item
 ```
 
-When this rule is `{ unchecked: ' ' }`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `{ unchecked: ' ' }`.
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-<!--This file is also valid by default-->
-
 - [ ] List item
 - [ ] List item
 - [ ]··
 - [ ]
 ```
 
-When this rule is `{ unchecked: '\t' }`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `{ unchecked: '\t' }`.
+
+###### In
+
+Note: `»` represents a tab.
 
 ```markdown
-<!--Also valid by default (note: `»` represents `\t`)-->
-
 - [»] List item
 - [»] List item
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
+
+Note: `»` represents a tab.
 
 ```markdown
-<!--Note: `»` represents `\t`-->
-
 - [x] List item
 - [X] List item
 - [ ] List item
 - [»] List item
 ```
 
+###### Out
+
 ```text
-4:4-4:5: Checked checkboxes should use `x` as a marker
-6:4-6:5: Unchecked checkboxes should use ` ` as a marker
+2:4-2:5: Checked checkboxes should use `x` as a marker
+4:4-4:5: Unchecked checkboxes should use ` ` as a marker
 ```
 
-When `{ unchecked: '!' }` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `{ unchecked: '!' }`.
+
+###### Out
 
 ```text
 1:1: Invalid unchecked checkbox marker `!`: use either `'\t'`, or `' '`
 ```
 
-When `{ checked: '!' }` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `{ checked: '!' }`.
+
+###### Out
 
 ```text
 1:1: Invalid checked checkbox marker `!`: use either `'x'`, or `'X'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-checkbox-character-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-checkbox-character-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-checkbox-character-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-checkbox-character-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -6,30 +6,22 @@
  * @fileoverview
  *   Warn when link and definition titles occur with incorrect quotes.
  *
- *   Options: `string`, either `'consistent'`, `'"'`, `'\''`, or
- *   `'()'`, default: `'consistent'`.
+ *   Options: `'consistent'`, `'"'`, `'\''`, or `'()'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used quote
- *   style, and will warn when a subsequent titles use a different
- *   style.
+ *   `'consistent'` detects the first used quote style and warns when subsequent
+ *   titles use different styles.
  *
  * @example {"name": "valid.md", "setting": "\""}
- *
- *   <!--Also valid when `consistent`-->
  *
  *   [Example](http://example.com "Example Domain")
  *   [Example](http://example.com "Example Domain")
  *
  * @example {"name": "valid.md", "setting": "'"}
  *
- *   <!--Also valid when `consistent`-->
- *
  *   ![Example](http://example.com/image.png 'Example Domain')
  *   ![Example](http://example.com/image.png 'Example Domain')
  *
  * @example {"name": "valid.md", "setting": "()"}
- *
- *   <!--Also valid when `consistent`-->
  *
  *   [Example](http://example.com (Example Domain) )
  *   [Example](http://example.com (Example Domain) )
@@ -44,26 +36,22 @@
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   <!--Always invalid-->
- *
  *   [Example](http://example.com "Example Domain")
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com 'Example Domain')
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   5:46: Titles should use `"` as a quote
+ *   3:46: Titles should use `"` as a quote
  *
  * @example {"name": "invalid.md", "label": "input", "setting": "()"}
- *
- *   <!--Always invalid-->
  *
  *   [Example](http://example.com (Example Domain))
  *   [Example](http://example.com 'Example Domain')
  *
  * @example {"name": "invalid.md", "label": "output", "setting": "()"}
  *
- *   4:46: Titles should use `()` as a quote
+ *   2:46: Titles should use `()` as a quote
  *
  * @example {"name": "invalid.md", "setting": ".", "label": "output", "config": {"positionless": true}}
  *

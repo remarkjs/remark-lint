@@ -9,13 +9,10 @@
  * @example {"name": "valid.md"}
  *
  *   <http://foo.bar/baz>
- *   <mailto:qux@quux.com>
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   http://foo.bar/baz
- *
- *   mailto:qux@quux.com
  *
  * @example {"name": "invalid.md", "label": "output"}
  *

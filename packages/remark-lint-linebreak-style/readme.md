@@ -4,69 +4,123 @@
 
 Warn when linebreaks violate a given or detected style.
 
-Options: `string`, either `'unix'` (for `\n`, denoted as ␊), `'windows'`
-(for `\r\n`, denoted as ␍␊), or `consistent` (to detect the first used
-linebreak in a file).
-Default: `'consistent'`.
+Options: either `'unix'` (for `\n`, denoted as `␊`), `'windows'` (for `\r\n`,
+denoted as `␍␊`), or `'consistent'` (to detect the first used linebreak in
+a file).  Default: `'consistent'`.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-linebreak-style
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid-consistent-as-windows.md` is ok:
+##### `valid-consistent-as-windows.md`
+
+###### In
+
+Note: `␍␊` represents a carriage return and a line feed.
 
 ```markdown
 Alpha␍␊
 Bravo␍␊
 ```
 
-When this rule is turned on, the following file
-`valid-consistent-as-unix.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid-consistent-as-unix.md`
+
+###### In
+
+Note: `␊` represents a line feed.
 
 ```markdown
 Alpha␊
 Bravo␊
 ```
 
-When this rule is `'unix'`, the following file
-`invalid-unix.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid-unix.md`
+
+When configured with `'unix'`.
+
+###### In
+
+Note: `␍␊` represents a carriage return and a line feed.
 
 ```markdown
 Alpha␍␊
 ```
+
+###### Out
 
 ```text
 1:7: Expected linebreaks to be unix (`\n`), not windows (`\r\n`)
 ```
 
-When this rule is `'unix'`, the following file
-`valid-unix.md` is ok:
+##### `invalid-windows.md`
+
+When configured with `'windows'`.
+
+###### In
+
+Note: `␊` represents a line feed.
 
 ```markdown
 Alpha␊
 ```
 
-When this rule is `'windows'`, the following file
-`invalid-windows.md` is **not** ok:
-
-```markdown
-Alpha␊
-```
+###### Out
 
 ```text
 1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
 ```
 
-When this rule is `'windows'`, the following file
-`valid-windows.md` is ok:
+## Install
 
-```markdown
-Alpha␍␊
+```sh
+npm install remark-lint-linebreak-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-linebreak-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-linebreak-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-linebreak-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

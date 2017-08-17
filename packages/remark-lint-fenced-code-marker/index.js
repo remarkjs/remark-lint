@@ -6,11 +6,10 @@
  * @fileoverview
  *   Warn for violating fenced code markers.
  *
- *   Options: `string`, either `` '`' ``, or `'~'`, default: `'consistent'`.
+ *   Options: `` '`' ``, `'~'`, or `'consistent'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used fenced code
- *   marker style, and will warn when a subsequent fenced code uses a
- *   different style.
+ *   `'consistent'` detects the first used fenced code marker style and warns
+ *   when subsequent fenced code-blocks use different styles.
  *
  * @example {"name": "valid.md"}
  *
@@ -19,8 +18,6 @@
  *       bravo();
  *
  * @example {"name": "valid.md", "setting": "`"}
- *
- *   <!-- This is also valid by default. -->
  *
  *   ```alpha
  *   bravo();
@@ -32,8 +29,6 @@
  *
  * @example {"name": "valid.md", "setting": "~"}
  *
- *   <!-- This is also valid by default. -->
- *
  *   ~~~alpha
  *   bravo();
  *   ~~~
@@ -43,8 +38,6 @@
  *   ~~~
  *
  * @example {"name": "invalid.md", "label": "input"}
- *
- *   <!-- This is always invalid. -->
  *
  *   ```alpha
  *   bravo();
@@ -56,7 +49,7 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   7:1-9:4: Fenced code should use ` as a marker
+ *   5:1-7:4: Fenced code should use ` as a marker
  *
  * @example {"name": "invalid.md", "setting": "!", "label": "output", "config": {"positionless": true}}
  *

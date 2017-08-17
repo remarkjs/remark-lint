@@ -9,7 +9,13 @@
  *   Options: `number`, default: `80`.
  *
  *   Ignores nodes which cannot be wrapped, such as headings, tables,
- *   code, link, images, and definitions.
+ *   code, and definitions.
+ *
+ *   Ignores nodes which cannot be wrapped, such as headings, tables,
+ *   code, and definitions.
+ *
+ *   URLs in images and links are okay if they occur at or after the wrap,
+ *   except when there’s white-space after them.
  *
  * @example {"name": "valid.md", "config": {"positionless": true}}
  *

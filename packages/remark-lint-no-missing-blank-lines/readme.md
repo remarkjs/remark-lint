@@ -4,20 +4,19 @@
 
 Warn when missing blank lines before a block node.
 
-This rule can be configured to allow tight list items
-without blank lines between their contents through
-`exceptTightLists: true` (default: false).
+This rule can be configured to allow tight list items without blank lines
+between their contents by passing `{exceptTightLists: true}` (default:
+`false`).
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-missing-blank-lines
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 # Foo
@@ -31,8 +30,13 @@ When this rule is turned on, the following file
 Paragraph.
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 # Foo
@@ -43,14 +47,19 @@ When this rule is turned on, the following file
 
 Paragraph.
 ```
+
+###### Out
 
 ```text
 2:1-2:7: Missing blank line before block node
 5:3-5:10: Missing blank line before block node
 ```
 
-When this rule is `{ exceptTightLists: true }`, the following file
-`tight.md` is **not** ok:
+##### `tight.md`
+
+When configured with `{ exceptTightLists: true }`.
+
+###### In
 
 ```markdown
 # Foo
@@ -62,8 +71,53 @@ When this rule is `{ exceptTightLists: true }`, the following file
 Paragraph.
 ```
 
+###### Out
+
 ```text
 2:1-2:7: Missing blank line before block node
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-missing-blank-lines
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-missing-blank-lines",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-missing-blank-lines readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-missing-blank-lines'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

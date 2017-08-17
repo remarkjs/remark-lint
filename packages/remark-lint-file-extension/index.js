@@ -4,8 +4,7 @@
  * @license MIT
  * @module file-extension
  * @fileoverview
- *   Warn when the document’s extension differs from the given preferred
- *   extension.
+ *   Warn when the file extension differ from the preferred extension.
  *
  *   Does not warn when given documents have no file extensions (such as
  *   `AUTHORS` or `LICENSE`).

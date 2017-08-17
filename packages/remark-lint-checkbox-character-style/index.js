@@ -6,33 +6,28 @@
  * @fileoverview
  *   Warn when list item checkboxes violate a given style.
  *
- *   The default value, `consistent`, detects the first used checked
- *   and unchecked checkbox styles, and will warn when a subsequent
- *   checkboxes use a different style.
+ *   Options: `Object` or `'consistent'`, default: `'consistent'`.
  *
- *   These values can also be passed in as an object, such as:
+ *   `'consistent'` detects the first used checked and unchecked checkbox
+ *   styles and warns when subsequent checkboxes use different styles.
+ *
+ *   Styles can also be passed in like so:
  *
  *   ```js
- *   {checked: 'x', unchecked: ' '}
+ *   { checked: 'x', unchecked: ' ' }
  *   ```
  *
  * @example {"name": "valid.md", "setting": {"checked": "x"}}
- *
- *   <!--This file is also valid by default-->
  *
  *   - [x] List item
  *   - [x] List item
  *
  * @example {"name": "valid.md", "setting": {"checked": "X"}}
  *
- *   <!--This file is also valid by default-->
- *
  *   - [X] List item
  *   - [X] List item
  *
  * @example {"name": "valid.md", "setting": {"unchecked": " "}}
- *
- *   <!--This file is also valid by default-->
  *
  *   - [ ] List item
  *   - [ ] List item
@@ -41,14 +36,10 @@
  *
  * @example {"name": "valid.md", "setting": {"unchecked": "\t"}}
  *
- *   <!--Also valid by default (note: `»` represents `\t`)-->
- *
  *   - [»] List item
  *   - [»] List item
  *
  * @example {"name": "invalid.md", "label": "input"}
- *
- *   <!--Note: `»` represents `\t`-->
  *
  *   - [x] List item
  *   - [X] List item
@@ -57,8 +48,8 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   4:4-4:5: Checked checkboxes should use `x` as a marker
- *   6:4-6:5: Unchecked checkboxes should use ` ` as a marker
+ *   2:4-2:5: Checked checkboxes should use `x` as a marker
+ *   4:4-4:5: Unchecked checkboxes should use ` ` as a marker
  *
  * @example {"setting": {"unchecked": "!"}, "name": "invalid.md", "label": "output", "config": {"positionless": true}}
  *

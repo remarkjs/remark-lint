@@ -7,7 +7,7 @@
  *   Warn when list looseness is incorrect, such as being tight
  *   when it should be loose, and vice versa.
  *
- *   According to the [markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/),
+ *   According to the [`markdown-style-guide`](http://www.cirosantilli.com/markdown-style-guide/),
  *   if one or more list-items in a list spans more than one line,
  *   the list is required to have blank lines between each item.
  *   And otherwise, there should not be blank lines between items.
@@ -69,10 +69,6 @@
  *       - item 1.A
  *   -   item 2
  *       > Blockquote
- *   -   item 3
- *       ```js
- *       code()
- *       ```
  *
  *   A loose list:
  *
@@ -83,12 +79,6 @@
  *   -   item 2
  *
  *       > Blockquote
- *
- *   -   item 3
- *
- *       ```js
- *       code()
- *       ```
  *
  * @example {"name": "invalid.md", "setting": {"checkBlanks": true}, "label": "input"}
  *
@@ -102,10 +92,6 @@
  *       > Blockquote
  *   -   item 3
  *
- *       ```js
- *       code()
- *       ```
- *
  *   A loose list:
  *
  *   -   item 1
@@ -114,17 +100,11 @@
  *   -   item 2
  *       > Blockquote
  *
- *   -   item 3
- *       ```js
- *       code()
- *       ```
- *
  * @example {"name": "invalid.md", "setting": {"checkBlanks": true}, "label": "output"}
  *
  *   5:15-6:1: Missing new line after list item
  *   8:17-9:1: Missing new line after list item
- *   19:1-20:1: Extraneous new line after list item
- *   22:1-23:1: Extraneous new line after list item
+ *   15:1-16:1: Extraneous new line after list item
  */
 
 'use strict';

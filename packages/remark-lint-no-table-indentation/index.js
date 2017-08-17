@@ -18,9 +18,9 @@
  *
  *   Paragraph.
  *
- *      | A     | B     |
- *      | ----- | ----- |
- *      | Alpha | Bravo |
+ *   ···| A     | B     |
+ *   ···| ----- | ----- |
+ *   ···| Alpha | Bravo |
  *
  * @example {"name": "invalid.md", "label": "output"}
  *

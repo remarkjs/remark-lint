@@ -6,14 +6,15 @@
  * @fileoverview
  *   Warn when the horizontal rules violate a given or detected style.
  *
- *   Note that horizontal rules are also called “thematic break”.
- *
- *   Options: `string`, either a valid markdown rule, or `consistent`,
+ *   Options: `string`, either a valid markdown rule, or `'consistent'`,
  *   default: `'consistent'`.
  *
- * @example {"name": "valid.md", "setting": "* * *"}
+ *   `'consistent'` detects the first used rule style and warns when subsequent
+ *   rules use different styles.
  *
- *   <!-- This is also valid when `consistent`. -->
+ *   Note: horizontal rules are also called “thematic break”.
+ *
+ * @example {"name": "valid.md", "setting": "* * *"}
  *
  *   * * *
  *
@@ -21,15 +22,11 @@
  *
  * @example {"name": "valid.md", "setting": "_______"}
  *
- *   <!-- This is also valid when `consistent`. -->
- *
  *   _______
  *
  *   _______
  *
  * @example {"name": "invalid.md", "label": "input"}
- *
- *   <!-- Always invalid. -->
  *
  *   ***
  *
@@ -37,7 +34,7 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   5:1-5:6: Rules should use `***`
+ *   3:1-3:6: Rules should use `***`
  *
  * @example {"name": "invalid.md", "label": "output", "setting": "!!!", "config": {"positionless": true}}
  *

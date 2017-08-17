@@ -4,16 +4,15 @@
 
 Warn when warn when the content in paragraphs are indented.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-paragraph-content-indent
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 Alpha
@@ -41,12 +40,17 @@ juliett.
 ![image reference][] text
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-<!--Note: `·` represents ` `-->
-
 ·Alpha
 
 Bravo
@@ -70,16 +74,61 @@ Bravo
 ![ image reference][] text
 ```
 
+###### Out
+
 ```text
-3:1: Expected no indentation in paragraph content
-6:1: Expected no indentation in paragraph content
-7:3: Expected no indentation in paragraph content
-10:5: Expected no indentation in paragraph content
-13:3: Expected no indentation in paragraph content
-16:1: Expected no indentation in paragraph content
-19:5: Expected no indentation in paragraph content
+1:1: Expected no indentation in paragraph content
+4:1: Expected no indentation in paragraph content
+5:3: Expected no indentation in paragraph content
+8:5: Expected no indentation in paragraph content
+11:3: Expected no indentation in paragraph content
+14:1: Expected no indentation in paragraph content
+17:5: Expected no indentation in paragraph content
+19:1: Expected no indentation in paragraph content
 21:1: Expected no indentation in paragraph content
-23:1: Expected no indentation in paragraph content
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-paragraph-content-indent
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-paragraph-content-indent",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-paragraph-content-indent readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-paragraph-content-indent'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -4,10 +4,10 @@
  * @license MIT
  * @module no-inline-padding
  * @fileoverview
- *   Warn when inline nodes are padded with spaces between markers and
+ *   Warn when inline nodes are padded with spaces between their markers and
  *   content.
  *
- *   Warns for emphasis, strong, delete, image, and link.
+ *   Warns for emphasis, strong, delete, images, and links.
  *
  * @example {"name": "valid.md"}
  *

@@ -5,26 +5,27 @@
 Warn when the list-item marker style of unordered lists violate a given
 style.
 
-Options: `string`, either `'consistent'`, `'-'`, `'*'`, or `'*'`,
-default: `'consistent'`.
+Options: `'consistent'`, `'-'`, `'*'`, or `'*'`, default: `'consistent'`.
 
-The default value, `consistent`, detects the first used list
-style, and will warn when a subsequent list uses a different
-style.
+`'consistent'` detects the first used list style and warns when subsequent
+lists use different styles.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-unordered-list-marker-style
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
-By default (`consistent`), if the file uses only one marker,
+By default (`'consistent'`), if the file uses only one marker,
 that’s OK.
 
 * Foo
@@ -38,8 +39,13 @@ Ordered lists are not affected.
 3. Baz
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 * Foo
@@ -47,36 +53,106 @@ When this rule is turned on, the following file
 + Baz
 ```
 
+###### Out
+
 ```text
 2:1-2:6: Marker style should be `*`
 3:1-3:6: Marker style should be `*`
 ```
 
-When this rule is `'*'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'*'`.
+
+###### In
 
 ```markdown
 * Foo
 ```
 
-When this rule is `'-'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'-'`.
+
+###### In
 
 ```markdown
 - Foo
 ```
 
-When this rule is `'+'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'+'`.
+
+###### In
 
 ```markdown
 + Foo
 ```
 
-When `'!'` is passed in, the following error is given:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'!'`.
+
+###### Out
 
 ```text
 1:1: Invalid unordered list-item marker style `!`: use either `'-'`, `'*'`, or `'+'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-unordered-list-marker-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-unordered-list-marker-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-unordered-list-marker-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-unordered-list-marker-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

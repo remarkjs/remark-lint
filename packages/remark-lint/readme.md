@@ -1,14 +1,22 @@
-# ![remark][logo]
+# ![remark-lint][logo]
 
 [![Build Status][build-badge]][build-status]
 [![Coverage Status][coverage-badge]][coverage-status]
 [![Chat][chat-badge]][chat]
 
-**remark-lint** is a markdown code style linter built on
-[**remark**][remark], a powerful markdown processor powered by
-[plugins][].
+`remark-lint` is a markdown code style linter built on [**remark**][remark], a
+powerful markdown processor powered by [plugins][].
 
-Read more about **remark-lint** on [the repo][repo].
+Read more about `remark-lint` on [the monorepo readme][repo].
+
+This package doesn’t do much other than [suppressing messages][suppres] through
+comments.
+
+## Install
+
+```sh
+npm install remark-lint
+```
 
 ## License
 
@@ -30,7 +38,7 @@ Read more about **remark-lint** on [the repo][repo].
 
 [chat]: https://gitter.im/wooorm/remark
 
-[repo]: https://github.com/wooorm/remark-lint
+[repo]: https://github.com/wooorm/remark-lint#readme
 
 [remark]: https://github.com/wooorm/remark
 
@@ -39,3 +47,5 @@ Read more about **remark-lint** on [the repo][repo].
 [license]: https://github.com/wooorm/remark-lint/blob/master/LICENSE
 
 [author]: http://wooorm.com
+
+[suppres]: https://github.com/wooorm/remark-lint#configuring-remark-lint

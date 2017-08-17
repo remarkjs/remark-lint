@@ -3,30 +3,37 @@
 # remark-lint-no-heading-punctuation
 
 Warn when a heading ends with a a group of characters.
-Defaults to `'.,;:!?'`.
 
 Options: `string`, default: `'.,;:!?'`.
 
-Note that these are added to a regex, in a group (`'[' + char + ']'`),
-be careful for escapes and dashes.
+Note: these are added to a regex, in a group (`'[' + char + ']'`), be careful
+for escapes and dashes.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-heading-punctuation
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 # Hello
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 # Hello:
@@ -40,6 +47,8 @@ When this rule is turned on, the following file
 # Hello;
 ```
 
+###### Out
+
 ```text
 1:1-1:9: Don’t add a trailing `:` to headings
 3:1-3:9: Don’t add a trailing `?` to headings
@@ -48,11 +57,61 @@ When this rule is turned on, the following file
 9:1-9:9: Don’t add a trailing `;` to headings
 ```
 
-When this rule is `',;:!?'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `',;:!?'`.
+
+###### In
 
 ```markdown
 # Hello...
+```
+
+###### Out
+
+No messages.
+
+## Install
+
+```sh
+npm install remark-lint-no-heading-punctuation
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-heading-punctuation",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-heading-punctuation readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-heading-punctuation'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

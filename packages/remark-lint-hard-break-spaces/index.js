@@ -8,21 +8,17 @@
  *
  * @example {"name": "valid.md"}
  *
- *   <!--Note: `·` represents ` `-->
- *
  *   Lorem ipsum··
  *   dolor sit amet
  *
  * @example {"name": "invalid.md", "label": "input"}
- *
- *   <!--Note: `·` represents ` `-->
  *
  *   Lorem ipsum···
  *   dolor sit amet.
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   3:12-4:1: Use two spaces for hard line breaks
+ *   1:12-2:1: Use two spaces for hard line breaks
  */
 
 'use strict';

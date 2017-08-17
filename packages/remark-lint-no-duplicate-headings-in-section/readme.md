@@ -2,20 +2,18 @@
 
 # remark-lint-no-duplicate-headings-in-section
 
-Warn when duplicate headings are found,
-but only when on the same level, “in”
-the same section.
+Warn when duplicate headings are found, but only when on the same level,
+“in” the same section.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-duplicate-headings-in-section
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 ## Alpha
@@ -35,8 +33,13 @@ When this rule is turned on, the following file
 ##### Bravo
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 ## Foxtrot
@@ -46,8 +49,53 @@ When this rule is turned on, the following file
 ### Golf
 ```
 
+###### Out
+
 ```text
 5:1-5:9: Do not use headings with similar content per section (3:1)
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-duplicate-headings-in-section
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-duplicate-headings-in-section",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-duplicate-headings-in-section readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-duplicate-headings-in-section'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

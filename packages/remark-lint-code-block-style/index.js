@@ -6,16 +6,12 @@
  * @fileoverview
  *   Warn when code-blocks do not adhere to a given style.
  *
- *   Options: `string`, either `'consistent'`, `'fenced'`, or `'indented'`,
- *   default: `'consistent'`.
+ *   Options: `'consistent'`, `'fenced'`, or `'indented'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used code-block
- *   style, and will warn when a subsequent code-block uses a different
- *   style.
+ *   `'consistent'` detects the first used code-block style and warns when
+ *   subsequent code-blocks uses different styles.
  *
  * @example {"setting": "indented", "name": "valid.md"}
- *
- *   <!-- This is also valid when `'consistent'` -->
  *
  *       alpha();
  *
@@ -42,8 +38,6 @@
  *
  * @example {"setting": "fenced", "name": "valid.md"}
  *
- *   <!-- This is also valid when `'consistent'` -->
- *
  *   ```
  *   alpha();
  *   ```
@@ -69,8 +63,6 @@
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   <!-- This is always invalid -->
- *
  *       alpha();
  *
  *   Paragraph.
@@ -81,7 +73,7 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   7:1-9:4: Code blocks should be indented
+ *   5:1-7:4: Code blocks should be indented
  *
  * @example {"setting": "invalid", "name": "invalid.md", "label": "output", "config": {"positionless": true}}
  *

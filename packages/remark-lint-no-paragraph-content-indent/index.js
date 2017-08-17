@@ -34,8 +34,6 @@
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   <!--Note: `·` represents ` `-->
- *
  *   ·Alpha
  *
  *   Bravo
@@ -60,15 +58,15 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   3:1: Expected no indentation in paragraph content
- *   6:1: Expected no indentation in paragraph content
- *   7:3: Expected no indentation in paragraph content
- *   10:5: Expected no indentation in paragraph content
- *   13:3: Expected no indentation in paragraph content
- *   16:1: Expected no indentation in paragraph content
- *   19:5: Expected no indentation in paragraph content
+ *   1:1: Expected no indentation in paragraph content
+ *   4:1: Expected no indentation in paragraph content
+ *   5:3: Expected no indentation in paragraph content
+ *   8:5: Expected no indentation in paragraph content
+ *   11:3: Expected no indentation in paragraph content
+ *   14:1: Expected no indentation in paragraph content
+ *   17:5: Expected no indentation in paragraph content
+ *   19:1: Expected no indentation in paragraph content
  *   21:1: Expected no indentation in paragraph content
- *   23:1: Expected no indentation in paragraph content
  */
 
 'use strict';

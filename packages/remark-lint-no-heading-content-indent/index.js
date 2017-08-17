@@ -8,8 +8,6 @@
  *
  * @example {"name": "valid.md"}
  *
- *   <!-- Note: the middle-dots represent spaces -->
- *
  *   #·Foo
  *
  *   ## Bar·##
@@ -23,8 +21,6 @@
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   <!-- Note: the middle-dots represent spaces -->
- *
  *   #··Foo
  *
  *   ## Bar··##
@@ -33,9 +29,9 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   3:4: Remove 1 space before this heading’s content
- *   5:7: Remove 1 space after this heading’s content
- *   7:7: Remove 1 space before this heading’s content
+ *   1:4: Remove 1 space before this heading’s content
+ *   3:7: Remove 1 space after this heading’s content
+ *   5:7: Remove 1 space before this heading’s content
  *
  * @example {"name": "empty-heading.md"}
  *

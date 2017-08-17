@@ -8,32 +8,87 @@ Options: `number`, default: `60`.
 
 Ignores markdown syntax, only checks the plain text content.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-maximum-heading-length
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `40`, the following file
-`invalid.md` is **not** ok:
+##### `invalid.md`
+
+When configured with `40`.
+
+###### In
 
 ```markdown
 # Alpha bravo charlie delta echo foxtrot golf hotel
 ```
+
+###### Out
 
 ```text
 1:1-1:52: Use headings shorter than `40`
 ```
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 # Alpha bravo charlie delta echo foxtrot golf hotel
 
 # ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
+```
+
+###### Out
+
+No messages.
+
+## Install
+
+```sh
+npm install remark-lint-maximum-heading-length
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-maximum-heading-length",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-maximum-heading-length readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-maximum-heading-length'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

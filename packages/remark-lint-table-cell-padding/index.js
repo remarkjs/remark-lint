@@ -6,16 +6,12 @@
  * @fileoverview
  *   Warn when table cells are incorrectly padded.
  *
- *   Options: `string`, either `'consistent'`, `'padded'`, or `'compact'`,
- *   default: `'consistent'`.
+ *   Options: `'consistent'`, `'padded'`, or `'compact'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used cell padding
- *   style, and will warn when a subsequent cells uses a different
- *   style.
+ *   `'consistent'` detects the first used cell padding style and warns when
+ *   subsequent cells use different styles.
  *
  * @example {"name": "valid.md", "setting": "padded"}
- *
- *   <!--Also valid when `consistent`-->
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -23,15 +19,11 @@
  *
  * @example {"name": "valid.md", "setting": "compact"}
  *
- *   <!--Also valid when `consistent`-->
- *
  *   |A    |B    |
  *   |-----|-----|
  *   |Alpha|Bravo|
  *
  * @example {"name": "invalid.md", "label": "input"}
- *
- *   <!--Always invalid-->
  *
  *   |   A    | B    |
  *   |   -----| -----|
@@ -39,9 +31,9 @@
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
- *   5:5: Cell should be padded with 1 space, not 3
- *   5:10: Cell should be padded
- *   5:17: Cell should be padded
+ *   3:5: Cell should be padded with 1 space, not 3
+ *   3:10: Cell should be padded
+ *   3:17: Cell should be padded
  *
  * @example {"name": "invalid.md", "label": "input", "setting": "padded"}
  *

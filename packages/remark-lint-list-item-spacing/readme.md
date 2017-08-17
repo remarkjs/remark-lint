@@ -5,7 +5,7 @@
 Warn when list looseness is incorrect, such as being tight
 when it should be loose, and vice versa.
 
-According to the [markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/),
+According to the [`markdown-style-guide`](http://www.cirosantilli.com/markdown-style-guide/),
 if one or more list-items in a list spans more than one line,
 the list is required to have blank lines between each item.
 And otherwise, there should not be blank lines between items.
@@ -18,16 +18,19 @@ items).
 If you pass `{checkBlanks: true}`, all items must be “loose” if one or
 more items contain blank lines.  Otherwise, the list must be tight.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-list-item-spacing
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 A tight list:
@@ -46,8 +49,13 @@ A loose list:
 -   item 3
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 A tight list:
@@ -65,6 +73,8 @@ A loose list:
 
 -   item 3
 ```
+
+###### Out
 
 ```text
 4:9-5:1: Missing new line after list item
@@ -73,75 +83,110 @@ A loose list:
 13:1-14:1: Extraneous new line after list item
 ```
 
-When this rule is `{ checkBlanks: true }`, the following file
-`valid.md` is ok:
+##### `valid.md`
 
-````markdown
-        A tight list:
+When configured with `{ checkBlanks: true }`.
 
-        -   item 1
-            - item 1.A
-        -   item 2
-            > Blockquote
-        -   item 3
-            ```js
-            code()
-            ```
+###### In
 
-        A loose list:
+```markdown
+A tight list:
 
-        -   item 1
+-   item 1
+    - item 1.A
+-   item 2
+    > Blockquote
 
-            - item 1.A
+A loose list:
 
-        -   item 2
+-   item 1
 
-            > Blockquote
+    - item 1.A
 
-        -   item 3
+-   item 2
 
-            ```js
-            code()
-            ```
-````
+    > Blockquote
+```
 
-When this rule is `{ checkBlanks: true }`, the following file
-`invalid.md` is **not** ok:
+###### Out
 
-````markdown
-        A tight list:
+No messages.
 
-        -   item 1
+##### `invalid.md`
 
-            - item 1.A
-        -   item 2
+When configured with `{ checkBlanks: true }`.
 
-            > Blockquote
-        -   item 3
+###### In
 
-            ```js
-            code()
-            ```
+```markdown
+A tight list:
 
-        A loose list:
+-   item 1
 
-        -   item 1
-            - item 1.A
+    - item 1.A
+-   item 2
 
-        -   item 2
-            > Blockquote
+    > Blockquote
+-   item 3
 
-        -   item 3
-            ```js
-            code()
-            ```
-````
+A loose list:
+
+-   item 1
+    - item 1.A
+
+-   item 2
+    > Blockquote
+```
+
+###### Out
 
 ```text
 5:15-6:1: Missing new line after list item
 8:17-9:1: Missing new line after list item
-19:1-20:1: Extraneous new line after list item
-22:1-23:1: Extraneous new line after list item
+15:1-16:1: Extraneous new line after list item
+```
+
+## Install
+
+```sh
+npm install remark-lint-list-item-spacing
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-list-item-spacing",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-list-item-spacing readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-list-item-spacing'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

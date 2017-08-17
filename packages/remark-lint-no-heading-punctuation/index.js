@@ -5,12 +5,11 @@
  * @module no-heading-punctuation
  * @fileoverview
  *   Warn when a heading ends with a a group of characters.
- *   Defaults to `'.,;:!?'`.
  *
  *   Options: `string`, default: `'.,;:!?'`.
  *
- *   Note that these are added to a regex, in a group (`'[' + char + ']'`),
- *   be careful for escapes and dashes.
+ *   Note: these are added to a regex, in a group (`'[' + char + ']'`), be careful
+ *   for escapes and dashes.
  *
  * @example {"name": "valid.md"}
  *

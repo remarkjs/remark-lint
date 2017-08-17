@@ -4,60 +4,124 @@
 
 Warn when the horizontal rules violate a given or detected style.
 
-Note that horizontal rules are also called “thematic break”.
-
-Options: `string`, either a valid markdown rule, or `consistent`,
+Options: `string`, either a valid markdown rule, or `'consistent'`,
 default: `'consistent'`.
 
-## Install
+`'consistent'` detects the first used rule style and warns when subsequent
+rules use different styles.
 
-```sh
-npm install --save remark-lint-rule-style
-```
+Note: horizontal rules are also called “thematic break”.
+
+## Presets
+
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is `'* * *'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'* * *'`.
+
+###### In
 
 ```markdown
-<!-- This is also valid when `consistent`. -->
-
 * * *
 
 * * *
 ```
 
-When this rule is `'_______'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'_______'`.
+
+###### In
 
 ```markdown
-<!-- This is also valid when `consistent`. -->
-
 _______
 
 _______
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
-<!-- Always invalid. -->
-
 ***
 
 * * *
 ```
 
+###### Out
+
 ```text
-5:1-5:6: Rules should use `***`
+3:1-3:6: Rules should use `***`
 ```
 
-When `'!!!'` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `'!!!'`.
+
+###### Out
 
 ```text
 1:1: Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-rule-style
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-rule-style",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-rule-style readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-rule-style'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

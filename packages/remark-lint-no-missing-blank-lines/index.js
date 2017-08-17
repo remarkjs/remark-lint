@@ -6,9 +6,9 @@
  * @fileoverview
  *   Warn when missing blank lines before a block node.
  *
- *   This rule can be configured to allow tight list items
- *   without blank lines between their contents through
- *   `exceptTightLists: true` (default: false).
+ *   This rule can be configured to allow tight list items without blank lines
+ *   between their contents by passing `{exceptTightLists: true}` (default:
+ *   `false`).
  *
  * @example {"name": "valid.md"}
  *

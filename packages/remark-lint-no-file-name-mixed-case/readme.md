@@ -5,32 +5,77 @@
 Warn when a file name uses mixed case: both upper- and lower case
 characters.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-file-name-mixed-case
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`README.md` is ok:
+##### `README.md`
 
-```markdown
+###### Out
 
-```
+No messages.
 
-When this rule is turned on, the following file
-`readme.md` is ok:
+##### `readme.md`
 
-```markdown
+###### Out
 
-```
+No messages.
 
-When turned on is passed in, the following error is given:
+##### `Readme.md`
+
+###### Out
 
 ```text
 1:1: Do not mix casing in file names
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-file-name-mixed-case
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-file-name-mixed-case",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-file-name-mixed-case readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-file-name-mixed-case'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

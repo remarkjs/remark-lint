@@ -4,12 +4,41 @@
  * @license MIT
  * @module final-newline
  * @fileoverview
- *   Warn when a newline at the end of a file is missing.
+ *   Warn when a newline at the end of a file is missing. Empty files are allowed.
  *
- *   This rule allows empty files.
+ *   See [StackExchange](http://unix.stackexchange.com/questions/18743) for why.
  *
- *   See [StackExchange](http://unix.stackexchange.com/questions/18743) for
- *   why.
+ *   ## Example
+ *
+ *   ##### `valid.md`
+ *
+ *   ###### In
+ *
+ *   Note: `␊` represents LF.
+ *
+ *   ```markdown
+ *   Alpha␊
+ *   ```
+ *
+ *   ###### Out
+ *
+ *   No messages.
+ *
+ *   ##### `invalid.md`
+ *
+ *   ###### In
+ *
+ *   Note: The below file does not have a final newline.
+ *
+ *   ```markdown
+ *   Bravo
+ *   ```
+ *
+ *   ###### Out
+ *
+ *   ```text
+ *   1:1: Missing newline character at end of file
+ *   ```
  */
 
 'use strict';

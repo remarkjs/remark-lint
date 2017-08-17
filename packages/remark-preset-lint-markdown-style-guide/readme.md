@@ -12,15 +12,15 @@ This uses the following Style Guide option system: `wrap:space`,
 ###### `space-sentence`
 
 Both `space-sentence:1` and `space-sentence:2` are not supported
-by **remark-lint**.  You could set-up
-[remark-retext](https://github.com/wooorm/remark-retext) with
-[retext-sentence-spacing](https://github.com/wooorm/retext-sentence-spacing)
+by `remark-lint`.  You could set-up
+[`remark-retext`](https://github.com/wooorm/remark-retext) with
+[`retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
 to check this though.
 
 ###### `wrap`
 
 `wrap:inner-sentence` and `wrap:sentence` are not supported by
-**remark-lint**.
+`remark-lint`.
 
 The default is `wrap:space`.  To use `wrap:no`, turn off
 `remark-lint-maximum-line-length` like so:
@@ -28,8 +28,8 @@ The default is `wrap:space`.  To use `wrap:no`, turn off
 ```diff
  "plugins": [
    ...
-   "remark-preset-lint-markdown-style-guide",
-+  ["remark-lint-maximum-line-length", false]
+   "preset-lint-markdown-style-guide",
++  ["lint-maximum-line-length", false]
    ...
  ]
 ```
@@ -42,8 +42,8 @@ setting for `remark-lint-heading-style` like so:
 ```diff
  "plugins": [
    ...
-   "remark-preset-lint-markdown-style-guide",
-+  ["remark-lint-heading-style", "setext"]
+   "preset-lint-markdown-style-guide",
++  ["lint-heading-style", "setext"]
    ...
  ]
 ```
@@ -57,8 +57,8 @@ The default is `list-marker:hyphen`.  For `list-marker:asterisk` or
 ```diff
  "plugins": [
    ...
-   "remark-preset-lint-markdown-style-guide",
-+  ["remark-lint-unordered-list-marker-style", "*"]
+   "preset-lint-markdown-style-guide",
++  ["lint-unordered-list-marker-style", "*"]
    ...
  ]
 ```
@@ -71,8 +71,8 @@ setting for `remark-lint-list-item-indent` like so:
 ```diff
  "plugins": [
    ...
-   "remark-preset-lint-markdown-style-guide",
-+  ["remark-lint-list-item-indent", "space"]
+   "preset-lint-markdown-style-guide",
++  ["lint-list-item-indent", "space"]
    ...
  ]
 ```
@@ -85,52 +85,15 @@ for `remark-lint-code-block-style` like so:
 ```diff
  "plugins": [
    ...
-   "remark-preset-lint-markdown-style-guide",
-+  ["remark-lint-code-block-style", "indented"]
+   "preset-lint-markdown-style-guide",
++  ["lint-code-block-style", "indented"]
    ...
  ]
 ```
 
-## Install
-
-npm:
-
-```sh
-npm install remark-preset-lint-markdown-style-guide
-```
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- ...
- "remarkConfig": {
-+  "plugins": ["remark-preset-lint-markdown-style-guide"]
- }
- ...
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u remark-preset-lint-markdown-style-guide readme.md
-```
-
-Or use this on the API:
-
-```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
-
- var file = remark()
-+  .use(require('remark-preset-lint-markdown-style-guide'))
-   .processSync('_Emphasis_ and **importance**')
-
- console.error(report(file));
-```
-
 ## Rules
 
-This preset configures [remark-lint](https://github.com/wooorm/remark-lint) with the following rules:
+This preset configures [`remark-lint`](https://github.com/wooorm/remark-lint) with the following rules:
 
 | Rule | Setting |
 | ---- | ------- |
@@ -178,3 +141,46 @@ This preset configures [remark-lint](https://github.com/wooorm/remark-lint) with
 | [`no-emphasis-as-heading`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-emphasis-as-heading) |  |
 | [`no-literal-urls`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-literal-urls) |  |
 | [`no-auto-link-without-protocol`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) |  |
+
+## Install
+
+npm:
+
+```sh
+npm install remark-preset-lint-markdown-style-guide
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
++  "plugins": ["preset-lint-markdown-style-guide"]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u preset-lint-markdown-style-guide readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
++  .use(require('remark-preset-lint-markdown-style-guide'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
+```
+
+## License
+
+[MIT](https://github.com/wooorm/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)

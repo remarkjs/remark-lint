@@ -6,8 +6,7 @@
  * @fileoverview
  *   Warn when shell code is prefixed by dollar-characters.
  *
- *   Ignored indented code blocks and fenced code blocks without language
- *   flag.
+ *   Ignores indented code blocks and fenced code blocks without language flag.
  *
  * @example {"name": "valid.md"}
  *

@@ -4,16 +4,15 @@
 
 Warn for h7+ “headings”.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-no-heading-like-paragraph
-```
+This rule is not included in any default preset
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
 
 ```markdown
 ###### Alpha
@@ -21,8 +20,13 @@ When this rule is turned on, the following file
 Bravo.
 ```
 
-When this rule is turned on, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+###### In
 
 ```markdown
 ####### Charlie
@@ -30,8 +34,53 @@ When this rule is turned on, the following file
 Delta.
 ```
 
+###### Out
+
 ```text
 1:1-1:16: This looks like a heading but has too many hashes
+```
+
+## Install
+
+```sh
+npm install remark-lint-no-heading-like-paragraph
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-no-heading-like-paragraph",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-no-heading-like-paragraph readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-heading-like-paragraph'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

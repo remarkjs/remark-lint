@@ -7,16 +7,14 @@
  *   Warn when the list-item marker style of unordered lists violate a given
  *   style.
  *
- *   Options: `string`, either `'consistent'`, `'-'`, `'*'`, or `'*'`,
- *   default: `'consistent'`.
+ *   Options: `'consistent'`, `'-'`, `'*'`, or `'*'`, default: `'consistent'`.
  *
- *   The default value, `consistent`, detects the first used list
- *   style, and will warn when a subsequent list uses a different
- *   style.
+ *   `'consistent'` detects the first used list style and warns when subsequent
+ *   lists use different styles.
  *
  * @example {"name": "valid.md"}
  *
- *   By default (`consistent`), if the file uses only one marker,
+ *   By default (`'consistent'`), if the file uses only one marker,
  *   that’s OK.
  *
  *   * Foo

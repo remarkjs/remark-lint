@@ -5,117 +5,210 @@
 Warn when the spacing between a list item’s bullet and its content
 violates a given style.
 
-Options: `string`, either `'tab-size'`, `'mixed'`, or `'space'`,
-default: `'tab-size'`.
+Options: `'tab-size'`, `'mixed'`, or `'space'`, default: `'tab-size'`.
 
-## Install
+## Presets
 
-```sh
-npm install --save remark-lint-list-item-indent
-```
+This rule is included in the following presets:
+
+| Preset | Setting |
+| ------ | ------- |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
+| [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) |  |
 
 ## Example
 
-When this rule is turned on, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-The below style is called `tab-size`.
-
-*   List
-    item.
+*···List
+····item.
 
 Paragraph.
 
-11. List
-    item.
+11.·List
+····item.
 
 Paragraph.
 
-*   List
-    item.
+*···List
+····item.
 
-*   List
-    item.
+*···List
+····item.
 ```
 
-When this rule is `'mixed'`, the following file
-`valid.md` is ok:
+###### Out
+
+No messages.
+
+##### `valid.md`
+
+When configured with `'mixed'`.
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-* List item.
+*·List item.
 
 Paragraph.
 
-11. List item
+11.·List item
 
 Paragraph.
 
-*   List
-    item.
+*···List
+····item.
 
-*   List
-    item.
+*···List
+····item.
 ```
 
-When this rule is `'mixed'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'mixed'`.
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-*   List item.
+*···List item.
 ```
+
+###### Out
 
 ```text
 1:5: Incorrect list-item indent: remove 2 spaces
 ```
 
-When this rule is `'space'`, the following file
-`valid.md` is ok:
+##### `valid.md`
+
+When configured with `'space'`.
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-* List item.
+*·List item.
 
 Paragraph.
 
-11. List item
+11.·List item
 
 Paragraph.
 
-* List
-  item.
+*·List
+··item.
 
-* List
-  item.
+*·List
+··item.
 ```
 
-When this rule is `'space'`, the following file
-`invalid.md` is **not** ok:
+###### Out
+
+No messages.
+
+##### `invalid.md`
+
+When configured with `'space'`.
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-*   List
-    item.
+*···List
+····item.
 ```
+
+###### Out
 
 ```text
 1:5: Incorrect list-item indent: remove 2 spaces
 ```
 
-When this rule is `'tab-size'`, the following file
-`invalid.md` is **not** ok:
+##### `invalid.md`
+
+When configured with `'tab-size'`.
+
+###### In
+
+Note: `·` represents a space.
 
 ```markdown
-* List
-  item.
+*·List
+··item.
 ```
+
+###### Out
 
 ```text
 1:3: Incorrect list-item indent: add 2 spaces
 ```
 
-When `'invalid'` is passed in, the following error is given:
+##### `invalid.md`
+
+When configured with `'invalid'`.
+
+###### Out
 
 ```text
 1:1: Invalid list-item indent style `invalid`: use either `'tab-size'`, `'space'`, or `'mixed'`
+```
+
+## Install
+
+```sh
+npm install remark-lint-list-item-indent
+```
+
+## Usage
+
+You probably want to use it on the CLI through a config file:
+
+```diff
+ ...
+ "remarkConfig": {
+   "plugins": [
+     ...
+     "lint",
++    "lint-list-item-indent",
+     ...
+   ]
+ }
+ ...
+```
+
+Or use it on the CLI directly
+
+```sh
+remark -u lint -u lint-list-item-indent readme.md
+```
+
+Or use this on the API:
+
+```diff
+ var remark = require('remark');
+ var report = require('vfile-reporter');
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-list-item-indent'))
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file));
+   });
 ```
 
 ## License

@@ -21,7 +21,7 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | ------ | ------- |
-| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) |  |
+| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) | `'consistent'` |
 
 ## Example
 

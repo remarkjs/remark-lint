@@ -70,7 +70,7 @@ rules(root).forEach(function (basename) {
         ])
       ].concat(includes.map(function (preset) {
         var url = remote + '/tree/master/packages/' + preset.name;
-        var option = preset.packages[rule.name];
+        var option = preset.packages[pack.name];
 
         return u('tableRow', [
           u('tableCell', [

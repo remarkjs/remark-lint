@@ -220,7 +220,7 @@ Presets can be loaded through the [`preset` setting][config-preset].
 
 External rules can be loaded just like normal rules.
 
-⚠️ means the rule has not been updates for remark-lint 6.0.0.
+⚠️ means the rule has not been updated for remark-lint 6.0.0.
 
 <!--
 This list is ordered based on the name without prefix, so

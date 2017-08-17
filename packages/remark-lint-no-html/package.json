@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-html",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "remark-lint rule to warn when HTML nodes are used",
   "license": "MIT",
   "keywords": [

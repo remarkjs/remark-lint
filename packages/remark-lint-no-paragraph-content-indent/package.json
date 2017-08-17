@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-paragraph-content-indent",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to warn when the content in paragraphs are indented",
   "license": "MIT",
   "keywords": [

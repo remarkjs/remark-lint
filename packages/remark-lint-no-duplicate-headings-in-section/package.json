@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-duplicate-headings-in-section",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "remark-lint rule to warn on duplicate headings in a section",
   "license": "MIT",
   "keywords": [

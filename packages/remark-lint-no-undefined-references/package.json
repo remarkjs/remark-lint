@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-undefined-references",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "remark-lint rule to warn when references to undefined definitions are found",
   "license": "MIT",
   "keywords": [

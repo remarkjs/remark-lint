@@ -250,6 +250,8 @@ excluding `remark-lint-no-` or `remark-lint-`
     — ⚠️ Warn about leading white-space
 *   [`remark-lint-list-item-punctuation`](https://github.com/wemake-services/remark-lint-list-item-punctuation)
     — ⚠️ check if list items end in periods
+*   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
+    - check if your links are reachable and/or unique
 *   [`remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
     — ⚠️ Ensure sentences are followed by a newline
 *   [`remark-lint-no-trailing-spaces`](https://github.com/verekia/remark-lint-no-trailing-spaces)

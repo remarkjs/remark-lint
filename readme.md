@@ -183,13 +183,15 @@ but the third is re-enabled):
 
 ## Using remark to fix your markdown
 
-One of **remark**’s cool parts is that it compiles to very clean, and highly
-cross-vendor supported markdown.  It’ll ensure list items use a single bullet,
-emphasis and strong use a standard marker, and that your table fences are
-aligned.
+You can use [`remark-stringify`][remark-stringify] to automatically format your
+markdown. It will ensure list items use a single bullet emphasis and strong
+use a standard marker, that your table fences are aligned, and more.
 
-**remark** should be able to fix most of your styling issues automatically,
-and I strongly suggest checking out how it can make your life easier :+1:
+You can use [`remark-stringify`][remark-stringify] directly in Node or via
+[`remark-cli`][cli]. In both cases, there [options](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#options)
+you can pass to change the markdown style. When using [`remark-cli`][cli],
+these can be specified as `settings`, either with the `--settings` flag or a
+`"settings"` property in your remark configuration.
 
 ## Editor Integrations
 
@@ -317,3 +319,5 @@ excluding `remark-lint-no-` or `remark-lint-`
 [preset-recommended]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-recommended
 
 [presets]: #list-of-presets
+
+[remark-stringify]: https://github.com/wooorm/remark/tree/master/packages/remark-stringify

@@ -183,13 +183,124 @@ but the third is re-enabled):
 
 ## Using remark to fix your markdown
 
-One of **remark**’s cool parts is that it compiles to very clean, and highly
-cross-vendor supported markdown.  It’ll ensure list items use a single bullet,
-emphasis and strong use a standard marker, and that your table fences are
-aligned.
+[`remark-stringify`][remark-stringify] can format markdown syntax. It ensures a
+single style is used: list items use one type of bullet (`*`, `-`, `+`),
+emphasis (`*` or `_`) and importance (`__` or `**`) use a standard marker, table
+fences are aligned, [and more][remark-stringify-options].
 
-**remark** should be able to fix most of your styling issues automatically,
-and I strongly suggest checking out how it can make your life easier :+1:
+###### Example
+
+If you `require('remark')`, [`remark-stringify`][remark-stringify] is included
+unless an output format other than markdown (such as HTML) is defined.
+
+Say we have the following file, `example.js`, showing how formatting rules can
+be used:
+
+```js
+var report = require('vfile-reporter');
+var remark = require('remark');
+var emphasisMarker = require('remark-lint-emphasis-marker');
+var strongMarker = require('remark-lint-strong-marker');
+
+remark()
+  .use(emphasisMarker, '*')
+  .use(strongMarker, '*')
+  // ^ two `remark-lint` rules.
+  .use({
+    settings: {emphasis: '*', strong: '*'}
+    // ^ `remark-stringify` settings.
+  })
+  .process('_Hello_, __world__!', function (err, file) {
+    console.error(report(err || file));
+    console.log(String(file));
+  });
+```
+
+Now, running `node example` yields warnings and a formatted file:
+
+```txt
+    1:1-1:8  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
+  1:10-1:19  warning  Strong should use `*` as a marker    strong-marker    remark-lint
+
+⚠ 2 warnings
+*Hello*, **world**!
+```
+
+###### Example
+
+If you’re using [`remark-stringify`][remark-stringify] yourself, you can pass
+options like any other plugin, like so:
+
+```js
+var report = require('vfile-reporter');
+var unified = require('unified');
+var parse = require('remark-parse');
+var stringify = require('remark-stringify');
+var emphasisMarker = require('remark-lint-emphasis-marker');
+var strongMarker = require('remark-lint-strong-marker');
+
+unified()
+  .use(parse)
+  .use(emphasisMarker, '*')
+  .use(strongMarker, '*')
+  // ^ two `remark-lint` rules.
+  .use(stringify, {emphasis: '*', strong: '*'})
+  // ^ `remark-stringify` with settings.
+  .process('_Hello_, __world__!', function (err, file) {
+    console.error(report(err || file));
+    console.log(String(file));
+  });
+```
+
+Now, when running `node example`, this results in the same output as the
+previous example.
+
+###### Example
+
+If you’re using [`remark-cli`][cli], [`remark-stringify`][remark-stringify] is
+included unless an output format other than markdown (such as HTML) is defined.
+In this case you can configure `remark-stringify` settings using the [`-s,
+--settings`][cli-settings] flag or a `"settings"` property in [remark
+configuration files][cli-config].
+
+Say we have the following file, `example.md`:
+
+```markdown
+_Hello_, __world__!
+```
+
+And our `package.json` looks as follows:
+
+```js
+  // ...
+  "remarkConfig": {
+    "settings": {
+      "emphasis": "*",
+      "strong": "*"
+    },
+    "plugins": [
+      "remark-lint-emphasis-marker",
+      "remark-lint-strong-marker"
+    ]
+  }
+  // ...
+```
+
+Now, running `remark example.md` yields warnings and a formatted file:
+
+```txt
+*Hello*, **world**!
+example.md
+    1:1-1:8  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
+  1:10-1:19  warning  Strong should use `*` as a marker    strong-marker    remark-lint
+
+⚠ 2 warnings
+```
+
+> Note: running `remark example.md -o` or `remark example.md --output`
+> overwrites `example.md` and formats it. So, if you’d run that twice (the first
+> pass lints and fixes the markdown, the second pass checks it again), you’d see
+> the output `example.md: written` as all warnings are now fixed.
 
 ## Editor Integrations
 
@@ -317,3 +428,11 @@ excluding `remark-lint-no-` or `remark-lint-`
 [preset-recommended]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-recommended
 
 [presets]: #list-of-presets
+
+[remark-stringify]: https://github.com/wooorm/remark/tree/master/packages/remark-stringify
+
+[remark-stringify-options]: https://github.com/wooorm/remark/tree/master/packages/remark-stringify#options
+
+[cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
+
+[cli-config]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md

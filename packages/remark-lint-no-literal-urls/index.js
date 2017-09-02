@@ -6,6 +6,14 @@
  * @fileoverview
  *   Warn when URLs without angle-brackets are used.
  *
+ *   ## Fix
+ *
+ *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   never creates literal URLs and always uses angle-brackets.
+ *
+ *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   on how to automatically fix warnings for this rule.
+ *
  * @example {"name": "valid.md"}
  *
  *   <http://foo.bar/baz>

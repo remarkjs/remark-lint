@@ -4,6 +4,14 @@
 
 Warn when a heading is indented.
 
+## Fix
+
+[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+removes all unneeded indentation around headings.
+
+See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+on how to automatically fix warnings for this rule.
+
 ## Presets
 
 This rule is not included in any default preset

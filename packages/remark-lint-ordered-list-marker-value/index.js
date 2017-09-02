@@ -14,6 +14,17 @@
  *   be the same as the relative starting point.  When set to `'one'`, bullets
  *   should always be `1`.
  *
+ *   ## Fix
+ *
+ *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   retains the number of the first list-item bullet, and by default
+ *   increments the other items. Pass
+ *   [`incrementListMarker: false`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsincrementlistmarker)
+ *   to not increment further list-items.
+ *
+ *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   on how to automatically fix warnings for this rule.
+ *
  * @example {"name": "valid.md"}
  *
  *   The default value is `ordered`, so unless changed, the below

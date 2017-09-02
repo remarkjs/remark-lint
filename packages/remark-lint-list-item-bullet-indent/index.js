@@ -6,6 +6,14 @@
  * @fileoverview
  *   Warn when list item bullets are indented.
  *
+ *   ## Fix
+ *
+ *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   removes all indentation before bullets.
+ *
+ *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   on how to automatically fix warnings for this rule.
+ *
  * @example {"name": "valid.md"}
  *
  *   Paragraph.

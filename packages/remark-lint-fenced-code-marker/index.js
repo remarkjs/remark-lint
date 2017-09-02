@@ -11,6 +11,16 @@
  *   `'consistent'` detects the first used fenced code marker style and warns
  *   when subsequent fenced code-blocks use different styles.
  *
+ *   ## Fix
+ *
+ *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   formats fences using a backtick (`` '`' ``) by default. Pass
+ *   [`fence: '~'`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsfence)
+ *   to use tildes instead.
+ *
+ *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   on how to automatically fix warnings for this rule.
+ *
  * @example {"name": "valid.md"}
  *
  *   Indented code blocks are not affected by this rule:

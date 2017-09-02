@@ -4,6 +4,14 @@
 
 Warn for angle-bracketed links without protocol.
 
+## Fix
+
+[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+adds a protocol where needed.
+
+See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+on how to automatically fix warnings for this rule.
+
 ## Presets
 
 This rule is included in the following presets:
@@ -22,6 +30,9 @@ This rule is included in the following presets:
 ```markdown
 <http://www.example.com>
 <mailto:foo@bar.com>
+
+Most markdown vendors don’t recognize the following as a link:
+<www.example.com>
 ```
 
 ###### Out
@@ -33,14 +44,13 @@ No messages.
 ###### In
 
 ```markdown
-<www.example.com>
 <foo@bar.com>
 ```
 
 ###### Out
 
 ```text
-2:1-2:14: All automatic links must start with a protocol
+1:1-1:14: All automatic links must start with a protocol
 ```
 
 ## Install

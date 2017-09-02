@@ -10,6 +10,17 @@ default: `'consistent'`.
 `'consistent'` detects the first used heading style and warns when
 subsequent headings use different styles.
 
+## Fix
+
+[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+formats headings as ATX by default. This can be configured with the
+[`setext`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionssetext)
+and [`closeAtx`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionscloseatx)
+options.
+
+See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+on how to automatically fix warnings for this rule.
+
 ## Presets
 
 This rule is included in the following presets:

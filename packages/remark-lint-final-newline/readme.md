@@ -6,6 +6,14 @@ Warn when a newline at the end of a file is missing. Empty files are allowed.
 
 See [StackExchange](http://unix.stackexchange.com/questions/18743) for why.
 
+## Fix
+
+[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+always adds a final newline to files.
+
+See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+on how to automatically fix warnings for this rule.
+
 ## Example
 
 ##### `valid.md`

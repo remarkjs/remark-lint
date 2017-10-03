@@ -57,7 +57,7 @@ When configured with `'atx-closed'`.
 ###### In
 
 ```markdown
-# Delta ##
+# Delta #
 
 ## Echo ##
 

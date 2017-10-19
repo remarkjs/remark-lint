@@ -313,6 +313,9 @@ If you want to run all of **remark** from **Atom**, use
 To run **remark**, optionally with **remark-lint** from **Gulp**, use
 [**gulp-remark**][gulp-remark].
 
+To check markdown documents editing with Vim, use
+[**ale**][ale].
+
 I’m very interested in more integrations.  Let me know if I can help.
 
 ## List of Presets
@@ -422,6 +425,8 @@ excluding `remark-lint-no-` or `remark-lint-`
 [linter-remark]: https://github.com/wooorm/linter-remark
 
 [gulp-remark]: https://github.com/denysdovhan/gulp-remark
+
+[ale]: https://github.com/w0rp/ale
 
 [config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
 

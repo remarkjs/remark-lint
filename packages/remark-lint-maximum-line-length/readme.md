@@ -25,6 +25,53 @@ This rule is included in the following presets:
 
 ## Example
 
+##### `valid-mixed-line-endings.md`
+
+When configured with `10`.
+
+###### In
+
+Note: `␍␊` represents a carriage return and a line feed.
+
+Note: `␊` represents a line feed.
+
+```markdown
+0123456789␍␊
+0123456789␊
+01234␍␊
+01234␊
+```
+
+###### Out
+
+No messages.
+
+##### `invalid-mixed-line-endings.md`
+
+When configured with `10`.
+
+###### In
+
+Note: `␍␊` represents a carriage return and a line feed.
+
+Note: `␊` represents a line feed.
+
+```markdown
+012345678901␍␊
+012345678901␊
+01234567890␍␊
+01234567890␊
+```
+
+###### Out
+
+```text
+1:13: Line must be at most 10 characters
+2:13: Line must be at most 10 characters
+3:12: Line must be at most 10 characters
+4:12: Line must be at most 10 characters
+```
+
 ##### `invalid.md`
 
 When configured with `80`.

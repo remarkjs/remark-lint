@@ -60,7 +60,27 @@
  *   4:86: Line must be at most 80 characters
  *   6:99: Line must be at most 80 characters
  *   8:97: Line must be at most 80 characters
- */
+ *
+ * @example {"name": "valid-mixed-line-endings.md", "setting": 10, "config": {"positionless": true}}
+ *
+ *   0123456789␍␊
+ *   0123456789␊
+ *   01234␍␊
+ *   01234␊
+ *
+ * @example {"name": "invalid-mixed-line-endings.md", "setting": 10, "label": "input", "config": {"positionless": true}}
+ *
+ *   012345678901␍␊
+ *   012345678901␊
+ *   01234567890␍␊
+ *   01234567890␊
+ *
+ * @example {"name": "invalid-mixed-line-endings.md", "setting": 10, "label": "output", "config": {"positionless": true}}
+ *
+ *   1:13: Line must be at most 10 characters
+ *   2:13: Line must be at most 10 characters
+ *   3:12: Line must be at most 10 characters
+ *   4:12: Line must be at most 10 characters */
 
 'use strict';
 
@@ -77,7 +97,7 @@ var end = position.end;
 function maximumLineLength(ast, file, preferred) {
   var style = preferred && preferred !== true ? preferred : 80;
   var content = file.toString();
-  var matrix = content.split('\n');
+  var matrix = content.split(/\r?\n/);
   var index = -1;
   var length = matrix.length;
   var lineLength;

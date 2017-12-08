@@ -9,11 +9,11 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   always uses one blank line between blocks if possible, or two lines when
  *   needed.
  *
- *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}

@@ -11,13 +11,13 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   uses `'tab-size'` (named `'tab'` there) by default to ensure markdown is
  *   seen the same way across vendors. This can be configured with the
- *   [`listItemIndent`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionslistitemindent)
+ *   [`listItemIndent`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionslistitemindent)
  *   option. This rule’s `'space'` option is named `'1'` there.
  *
- *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}

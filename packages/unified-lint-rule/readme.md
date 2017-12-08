@@ -15,8 +15,8 @@ npm install unified-lint-rule
 
 [MIT][] © [Titus Wormer][author]
 
-[lint]: https://github.com/wooorm/remark-lint
+[lint]: https://github.com/remarkjs/remark-lint
 
-[mit]: https://github.com/wooorm/remark-lint/blob/master/LICENSE
+[mit]: https://github.com/remarkjs/remark-lint/blob/master/LICENSE
 
 [author]: http://wooorm.com

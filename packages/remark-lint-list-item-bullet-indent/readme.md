@@ -6,10 +6,10 @@ Warn when list item bullets are indented.
 
 ## Fix
 
-[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
 removes all indentation before bullets.
 
-See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets
@@ -18,7 +18,7 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | ------ | ------- |
-| [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) |  |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-recommended) |  |
 
 ## Example
 
@@ -102,4 +102,4 @@ Or use this on the API:
 
 ## License
 
-[MIT](https://github.com/wooorm/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)
+[MIT](https://github.com/remarkjs/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)

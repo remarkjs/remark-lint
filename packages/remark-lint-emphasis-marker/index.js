@@ -13,12 +13,12 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   formats emphasis using an underscore (`_`) by default. Pass
- *   [`emphasis: '*'`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsemphasis)
+ *   [`emphasis: '*'`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsemphasis)
  *   to use asterisks instead.
  *
- *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"setting": "*", "name": "valid.md"}

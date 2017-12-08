@@ -324,9 +324,9 @@ Presets can be loaded through the [`preset` setting][config-preset].
 
 <!--presets start-->
 
-*   [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) — rules that enforce consistency
-*   [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
-*   [`remark-preset-lint-recommended`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
+*   [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-consistent) — rules that enforce consistency
+*   [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
+*   [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
 
 <!--presets end-->
 
@@ -377,7 +377,7 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 ## Related
 
-*   [`remark-validate-links`](https://github.com/wooorm/remark-validate-links)
+*   [`remark-validate-links`](https://github.com/remarkjs/remark-validate-links)
     — Validate if links point to existing headings and files in markdown
 
 ## License
@@ -386,17 +386,17 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/remark-lint.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint.svg
 
-[build-status]: https://travis-ci.org/wooorm/remark-lint
+[build-status]: https://travis-ci.org/remarkjs/remark-lint
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/remark-lint
+[coverage-status]: https://codecov.io/github/remarkjs/remark-lint
 
-[chat-badge]: https://img.shields.io/gitter/room/wooorm/remark.svg
+[chat-badge]: https://img.shields.io/gitter/room/remarkjs/Lobby.svg
 
-[chat]: https://gitter.im/wooorm/remark
+[chat]: https://gitter.im/remarkjs/Lobby
 
 [license]: LICENSE
 
@@ -404,23 +404,23 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[remark]: https://github.com/wooorm/remark
+[remark]: https://github.com/remarkjs/remark
 
-[logo]: https://cdn.rawgit.com/wooorm/remark-lint/b177ac6/logo.svg
+[logo]: https://cdn.rawgit.com/remarkjs/remark-lint/b177ac6/logo.svg
 
-[screenshot]: https://cdn.rawgit.com/wooorm/remark-lint/master/screenshot.png
+[screenshot]: https://cdn.rawgit.com/remarkjs/remark-lint/master/screenshot.png
 
 [rules]: doc/rules.md
 
-[api]: https://github.com/wooorm/remark/tree/master/packages/remark
+[api]: https://github.com/remarkjs/remark/tree/master/packages/remark
 
-[cli]: https://github.com/wooorm/remark/tree/master/packages/remark-cli
+[cli]: https://github.com/remarkjs/remark/tree/master/packages/remark-cli
 
-[remark-plugins]: https://github.com/wooorm/remark/blob/master/doc/plugins.md
+[remark-plugins]: https://github.com/remarkjs/remark/blob/master/doc/plugins.md
 
 [linter-markdown]: https://atom.io/packages/linter-markdown
 
-[message-control]: https://github.com/wooorm/remark-message-control#markers
+[message-control]: https://github.com/remarkjs/remark-message-control#markers
 
 [linter-remark]: https://github.com/wooorm/linter-remark
 
@@ -428,15 +428,15 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 [ale]: https://github.com/w0rp/ale
 
-[config-preset]: https://github.com/wooorm/unified-engine/blob/master/doc/configure.md#presets
+[config-preset]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md#presets
 
-[preset-recommended]: https://github.com/wooorm/remark-lint/blob/master/packages/remark-preset-lint-recommended
+[preset-recommended]: https://github.com/remarkjs/remark-lint/blob/master/packages/remark-preset-lint-recommended
 
 [presets]: #list-of-presets
 
-[remark-stringify]: https://github.com/wooorm/remark/tree/master/packages/remark-stringify
+[remark-stringify]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify
 
-[remark-stringify-options]: https://github.com/wooorm/remark/tree/master/packages/remark-stringify#options
+[remark-stringify-options]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#options
 
 [cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
 

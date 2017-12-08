@@ -10,8 +10,8 @@
     "table",
     "indent"
   ],
-  "repository": "https://github.com/wooorm/remark-lint/tree/master/packages/remark-lint-no-table-indentation",
-  "bugs": "https://github.com/wooorm/remark-lint/issues",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-table-indentation",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"

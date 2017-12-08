@@ -24,28 +24,28 @@ npm install remark-lint
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/wooorm/remark-lint/b177ac6/logo.svg
+[logo]: https://cdn.rawgit.com/remarkjs/remark-lint/b177ac6/logo.svg
 
-[build-badge]: https://img.shields.io/travis/wooorm/remark-lint.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint.svg
 
-[build-status]: https://travis-ci.org/wooorm/remark-lint
+[build-status]: https://travis-ci.org/remarkjs/remark-lint
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-lint.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/remark-lint
+[coverage-status]: https://codecov.io/github/remarkjs/remark-lint
 
-[chat-badge]: https://img.shields.io/gitter/room/wooorm/remark.svg
+[chat-badge]: https://img.shields.io/gitter/room/remarkjs/remark.svg
 
-[chat]: https://gitter.im/wooorm/remark
+[chat]: https://gitter.im/remarkjs/remark
 
-[repo]: https://github.com/wooorm/remark-lint#readme
+[repo]: https://github.com/remarkjs/remark-lint#readme
 
-[remark]: https://github.com/wooorm/remark
+[remark]: https://github.com/remarkjs/remark
 
-[plugins]: https://github.com/wooorm/remark/blob/master/doc/plugins.md
+[plugins]: https://github.com/remarkjs/remark/blob/master/doc/plugins.md
 
-[license]: https://github.com/wooorm/remark-lint/blob/master/LICENSE
+[license]: https://github.com/remarkjs/remark-lint/blob/master/LICENSE
 
 [author]: http://wooorm.com
 
-[suppres]: https://github.com/wooorm/remark-lint#configuring-remark-lint
+[suppres]: https://github.com/remarkjs/remark-lint#configuring-remark-lint

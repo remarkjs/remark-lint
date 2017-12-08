@@ -14,17 +14,17 @@ Note: horizontal rules are also called “thematic break”.
 
 ## Fix
 
-[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
 has three settings that define how rules are created:
 
-*   [`rule`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsrule)
+*   [`rule`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsrule)
     (default: `*`) — Marker to use
-*   [`ruleRepetition`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsrulerepetition)
+*   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsrulerepetition)
     (default: `3`) — Number of markers to use
-*   [`ruleSpaces`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsrulespaces)
+*   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsrulespaces)
     (default: `true`) — Whether to pad markers with spaces
 
-See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets
@@ -33,8 +33,8 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | ------ | ------- |
-| [`remark-preset-lint-consistent`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) | `'---'` |
+| [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-consistent) | `'consistent'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) | `'---'` |
 
 ## Example
 
@@ -141,4 +141,4 @@ Or use this on the API:
 
 ## License
 
-[MIT](https://github.com/wooorm/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)
+[MIT](https://github.com/remarkjs/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)

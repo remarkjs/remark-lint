@@ -6,19 +6,19 @@ Warn when table pipes are not aligned.
 
 ## Fix
 
-[`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
 tries to align tables by default. Pass
-[`paddedTable: false`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionspaddedtable)
+[`paddedTable: false`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionspaddedtable)
 to not align cells.
 
 Aligning cells perfectly is impossible as some characters (such as emoji or
 Chinese characters) are rendered differently in different browsers, terminals,
 and editors. You can pass your own
-[`stringLength`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsstringlength)
+[`stringLength`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsstringlength)
 function to customize how cells are aligned. In which case this rule must
 be turned off.
 
-See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets
@@ -27,7 +27,7 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | ------ | ------- |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
 
 ## Example
 
@@ -107,4 +107,4 @@ Or use this on the API:
 
 ## License
 
-[MIT](https://github.com/wooorm/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)
+[MIT](https://github.com/remarkjs/remark-lint/blob/master/LICENSE) © [Titus Wormer](http://wooorm.com)

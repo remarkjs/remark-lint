@@ -8,10 +8,10 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   removes all unneeded padding around a heading’s content.
  *
- *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}
@@ -102,7 +102,7 @@ function noHeadingContentIndent(ast, file) {
         char = contents.charAt(index);
       }
 
-      /* istanbul ignore if - CR/LF bug: wooorm/remark#195. */
+      /* istanbul ignore if - CR/LF bug: remarkjs/remark#195. */
       if (!char) {
         return;
       }

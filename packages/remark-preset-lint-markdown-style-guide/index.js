@@ -11,8 +11,8 @@
  *
  *   Both `space-sentence:1` and `space-sentence:2` are not supported
  *   by `remark-lint`.  You could set-up
- *   [`remark-retext`](https://github.com/wooorm/remark-retext) with
- *   [`retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
+ *   [`remark-retext`](https://github.com/remarkjs/remark-retext) with
+ *   [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
  *   to check this though.
  *
  *   ###### `wrap`

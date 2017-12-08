@@ -13,12 +13,12 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   formats tables with padding by default. Pass
- *   [`spacedTable: false`](https://github.com/wooorm/remark/tree/master/packages/remark-stringify#optionsspacedtable)
+ *   [`spacedTable: false`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsspacedtable)
  *   to not use padding.
  *
- *   See [Using remark to fix your markdown](https://github.com/wooorm/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md", "setting": "padded"}

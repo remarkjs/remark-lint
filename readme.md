@@ -26,6 +26,7 @@ processor powered by [plugins][remark-plugins] (such as this one).
 *   [List of Presets](#list-of-presets)
 *   [List of External Rules](#list-of-external-rules)
 *   [Related](#related)
+*   [Contribute](#contribute)
 *   [License](#license)
 
 ## Installation
@@ -380,6 +381,13 @@ excluding `remark-lint-no-` or `remark-lint-`
 *   [`remark-validate-links`](https://github.com/remarkjs/remark-validate-links)
     — Validate if links point to existing headings and files in markdown
 
+## Contribute
+
+See [`contribute.md` in `remarkjs/remarkj`][contribute] for ways to get started.
+
+This organisation has a [Code of Conduct][coc].  By interacting with this
+repository, organisation, or community you agree to abide by its terms.
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -441,3 +449,7 @@ excluding `remark-lint-no-` or `remark-lint-`
 [cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
 
 [cli-config]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
+
+[contribute]: https://github.com/remarkjs/remark/blob/master/contributing.md
+
+[coc]: https://github.com/remarkjs/remark/blob/master/code-of-conduct.md

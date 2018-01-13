@@ -4,14 +4,14 @@
 [![Coverage Status][coverage-badge]][coverage-status]
 [![Chat][chat-badge]][chat]
 
-**remark-lint** is a markdown code style linter.  Another linter?  Yes.
+`remark-lint` is a markdown code style linter.  Another linter?  Yes.
 Ensuring the markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes
 sure less refactoring is needed afterwards.
 
 What is quality? That’s up to you, but there are sensible [presets][].
 
-**remark-lint** is built on [**remark**][remark], a powerful markdown
+`remark-lint` is built on [**remark**][remark], a powerful markdown
 processor powered by [plugins][remark-plugins] (such as this one).
 
 ## Table of Contents
@@ -41,7 +41,8 @@ npm install remark-lint
 
 ![Example of how remark-lint looks on screen][screenshot]
 
-Use `remark-lint` with [`remark-cli`][cli], and a [preset][preset-recommended].
+Use `remark-lint` with [`remark-cli`][cli] through a
+[preset][preset-recommended].
 
 ```bash
 npm install --save remark-cli remark-preset-lint-recommended
@@ -61,7 +62,7 @@ Then, configure **remark** in your `package.json`:
   // ...
 ```
 
-Let’s say there’s an `example.md`, which looks as follows:
+Let’s say there’s an `example.md` that looks as follows:
 
 ```md
 * Hello
@@ -69,7 +70,7 @@ Let’s say there’s an `example.md`, which looks as follows:
 [World][]
 ```
 
-Now, running our `lint-md` script with npm, `npm run lint-md`, yields:
+Now, running our `lint-md` script with `npm run lint-md` yields:
 
 ```txt
 example.md
@@ -86,7 +87,7 @@ turn them off).
 Use `remark-lint` together with [`remark`][api]:
 
 ```bash
-npm install remark remark-lint remark-lint-first-heading-level
+npm install remark remark-preset-lint-markdown-style-guide
 ```
 
 Let’s say `example.js` looks as follows:
@@ -115,8 +116,8 @@ Now, running `node example.js` yields:
 
 ## Configuring remark-lint
 
-**remark-lint** is a **remark** plug-in and supports configuration
-through its [configuration files][cli].
+`remark-lint` is a **remark** plug-in and when used on the CLI supports
+configuration through its [configuration files][cli].
 
 An example `.remarkrc` file could look as follows:
 
@@ -129,8 +130,8 @@ An example `.remarkrc` file could look as follows:
 }
 ```
 
-Where the object at `plugins.lint` is a map of `ruleId`s and
-their values, which precede over presets.
+The preset turns on `remark-lint-list-item-indent`, but setting it to `false`
+later turns it off again.
 
 Using our `example.md` from before:
 
@@ -150,10 +151,10 @@ example.md
 ```
 
 In addition, you can also provide configuration comments to turn a rule
-on or off inside a file.  Note that you cannot change what a setting,
-such as `maximum-line-length`, just whether they are shown or not.
+on or off inside a file.  Note that you cannot change a setting, such as
+`maximum-line-length`, just whether messages are shown or not.
 Read more about configuration comments in
-[**remark-message-control**][message-control]s documentation.
+[`remark-message-control`][message-control]s documentation.
 
 The following file will warn twice for the duplicate headings:
 
@@ -314,14 +315,13 @@ If you want to run all of **remark** from **Atom**, use
 To run **remark**, optionally with **remark-lint** from **Gulp**, use
 [**gulp-remark**][gulp-remark].
 
-To check markdown documents editing with Vim, use
-[**ale**][ale].
+To check markdown documents editing with Vim, use [**ale**][ale].
 
-I’m very interested in more integrations.  Let me know if I can help.
+We’re interested in more integrations.  Let us know if we can help.
 
 ## List of Presets
 
-Presets can be loaded through the [`preset` setting][config-preset].
+Presets can be loaded just like other plugins.
 
 <!--presets start-->
 
@@ -383,7 +383,7 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 ## Contribute
 
-See [`contribute.md` in `remarkjs/remarkj`][contribute] for ways to get started.
+See [`contribute.md` in `remarkjs/remark`][contribute] for ways to get started.
 
 This organisation has a [Code of Conduct][coc].  By interacting with this
 repository, organisation, or community you agree to abide by its terms.
@@ -435,8 +435,6 @@ repository, organisation, or community you agree to abide by its terms.
 [gulp-remark]: https://github.com/denysdovhan/gulp-remark
 
 [ale]: https://github.com/w0rp/ale
-
-[config-preset]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md#presets
 
 [preset-recommended]: https://github.com/remarkjs/remark-lint/blob/master/packages/remark-preset-lint-recommended
 

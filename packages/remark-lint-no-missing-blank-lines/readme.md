@@ -14,7 +14,7 @@ between their contents by passing `{exceptTightLists: true}` (default:
 always uses one blank line between blocks if possible, or two lines when
 needed. The style of the list-items persists.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

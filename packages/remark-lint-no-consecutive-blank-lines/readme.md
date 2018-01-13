@@ -11,7 +11,7 @@ needed between a list and indented code, and two lists.
 always uses one blank line between blocks if possible, or two lines when
 needed.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

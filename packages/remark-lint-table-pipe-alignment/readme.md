@@ -18,7 +18,7 @@ and editors. You can pass your own
 function to customize how cells are aligned. In which case this rule must
 be turned off.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

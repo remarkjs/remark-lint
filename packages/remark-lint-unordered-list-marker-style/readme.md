@@ -17,7 +17,7 @@ formats unordered lists using a hyphen-minus (`-`) by default. Pass
 [`bullet: '*'` or `bullet: '+'`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsbullet)
 to use asterisks or plusses instead.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

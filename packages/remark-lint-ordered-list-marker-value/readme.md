@@ -20,7 +20,7 @@ increments the other items. Pass
 [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsincrementlistmarker)
 to not increment further list-items.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

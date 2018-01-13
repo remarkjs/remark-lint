@@ -16,7 +16,7 @@ formats fences using a backtick (``'`'``) by default. Pass
 [`fence: '~'`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsfence)
 to use tildes instead.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

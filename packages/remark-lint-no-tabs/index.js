@@ -12,7 +12,7 @@
  *   uses spaces where tabs are used for indentation, but retains tabs used in
  *   content.
  *
- *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint/tree/formatting#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}

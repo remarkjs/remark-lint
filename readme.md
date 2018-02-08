@@ -361,6 +361,8 @@ excluding `remark-lint-no-` or `remark-lint-`
     — Ensure every heading is followed by content (forming a section)
 *   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
     — Ensure headings have the appropriate length
+*   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
+    — Ensure headings parsing is not broken by accidental irregular whitespaces
 *   [`remark-lint-no-leading-spaces`](https://github.com/verekia/remark-lint-no-leading-spaces)
     — ⚠️ Warn about leading white-space
 *   [`remark-lint-list-item-punctuation`](https://github.com/wemake-services/remark-lint-list-item-punctuation)

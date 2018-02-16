@@ -44,6 +44,10 @@
  *
  *   [foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>
  *
+ *   Also, inline code is fine:
+ *
+ *   `var longLine = 'This line is simply toooooooooooooooooooooooooooooooooooooooooooo long'`
+ *
  * @example {"name": "invalid.md", "setting": 80, "label": "input", "config": {"positionless": true}}
  *
  *   This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -185,5 +189,6 @@ function isIgnored(node) {
   return node.type === 'heading' ||
     node.type === 'table' ||
     node.type === 'code' ||
+    node.type === 'inlineCode' ||
     node.type === 'definition';
 }

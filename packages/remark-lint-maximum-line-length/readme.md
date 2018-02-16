@@ -126,6 +126,10 @@ The following is also fine, because there is no white-space.
 In addition, definitions are also fine:
 
 [foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>
+
+Also, inline code is fine:
+
+`var longLine = 'This line is simply toooooooooooooooooooooooooooooooooooooooooooo long'`
 ```
 
 ###### Out

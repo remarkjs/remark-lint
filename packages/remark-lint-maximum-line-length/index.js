@@ -11,8 +11,7 @@
  *   Ignores nodes which cannot be wrapped, such as headings, tables,
  *   code, and definitions.
  *
- *   Ignores nodes which cannot be wrapped, such as headings, tables,
- *   code, and definitions.
+ *   Inline code is okay if it doesn't have any break point.
  *
  *   URLs in images and links are okay if they occur at or after the wrap,
  *   except when there’s white-space after them.
@@ -44,9 +43,9 @@
  *
  *   [foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>
  *
- *   Also, inline code is fine:
+ *   Also, inline code with out break points are fine:
  *
- *   `var longLine = 'This line is simply toooooooooooooooooooooooooooooooooooooooooooo long'`
+ *   `http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables`
  *
  * @example {"name": "invalid.md", "setting": 80, "label": "input", "config": {"positionless": true}}
  *
@@ -59,11 +58,14 @@
  *
  *   <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables> and such.
  *
+ *   This inline code can also have a break point `This is a loooooooong inline code with break point`.
+ *
  * @example {"name": "invalid.md", "setting": 80, "label": "output", "config": {"positionless": true}}
  *
  *   4:86: Line must be at most 80 characters
  *   6:99: Line must be at most 80 characters
  *   8:97: Line must be at most 80 characters
+ *   10:99: Line must be at most 80 characters
  *
  * @example {"name": "valid-mixed-line-endings.md", "setting": 10, "config": {"positionless": true}}
  *
@@ -112,6 +114,8 @@ function maximumLineLength(ast, file, preferred) {
 
   visit(ast, 'link', validateLink);
   visit(ast, 'image', validateLink);
+
+  visit(ast, 'inlineCode', validateInlineCode);
 
   /* Iterate over every line, and warn for
    * violating lines. */
@@ -181,6 +185,28 @@ function maximumLineLength(ast, file, preferred) {
 
     whitelist(initial.line - 1, final.line);
   }
+
+  /* Check if inline code have a break point, if it
+   * doesn’t have one, ignore it */
+  function validateInlineCode(node, pos, parent) {
+    var inlineCode = parent.children[pos].value;
+    var initial = start(node);
+    var final = end(node);
+
+    /* No whitelisting when starting after the border,
+     * or ending before it. */
+    if (initial.column > style || final.column < style) {
+      return;
+    }
+
+    /* No whitelisting when the inline code can have
+     * a break point. */
+    if (inlineCode.includes(' ')) {
+      return;
+    }
+
+    whitelist(initial.line - 1, final.line);
+  }
 }
 
 /* Check if `node` is applicable, as in, if it should be
@@ -189,6 +215,5 @@ function isIgnored(node) {
   return node.type === 'heading' ||
     node.type === 'table' ||
     node.type === 'code' ||
-    node.type === 'inlineCode' ||
     node.type === 'definition';
 }

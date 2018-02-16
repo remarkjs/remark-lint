@@ -25,6 +25,8 @@
  *
  *   <http://this-link-is-fine.com>
  *
+ *   `http://also-this-link-is-fine.com`
+ *
  *   [foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
  *
  *   <http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables>

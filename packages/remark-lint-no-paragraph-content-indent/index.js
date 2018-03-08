@@ -104,7 +104,7 @@ function noParagraphContentIndent(tree, file) {
         return;
       }
 
-      if (first === true && ws(toString(node).charAt(0))) {
+      if (first && ws(toString(node).charAt(0))) {
         file.message(message, node.position.start);
       }
 
@@ -163,7 +163,7 @@ function head(node) {
 }
 
 function applicable(node) {
-  return 'value' in node || 'alt' in node;
+  return 'value' in node || ('alt' in node && node.alt !== null);
 }
 
 function toString(node) {

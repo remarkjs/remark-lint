@@ -5,3 +5,5 @@ coverage/
 node_modules/
 remark-lint.js
 remark-lint.min.js
+yarn.lock
+package-lock.json

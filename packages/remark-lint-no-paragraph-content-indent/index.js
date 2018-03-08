@@ -163,7 +163,7 @@ function head(node) {
 }
 
 function applicable(node) {
-  return 'value' in node || ('alt' in node && node.alt !== null);
+  return 'value' in node || node.alt;
 }
 
 function toString(node) {

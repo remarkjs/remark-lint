@@ -32,6 +32,8 @@
  *
  *   ![image reference][] text
  *
+ *   [![][text]][text]
+ *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   ·Alpha
@@ -56,6 +58,8 @@
  *
  *   ![ image reference][] text
  *
+ *   [![ ][text]][text]
+ *
  * @example {"name": "invalid.md", "label": "output"}
  *
  *   1:1: Expected no indentation in paragraph content
@@ -67,6 +71,7 @@
  *   17:5: Expected no indentation in paragraph content
  *   19:1: Expected no indentation in paragraph content
  *   21:1: Expected no indentation in paragraph content
+ *   23:2: Expected no indentation in paragraph content
  */
 
 'use strict';

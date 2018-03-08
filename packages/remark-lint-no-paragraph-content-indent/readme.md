@@ -38,6 +38,8 @@ juliett.
 ![image]() text
 
 ![image reference][] text
+
+[![][text]][text]
 ```
 
 ###### Out
@@ -72,6 +74,8 @@ Bravo
 ![ image]() text
 
 ![ image reference][] text
+
+[![ ][text]][text]
 ```
 
 ###### Out
@@ -86,6 +90,7 @@ Bravo
 17:5: Expected no indentation in paragraph content
 19:1: Expected no indentation in paragraph content
 21:1: Expected no indentation in paragraph content
+23:2: Expected no indentation in paragraph content
 ```
 
 ## Install

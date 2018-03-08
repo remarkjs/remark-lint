@@ -32,6 +32,8 @@
  *
  *   ![image reference][] text
  *
+ *   [![][text]][text]
+ *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   ·Alpha
@@ -56,6 +58,8 @@
  *
  *   ![ image reference][] text
  *
+ *   [![ ][text]][text]
+ *
  * @example {"name": "invalid.md", "label": "output"}
  *
  *   1:1: Expected no indentation in paragraph content
@@ -67,6 +71,7 @@
  *   17:5: Expected no indentation in paragraph content
  *   19:1: Expected no indentation in paragraph content
  *   21:1: Expected no indentation in paragraph content
+ *   23:2: Expected no indentation in paragraph content
  */
 
 'use strict';
@@ -104,7 +109,7 @@ function noParagraphContentIndent(tree, file) {
         return;
       }
 
-      if (first === true && ws(toString(node).charAt(0))) {
+      if (first && ws(toString(node).charAt(0))) {
         file.message(message, node.position.start);
       }
 
@@ -163,7 +168,7 @@ function head(node) {
 }
 
 function applicable(node) {
-  return 'value' in node || 'alt' in node;
+  return 'value' in node || node.alt;
 }
 
 function toString(node) {

@@ -68,6 +68,8 @@ function linebreakStyle(ast, file, preferred) {
   var index = content.indexOf('\n');
   var type;
 
+  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+
   while (index !== -1) {
     type = content.charAt(index - 1) === '\r' ? 'windows' : 'unix';
 

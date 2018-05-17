@@ -21,22 +21,22 @@ This rule is included in the following presets:
 ###### In
 
 ````markdown
-        ```sh
-        echo a
-        echo a > file
-        ```
+```sh
+echo a
+echo a > file
+```
 
-        ```zsh
-        $ echo a
-        a
-        $ echo a > file
-        ```
+```zsh
+$ echo a
+a
+$ echo a > file
+```
 
-        It’s fine to use dollars in non-shell code.
+It’s fine to use dollars in non-shell code.
 
-        ```js
-        $('div').remove();
-        ```
+```js
+$('div').remove();
+```
 ````
 
 ###### Out
@@ -48,10 +48,10 @@ No messages.
 ###### In
 
 ````markdown
-        ```bash
-        $ echo a
-        $ echo a > file
-        ```
+```bash
+$ echo a
+$ echo a > file
+```
 ````
 
 ###### Out

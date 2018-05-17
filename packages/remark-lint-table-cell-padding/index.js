@@ -215,7 +215,7 @@ function tableCellPadding(tree, file, preferred) {
 }
 
 function inferSizes(tree) {
-  var sizes = Array(tree.align.length);
+  var sizes = new Array(tree.align.length);
 
   tree.children.forEach(row);
 

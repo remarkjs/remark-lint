@@ -56,15 +56,15 @@ When configured with `'indented'`.
 ###### In
 
 ````markdown
-        ```
-        alpha();
-        ```
+```
+alpha();
+```
 
-        Paragraph.
+Paragraph.
 
-        ```
-        bravo();
-        ```
+```
+bravo();
+```
 ````
 
 ###### Out
@@ -81,15 +81,15 @@ When configured with `'fenced'`.
 ###### In
 
 ````markdown
-        ```
-        alpha();
-        ```
+```
+alpha();
+```
 
-        Paragraph.
+Paragraph.
 
-        ```
-        bravo();
-        ```
+```
+bravo();
+```
 ````
 
 ###### Out
@@ -122,13 +122,13 @@ Paragraph.
 ###### In
 
 ````markdown
-            alpha();
+    alpha();
 
-        Paragraph.
+Paragraph.
 
-        ```
-        bravo();
-        ```
+```
+bravo();
+```
 ````
 
 ###### Out

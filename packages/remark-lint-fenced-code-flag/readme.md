@@ -28,9 +28,9 @@ This rule is included in the following presets:
 ###### In
 
 ````markdown
-        ```alpha
-        bravo();
-        ```
+```alpha
+bravo();
+```
 ````
 
 ###### Out
@@ -42,9 +42,9 @@ No messages.
 ###### In
 
 ````markdown
-        ```
-        alpha();
-        ```
+```
+alpha();
+```
 ````
 
 ###### Out
@@ -60,9 +60,9 @@ When configured with `{ allowEmpty: true }`.
 ###### In
 
 ````markdown
-        ```
-        alpha();
-        ```
+```
+alpha();
+```
 ````
 
 ###### Out
@@ -76,9 +76,9 @@ When configured with `{ allowEmpty: false }`.
 ###### In
 
 ````markdown
-        ```
-        alpha();
-        ```
+```
+alpha();
+```
 ````
 
 ###### Out
@@ -94,9 +94,9 @@ When configured with `[ 'alpha' ]`.
 ###### In
 
 ````markdown
-        ```alpha
-        bravo();
-        ```
+```alpha
+bravo();
+```
 ````
 
 ###### Out
@@ -110,9 +110,9 @@ When configured with `[ 'charlie' ]`.
 ###### In
 
 ````markdown
-        ```alpha
-        bravo();
-        ```
+```alpha
+bravo();
+```
 ````
 
 ###### Out

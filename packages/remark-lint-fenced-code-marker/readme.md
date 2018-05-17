@@ -49,13 +49,13 @@ No messages.
 ###### In
 
 ````markdown
-        ```alpha
-        bravo();
-        ```
+```alpha
+bravo();
+```
 
-        ~~~
-        charlie();
-        ~~~
+~~~
+charlie();
+~~~
 ````
 
 ###### Out
@@ -71,13 +71,13 @@ When configured with ``'`'``.
 ###### In
 
 ````markdown
-        ```alpha
-        bravo();
-        ```
+```alpha
+bravo();
+```
 
-        ```
-        charlie();
-        ```
+```
+charlie();
+```
 ````
 
 ###### Out
@@ -91,13 +91,13 @@ When configured with `'~'`.
 ###### In
 
 ```markdown
-        ~~~alpha
-        bravo();
-        ~~~
+~~~alpha
+bravo();
+~~~
 
-        ~~~
-        charlie();
-        ~~~
+~~~
+charlie();
+~~~
 ```
 
 ###### Out

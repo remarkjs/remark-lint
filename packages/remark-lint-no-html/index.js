@@ -24,20 +24,22 @@
  *   1:1-1:15: Do not use HTML in markdown
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-html', noHTML);
+module.exports = rule('remark-lint:no-html', noHTML)
 
-function noHTML(ast, file) {
-  visit(ast, 'html', visitor);
+var reason = 'Do not use HTML in markdown'
+
+function noHTML(tree, file) {
+  visit(tree, 'html', visitor)
 
   function visitor(node) {
     if (!generated(node) && !/^\s*<!--/.test(node.value)) {
-      file.message('Do not use HTML in markdown', node);
+      file.message(reason, node)
     }
   }
 }

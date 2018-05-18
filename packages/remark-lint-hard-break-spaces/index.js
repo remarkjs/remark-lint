@@ -21,33 +21,34 @@
  *   1:12-2:1: Use two spaces for hard line breaks
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:hard-break-spaces', hardBreakSpaces);
+module.exports = rule('remark-lint:hard-break-spaces', hardBreakSpaces)
 
-function hardBreakSpaces(ast, file) {
-  var contents = file.toString();
+var reason = 'Use two spaces for hard line breaks'
 
-  visit(ast, 'break', visitor);
+function hardBreakSpaces(tree, file) {
+  var contents = String(file)
+
+  visit(tree, 'break', visitor)
 
   function visitor(node) {
-    var start = position.start(node).offset;
-    var end = position.end(node).offset;
-    var value;
+    var value
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      value = contents
+        .slice(position.start(node).offset, position.end(node).offset)
+        .split('\n', 1)[0]
+        .replace(/\r$/, '')
 
-    value = contents.slice(start, end).split('\n', 1)[0].replace(/\r$/, '');
-
-    if (value.length > 2) {
-      file.message('Use two spaces for hard line breaks', node);
+      if (value.length > 2) {
+        file.message(reason, node)
+      }
     }
   }
 }

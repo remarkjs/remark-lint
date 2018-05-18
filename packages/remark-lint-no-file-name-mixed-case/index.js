@@ -16,16 +16,21 @@
  *   1:1: Do not mix casing in file names
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:no-file-name-mixed-case', noFileNameMixedCase);
+module.exports = rule(
+  'remark-lint:no-file-name-mixed-case',
+  noFileNameMixedCase
+)
 
-function noFileNameMixedCase(ast, file) {
-  var name = file.stem;
+var reason = 'Do not mix casing in file names'
+
+function noFileNameMixedCase(tree, file) {
+  var name = file.stem
 
   if (name && !(name === name.toLowerCase() || name === name.toUpperCase())) {
-    file.message('Do not mix casing in file names');
+    file.message(reason)
   }
 }

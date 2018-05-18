@@ -91,65 +91,58 @@
  *   1:1: Invalid code block style `invalid`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:code-block-style', codeBlockStyle);
+module.exports = rule('remark-lint:code-block-style', codeBlockStyle)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-var STYLES = {
-  null: true,
-  fenced: true,
-  indented: true
-};
+var styles = {null: true, fenced: true, indented: true}
 
-function codeBlockStyle(tree, file, preferred) {
-  var contents = file.toString();
+function codeBlockStyle(tree, file, pref) {
+  var contents = String(file)
 
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
 
-  if (STYLES[preferred] !== true) {
-    file.fail('Invalid code block style `' + preferred + '`: use either `\'consistent\'`, `\'fenced\'`, or `\'indented\'`');
+  if (styles[pref] !== true) {
+    file.fail(
+      'Invalid code block style `' +
+        pref +
+        "`: use either `'consistent'`, `'fenced'`, or `'indented'`"
+    )
   }
 
-  visit(tree, 'code', visitor);
+  visit(tree, 'code', visitor)
 
   function visitor(node) {
-    var current = check(node);
+    var current = check(node)
 
-    if (!current) {
-      return;
-    }
-
-    if (!preferred) {
-      preferred = current;
-    } else if (preferred !== current) {
-      file.message('Code blocks should be ' + preferred, node);
+    if (current) {
+      if (!pref) {
+        pref = current
+      } else if (pref !== current) {
+        file.message('Code blocks should be ' + pref, node)
+      }
     }
   }
 
   /* Get the style of `node`. */
   function check(node) {
-    var initial = start(node).offset;
-    var final = end(node).offset;
+    var initial = start(node).offset
+    var final = end(node).offset
 
     if (generated(node)) {
-      return null;
+      return null
     }
 
-    if (
-      node.lang ||
-      /^\s*([~`])\1{2,}/.test(contents.slice(initial, final))
-    ) {
-      return 'fenced';
-    }
-
-    return 'indented';
+    return node.lang || /^\s*([~`])\1{2,}/.test(contents.slice(initial, final))
+      ? 'fenced'
+      : 'indented'
   }
 }

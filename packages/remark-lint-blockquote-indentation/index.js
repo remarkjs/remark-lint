@@ -45,59 +45,64 @@
  *   9:3: Add 1 space between blockquote and content
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var plural = require('plur');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var plural = require('plur')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:blockquote-indentation', blockquoteIndentation);
+module.exports = rule(
+  'remark-lint:blockquote-indentation',
+  blockquoteIndentation
+)
 
-function blockquoteIndentation(tree, file, preferred) {
-  preferred = isNaN(preferred) || typeof preferred !== 'number' ? null : preferred;
+function blockquoteIndentation(tree, file, pref) {
+  pref = typeof pref === 'number' && !isNaN(pref) ? pref : null
 
-  visit(tree, 'blockquote', visitor);
+  visit(tree, 'blockquote', visitor)
 
   function visitor(node) {
-    var indent;
-    var diff;
-    var word;
+    var diff
+    var diffAbs
+    var reason
 
     if (generated(node) || node.children.length === 0) {
-      return;
+      return
     }
 
-    if (preferred) {
-      indent = check(node);
-      diff = preferred - indent;
-      word = diff > 0 ? 'Add' : 'Remove';
-
-      diff = Math.abs(diff);
+    if (pref) {
+      diff = pref - check(node)
 
       if (diff !== 0) {
-        file.message(
-          word + ' ' + diff + ' ' + plural('space', diff) +
-          ' between blockquote and content',
-          position.start(node.children[0])
-        );
+        diffAbs = Math.abs(diff)
+
+        reason =
+          (diff > 0 ? 'Add' : 'Remove') +
+          ' ' +
+          diffAbs +
+          ' ' +
+          plural('space', diffAbs) +
+          ' between blockquote and content'
+
+        file.message(reason, position.start(node.children[0]))
       }
     } else {
-      preferred = check(node);
+      pref = check(node)
     }
   }
 }
 
 function check(node) {
-  var head = node.children[0];
-  var indentation = position.start(head).column - position.start(node).column;
-  var padding = toString(head).match(/^ +/);
+  var head = node.children[0]
+  var indentation = position.start(head).column - position.start(node).column
+  var padding = toString(head).match(/^ +/)
 
   if (padding) {
-    indentation += padding[0].length;
+    indentation += padding[0].length
   }
 
-  return indentation;
+  return indentation
 }

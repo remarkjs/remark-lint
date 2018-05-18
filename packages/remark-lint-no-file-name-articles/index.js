@@ -25,16 +25,16 @@
  *   1:1: Do not start file names with `an`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:no-file-name-articles', noFileNameArticles);
+module.exports = rule('remark-lint:no-file-name-articles', noFileNameArticles)
 
-function noFileNameArticles(ast, file) {
-  var match = file.stem && file.stem.match(/^(the|teh|an?)\b/i);
+function noFileNameArticles(tree, file) {
+  var match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)
 
   if (match) {
-    file.message('Do not start file names with `' + match[0] + '`');
+    file.message('Do not start file names with `' + match[0] + '`')
   }
 }

@@ -56,6 +56,16 @@ When configured with `'padded'`.
 | A    |    B |
 | :----|----: |
 | Alpha|Bravo |
+
+| C      |    D |
+| :----- | ---: |
+|Charlie | Delta|
+
+Too much padding isn’t good either:
+
+| E     | F        |   G    |      H |
+| :---- | -------- | :----: | -----: |
+| Echo  | Foxtrot  |  Golf  |  Hotel |
 ```
 
 ###### Out
@@ -63,7 +73,52 @@ When configured with `'padded'`.
 ```text
 3:8: Cell should be padded
 3:9: Cell should be padded
+7:2: Cell should be padded
+7:17: Cell should be padded
+13:23: Cell should be padded with 1 space, not 2
+13:32: Cell should be padded with 1 space, not 2
 ```
+
+##### `empty.md`
+
+When configured with `'padded'`.
+
+###### In
+
+```markdown
+<!-- Empty cells are OK, but those surrounding them may not be. -->
+
+|        | Alpha | Bravo|
+| ------ | ----- | ---: |
+| Charlie|       |  Echo|
+```
+
+###### Out
+
+```text
+3:25: Cell should be padded
+5:10: Cell should be padded
+5:25: Cell should be padded
+```
+
+##### `missing-body.md`
+
+When configured with `'padded'`.
+
+###### In
+
+```markdown
+<!-- Missing cells are fine as well. -->
+
+| Alpha | Bravo    | Charlie |
+| ----- | -------- | ------- |
+| Delta |
+| Echo  | Foxtrott |
+```
+
+###### Out
+
+No messages.
 
 ##### `valid.md`
 
@@ -88,66 +143,106 @@ When configured with `'compact'`.
 ###### In
 
 ```markdown
-|A    |     B|
-|:----|-----:|
-|Alpha|Bravo |
-```
-
-###### Out
-
-```text
-3:13: Cell should be compact
-```
-
-##### `invalid.md`
-
-###### In
-
-```markdown
 |   A    | B    |
 |   -----| -----|
 |   Alpha| Bravo|
+
+|C      |     D|
+|:------|-----:|
+|Charlie|Delta |
 ```
 
 ###### Out
 
 ```text
-3:5: Cell should be padded with 1 space, not 3
-3:10: Cell should be padded
-3:17: Cell should be padded
+3:5: Cell should be compact
+3:12: Cell should be compact
+7:15: Cell should be compact
 ```
 
-##### `empty-heading.md`
+##### `valid-padded.md`
+
+When configured with `'consistent'`.
 
 ###### In
 
 ```markdown
-<!-- Empty heading cells are always OK. -->
+| A     | B     |
+| ----- | ----- |
+| Alpha | Bravo |
 
-|       | Alpha   |
-| ----- | ------- |
-| Bravo | Charlie |
+| C       | D     |
+| ------- | ----- |
+| Charlie | Delta |
 ```
 
 ###### Out
 
 No messages.
 
-##### `empty-body.md`
+##### `invalid-padded.md`
+
+When configured with `'consistent'`.
 
 ###### In
 
 ```markdown
-<!-- Empty body cells are always OK. -->
+| A     | B     |
+| ----- | ----- |
+| Alpha | Bravo |
 
-| Alpha   | Bravo   |
-| ------- | ------- |
-| Charlie |         |
+| C      |     D |
+| :----- | ----: |
+|Charlie | Delta |
+```
+
+###### Out
+
+```text
+7:2: Cell should be padded
+```
+
+##### `valid-compact.md`
+
+When configured with `'consistent'`.
+
+###### In
+
+```markdown
+|A    |B    |
+|-----|-----|
+|Alpha|Bravo|
+
+|C      |D    |
+|-------|-----|
+|Charlie|Delta|
 ```
 
 ###### Out
 
 No messages.
+
+##### `invalid-compact.md`
+
+When configured with `'consistent'`.
+
+###### In
+
+```markdown
+|A    |B    |
+|-----|-----|
+|Alpha|Bravo|
+
+|C      |     D|
+|:------|-----:|
+|Charlie|Delta |
+```
+
+###### Out
+
+```text
+7:15: Cell should be compact
+```
 
 ##### `invalid.md`
 

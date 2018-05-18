@@ -41,62 +41,69 @@
  *   3:17-3:18: Misaligned table fence
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:table-pipe-alignment', tablePipeAlignment);
+module.exports = rule('remark-lint:table-pipe-alignment', tablePipeAlignment)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-function tablePipeAlignment(ast, file) {
-  visit(ast, 'table', visitor);
+var reason = 'Misaligned table fence'
+
+function tablePipeAlignment(tree, file) {
+  var contents = String(file)
+
+  visit(tree, 'table', visitor)
 
   function visitor(node) {
-    var contents = file.toString();
-    var indices = [];
-    var offset;
-    var line;
+    var rows = node.children
+    var length = generated(node) ? 0 : rows.length
+    var index = -1
+    var indices = []
+    var row
+    var cells
+    var begin
+    var column
+    var columns
+    var cell
+    var initial
+    var final
+    var next
+    var nextIndex
+    var fence
+    var pos
 
-    if (generated(node)) {
-      return;
-    }
+    while (++index < length) {
+      row = rows[index]
+      begin = start(row)
+      cells = row.children
+      columns = cells.length
+      column = -2 /* Start without a first cell */
+      next = null
 
-    node.children.forEach(visitRow);
+      while (++column < columns) {
+        cell = next
+        nextIndex = column + 1
+        next = cells[nextIndex]
 
-    function visitRow(row) {
-      var cells = row.children;
+        initial = cell ? end(cell).offset : start(row).offset
+        final = next ? start(next).offset : end(row).offset
+        fence = contents.slice(initial, final)
+        pos = initial + fence.indexOf('|') - begin.offset + 1
 
-      line = start(row).line;
-      offset = start(row).offset;
-
-      check(start(row).offset, start(cells[0]).offset, 0);
-
-      row.children.forEach(visitCell);
-
-      function visitCell(cell, index) {
-        var next = start(cells[index + 1]).offset || end(row).offset;
-
-        check(end(cell).offset, next, index + 1);
-      }
-    }
-
-    /* Check that all pipes after each column are at
-     * aligned. */
-    function check(initial, final, index) {
-      var pos = initial + contents.slice(initial, final).indexOf('|') - offset + 1;
-
-      if (indices[index] === undefined || indices[index] === null) {
-        indices[index] = pos;
-      } else if (pos !== indices[index]) {
-        file.message('Misaligned table fence', {
-          start: {line: line, column: pos},
-          end: {line: line, column: pos + 1}
-        });
+        if (indices[nextIndex] === undefined || indices[nextIndex] === null) {
+          indices[nextIndex] = pos
+        } else if (pos !== indices[nextIndex]) {
+          file.message(reason, {
+            start: {line: begin.line, column: pos},
+            end: {line: begin.line, column: pos + 1}
+          })
+        }
       }
     }
   }

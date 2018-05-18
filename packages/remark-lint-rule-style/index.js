@@ -56,50 +56,46 @@
  *   1:1: Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:rule-style', ruleStyle);
+module.exports = rule('remark-lint:rule-style', ruleStyle)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-function ruleStyle(ast, file, preferred) {
-  var contents = file.toString();
+function ruleStyle(tree, file, pref) {
+  var contents = String(file)
 
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
 
-  if (validateRuleStyle(preferred) !== true) {
-    file.fail('Invalid preferred rule-style: provide a valid markdown rule, or `\'consistent\'`');
+  if (pref !== null && /[^-_* ]/.test(pref)) {
+    file.fail(
+      "Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`"
+    )
   }
 
-  visit(ast, 'thematicBreak', visitor);
+  visit(tree, 'thematicBreak', visitor)
 
   function visitor(node) {
-    var initial = start(node).offset;
-    var final = end(node).offset;
-    var hr;
+    var initial = start(node).offset
+    var final = end(node).offset
+    var rule
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      rule = contents.slice(initial, final)
 
-    hr = contents.slice(initial, final);
-
-    if (preferred) {
-      if (hr !== preferred) {
-        file.message('Rules should use `' + preferred + '`', node);
+      if (pref) {
+        if (rule !== pref) {
+          file.message('Rules should use `' + pref + '`', node)
+        }
+      } else {
+        pref = rule
       }
-    } else {
-      preferred = hr;
     }
   }
-}
-
-function validateRuleStyle(style) {
-  return style === null || !/[^-_* ]/.test(style);
 }

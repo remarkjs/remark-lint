@@ -49,17 +49,17 @@
  *   ```
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:final-newline', finalNewline);
+module.exports = rule('remark-lint:final-newline', finalNewline)
 
-function finalNewline(ast, file) {
-  var contents = file.toString();
-  var last = contents.length - 1;
+function finalNewline(tree, file) {
+  var contents = String(file)
+  var last = contents.length - 1
 
   if (last > -1 && contents.charAt(last) !== '\n') {
-    file.message('Missing newline character at end of file');
+    file.message('Missing newline character at end of file')
   }
 }

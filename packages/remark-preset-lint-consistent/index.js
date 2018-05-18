@@ -4,7 +4,7 @@
  *   settings that enforce consistency.
  */
 
-'use strict';
+'use strict'
 
 module.exports.plugins = [
   require('remark-lint'),
@@ -20,4 +20,4 @@ module.exports.plugins = [
   [require('remark-lint-rule-style'), 'consistent'],
   [require('remark-lint-strong-marker'), 'consistent'],
   [require('remark-lint-table-cell-padding'), 'consistent']
-];
+]

@@ -38,39 +38,40 @@
  *   5:1-5:9: Do not use headings with similar content per section (3:1)
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
-var visit = require('unist-util-visit');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
+var visit = require('unist-util-visit')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:no-duplicate-headings-in-section', noDuplicateHeadingsInSection);
+module.exports = rule(
+  'remark-lint:no-duplicate-headings-in-section',
+  noDuplicateHeadingsInSection
+)
+
+var reason = 'Do not use headings with similar content per section'
 
 function noDuplicateHeadingsInSection(tree, file) {
-  var stack = [{}];
+  var stack = [{}]
 
-  visit(tree, 'heading', visitor);
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var depth = node.depth;
-    var siblings = stack[depth - 1] || {};
-    var value = toString(node).toUpperCase();
-    var duplicate = siblings[value];
-    var pos;
+    var depth = node.depth
+    var siblings = stack[depth - 1] || {}
+    var value = toString(node).toUpperCase()
+    var duplicate = siblings[value]
+    var pos
 
-    stack = stack.slice(0, depth);
-    stack[depth] = {};
-    siblings[value] = node;
+    stack = stack.slice(0, depth)
+    stack[depth] = {}
+    siblings[value] = node
 
     if (!generated(node) && duplicate && duplicate.type === 'heading') {
-      pos = position.start(duplicate);
-      file.message(
-        'Do not use headings with similar content per section (' +
-        pos.line + ':' + pos.column + ')',
-        node
-      );
+      pos = position.start(duplicate)
+      file.message(reason + ' (' + pos.line + ':' + pos.column + ')', node)
     }
   }
 }

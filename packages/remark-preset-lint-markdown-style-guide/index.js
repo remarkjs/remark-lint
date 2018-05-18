@@ -90,7 +90,7 @@
  *   ```
  */
 
-'use strict';
+'use strict'
 
 module.exports.plugins = [
   require('remark-lint'),
@@ -232,4 +232,4 @@ module.exports.plugins = [
 
   /* http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
    * Not checked. */
-];
+]

@@ -21,49 +21,43 @@
  *   1:1-1:27: Found unused definition
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var generated = require('unist-util-generated');
-var visit = require('unist-util-visit');
+var rule = require('unified-lint-rule')
+var generated = require('unist-util-generated')
+var visit = require('unist-util-visit')
 
-module.exports = rule('remark-lint:no-unused-definitions', noUnusedDefinitions);
+module.exports = rule('remark-lint:no-unused-definitions', noUnusedDefinitions)
 
-function noUnusedDefinitions(ast, file) {
-  var map = {};
-  var identifier;
+var reason = 'Found unused definition'
 
-  visit(ast, 'definition', find);
-  visit(ast, 'footnoteDefinition', find);
+function noUnusedDefinitions(tree, file) {
+  var map = {}
+  var identifier
+  var entry
 
-  visit(ast, 'imageReference', mark);
-  visit(ast, 'linkReference', mark);
-  visit(ast, 'footnoteReference', mark);
+  visit(tree, ['definition', 'footnoteDefinition'], find)
+  visit(tree, ['imageReference', 'linkReference', 'footnoteReference'], mark)
 
   for (identifier in map) {
-    if (!map[identifier].used) {
-      file.message('Found unused definition', map[identifier].node);
+    entry = map[identifier]
+
+    if (!entry.used) {
+      file.message(reason, entry.node)
     }
   }
 
   function find(node) {
-    if (generated(node)) {
-      return;
+    if (!generated(node)) {
+      map[node.identifier.toUpperCase()] = {node: node, used: false}
     }
-
-    map[node.identifier.toUpperCase()] = {
-      node: node,
-      used: false
-    };
   }
 
   function mark(node) {
-    var info = map[node.identifier.toUpperCase()];
+    var info = map[node.identifier.toUpperCase()]
 
-    if (generated(node) || !info) {
-      return;
+    if (!generated(node) && info) {
+      info.used = true
     }
-
-    info.used = true;
   }
 }

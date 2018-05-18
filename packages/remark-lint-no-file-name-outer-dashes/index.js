@@ -17,14 +17,19 @@
  *   1:1: Do not use initial or final dashes in a file name
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:no-file-name-outer-dashes', noFileNameOuterDashes);
+module.exports = rule(
+  'remark-lint:no-file-name-outer-dashes',
+  noFileNameOuterDashes
+)
 
-function noFileNameOuterDashes(ast, file) {
+var reason = 'Do not use initial or final dashes in a file name'
+
+function noFileNameOuterDashes(tree, file) {
   if (file.stem && /^-|-$/.test(file.stem)) {
-    file.message('Do not use initial or final dashes in a file name');
+    file.message(reason)
   }
 }

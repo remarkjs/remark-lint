@@ -21,38 +21,45 @@
  *   2:5: Don’t use mixed indentation for children, remove 1 space
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var plural = require('plur');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var plural = require('plur')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:list-item-content-indent', listItemContentIndent);
+module.exports = rule(
+  'remark-lint:list-item-content-indent',
+  listItemContentIndent
+)
 
-var start = position.start;
+var start = position.start
 
-function listItemContentIndent(ast, file) {
-  var contents = file.toString();
+function listItemContentIndent(tree, file) {
+  var contents = String(file)
 
-  visit(ast, 'listItem', visitor);
+  visit(tree, 'listItem', visitor)
 
   function visitor(node) {
-    var style;
+    var style
 
-    node.children.forEach(visitItem);
+    node.children.forEach(visitItem)
 
     function visitItem(item, index) {
-      var begin = start(item);
-      var column = begin.column;
-      var char;
-      var diff;
-      var word;
+      var begin
+      var column
+      var char
+      var diff
+      var absDiff
+      var reason
 
       if (generated(item)) {
-        return;
+        return
       }
+
+      begin = start(item)
+      column = begin.column
 
       /* Get indentation for the first child.
        * Only the first item can have a checkbox,
@@ -61,37 +68,39 @@ function listItemContentIndent(ast, file) {
         /* If there’s a checkbox before the content,
          * look backwards to find the start of that
          * checkbox. */
-        if (Boolean(node.checked) === node.checked) {
-          char = begin.offset - 1;
+        if (typeof node.checked === 'boolean') {
+          char = begin.offset - 1
 
           while (contents.charAt(char) !== '[') {
-            char--;
+            char--
           }
 
-          column -= begin.offset - char;
+          column -= begin.offset - char
         }
 
-        style = column;
+        style = column
 
-        return;
+        return
       }
 
       /* Warn for violating children. */
       if (column !== style) {
-        diff = style - column;
-        /* istanbul ignore next - hard to test, I couldn’t find it at least. */
-        word = diff > 0 ? 'add' : 'remove';
+        diff = style - column
+        absDiff = Math.abs(diff)
 
-        diff = Math.abs(diff);
+        reason =
+          'Don’t use mixed indentation for children, ' +
+          /* istanbul ignore next - hard to test, I couldn’t find it at least. */
+          (diff > 0 ? 'add' : 'remove') +
+          ' ' +
+          absDiff +
+          ' ' +
+          plural('space', absDiff)
 
-        file.message(
-          'Don’t use mixed indentation for children, ' + word +
-          ' ' + diff + ' ' + plural('space', diff),
-          {
-            line: start(item).line,
-            column: column
-          }
-        );
+        file.message(reason, {
+          line: start(item).line,
+          column: column
+        })
       }
     }
   }

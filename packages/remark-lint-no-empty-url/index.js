@@ -11,7 +11,7 @@
  *   [alpha](http://bravo.com).
  *
  *   ![charlie](http://delta.com/echo.png "foxtrott").
-*
+ *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   [golf]().
@@ -24,22 +24,20 @@
  *   3:1-3:11: Don’t use images without URL
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-empty-url', noEmptyURL);
-
-var types = ['link', 'image'];
+module.exports = rule('remark-lint:no-empty-url', noEmptyURL)
 
 function noEmptyURL(tree, file) {
-  visit(tree, visitor);
+  visit(tree, ['link', 'image'], visitor)
 
   function visitor(node) {
-    if (types.indexOf(node.type) !== -1 && !generated(node) && !node.url) {
-      file.message('Don’t use ' + node.type + 's without URL', node);
+    if (!generated(node) && !node.url) {
+      file.message('Don’t use ' + node.type + 's without URL', node)
     }
   }
 }

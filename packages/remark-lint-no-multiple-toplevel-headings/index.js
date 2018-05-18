@@ -25,36 +25,43 @@
  *   3:1-3:6: Don’t use multiple top level headings (3:1)
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-multiple-toplevel-headings', noMultipleToplevelHeadings);
+module.exports = rule(
+  'remark-lint:no-multiple-toplevel-headings',
+  noMultipleToplevelHeadings
+)
 
-function noMultipleToplevelHeadings(ast, file, preferred) {
-  var style = preferred ? preferred : 1;
-  var topLevelheading = false;
+function noMultipleToplevelHeadings(tree, file, pref) {
+  var style = pref ? pref : 1
+  var topLevelheading = false
 
-  visit(ast, 'heading', visitor);
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var pos;
+    var pos
+    var reason
 
-    if (generated(node)) {
-      return;
-    }
-
-    if (node.depth === style) {
+    if (!generated(node) && node.depth === style) {
       if (topLevelheading) {
-        pos = position.start(node);
+        pos = position.start(node)
 
-        file.message('Don’t use multiple top level headings (' + pos.line + ':' + pos.column + ')', node);
+        reason =
+          'Don’t use multiple top level headings (' +
+          pos.line +
+          ':' +
+          pos.column +
+          ')'
+
+        file.message(reason, node)
       }
 
-      topLevelheading = node;
+      topLevelheading = true
     }
   }
 }

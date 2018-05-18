@@ -22,22 +22,18 @@
  * @example {"name": "readme.mkd", "setting": "mkd"}
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:file-extension', fileExtension);
+module.exports = rule('remark-lint:file-extension', fileExtension)
 
-function fileExtension(ast, file, preferred) {
-  var ext = file.extname;
+function fileExtension(tree, file, pref) {
+  var ext = file.extname
 
-  if (ext) {
-    ext = ext.slice(1);
-  }
+  pref = typeof pref === 'string' ? pref : 'md'
 
-  preferred = typeof preferred === 'string' ? preferred : 'md';
-
-  if (ext && ext !== preferred) {
-    file.message('Invalid extension: use `' + preferred + '`');
+  if (ext && ext.slice(1) !== pref) {
+    file.message('Invalid extension: use `' + pref + '`')
   }
 }

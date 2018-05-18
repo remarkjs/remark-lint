@@ -27,209 +27,264 @@
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "valid.md", "setting": "compact"}
- *
- *   |A    |B    |
- *   |-----|-----|
- *   |Alpha|Bravo|
- *
- * @example {"name": "invalid.md", "label": "input"}
- *
- *   |   A    | B    |
- *   |   -----| -----|
- *   |   Alpha| Bravo|
- *
- * @example {"name": "invalid.md", "label": "output"}
- *
- *   3:5: Cell should be padded with 1 space, not 3
- *   3:10: Cell should be padded
- *   3:17: Cell should be padded
- *
  * @example {"name": "invalid.md", "label": "input", "setting": "padded"}
  *
  *   | A    |    B |
  *   | :----|----: |
  *   | Alpha|Bravo |
  *
+ *   | C      |    D |
+ *   | :----- | ---: |
+ *   |Charlie | Delta|
+ *
+ *   Too much padding isn’t good either:
+ *
+ *   | E     | F        |   G    |      H |
+ *   | :---- | -------- | :----: | -----: |
+ *   | Echo  | Foxtrot  |  Golf  |  Hotel |
+ *
  * @example {"name": "invalid.md", "label": "output", "setting": "padded"}
  *
  *   3:8: Cell should be padded
  *   3:9: Cell should be padded
+ *   7:2: Cell should be padded
+ *   7:17: Cell should be padded
+ *   13:23: Cell should be padded with 1 space, not 2
+ *   13:32: Cell should be padded with 1 space, not 2
+ *
+ * @example {"name": "valid.md", "setting": "compact"}
+ *
+ *   |A    |B    |
+ *   |-----|-----|
+ *   |Alpha|Bravo|
  *
  * @example {"name": "invalid.md", "label": "input", "setting": "compact"}
  *
- *   |A    |     B|
- *   |:----|-----:|
- *   |Alpha|Bravo |
+ *   |   A    | B    |
+ *   |   -----| -----|
+ *   |   Alpha| Bravo|
+ *
+ *   |C      |     D|
+ *   |:------|-----:|
+ *   |Charlie|Delta |
  *
  * @example {"name": "invalid.md", "label": "output", "setting": "compact"}
  *
- *   3:13: Cell should be compact
+ *   3:5: Cell should be compact
+ *   3:12: Cell should be compact
+ *   7:15: Cell should be compact
+ *
+ * @example {"name": "valid-padded.md", "setting": "consistent"}
+ *
+ *   | A     | B     |
+ *   | ----- | ----- |
+ *   | Alpha | Bravo |
+ *
+ *   | C       | D     |
+ *   | ------- | ----- |
+ *   | Charlie | Delta |
+ *
+ * @example {"name": "invalid-padded.md", "label": "input", "setting": "consistent"}
+ *
+ *   | A     | B     |
+ *   | ----- | ----- |
+ *   | Alpha | Bravo |
+ *
+ *   | C      |     D |
+ *   | :----- | ----: |
+ *   |Charlie | Delta |
+ *
+ * @example {"name": "invalid-padded.md", "label": "output", "setting": "consistent"}
+ *
+ *   7:2: Cell should be padded
+ *
+ * @example {"name": "valid-compact.md", "setting": "consistent"}
+ *
+ *   |A    |B    |
+ *   |-----|-----|
+ *   |Alpha|Bravo|
+ *
+ *   |C      |D    |
+ *   |-------|-----|
+ *   |Charlie|Delta|
+ *
+ * @example {"name": "invalid-compact.md", "label": "input", "setting": "consistent"}
+ *
+ *   |A    |B    |
+ *   |-----|-----|
+ *   |Alpha|Bravo|
+ *
+ *   |C      |     D|
+ *   |:------|-----:|
+ *   |Charlie|Delta |
+ *
+ * @example {"name": "invalid-compact.md", "label": "output", "setting": "consistent"}
+ *
+ *   7:15: Cell should be compact
  *
  * @example {"name": "invalid.md", "label": "output", "setting": "invalid", "config": {"positionless": true}}
  *
  *   1:1: Invalid table-cell-padding style `invalid`
  *
- * @example {"name": "empty-heading.md"}
+ * @example {"name": "empty.md", "label": "input", "setting": "padded"}
  *
- *   <!-- Empty heading cells are always OK. -->
+ *   <!-- Empty cells are OK, but those surrounding them may not be. -->
  *
- *   |       | Alpha   |
- *   | ----- | ------- |
- *   | Bravo | Charlie |
+ *   |        | Alpha | Bravo|
+ *   | ------ | ----- | ---: |
+ *   | Charlie|       |  Echo|
  *
- * @example {"name": "empty-body.md"}
+ * @example {"name": "empty.md", "label": "output", "setting": "padded"}
  *
- *   <!-- Empty body cells are always OK. -->
+ *   3:25: Cell should be padded
+ *   5:10: Cell should be padded
+ *   5:25: Cell should be padded
  *
- *   | Alpha   | Bravo   |
- *   | ------- | ------- |
- *   | Charlie |         |
+ * @example {"name": "missing-body.md", "setting": "padded"}
+ *
+ *   <!-- Missing cells are fine as well. -->
+ *
+ *   | Alpha | Bravo    | Charlie |
+ *   | ----- | -------- | ------- |
+ *   | Delta |
+ *   | Echo  | Foxtrott |
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:table-cell-padding', tableCellPadding);
+module.exports = rule('remark-lint:table-cell-padding', tableCellPadding)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-var STYLES = {
-  null: true,
-  padded: true,
-  compact: true
-};
+var styles = {null: true, padded: true, compact: true}
 
-function tableCellPadding(tree, file, preferred) {
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+function tableCellPadding(tree, file, pref) {
+  var contents = String(file)
 
-  if (STYLES[preferred] !== true) {
-    file.fail('Invalid table-cell-padding style `' + preferred + '`');
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
+
+  if (styles[pref] !== true) {
+    file.fail('Invalid table-cell-padding style `' + pref + '`')
   }
 
-  visit(tree, 'table', visitor);
+  visit(tree, 'table', visitor)
 
   function visitor(node) {
-    var rows = node.children;
-    var contents = String(file);
-    var starts = [];
-    var ends = [];
-    var cells = [];
-    var style;
-    var sizes;
+    var rows = node.children
+    var sizes = new Array(node.align.length)
+    var length = generated(node) ? -1 : rows.length
+    var index = -1
+    var entries = []
+    var style
+    var row
+    var cells
+    var column
+    var cellCount
+    var cell
+    var next
+    var fence
+    var pos
+    var entry
+    var final
 
-    if (generated(node)) {
-      return;
-    }
+    /* Check rows. */
+    while (++index < length) {
+      row = rows[index]
+      cells = row.children
+      cellCount = cells.length
+      column = -2 /* Start without a first cell */
+      next = null
+      final = undefined
 
-    rows.forEach(eachRow);
+      /* Check fences (before, between, and after cells) */
+      while (++column < cellCount) {
+        cell = next
+        next = cells[column + 1]
 
-    sizes = inferSizes(node);
+        fence = contents.slice(
+          cell ? end(cell).offset : start(row).offset,
+          next ? start(next).offset : end(row).offset
+        )
 
-    if (preferred === 'padded') {
-      style = 1;
-    } else if (preferred === 'compact') {
-      style = 0;
-    } else {
-      style = null;
-      starts.concat(ends).some(inferStyle);
-    }
+        pos = fence.indexOf('|')
 
-    cells.forEach(checkCell);
+        if (cell && cell.children.length !== 0 && final !== undefined) {
+          entries.push({node: cell, start: final, end: pos, index: column})
 
-    function eachRow(row) {
-      var children = row.children;
+          /* Detect max space per column. */
+          sizes[column] = Math.max(sizes[column] || 0, size(cell))
+        } else {
+          final = undefined
+        }
 
-      check(start(row).offset, start(children[0]).offset, null, children[0]);
-      ends.pop(); /* Ignore end before row. */
-
-      children.forEach(eachCell);
-      starts.pop(); /* Ignore start after row */
-
-      function eachCell(cell, index) {
-        var next = children[index + 1] || null;
-        check(end(cell).offset, start(next).offset || end(row).offset, cell, next);
-        cells.push(cell);
-      }
-    }
-
-    function inferStyle(pos) {
-      if (pos === undefined) {
-        return false;
-      }
-
-      style = Math.min(pos, 1);
-      return true;
-    }
-
-    function check(initial, final, prev, next) {
-      var fence = contents.slice(initial, final);
-      var pos = fence.indexOf('|');
-
-      ends.push(prev && pos !== -1 && prev.children.length !== 0 ? pos : undefined);
-      starts.push(next && next.children.length !== 0 ? fence.length - pos - 1 : undefined);
-    }
-
-    function checkCell(cell, index) {
-      /* Ignore, when compact, every cell except the biggest in the column. */
-      if (style === 0 && size(cell) < sizes[index % sizes.length]) {
-        return;
-      }
-
-      checkSide('start', cell, starts[index], index);
-      checkSide('end', cell, ends[index]);
-    }
-
-    function checkSide(side, cell, spacing, index) {
-      var message;
-
-      if (spacing === undefined || spacing === style) {
-        return;
-      }
-
-      message = 'Cell should be ';
-
-      if (style === 0) {
-        message += 'compact';
-      } else {
-        message += 'padded';
-
-        if (spacing > style) {
-          message += ' with 1 space, not ' + spacing;
-
-          /* May be right or center aligned. */
-          if (size(cell) < sizes[index % sizes.length]) {
-            return;
-          }
+        if (next && next.children.length !== 0) {
+          final = fence.length - pos - 1
+        } else {
+          final = undefined
         }
       }
-
-      file.message(message, cell.position[side]);
     }
+
+    if (pref) {
+      style = pref === 'padded' ? 1 : 0
+    } else {
+      style = entries[0] && (!entries[0].start || !entries[0].end) ? 0 : 1
+    }
+
+    index = -1
+    length = entries.length
+
+    while (++index < length) {
+      entry = entries[index]
+      checkSide('start', entry, style, sizes)
+      checkSide('end', entry, style, sizes)
+    }
+
+    return visit.SKIP
   }
-}
 
-function inferSizes(tree) {
-  var sizes = new Array(tree.align.length);
+  function checkSide(side, entry, style, sizes) {
+    var cell = entry.node
+    var spacing = entry[side]
+    var index = entry.index
+    var reason
 
-  tree.children.forEach(row);
+    if (spacing === undefined || spacing === style) {
+      return
+    }
 
-  return sizes;
+    reason = 'Cell should be '
 
-  function row(node) {
-    node.children.forEach(cell);
-  }
+    if (style === 0) {
+      reason += 'compact'
 
-  function cell(node, index) {
-    sizes[index] = Math.max(sizes[index] || 0, size(node));
+      /* Ignore every cell except the biggest in the column. */
+      if (size(cell) < sizes[index]) {
+        return
+      }
+    } else {
+      reason += 'padded'
+
+      if (spacing > style) {
+        reason += ' with 1 space, not ' + spacing
+
+        /* May be right or center aligned. */
+        if (size(cell) < sizes[index]) {
+          return
+        }
+      }
+    }
+
+    file.message(reason, cell.position[side])
   }
 }
 
 function size(node) {
-  return end(node).offset - start(node).offset;
+  return end(node).offset - start(node).offset
 }

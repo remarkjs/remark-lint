@@ -32,6 +32,11 @@ a
 $ echo a > file
 ```
 
+Some empty code:
+
+```command
+```
+
 It’s fine to use dollars in non-shell code.
 
 ```js

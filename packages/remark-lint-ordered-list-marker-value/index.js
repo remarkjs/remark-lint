@@ -89,6 +89,15 @@
  *
  *   2:1-2:8: Marker should be `1`, was `2`
  *
+ * @example {"name": "also-invalid.md", "setting": "one", "label": "input"}
+ *
+ *   2.  Foo
+ *   1.  Bar
+ *
+ * @example {"name": "also-invalid.md", "setting": "one", "label": "output"}
+ *
+ *   1:1-1:8: Marker should be `1`, was `2`
+ *
  * @example {"name": "invalid.md", "setting": "ordered", "label": "input"}
  *
  *   1.  Foo
@@ -103,74 +112,71 @@
  *   1:1: Invalid ordered list-item marker value `invalid`: use either `'ordered'` or `'one'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:ordered-list-marker-value', orderedListMarkerValue);
+module.exports = rule(
+  'remark-lint:ordered-list-marker-value',
+  orderedListMarkerValue
+)
 
-var start = position.start;
+var start = position.start
 
-var STYLES = {
-  ordered: true,
-  single: true,
-  one: true
-};
+var styles = {ordered: true, single: true, one: true}
 
-function orderedListMarkerValue(ast, file, preferred) {
-  var contents = file.toString();
+function orderedListMarkerValue(tree, file, pref) {
+  var contents = String(file)
 
-  preferred = typeof preferred === 'string' ? preferred : 'ordered';
+  pref = typeof pref === 'string' ? pref : 'ordered'
 
-  if (STYLES[preferred] !== true) {
-    file.fail('Invalid ordered list-item marker value `' + preferred + '`: use either `\'ordered\'` or `\'one\'`');
+  if (styles[pref] !== true) {
+    file.fail(
+      'Invalid ordered list-item marker value `' +
+        pref +
+        "`: use either `'ordered'` or `'one'`"
+    )
   }
 
-  visit(ast, 'list', visitor);
+  visit(tree, 'list', visitor)
 
   function visitor(node) {
-    var items = node.children;
-    var shouldBe = (preferred === 'one' ? 1 : node.start) || 1;
+    var children = node.children
+    var shouldBe = (pref === 'one' ? 1 : node.start) || 1
+    var length = node.ordered ? children.length : 0
+    var index = -1
+    var child
+    var marker
 
-    /* Ignore unordered lists. */
-    if (!node.ordered) {
-      return;
-    }
+    while (++index < length) {
+      child = children[index]
 
-    items.forEach(each);
-
-    function each(item, index) {
-      var head = item.children[0];
-      var initial = start(item).offset;
-      var final = start(head).offset;
-      var marker;
-
-      /* Ignore first list item. */
-      if (index === 0) {
-        return;
+      /* Ignore generated nodes, first items. */
+      if (generated(child) || (index === 0 && pref !== 'one')) {
+        continue
       }
 
       /* Increase the expected line number when in
        * `ordered` mode. */
-      if (preferred === 'ordered') {
-        shouldBe++;
+      if (pref === 'ordered') {
+        shouldBe++
       }
 
-      /* Ignore generated nodes. */
-      if (generated(item)) {
-        return;
-      }
-
-      marker = contents.slice(initial, final).replace(/[\s.)]/g, '');
-
-      /* Support checkboxes. */
-      marker = Number(marker.replace(/\[[x ]?]\s*$/i, ''));
+      marker = Number(
+        contents
+          .slice(start(child).offset, start(child.children[0]).offset)
+          .replace(/[\s.)]/g, '')
+          .replace(/\[[x ]?]\s*$/i, '')
+      )
 
       if (marker !== shouldBe) {
-        file.message('Marker should be `' + shouldBe + '`, was `' + marker + '`', item);
+        file.message(
+          'Marker should be `' + shouldBe + '`, was `' + marker + '`',
+          child
+        )
       }
     }
   }

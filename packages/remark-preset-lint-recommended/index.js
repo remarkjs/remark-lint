@@ -5,7 +5,7 @@
  *   across vendors.
  */
 
-'use strict';
+'use strict'
 
 module.exports.plugins = [
   require('remark-lint'),
@@ -29,4 +29,4 @@ module.exports.plugins = [
   require('remark-lint-no-shortcut-reference-link'),
   require('remark-lint-no-undefined-references'),
   require('remark-lint-no-unused-definitions')
-];
+]

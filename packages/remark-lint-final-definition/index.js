@@ -25,36 +25,41 @@
  *   3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:final-definition', finalDefinition);
+module.exports = rule('remark-lint:final-definition', finalDefinition)
 
-var start = position.start;
+var start = position.start
 
-function finalDefinition(ast, file) {
-  var last = null;
+function finalDefinition(tree, file) {
+  var last = null
 
-  visit(ast, visitor, true);
+  visit(tree, visitor, true)
 
   function visitor(node) {
-    var line = start(node).line;
+    var line = start(node).line
 
     /* Ignore generated nodes. */
     if (node.type === 'root' || generated(node)) {
-      return;
+      return
     }
 
     if (node.type === 'definition') {
       if (last !== null && last > line) {
-        file.message('Move definitions to the end of the file (after the node at line `' + last + '`)', node);
+        file.message(
+          'Move definitions to the end of the file (after the node at line `' +
+            last +
+            '`)',
+          node
+        )
       }
     } else if (last === null) {
-      last = line;
+      last = line
     }
   }
 }

@@ -74,75 +74,77 @@
  *   23:2: Expected no indentation in paragraph content
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
 
-module.exports = rule('remark-lint:no-paragraph-content-indent', noParagraphContentIndent);
+module.exports = rule(
+  'remark-lint:no-paragraph-content-indent',
+  noParagraphContentIndent
+)
 
-var message = 'Expected no indentation in paragraph content';
+var reason = 'Expected no indentation in paragraph content'
 
 function noParagraphContentIndent(tree, file) {
-  visit(tree, 'paragraph', visitor);
+  visit(tree, 'paragraph', visitor)
 
   function visitor(node) {
-    var first = true;
+    var first = true
 
-    visit(node, check);
+    visit(node, check)
+
+    return visit.SKIP
 
     function check(node, pos, parent) {
-      var start = position.start(node);
-      var value;
-      var index;
-      var line;
-      var cumulative;
-      var indent;
+      var start = position.start(node)
+      var value
+      var index
+      var line
+      var cumulative
+      var indent
 
       if (!applicable(node)) {
-        return;
+        return
       }
 
       if (!start.line || !node.position.indent) {
-        first = false;
-        return;
+        first = false
+        return
       }
 
       if (first && ws(toString(node).charAt(0))) {
-        file.message(message, node.position.start);
+        file.message(reason, node.position.start)
       }
 
-      first = false;
-      value = toString(node);
-      index = value.indexOf('\n');
-      line = 0;
-      cumulative = 0;
-      indent = node.position.indent;
+      first = false
+      value = toString(node)
+      index = value.indexOf('\n')
+      line = 0
+      cumulative = 0
+      indent = node.position.indent
 
       while (index !== -1) {
-        cumulative += indent[line];
+        cumulative += indent[line]
 
         if (ws(value.charAt(index + 1))) {
-          file.message(
-            message,
-            {
-              line: start.line + line + 1,
-              column: indent[line],
-              offset: start.offset + index + cumulative
-            }
-          );
+          file.message(reason, {
+            line: start.line + line + 1,
+            column: indent[line],
+            offset: start.offset + index + cumulative
+          })
         }
 
-        index = value.indexOf('\n', index + 1);
-        line++;
+        index = value.indexOf('\n', index + 1)
+        line++
       }
 
       if (value.charAt(value.length - 1) === '\n') {
-        node = head(parent.children[pos + 1]);
+        node = head(parent.children[pos + 1])
 
         if (node && ws(toString(node).charAt(0))) {
-          file.message(message, node.position.start);
+          file.message(reason, node.position.start)
         }
       }
     }
@@ -150,27 +152,27 @@ function noParagraphContentIndent(tree, file) {
 }
 
 function ws(character) {
-  return character === ' ' || character === '\t';
+  return character === ' ' || character === '\t'
 }
 
 function head(node) {
   while (node && 'children' in node) {
-    node = node.children[0];
+    node = node.children[0]
   }
 
   /* istanbul ignore if - shouldn’t happen by default, could happen for void
    * nodes though. */
   if (!node || !applicable(node)) {
-    return null;
+    return null
   }
 
-  return node;
+  return node
 }
 
 function applicable(node) {
-  return 'value' in node || node.alt;
+  return 'value' in node || node.alt
 }
 
 function toString(node) {
-  return 'value' in node ? node.value : node.alt;
+  return 'value' in node ? node.value : node.alt
 }

@@ -59,6 +59,12 @@ Paragraph.
 
 No messages.
 
+##### `empty-document.md`
+
+###### Out
+
+No messages.
+
 ##### `invalid.md`
 
 ###### In
@@ -69,13 +75,16 @@ Note: `␊` represents a line feed.
 Foo...
 ␊
 ␊
-...Bar.
+...Bar
+␊
+␊
 ```
 
 ###### Out
 
 ```text
 4:1: Remove 1 line before node
+4:7: Remove 2 lines after node
 ```
 
 ## Install

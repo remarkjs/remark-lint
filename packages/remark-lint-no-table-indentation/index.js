@@ -36,33 +36,38 @@
  *   5:1-5:21: Do not indent table rows
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-table-indentation', noTableIndentation);
+module.exports = rule('remark-lint:no-table-indentation', noTableIndentation)
 
-function noTableIndentation(ast, file) {
-  visit(ast, 'table', visitor);
+var reason = 'Do not indent table rows'
+
+function noTableIndentation(tree, file) {
+  var contents = String(file)
+
+  visit(tree, 'table', visitor)
 
   function visitor(node) {
-    var contents = file.toString();
-
-    if (generated(node)) {
-      return;
+    if (!generated(node)) {
+      node.children.forEach(each)
     }
 
-    node.children.forEach(each);
+    return visit.SKIP
+  }
 
-    function each(row) {
-      var fence = contents.slice(position.start(row).offset, position.start(row.children[0]).offset);
+  function each(row) {
+    var fence = contents.slice(
+      position.start(row).offset,
+      position.start(row.children[0]).offset
+    )
 
-      if (fence.indexOf('|') > 1) {
-        file.message('Do not indent table rows', row);
-      }
+    if (fence.indexOf('|') > 1) {
+      file.message(reason, row)
     }
   }
 }

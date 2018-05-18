@@ -61,52 +61,47 @@
  *   2:1-2:7: Missing blank line before block node
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-missing-blank-lines', noMissingBlankLines);
+module.exports = rule('remark-lint:no-missing-blank-lines', noMissingBlankLines)
 
-function noMissingBlankLines(ast, file, options) {
-  var allow = (options || {}).exceptTightLists;
+var reason = 'Missing blank line before block node'
 
-  visit(ast, visitor);
+var types = [
+  'paragraph',
+  'blockquote',
+  'heading',
+  'code',
+  'yaml',
+  'html',
+  'list',
+  'table',
+  'thematicBreak'
+]
+
+function noMissingBlankLines(tree, file, pref) {
+  var allow = (pref || {}).exceptTightLists
+
+  visit(tree, visitor)
 
   function visitor(node, index, parent) {
-    var next = parent && parent.children[index + 1];
+    var next
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node) && parent && (!allow || parent.type !== 'listItem')) {
+      next = parent.children[index + 1]
 
-    if (allow && parent && parent.type === 'listItem') {
-      return;
-    }
-
-    if (
-      next &&
-      applicable(node) &&
-      applicable(next) &&
-      position.start(next).line === position.end(node).line + 1
-    ) {
-      file.message('Missing blank line before block node', next);
+      if (
+        next &&
+        types.indexOf(next.type) !== -1 &&
+        position.start(next).line === position.end(node).line + 1
+      ) {
+        file.message(reason, next)
+      }
     }
   }
-}
-
-function applicable(node) {
-  return [
-    'paragraph',
-    'blockquote',
-    'heading',
-    'code',
-    'yaml',
-    'html',
-    'list',
-    'table',
-    'thematicBreak'
-  ].indexOf(node.type) !== -1;
 }

@@ -23,39 +23,42 @@
  *   1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var generated = require('unist-util-generated');
-var visit = require('unist-util-visit');
+var rule = require('unified-lint-rule')
+var generated = require('unist-util-generated')
+var visit = require('unist-util-visit')
 
-module.exports = rule('remark-lint:no-reference-like-url', noReferenceLikeURL);
+module.exports = rule('remark-lint:no-reference-like-url', noReferenceLikeURL)
 
 function noReferenceLikeURL(tree, file) {
-  var identifiers = [];
+  var identifiers = []
 
-  visit(tree, 'definition', find);
-
-  visit(tree, 'image', check);
-  visit(tree, 'link', check);
+  visit(tree, 'definition', find)
+  visit(tree, ['image', 'link'], check)
 
   /* Find identifiers. */
   function find(node) {
     if (!generated(node)) {
-      identifiers.push(node.identifier.toLowerCase());
+      identifiers.push(node.identifier.toLowerCase())
     }
   }
 
   /* Check `node`. */
   function check(node) {
-    var url = node.url;
+    var url = node.url
+    var reason
 
     if (identifiers.indexOf(url.toLowerCase()) !== -1) {
-      file.message(
-        'Did you mean to use `[' + url + ']` instead of ' +
-        '`(' + url + ')`, a reference?',
-        node
-      );
+      reason =
+        'Did you mean to use `[' +
+        url +
+        ']` instead of ' +
+        '`(' +
+        url +
+        ')`, a reference?'
+
+      file.message(reason, node)
     }
   }
 }

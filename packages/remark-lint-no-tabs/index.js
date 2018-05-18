@@ -50,22 +50,22 @@
  *   13:41: Use spaces instead of hard-tabs
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var location = require('vfile-location');
+var rule = require('unified-lint-rule')
+var location = require('vfile-location')
 
-module.exports = rule('remark-lint:no-tabs', noTabs);
+module.exports = rule('remark-lint:no-tabs', noTabs)
 
-function noTabs(ast, file) {
-  var content = file.toString();
-  var position = location(file).toPosition;
-  var index = -1;
-  var length = content.length;
+var reason = 'Use spaces instead of hard-tabs'
 
-  while (++index < length) {
-    if (content.charAt(index) === '\t') {
-      file.message('Use spaces instead of hard-tabs', position(index));
-    }
+function noTabs(tree, file) {
+  var content = String(file)
+  var position = location(file).toPosition
+  var index = content.indexOf('\t')
+
+  while (index !== -1) {
+    file.message(reason, position(index))
+    index = content.indexOf('\t', index + 1)
   }
 }

@@ -25,27 +25,26 @@
  *   1:1-1:52: Use headings shorter than `40`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:maximum-heading-length', maximumHeadingLength);
+module.exports = rule(
+  'remark-lint:maximum-heading-length',
+  maximumHeadingLength
+)
 
-function maximumHeadingLength(ast, file, preferred) {
-  preferred = isNaN(preferred) || typeof preferred !== 'number' ? 60 : preferred;
+function maximumHeadingLength(tree, file, pref) {
+  pref = typeof pref === 'number' && !isNaN(pref) ? pref : 60
 
-  visit(ast, 'heading', visitor);
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    if (generated(node)) {
-      return;
-    }
-
-    if (toString(node).length > preferred) {
-      file.message('Use headings shorter than `' + preferred + '`', node);
+    if (!generated(node) && toString(node).length > pref) {
+      file.message('Use headings shorter than `' + pref + '`', node)
     }
   }
 }

@@ -31,38 +31,44 @@
  *   1:1-1:14: All automatic links must start with a protocol
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:no-auto-link-without-protocol', noAutoLinkWithoutProtocol);
+module.exports = rule(
+  'remark-lint:no-auto-link-without-protocol',
+  noAutoLinkWithoutProtocol
+)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
 /* Protocol expression. See:
  * http://en.wikipedia.org/wiki/URI_scheme#Generic_syntax */
-var PROTOCOL = /^[a-z][a-z+.-]+:\/?/i;
+var protocol = /^[a-z][a-z+.-]+:\/?/i
 
-function noAutoLinkWithoutProtocol(ast, file) {
-  visit(ast, 'link', visitor);
+var reason = 'All automatic links must start with a protocol'
+
+function noAutoLinkWithoutProtocol(tree, file) {
+  visit(tree, 'link', visitor)
 
   function visitor(node) {
-    var head = start(node.children[0]).column;
-    var tail = end(node.children[node.children.length - 1]).column;
-    var initial = start(node).column;
-    var final = end(node).column;
+    var children
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      children = node.children
 
-    if (initial === head - 1 && final === tail + 1 && !PROTOCOL.test(toString(node))) {
-      file.message('All automatic links must start with a protocol', node);
+      if (
+        start(node).column === start(children[0]).column - 1 &&
+        end(node).column === end(children[children.length - 1]).column + 1 &&
+        !protocol.test(toString(node))
+      ) {
+        file.message(reason, node)
+      }
     }
   }
 }

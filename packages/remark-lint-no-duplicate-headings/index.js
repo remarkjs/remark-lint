@@ -26,40 +26,39 @@
  *   5:1-5:29: Do not use headings with similar content (3:1)
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
-var visit = require('unist-util-visit');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
+var visit = require('unist-util-visit')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:no-duplicate-headings', noDuplicateHeadings);
+module.exports = rule('remark-lint:no-duplicate-headings', noDuplicateHeadings)
 
-function noDuplicateHeadings(ast, file) {
-  var map = {};
+var reason = 'Do not use headings with similar content'
 
-  visit(ast, 'heading', visitor);
+function noDuplicateHeadings(tree, file) {
+  var map = {}
+
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var value = toString(node).toUpperCase();
-    var duplicate = map[value];
-    var pos;
+    var value
+    var duplicate
+    var pos
 
-    if (generated(node)) {
-      return;
+    if (!generated(node)) {
+      value = toString(node).toUpperCase()
+      duplicate = map[value]
+
+      if (duplicate && duplicate.type === 'heading') {
+        pos = position.start(duplicate)
+
+        file.message(reason + ' (' + pos.line + ':' + pos.column + ')', node)
+      }
+
+      map[value] = node
     }
-
-    if (duplicate && duplicate.type === 'heading') {
-      pos = position.start(duplicate);
-
-      file.message(
-        'Do not use headings with similar content (' +
-        pos.line + ':' + pos.column + ')',
-        node
-      );
-    }
-
-    map[value] = node;
   }
 }

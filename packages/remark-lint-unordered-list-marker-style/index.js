@@ -65,63 +65,65 @@
  *   1:1: Invalid unordered list-item marker style `!`: use either `'-'`, `'*'`, or `'+'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:unordered-list-marker-style', unorderedListMarkerStyle);
+module.exports = rule(
+  'remark-lint:unordered-list-marker-style',
+  unorderedListMarkerStyle
+)
 
-var start = position.start;
+var start = position.start
 
-var STYLES = {
+var styles = {
   '-': true,
   '*': true,
   '+': true,
   null: true
-};
+}
 
-function unorderedListMarkerStyle(ast, file, preferred) {
-  var contents = file.toString();
+function unorderedListMarkerStyle(tree, file, pref) {
+  var contents = String(file)
 
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
 
-  if (STYLES[preferred] !== true) {
-    file.fail('Invalid unordered list-item marker style `' + preferred + '`: use either `\'-\'`, `\'*\'`, or `\'+\'`');
+  if (styles[pref] !== true) {
+    file.fail(
+      'Invalid unordered list-item marker style `' +
+        pref +
+        "`: use either `'-'`, `'*'`, or `'+'`"
+    )
   }
 
-  visit(ast, 'list', visitor);
+  visit(tree, 'list', visitor)
 
   function visitor(node) {
-    var items = node.children;
+    var children = node.children
+    var length = node.ordered ? 0 : children.length
+    var index = -1
+    var child
+    var marker
 
-    if (node.ordered) {
-      return;
-    }
+    while (++index < length) {
+      child = children[index]
 
-    items.forEach(visitItem);
+      if (!generated(child)) {
+        marker = contents
+          .slice(start(child).offset, start(child.children[0]).offset)
+          .replace(/\[[x ]?]\s*$/i, '')
+          .replace(/\s/g, '')
 
-    function visitItem(item) {
-      var head = item.children[0];
-      var initial = start(item).offset;
-      var final = start(head).offset;
-      var marker;
-
-      if (generated(item)) {
-        return;
-      }
-
-      marker = contents.slice(initial, final).replace(/\s/g, '');
-
-      /* Support checkboxes. */
-      marker = marker.replace(/\[[x ]?]\s*$/i, '');
-
-      if (!preferred) {
-        preferred = marker;
-      } else if (marker !== preferred) {
-        file.message('Marker style should be `' + preferred + '`', item);
+        if (pref) {
+          if (marker !== pref) {
+            file.message('Marker style should be `' + pref + '`', child)
+          }
+        } else {
+          pref = marker
+        }
       }
     }
   }

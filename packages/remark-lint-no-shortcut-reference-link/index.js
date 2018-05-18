@@ -28,24 +28,25 @@
  *   1:1-1:6: Use the trailing [] on reference links
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-shortcut-reference-link', noShortcutReferenceLink);
+module.exports = rule(
+  'remark-lint:no-shortcut-reference-link',
+  noShortcutReferenceLink
+)
 
-function noShortcutReferenceLink(ast, file) {
-  visit(ast, 'linkReference', visitor);
+var reason = 'Use the trailing [] on reference links'
+
+function noShortcutReferenceLink(tree, file) {
+  visit(tree, 'linkReference', visitor)
 
   function visitor(node) {
-    if (generated(node)) {
-      return;
-    }
-
-    if (node.referenceType === 'shortcut') {
-      file.message('Use the trailing [] on reference links', node);
+    if (!generated(node) && node.referenceType === 'shortcut') {
+      file.message(reason, node)
     }
   }
 }

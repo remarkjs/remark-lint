@@ -21,6 +21,11 @@
  *   $ echo a > file
  *   ```
  *
+ *   Some empty code:
+ *
+ *   ```command
+ *   ```
+ *
  *   It’s fine to use dollars in non-shell code.
  *
  *   ```js
@@ -39,13 +44,15 @@
  *   1:1-4:4: Do not use dollar signs before shell-commands
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-shell-dollars', noShellDollars);
+module.exports = rule('remark-lint:no-shell-dollars', noShellDollars)
+
+var reason = 'Do not use dollar signs before shell-commands'
 
 /* List of shell script file extensions (also used as code
  * flags for syntax highlighting on GitHub):
@@ -62,31 +69,36 @@ var flags = [
   'tmux',
   'tool',
   'zsh'
-];
+]
 
-function noShellDollars(ast, file) {
-  visit(ast, 'code', visitor);
+function noShellDollars(tree, file) {
+  visit(tree, 'code', visitor)
 
   function visitor(node) {
-    var language = node.lang;
-    var value = node.value;
-    var warn;
-
-    if (!language || generated(node)) {
-      return;
-    }
+    var lines
+    var line
+    var length
+    var index
 
     /* Check both known shell-code and unknown code. */
-    if (flags.indexOf(language) !== -1) {
-      warn = value.length && value.split('\n').every(check);
+    if (!generated(node) && node.lang && flags.indexOf(node.lang) !== -1) {
+      lines = node.value.split('\n')
+      length = lines.length
+      index = -1
 
-      if (warn) {
-        file.message('Do not use dollar signs before shell-commands', node);
+      if (length <= 1) {
+        return
       }
-    }
-  }
 
-  function check(line) {
-    return Boolean(!line.trim() || line.match(/^\s*\$\s*/));
+      while (++index < length) {
+        line = lines[index]
+
+        if (line.trim() && !line.match(/^\s*\$\s*/)) {
+          return
+        }
+      }
+
+      file.message(reason, node)
+    }
   }
 }

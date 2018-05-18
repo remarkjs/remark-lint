@@ -24,37 +24,29 @@
  *   1:32-1:63: Don’t pad `link` with inner spaces
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:no-inline-padding', noInlinePadding);
+module.exports = rule('remark-lint:no-inline-padding', noInlinePadding)
 
-function noInlinePadding(ast, file) {
-  visit(ast, visitor);
+function noInlinePadding(tree, file) {
+  visit(tree, ['emphasis', 'strong', 'delete', 'image', 'link'], visitor)
 
   function visitor(node) {
-    var type = node.type;
-    var contents;
+    var contents
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      contents = toString(node)
 
-    if (
-      type === 'emphasis' ||
-      type === 'strong' ||
-      type === 'delete' ||
-      type === 'image' ||
-      type === 'link'
-    ) {
-      contents = toString(node);
-
-      if (contents.charAt(0) === ' ' || contents.charAt(contents.length - 1) === ' ') {
-        file.message('Don’t pad `' + type + '` with inner spaces', node);
+      if (
+        contents.charAt(0) === ' ' ||
+        contents.charAt(contents.length - 1) === ' '
+      ) {
+        file.message('Don’t pad `' + node.type + '` with inner spaces', node)
       }
     }
   }

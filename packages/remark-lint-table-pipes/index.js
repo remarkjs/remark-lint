@@ -36,43 +36,54 @@
  *   3:14: Missing final pipe in table fence
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:table-pipes', tablePipes);
+module.exports = rule('remark-lint:table-pipes', tablePipes)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-function tablePipes(ast, file) {
-  visit(ast, 'table', visitor);
+var reasonStart = 'Missing initial pipe in table fence'
+var reasonEnd = 'Missing final pipe in table fence'
+
+function tablePipes(tree, file) {
+  var contents = String(file)
+
+  visit(tree, 'table', visitor)
 
   function visitor(node) {
-    var contents = file.toString();
+    var rows = node.children
+    var length = rows.length
+    var index = -1
+    var row
+    var cells
+    var head
+    var tail
+    var initial
+    var final
 
-    node.children.forEach(visitRow);
+    while (++index < length) {
+      row = rows[index]
 
-    function visitRow(row) {
-      var cells = row.children;
-      var head = cells[0];
-      var tail = cells[cells.length - 1];
-      var initial = contents.slice(start(row).offset, start(head).offset);
-      var final = contents.slice(end(tail).offset, end(row).offset);
+      if (!generated(row)) {
+        cells = row.children
+        head = cells[0]
+        tail = cells[cells.length - 1]
+        initial = contents.slice(start(row).offset, start(head).offset)
+        final = contents.slice(end(tail).offset, end(row).offset)
 
-      if (generated(row)) {
-        return;
-      }
+        if (initial.indexOf('|') === -1) {
+          file.message(reasonStart, start(row))
+        }
 
-      if (initial.indexOf('|') === -1) {
-        file.message('Missing initial pipe in table fence', start(row));
-      }
-
-      if (final.indexOf('|') === -1) {
-        file.message('Missing final pipe in table fence', end(row));
+        if (final.indexOf('|') === -1) {
+          file.message(reasonEnd, end(row))
+        }
       }
     }
   }

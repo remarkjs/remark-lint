@@ -107,103 +107,90 @@
  *   15:1-16:1: Extraneous new line after list item
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:list-item-spacing', listItemSpacing);
+module.exports = rule('remark-lint:list-item-spacing', listItemSpacing)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-function listItemSpacing(ast, file, preferred) {
-  var blanks = Boolean(
-    preferred &&
-    typeof preferred === 'object' &&
-    preferred.checkBlanks
-  );
+var reasonLoose = 'Missing new line after list item'
+var reasonTight = 'Extraneous new line after list item'
 
-  visit(ast, 'list', visitor);
+function listItemSpacing(tree, file, pref) {
+  var blanks = pref && typeof pref === 'object' && Boolean(pref.checkBlanks)
+  var fn = blanks ? inferBlankLine : inferMultiline
+
+  visit(tree, 'list', visitor)
 
   function visitor(node) {
-    var items = node.children;
-    var isTightList = true;
-    var indent = start(node).column;
-    var type;
+    var tight = true
+    var indent
+    var children
+    var length
+    var index
+    var child
+    var next
 
-    if (generated(node)) {
-      return;
-    }
-
-    items.forEach(infer);
-
-    type = isTightList ? 'tight' : 'loose';
-
-    items.forEach(warn);
-
-    function infer(item) {
-      var fn = blanks ? inferBlankLine : inferMultiline;
-
-      if (fn(item)) {
-        isTightList = false;
-      }
-    }
-
-    function inferBlankLine(item) {
-      var children = item.children;
-      var length = children.length;
-      var index = 0;
-      var child = children[index];
-      var next;
+    if (!generated(node)) {
+      children = node.children
+      length = children.length
+      index = -1
 
       while (++index < length) {
-        next = children[index];
-
-        /* All children in `listItem`s are block. */
-        if ((start(next).line - end(child).line) > 1) {
-          return true;
+        if (fn(children[index])) {
+          tight = false
+          break
         }
-
-        child = next;
       }
 
-      return false;
-    }
+      indent = start(node).column
+      child = children[0]
+      index = 0
 
-    function inferMultiline(item) {
-      var content = item.children;
-      var head = content[0];
-      var tail = content[content.length - 1];
-      return (end(tail).line - start(head).line) > 0;
-    }
+      while (++index < length) {
+        next = children[index]
 
-    function warn(item, index) {
-      var next = items[index + 1];
-      var isTight = end(item).column > indent;
-
-      /* Ignore last. */
-      if (!next) {
-        return;
-      }
-
-      /* Check if the list item's state does (not)
-       * match the list's state. */
-      if (isTight !== isTightList) {
-        if (type === 'loose') {
-          file.message('Missing new line after list item', {
-            start: end(item),
+        if (end(child).column > indent !== tight) {
+          file.message(tight ? reasonTight : reasonLoose, {
+            start: end(child),
             end: start(next)
-          });
-        } else {
-          file.message('Extraneous new line after list item', {
-            start: end(item),
-            end: start(next)
-          });
+          })
         }
+
+        child = next
       }
     }
   }
+}
+
+function inferBlankLine(node) {
+  var children = node.children
+  var child = children[0]
+  var length = children.length
+  var index = 0
+  var next
+
+  while (++index < length) {
+    next = children[index]
+
+    /* All children in `listItem`s are block. */
+    if (start(next).line - end(child).line > 1) {
+      return true
+    }
+
+    child = next
+  }
+
+  return false
+}
+
+function inferMultiline(node) {
+  var children = node.children
+  return end(children[children.length - 1]).line - start(children[0]).line > 0
 }

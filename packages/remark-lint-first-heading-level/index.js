@@ -77,45 +77,43 @@
  *   1:1-1:14: First heading level should be `2`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:first-heading-level', firstHeadingLevel);
+module.exports = rule('remark-lint:first-heading-level', firstHeadingLevel)
 
-var re = /<h([1-6])/;
+var re = /<h([1-6])/
 
-function firstHeadingLevel(tree, file, preferred) {
-  var style = preferred && preferred !== true ? preferred : 1;
+function firstHeadingLevel(tree, file, pref) {
+  var style = pref && pref !== true ? pref : 1
 
-  visit(tree, visitor);
+  visit(tree, visitor)
 
   function visitor(node) {
-    var depth;
+    var depth
 
-    if (generated(node)) {
-      return;
-    }
-
-    if (node.type === 'heading') {
-      depth = node.depth;
-    } else if (node.type === 'html') {
-      depth = infer(node);
-    }
-
-    if (depth !== undefined) {
-      if (depth !== style) {
-        file.message('First heading level should be `' + style + '`', node);
+    if (!generated(node)) {
+      if (node.type === 'heading') {
+        depth = node.depth
+      } else if (node.type === 'html') {
+        depth = infer(node)
       }
 
-      return false;
+      if (depth !== undefined) {
+        if (depth !== style) {
+          file.message('First heading level should be `' + style + '`', node)
+        }
+
+        return visit.EXIT
+      }
     }
   }
 }
 
 function infer(node) {
-  var results = node.value.match(re);
-  return results ? Number(results[1]) : undefined;
+  var results = node.value.match(re)
+  return results ? Number(results[1]) : undefined
 }

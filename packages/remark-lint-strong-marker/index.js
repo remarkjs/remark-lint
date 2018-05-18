@@ -52,43 +52,43 @@
  *   1:1: Invalid strong marker `!`: use either `'consistent'`, `'*'`, or `'_'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:strong-marker', strongMarker);
+module.exports = rule('remark-lint:strong-marker', strongMarker)
 
-var MARKERS = {
-  '*': true,
-  _: true,
-  null: true
-};
+var markers = {'*': true, _: true, null: true}
 
-function strongMarker(ast, file, preferred) {
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+function strongMarker(tree, file, pref) {
+  var contents = String(file)
 
-  if (MARKERS[preferred] !== true) {
-    file.fail('Invalid strong marker `' + preferred + '`: use either `\'consistent\'`, `\'*\'`, or `\'_\'`');
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
+
+  if (markers[pref] !== true) {
+    file.fail(
+      'Invalid strong marker `' +
+        pref +
+        "`: use either `'consistent'`, `'*'`, or `'_'`"
+    )
   }
 
-  visit(ast, 'strong', visitor);
+  visit(tree, 'strong', visitor)
 
   function visitor(node) {
-    var marker = file.toString().charAt(position.start(node).offset);
+    var marker = contents.charAt(position.start(node).offset)
 
-    if (generated(node)) {
-      return;
-    }
-
-    if (preferred) {
-      if (marker !== preferred) {
-        file.message('Strong should use `' + preferred + '` as a marker', node);
+    if (!generated(node)) {
+      if (pref) {
+        if (marker !== pref) {
+          file.message('Strong should use `' + pref + '` as a marker', node)
+        }
+      } else {
+        pref = marker
       }
-    } else {
-      preferred = marker;
     }
   }
 }

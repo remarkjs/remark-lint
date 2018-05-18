@@ -31,84 +31,98 @@
  *   ␊
  *       bravo();
  *
+ * @example {"name": "empty-document.md"}
+ *
  * @example {"name": "invalid.md", "label": "input"}
  *
  *   Foo...
  *   ␊
  *   ␊
- *   ...Bar.
+ *   ...Bar
+ *   ␊
+ *   ␊
  *
  * @example {"name": "invalid.md", "label": "output"}
  *
  *   4:1: Remove 1 line before node
+ *   4:7: Remove 2 lines after node
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var plural = require('plur');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var plural = require('plur')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-consecutive-blank-lines', noConsecutiveBlankLines);
+module.exports = rule(
+  'remark-lint:no-consecutive-blank-lines',
+  noConsecutiveBlankLines
+)
 
-var MAX = 2;
-
-function noConsecutiveBlankLines(ast, file) {
-  visit(ast, visitor);
+function noConsecutiveBlankLines(tree, file) {
+  visit(tree, visitor)
 
   function visitor(node) {
-    var children = node.children;
-    var head = children && children[0];
-    var tail = children && children[children.length - 1];
+    var children = node.children
+    var head
+    var tail
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node) && children) {
+      head = children[0]
 
-    if (head && !generated(head)) {
-      /* Compare parent and first child. */
-      compare(position.start(node), position.start(head), 0);
+      if (head && !generated(head)) {
+        /* Compare parent and first child. */
+        compare(position.start(node), position.start(head), 0)
 
-      /* Compare between each child. */
-      children.forEach(visitChild);
+        /* Compare between each child. */
+        children.forEach(visitChild)
 
-      /* Compare parent and last child. */
-      if (tail !== head && !generated(tail)) {
-        compare(position.end(node), position.end(tail), 1);
+        tail = children[children.length - 1]
+
+        /* Compare parent and last child. */
+        if (tail !== head && !generated(tail)) {
+          compare(position.end(node), position.end(tail), 1)
+        }
       }
-    }
-
-    function visitChild(child, index) {
-      var prev = children[index - 1];
-      var max = MAX;
-
-      if (!prev || generated(prev) || generated(child)) {
-        return;
-      }
-
-      if (
-        (prev.type === 'list' && child.type === 'list') ||
-        (child.type === 'code' && prev.type === 'list' && !child.lang)
-      ) {
-        max++;
-      }
-
-      compare(position.end(prev), position.start(child), max);
     }
   }
 
   /* Compare the difference between `start` and `end`,
    * and warn when that difference exceeds `max`. */
   function compare(start, end, max) {
-    var diff = end.line - start.line;
-    var word = diff > 0 ? 'before' : 'after';
+    var diff = end.line - start.line
+    var lines = Math.abs(diff) - max
+    var reason
 
-    diff = Math.abs(diff) - max;
+    if (lines > 0) {
+      reason =
+        'Remove ' +
+        lines +
+        ' ' +
+        plural('line', lines) +
+        ' ' +
+        (diff > 0 ? 'before' : 'after') +
+        ' node'
 
-    if (diff > 0) {
-      file.message('Remove ' + diff + ' ' + plural('line', diff) + ' ' + word + ' node', end);
+      file.message(reason, end)
+    }
+  }
+
+  function visitChild(child, index, all) {
+    var prev = all[index - 1]
+    var max = 2
+
+    if (prev && !generated(prev) && !generated(child)) {
+      if (
+        (prev.type === 'list' && child.type === 'list') ||
+        (child.type === 'code' && prev.type === 'list' && !child.lang)
+      ) {
+        max++
+      }
+
+      compare(position.end(prev), position.start(child), max)
     }
   }
 }

@@ -28,24 +28,25 @@
  *   1:1-1:7: Use the trailing [] on reference images
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-shortcut-reference-image', noShortcutReferenceImage);
+module.exports = rule(
+  'remark-lint:no-shortcut-reference-image',
+  noShortcutReferenceImage
+)
 
-function noShortcutReferenceImage(ast, file) {
-  visit(ast, 'imageReference', visitor);
+var reason = 'Use the trailing [] on reference images'
+
+function noShortcutReferenceImage(tree, file) {
+  visit(tree, 'imageReference', visitor)
 
   function visitor(node) {
-    if (generated(node)) {
-      return;
-    }
-
-    if (node.referenceType === 'shortcut') {
-      file.message('Use the trailing [] on reference images', node);
+    if (!generated(node) && node.referenceType === 'shortcut') {
+      file.message(reason, node)
     }
   }
 }

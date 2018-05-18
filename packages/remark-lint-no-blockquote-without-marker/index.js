@@ -31,58 +31,64 @@
  *   2:1: Missing marker in blockquote
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var vfileLocation = require('vfile-location');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var vfileLocation = require('vfile-location')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-blockquote-without-marker', noBlockquoteWithoutMarker);
+module.exports = rule(
+  'remark-lint:no-blockquote-without-marker',
+  noBlockquoteWithoutMarker
+)
 
-function noBlockquoteWithoutMarker(ast, file) {
-  var contents = file.toString();
-  var location = vfileLocation(file);
-  var last = contents.length;
+var reason = 'Missing marker in blockquote'
 
-  visit(ast, 'blockquote', visitor);
+function noBlockquoteWithoutMarker(tree, file) {
+  var contents = String(file)
+  var location = vfileLocation(file)
+  var last = contents.length
+
+  visit(tree, 'blockquote', visitor)
 
   function visitor(node) {
-    var start = position.start(node).line;
-    var indent = node.position && node.position.indent;
+    var indent = node.position && node.position.indent
+    var start
+    var length
+    var index
+    var line
+    var offset
+    var character
+    var pos
 
     if (generated(node) || !indent || indent.length === 0) {
-      return;
+      return
     }
 
-    indent.forEach(eachLine);
+    start = position.start(node).line
+    length = indent.length
+    index = -1
 
-    function eachLine(column, n) {
-      var character;
-      var line = start + n + 1;
-      var offset = location.toOffset({
-        line: line,
-        column: column
-      }) - 1;
+    while (++index < length) {
+      line = start + index + 1
+      pos = {line: line, column: indent[index]}
+      offset = location.toOffset(pos) - 1
 
       while (++offset < last) {
-        character = contents.charAt(offset);
+        character = contents.charAt(offset)
 
         if (character === '>') {
-          return;
+          break
         }
 
         /* istanbul ignore else - just for safety */
         if (character !== ' ' && character !== '\t') {
-          break;
+          file.message(reason, pos)
+          break
         }
       }
-
-      file.message('Missing marker in blockquote', {
-        line: line,
-        column: column
-      });
     }
   }
 }

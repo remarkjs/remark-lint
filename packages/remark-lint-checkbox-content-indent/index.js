@@ -27,56 +27,58 @@
  *   4:7-4:10: Checkboxes should be followed by a single character
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var vfileLocation = require('vfile-location');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var vfileLocation = require('vfile-location')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:checkbox-content-indent', checkboxContentIndent);
+module.exports = rule(
+  'remark-lint:checkbox-content-indent',
+  checkboxContentIndent
+)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
+
+var reason = 'Checkboxes should be followed by a single character'
 
 function checkboxContentIndent(tree, file) {
-  var contents = file.toString();
-  var location = vfileLocation(file);
+  var contents = String(file)
+  var location = vfileLocation(file)
 
-  visit(tree, 'listItem', visitor);
+  visit(tree, 'listItem', visitor)
 
   function visitor(node) {
-    var initial;
-    var final;
-    var value;
+    var initial
+    var final
+    var value
 
     /* Exit early for items without checkbox. */
-    if (node.checked !== Boolean(node.checked) || generated(node)) {
-      return;
+    if (typeof node.checked !== 'boolean' || generated(node)) {
+      return
     }
 
-    initial = start(node).offset;
+    initial = start(node).offset
     /* istanbul ignore next - hard to test, couldn’t find a case. */
-    final = (node.children.length ? start(node.children[0]) : end(node)).offset;
+    final = (node.children.length ? start(node.children[0]) : end(node)).offset
 
     while (/[^\S\n]/.test(contents.charAt(final))) {
-      final++;
+      final++
     }
 
     /* For a checkbox to be parsed, it must be followed
      * by a white space. */
-    value = contents.slice(initial, final);
+    value = contents.slice(initial, final)
+    value = value.slice(value.indexOf(']') + 1)
 
-    value = value.slice(value.indexOf(']') + 1);
-
-    if (value.length === 1) {
-      return;
+    if (value.length !== 1) {
+      file.message(reason, {
+        start: location.toPosition(final - value.length + 1),
+        end: location.toPosition(final)
+      })
     }
-
-    file.message('Checkboxes should be followed by a single character', {
-      start: location.toPosition(final - value.length + 1),
-      end: location.toPosition(final)
-    });
   }
 }

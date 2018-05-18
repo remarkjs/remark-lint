@@ -23,30 +23,32 @@
  *   3:1-3:10: Heading levels should increment by one level at a time
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:heading-increment', headingIncrement);
+module.exports = rule('remark-lint:heading-increment', headingIncrement)
 
-function headingIncrement(ast, file) {
-  var prev = null;
+var reason = 'Heading levels should increment by one level at a time'
 
-  visit(ast, 'heading', visitor);
+function headingIncrement(tree, file) {
+  var prev = null
+
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var depth = node.depth;
+    var depth
 
-    if (generated(node)) {
-      return;
+    if (!generated(node)) {
+      depth = node.depth
+
+      if (prev && depth > prev + 1) {
+        file.message(reason, node)
+      }
+
+      prev = depth
     }
-
-    if (prev && depth > prev + 1) {
-      file.message('Heading levels should increment by one level at a time', node);
-    }
-
-    prev = depth;
   }
 }

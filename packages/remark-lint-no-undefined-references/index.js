@@ -21,33 +21,34 @@
  *   1:1-1:8: Found reference to undefined definition
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var generated = require('unist-util-generated');
-var visit = require('unist-util-visit');
+var rule = require('unified-lint-rule')
+var generated = require('unist-util-generated')
+var visit = require('unist-util-visit')
 
-module.exports = rule('remark-lint:no-undefined-references', noUndefinedReferences);
+module.exports = rule(
+  'remark-lint:no-undefined-references',
+  noUndefinedReferences
+)
 
-function noUndefinedReferences(ast, file) {
-  var map = {};
+var reason = 'Found reference to undefined definition'
 
-  visit(ast, 'definition', mark);
-  visit(ast, 'footnoteDefinition', mark);
+function noUndefinedReferences(tree, file) {
+  var map = {}
 
-  visit(ast, 'imageReference', find);
-  visit(ast, 'linkReference', find);
-  visit(ast, 'footnoteReference', find);
+  visit(tree, ['definition', 'footnoteDefinition'], mark)
+  visit(tree, ['imageReference', 'linkReference', 'footnoteReference'], find)
 
   function mark(node) {
     if (!generated(node)) {
-      map[node.identifier.toUpperCase()] = true;
+      map[node.identifier.toUpperCase()] = true
     }
   }
 
   function find(node) {
     if (!generated(node) && !map[node.identifier.toUpperCase()]) {
-      file.message('Found reference to undefined definition', node);
+      file.message(reason, node)
     }
   }
 }

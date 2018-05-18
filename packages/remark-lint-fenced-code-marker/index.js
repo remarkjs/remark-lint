@@ -66,52 +66,58 @@
  *   1:1: Invalid fenced code marker `!`: use either `'consistent'`, `` '`' ``, or `'~'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:fenced-code-marker', fencedCodeMarker);
+module.exports = rule('remark-lint:fenced-code-marker', fencedCodeMarker)
 
-var MARKERS = {
+var markers = {
   '`': true,
   '~': true,
   null: true
-};
+}
 
-function fencedCodeMarker(ast, file, preferred) {
-  var contents = file.toString();
+function fencedCodeMarker(tree, file, pref) {
+  var contents = String(file)
 
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
 
-  if (MARKERS[preferred] !== true) {
-    file.fail('Invalid fenced code marker `' + preferred + '`: use either `\'consistent\'`, `` \'`\' ``, or `\'~\'`');
+  if (markers[pref] !== true) {
+    file.fail(
+      'Invalid fenced code marker `' +
+        pref +
+        "`: use either `'consistent'`, `` '`' ``, or `'~'`"
+    )
   }
 
-  visit(ast, 'code', visitor);
+  visit(tree, 'code', visitor)
 
   function visitor(node) {
-    var marker = contents.substr(position.start(node).offset, 4);
+    var marker
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      marker = contents
+        .substr(position.start(node).offset, 4)
+        .trimLeft()
+        .charAt(0)
 
-    marker = marker.trimLeft().charAt(0);
-
-    /* Ignore unfenced code blocks. */
-    if (MARKERS[marker] !== true) {
-      return;
-    }
-
-    if (preferred) {
-      if (marker !== preferred) {
-        file.message('Fenced code should use ' + preferred + ' as a marker', node);
+      /* Ignore unfenced code blocks. */
+      if (markers[marker] === true) {
+        if (pref) {
+          if (marker !== pref) {
+            file.message(
+              'Fenced code should use ' + pref + ' as a marker',
+              node
+            )
+          }
+        } else {
+          pref = marker
+        }
       }
-    } else {
-      preferred = marker;
     }
   }
 }

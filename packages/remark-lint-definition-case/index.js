@@ -19,38 +19,36 @@
  *   1:1-1:47: Do not use upper-case characters in definition labels
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:definition-case', definitionCase);
+module.exports = rule('remark-lint:definition-case', definitionCase)
 
-var LABEL = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/;
+var label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
+var reason = 'Do not use upper-case characters in definition labels'
 
 function definitionCase(tree, file) {
-  var contents = file.toString();
+  var contents = String(file)
 
-  visit(tree, 'definition', validate);
-  visit(tree, 'footnoteDefinition', validate);
+  visit(tree, ['definition', 'footnoteDefinition'], validate)
 
   /* Validate a node, either a normal definition or
    * a footnote definition. */
   function validate(node) {
-    var start = position.start(node).offset;
-    var end = position.end(node).offset;
-    var label;
+    var start = position.start(node).offset
+    var end = position.end(node).offset
+    var value
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      value = contents.slice(start, end).match(label)[1]
 
-    label = contents.slice(start, end).match(LABEL)[1];
-
-    if (label !== label.toLowerCase()) {
-      file.message('Do not use upper-case characters in definition labels', node);
+      if (value !== value.toLowerCase()) {
+        file.message(reason, node)
+      }
     }
   }
 }

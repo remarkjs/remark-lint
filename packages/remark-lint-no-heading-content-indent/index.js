@@ -57,75 +57,85 @@
  *   3:34: Remove 1 space after this heading’s content
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var style = require('mdast-util-heading-style');
-var plural = require('plur');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var style = require('mdast-util-heading-style')
+var plural = require('plur')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-heading-content-indent', noHeadingContentIndent);
+module.exports = rule(
+  'remark-lint:no-heading-content-indent',
+  noHeadingContentIndent
+)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-function noHeadingContentIndent(ast, file) {
-  var contents = file.toString();
+function noHeadingContentIndent(tree, file) {
+  var contents = String(file)
 
-  visit(ast, 'heading', visitor);
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var depth = node.depth;
-    var children = node.children;
-    var type = style(node, 'atx');
-    var head;
-    var initial;
-    var final;
-    var diff;
-    var word;
-    var index;
-    var char;
+    var depth
+    var children
+    var type
+    var head
+    var initial
+    var final
+    var diff
+    var absDiff
+    var index
+    var char
+    var reason
 
     if (generated(node)) {
-      return;
+      return
     }
 
+    depth = node.depth
+    children = node.children
+    type = style(node, 'atx')
+
     if (type === 'atx' || type === 'atx-closed') {
-      initial = start(node);
-      index = initial.offset;
-      char = contents.charAt(index);
+      initial = start(node)
+      index = initial.offset
+      char = contents.charAt(index)
 
       while (char && char !== '#') {
-        index++;
-        char = contents.charAt(index);
+        char = contents.charAt(++index)
       }
 
       /* istanbul ignore if - CR/LF bug: remarkjs/remark#195. */
       if (!char) {
-        return;
+        return
       }
 
-      index = depth + (index - initial.offset);
-      head = start(children[0]).column;
+      index = depth + (index - initial.offset)
+      head = start(children[0]).column
 
       /* Ignore empty headings. */
       if (!head) {
-        return;
+        return
       }
 
-      diff = head - initial.column - 1 - index;
+      diff = head - initial.column - 1 - index
 
       if (diff) {
-        word = diff > 0 ? 'Remove' : 'Add';
-        diff = Math.abs(diff);
+        absDiff = Math.abs(diff)
 
-        file.message(
-          word + ' ' + diff + ' ' + plural('space', diff) +
-          ' before this heading’s content',
-          start(children[0])
-        );
+        reason =
+          (diff > 0 ? 'Remove' : 'Add') +
+          ' ' +
+          absDiff +
+          ' ' +
+          plural('space', absDiff) +
+          ' before this heading’s content'
+
+        file.message(reason, start(children[0]))
       }
     }
 
@@ -133,15 +143,18 @@ function noHeadingContentIndent(ast, file) {
      * between their content and the final hashes,
      * thus, there is no `add x spaces`. */
     if (type === 'atx-closed') {
-      final = end(children[children.length - 1]);
-      diff = end(node).column - final.column - 1 - depth;
+      final = end(children[children.length - 1])
+      diff = end(node).column - final.column - 1 - depth
 
       if (diff) {
-        file.message(
-          'Remove ' + diff + ' ' + plural('space', diff) +
-          ' after this heading’s content',
-          final
-        );
+        reason =
+          'Remove ' +
+          diff +
+          ' ' +
+          plural('space', diff) +
+          ' after this heading’s content'
+
+        file.message(reason, final)
       }
     }
   }

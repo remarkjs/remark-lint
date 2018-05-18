@@ -59,43 +59,45 @@
  *   1:1: Invalid emphasis marker `invalid`: use either `'consistent'`, `'*'`, or `'_'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:emphasis-marker', emphasisMarker);
+module.exports = rule('remark-lint:emphasis-marker', emphasisMarker)
 
-var MARKERS = {
-  '*': true,
-  _: true,
-  null: true
-};
+var markers = {null: true, '*': true, _: true}
 
-function emphasisMarker(tree, file, preferred) {
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+function emphasisMarker(tree, file, pref) {
+  var contents = String(file)
 
-  if (MARKERS[preferred] !== true) {
-    file.fail('Invalid emphasis marker `' + preferred + '`: use either `\'consistent\'`, `\'*\'`, or `\'_\'`');
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
+
+  if (markers[pref] !== true) {
+    file.fail(
+      'Invalid emphasis marker `' +
+        pref +
+        "`: use either `'consistent'`, `'*'`, or `'_'`"
+    )
   }
 
-  visit(tree, 'emphasis', visitor);
+  visit(tree, 'emphasis', visitor)
 
   function visitor(node) {
-    var marker = file.toString().charAt(position.start(node).offset);
+    var marker
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      marker = contents.charAt(position.start(node).offset)
 
-    if (preferred) {
-      if (marker !== preferred) {
-        file.message('Emphasis should use `' + preferred + '` as a marker', node);
+      if (pref) {
+        if (marker !== pref) {
+          file.message('Emphasis should use `' + pref + '` as a marker', node)
+        }
+      } else {
+        pref = marker
       }
-    } else {
-      preferred = marker;
     }
   }
 }

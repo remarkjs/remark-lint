@@ -29,35 +29,33 @@
  *   5:1-5:8: Don’t use emphasis to introduce a section, use a heading
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-emphasis-as-heading', noEmphasisAsHeading);
+module.exports = rule('remark-lint:no-emphasis-as-heading', noEmphasisAsHeading)
 
-function noEmphasisAsHeading(ast, file) {
-  visit(ast, 'paragraph', visitor);
+var reason = 'Don’t use emphasis to introduce a section, use a heading'
+
+function noEmphasisAsHeading(tree, file) {
+  visit(tree, 'paragraph', visitor)
 
   function visitor(node, index, parent) {
-    var children = node.children;
-    var child = children[0];
-    var prev = parent.children[index - 1];
-    var next = parent.children[index + 1];
-
-    if (generated(node)) {
-      return;
-    }
+    var head = node.children[0]
+    var prev = parent.children[index - 1]
+    var next = parent.children[index + 1]
 
     if (
+      !generated(node) &&
       (!prev || prev.type !== 'heading') &&
       next &&
       next.type === 'paragraph' &&
-      children.length === 1 &&
-      (child.type === 'emphasis' || child.type === 'strong')
+      node.children.length === 1 &&
+      (head.type === 'emphasis' || head.type === 'strong')
     ) {
-      file.message('Don’t use emphasis to introduce a section, use a heading', node);
+      file.message(reason, node)
     }
   }
 }

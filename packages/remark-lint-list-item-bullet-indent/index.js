@@ -34,48 +34,52 @@
  *   4:3: Incorrect indentation before bullet: remove 1 space
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var plural = require('plur');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var plural = require('plur')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:list-item-bullet-indent', listItemBulletIndent);
+module.exports = rule(
+  'remark-lint:list-item-bullet-indent',
+  listItemBulletIndent
+)
 
-var start = position.start;
+var start = position.start
 
-function listItemBulletIndent(ast, file) {
-  var contents = file.toString();
+function listItemBulletIndent(tree, file) {
+  var contents = String(file)
 
-  visit(ast, 'list', visitor);
+  visit(tree, 'list', visitor)
 
   function visitor(node) {
-    var items = node.children;
-
-    items.forEach(visitItems);
+    node.children.forEach(visitItems)
   }
 
   function visitItems(item) {
-    var head = item.children[0];
-    var initial = start(item).offset;
-    var final = start(head).offset;
-    var indent;
+    var final
+    var indent
+    var reason
 
-    if (generated(item)) {
-      return;
-    }
+    if (!generated(item)) {
+      final = start(item.children[0])
+      indent = contents.slice(start(item).offset, final.offset).match(/^\s*/)[0]
+        .length
 
-    indent = contents.slice(initial, final).match(/^\s*/)[0].length;
+      if (indent !== 0) {
+        reason =
+          'Incorrect indentation before bullet: remove ' +
+          indent +
+          ' ' +
+          plural('space', indent)
 
-    if (indent !== 0) {
-      initial = start(head);
-
-      file.message('Incorrect indentation before bullet: remove ' + indent + ' ' + plural('space', indent), {
-        line: initial.line,
-        column: initial.column - indent
-      });
+        file.message(reason, {
+          line: final.line,
+          column: final.column - indent
+        })
+      }
     }
   }
 }

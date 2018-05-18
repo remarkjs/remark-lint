@@ -13,14 +13,19 @@
  *   1:1: Do not use consecutive dashes in a file name
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:no-file-name-consecutive-dashes', noFileNameConsecutiveDashes);
+module.exports = rule(
+  'remark-lint:no-file-name-consecutive-dashes',
+  noFileNameConsecutiveDashes
+)
 
-function noFileNameConsecutiveDashes(ast, file) {
+var reason = 'Do not use consecutive dashes in a file name'
+
+function noFileNameConsecutiveDashes(tree, file) {
   if (file.stem && /-{2,}/.test(file.stem)) {
-    file.message('Do not use consecutive dashes in a file name');
+    file.message(reason)
   }
 }

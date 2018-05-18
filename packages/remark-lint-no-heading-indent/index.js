@@ -46,54 +46,57 @@
  *   8:4: Remove 3 spaces before this heading
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var plural = require('plur');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var plural = require('plur')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:no-heading-indent', noHeadingIndent);
+module.exports = rule('remark-lint:no-heading-indent', noHeadingIndent)
 
-var start = position.start;
+var start = position.start
 
-function noHeadingIndent(ast, file) {
-  var contents = file.toString();
-  var length = contents.length;
+function noHeadingIndent(tree, file) {
+  var contents = String(file)
+  var length = contents.length
 
-  visit(ast, 'heading', visitor);
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var initial = start(node);
-    var begin = initial.offset;
-    var index = begin - 1;
-    var character;
-    var diff;
+    var initial
+    var begin
+    var index
+    var character
+    var diff
 
     if (generated(node)) {
-      return;
+      return
     }
 
+    initial = start(node)
+    begin = initial.offset
+    index = begin - 1
+
     while (++index < length) {
-      character = contents.charAt(index);
+      character = contents.charAt(index)
 
       if (character !== ' ' && character !== '\t') {
-        break;
+        break
       }
     }
 
-    diff = index - begin;
+    diff = index - begin
 
     if (diff) {
       file.message(
-        'Remove ' + diff + ' ' + plural('space', diff) +
-        ' before this heading',
+        'Remove ' + diff + ' ' + plural('space', diff) + ' before this heading',
         {
           line: initial.line,
           column: initial.column + diff
         }
-      );
+      )
     }
   }
 }

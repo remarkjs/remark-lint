@@ -45,46 +45,49 @@
  *   1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var location = require('vfile-location');
+var rule = require('unified-lint-rule')
+var location = require('vfile-location')
 
-module.exports = rule('remark-lint:linebreak-style', linebreakStyle);
+module.exports = rule('remark-lint:linebreak-style', linebreakStyle)
 
-var sequences = {
-  unix: '\n',
-  windows: '\r\n'
-};
+var sequences = {unix: '\n', windows: '\r\n'}
+var escaped = {unix: '\\n', windows: '\\r\\n'}
+var types = {true: 'windows', false: 'unix'}
 
-var escaped = {
-  unix: '\\n',
-  windows: '\\r\\n'
-};
+function linebreakStyle(tree, file, pref) {
+  var content = String(file)
+  var position = location(content).toPosition
+  var index = content.indexOf('\n')
+  var type
+  var reason
 
-function linebreakStyle(ast, file, preferred) {
-  var content = String(file);
-  var position = location(content).toPosition;
-  var index = content.indexOf('\n');
-  var type;
-
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
 
   while (index !== -1) {
-    type = content.charAt(index - 1) === '\r' ? 'windows' : 'unix';
+    type = types[content.charAt(index - 1) === '\r']
 
-    if (preferred) {
-      if (sequences[preferred] !== sequences[type]) {
-        file.message(
-          'Expected linebreaks to be ' + preferred + ' (`' + escaped[preferred] + '`), ' +
-          'not ' + type + ' (`' + escaped[type] + '`)',
-          position(index)
-        );
+    if (pref) {
+      if (sequences[pref] !== sequences[type]) {
+        reason =
+          'Expected linebreaks to be ' +
+          pref +
+          ' (`' +
+          escaped[pref] +
+          '`), ' +
+          'not ' +
+          type +
+          ' (`' +
+          escaped[type] +
+          '`)'
+
+        file.message(reason, position(index))
       }
     } else {
-      preferred = type;
+      pref = type
     }
 
-    index = content.indexOf('\n', index + 1);
+    index = content.indexOf('\n', index + 1)
   }
 }

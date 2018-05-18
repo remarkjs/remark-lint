@@ -54,62 +54,64 @@
  *   1:1: Invalid ordered list-item marker style `!`: use either `'.'` or `')'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:ordered-list-marker-style', orderedListMarkerStyle);
+module.exports = rule(
+  'remark-lint:ordered-list-marker-style',
+  orderedListMarkerStyle
+)
 
-var start = position.start;
+var start = position.start
 
-var STYLES = {
+var styles = {
   ')': true,
   '.': true,
   null: true
-};
+}
 
-function orderedListMarkerStyle(ast, file, preferred) {
-  var contents = file.toString();
+function orderedListMarkerStyle(tree, file, pref) {
+  var contents = String(file)
 
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref !== 'string' || pref === 'consistent' ? null : pref
 
-  if (STYLES[preferred] !== true) {
-    file.fail('Invalid ordered list-item marker style `' + preferred + '`: use either `\'.\'` or `\')\'`');
+  if (styles[pref] !== true) {
+    file.fail(
+      'Invalid ordered list-item marker style `' +
+        pref +
+        "`: use either `'.'` or `')'`"
+    )
   }
 
-  visit(ast, 'list', visitor);
+  visit(tree, 'list', visitor)
 
   function visitor(node) {
-    var items = node.children;
+    var children = node.children
+    var length = node.ordered ? children.length : 0
+    var index = -1
+    var marker
+    var child
 
-    if (!node.ordered) {
-      return;
-    }
+    while (++index < length) {
+      child = children[index]
 
-    items.forEach(each);
+      if (!generated(child)) {
+        marker = contents
+          .slice(start(child).offset, start(child.children[0]).offset)
+          .replace(/\s|\d/g, '')
+          .replace(/\[[x ]?]\s*$/i, '')
 
-    function each(item) {
-      var head = item.children[0];
-      var initial = start(item).offset;
-      var final = start(head).offset;
-      var marker;
-
-      if (generated(item)) {
-        return;
-      }
-
-      marker = contents.slice(initial, final).replace(/\s|\d/g, '');
-
-      /* Support checkboxes. */
-      marker = marker.replace(/\[[x ]?]\s*$/i, '');
-
-      if (!preferred) {
-        preferred = marker;
-      } else if (marker !== preferred) {
-        file.message('Marker style should be `' + preferred + '`', item);
+        if (pref) {
+          if (marker !== pref) {
+            file.message('Marker style should be `' + pref + '`', child)
+          }
+        } else {
+          pref = marker
+        }
       }
     }
   }

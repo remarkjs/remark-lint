@@ -27,40 +27,35 @@
  *   1:1-1:19: Don’t use literal URLs without angle brackets
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:no-literal-urls', noLiteralURLs);
+module.exports = rule('remark-lint:no-literal-urls', noLiteralURLs)
 
-var start = position.start;
-var end = position.end;
-var MAILTO = 'mailto:';
+var start = position.start
+var end = position.end
+var mailto = 'mailto:'
+var reason = 'Don’t use literal URLs without angle brackets'
 
-function noLiteralURLs(ast, file) {
-  visit(ast, 'link', visitor);
+function noLiteralURLs(tree, file) {
+  visit(tree, 'link', visitor)
 
   function visitor(node) {
-    var head = start(node.children[0]).column;
-    var tail = end(node.children[node.children.length - 1]).column;
-    var initial = start(node).column;
-    var final = end(node).column;
-    var value = toString(node);
-
-    if (generated(node)) {
-      return;
-    }
+    var children = node.children
+    var value = toString(node)
 
     if (
-      initial === head &&
-      final === tail &&
-      (node.url === MAILTO + value || node.url === value)
+      !generated(node) &&
+      start(node).column === start(children[0]).column &&
+      end(node).column === end(children[children.length - 1]).column &&
+      (node.url === mailto + value || node.url === value)
     ) {
-      file.message('Don’t use literal URLs without angle brackets', node);
+      file.message(reason, node)
     }
   }
 }

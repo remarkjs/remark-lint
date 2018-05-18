@@ -38,6 +38,7 @@
     "mdast-zone": "^3.0.0",
     "nyc": "^11.0.0",
     "parse-author": "^2.0.0",
+    "prettier": "^1.12.1",
     "remark": "^9.0.0",
     "remark-cli": "^5.0.0",
     "remark-comment-config": "^5.0.0",
@@ -55,16 +56,16 @@
   },
   "scripts": {
     "prepublish": "lerna bootstrap",
-    "build-presets": "node script/build-presets",
-    "build-rules": "node script/build-rules",
-    "build-md": "remark . -qfo",
-    "build-bundle": "browserify packages/remark-lint/index.js --bare -s remarkLint > remark-lint.js",
-    "build-mangle": "esmangle remark-lint.js > remark-lint.min.js",
-    "build": "npm run build-presets && npm run build-rules && npm run build-md && npm run build-bundle && npm run build-mangle",
-    "lint": "xo",
+    "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
+    "generate:presets": "node script/build-presets",
+    "generate:rules": "node script/build-rules",
+    "generate": "npm run generate:presets && npm run generate:rules",
+    "build:bundle": "browserify packages/remark-lint/index.js --bare -s remarkLint > remark-lint.js",
+    "build:mangle": "esmangle remark-lint.js > remark-lint.min.js",
+    "build": "npm run build:bundle && npm run build:mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
-    "test": "npm run build && npm run lint && npm run test-coverage"
+    "test": "npm run generate && npm run format && npm run build && npm run test-coverage"
   },
   "nyc": {
     "check-coverage": true,
@@ -72,8 +73,16 @@
     "functions": 100,
     "branches": 100
   },
+  "prettier": {
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "semi": false,
+    "trailingComma": "none"
+  },
   "xo": {
-    "space": true,
+    "prettier": true,
     "esnext": false,
     "rules": {
       "guard-for-in": "off",

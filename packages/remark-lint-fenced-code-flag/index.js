@@ -64,48 +64,53 @@
  *   1:1-3:4: Invalid code-language flag
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:fenced-code-flag', fencedCodeFlag);
+module.exports = rule('remark-lint:fenced-code-flag', fencedCodeFlag)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-function fencedCodeFlag(ast, file, preferred) {
-  var contents = file.toString();
-  var allowEmpty = false;
-  var flags = [];
+var fence = /^ {0,3}([~`])\1{2,}/
+var reasonInvalid = 'Invalid code-language flag'
+var reasonMissing = 'Missing code-language flag'
 
-  if (typeof preferred === 'object' && !('length' in preferred)) {
-    allowEmpty = Boolean(preferred.allowEmpty);
+function fencedCodeFlag(tree, file, pref) {
+  var contents = String(file)
+  var allowEmpty = false
+  var flags = []
 
-    preferred = preferred.flags;
+  if (typeof pref === 'object' && !('length' in pref)) {
+    allowEmpty = Boolean(pref.allowEmpty)
+    pref = pref.flags
   }
 
-  if (typeof preferred === 'object' && 'length' in preferred) {
-    flags = String(preferred).split(',');
+  if (typeof pref === 'object' && 'length' in pref) {
+    flags = String(pref).split(',')
   }
 
-  visit(ast, 'code', visitor);
+  visit(tree, 'code', visitor)
 
   function visitor(node) {
-    var value = contents.slice(start(node).offset, end(node).offset);
+    var value
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      if (node.lang) {
+        if (flags.length !== 0 && flags.indexOf(node.lang) === -1) {
+          file.message(reasonInvalid, node)
+        }
+      } else {
+        value = contents.slice(start(node).offset, end(node).offset)
 
-    if (node.lang) {
-      if (flags.length !== 0 && flags.indexOf(node.lang) === -1) {
-        file.message('Invalid code-language flag', node);
+        if (!allowEmpty && fence.test(value)) {
+          file.message(reasonMissing, node)
+        }
       }
-    } else if (/^ {0,3}([~`])\1{2,}/.test(value) && !allowEmpty) {
-      file.message('Missing code-language flag', node);
     }
   }
 }

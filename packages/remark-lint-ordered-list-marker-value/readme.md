@@ -99,6 +99,23 @@ When configured with `'one'`.
 2:1-2:8: Marker should be `1`, was `2`
 ```
 
+##### `also-invalid.md`
+
+When configured with `'one'`.
+
+###### In
+
+```markdown
+2.  Foo
+1.  Bar
+```
+
+###### Out
+
+```text
+1:1-1:8: Marker should be `1`, was `2`
+```
+
 ##### `valid.md`
 
 When configured with `'single'`.

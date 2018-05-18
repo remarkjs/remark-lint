@@ -64,33 +64,31 @@
  *   6:1-6:13: Headings should use setext
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var style = require('mdast-util-heading-style');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var style = require('mdast-util-heading-style')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:heading-style', headingStyle);
+module.exports = rule('remark-lint:heading-style', headingStyle)
 
-var TYPES = ['atx', 'atx-closed', 'setext'];
+var types = ['atx', 'atx-closed', 'setext']
 
-function headingStyle(ast, file, preferred) {
-  preferred = TYPES.indexOf(preferred) === -1 ? null : preferred;
+function headingStyle(tree, file, pref) {
+  pref = types.indexOf(pref) === -1 ? null : pref
 
-  visit(ast, 'heading', visitor);
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    if (generated(node)) {
-      return;
-    }
-
-    if (preferred) {
-      if (style(node, preferred) !== preferred) {
-        file.message('Headings should use ' + preferred, node);
+    if (!generated(node)) {
+      if (pref) {
+        if (style(node, pref) !== pref) {
+          file.message('Headings should use ' + pref, node)
+        }
+      } else {
+        pref = style(node, pref)
       }
-    } else {
-      preferred = style(node, preferred);
     }
   }
 }

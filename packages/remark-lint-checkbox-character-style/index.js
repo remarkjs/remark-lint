@@ -68,103 +68,94 @@
  *   1:1: Invalid checked checkbox marker `!`: use either `'x'`, or `'X'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var vfileLocation = require('vfile-location');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var vfileLocation = require('vfile-location')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:checkbox-character-style', checkboxCharacterStyle);
+module.exports = rule(
+  'remark-lint:checkbox-character-style',
+  checkboxCharacterStyle
+)
 
-var start = position.start;
-var end = position.end;
+var start = position.start
+var end = position.end
 
-var CHECKED = {x: true, X: true};
-var UNCHECKED = {' ': true, '\t': true};
+var checked = {x: true, X: true}
+var unchecked = {' ': true, '\t': true}
+var types = {true: 'checked', false: 'unchecked'}
 
-function checkboxCharacterStyle(tree, file, preferred) {
-  var contents = file.toString();
-  var location = vfileLocation(file);
+function checkboxCharacterStyle(tree, file, pref) {
+  var contents = String(file)
+  var location = vfileLocation(file)
 
-  if (preferred === 'consistent' || typeof preferred !== 'object') {
-    preferred = {};
-  }
+  pref = typeof pref === 'object' ? pref : {}
 
-  if (!preferred.unchecked) {
-    preferred.unchecked = null;
-  }
-
-  if (!preferred.checked) {
-    preferred.checked = null;
-  }
-
-  if (
-    preferred.unchecked !== null &&
-    UNCHECKED[preferred.unchecked] !== true
-  ) {
+  if (pref.unchecked && unchecked[pref.unchecked] !== true) {
     file.fail(
       'Invalid unchecked checkbox marker `' +
-      preferred.unchecked +
-      '`: use either `\'\\t\'`, or `\' \'`'
-    );
+        pref.unchecked +
+        "`: use either `'\\t'`, or `' '`"
+    )
   }
 
-  if (
-    preferred.checked !== null &&
-    CHECKED[preferred.checked] !== true
-  ) {
+  if (pref.checked && checked[pref.checked] !== true) {
     file.fail(
       'Invalid checked checkbox marker `' +
-      preferred.checked +
-      '`: use either `\'x\'`, or `\'X\'`'
-    );
+        pref.checked +
+        "`: use either `'x'`, or `'X'`"
+    )
   }
 
-  visit(tree, 'listItem', visitor);
+  visit(tree, 'listItem', visitor)
 
   function visitor(node) {
-    var type;
-    var initial;
-    var final;
-    var stop;
-    var value;
-    var style;
-    var character;
+    var type
+    var initial
+    var final
+    var value
+    var style
+    var character
+    var reason
 
     /* Exit early for items without checkbox. */
-    if (node.checked !== Boolean(node.checked) || generated(node)) {
-      return;
+    if (typeof node.checked !== 'boolean' || generated(node)) {
+      return
     }
 
-    type = node.checked ? 'checked' : 'unchecked';
+    type = types[node.checked]
+    initial = start(node).offset
+    final = (node.children.length ? start(node.children[0]) : end(node)).offset
 
-    initial = start(node).offset;
-    final = (node.children.length ? start(node.children[0]) : end(node)).offset;
+    /* For a checkbox to be parsed, it must be followed by a white space. */
+    value = contents
+      .slice(initial, final)
+      .trimRight()
+      .slice(0, -1)
 
-    /* For a checkbox to be parsed, it must be followed
-     * by a white space. */
-    value = contents.slice(initial, final).trimRight().slice(0, -1);
+    /* The checkbox character is behind a square bracket. */
+    character = value.charAt(value.length - 1)
+    style = pref[type]
 
-    /* The checkbox character is behind a square
-     * bracket. */
-    character = value.charAt(value.length - 1);
-    style = preferred[type];
+    if (style) {
+      if (character !== style) {
+        reason =
+          type.charAt(0).toUpperCase() +
+          type.slice(1) +
+          ' checkboxes should use `' +
+          style +
+          '` as a marker'
 
-    if (style === null) {
-      preferred[type] = character;
-    } else if (character !== style) {
-      stop = initial + value.length;
-
-      file.message(
-        type.charAt(0).toUpperCase() + type.slice(1) +
-        ' checkboxes should use `' + style + '` as a marker',
-        {
-          start: location.toPosition(stop - 1),
-          end: location.toPosition(stop)
-        }
-      );
+        file.message(reason, {
+          start: location.toPosition(initial + value.length - 1),
+          end: location.toPosition(initial + value.length)
+        })
+      }
+    } else {
+      pref[type] = character
     }
   }
 }

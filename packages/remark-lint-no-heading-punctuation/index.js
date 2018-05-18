@@ -40,31 +40,37 @@
  *   9:1-9:9: Don’t add a trailing `;` to headings
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var visit = require('unist-util-visit');
-var generated = require('unist-util-generated');
-var toString = require('mdast-util-to-string');
+var rule = require('unified-lint-rule')
+var visit = require('unist-util-visit')
+var generated = require('unist-util-generated')
+var toString = require('mdast-util-to-string')
 
-module.exports = rule('remark-lint:no-heading-punctuation', noHeadingPunctuation);
+module.exports = rule(
+  'remark-lint:no-heading-punctuation',
+  noHeadingPunctuation
+)
 
-function noHeadingPunctuation(ast, file, preferred) {
-  preferred = typeof preferred === 'string' ? preferred : '\\.,;:!?';
+var defaults = '\\.,;:!?'
 
-  visit(ast, 'heading', visitor);
+function noHeadingPunctuation(tree, file, pref) {
+  var expression = new RegExp(
+    '[' + (typeof pref === 'string' ? pref : defaults) + ']'
+  )
+
+  visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var value = toString(node);
+    var value
 
-    if (generated(node)) {
-      return;
-    }
+    if (!generated(node)) {
+      value = toString(node)
+      value = value.charAt(value.length - 1)
 
-    value = value.charAt(value.length - 1);
-
-    if (new RegExp('[' + preferred + ']').test(value)) {
-      file.message('Don’t add a trailing `' + value + '` to headings', node);
+      if (expression.test(value)) {
+        file.message('Don’t add a trailing `' + value + '` to headings', node)
+      }
     }
   }
 }

@@ -67,77 +67,75 @@
  *   1:1: Invalid link title style marker `.`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
-var vfileLocation = require('vfile-location');
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var generated = require('unist-util-generated');
+var rule = require('unified-lint-rule')
+var vfileLocation = require('vfile-location')
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var generated = require('unist-util-generated')
 
-module.exports = rule('remark-lint:link-title-style', linkTitleStyle);
+module.exports = rule('remark-lint:link-title-style', linkTitleStyle)
 
-var end = position.end;
+var end = position.end
 
-var MARKERS = {
-  '"': true,
-  '\'': true,
-  ')': true,
-  null: true
-};
+var markers = {'"': true, "'": true, ')': true, null: true}
 
-function linkTitleStyle(ast, file, preferred) {
-  var contents = file.toString();
-  var location = vfileLocation(file);
+function linkTitleStyle(tree, file, pref) {
+  var contents = String(file)
+  var location = vfileLocation(file)
 
-  preferred = typeof preferred !== 'string' || preferred === 'consistent' ? null : preferred;
+  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
+  pref = pref === '()' || pref === '(' ? ')' : pref
 
-  if (preferred === '()' || preferred === '(') {
-    preferred = ')';
+  if (markers[pref] !== true) {
+    file.fail(
+      'Invalid link title style marker `' +
+        pref +
+        "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
+    )
   }
 
-  if (MARKERS[preferred] !== true) {
-    file.fail('Invalid link title style marker `' + preferred + '`: use either `\'consistent\'`, `\'"\'`, `\'\\\'\'`, or `\'()\'`');
-  }
-
-  visit(ast, 'link', validate);
-  visit(ast, 'image', validate);
-  visit(ast, 'definition', validate);
+  visit(tree, ['link', 'image', 'definition'], validate)
 
   function validate(node) {
-    var last = end(node).offset - 1;
-    var character;
-    var pos;
+    var last = end(node).offset - 1
+    var character
+    var reason
 
     if (generated(node)) {
-      return;
+      return
     }
 
     if (node.type !== 'definition') {
-      last--;
+      last--
     }
 
     while (last) {
-      character = contents.charAt(last);
+      character = contents.charAt(last)
 
       /* istanbul ignore if - remark before 8.0.0 */
       if (/\s/.test(character)) {
-        last--;
+        last--
       } else {
-        break;
+        break
       }
     }
 
-    /* Not a title. */
-    if (!(character in MARKERS)) {
-      return;
-    }
+    /* Skip non-titles. */
+    if (character in markers) {
+      if (pref) {
+        if (pref !== character) {
+          reason =
+            'Titles should use `' +
+            (pref === ')' ? '()' : pref) +
+            '` as a quote'
 
-    if (!preferred) {
-      preferred = character;
-    } else if (preferred !== character) {
-      pos = location.toPosition(last + 1);
-      file.message('Titles should use `' + (preferred === ')' ? '()' : preferred) + '` as a quote', pos);
+          file.message(reason, location.toPosition(last + 1))
+        }
+      } else {
+        pref = character
+      }
     }
   }
 }

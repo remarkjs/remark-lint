@@ -31,23 +31,28 @@
  *   1:1: Do not use ` ` in a file name
  */
 
-'use strict';
+'use strict'
 
-var rule = require('unified-lint-rule');
+var rule = require('unified-lint-rule')
 
-module.exports = rule('remark-lint:no-file-name-irregular-characters', noFileNameIrregularCharacters);
+module.exports = rule(
+  'remark-lint:no-file-name-irregular-characters',
+  noFileNameIrregularCharacters
+)
 
-function noFileNameIrregularCharacters(ast, file, preferred) {
-  var expression = preferred || /[^\\.a-zA-Z0-9-]/;
-  var match;
+var expression = /[^\\.a-zA-Z0-9-]/
 
-  if (typeof expression === 'string') {
-    expression = new RegExp('[^' + expression + ']');
+function noFileNameIrregularCharacters(tree, file, pref) {
+  var style = pref || expression
+  var match
+
+  if (typeof style === 'string') {
+    style = new RegExp('[^' + style + ']')
   }
 
-  match = file.stem && file.stem.match(expression);
+  match = file.stem && file.stem.match(style)
 
   if (match) {
-    file.message('Do not use `' + match[0] + '` in a file name');
+    file.message('Do not use `' + match[0] + '` in a file name')
   }
 }

@@ -36,8 +36,15 @@ When configured with `'"'`.
 ###### In
 
 ```markdown
+[Example](http://example.com#without-title)
 [Example](http://example.com "Example Domain")
-[Example](http://example.com "Example Domain")
+![Example](http://example.com "Example Domain")
+
+[Example]: http://example.com "Example Domain"
+
+You can use parens in URLs if they’re not a title (see GH-166):
+
+[Example](#Heading-(optional))
 ```
 
 ###### Out
@@ -57,7 +64,7 @@ When configured with `'"'`.
 ###### Out
 
 ```text
-1:47: Titles should use `"` as a quote
+1:31-1:47: Titles should use `"` as a quote
 ```
 
 ##### `valid.md`
@@ -67,13 +74,32 @@ When configured with `'\''`.
 ###### In
 
 ```markdown
-![Example](http://example.com/image.png 'Example Domain')
-![Example](http://example.com/image.png 'Example Domain')
+[Example](http://example.com#without-title)
+[Example](http://example.com 'Example Domain')
+![Example](http://example.com 'Example Domain')
+
+[Example]: http://example.com 'Example Domain'
 ```
 
 ###### Out
 
 No messages.
+
+##### `invalid.md`
+
+When configured with `'\''`.
+
+###### In
+
+```markdown
+[Example]: http://example.com "Example Domain"
+```
+
+###### Out
+
+```text
+1:31-1:47: Titles should use `'` as a quote
+```
 
 ##### `valid.md`
 
@@ -82,8 +108,11 @@ When configured with `'()'`.
 ###### In
 
 ```markdown
-[Example](http://example.com (Example Domain) )
-[Example](http://example.com (Example Domain) )
+[Example](http://example.com#without-title)
+[Example](http://example.com (Example Domain))
+![Example](http://example.com (Example Domain))
+
+[Example]: http://example.com (Example Domain)
 ```
 
 ###### Out
@@ -97,14 +126,13 @@ When configured with `'()'`.
 ###### In
 
 ```markdown
-[Example](http://example.com (Example Domain))
 [Example](http://example.com 'Example Domain')
 ```
 
 ###### Out
 
 ```text
-2:46: Titles should use `()` as a quote
+1:30-1:46: Titles should use `()` as a quote
 ```
 
 ##### `invalid.md`
@@ -113,14 +141,13 @@ When configured with `'()'`.
 
 ```markdown
 [Example](http://example.com "Example Domain")
-[Example](http://example.com#without-title)
 [Example](http://example.com 'Example Domain')
 ```
 
 ###### Out
 
 ```text
-3:46: Titles should use `"` as a quote
+2:30-2:46: Titles should use `"` as a quote
 ```
 
 ##### `invalid.md`

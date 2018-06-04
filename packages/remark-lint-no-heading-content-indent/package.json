@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-heading-content-indent",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "remark-lint rule to warn when heading content is indented",
   "license": "MIT",
   "keywords": [

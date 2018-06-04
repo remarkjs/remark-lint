@@ -1,6 +1,6 @@
 {
   "name": "unified-lint-rule",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create a linting rule for a unified processors",
   "license": "MIT",
   "keywords": [

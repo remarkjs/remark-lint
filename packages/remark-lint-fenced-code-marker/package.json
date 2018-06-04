@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-fenced-code-marker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "remark-lint rule to warn when fenced code markers violate the given style",
   "license": "MIT",
   "keywords": [

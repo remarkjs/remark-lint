@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-list-item-spacing",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "remark-lint rule to warn when list looseness is incorrect",
   "license": "MIT",
   "keywords": [

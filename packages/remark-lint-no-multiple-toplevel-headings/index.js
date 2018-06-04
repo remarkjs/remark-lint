@@ -22,15 +22,16 @@
  *
  * @example {"name": "invalid.md", "setting": 1, "label": "output"}
  *
- *   3:1-3:6: Don’t use multiple top level headings (3:1)
+ *   3:1-3:6: Don’t use multiple top level headings (1:1)
  */
 
 'use strict'
 
 var rule = require('unified-lint-rule')
 var visit = require('unist-util-visit')
-var position = require('unist-util-position')
+var start = require('unist-util-position').start
 var generated = require('unist-util-generated')
+var stringify = require('unist-util-stringify-position')
 
 module.exports = rule(
   'remark-lint:no-multiple-toplevel-headings',
@@ -39,29 +40,20 @@ module.exports = rule(
 
 function noMultipleToplevelHeadings(tree, file, pref) {
   var style = pref ? pref : 1
-  var topLevelheading = false
+  var duplicate
 
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    var pos
-    var reason
-
     if (!generated(node) && node.depth === style) {
-      if (topLevelheading) {
-        pos = position.start(node)
-
-        reason =
-          'Don’t use multiple top level headings (' +
-          pos.line +
-          ':' +
-          pos.column +
-          ')'
-
-        file.message(reason, node)
+      if (duplicate) {
+        file.message(
+          'Don’t use multiple top level headings (' + duplicate + ')',
+          node
+        )
+      } else {
+        duplicate = stringify(start(node))
       }
-
-      topLevelheading = true
     }
   }
 }

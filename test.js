@@ -39,7 +39,7 @@ test('core', function(t) {
           [
             null,
             'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-            'virtual.md:3:1-3:24: Don’t use multiple top level headings (3:1)'
+            'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
           ],
           'should support `remark-lint` last'
         )
@@ -55,7 +55,7 @@ test('core', function(t) {
           [
             null,
             'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-            'virtual.md:3:1-3:24: Don’t use multiple top level headings (3:1)'
+            'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
           ],
           'should support `remark-lint` first'
         )

@@ -47,7 +47,7 @@ When configured with `1`.
 ###### Out
 
 ```text
-3:1-3:6: Don’t use multiple top level headings (3:1)
+3:1-3:6: Don’t use multiple top level headings (1:1)
 ```
 
 ## Install

@@ -52,7 +52,6 @@ var location = require('vfile-location')
 
 module.exports = rule('remark-lint:linebreak-style', linebreakStyle)
 
-var sequences = {unix: '\n', windows: '\r\n'}
 var escaped = {unix: '\\n', windows: '\\r\\n'}
 var types = {true: 'windows', false: 'unix'}
 
@@ -69,7 +68,7 @@ function linebreakStyle(tree, file, pref) {
     type = types[content.charAt(index - 1) === '\r']
 
     if (pref) {
-      if (sequences[pref] !== sequences[type]) {
+      if (pref !== type) {
         reason =
           'Expected linebreaks to be ' +
           pref +

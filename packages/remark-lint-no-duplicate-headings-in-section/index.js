@@ -44,6 +44,7 @@ var rule = require('unified-lint-rule')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
 var visit = require('unist-util-visit')
+var stringify = require('unist-util-stringify-position')
 var toString = require('mdast-util-to-string')
 
 module.exports = rule(
@@ -63,15 +64,16 @@ function noDuplicateHeadingsInSection(tree, file) {
     var siblings = stack[depth - 1] || {}
     var value = toString(node).toUpperCase()
     var duplicate = siblings[value]
-    var pos
 
     stack = stack.slice(0, depth)
     stack[depth] = {}
     siblings[value] = node
 
     if (!generated(node) && duplicate && duplicate.type === 'heading') {
-      pos = position.start(duplicate)
-      file.message(reason + ' (' + pos.line + ':' + pos.column + ')', node)
+      file.message(
+        reason + ' (' + stringify(position.start(duplicate)) + ')',
+        node
+      )
     }
   }
 }

@@ -32,6 +32,7 @@ var rule = require('unified-lint-rule')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
 var visit = require('unist-util-visit')
+var stringify = require('unist-util-stringify-position')
 var toString = require('mdast-util-to-string')
 
 module.exports = rule('remark-lint:no-duplicate-headings', noDuplicateHeadings)
@@ -46,16 +47,16 @@ function noDuplicateHeadings(tree, file) {
   function visitor(node) {
     var value
     var duplicate
-    var pos
 
     if (!generated(node)) {
       value = toString(node).toUpperCase()
       duplicate = map[value]
 
       if (duplicate && duplicate.type === 'heading') {
-        pos = position.start(duplicate)
-
-        file.message(reason + ' (' + pos.line + ':' + pos.column + ')', node)
+        file.message(
+          reason + ' (' + stringify(position.start(duplicate)) + ')',
+          node
+        )
       }
 
       map[value] = node

@@ -8,14 +8,11 @@
  *
  *   Options: `number`, default: `80`.
  *
- *   Ignores nodes which cannot be wrapped, such as headings, tables,
+ *   Ignores nodes that cannot be wrapped, such as headings, tables,
  *   code, and definitions.
  *
- *   Ignores nodes which cannot be wrapped, such as headings, tables,
- *   code, and definitions.
- *
- *   URLs in images and links are okay if they occur at or after the wrap,
- *   except when there’s white-space after them.
+ *   Ignores images, links, and inline code if they start before the wrap, end
+ *   after the wrap, and there’s no white-space after them.
  *
  * @example {"name": "valid.md", "config": {"positionless": true}}
  *
@@ -25,6 +22,8 @@
  *   This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?query=variables>
  *
  *   <http://this-link-is-fine.com>
+ *
+ *   `alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscarPapaQuebec.romeo()`
  *
  *   [foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
  *
@@ -55,11 +54,17 @@
  *
  *   <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables> and such.
  *
+ *   And this one is also very wrong: because the code starts aaaaaaafter the column: `alpha.bravo()`
+ *
+ *   `alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscar.papa()` and such.
+ *
  * @example {"name": "invalid.md", "setting": 80, "label": "output", "config": {"positionless": true}}
  *
  *   4:86: Line must be at most 80 characters
  *   6:99: Line must be at most 80 characters
  *   8:97: Line must be at most 80 characters
+ *   10:97: Line must be at most 80 characters
+ *   12:99: Line must be at most 80 characters
  *
  * @example {"name": "valid-mixed-line-endings.md", "setting": 10, "config": {"positionless": true}}
  *
@@ -104,7 +109,7 @@ function maximumLineLength(tree, file, pref) {
   var lineLength
 
   visit(tree, ['heading', 'table', 'code', 'definition'], ignore)
-  visit(tree, ['link', 'image'], validateLink)
+  visit(tree, ['link', 'image', 'inlineCode'], inline)
 
   /* Iterate over every line, and warn for violating lines. */
   while (++index < length) {
@@ -118,11 +123,10 @@ function maximumLineLength(tree, file, pref) {
     }
   }
 
-  /* Finally, whitelist URLs, but only if they occur at
-   * or after the wrap.  However, when they do, and
-   * there’s white-space after it, they are not
-   * whitelisted. */
-  function validateLink(node, pos, parent) {
+  /* Finally, whitelist some inline spans, but only if they occur at or after
+   * the wrap.  However, when they do, and there’s white-space after it, they
+   * are not whitelisted. */
+  function inline(node, pos, parent) {
     var next = parent.children[pos + 1]
     var initial
     var final

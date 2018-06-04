@@ -66,7 +66,6 @@ function blockquoteIndentation(tree, file, pref) {
 
   function visitor(node) {
     var diff
-    var diffAbs
     var reason
 
     if (generated(node) || node.children.length === 0) {
@@ -77,14 +76,12 @@ function blockquoteIndentation(tree, file, pref) {
       diff = pref - check(node)
 
       if (diff !== 0) {
-        diffAbs = Math.abs(diff)
-
         reason =
           (diff > 0 ? 'Add' : 'Remove') +
           ' ' +
-          diffAbs +
+          Math.abs(diff) +
           ' ' +
-          plural('space', diffAbs) +
+          plural('space', diff) +
           ' between blockquote and content'
 
         file.message(reason, position.start(node.children[0]))

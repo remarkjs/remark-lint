@@ -144,7 +144,6 @@ function listItemIndent(tree, file, pref) {
       var bulletSize
       var style
       var diff
-      var absDiff
       var reason
 
       marker = contents
@@ -160,15 +159,14 @@ function listItemIndent(tree, file, pref) {
 
       if (marker.length !== style) {
         diff = style - marker.length
-        absDiff = Math.abs(diff)
 
         reason =
           'Incorrect list-item indent: ' +
           (diff > 0 ? 'add' : 'remove') +
           ' ' +
-          absDiff +
+          Math.abs(diff) +
           ' ' +
-          plural('space', absDiff)
+          plural('space', diff)
 
         file.message(reason, final)
       }

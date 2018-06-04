@@ -51,7 +51,6 @@ function listItemContentIndent(tree, file) {
       var column
       var char
       var diff
-      var absDiff
       var reason
 
       if (generated(item)) {
@@ -86,16 +85,15 @@ function listItemContentIndent(tree, file) {
       /* Warn for violating children. */
       if (column !== style) {
         diff = style - column
-        absDiff = Math.abs(diff)
 
         reason =
           'Don’t use mixed indentation for children, ' +
           /* istanbul ignore next - hard to test, I couldn’t find it at least. */
           (diff > 0 ? 'add' : 'remove') +
           ' ' +
-          absDiff +
+          Math.abs(diff) +
           ' ' +
-          plural('space', absDiff)
+          plural('space', diff)
 
         file.message(reason, {
           line: start(item).line,

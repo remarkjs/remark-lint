@@ -87,7 +87,6 @@ function noHeadingContentIndent(tree, file) {
     var initial
     var final
     var diff
-    var absDiff
     var index
     var char
     var reason
@@ -125,14 +124,12 @@ function noHeadingContentIndent(tree, file) {
       diff = head - initial.column - 1 - index
 
       if (diff) {
-        absDiff = Math.abs(diff)
-
         reason =
           (diff > 0 ? 'Remove' : 'Add') +
           ' ' +
-          absDiff +
+          Math.abs(diff) +
           ' ' +
-          plural('space', absDiff) +
+          plural('space', diff) +
           ' before this heading’s content'
 
         file.message(reason, start(children[0]))

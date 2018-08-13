@@ -63,7 +63,8 @@ function checkboxContentIndent(tree, file) {
 
     initial = start(node).offset
     /* istanbul ignore next - hard to test, couldn’t find a case. */
-    final = (node.children.length ? start(node.children[0]) : end(node)).offset
+    final = (node.children.length === 0 ? end(node) : start(node.children[0]))
+      .offset
 
     while (/[^\S\n]/.test(contents.charAt(final))) {
       final++

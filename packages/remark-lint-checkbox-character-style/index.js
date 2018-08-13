@@ -128,7 +128,8 @@ function checkboxCharacterStyle(tree, file, pref) {
 
     type = types[node.checked]
     initial = start(node).offset
-    final = (node.children.length ? start(node.children[0]) : end(node)).offset
+    final = (node.children.length === 0 ? end(node) : start(node.children[0]))
+      .offset
 
     /* For a checkbox to be parsed, it must be followed by a white space. */
     value = contents

@@ -33,9 +33,9 @@
     "browserify": "^16.0.0",
     "chalk": "^2.0.0",
     "dox": "^0.9.0",
-    "lerna": "^2.0.0",
+    "lerna": "^3.0.0",
     "mdast-zone": "^3.0.0",
-    "nyc": "^11.0.0",
+    "nyc": "^12.0.0",
     "parse-author": "^2.0.0",
     "prettier": "^1.12.1",
     "remark": "^9.0.0",
@@ -47,12 +47,12 @@
     "strip-indent": "^2.0.0",
     "tape": "^4.6.0",
     "tinyify": "^2.4.3",
-    "to-vfile": "^4.0.0",
+    "to-vfile": "^5.0.0",
     "trim": "0.0.1",
     "unist-builder": "^1.0.2",
     "unist-util-remove-position": "^1.1.0",
     "vfile-reporter": "^5.0.0",
-    "xo": "^0.21.0"
+    "xo": "^0.22.0"
   },
   "scripts": {
     "prepublish": "lerna bootstrap",

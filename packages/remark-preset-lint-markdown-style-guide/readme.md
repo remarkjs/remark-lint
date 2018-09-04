@@ -122,7 +122,7 @@ This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) 
 | [`list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-content-indent) |  |
 | [`list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-spacing) |  |
 | [`code-block-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-code-block-style) | `'fenced'` |
-| [`fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-fenced-code-flag) | `{allowEmpty: false}` |
+| [`fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-fenced-code-flag) | `{"allowEmpty": false}` |
 | [`fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-fenced-code-marker) | ``'`'`` |
 | [`rule-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-rule-style) | `'---'` |
 | [`no-table-indentation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-table-indentation) |  |

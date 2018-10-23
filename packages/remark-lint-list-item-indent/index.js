@@ -131,7 +131,7 @@ function listItemIndent(tree, file, pref) {
   visit(tree, 'list', visitor)
 
   function visitor(node) {
-    var loose = node.loose
+    var spread = node.spread || node.loose
 
     if (!generated(node)) {
       node.children.forEach(visitItem)
@@ -153,7 +153,7 @@ function listItemIndent(tree, file, pref) {
       bulletSize = marker.trimRight().length
 
       style =
-        pref === 'tab-size' || (pref === 'mixed' && loose)
+        pref === 'tab-size' || (pref === 'mixed' && spread)
           ? Math.ceil(bulletSize / 4) * 4
           : bulletSize + 1
 

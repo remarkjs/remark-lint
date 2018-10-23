@@ -1,7 +1,8 @@
 # ![remark-lint][logo]
 
-[![Build Status][build-badge]][build-status]
-[![Coverage Status][coverage-badge]][coverage-status]
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
 [![Chat][chat-badge]][chat]
 
 `remark-lint` is a markdown code style linter.  Another linter?  Yes.
@@ -398,11 +399,15 @@ repository, organisation, or community you agree to abide by its terms.
 
 [build-badge]: https://img.shields.io/travis/remarkjs/remark-lint.svg
 
-[build-status]: https://travis-ci.org/remarkjs/remark-lint
+[build]: https://travis-ci.org/remarkjs/remark-lint
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
 
-[coverage-status]: https://codecov.io/github/remarkjs/remark-lint
+[coverage]: https://codecov.io/github/remarkjs/remark-lint
+
+[downloads-badge]: https://img.shields.io/npm/dm/remark-lint.svg
+
+[downloads]: https://www.npmjs.com/package/remark-lint
 
 [chat-badge]: https://img.shields.io/gitter/room/remarkjs/Lobby.svg
 

@@ -1,7 +1,8 @@
 # ![remark-lint][logo]
 
-[![Build Status][build-badge]][build-status]
-[![Coverage Status][coverage-badge]][coverage-status]
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
 [![Chat][chat-badge]][chat]
 
 `remark-lint` is a markdown code style linter built on [**remark**][remark], a
@@ -28,15 +29,19 @@ npm install remark-lint
 
 [build-badge]: https://img.shields.io/travis/remarkjs/remark-lint.svg
 
-[build-status]: https://travis-ci.org/remarkjs/remark-lint
+[build]: https://travis-ci.org/remarkjs/remark-lint
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
 
-[coverage-status]: https://codecov.io/github/remarkjs/remark-lint
+[coverage]: https://codecov.io/github/remarkjs/remark-lint
 
-[chat-badge]: https://img.shields.io/gitter/room/remarkjs/remark.svg
+[downloads-badge]: https://img.shields.io/npm/dm/remark-lint.svg
 
-[chat]: https://gitter.im/remarkjs/remark
+[downloads]: https://www.npmjs.com/package/remark-lint
+
+[chat-badge]: https://img.shields.io/gitter/room/remarkjs/Lobby.svg
+
+[chat]: https://gitter.im/remarkjs/Lobby
 
 [repo]: https://github.com/remarkjs/remark-lint#readme
 

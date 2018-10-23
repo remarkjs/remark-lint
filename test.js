@@ -311,9 +311,9 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
 
   try {
     proc.runSync(proc.parse(file), file)
-  } catch (err) {
-    if (err && err.source !== 'remark-lint') {
-      throw err
+  } catch (error) {
+    if (error && error.source !== 'remark-lint') {
+      throw error
     }
   }
 

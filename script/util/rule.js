@@ -59,10 +59,10 @@ function ruleSync(filePath) {
 
     try {
       info = JSON.parse(lines[0])
-    } catch (err) {
+    } catch (error) {
       /* istanbul ignore next */
       throw new Error(
-        'Could not parse example in ' + ruleId + ':\n' + err.stack
+        'Could not parse example in ' + ruleId + ':\n' + error.stack
       )
     }
 

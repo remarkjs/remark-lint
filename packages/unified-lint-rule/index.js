@@ -42,7 +42,7 @@ function factory(id, rule) {
         if (err && messages.indexOf(err) === -1) {
           try {
             file.fail(err)
-          } catch (err) {}
+          } catch (error) {}
         }
 
         while (index < messages.length) {

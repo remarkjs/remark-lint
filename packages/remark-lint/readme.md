@@ -24,7 +24,7 @@ npm install remark-lint
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/remarkjs/remark-lint/b177ac6/logo.svg
+[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
 
 [build-badge]: https://img.shields.io/travis/remarkjs/remark-lint.svg
 

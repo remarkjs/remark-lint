@@ -416,9 +416,9 @@ repository, organisation, or community you agree to abide by its terms.
 
 [remark]: https://github.com/remarkjs/remark
 
-[logo]: https://cdn.rawgit.com/remarkjs/remark-lint/b177ac6/logo.svg
+[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
 
-[screenshot]: https://cdn.rawgit.com/remarkjs/remark-lint/master/screenshot.png
+[screenshot]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/screenshot.png
 
 [rules]: doc/rules.md
 

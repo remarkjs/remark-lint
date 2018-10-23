@@ -201,7 +201,7 @@ rules(root).forEach(function(basename) {
     ),
     u('heading', {depth: 2}, [u('text', 'License')]),
     u('paragraph', [
-      u('link', {url: remote + '/blob/master/LICENSE'}, [
+      u('link', {url: remote + '/blob/master/license'}, [
         u('text', pack.license)
       ]),
       u('text', ' © '),

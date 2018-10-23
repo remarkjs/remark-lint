@@ -44,7 +44,7 @@ npm install remark-lint
 
 [plugins]: https://github.com/remarkjs/remark/blob/master/doc/plugins.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/LICENSE
+[license]: https://github.com/remarkjs/remark-lint/blob/master/license
 
 [author]: http://wooorm.com
 

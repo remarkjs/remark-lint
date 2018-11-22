@@ -106,7 +106,7 @@ test('core', function(t) {
   })
 
   t.test('should support a boolean (`true`)', function(st) {
-    /* Note! This is handled by unified. */
+    // Note! This is handled by unified.
     st.plan(1)
 
     remark()
@@ -121,7 +121,7 @@ test('core', function(t) {
   })
 
   t.test('should support a boolean (`false`)', function(st) {
-    /* Note! This is handled by unified. */
+    // Note! This is handled by unified.
     st.plan(1)
 
     remark()
@@ -276,7 +276,7 @@ test('rules', function(t) {
   }
 })
 
-/* Assert a rule. */
+// Assert a rule.
 function assertRule(t, rule, info) {
   var tests = info.tests
 

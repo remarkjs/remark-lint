@@ -83,7 +83,7 @@ function tablePipeAlignment(tree, file) {
       begin = start(row)
       cells = row.children
       columns = cells.length
-      column = -2 /* Start without a first cell */
+      column = -2 // Start without a first cell.
       next = null
 
       while (++column < columns) {

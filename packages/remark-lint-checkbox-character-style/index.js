@@ -121,7 +121,7 @@ function checkboxCharacterStyle(tree, file, pref) {
     var character
     var reason
 
-    /* Exit early for items without checkbox. */
+    // Exit early for items without checkbox.
     if (typeof node.checked !== 'boolean' || generated(node)) {
       return
     }
@@ -131,13 +131,13 @@ function checkboxCharacterStyle(tree, file, pref) {
     final = (node.children.length === 0 ? end(node) : start(node.children[0]))
       .offset
 
-    /* For a checkbox to be parsed, it must be followed by a white space. */
+    // For a checkbox to be parsed, it must be followed by a white space.
     value = contents
       .slice(initial, final)
       .trimRight()
       .slice(0, -1)
 
-    /* The checkbox character is behind a square bracket. */
+    // The checkbox character is behind a square bracket.
     character = value.charAt(value.length - 1)
     style = pref[type]
 

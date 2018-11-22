@@ -105,7 +105,7 @@ function fencedCodeMarker(tree, file, pref) {
         .trimLeft()
         .charAt(0)
 
-      /* Ignore unfenced code blocks. */
+      // Ignore unfenced code blocks.
       if (markers[marker] === true) {
         if (pref) {
           if (marker !== pref) {

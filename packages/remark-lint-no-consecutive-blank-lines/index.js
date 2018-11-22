@@ -73,15 +73,15 @@ function noConsecutiveBlankLines(tree, file) {
       head = children[0]
 
       if (head && !generated(head)) {
-        /* Compare parent and first child. */
+        // Compare parent and first child.
         compare(position.start(node), position.start(head), 0)
 
-        /* Compare between each child. */
+        // Compare between each child.
         children.forEach(visitChild)
 
         tail = children[children.length - 1]
 
-        /* Compare parent and last child. */
+        // Compare parent and last child.
         if (tail !== head && !generated(tail)) {
           compare(position.end(node), position.end(tail), 1)
         }
@@ -89,8 +89,8 @@ function noConsecutiveBlankLines(tree, file) {
     }
   }
 
-  /* Compare the difference between `start` and `end`,
-   * and warn when that difference exceeds `max`. */
+  // Compare the difference between `start` and `end`, and warn when that
+  // difference exceeds `max`.
   function compare(start, end, max) {
     var diff = end.line - start.line
     var lines = Math.abs(diff) - max

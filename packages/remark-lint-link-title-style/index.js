@@ -145,7 +145,7 @@ function linkTitleStyle(tree, file, pref) {
       last--
     }
 
-    /* Skip back to before whitespace */
+    // Skip back to before whitespace.
     while (last) {
       final = contents.charAt(last)
 
@@ -157,18 +157,18 @@ function linkTitleStyle(tree, file, pref) {
       }
     }
 
-    /* Exit if the final marker is not a known marker. */
+    // Exit if the final marker is not a known marker.
     if (!(final in markers)) {
       return
     }
 
     initial = markers[final]
 
-    /* Find the starting delimiter */
+    // Find the starting delimiter
     first = contents.lastIndexOf(initial, last - 1)
 
-    /* Exit if there’s no starting delimiter, the starting delimiter
-     * is before the start of the node, or if it’s not preceded by whitespace. */
+    // Exit if there’s no starting delimiter, the starting delimiter is before
+    // the start of the node, or if it’s not preceded by whitespace.
     if (first <= begin || !/\s/.test(contents.charAt(first - 1))) {
       return
     }

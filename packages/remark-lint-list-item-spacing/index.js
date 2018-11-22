@@ -179,7 +179,7 @@ function inferBlankLine(node) {
   while (++index < length) {
     next = children[index]
 
-    /* All children in `listItem`s are block. */
+    // All children in `listItem`s are block.
     if (start(next).line - end(child).line > 1) {
       return true
     }

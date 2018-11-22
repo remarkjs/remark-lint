@@ -4,7 +4,7 @@ module.exports = find
 
 find.all = findAll
 
-/* Find the first tag in `tags` with a type set to `key`. */
+// Find the first tag in `tags` with a type set to `key`.
 function find(tags, key) {
   var value = null
 
@@ -21,7 +21,7 @@ function find(tags, key) {
   return value && value.string
 }
 
-/* Find the first tag in `tags` with a type set to `key`. */
+// Find the first tag in `tags` with a type set to `key`.
 function findAll(tags, key) {
   return tags
     .filter(function(tag) {

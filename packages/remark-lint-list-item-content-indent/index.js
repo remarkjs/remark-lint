@@ -60,13 +60,11 @@ function listItemContentIndent(tree, file) {
       begin = start(item)
       column = begin.column
 
-      /* Get indentation for the first child.
-       * Only the first item can have a checkbox,
-       * so here we remove that from the column. */
+      // Get indentation for the first child.  Only the first item can have a
+      // checkbox, so here we remove that from the column.
       if (index === 0) {
-        /* If there’s a checkbox before the content,
-         * look backwards to find the start of that
-         * checkbox. */
+        // If there’s a checkbox before the content, look backwards to find the
+        // start of that checkbox.
         if (typeof node.checked === 'boolean') {
           char = begin.offset - 1
 
@@ -82,7 +80,7 @@ function listItemContentIndent(tree, file) {
         return
       }
 
-      /* Warn for violating children. */
+      // Warn for violating children.
       if (column !== style) {
         diff = style - column
 

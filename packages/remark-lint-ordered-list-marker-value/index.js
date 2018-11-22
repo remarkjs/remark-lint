@@ -154,13 +154,12 @@ function orderedListMarkerValue(tree, file, pref) {
     while (++index < length) {
       child = children[index]
 
-      /* Ignore generated nodes, first items. */
+      // Ignore generated nodes, first items.
       if (generated(child) || (index === 0 && pref !== 'one')) {
         continue
       }
 
-      /* Increase the expected line number when in
-       * `ordered` mode. */
+      // Increase the expected line number when in `ordered` mode.
       if (pref === 'ordered') {
         shouldBe++
       }

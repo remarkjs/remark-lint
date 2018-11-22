@@ -193,16 +193,16 @@ function tableCellPadding(tree, file, pref) {
     var entry
     var final
 
-    /* Check rows. */
+    // Check rows.
     while (++index < length) {
       row = rows[index]
       cells = row.children
       cellCount = cells.length
-      column = -2 /* Start without a first cell */
+      column = -2 // Start without a first cell.
       next = null
       final = undefined
 
-      /* Check fences (before, between, and after cells) */
+      // Check fences (before, between, and after cells).
       while (++column < cellCount) {
         cell = next
         next = cells[column + 1]
@@ -217,7 +217,7 @@ function tableCellPadding(tree, file, pref) {
         if (cell && cell.children.length !== 0 && final !== undefined) {
           entries.push({node: cell, start: final, end: pos, index: column})
 
-          /* Detect max space per column. */
+          // Detect max space per column.
           sizes[column] = Math.max(sizes[column] || 0, size(cell))
         } else {
           final = undefined
@@ -264,7 +264,7 @@ function tableCellPadding(tree, file, pref) {
     if (style === 0) {
       reason += 'compact'
 
-      /* Ignore every cell except the biggest in the column. */
+      // Ignore every cell except the biggest in the column.
       if (size(cell) < sizes[index]) {
         return
       }
@@ -274,7 +274,7 @@ function tableCellPadding(tree, file, pref) {
       if (spacing > style) {
         reason += ' with 1 space, not ' + spacing
 
-        /* May be right or center aligned. */
+        // May be right or center aligned.
         if (size(cell) < sizes[index]) {
           return
         }

@@ -132,7 +132,7 @@ function codeBlockStyle(tree, file, pref) {
     }
   }
 
-  /* Get the style of `node`. */
+  // Get the style of `node`.
   function check(node) {
     var initial = start(node).offset
     var final = end(node).offset

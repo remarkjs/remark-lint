@@ -37,14 +37,14 @@ function noReferenceLikeURL(tree, file) {
   visit(tree, 'definition', find)
   visit(tree, ['image', 'link'], check)
 
-  /* Find identifiers. */
+  // Find identifiers.
   function find(node) {
     if (!generated(node)) {
       identifiers.push(node.identifier.toLowerCase())
     }
   }
 
-  /* Check `node`. */
+  // Check `node`.
   function check(node) {
     var url = node.url
     var reason

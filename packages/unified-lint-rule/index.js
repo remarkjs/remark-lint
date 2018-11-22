@@ -37,7 +37,7 @@ function factory(id, rule) {
         var messages = file.messages
         var message
 
-        /* Add the error, if not already properly added. */
+        // Add the error, if not already properly added.
         /* istanbul ignore if - only happens for incorrect plugins */
         if (err && messages.indexOf(err) === -1) {
           try {
@@ -60,7 +60,7 @@ function factory(id, rule) {
   }
 }
 
-/* Coerce a value to a severity--options tuple. */
+// Coerce a value to a severity--options tuple.
 function coerce(name, value) {
   var def = 1
   var result

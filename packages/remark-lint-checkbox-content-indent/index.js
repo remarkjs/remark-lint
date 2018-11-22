@@ -56,7 +56,7 @@ function checkboxContentIndent(tree, file) {
     var final
     var value
 
-    /* Exit early for items without checkbox. */
+    // Exit early for items without checkbox.
     if (typeof node.checked !== 'boolean' || generated(node)) {
       return
     }
@@ -70,8 +70,7 @@ function checkboxContentIndent(tree, file) {
       final++
     }
 
-    /* For a checkbox to be parsed, it must be followed
-     * by a white space. */
+    // For a checkbox to be parsed, it must be followed by a white space.
     value = contents.slice(initial, final)
     value = value.slice(value.indexOf(']') + 1)
 

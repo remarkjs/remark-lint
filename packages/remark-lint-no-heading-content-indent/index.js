@@ -116,7 +116,7 @@ function noHeadingContentIndent(tree, file) {
       index = depth + (index - initial.offset)
       head = start(children[0]).column
 
-      /* Ignore empty headings. */
+      // Ignore empty headings.
       if (!head) {
         return
       }
@@ -136,9 +136,8 @@ function noHeadingContentIndent(tree, file) {
       }
     }
 
-    /* Closed ATX-heading always must have a space
-     * between their content and the final hashes,
-     * thus, there is no `add x spaces`. */
+    // Closed ATX-heading always must have a space between their content and
+    // the final hashes, thus, there is no `add x spaces`.
     if (type === 'atx-closed') {
       final = end(children[children.length - 1])
       diff = end(node).column - final.column - 1 - depth

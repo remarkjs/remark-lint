@@ -44,7 +44,7 @@ function finalDefinition(tree, file) {
   function visitor(node) {
     var line = start(node).line
 
-    /* Ignore generated nodes. */
+    // Ignore generated nodes.
     if (node.type === 'root' || generated(node)) {
       return
     }

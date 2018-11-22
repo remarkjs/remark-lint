@@ -9,7 +9,7 @@ var find = require('./find')
 
 module.exports = ruleSync
 
-/* Get information for a rule at `filePath`. */
+// Get information for a rule at `filePath`.
 function ruleSync(filePath) {
   var ruleId = path.basename(filePath)
   var result = {}

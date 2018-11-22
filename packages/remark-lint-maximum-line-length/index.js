@@ -111,7 +111,7 @@ function maximumLineLength(tree, file, pref) {
   visit(tree, ['heading', 'table', 'code', 'definition'], ignore)
   visit(tree, ['link', 'image', 'inlineCode'], inline)
 
-  /* Iterate over every line, and warn for violating lines. */
+  // Iterate over every line, and warn for violating lines.
   while (++index < length) {
     lineLength = lines[index].length
 
@@ -123,9 +123,9 @@ function maximumLineLength(tree, file, pref) {
     }
   }
 
-  /* Finally, whitelist some inline spans, but only if they occur at or after
-   * the wrap.  However, when they do, and there’s white-space after it, they
-   * are not whitelisted. */
+  // Finally, whitelist some inline spans, but only if they occur at or after
+  // the wrap.  However, when they do, and there’s white-space after it, they
+  // are not whitelisted.
   function inline(node, pos, parent) {
     var next = parent.children[pos + 1]
     var initial
@@ -139,13 +139,12 @@ function maximumLineLength(tree, file, pref) {
     initial = start(node)
     final = end(node)
 
-    /* No whitelisting when starting after the border, or ending before it. */
+    // No whitelisting when starting after the border, or ending before it.
     if (initial.column > style || final.column < style) {
       return
     }
 
-    /* No whitelisting when there’s white-space after
-     * the link. */
+    // No whitelisting when there’s white-space after the link.
     if (
       next &&
       start(next).line === initial.line &&
@@ -164,7 +163,7 @@ function maximumLineLength(tree, file, pref) {
     }
   }
 
-  /* Whitelist from `initial` to `final`, zero-based. */
+  // Whitelist from `initial` to `final`, zero-based.
   function whitelist(initial, final) {
     while (initial < final) {
       lines[initial++] = ''

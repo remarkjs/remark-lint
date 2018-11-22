@@ -9,18 +9,17 @@
 
 module.exports.plugins = [
   require('remark-lint'),
-  /* Unix compatibility. */
+  // Unix compatibility.
   require('remark-lint-final-newline'),
-  /* Rendering across vendors differs greatly
-   * if using other styles. */
+  // Rendering across vendors differs greatly if using other styles.
   require('remark-lint-list-item-bullet-indent'),
   [require('remark-lint-list-item-indent'), 'tab-size'],
-  /* Differs or unsupported across vendors. */
+  // Differs or unsupported across vendors.
   require('remark-lint-no-auto-link-without-protocol'),
   require('remark-lint-no-blockquote-without-marker'),
   require('remark-lint-no-literal-urls'),
   [require('remark-lint-ordered-list-marker-style'), '.'],
-  /* Mistakes. */
+  // Mistakes.
   require('remark-lint-hard-break-spaces'),
   require('remark-lint-no-duplicate-definitions'),
   require('remark-lint-no-heading-content-indent'),

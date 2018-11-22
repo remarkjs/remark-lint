@@ -54,10 +54,9 @@ module.exports = rule('remark-lint:no-shell-dollars', noShellDollars)
 
 var reason = 'Do not use dollar signs before shell-commands'
 
-/* List of shell script file extensions (also used as code
- * flags for syntax highlighting on GitHub):
- * https://github.com/github/linguist/blob/5bf8cf5/lib/
- * linguist/languages.yml#L3002. */
+// List of shell script file extensions (also used as code flags for syntax
+// highlighting on GitHub):
+// See: <https://github.com/github/linguist/blob/5bf8cf5/lib/linguist/languages.yml#L3002>
 var flags = [
   'sh',
   'bash',
@@ -80,7 +79,7 @@ function noShellDollars(tree, file) {
     var length
     var index
 
-    /* Check both known shell-code and unknown code. */
+    // Check both known shell-code and unknown code.
     if (!generated(node) && node.lang && flags.indexOf(node.lang) !== -1) {
       lines = node.value.split('\n')
       length = lines.length

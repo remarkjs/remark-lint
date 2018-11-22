@@ -48,7 +48,7 @@ var start = position.start
 var end = position.end
 
 /* Protocol expression. See:
- * http://en.wikipedia.org/wiki/URI_scheme#Generic_syntax */
+ * https://en.wikipedia.org/wiki/URI_scheme#Generic_syntax */
 var protocol = /^[a-z][a-z+.-]+:\/?/i
 
 var reason = 'All automatic links must start with a protocol'

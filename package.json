@@ -3,9 +3,9 @@
   "license": "MIT",
   "repository": "https://github.com/remarkjs/remark-lint",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
     "Stephan Schneider <stephanschndr@gmail.com>",
     "Linda_pp <rhysd@users.noreply.github.com>",
     "Merlijn Vos <hello@murderlon.me>",

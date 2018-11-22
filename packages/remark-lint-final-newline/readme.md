@@ -4,7 +4,7 @@
 
 Warn when a newline at the end of a file is missing. Empty files are allowed.
 
-See [StackExchange](http://unix.stackexchange.com/questions/18743) for why.
+See [StackExchange](https://unix.stackexchange.com/questions/18743) for why.
 
 ## Fix
 
@@ -99,4 +99,4 @@ Or use this on the API:
 
 ## License
 
-[MIT](https://github.com/remarkjs/remark-lint/blob/master/license) © [Titus Wormer](http://wooorm.com)
+[MIT](https://github.com/remarkjs/remark-lint/blob/master/license) © [Titus Wormer](https://wooorm.com)

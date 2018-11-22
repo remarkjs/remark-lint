@@ -12,9 +12,9 @@
   ],
   "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-undefined-references",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
     "index.js"

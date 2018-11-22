@@ -6,7 +6,7 @@
  * @fileoverview
  *   Warn when a newline at the end of a file is missing. Empty files are allowed.
  *
- *   See [StackExchange](http://unix.stackexchange.com/questions/18743) for why.
+ *   See [StackExchange](https://unix.stackexchange.com/questions/18743) for why.
  *
  *   ## Fix
  *

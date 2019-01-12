@@ -23,7 +23,7 @@
   "dependencies": {
     "unified-lint-rule": "^1.0.0",
     "unist-util-position": "^3.0.0",
-    "unist-util-visit": "^1.1.3"
+    "unist-util-visit": "^1.4.0"
   },
   "xo": false
 }

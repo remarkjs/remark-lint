@@ -320,6 +320,10 @@ To run **remark**, optionally with **remark-lint** from **Gulp**, use
 
 To check markdown documents editing with Vim, use [**ale**][ale].
 
+For [**Sublime Text**](https://www.sublimetext.com) use [**SublimeLinter-contrib-remark-lint**](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint) — part of [**SublimeLinter**](http://www.sublimelinter.com/en/stable/) framework.
+
+[**Grunt**](https://gruntjs.com/) users can use [**grunt-remark**](https://www.npmjs.com/package/grunt-remark).
+
 We’re interested in more integrations.  Let us know if we can help.
 
 ## List of Presets

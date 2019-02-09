@@ -267,11 +267,17 @@ test('rules', function(t) {
     var base = path.resolve(root, basename)
     var info = rule(base)
     var fn = require(base)
+    var handle = Object.keys(info.tests).length === 0 ? ignore : one
 
-    t.test(info.ruleId, one)
+    t.test(info.ruleId, handle)
 
     function one(st) {
       assertRule(st, fn, info)
+    }
+
+    function ignore(st) {
+      st.pass('no tests')
+      st.end()
     }
   }
 })
@@ -279,21 +285,25 @@ test('rules', function(t) {
 // Assert a rule.
 function assertRule(t, rule, info) {
   var tests = info.tests
+  var settings = Object.keys(tests)
 
-  Object.keys(tests).forEach(function(setting) {
+  t.plan(settings.length)
+
+  settings.forEach(function(setting) {
     var fixture = tests[setting]
+    var names = Object.keys(fixture)
     var config = JSON.parse(setting)
 
     t.test(setting, function(st) {
-      Object.keys(fixture).forEach(function(name) {
+      st.plan(names.length)
+
+      names.forEach(function(name) {
         st.test(name, function(sst) {
           assertFixture(sst, rule, info, fixture[name], name, config)
         })
       })
     })
   })
-
-  t.end()
 }
 
 function assertFixture(t, rule, info, fixture, basename, setting) {

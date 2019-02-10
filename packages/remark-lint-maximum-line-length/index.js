@@ -9,7 +9,7 @@
  *   Options: `number`, default: `80`.
  *
  *   Ignores nodes that cannot be wrapped, such as headings, tables,
- *   code, and definitions.
+ *   code, definitions, HTML, and JSX.
  *
  *   Ignores images, links, and inline code if they start before the wrap, end
  *   after the wrap, and there’s no white-space after them.
@@ -34,6 +34,8 @@
  *   | An | exception | is | line | length | in | long | tables | because | those | can’t | just |
  *   | -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |
  *   | be | helped    |    |      |        |    |      |        |         |       |       | .    |
+ *
+ *   <a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
  *
  *   The following is also fine, because there is no white-space.
  *
@@ -108,7 +110,8 @@ function maximumLineLength(tree, file, pref) {
   var index = -1
   var lineLength
 
-  visit(tree, ['heading', 'table', 'code', 'definition'], ignore)
+  // Note: JSX is from MDX: <https://github.com/mdx-js/specification>.
+  visit(tree, ['heading', 'table', 'code', 'definition', 'html', 'jsx'], ignore)
   visit(tree, ['link', 'image', 'inlineCode'], inline)
 
   // Iterate over every line, and warn for violating lines.

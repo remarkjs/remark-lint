@@ -56,7 +56,7 @@
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
-    "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
+    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
     "generate:presets": "node script/build-presets",
     "generate:rules": "node script/build-rules",
     "generate": "npm run generate:presets && npm run generate:rules",

@@ -25,7 +25,7 @@ processor powered by [plugins][remark-plugins] (such as this one).
 *   [Rules](#rules)
 *   [Configuring remark-lint](#configuring-remark-lint)
 *   [Using remark to fix your markdown](#using-remark-to-fix-your-markdown)
-*   [Editor Integrations](#editor-integrations)
+*   [Integrations](#integrations)
 *   [List of Presets](#list-of-presets)
 *   [List of External Rules](#list-of-external-rules)
 *   [Related](#related)
@@ -307,22 +307,14 @@ example.md
 > pass lints and fixes the markdown, the second pass checks it again), you’d see
 > the output `example.md: written` as all warnings are now fixed.
 
-## Editor Integrations
+## Integrations
 
-Currently, **remark-lint** is integrated with Atom through
-[**linter-markdown**][linter-markdown].
-
-If you want to run all of **remark** from **Atom**, use
-[**linter-remark**][linter-remark].
-
-To run **remark**, optionally with **remark-lint** from **Gulp**, use
-[**gulp-remark**][gulp-remark].
-
-To check markdown documents editing with Vim, use [**ale**][ale].
-
-For [**Sublime Text**](https://www.sublimetext.com) use [**SublimeLinter-contrib-remark-lint**](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint) — part of [**SublimeLinter**](http://www.sublimelinter.com/en/stable/) framework.
-
-[**Grunt**](https://gruntjs.com/) users can use [**grunt-remark**](https://www.npmjs.com/package/grunt-remark).
+*   [linter-markdown][] ([Atom][]) — use remark-lint from Atom
+*   [linter-remark][] ([Atom][]) — use all of remark from Atom
+*   [SublimeLinter-contrib-remark-lint][] ([Sublime][]) — use remark-lint from Sublime Text
+*   [ale][] ([Vim][]) — use remark-lint from Vim
+*   [gulp-remark][] ([Gulp][]) — use all of remark with Gulp
+*   [grunt-remark][] ([Grunt][]) — use all of remark with Grunt
 
 We’re interested in more integrations.  Let us know if we can help.
 
@@ -451,9 +443,23 @@ repository, organisation, or community you agree to abide by its terms.
 
 [linter-remark]: https://github.com/wooorm/linter-remark
 
+[SublimeLinter-contrib-remark-lint]: https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint
+
 [gulp-remark]: https://github.com/denysdovhan/gulp-remark
 
+[grunt-remark]: https://www.npmjs.com/package/grunt-remark
+
 [ale]: https://github.com/w0rp/ale
+
+[atom]: https://atom.io
+
+[sublime]: https://www.sublimetext.com
+
+[vim]: https://www.vim.org
+
+[grunt]: https://gruntjs.com/
+
+[gulp]: https://gulpjs.com
 
 [preset-recommended]: https://github.com/remarkjs/remark-lint/blob/master/packages/remark-preset-lint-recommended
 

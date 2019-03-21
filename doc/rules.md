@@ -27,7 +27,7 @@ remark()
   // ...
 ```
 
-Rules can be configured with a severity too.  The following is ignores all
+Rules can be configured with a severity too.  The following ignores all
 messages from the plugin:
 
 ```js

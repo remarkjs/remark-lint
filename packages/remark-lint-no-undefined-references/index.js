@@ -35,7 +35,7 @@ module.exports = rule(
 var reason = 'Found reference to undefined definition'
 
 function noUndefinedReferences(tree, file) {
-  var map = {}
+  var map = Object.create(null)
 
   visit(tree, ['definition', 'footnoteDefinition'], mark)
   visit(tree, ['imageReference', 'linkReference', 'footnoteReference'], find)
@@ -47,7 +47,10 @@ function noUndefinedReferences(tree, file) {
   }
 
   function find(node) {
-    if (!generated(node) && !map[node.identifier.toUpperCase()]) {
+    if (!(generated(node) ||
+          node.identifier === '\u2026' ||  // HORIZONTAL ELLIPSIS
+          node.identifier === '...' ||     // remarkjs/remark-lint#207
+          node.identifier.toUpperCase() in map)) {
       file.message(reason, node)
     }
   }

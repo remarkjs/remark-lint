@@ -4,6 +4,10 @@
 
 Warn when references to undefined definitions are found.
 
+No warning is emitted if the “link identifier” is `…` or `...`, permitting the
+use of _[…]_ and _[...]_ to elide portions of quoted passages (as discussed in
+[#207](https://github.com/remarkjs/remark-lint/issues/207)).
+
 ## Presets
 
 This rule is included in the following presets:

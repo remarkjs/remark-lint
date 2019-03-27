@@ -4,9 +4,10 @@
 
 Warn when references to undefined definitions are found.
 
-No warning is emitted if the “link identifier” is `…` or `...`, permitting the
-use of _[…]_ and _[...]_ to elide portions of quoted passages (as discussed in
-[#207](https://github.com/remarkjs/remark-lint/issues/207)).
+Options: `Object`, optional.
+
+The object can have a `'whitelist'`, an array of strings that may appear
+between `[` and `]` but that should not be treated as link identifiers.
 
 ## Presets
 
@@ -37,14 +38,28 @@ No messages.
 ###### In
 
 ```markdown
-[bar][]
+> Eliding a portion of a quoted passage [...] is acceptable.
 ```
 
 ###### Out
 
 ```text
-1:1-1:8: Found reference to undefined definition
+1:41-1:46: Found reference to undefined definition
 ```
+
+##### `valid.md`
+
+When configured with `{ whitelist: [ '...' ] }`.
+
+###### In
+
+```markdown
+> Eliding a portion of a quoted passage [...] is acceptable.
+```
+
+###### Out
+
+No messages.
 
 ## Install
 

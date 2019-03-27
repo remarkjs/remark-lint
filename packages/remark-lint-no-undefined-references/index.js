@@ -6,6 +6,11 @@
  * @fileoverview
  *   Warn when references to undefined definitions are found.
  *
+ *   Options: `Object`, optional.
+ *
+ *   The object can have a `'whitelist'`, an array of strings that may appear
+ *   between `[` and `]` but that should not be treated as link identifiers.
+ *
  * @example {"name": "valid.md"}
  *
  *   [foo][]
@@ -19,6 +24,18 @@
  * @example {"name": "invalid.md", "label": "output"}
  *
  *   1:1-1:8: Found reference to undefined definition
+ *
+ * @example {"name": "invalid.md", "label": "input"}
+ *
+ *   > Eliding a portion of a quoted passage [...] is acceptable.
+ *
+ * @example {"name": "invalid.md", "label": "output"}
+ *
+ *   1:41-1:46: Found reference to undefined definition
+ *
+ * @example {"name": "valid.md", "setting": {"whitelist": ["..."]}}
+ *
+ *   > Eliding a portion of a quoted passage [...] is acceptable.
  */
 
 'use strict'
@@ -34,7 +51,13 @@ module.exports = rule(
 
 var reason = 'Found reference to undefined definition'
 
-function noUndefinedReferences(tree, file) {
+function toUpper(s) { return s.toUpperCase() }
+
+function noUndefinedReferences(tree, file, pref) {
+  var whitelist = pref != null && Array.isArray (pref.whitelist) ?
+                  pref.whitelist.map(toUpper) :
+                  []
+
   var map = {}
 
   visit(tree, ['definition', 'footnoteDefinition'], mark)
@@ -42,15 +65,14 @@ function noUndefinedReferences(tree, file) {
 
   function mark(node) {
     if (!generated(node)) {
-      map[node.identifier.toUpperCase()] = true
+      map[toUpper(node.identifier)] = true
     }
   }
 
   function find(node) {
     if (!(generated(node) ||
-          node.identifier === '\u2026' ||  // HORIZONTAL ELLIPSIS
-          node.identifier === '...' ||     // remarkjs/remark-lint#207
-          node.identifier.toUpperCase() in map)) {
+          whitelist.includes(toUpper(node.identifier)) ||
+          toUpper(node.identifier) in map)) {
       file.message(reason, node)
     }
   }

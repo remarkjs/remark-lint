@@ -35,7 +35,7 @@ module.exports = rule(
 var reason = 'Found reference to undefined definition'
 
 function noUndefinedReferences(tree, file) {
-  var map = Object.create(null)
+  var map = {}
 
   visit(tree, ['definition', 'footnoteDefinition'], mark)
   visit(tree, ['imageReference', 'linkReference', 'footnoteReference'], find)

@@ -26,7 +26,7 @@
  *
  *   1:1-1:8: Found reference to undefined definition
  *
- * @example {"name": "valid.md", "setting": {"allow": ["..."]}}
+ * @example {"name": "valid-allow.md", "setting": {"allow": ["..."]}}
  *
  *   > Eliding a portion of a quoted passage [...] is acceptable.
  */

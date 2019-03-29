@@ -48,7 +48,7 @@ No messages.
 1:1-1:8: Found reference to undefined definition
 ```
 
-##### `valid.md`
+##### `valid-allow.md`
 
 When configured with `{ allow: [ '...' ] }`.
 

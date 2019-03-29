@@ -33,6 +33,7 @@
 
 'use strict'
 
+var collapseWhiteSpace = require('collapse-white-space')
 var rule = require('unified-lint-rule')
 var generated = require('unist-util-generated')
 var visit = require('unist-util-visit')
@@ -44,11 +45,14 @@ module.exports = rule(
 
 var reason = 'Found reference to undefined definition'
 
-function toUpper(s) { return s.toUpperCase() }
+//  The identifier is upcased to avoid naming collisions with properties
+//  inherited from `Object.prototype`. Were `Object.create(null)` to be
+//  used in place of `{}`, downcasing would work equally well.
+function normalize(s) { return collapseWhiteSpace(s.toUpperCase()) }
 
 function noUndefinedReferences(tree, file, pref) {
   var allow = pref != null && Array.isArray (pref.allow) ?
-              pref.allow.map(toUpper) :
+              pref.allow.map(normalize) :
               []
 
   var map = {}
@@ -58,14 +62,14 @@ function noUndefinedReferences(tree, file, pref) {
 
   function mark(node) {
     if (!generated(node)) {
-      map[toUpper(node.identifier)] = true
+      map[normalize(node.identifier)] = true
     }
   }
 
   function find(node) {
     if (!(generated(node) ||
-          allow.includes(toUpper(node.identifier)) ||
-          toUpper(node.identifier) in map)) {
+          allow.includes(normalize(node.identifier)) ||
+          normalize(node.identifier) in map)) {
       file.message(reason, node)
     }
   }

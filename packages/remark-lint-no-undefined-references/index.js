@@ -48,12 +48,13 @@ var reason = 'Found reference to undefined definition'
 //  The identifier is upcased to avoid naming collisions with properties
 //  inherited from `Object.prototype`. Were `Object.create(null)` to be
 //  used in place of `{}`, downcasing would work equally well.
-function normalize(s) { return collapseWhiteSpace(s.toUpperCase()) }
+function normalize(s) {
+  return collapseWhiteSpace(s.toUpperCase())
+}
 
 function noUndefinedReferences(tree, file, pref) {
-  var allow = pref != null && Array.isArray (pref.allow) ?
-              pref.allow.map(normalize) :
-              []
+  var allow =
+    pref != null && Array.isArray(pref.allow) ? pref.allow.map(normalize) : []
 
   var map = {}
 
@@ -67,9 +68,13 @@ function noUndefinedReferences(tree, file, pref) {
   }
 
   function find(node) {
-    if (!(generated(node) ||
-          allow.includes(normalize(node.identifier)) ||
-          normalize(node.identifier) in map)) {
+    if (
+      !(
+        generated(node) ||
+        allow.includes(normalize(node.identifier)) ||
+        normalize(node.identifier) in map
+      )
+    ) {
       file.message(reason, node)
     }
   }

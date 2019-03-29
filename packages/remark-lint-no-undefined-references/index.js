@@ -8,8 +8,9 @@
  *
  *   Options: `Object`, optional.
  *
- *   The object can have a `'whitelist'`, an array of strings that may appear
- *   between `[` and `]` but that should not be treated as link identifiers.
+ *   The object can have an `allow` property, an array of strings that
+ *   may appear between `[` and `]` but that should not be treated as
+ *   link identifiers.
  *
  * @example {"name": "valid.md"}
  *
@@ -33,7 +34,7 @@
  *
  *   1:41-1:46: Found reference to undefined definition
  *
- * @example {"name": "valid.md", "setting": {"whitelist": ["..."]}}
+ * @example {"name": "valid.md", "setting": {"allow": ["..."]}}
  *
  *   > Eliding a portion of a quoted passage [...] is acceptable.
  */
@@ -54,9 +55,9 @@ var reason = 'Found reference to undefined definition'
 function toUpper(s) { return s.toUpperCase() }
 
 function noUndefinedReferences(tree, file, pref) {
-  var whitelist = pref != null && Array.isArray (pref.whitelist) ?
-                  pref.whitelist.map(toUpper) :
-                  []
+  var allow = pref != null && Array.isArray (pref.allow) ?
+              pref.allow.map(toUpper) :
+              []
 
   var map = {}
 
@@ -71,7 +72,7 @@ function noUndefinedReferences(tree, file, pref) {
 
   function find(node) {
     if (!(generated(node) ||
-          whitelist.includes(toUpper(node.identifier)) ||
+          allow.includes(toUpper(node.identifier)) ||
           toUpper(node.identifier) in map)) {
       file.message(reason, node)
     }

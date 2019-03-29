@@ -6,8 +6,9 @@ Warn when references to undefined definitions are found.
 
 Options: `Object`, optional.
 
-The object can have a `'whitelist'`, an array of strings that may appear
-between `[` and `]` but that should not be treated as link identifiers.
+The object can have an `allow` property, an array of strings that
+may appear between `[` and `]` but that should not be treated as
+link identifiers.
 
 ## Presets
 
@@ -49,7 +50,7 @@ No messages.
 
 ##### `valid.md`
 
-When configured with `{ whitelist: [ '...' ] }`.
+When configured with `{ allow: [ '...' ] }`.
 
 ###### In
 

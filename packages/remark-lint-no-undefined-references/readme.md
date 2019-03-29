@@ -39,13 +39,13 @@ No messages.
 ###### In
 
 ```markdown
-> Eliding a portion of a quoted passage [...] is acceptable.
+[bar][]
 ```
 
 ###### Out
 
 ```text
-1:41-1:46: Found reference to undefined definition
+1:1-1:8: Found reference to undefined definition
 ```
 
 ##### `valid.md`

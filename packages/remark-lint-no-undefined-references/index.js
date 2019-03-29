@@ -26,14 +26,6 @@
  *
  *   1:1-1:8: Found reference to undefined definition
  *
- * @example {"name": "invalid.md", "label": "input"}
- *
- *   > Eliding a portion of a quoted passage [...] is acceptable.
- *
- * @example {"name": "invalid.md", "label": "output"}
- *
- *   1:41-1:46: Found reference to undefined definition
- *
  * @example {"name": "valid.md", "setting": {"allow": ["..."]}}
  *
  *   > Eliding a portion of a quoted passage [...] is acceptable.

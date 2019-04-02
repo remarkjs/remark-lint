@@ -4,6 +4,12 @@
 
 Warn when references to undefined definitions are found.
 
+Options: `Object`, optional.
+
+The object can have an `allow` property, an array of strings that
+may appear between `[` and `]` but that should not be treated as
+link identifiers.
+
 ## Presets
 
 This rule is included in the following presets:
@@ -41,6 +47,20 @@ No messages.
 ```text
 1:1-1:8: Found reference to undefined definition
 ```
+
+##### `valid-allow.md`
+
+When configured with `{ allow: [ '...' ] }`.
+
+###### In
+
+```markdown
+> Eliding a portion of a quoted passage [...] is acceptable.
+```
+
+###### Out
+
+No messages.
 
 ## Install
 

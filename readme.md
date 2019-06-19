@@ -359,8 +359,16 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
     — Lint fenced code blocks by corresponding language tags,
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
+*   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-match-punctuation)
+    — Ensures punctuations are used in pairs if necessary.
+*   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-chinese-punctuation-in-number)
+    — Ensures that Chinese punctuation will not be used in number, such as 1，000 or 12：34.
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
     — Check that external links are alive
+*   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-long-code)
+    — Ensures that each line in code block won't be too long.
+*   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-repeat-punctuation)
+    — Ensures that punctuation will not be used multiple times, such as `"！！！"` or `"？？？"`.
 *   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
     — Enforce a limit of emoji per paragraph
 *   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
@@ -371,6 +379,10 @@ This list is ordered based on the name without prefix, so excluding
     — Ensure headings parsing is not broken by accidental irregular whitespaces
 *   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
     — Check if your links are reachable and/or unique
+*   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-spaces-around-number)
+    — Ensures there are spaces around number and Chinese.
+*   [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-spaces-around-word)
+    — Ensures there are spaces around English word and Chinese.
 *   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)

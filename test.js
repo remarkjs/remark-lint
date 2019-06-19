@@ -1,7 +1,5 @@
 'use strict'
 
-/* eslint-disable max-params */
-
 var path = require('path')
 var test = require('tape')
 var vfile = require('to-vfile')
@@ -306,6 +304,7 @@ function assertRule(t, rule, info) {
   })
 }
 
+/* eslint-disable-next-line max-params */
 function assertFixture(t, rule, info, fixture, basename, setting) {
   var ruleId = info.ruleId
   var file = vfile(basename)

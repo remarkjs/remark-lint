@@ -343,11 +343,9 @@ Presets can be loaded just like other plugins.
 
 External rules can be loaded just like normal rules.
 
-⚠️ means the rule has not been updated for remark-lint 6.0.0.
-
 <!--
-This list is ordered based on the name without prefix, so
-excluding `remark-lint-no-` or `remark-lint-`
+This list is ordered based on the name without prefix, so excluding
+`remark-lint-no-` or `remark-lint-`
 -->
 
 *   [`remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
@@ -371,16 +369,8 @@ excluding `remark-lint-no-` or `remark-lint-`
     — Ensure headings have the appropriate length
 *   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
     — Ensure headings parsing is not broken by accidental irregular whitespaces
-*   [`remark-lint-no-leading-spaces`](https://github.com/verekia/remark-lint-no-leading-spaces)
-    — ⚠️ Warn about leading white-space
-*   [`remark-lint-list-item-punctuation`](https://github.com/wemake-services/remark-lint-list-item-punctuation)
-    — ⚠️ check if list items end in periods
 *   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
     — Check if your links are reachable and/or unique
-*   [`remark-lint-sentence-newline`](https://github.com/chcokr/remark-lint-sentence-newline)
-    — ⚠️ Ensure sentences are followed by a newline
-*   [`remark-lint-no-trailing-spaces`](https://github.com/verekia/remark-lint-no-trailing-spaces)
-    — ⚠️ Warn about trailing white-space
 *   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)

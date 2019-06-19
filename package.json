@@ -7,7 +7,6 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
     "Stephan Schneider <stephanschndr@gmail.com>",
-    "Linda_pp <rhysd@users.noreply.github.com>",
     "Merlijn Vos <hello@murderlon.me>",
     "John Vandenberg <jayvdb@gmail.com>",
     "Michael Mior <michael.mior@gmail.com>",
@@ -27,7 +26,9 @@
     "Burak Yiğit Kaya <ben@byk.im>",
     "Danny Arnold <despair.blue@gmail.com>",
     "David Clark <dclark@mapbox.com>",
-    "Joaquín Serna <BubuAnabelas@users.noreply.github.com>"
+    "Саша Черных <SashaChernykhEmpressOfUniverse@kristinita.ru>",
+    "Bob “Wombat” Hogg <wombat@rwhogg.site>",
+    "David Chambers <dc@davidchambers.me>"
   ],
   "devDependencies": {
     "browserify": "^16.0.0",

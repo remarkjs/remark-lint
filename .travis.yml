@@ -3,6 +3,6 @@ os:
   - windows
   - linux
 node_js:
-  - lts/boron
+  - lts/dubnium
   - node
 after_script: bash <(curl -s https://codecov.io/bash)

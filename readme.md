@@ -7,47 +7,51 @@
 [![Sponsors][sponsors-badge]][collective]
 [![Backers][backers-badge]][collective]
 
-`remark-lint` is a markdown code style linter.  Another linter?  Yes.
-Ensuring the markdown you (and contributors) write is of great quality will
-provide better rendering in all the different markdown parsers, and makes
-sure less refactoring is needed afterwards.
+[**remark**][remark] plugins to lint Markdown.
 
-What is quality? That’s up to you, but there are sensible [presets][].
+Another linter?
+Yes.
+Ensuring the Markdown you (and contributors) write is of great quality will
+provide better rendering in all the different markdown parsers, and makes sure
+less refactoring is needed afterwards.
 
-`remark-lint` is built on [**remark**][remark], a powerful markdown
-processor powered by [plugins][remark-plugins] (such as this one).
+What is quality?
+That’s up to you, but there are sensible [presets][].
+
+`remark-lint` is built on [**remark**][remark], a powerful Markdown processor
+powered by [plugins][remark-plugins] (such as these).
 
 ## Table of Contents
 
-*   [Installation](#installation)
-*   [Command line](#command-line)
-*   [Programmatic](#programmatic)
-*   [Rules](#rules)
+*   [Install](#install)
+*   [CLI](#cli)
+*   [API](#api)
 *   [Configuring remark-lint](#configuring-remark-lint)
-*   [Using remark to fix your markdown](#using-remark-to-fix-your-markdown)
+*   [Using remark to fix your Markdown](#using-remark-to-fix-your-markdown)
 *   [Integrations](#integrations)
+*   [Rules](#rules)
 *   [List of Presets](#list-of-presets)
 *   [List of External Rules](#list-of-external-rules)
 *   [Related](#related)
 *   [Contribute](#contribute)
 *   [License](#license)
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install remark-lint
 ```
 
-## Command line
+## CLI
 
 ![Example of how remark-lint looks on screen][screenshot]
 
 Use `remark-lint` with [`remark-cli`][cli] through a
 [preset][preset-recommended].
 
-```bash
+```sh
 npm install --save remark-cli remark-preset-lint-recommended
 ```
 
@@ -67,7 +71,7 @@ Then, configure **remark** in your `package.json`:
 
 Let’s say there’s an `example.md` that looks as follows:
 
-```md
+```markdown
 * Hello
 
 [World][]
@@ -82,27 +86,29 @@ example.md
 ⚠ 2 warnings
 ```
 
-See [`doc/rules.md`][rules] for what those warnings are (and how to
-turn them off).
+See [`doc/rules.md`][rules] for what those warnings are (and how to turn them
+off).
 
-## Programmatic
+## API
 
 Use `remark-lint` together with [`remark`][api]:
 
-```bash
+```sh
 npm install remark remark-preset-lint-markdown-style-guide
 ```
 
 Let’s say `example.js` looks as follows:
 
 ```js
-var report = require('vfile-reporter');
-var remark = require('remark');
-var styleGuide = require('remark-preset-lint-markdown-style-guide');
+var report = require('vfile-reporter')
+var remark = require('remark')
+var styleGuide = require('remark-preset-lint-markdown-style-guide')
 
-var file = remark().use(styleGuide).processSync('_Hello world_');
+var file = remark()
+  .use(styleGuide)
+  .processSync('_Hello world_')
 
-console.log(report(file));
+console.log(report(file))
 ```
 
 Now, running `node example.js` yields:
@@ -113,13 +119,9 @@ Now, running `node example.js` yields:
 ⚠ 1 warning
 ```
 
-## Rules
-
-[`doc/rules.md`][rules] lists all available official rules.
-
 ## Configuring remark-lint
 
-`remark-lint` is a **remark** plug-in and when used on the CLI supports
+`remark-lint` is a **remark** plugin and when used on the CLI supports
 configuration through its [configuration files][cli].
 
 An example `.remarkrc` file could look as follows:
@@ -133,12 +135,12 @@ An example `.remarkrc` file could look as follows:
 }
 ```
 
-The preset turns on `remark-lint-list-item-indent`, but setting it to `false`
-later turns it off again.
+The preset turns on `remark-lint-list-item-indent`, but setting a plugin to
+`false` later turns it off again.
 
 Using our `example.md` from before:
 
-```md
+```markdown
 * Hello
 
 [World][]
@@ -148,14 +150,15 @@ Now, running `npm run lint-md` yields:
 
 ```bash
 example.md
-   3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
+   3:1-3:10  warning  Found reference to undefined definition   no-undefined-references  remark-lint
 
 ⚠ 2 warnings
 ```
 
-In addition, you can also provide configuration comments to turn a rule
-on or off inside a file.  Note that you cannot change a setting, such as
-`maximum-line-length`, just whether messages are shown or not.
+You can also provide configuration comments to turn a rule on or off inside a
+file.
+Note that you cannot change a setting, such as `maximum-line-length`, just
+whether messages are shown or not.
 Read more about configuration comments in
 [`remark-message-control`][message-control]s documentation.
 
@@ -169,8 +172,8 @@ The following file will warn twice for the duplicate headings:
 ### Hello
 ```
 
-The following file will warn once (the second heading is ignored,
-but the third is re-enabled):
+The following file will warn once (the second heading is ignored, but the third
+is re-enabled):
 
 ```markdown
 # Hello
@@ -186,12 +189,12 @@ but the third is re-enabled):
 
 > **Note**: You’ll need the blank lines between comments and other nodes!
 
-## Using remark to fix your markdown
+## Using remark to fix your Markdown
 
-[`remark-stringify`][remark-stringify] can format markdown syntax. It ensures a
-single style is used: list items use one type of bullet (`*`, `-`, `+`),
-emphasis (`*` or `_`) and importance (`__` or `**`) use a standard marker, table
-fences are aligned, [and more][remark-stringify-options].
+[`remark-stringify`][remark-stringify] can format markdown syntax.
+It ensures a single style is used: list items use one type of bullet (`*`, `-`,
+`+`), emphasis (`*` or `_`) and importance (`__` or `**`) use a standard marker,
+table fences are aligned, [and more][remark-stringify-options].
 
 ###### Example
 
@@ -233,7 +236,7 @@ Now, running `node example` yields warnings and a formatted file:
 
 ###### Example
 
-If you’re using [`remark-stringify`][remark-stringify] yourself, you can pass
+If you’re using [`remark-stringify`][remark-stringify] explicitly, you can pass
 options like any other plugin, like so:
 
 ```js
@@ -303,9 +306,10 @@ example.md
 ```
 
 > Note: running `remark example.md -o` or `remark example.md --output`
-> overwrites `example.md` and formats it. So, if you’d run that twice (the first
-> pass lints and fixes the markdown, the second pass checks it again), you’d see
-> the output `example.md: written` as all warnings are now fixed.
+> overwrites `example.md` and formats it.
+> So, if you’d run that twice (the first pass lints and fixes the Markdown, the
+> second pass checks it again), you’d see the output `example.md: written` as
+> all warnings are now fixed.
 
 ## Integrations
 
@@ -316,7 +320,12 @@ example.md
 *   [gulp-remark][] ([Gulp][]) — use all of remark with Gulp
 *   [grunt-remark][] ([Grunt][]) — use all of remark with Grunt
 
-We’re interested in more integrations.  Let us know if we can help.
+We’re interested in more integrations.
+Let us know if we can help.
+
+## Rules
+
+[`doc/rules.md`][rules] lists all available official rules.
 
 ## List of Presets
 
@@ -384,10 +393,13 @@ excluding `remark-lint-no-` or `remark-lint-`
 
 ## Contribute
 
-See [`contributing.md` in `remarkjs/remark`][contributing] for ways to get started.
+See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -395,7 +407,7 @@ repository, organisation, or community you agree to abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -417,37 +429,47 @@ repository, organisation, or community you agree to abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
+[npm]: https://docs.npmjs.com/cli/install
+
+[health]: https://github.com/remarkjs/.github
+
+[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/remarkjs/.github/blob/master/support.md
+
+[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+
 [license]: license
 
 [author]: https://wooorm.com
 
-[npm]: https://docs.npmjs.com/cli/install
+[cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
+
+[cli-config]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
 
 [remark]: https://github.com/remarkjs/remark
 
-[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
+[remark-plugins]: https://github.com/remarkjs/remark/blob/master/doc/plugins.md
 
-[screenshot]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/screenshot.png
+[remark-stringify]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify
 
-[rules]: doc/rules.md
+[remark-stringify-options]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#options
 
 [api]: https://github.com/remarkjs/remark/tree/master/packages/remark
 
 [cli]: https://github.com/remarkjs/remark/tree/master/packages/remark-cli
 
-[remark-plugins]: https://github.com/remarkjs/remark/blob/master/doc/plugins.md
+[message-control]: https://github.com/remarkjs/remark-message-control#markers
 
 [linter-markdown]: https://atom.io/packages/linter-markdown
-
-[message-control]: https://github.com/remarkjs/remark-message-control#markers
 
 [linter-remark]: https://github.com/wooorm/linter-remark
 
 [SublimeLinter-contrib-remark-lint]: https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint
 
-[gulp-remark]: https://github.com/denysdovhan/gulp-remark
+[gulp-remark]: https://github.com/remarkjs/gulp-remark
 
-[grunt-remark]: https://www.npmjs.com/package/grunt-remark
+[grunt-remark]: https://github.com/remarkjs/grunt-remark
 
 [ale]: https://github.com/w0rp/ale
 
@@ -463,16 +485,10 @@ repository, organisation, or community you agree to abide by its terms.
 
 [preset-recommended]: https://github.com/remarkjs/remark-lint/blob/master/packages/remark-preset-lint-recommended
 
+[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
+
+[screenshot]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/screenshot.png
+
+[rules]: doc/rules.md
+
 [presets]: #list-of-presets
-
-[remark-stringify]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify
-
-[remark-stringify-options]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#options
-
-[cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
-
-[cli-config]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
-
-[contributing]: https://github.com/remarkjs/remark/blob/master/contributing.md
-
-[coc]: https://github.com/remarkjs/remark/blob/master/code-of-conduct.md

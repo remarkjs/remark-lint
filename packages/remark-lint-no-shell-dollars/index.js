@@ -56,7 +56,7 @@ var reason = 'Do not use dollar signs before shell-commands'
 
 // List of shell script file extensions (also used as code flags for syntax
 // highlighting on GitHub):
-// See: <https://github.com/github/linguist/blob/5bf8cf5/lib/linguist/languages.yml#L3002>
+// See: <https://github.com/github/linguist/blob/001ca52/lib/linguist/languages.yml#L4702>
 var flags = [
   'sh',
   'bash',

@@ -2,8 +2,9 @@
 
 # remark-lint-no-consecutive-blank-lines
 
-Warn for too many consecutive blank lines.  Knows about the extra line
-needed between a list and indented code, and two lists.
+Warn for too many consecutive blank lines.
+Knows about the extra line needed between a list and indented code, and two
+lists.
 
 ## Fix
 
@@ -11,7 +12,7 @@ needed between a list and indented code, and two lists.
 always uses one blank line between blocks if possible, or two lines when
 needed.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

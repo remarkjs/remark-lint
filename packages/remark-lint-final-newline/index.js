@@ -4,16 +4,17 @@
  * @license MIT
  * @module final-newline
  * @fileoverview
- *   Warn when a newline at the end of a file is missing. Empty files are allowed.
+ *   Warn when a line feed at the end of a file is missing.
+ *   Empty files are allowed.
  *
  *   See [StackExchange](https://unix.stackexchange.com/questions/18743) for why.
  *
  *   ## Fix
  *
  *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
- *   always adds a final newline to files.
+ *   always adds a final line feed to files.
  *
- *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  *   ## Example

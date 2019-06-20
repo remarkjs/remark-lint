@@ -12,10 +12,10 @@ titles use different styles.
 ## Fix
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
-uses single quotes for titles if they contain a double quote, and double
-quotes otherwise.
+uses `'` (single quote) for titles if they contain a double quote, and `"`
+(double quotes) otherwise.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

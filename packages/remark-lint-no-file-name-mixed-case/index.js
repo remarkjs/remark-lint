@@ -4,8 +4,7 @@
  * @license MIT
  * @module no-file-name-mixed-case
  * @fileoverview
- *   Warn when a file name uses mixed case: both upper- and lower case
- *   characters.
+ *   Warn when file names use mixed case: both upper- and lowercase characters.
  *
  * @example {"name": "README.md"}
  *

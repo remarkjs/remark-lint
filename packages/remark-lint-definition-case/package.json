@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-definition-case",
   "version": "1.0.3",
-  "description": "remark-lint rule to warn when definition labels are not lower-case",
+  "description": "remark-lint rule to warn when definition labels are not lowercase",
   "license": "MIT",
   "keywords": [
     "remark",

@@ -2,8 +2,7 @@
 
 # remark-lint-ordered-list-marker-style
 
-Warn when the list-item marker style of ordered lists violate a given
-style.
+Warn when the list item marker style of ordered lists violate a given style.
 
 Options: `'consistent'`, `'.'`, or `')'`, default: `'consistent'`.
 

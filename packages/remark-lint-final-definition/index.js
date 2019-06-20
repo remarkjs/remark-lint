@@ -4,7 +4,8 @@
  * @license MIT
  * @module final-definition
  * @fileoverview
- *   Warn when definitions are not placed at the end of the file.
+ *   Warn when definitions are placed somewhere other than at the end of
+ *   the file.
  *
  * @example {"name": "valid.md"}
  *

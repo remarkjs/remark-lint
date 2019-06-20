@@ -2,7 +2,8 @@
 
 # remark-lint-final-definition
 
-Warn when definitions are not placed at the end of the file.
+Warn when definitions are placed somewhere other than at the end of
+the file.
 
 ## Presets
 

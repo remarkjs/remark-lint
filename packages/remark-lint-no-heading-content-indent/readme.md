@@ -2,14 +2,14 @@
 
 # remark-lint-no-heading-content-indent
 
-Warn when a heading’s content is indented.
+Warn when content of headings is indented.
 
 ## Fix
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
-removes all unneeded padding around a heading’s content.
+removes all unneeded padding around content in headings.
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

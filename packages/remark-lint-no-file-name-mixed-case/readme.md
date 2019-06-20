@@ -2,8 +2,7 @@
 
 # remark-lint-no-file-name-mixed-case
 
-Warn when a file name uses mixed case: both upper- and lower case
-characters.
+Warn when file names use mixed case: both upper- and lowercase characters.
 
 ## Presets
 

@@ -4,7 +4,7 @@
  * @license MIT
  * @module no-file-name-outer-dashes
  * @fileoverview
- *   Warn when file names contain initial or final dashes.
+ *   Warn when file names contain initial or final dashes (hyphen-minus, `-`).
  *
  * @example {"name": "readme.md"}
  *

@@ -1,7 +1,8 @@
 /**
  * @fileoverview
- *   remark preset to configure remark-lint with settings that the
- *   [Markdown Style Guide](http://www.cirosantilli.com/markdown-style-guide/).
+ *   remark preset to configure `remark-lint` with settings that the
+ *   [Markdown Style Guide](http://www.cirosantilli.com/markdown-style-guide/)
+ *   recommends.
  *
  *   This uses the following Style Guide option system: `wrap:space`,
  *   `header:atx`, `list-marker:hyphen`, `list-space:mixed`, and
@@ -10,8 +11,10 @@
  *   ###### `space-sentence`
  *
  *   Both `space-sentence:1` and `space-sentence:2` are not supported
- *   by `remark-lint`.  You could set-up
- *   [`remark-retext`](https://github.com/remarkjs/remark-retext) with
+ *   by `remark-lint`.
+ *   You could set-up
+ *   [`remark-retext`](https://github.com/remarkjs/remark-retext)
+ *   with
  *   [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
  *   to check this though.
  *
@@ -20,8 +23,8 @@
  *   `wrap:inner-sentence` and `wrap:sentence` are not supported by
  *   `remark-lint`.
  *
- *   The default is `wrap:space`.  To use `wrap:no`, turn off
- *   `remark-lint-maximum-line-length` like so:
+ *   The default is `wrap:space`.
+ *   To use `wrap:no`, turn off `remark-lint-maximum-line-length` like so:
  *
  *   ```diff
  *    "plugins": [
@@ -34,8 +37,9 @@
  *
  *   ###### `header`
  *
- *   The default is `header:atx`.  To use `header:setext`, change the
- *   setting for `remark-lint-heading-style` like so:
+ *   The default is `header:atx`.
+ *   To use `header:setext`, change the setting for `remark-lint-heading-style`
+ *   like so:
  *
  *   ```diff
  *    "plugins": [
@@ -48,8 +52,8 @@
  *
  *   ###### `list-marker`
  *
- *   The default is `list-marker:hyphen`.  For `list-marker:asterisk` or
- *   `list-marker:plus`, change the setting for
+ *   The default is `list-marker:hyphen`.
+ *   For `list-marker:asterisk` or `list-marker:plus`, change the setting for
  *   `remark-lint-unordered-list-marker-style` like so:
  *
  *   ```diff
@@ -63,8 +67,9 @@
  *
  *   ###### `list-space`
  *
- *   The default is `list-space:mixed`.  For `list-space:1`, change the
- *   setting for `remark-lint-list-item-indent` like so:
+ *   The default is `list-space:mixed`.
+ *   For `list-space:1`, change the setting for `remark-lint-list-item-indent`
+ *   like so:
  *
  *   ```diff
  *    "plugins": [
@@ -77,8 +82,9 @@
  *
  *   ###### `code`
  *
- *   The default is `code:fenced`.  For `code:indented`, change the setting
- *   for `remark-lint-code-block-style` like so:
+ *   The default is `code:fenced`.
+ *   For `code:indented`, change the setting for `remark-lint-code-block-style`
+ *   like so:
  *
  *   ```diff
  *    "plugins": [

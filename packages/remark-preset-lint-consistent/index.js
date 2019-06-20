@@ -1,7 +1,7 @@
 /**
  * @fileoverview
- *   remark preset to configure remark-lint with
- *   settings that enforce consistency.
+ *   remark preset to configure `remark-lint` with settings that enforce
+ *   consistency.
  */
 
 'use strict'

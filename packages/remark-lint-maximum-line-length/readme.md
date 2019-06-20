@@ -6,11 +6,11 @@ Warn when lines are too long.
 
 Options: `number`, default: `80`.
 
-Ignores nodes that cannot be wrapped, such as headings, tables,
-code, definitions, HTML, and JSX.
+Ignores nodes that cannot be wrapped, such as headings, tables, code,
+definitions, HTML, and JSX.
 
 Ignores images, links, and inline code if they start before the wrap, end
-after the wrap, and there’s no white-space after them.
+after the wrap, and there’s no whitespace after them.
 
 ## Presets
 
@@ -126,7 +126,7 @@ This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?qu
 
 <a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
 
-The following is also fine, because there is no white-space.
+The following is also fine, because there is no whitespace.
 
 <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>.
 

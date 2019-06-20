@@ -2,7 +2,7 @@
 
 # remark-lint-no-paragraph-content-indent
 
-Warn when the content in paragraphs are indented.
+Warn when the content in paragraphs is indented.
 
 ## Presets
 

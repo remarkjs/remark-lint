@@ -20,9 +20,10 @@
  *   ## Fix
  *
  *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
- *   formats checked checkboxes using `x` and unchecked checkboxes as ` `.
+ *   formats checked checkboxes using `x` (lowercase X) and unchecked checkboxes
+ *   as `·` (a single space).
  *
- *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md", "setting": {"checked": "x"}}
@@ -131,7 +132,7 @@ function checkboxCharacterStyle(tree, file, pref) {
     final = (node.children.length === 0 ? end(node) : start(node.children[0]))
       .offset
 
-    // For a checkbox to be parsed, it must be followed by a white space.
+    // For a checkbox to be parsed, it must be followed by a whitespace.
     value = contents
       .slice(initial, final)
       .trimRight()

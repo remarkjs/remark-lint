@@ -4,7 +4,8 @@
  * @license MIT
  * @module no-missing-blank-lines
  * @fileoverview
- *   Warn when missing blank lines before a block node.
+ *   Warn when missing blank lines before block content (and frontmatter
+ *   content).
  *
  *   This rule can be configured to allow tight list items without blank lines
  *   between their contents by passing `{exceptTightLists: true}` (default:
@@ -14,9 +15,10 @@
  *
  *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   always uses one blank line between blocks if possible, or two lines when
- *   needed. The style of the list-items persists.
+ *   needed.
+ *   The style of the list items persists.
  *
- *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}
@@ -74,14 +76,14 @@ var reason = 'Missing blank line before block node'
 
 var types = [
   'paragraph',
-  'blockquote',
   'heading',
-  'code',
-  'yaml',
-  'html',
+  'thematicBreak',
+  'blockquote',
   'list',
   'table',
-  'thematicBreak'
+  'html',
+  'code',
+  'yaml'
 ]
 
 function noMissingBlankLines(tree, file, pref) {

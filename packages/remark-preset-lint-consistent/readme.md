@@ -2,8 +2,8 @@
 
 # remark-preset-lint-consistent
 
-remark preset to configure remark-lint with
-settings that enforce consistency.
+remark preset to configure `remark-lint` with settings that enforce
+consistency.
 
 ## Rules
 

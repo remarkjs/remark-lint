@@ -2,7 +2,7 @@
 
 # remark-lint-checkbox-content-indent
 
-Warn when list item checkboxes are followed by too much white-space.
+Warn when list item checkboxes are followed by too much whitespace.
 
 ## Presets
 

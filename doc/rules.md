@@ -73,10 +73,10 @@ Rules][external].
 
 *   [`blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) — warn when blockquotes are either indented too much or too little
 *   [`checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
-*   [`checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much white-space
+*   [`checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
 *   [`code-block-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-code-block-style) — warn when code-blocks do not adhere to a given style
-*   [`definition-case`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-case) — warn when definition labels are not lower-case
-*   [`definition-spacing`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-spacing) — warn when consecutive white space is used in a definition
+*   [`definition-case`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
+*   [`definition-spacing`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 *   [`emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
 *   [`fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
 *   [`fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style

@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-definition-spacing",
   "version": "1.0.3",
-  "description": "remark-lint rule to warn when consecutive white space is used in a definition",
+  "description": "remark-lint rule to warn when consecutive whitespace is used in a definition",
   "license": "MIT",
   "keywords": [
     "remark",

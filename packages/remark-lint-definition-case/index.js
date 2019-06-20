@@ -4,7 +4,7 @@
  * @license MIT
  * @module definition-case
  * @fileoverview
- *   Warn when definition labels are not lower-case.
+ *   Warn when definition labels are not lowercase.
  *
  * @example {"name": "valid.md"}
  *

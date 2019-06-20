@@ -4,7 +4,7 @@
  * @license MIT
  * @module no-paragraph-content-indent
  * @fileoverview
- *   Warn when the content in paragraphs are indented.
+ *   Warn when the content in paragraphs is indented.
  *
  * @example {"name": "valid.md"}
  *

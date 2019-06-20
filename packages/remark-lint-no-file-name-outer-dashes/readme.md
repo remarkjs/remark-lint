@@ -2,7 +2,7 @@
 
 # remark-lint-no-file-name-outer-dashes
 
-Warn when file names contain initial or final dashes.
+Warn when file names contain initial or final dashes (hyphen-minus, `-`).
 
 ## Presets
 

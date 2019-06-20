@@ -2,15 +2,14 @@
 
 # remark-lint-rule-style
 
-Warn when the horizontal rules violate a given or detected style.
+Warn when the thematic breaks (horizontal rules) violate a given or
+detected style.
 
-Options: `string`, either a valid markdown rule, or `'consistent'`,
+Options: `string`, either a valid thematic breaks, or `'consistent'`,
 default: `'consistent'`.
 
-`'consistent'` detects the first used rule style and warns when subsequent
-rules use different styles.
-
-Note: horizontal rules are also called “thematic break”.
+`'consistent'` detects the first used thematic break style and warns when
+subsequent rules use different styles.
 
 ## Fix
 
@@ -24,7 +23,7 @@ has three settings that define how rules are created:
 *   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsrulespaces)
     (default: `true`) — Whether to pad markers with spaces
 
-See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
 
 ## Presets

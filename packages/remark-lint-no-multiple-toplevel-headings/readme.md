@@ -2,7 +2,7 @@
 
 # remark-lint-no-multiple-toplevel-headings
 
-Warn when multiple top-level headings are used.
+Warn when multiple top level headings are used.
 
 Options: `number`, default: `1`.
 

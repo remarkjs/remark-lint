@@ -4,7 +4,7 @@
  * @license MIT
  * @module checkbox-content-indent
  * @fileoverview
- *   Warn when list item checkboxes are followed by too much white-space.
+ *   Warn when list item checkboxes are followed by too much whitespace.
  *
  * @example {"name": "valid.md"}
  *
@@ -70,7 +70,7 @@ function checkboxContentIndent(tree, file) {
       final++
     }
 
-    // For a checkbox to be parsed, it must be followed by a white space.
+    // For a checkbox to be parsed, it must be followed by a whitespace.
     value = contents.slice(initial, final)
     value = value.slice(value.indexOf(']') + 1)
 

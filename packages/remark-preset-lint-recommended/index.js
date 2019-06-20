@@ -1,8 +1,7 @@
 /**
  * @fileoverview
- *   remark preset to configure remark-lint with settings that
- *   prevent mistakes or syntaxes that do not work correctly
- *   across vendors.
+ *   remark preset to configure `remark-lint` with settings that prevent
+ *   mistakes or syntaxes that do not work correctly across vendors.
  */
 
 'use strict'

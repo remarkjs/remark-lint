@@ -4,7 +4,7 @@
  * @license MIT
  * @module fenced-code-flag
  * @fileoverview
- *   Check fenced code-block flags.
+ *   Check fenced code block flags.
  *
  *   Options: `Array.<string>` or `Object`, optional.
  *
@@ -12,7 +12,7 @@
  *
  *   The object can have an array of `'flags'` which are deemed valid.
  *   In addition it can have the property `allowEmpty` (`boolean`, default:
- *   `false`) which signifies whether or not to warn for fenced code-blocks
+ *   `false`) which signifies whether or not to warn for fenced code blocks
  *   without language flags.
  *
  * @example {"name": "valid.md"}

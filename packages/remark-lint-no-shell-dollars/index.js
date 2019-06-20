@@ -4,7 +4,7 @@
  * @license MIT
  * @module no-shell-dollars
  * @fileoverview
- *   Warn when shell code is prefixed by dollar-characters.
+ *   Warn when shell code is prefixed by `$` (dollar sign) characters.
  *
  *   Ignores indented code blocks and fenced code blocks without language flag.
  *
@@ -79,7 +79,7 @@ function noShellDollars(tree, file) {
     var length
     var index
 
-    // Check both known shell-code and unknown code.
+    // Check both known shell code and unknown code.
     if (!generated(node) && node.lang && flags.indexOf(node.lang) !== -1) {
       lines = node.value.split('\n')
       length = lines.length

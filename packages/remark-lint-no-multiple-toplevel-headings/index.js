@@ -4,7 +4,7 @@
  * @license MIT
  * @module no-multiple-toplevel-headings
  * @fileoverview
- *   Warn when multiple top-level headings are used.
+ *   Warn when multiple top level headings are used.
  *
  *   Options: `number`, default: `1`.
  *

@@ -4,7 +4,7 @@
  * @license MIT
  * @module no-file-name-articles
  * @fileoverview
- *   Warn when file name start with an article.
+ *   Warn when file names start with an article.
  *
  * @example {"name": "title.md"}
  *

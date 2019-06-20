@@ -8,11 +8,11 @@
  *
  *   Options: `number`, default: `80`.
  *
- *   Ignores nodes that cannot be wrapped, such as headings, tables,
- *   code, definitions, HTML, and JSX.
+ *   Ignores nodes that cannot be wrapped, such as headings, tables, code,
+ *   definitions, HTML, and JSX.
  *
  *   Ignores images, links, and inline code if they start before the wrap, end
- *   after the wrap, and there’s no white-space after them.
+ *   after the wrap, and there’s no whitespace after them.
  *
  * @example {"name": "valid.md", "config": {"positionless": true}}
  *
@@ -37,7 +37,7 @@
  *
  *   <a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
  *
- *   The following is also fine, because there is no white-space.
+ *   The following is also fine, because there is no whitespace.
  *
  *   <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>.
  *
@@ -127,8 +127,9 @@ function maximumLineLength(tree, file, pref) {
   }
 
   // Finally, whitelist some inline spans, but only if they occur at or after
-  // the wrap.  However, when they do, and there’s white-space after it, they
-  // are not whitelisted.
+  // the wrap.
+  // However, when they do, and there’s whitespace after it, they are not
+  // whitelisted.
   function inline(node, pos, parent) {
     var next = parent.children[pos + 1]
     var initial
@@ -147,7 +148,7 @@ function maximumLineLength(tree, file, pref) {
       return
     }
 
-    // No whitelisting when there’s white-space after the link.
+    // No whitelisting when there’s whitespace after the link.
     if (
       next &&
       start(next).line === initial.line &&

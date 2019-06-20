@@ -4,14 +4,16 @@
  * @license MIT
  * @module no-auto-link-without-protocol
  * @fileoverview
- *   Warn for angle-bracketed links without protocol.
+ *   Warn for autolinks without protocol.
+ *   Autolinks are URLs enclosed in `<` (less-than) and `>` (greater-than)
+ *   characters.
  *
  *   ## Fix
  *
  *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
  *   adds a protocol where needed.
  *
- *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}
@@ -19,7 +21,7 @@
  *   <http://www.example.com>
  *   <mailto:foo@bar.com>
  *
- *   Most markdown vendors don’t recognize the following as a link:
+ *   Most Markdown vendors don’t recognize the following as a link:
  *   <www.example.com>
  *
  * @example {"name": "invalid.md", "label": "input"}

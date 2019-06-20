@@ -4,14 +4,14 @@
  * @license MIT
  * @module no-heading-content-indent
  * @fileoverview
- *   Warn when a heading’s content is indented.
+ *   Warn when content of headings is indented.
  *
  *   ## Fix
  *
  *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
- *   removes all unneeded padding around a heading’s content.
+ *   removes all unneeded padding around content in headings.
  *
- *   See [Using remark to fix your markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
+ *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
  * @example {"name": "valid.md"}
@@ -136,8 +136,8 @@ function noHeadingContentIndent(tree, file) {
       }
     }
 
-    // Closed ATX-heading always must have a space between their content and
-    // the final hashes, thus, there is no `add x spaces`.
+    // Closed ATX-heading always must have a space between their content and the
+    // final hashes, thus, there is no `add x spaces`.
     if (type === 'atx-closed') {
       final = end(children[children.length - 1])
       diff = end(node).column - final.column - 1 - depth

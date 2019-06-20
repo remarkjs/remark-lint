@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-heading-like-paragraph",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to for too many hashes (h7+ “headings”)",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-linebreak-style",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to warn when linebreaks violate a given or detected style",
   "license": "MIT",
   "keywords": [

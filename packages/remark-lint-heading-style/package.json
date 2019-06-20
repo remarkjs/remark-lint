@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-heading-style",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to warn when heading style violates the given style",
   "license": "MIT",
   "keywords": [

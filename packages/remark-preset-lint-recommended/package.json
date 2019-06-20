@@ -1,6 +1,6 @@
 {
   "name": "remark-preset-lint-recommended",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "remark preset to configure remark-lint with rules that prevent mistakes or syntaxes that do not work correctly across vendors",
   "license": "MIT",
   "keywords": [

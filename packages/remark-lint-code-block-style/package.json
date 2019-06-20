@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-code-block-style",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to warn when code-blocks do not adhere to a given style",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-reference-like-url",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "remark-lint rule to warn when URLs are also defined identifiers",
   "license": "MIT",
   "keywords": [

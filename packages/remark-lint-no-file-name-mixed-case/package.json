@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-file-name-mixed-case",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to warn when file names use mixed case",
   "license": "MIT",
   "keywords": [

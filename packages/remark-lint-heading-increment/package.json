@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-heading-increment",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "remark-lint rule to warn when headings increment with more than 1 level at a time",
   "license": "MIT",
   "keywords": [

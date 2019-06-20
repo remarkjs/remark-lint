@@ -125,6 +125,8 @@ Rules][external].
 *   [`no-table-indentation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-table-indentation) — warn when tables are indented
 *   [`no-tabs`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-tabs) — warn when hard tabs are used instead of spaces
 *   [`no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-undefined-references) — warn when references to undefined definitions are found
+*   [`no-unneeded-full-reference-image`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unneeded-full-reference-image) — warn when full reference images are used if they can be collapsed
+*   [`no-unneeded-full-reference-link`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unneeded-full-reference-link) — warn when full reference links are used if they can be collapsed
 *   [`no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unused-definitions) — warn when unused definitions are found
 *   [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-style) — warn when the markers of ordered lists violate a given style
 *   [`ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-value) — warn when the marker value of ordered lists violates a given style

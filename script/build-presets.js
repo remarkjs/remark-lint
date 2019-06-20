@@ -25,6 +25,17 @@ presets(root).forEach(function(basename) {
   var rows = []
   var children
   var short = basename.replace(/^remark-/, '')
+  var org = remote
+    .split('/')
+    .slice(0, -1)
+    .join('/')
+  var master = remote + '/blob/master'
+  var health = org + '/.github'
+  var hMaster = health + '/blob/master'
+  var slug = remote
+    .split('/')
+    .slice(-2)
+    .join('/')
 
   if (basename !== pack.name) {
     throw new Error(
@@ -65,7 +76,36 @@ presets(root).forEach(function(basename) {
 
   children = [
     u('html', '<!--This file is generated-->'),
-    u('heading', {depth: 1}, [u('text', basename)])
+    u('heading', {depth: 1}, [u('text', basename)]),
+    u('paragraph', [
+      u('linkReference', {identifier: 'build'}, [
+        u('imageReference', {identifier: 'build-badge', alt: 'Build'})
+      ]),
+      u('text', '\n'),
+      u('linkReference', {identifier: 'coverage'}, [
+        u('imageReference', {identifier: 'coverage-badge', alt: 'Coverage'})
+      ]),
+      u('text', '\n'),
+      u('linkReference', {identifier: 'downloads'}, [
+        u('imageReference', {identifier: 'downloads-badge', alt: 'Downloads'})
+      ]),
+      u('text', '\n'),
+      u('linkReference', {identifier: 'size'}, [
+        u('imageReference', {identifier: 'size-badge', alt: 'Size'})
+      ]),
+      u('text', '\n'),
+      u('linkReference', {identifier: 'collective'}, [
+        u('imageReference', {identifier: 'sponsors-badge', alt: 'Sponsors'})
+      ]),
+      u('text', '\n'),
+      u('linkReference', {identifier: 'collective'}, [
+        u('imageReference', {identifier: 'backers-badge', alt: 'Backers'})
+      ]),
+      u('text', '\n'),
+      u('linkReference', {identifier: 'chat'}, [
+        u('imageReference', {identifier: 'chat-badge', alt: 'Chat'})
+      ])
+    ])
   ]
 
   children = children.concat(remark().parse(description).children)
@@ -79,9 +119,14 @@ presets(root).forEach(function(basename) {
     ]),
     u('table', {align: []}, rows),
     u('heading', {depth: 2}, [u('text', 'Install')]),
-    u('paragraph', [u('text', 'npm:')]),
+    u('paragraph', [
+      u('linkReference', {identifier: 'npm', referenceType: 'collapsed'}, [
+        u('text', 'npm')
+      ]),
+      u('text', ':')
+    ]),
     u('code', {lang: 'sh'}, 'npm install ' + basename),
-    u('heading', {depth: 2}, [u('text', 'Usage')]),
+    u('heading', {depth: 2}, [u('text', 'Use')]),
     u('paragraph', [
       u('text', 'You probably want to use it on the CLI through a config file:')
     ]),
@@ -113,14 +158,111 @@ presets(root).forEach(function(basename) {
         '   });'
       ].join('\n')
     ),
+    u('heading', {depth: 2}, [u('text', 'Contribute')]),
+    u('paragraph', [
+      u('text', 'See '),
+      u('linkReference', {identifier: 'contributing'}, [
+        u('inlineCode', 'contributing.md')
+      ]),
+      u('text', ' in '),
+      u('linkReference', {identifier: 'health'}, [
+        u(
+          'inlineCode',
+          health
+            .split('/')
+            .slice(-2)
+            .join('/')
+        )
+      ]),
+      u('text', ' for ways\nto get started.\nSee '),
+      u('linkReference', {identifier: 'support'}, [
+        u('inlineCode', 'support.md')
+      ]),
+      u('text', ' for ways to get help.')
+    ]),
+    u('paragraph', [
+      u('text', 'This project has a '),
+      u('linkReference', {identifier: 'coc'}, [u('text', 'Code of Conduct')]),
+      u(
+        'text',
+        '.\nBy interacting with this repository, organisation, or community you agree to\nabide by its terms.'
+      )
+    ]),
     u('heading', {depth: 2}, [u('text', 'License')]),
     u('paragraph', [
-      u('link', {url: remote + '/blob/master/license'}, [
-        u('text', pack.license)
-      ]),
+      u('linkReference', {identifier: 'license'}, [u('text', pack.license)]),
       u('text', ' © '),
-      u('link', {url: author.url}, [u('text', author.name)])
-    ])
+      u('linkReference', {identifier: 'author'}, [u('text', author.name)])
+    ]),
+    u('definition', {
+      identifier: 'build-badge',
+      url: 'https://img.shields.io/travis/' + slug + '/master.svg'
+    }),
+    u('definition', {
+      identifier: 'build',
+      url: 'https://travis-ci.org/' + slug
+    }),
+    u('definition', {
+      identifier: 'coverage-badge',
+      url: 'https://img.shields.io/codecov/c/github/' + slug + '.svg'
+    }),
+    u('definition', {
+      identifier: 'coverage',
+      url: 'https://codecov.io/github/' + slug
+    }),
+    u('definition', {
+      identifier: 'downloads-badge',
+      url: 'https://img.shields.io/npm/dm/' + basename + '.svg'
+    }),
+    u('definition', {
+      identifier: 'downloads',
+      url: 'https://www.npmjs.com/package/' + basename
+    }),
+    u('definition', {
+      identifier: 'size-badge',
+      url: 'https://img.shields.io/bundlephobia/minzip/' + basename + '.svg'
+    }),
+    u('definition', {
+      identifier: 'size',
+      url: 'https://bundlephobia.com/result?p=' + basename
+    }),
+    u('definition', {
+      identifier: 'sponsors-badge',
+      url: 'https://opencollective.com/unified/sponsors/badge.svg'
+    }),
+    u('definition', {
+      identifier: 'backers-badge',
+      url: 'https://opencollective.com/unified/backers/badge.svg'
+    }),
+    u('definition', {
+      identifier: 'collective',
+      url: 'https://opencollective.com/unified'
+    }),
+    u('definition', {
+      identifier: 'chat-badge',
+      url:
+        'https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg'
+    }),
+    u('definition', {
+      identifier: 'chat',
+      url: 'https://spectrum.chat/unified/remark'
+    }),
+    u('definition', {
+      identifier: 'npm',
+      url: 'https://docs.npmjs.com/cli/install'
+    }),
+    u('definition', {identifier: 'health', url: health}),
+    u('definition', {
+      identifier: 'contributing',
+      url: hMaster + '/contributing.md'
+    }),
+    u('definition', {identifier: 'support', url: hMaster + '/support.md'}),
+    u('definition', {
+      identifier: 'coc',
+      url: hMaster + '/code-of-conduct.md'
+    }),
+    u('definition', {identifier: 'license', url: master + '/license'}),
+    u('definition', {identifier: 'author', url: author.url})
   )
 
   fs.writeFileSync(

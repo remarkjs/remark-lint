@@ -1,0 +1,31 @@
+{
+  "name": "remark-lint-no-unneeded-full-reference-image",
+  "version": "0.0.0",
+  "description": "remark-lint rule to warn when full reference images are used if they can be collapsed",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "full",
+    "collapsed",
+    "reference",
+    "image"
+  ],
+  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unneeded-full-reference-image",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "collapse-white-space": "^1.0.0",
+    "unified-lint-rule": "^1.0.0",
+    "unist-util-generated": "^1.1.0",
+    "unist-util-visit": "^1.4.0"
+  },
+  "xo": false
+}

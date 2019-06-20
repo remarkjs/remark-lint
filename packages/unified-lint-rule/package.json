@@ -1,10 +1,11 @@
 {
   "name": "unified-lint-rule",
   "version": "1.0.3",
-  "description": "Create a linting rule for a unified processors",
+  "description": "unified plugin to make it a bit easier to create linting rules",
   "license": "MIT",
   "keywords": [
     "unified",
+    "plugin",
     "lint",
     "rule"
   ],

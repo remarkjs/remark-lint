@@ -1,13 +1,16 @@
 {
   "name": "remark-lint",
   "version": "6.0.4",
-  "description": "Lint markdown with remark",
+  "description": "remark plugin to lint Markdown code style",
   "license": "MIT",
   "keywords": [
+    "unified",
+    "remark",
+    "plugin",
+    "mdast",
     "markdown",
     "lint",
-    "validate",
-    "remark"
+    "validate"
   ],
   "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",

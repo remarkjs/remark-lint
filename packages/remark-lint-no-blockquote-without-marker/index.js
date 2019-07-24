@@ -17,15 +17,15 @@
  *
  * @example {"name": "valid.md"}
  *
- *   > Foo...
- *   >
- *   > ...Bar.
+ *   > Foo…
+ *   > …bar…
+ *   > …baz.
  *
  * @example {"name": "invalid.md", "label": "input"}
  *
- *   > Foo...
- *
- *   > ...Bar.
+ *   > Foo…
+ *   …bar…
+ *   > …baz.
  *
  * @example {"name": "invalid.md", "label": "output"}
  *

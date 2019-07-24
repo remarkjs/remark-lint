@@ -37,9 +37,9 @@ This rule is included in the following presets:
 ###### In
 
 ```markdown
-> Foo...
->
-> ...Bar.
+> Foo…
+> …bar…
+> …baz.
 ```
 
 ###### Out
@@ -51,9 +51,9 @@ No messages.
 ###### In
 
 ```markdown
-> Foo...
-
-> ...Bar.
+> Foo…
+…bar…
+> …baz.
 ```
 
 ###### Out

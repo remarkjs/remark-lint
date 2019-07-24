@@ -32,6 +32,7 @@ powered by [plugins][remark-plugins] (such as these).
 *   [Rules](#rules)
 *   [List of Presets](#list-of-presets)
 *   [List of External Rules](#list-of-external-rules)
+*   [Security](#security)
 *   [Related](#related)
 *   [Contribute](#contribute)
 *   [License](#license)
@@ -388,6 +389,13 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
     — Wrapper for write-good
 
+## Security
+
+Use of `remark-lint` does not mutate the tree so there are no openings for
+[cross-site scripting (XSS)][xss] attacks.
+Messages from linting rules may be hidden from user content though, causing
+builds to fail or pass, or changing a report.
+
 ## Related
 
 *   [`remark-validate-links`](https://github.com/remarkjs/remark-validate-links)
@@ -494,3 +502,5 @@ abide by its terms.
 [rules]: doc/rules.md
 
 [presets]: #list-of-presets
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting

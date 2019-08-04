@@ -8,11 +8,7 @@
     "strictFunctionTypes": true,
     "baseUrl": ".",
     "paths": {
-      "remark-lint": ["packages/remark-lint/index.d.ts"],
-      "remark-lint-blockquote-indentation": ["packages/remark-lint-blockquote-indentation/index.d.ts"],
-      "remark-lint-checkbox-character-style": ["packages/remark-lint-checkbox-character-style/index.d.ts"],
-      "remark-lint-checkbox-content-indent": ["packages/remark-lint-checkbox-content-indent/index.d.ts"],
-      "remark-lint-code-block-style": ["packages/remark-lint-code-block-style/index.d.ts"]
+      "remark-*": ["packages/remark-*"]
     }
   }
 }

@@ -34,6 +34,7 @@
     "browserify": "^16.0.0",
     "chalk": "^2.0.0",
     "dox": "^0.9.0",
+    "dtslint": "^0.9.0",
     "lerna": "^3.0.0",
     "mdast-zone": "^3.0.0",
     "nyc": "^14.0.0",
@@ -50,6 +51,7 @@
     "tinyify": "^2.0.0",
     "to-vfile": "^6.0.0",
     "trim": "0.0.1",
+    "typescript": "^3.5.3",
     "unist-builder": "^1.0.0",
     "unist-util-remove-position": "^1.0.0",
     "vfile-reporter": "^6.0.0",
@@ -57,7 +59,7 @@
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
-    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
+    "format": "remark . -qfo && prettier --write \"**/*.{js,ts}\" && xo --fix",
     "generate:presets": "node script/build-presets",
     "generate:rules": "node script/build-rules",
     "generate": "npm run generate:presets && npm run generate:rules",
@@ -66,7 +68,8 @@
     "build": "npm run build:bundle && npm run build:mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
-    "test": "npm run generate && npm run format && npm run build && npm run test-coverage"
+    "test-types": "dtslint .",
+    "test": "npm run generate && npm run format && npm run build && npm run test-coverage && npm run test-types"
   },
   "nyc": {
     "check-coverage": true,

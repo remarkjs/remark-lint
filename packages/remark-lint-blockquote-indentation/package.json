@@ -18,8 +18,10 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "dependencies": {
     "mdast-util-to-string": "^1.0.2",
     "plur": "^3.0.0",

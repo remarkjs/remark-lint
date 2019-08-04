@@ -4,6 +4,10 @@ import remarkLintBlockquoteIndentation = require('remark-lint-blockquote-indenta
 import remarkLintCheckboxCharacterStyle = require('remark-lint-checkbox-character-style')
 import remarkLintCheckboxContentIndent = require('remark-lint-checkbox-content-indent')
 import remarkLintCodeBlockStyle = require('remark-lint-code-block-style')
+import remarkLintDefinitionCase = require('remark-lint-definition-case')
+import remarkLintDefinitionSpacing = require('remark-lint-definition-spacing')
+import remarkLintEmphasisMarker = require('remark-lint-emphasis-marker')
+import remarkLintFencedCodeFlag = require('remark-lint-fenced-code-flag')
 
 remark()
   .use(remarkLint)
@@ -38,3 +42,31 @@ remark()
   .use(remarkLintCodeBlockStyle, 'indented')
   // $ExpectError
   .use(remarkLintCodeBlockStyle, 'dne')
+
+remark()
+  .use(remarkLintDefinitionCase)
+  // $ExpectError
+  .use(remarkLintDefinitionCase, 'dne')
+
+remark()
+  .use(remarkLintDefinitionSpacing)
+  // $ExpectError
+  .use(remarkLintDefinitionSpacing, 'dne')
+
+remark()
+  .use(remarkLintEmphasisMarker)
+  .use(remarkLintEmphasisMarker, 'consistent')
+  .use(remarkLintEmphasisMarker, '*')
+  .use(remarkLintEmphasisMarker, '_')
+  // $ExpectError
+  .use(remarkLintEmphasisMarker, 'dne')
+
+remark()
+  .use(remarkLintFencedCodeFlag)
+  .use(remarkLintFencedCodeFlag, ['bravo'])
+  .use(remarkLintFencedCodeFlag, {allowEmpty: true})
+  .use(remarkLintFencedCodeFlag, {allowEmpty: false})
+  .use(remarkLintFencedCodeFlag, {allowEmpty: true, flags: ['bravo']})
+  .use(remarkLintFencedCodeFlag, {allowEmpty: false, flags: ['bravo']})
+  // $ExpectError
+  .use(remarkLintFencedCodeFlag, 'dne')

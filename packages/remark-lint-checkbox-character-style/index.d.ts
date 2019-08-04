@@ -1,5 +1,7 @@
 // TypeScript Version: 3.4
 
+import {Transformer} from 'unified'
+
 declare namespace remarkLintCheckboxCharacterStyle {
   interface Style {
     checked?: string
@@ -10,6 +12,6 @@ declare namespace remarkLintCheckboxCharacterStyle {
 
 declare function remarkLintCheckboxCharacterStyle(
   option?: remarkLintCheckboxCharacterStyle.Options
-): void
+): Transformer
 
 export = remarkLintCheckboxCharacterStyle

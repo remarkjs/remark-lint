@@ -18,8 +18,10 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "typings": "index.d.ts",
   "dependencies": {
     "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",

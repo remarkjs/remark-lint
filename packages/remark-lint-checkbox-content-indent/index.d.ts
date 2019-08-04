@@ -1,5 +1,7 @@
 // TypeScript Version: 3.4
 
-declare function remarkLintCheckboxContentIndent(): void
+import {Transformer} from 'unified'
+
+declare function remarkLintCheckboxContentIndent(): Transformer
 
 export = remarkLintCheckboxContentIndent

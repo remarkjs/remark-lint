@@ -15,8 +15,10 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "typings": "index.d.ts",
   "dependencies": {
     "remark-lint": "^6.0.0",
     "remark-lint-final-newline": "^1.0.0",

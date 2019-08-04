@@ -1,5 +1,7 @@
 // TypeScript Version: 3.4
 
-declare function remarkLint(): void
+import {Transformer} from 'unified'
+
+declare function remarkLint(): Transformer
 
 export = remarkLint

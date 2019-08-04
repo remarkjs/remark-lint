@@ -1,11 +1,13 @@
 // TypeScript Version: 3.4
 
+import {Transformer} from 'unified'
+
 declare namespace remarkLintBlockquoteIndentation {
   type Options = 'consistent' | number
 }
 
 declare function remarkLintBlockquoteIndentation(
   options?: remarkLintBlockquoteIndentation.Options
-): void
+): Transformer
 
 export = remarkLintBlockquoteIndentation

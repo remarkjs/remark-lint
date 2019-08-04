@@ -17,8 +17,10 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "typings": "index.d.ts",
   "dependencies": {
     "collapse-white-space": "^1.0.4",
     "unified-lint-rule": "^1.0.0",

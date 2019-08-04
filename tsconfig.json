@@ -8,7 +8,8 @@
     "strictFunctionTypes": true,
     "baseUrl": ".",
     "paths": {
-      "remark-*": ["packages/remark-*"]
+      "remark-*": ["packages/remark-*"],
+      "unified-lint-rule": ["packages/unified-lint-rule"]
     }
   }
 }

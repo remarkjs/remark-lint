@@ -1,4 +1,9 @@
 import remark = require('remark')
+
+import unifiedLintRule = require('unified-lint-rule')
+import {Node} from 'unist'
+import {VFile} from 'vfile'
+
 import remarkLint = require('remark-lint')
 import remarkLintBlockquoteIndentation = require('remark-lint-blockquote-indentation')
 import remarkLintCheckboxCharacterStyle = require('remark-lint-checkbox-character-style')
@@ -8,6 +13,23 @@ import remarkLintDefinitionCase = require('remark-lint-definition-case')
 import remarkLintDefinitionSpacing = require('remark-lint-definition-spacing')
 import remarkLintEmphasisMarker = require('remark-lint-emphasis-marker')
 import remarkLintFencedCodeFlag = require('remark-lint-fenced-code-flag')
+
+type ExampleLintRulePreferences = 'consistent' | boolean
+
+const exampleRule = unifiedLintRule(
+  'remark-lint:example-rule',
+  (tree: Node, file: VFile, preferences?: ExampleLintRulePreferences) => {
+    file.message('example reason')
+  }
+)
+
+remark()
+  .use(exampleRule)
+  .use(exampleRule, 'consistent')
+  .use(exampleRule, true)
+  .use(exampleRule, false)
+  // $ExpectError
+  .use(exampleRule, 'dne')
 
 remark()
   .use(remarkLint)

@@ -22,7 +22,7 @@
     "index.js",
     "index.d.ts"
   ],
-  "types": "index.d.ts",
+  "typings": "index.d.ts",
   "dependencies": {
     "remark-message-control": "^4.0.0"
   },

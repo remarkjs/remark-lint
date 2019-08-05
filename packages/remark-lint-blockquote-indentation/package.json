@@ -21,7 +21,7 @@
     "index.js",
     "index.d.ts"
   ],
-  "types": "index.d.ts",
+  "typings": "index.d.ts",
   "dependencies": {
     "mdast-util-to-string": "^1.0.2",
     "plur": "^3.0.0",

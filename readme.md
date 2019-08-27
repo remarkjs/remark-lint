@@ -320,6 +320,7 @@ example.md
 *   [ale][] ([Vim][]) — use remark-lint from Vim
 *   [gulp-remark][] ([Gulp][]) — use all of remark with Gulp
 *   [grunt-remark][] ([Grunt][]) — use all of remark with Grunt
+*   [jest-runner-remark][] ([Jest][]) - use all of remark with Jest
 
 We’re interested in more integrations.
 Let us know if we can help.
@@ -481,6 +482,8 @@ abide by its terms.
 
 [grunt-remark]: https://github.com/remarkjs/grunt-remark
 
+[jest-runner-remark]: https://github.com/keplersj/jest-runner-remark
+
 [ale]: https://github.com/w0rp/ale
 
 [atom]: https://atom.io
@@ -492,6 +495,8 @@ abide by its terms.
 [grunt]: https://gruntjs.com/
 
 [gulp]: https://gulpjs.com
+
+[jest]: https://jestjs.io
 
 [preset-recommended]: https://github.com/remarkjs/remark-lint/blob/master/packages/remark-preset-lint-recommended
 

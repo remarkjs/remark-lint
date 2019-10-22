@@ -145,9 +145,17 @@ function orderedListMarkerValue(tree, file, pref) {
 
   visit(tree, 'list', visitor)
 
+	function getStartValue(value) {
+		if (typeof value !== "undefined" && value !== null) {
+			return node.start
+		} else {
+			return 0;
+		}
+	}
+
   function visitor(node) {
     var children = node.children
-    var shouldBe = (pref === 'one' ? 1 : node.start) || 0
+    var shouldBe = pref === 'one' ? 1 : getStartValue(node.start)
     var length = node.ordered ? children.length : 0
     var index = -1
     var child

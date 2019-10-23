@@ -77,7 +77,7 @@ When configured with `'"'`.
 
 ##### `valid.md`
 
-When configured with `"'"`.
+When configured with `'\''`.
 
 ###### In
 
@@ -95,7 +95,7 @@ No messages.
 
 ##### `invalid.md`
 
-When configured with `"'"`.
+When configured with `'\''`.
 
 ###### In
 

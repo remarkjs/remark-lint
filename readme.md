@@ -363,6 +363,8 @@ This list is ordered based on the name without prefix, so excluding
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
 *   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-match-punctuation)
     — Ensures punctuations are used in pairs if necessary.
+*   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
+    — Ensure a mdash style to follow a standard format
 *   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-chinese-punctuation-in-number)
     — Ensures that Chinese punctuation will not be used in number, such as 1，000 or 12：34.
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)

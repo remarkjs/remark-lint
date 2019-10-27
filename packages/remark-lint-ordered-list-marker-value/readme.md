@@ -142,6 +142,12 @@ Paragraph.
 3.  Alpha
 3.  Bravo
 3.  Charlie
+
+Paragraph.
+
+0.  Delta
+0.  Echo
+0.  Foxtrot
 ```
 
 ###### Out
@@ -164,6 +170,12 @@ Paragraph.
 3.  Alpha
 4.  Bravo
 5.  Charlie
+
+Paragraph.
+
+0.  Delta
+1.  Echo
+2.  Foxtrot
 ```
 
 ###### Out

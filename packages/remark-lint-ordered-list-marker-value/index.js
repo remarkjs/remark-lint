@@ -70,6 +70,12 @@
  *   3.  Bravo
  *   3.  Charlie
  *
+ *   Paragraph.
+ *
+ *   0.  Delta
+ *   0.  Echo
+ *   0.  Foxtrot
+ *
  * @example {"name": "valid.md", "setting": "ordered"}
  *
  *   1.  Foo
@@ -81,6 +87,12 @@
  *   3.  Alpha
  *   4.  Bravo
  *   5.  Charlie
+ *
+ *   Paragraph.
+ *
+ *   0.  Delta
+ *   1.  Echo
+ *   2.  Foxtrot
  *
  * @example {"name": "invalid.md", "setting": "one", "label": "input"}
  *
@@ -147,7 +159,7 @@ function orderedListMarkerValue(tree, file, pref) {
 
   function visitor(node) {
     var children = node.children
-    var shouldBe = pref === 'one' ? 1 : (node.start == null ? 1 : node.start)
+    var shouldBe = pref === 'one' ? 1 : node.start == null ? 1 : node.start
     var length = node.ordered ? children.length : 0
     var index = -1
     var child

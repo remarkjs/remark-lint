@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-checkbox-content-indent",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "remark-lint rule to warn when list item checkboxes are followed by too much whitespace",
   "license": "MIT",
   "keywords": [

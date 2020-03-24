@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-table-indentation",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "remark-lint rule to warn when tables are indented",
   "license": "MIT",
   "keywords": [

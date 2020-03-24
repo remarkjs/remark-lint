@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-file-name-irregular-characters",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "remark-lint rule to warn when file names contain irregular characters",
   "license": "MIT",
   "keywords": [

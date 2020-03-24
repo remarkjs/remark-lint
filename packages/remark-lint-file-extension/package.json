@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-file-extension",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "remark-lint rule to warn when the file’s extension violates the given style",
   "license": "MIT",
   "keywords": [

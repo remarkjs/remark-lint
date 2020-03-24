@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-duplicate-headings",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "remark-lint rule to warn on duplicate headings",
   "license": "MIT",
   "keywords": [

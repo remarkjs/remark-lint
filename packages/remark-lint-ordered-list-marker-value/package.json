@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-ordered-list-marker-value",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "remark-lint rule to warn when the marker value of ordered lists violates a given style",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "unified-lint-rule",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "unified plugin to make it a bit easier to create linting rules",
   "license": "MIT",
   "keywords": [

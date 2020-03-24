@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-table-pipe-alignment",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "remark-lint rule to warn when table pipes are not aligned",
   "license": "MIT",
   "keywords": [

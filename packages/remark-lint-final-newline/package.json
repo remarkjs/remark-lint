@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-final-newline",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "remark-lint rule to warn when a newline at the end of a file is missing",
   "license": "MIT",
   "keywords": [

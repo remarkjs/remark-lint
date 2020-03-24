@@ -54,22 +54,23 @@ module.exports = rule(
 
 var defaults = '\\.,;:!?'
 
-function noHeadingPunctuation(tree, file, pref) {
+function noHeadingPunctuation(tree, file, option) {
   var expression = new RegExp(
-    '[' + (typeof pref === 'string' ? pref : defaults) + ']'
+    '[' + (typeof option === 'string' ? option : defaults) + ']'
   )
 
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
     var value
+    var tail
 
     if (!generated(node)) {
       value = toString(node)
-      value = value.charAt(value.length - 1)
+      tail = value.charAt(value.length - 1)
 
-      if (expression.test(value)) {
-        file.message('Don’t add a trailing `' + value + '` to headings', node)
+      if (expression.test(tail)) {
+        file.message('Don’t add a trailing `' + tail + '` to headings', node)
       }
     }
   }

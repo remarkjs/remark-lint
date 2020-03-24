@@ -28,12 +28,11 @@ var rule = require('unified-lint-rule')
 
 module.exports = rule('remark-lint:file-extension', fileExtension)
 
-function fileExtension(tree, file, pref) {
+function fileExtension(tree, file, option) {
   var ext = file.extname
+  var preferred = typeof option === 'string' ? option : 'md'
 
-  pref = typeof pref === 'string' ? pref : 'md'
-
-  if (ext && ext.slice(1) !== pref) {
-    file.message('Incorrect extension: use `' + pref + '`')
+  if (ext && ext.slice(1) !== preferred) {
+    file.message('Incorrect extension: use `' + preferred + '`')
   }
 }

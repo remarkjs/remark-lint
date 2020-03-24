@@ -55,25 +55,25 @@ module.exports = rule('remark-lint:linebreak-style', linebreakStyle)
 var escaped = {unix: '\\n', windows: '\\r\\n'}
 var types = {true: 'windows', false: 'unix'}
 
-function linebreakStyle(tree, file, pref) {
+function linebreakStyle(tree, file, option) {
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
   var content = String(file)
   var position = location(content).toPosition
   var index = content.indexOf('\n')
   var type
   var reason
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
   while (index !== -1) {
     type = types[content.charAt(index - 1) === '\r']
 
-    if (pref) {
-      if (pref !== type) {
+    if (preferred) {
+      if (preferred !== type) {
         reason =
           'Expected linebreaks to be ' +
-          pref +
+          preferred +
           ' (`' +
-          escaped[pref] +
+          escaped[preferred] +
           '`), not ' +
           type +
           ' (`' +
@@ -83,7 +83,7 @@ function linebreakStyle(tree, file, pref) {
         file.message(reason, position(index))
       }
     } else {
-      pref = type
+      preferred = type
     }
 
     index = content.indexOf('\n', index + 1)

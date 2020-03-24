@@ -48,7 +48,7 @@
  *   charlie();
  *   ~~~
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok-consistent-tick.md", "label": "input"}
  *
  *   ```alpha
  *   bravo();
@@ -58,11 +58,25 @@
  *   charlie();
  *   ~~~
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok-consistent-tick.md", "label": "output"}
  *
- *   5:1-7:4: Fenced code should use `` '`' `` as a marker
+ *   5:1-7:4: Fenced code should use `` ` `` as a marker
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok-consistent-tilde.md", "label": "input"}
+ *
+ *   ~~~alpha
+ *   bravo();
+ *   ~~~
+ *
+ *   ```
+ *   charlie();
+ *   ```
+ *
+ * @example {"name": "not-ok-consistent-tilde.md", "label": "output"}
+ *
+ *   5:1-7:4: Fenced code should use `~` as a marker
+ *
+ * @example {"name": "not-ok-incorrect.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
  *
  *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */
@@ -113,9 +127,9 @@ function fencedCodeMarker(tree, file, option) {
       if (markers[marker] === true) {
         if (preferred) {
           if (marker !== preferred) {
-            label = preferred === '~' ? preferred : "`` '`' ``"
+            label = preferred === '~' ? preferred : '` ` `'
             file.message(
-              'Fenced code should use ' + label + ' as a marker',
+              'Fenced code should use `' + label + '` as a marker',
               node
             )
           }

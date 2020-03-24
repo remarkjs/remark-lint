@@ -37,14 +37,14 @@ module.exports = rule(
   maximumHeadingLength
 )
 
-function maximumHeadingLength(tree, file, pref) {
-  pref = typeof pref === 'number' && !isNaN(pref) ? pref : 60
+function maximumHeadingLength(tree, file, option) {
+  var preferred = typeof option === 'number' && !isNaN(option) ? option : 60
 
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    if (!generated(node) && toString(node).length > pref) {
-      file.message('Use headings shorter than `' + pref + '`', node)
+    if (!generated(node) && toString(node).length > preferred) {
+      file.message('Use headings shorter than `' + preferred + '`', node)
     }
   }
 }

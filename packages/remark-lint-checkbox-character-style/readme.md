@@ -20,7 +20,7 @@ styles and warns when subsequent checkboxes use different styles.
 Styles can also be passed in like so:
 
 ```js
-{ checked: 'x', unchecked: ' ' }
+{checked: 'x', unchecked: ' '}
 ```
 
 ## Fix

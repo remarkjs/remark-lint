@@ -80,18 +80,19 @@ var fence = /^ {0,3}([~`])\1{2,}/
 var reasonIncorrect = 'Incorrect code language flag'
 var reasonMissing = 'Missing code language flag'
 
-function fencedCodeFlag(tree, file, pref) {
+function fencedCodeFlag(tree, file, option) {
   var contents = String(file)
   var allowEmpty = false
-  var flags = []
+  var allowed = []
+  var flags = option
 
-  if (typeof pref === 'object' && !('length' in pref)) {
-    allowEmpty = Boolean(pref.allowEmpty)
-    pref = pref.flags
+  if (typeof flags === 'object' && !('length' in flags)) {
+    allowEmpty = Boolean(flags.allowEmpty)
+    flags = flags.flags
   }
 
-  if (typeof pref === 'object' && 'length' in pref) {
-    flags = String(pref).split(',')
+  if (typeof flags === 'object' && 'length' in flags) {
+    allowed = String(flags).split(',')
   }
 
   visit(tree, 'code', visitor)
@@ -101,7 +102,7 @@ function fencedCodeFlag(tree, file, pref) {
 
     if (!generated(node)) {
       if (node.lang) {
-        if (flags.length !== 0 && flags.indexOf(node.lang) === -1) {
+        if (allowed.length !== 0 && allowed.indexOf(node.lang) === -1) {
           file.message(reasonIncorrect, node)
         }
       } else {

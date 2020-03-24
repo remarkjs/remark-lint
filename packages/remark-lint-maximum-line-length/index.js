@@ -102,8 +102,8 @@ module.exports = rule('remark-lint:maximum-line-length', maximumLineLength)
 var start = position.start
 var end = position.end
 
-function maximumLineLength(tree, file, pref) {
-  var style = typeof pref === 'number' && !isNaN(pref) ? pref : 80
+function maximumLineLength(tree, file, option) {
+  var preferred = typeof option === 'number' && !isNaN(option) ? option : 80
   var content = String(file)
   var lines = content.split(/\r?\n/)
   var length = lines.length
@@ -118,8 +118,8 @@ function maximumLineLength(tree, file, pref) {
   while (++index < length) {
     lineLength = lines[index].length
 
-    if (lineLength > style) {
-      file.message('Line must be at most ' + style + ' characters', {
+    if (lineLength > preferred) {
+      file.message('Line must be at most ' + preferred + ' characters', {
         line: index + 1,
         column: lineLength + 1
       })
@@ -144,7 +144,7 @@ function maximumLineLength(tree, file, pref) {
     final = end(node)
 
     // No whitelisting when starting after the border, or ending before it.
-    if (initial.column > style || final.column < style) {
+    if (initial.column > preferred || final.column < preferred) {
       return
     }
 

@@ -87,15 +87,15 @@ var styles = {
   null: true
 }
 
-function unorderedListMarkerStyle(tree, file, pref) {
+function unorderedListMarkerStyle(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (styles[pref] !== true) {
+  if (styles[preferred] !== true) {
     file.fail(
       'Incorrect unordered list item marker style `' +
-        pref +
+        preferred +
         "`: use either `'-'`, `'*'`, or `'+'`"
     )
   }
@@ -118,12 +118,12 @@ function unorderedListMarkerStyle(tree, file, pref) {
           .replace(/\[[x ]?]\s*$/i, '')
           .replace(/\s/g, '')
 
-        if (pref) {
-          if (marker !== pref) {
-            file.message('Marker style should be `' + pref + '`', child)
+        if (preferred) {
+          if (marker !== preferred) {
+            file.message('Marker style should be `' + preferred + '`', child)
           }
         } else {
-          pref = marker
+          preferred = marker
         }
       }
     }

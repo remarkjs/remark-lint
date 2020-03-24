@@ -86,15 +86,19 @@ var types = [
   'yaml'
 ]
 
-function noMissingBlankLines(tree, file, pref) {
-  var allow = (pref || {}).exceptTightLists
+function noMissingBlankLines(tree, file, option) {
+  var exceptTightLists = (option || {}).exceptTightLists
 
   visit(tree, visitor)
 
   function visitor(node, index, parent) {
     var next
 
-    if (!generated(node) && parent && (!allow || parent.type !== 'listItem')) {
+    if (
+      parent &&
+      !generated(node) &&
+      (!exceptTightLists || parent.type !== 'listItem')
+    ) {
       next = parent.children[index + 1]
 
       if (

@@ -165,15 +165,15 @@ var end = position.end
 
 var styles = {null: true, padded: true, compact: true}
 
-function tableCellPadding(tree, file, pref) {
+function tableCellPadding(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (styles[pref] !== true) {
+  if (styles[preferred] !== true) {
     file.fail(
       'Incorrect table cell padding style `' +
-        pref +
+        preferred +
         "`, expected `'padded'`, `'compact'`, or `'consistent'`"
     )
   }
@@ -236,8 +236,8 @@ function tableCellPadding(tree, file, pref) {
       }
     }
 
-    if (pref) {
-      style = pref === 'padded' ? 1 : 0
+    if (preferred) {
+      style = preferred === 'padded' ? 1 : 0
     } else {
       style = entries[0] && (!entries[0].start || !entries[0].end) ? 0 : 1
     }

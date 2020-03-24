@@ -77,19 +77,19 @@ module.exports = rule('remark-lint:heading-style', headingStyle)
 
 var types = ['atx', 'atx-closed', 'setext']
 
-function headingStyle(tree, file, pref) {
-  pref = types.indexOf(pref) === -1 ? null : pref
+function headingStyle(tree, file, option) {
+  var preferred = types.indexOf(option) === -1 ? null : option
 
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
     if (!generated(node)) {
-      if (pref) {
-        if (style(node, pref) !== pref) {
-          file.message('Headings should use ' + pref, node)
+      if (preferred) {
+        if (style(node, preferred) !== preferred) {
+          file.message('Headings should use ' + preferred, node)
         }
       } else {
-        pref = style(node, pref)
+        preferred = style(node, preferred)
       }
     }
   }

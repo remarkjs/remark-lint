@@ -87,24 +87,27 @@ module.exports = rule('remark-lint:first-heading-level', firstHeadingLevel)
 
 var re = /<h([1-6])/
 
-function firstHeadingLevel(tree, file, pref) {
-  var style = pref && pref !== true ? pref : 1
+function firstHeadingLevel(tree, file, option) {
+  var preferred = option && option !== true ? option : 1
 
   visit(tree, visitor)
 
   function visitor(node) {
-    var depth
+    var rank
 
     if (!generated(node)) {
       if (node.type === 'heading') {
-        depth = node.depth
+        rank = node.depth
       } else if (node.type === 'html') {
-        depth = infer(node)
+        rank = infer(node)
       }
 
-      if (depth !== undefined) {
-        if (depth !== style) {
-          file.message('First heading level should be `' + style + '`', node)
+      if (rank !== undefined) {
+        if (rank !== preferred) {
+          file.message(
+            'First heading level should be `' + preferred + '`',
+            node
+          )
         }
 
         return visit.EXIT

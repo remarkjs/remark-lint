@@ -107,17 +107,20 @@ var markers = {
   ')': '('
 }
 
-function linkTitleStyle(tree, file, pref) {
+function linkTitleStyle(tree, file, option) {
   var contents = String(file)
   var location = vfileLocation(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-  pref = pref === '()' || pref === '(' ? ')' : pref
+  if (preferred === '()' || preferred === '(') {
+    preferred = ')'
+  }
 
-  if (pref && !own.call(markers, pref)) {
+  if (preferred && !own.call(markers, preferred)) {
     file.fail(
       'Incorrect link title style marker `' +
-        pref +
+        preferred +
         "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
     )
   }
@@ -173,10 +176,12 @@ function linkTitleStyle(tree, file, pref) {
       return
     }
 
-    if (pref) {
-      if (pref !== final) {
+    if (preferred) {
+      if (preferred !== final) {
         reason =
-          'Titles should use `' + (pref === ')' ? '()' : pref) + '` as a quote'
+          'Titles should use `' +
+          (preferred === ')' ? '()' : preferred) +
+          '` as a quote'
 
         file.message(reason, {
           start: location.toPosition(first),
@@ -184,7 +189,7 @@ function linkTitleStyle(tree, file, pref) {
         })
       }
     } else {
-      pref = final
+      preferred = final
     }
   }
 }

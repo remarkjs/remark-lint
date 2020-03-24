@@ -73,15 +73,15 @@ var styles = {
   null: true
 }
 
-function orderedListMarkerStyle(tree, file, pref) {
+function orderedListMarkerStyle(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option !== 'string' || option === 'consistent' ? null : option
 
-  pref = typeof pref !== 'string' || pref === 'consistent' ? null : pref
-
-  if (styles[pref] !== true) {
+  if (styles[preferred] !== true) {
     file.fail(
       'Incorrect ordered list item marker style `' +
-        pref +
+        preferred +
         "`: use either `'.'` or `')'`"
     )
   }
@@ -104,12 +104,12 @@ function orderedListMarkerStyle(tree, file, pref) {
           .replace(/\s|\d/g, '')
           .replace(/\[[x ]?]\s*$/i, '')
 
-        if (pref) {
-          if (marker !== pref) {
-            file.message('Marker style should be `' + pref + '`', child)
+        if (preferred) {
+          if (marker !== preferred) {
+            file.message('Marker style should be `' + preferred + '`', child)
           }
         } else {
-          pref = marker
+          preferred = marker
         }
       }
     }

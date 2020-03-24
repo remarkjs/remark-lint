@@ -53,7 +53,7 @@ Indented code blocks are not affected by this rule:
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-consistent-tick.md`
 
 ###### In
 
@@ -70,7 +70,27 @@ charlie();
 ###### Out
 
 ```text
-5:1-7:4: Fenced code should use `` '`' `` as a marker
+5:1-7:4: Fenced code should use `` ` `` as a marker
+```
+
+##### `not-ok-consistent-tilde.md`
+
+###### In
+
+````markdown
+~~~alpha
+bravo();
+~~~
+
+```
+charlie();
+```
+````
+
+###### Out
+
+```text
+5:1-7:4: Fenced code should use `~` as a marker
 ```
 
 ##### `ok.md`
@@ -113,7 +133,7 @@ charlie();
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-incorrect.md`
 
 When configured with `'💩'`.
 

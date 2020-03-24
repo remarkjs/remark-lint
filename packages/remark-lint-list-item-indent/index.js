@@ -117,15 +117,14 @@ var start = position.start
 
 var styles = {'tab-size': true, mixed: true, space: true}
 
-function listItemIndent(tree, file, pref) {
+function listItemIndent(tree, file, option) {
   var contents = String(file)
+  var preferred = typeof option === 'string' ? option : 'tab-size'
 
-  pref = typeof pref === 'string' ? pref : 'tab-size'
-
-  if (styles[pref] !== true) {
+  if (styles[preferred] !== true) {
     file.fail(
       'Incorrect list-item indent style `' +
-        pref +
+        preferred +
         "`: use either `'tab-size'`, `'space'`, or `'mixed'`"
     )
   }
@@ -155,7 +154,7 @@ function listItemIndent(tree, file, pref) {
       bulletSize = marker.replace(/\s+$/, '').length
 
       style =
-        pref === 'tab-size' || (pref === 'mixed' && spread)
+        preferred === 'tab-size' || (preferred === 'mixed' && spread)
           ? Math.ceil(bulletSize / 4) * 4
           : bulletSize + 1
 

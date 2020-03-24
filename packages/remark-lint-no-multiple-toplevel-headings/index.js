@@ -38,14 +38,14 @@ module.exports = rule(
   noMultipleToplevelHeadings
 )
 
-function noMultipleToplevelHeadings(tree, file, pref) {
-  var style = pref ? pref : 1
+function noMultipleToplevelHeadings(tree, file, option) {
+  var preferred = option || 1
   var duplicate
 
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
-    if (!generated(node) && node.depth === style) {
+    if (!generated(node) && node.depth === preferred) {
       if (duplicate) {
         file.message(
           'Don’t use multiple top level headings (' + duplicate + ')',

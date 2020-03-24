@@ -62,15 +62,15 @@ module.exports = rule('remark-lint:strong-marker', strongMarker)
 
 var markers = {'*': true, _: true, null: true}
 
-function strongMarker(tree, file, pref) {
+function strongMarker(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (markers[pref] !== true) {
+  if (markers[preferred] !== true) {
     file.fail(
       'Incorrect strong marker `' +
-        pref +
+        preferred +
         "`: use either `'consistent'`, `'*'`, or `'_'`"
     )
   }
@@ -81,12 +81,15 @@ function strongMarker(tree, file, pref) {
     var marker = contents.charAt(position.start(node).offset)
 
     if (!generated(node)) {
-      if (pref) {
-        if (marker !== pref) {
-          file.message('Strong should use `' + pref + '` as a marker', node)
+      if (preferred) {
+        if (marker !== preferred) {
+          file.message(
+            'Strong should use `' + preferred + '` as a marker',
+            node
+          )
         }
       } else {
-        pref = marker
+        preferred = marker
       }
     }
   }

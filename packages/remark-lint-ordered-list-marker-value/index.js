@@ -142,15 +142,14 @@ var start = position.start
 
 var styles = {ordered: true, single: true, one: true}
 
-function orderedListMarkerValue(tree, file, pref) {
+function orderedListMarkerValue(tree, file, option) {
   var contents = String(file)
+  var preferred = typeof option === 'string' ? option : 'ordered'
 
-  pref = typeof pref === 'string' ? pref : 'ordered'
-
-  if (styles[pref] !== true) {
+  if (styles[preferred] !== true) {
     file.fail(
       'Incorrect ordered list item marker value `' +
-        pref +
+        preferred +
         "`: use either `'ordered'` or `'one'`"
     )
   }
@@ -159,7 +158,7 @@ function orderedListMarkerValue(tree, file, pref) {
 
   function visitor(node) {
     var children = node.children
-    var shouldBe = pref === 'one' ? 1 : node.start == null ? 1 : node.start
+    var expected = preferred === 'one' ? 1 : node.start == null ? 1 : node.start
     var length = node.ordered ? children.length : 0
     var index = -1
     var child
@@ -169,13 +168,13 @@ function orderedListMarkerValue(tree, file, pref) {
       child = children[index]
 
       // Ignore generated nodes, first items.
-      if (generated(child) || (index === 0 && pref !== 'one')) {
+      if (generated(child) || (index === 0 && preferred !== 'one')) {
         continue
       }
 
       // Increase the expected line number when in `ordered` mode.
-      if (pref === 'ordered') {
-        shouldBe++
+      if (preferred === 'ordered') {
+        expected++
       }
 
       marker = Number(
@@ -185,9 +184,9 @@ function orderedListMarkerValue(tree, file, pref) {
           .replace(/\[[x ]?]\s*$/i, '')
       )
 
-      if (marker !== shouldBe) {
+      if (marker !== expected) {
         file.message(
-          'Marker should be `' + shouldBe + '`, was `' + marker + '`',
+          'Marker should be `' + expected + '`, was `' + marker + '`',
           child
         )
       }

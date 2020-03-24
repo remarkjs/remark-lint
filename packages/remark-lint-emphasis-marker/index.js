@@ -71,15 +71,15 @@ module.exports = rule('remark-lint:emphasis-marker', emphasisMarker)
 
 var markers = {null: true, '*': true, _: true}
 
-function emphasisMarker(tree, file, pref) {
+function emphasisMarker(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (markers[pref] !== true) {
+  if (markers[preferred] !== true) {
     file.fail(
       'Incorrect emphasis marker `' +
-        pref +
+        preferred +
         "`: use either `'consistent'`, `'*'`, or `'_'`"
     )
   }
@@ -92,12 +92,15 @@ function emphasisMarker(tree, file, pref) {
     if (!generated(node)) {
       marker = contents.charAt(position.start(node).offset)
 
-      if (pref) {
-        if (marker !== pref) {
-          file.message('Emphasis should use `' + pref + '` as a marker', node)
+      if (preferred) {
+        if (marker !== preferred) {
+          file.message(
+            'Emphasis should use `' + preferred + '` as a marker',
+            node
+          )
         }
       } else {
-        pref = marker
+        preferred = marker
       }
     }
   }

@@ -105,7 +105,7 @@ bravo();
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-fenced.md`
 
 When configured with `'fenced'`.
 
@@ -126,7 +126,7 @@ Paragraph.
 5:1-5:13: Code blocks should be fenced
 ```
 
-##### `not-ok.md`
+##### `not-ok-consistent.md`
 
 ###### In
 
@@ -146,7 +146,7 @@ bravo();
 5:1-7:4: Code blocks should be indented
 ```
 
-##### `not-ok.md`
+##### `not-ok-incorrect.md`
 
 When configured with `'💩'`.
 

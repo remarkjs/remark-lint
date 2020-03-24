@@ -59,8 +59,8 @@ module.exports = rule(
   blockquoteIndentation
 )
 
-function blockquoteIndentation(tree, file, pref) {
-  pref = typeof pref === 'number' && !isNaN(pref) ? pref : null
+function blockquoteIndentation(tree, file, option) {
+  var preferred = typeof option === 'number' && !isNaN(option) ? option : null
 
   visit(tree, 'blockquote', visitor)
 
@@ -72,8 +72,8 @@ function blockquoteIndentation(tree, file, pref) {
       return
     }
 
-    if (pref) {
-      diff = pref - check(node)
+    if (preferred) {
+      diff = preferred - check(node)
 
       if (diff !== 0) {
         reason =
@@ -87,7 +87,7 @@ function blockquoteIndentation(tree, file, pref) {
         file.message(reason, position.start(node.children[0]))
       }
     } else {
-      pref = check(node)
+      preferred = check(node)
     }
   }
 }

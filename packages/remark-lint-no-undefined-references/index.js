@@ -53,10 +53,8 @@ function normalize(s) {
   return collapseWhiteSpace(s.toUpperCase())
 }
 
-function noUndefinedReferences(tree, file, pref) {
-  var allow =
-    pref != null && Array.isArray(pref.allow) ? pref.allow.map(normalize) : []
-
+function noUndefinedReferences(tree, file, option) {
+  var allow = ((option || {}).allow || []).map(normalize)
   var map = {}
 
   visit(tree, ['definition', 'footnoteDefinition'], mark)
@@ -70,11 +68,9 @@ function noUndefinedReferences(tree, file, pref) {
 
   function find(node) {
     if (
-      !(
-        generated(node) ||
-        allow.includes(normalize(node.identifier)) ||
-        normalize(node.identifier) in map
-      )
+      !generated(node) &&
+      !(normalize(node.identifier) in map) &&
+      allow.indexOf(normalize(node.identifier)) === -1
     ) {
       file.message(reason, node)
     }

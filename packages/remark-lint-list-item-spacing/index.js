@@ -122,9 +122,11 @@ var end = position.end
 var reasonLoose = 'Missing new line after list item'
 var reasonTight = 'Extraneous new line after list item'
 
-function listItemSpacing(tree, file, pref) {
-  var blanks = pref && typeof pref === 'object' && Boolean(pref.checkBlanks)
-  var fn = blanks ? inferBlankLine : inferMultiline
+function listItemSpacing(tree, file, option) {
+  var infer =
+    option && typeof option === 'object' && option.checkBlanks
+      ? inferBlankLine
+      : inferMultiline
 
   visit(tree, 'list', visitor)
 
@@ -143,7 +145,7 @@ function listItemSpacing(tree, file, pref) {
       index = -1
 
       while (++index < length) {
-        if (fn(children[index])) {
+        if (infer(children[index])) {
           tight = false
           break
         }

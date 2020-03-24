@@ -67,12 +67,12 @@ module.exports = rule('remark-lint:rule-style', ruleStyle)
 var start = position.start
 var end = position.end
 
-function ruleStyle(tree, file, pref) {
+function ruleStyle(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (pref !== null && /[^-_* ]/.test(pref)) {
+  if (preferred !== null && /[^-_* ]/.test(preferred)) {
     file.fail(
       "Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`"
     )
@@ -88,12 +88,12 @@ function ruleStyle(tree, file, pref) {
     if (!generated(node)) {
       rule = contents.slice(initial, final)
 
-      if (pref) {
-        if (rule !== pref) {
-          file.message('Rules should use `' + pref + '`', node)
+      if (preferred) {
+        if (rule !== preferred) {
+          file.message('Rules should use `' + preferred + '`', node)
         }
       } else {
-        pref = rule
+        preferred = rule
       }
     }
   }

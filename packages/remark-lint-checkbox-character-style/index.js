@@ -14,7 +14,7 @@
  *   Styles can also be passed in like so:
  *
  *   ```js
- *   { checked: 'x', unchecked: ' ' }
+ *   {checked: 'x', unchecked: ' '}
  *   ```
  *
  *   ## Fix
@@ -89,24 +89,23 @@ var checked = {x: true, X: true}
 var unchecked = {' ': true, '\t': true}
 var types = {true: 'checked', false: 'unchecked'}
 
-function checkboxCharacterStyle(tree, file, pref) {
+function checkboxCharacterStyle(tree, file, option) {
   var contents = String(file)
   var location = vfileLocation(file)
+  var preferred = typeof option === 'object' ? option : {}
 
-  pref = typeof pref === 'object' ? pref : {}
-
-  if (pref.unchecked && unchecked[pref.unchecked] !== true) {
+  if (preferred.unchecked && unchecked[preferred.unchecked] !== true) {
     file.fail(
       'Incorrect unchecked checkbox marker `' +
-        pref.unchecked +
+        preferred.unchecked +
         "`: use either `'\\t'`, or `' '`"
     )
   }
 
-  if (pref.checked && checked[pref.checked] !== true) {
+  if (preferred.checked && checked[preferred.checked] !== true) {
     file.fail(
       'Incorrect checked checkbox marker `' +
-        pref.checked +
+        preferred.checked +
         "`: use either `'x'`, or `'X'`"
     )
   }
@@ -137,7 +136,7 @@ function checkboxCharacterStyle(tree, file, pref) {
 
     // The checkbox character is behind a square bracket.
     character = value.charAt(value.length - 1)
-    style = pref[type]
+    style = preferred[type]
 
     if (style) {
       if (character !== style) {
@@ -154,7 +153,7 @@ function checkboxCharacterStyle(tree, file, pref) {
         })
       }
     } else {
-      pref[type] = character
+      preferred[type] = character
     }
   }
 }

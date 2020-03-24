@@ -60,7 +60,7 @@
  *   bravo();
  *   ```
  *
- * @example {"setting": "fenced", "name": "not-ok.md", "label": "input"}
+ * @example {"setting": "fenced", "name": "not-ok-fenced.md", "label": "input"}
  *
  *       alpha();
  *
@@ -68,12 +68,12 @@
  *
  *       bravo();
  *
- * @example {"setting": "fenced", "name": "not-ok.md", "label": "output"}
+ * @example {"setting": "fenced", "name": "not-ok-fenced.md", "label": "output"}
  *
  *   1:1-1:13: Code blocks should be fenced
  *   5:1-5:13: Code blocks should be fenced
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok-consistent.md", "label": "input"}
  *
  *       alpha();
  *
@@ -83,11 +83,11 @@
  *   bravo();
  *   ```
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok-consistent.md", "label": "output"}
  *
  *   5:1-7:4: Code blocks should be indented
  *
- * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": "💩", "name": "not-ok-incorrect.md", "label": "output", "config": {"positionless": true}}
  *
  *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */
@@ -106,15 +106,15 @@ var end = position.end
 
 var styles = {null: true, fenced: true, indented: true}
 
-function codeBlockStyle(tree, file, pref) {
+function codeBlockStyle(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (styles[pref] !== true) {
+  if (styles[preferred] !== true) {
     file.fail(
       'Incorrect code block style `' +
-        pref +
+        preferred +
         "`: use either `'consistent'`, `'fenced'`, or `'indented'`"
     )
   }
@@ -122,28 +122,28 @@ function codeBlockStyle(tree, file, pref) {
   visit(tree, 'code', visitor)
 
   function visitor(node) {
-    var current = check(node)
-
-    if (current) {
-      if (!pref) {
-        pref = current
-      } else if (pref !== current) {
-        file.message('Code blocks should be ' + pref, node)
-      }
-    }
-  }
-
-  // Get the style of `node`.
-  function check(node) {
-    var initial = start(node).offset
-    var final = end(node).offset
+    var initial
+    var final
+    var current
 
     if (generated(node)) {
       return null
     }
 
-    return node.lang || /^\s*([~`])\1{2,}/.test(contents.slice(initial, final))
-      ? 'fenced'
-      : 'indented'
+    initial = start(node).offset
+    final = end(node).offset
+
+    current =
+      node.lang || /^\s*([~`])\1{2,}/.test(contents.slice(initial, final))
+        ? 'fenced'
+        : 'indented'
+
+    if (preferred) {
+      if (preferred !== current) {
+        file.message('Code blocks should be ' + preferred, node)
+      }
+    } else {
+      preferred = current
+    }
   }
 }

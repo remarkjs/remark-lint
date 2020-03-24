@@ -7,6 +7,7 @@
     "remark",
     "lint",
     "rule",
+    "remark-lint-rule",
     "html"
   ],
   "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-html",

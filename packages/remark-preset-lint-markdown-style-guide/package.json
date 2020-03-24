@@ -5,6 +5,7 @@
   "license": "MIT",
   "keywords": [
     "remark",
+    "remark-preset",
     "preset",
     "markdown",
     "style",

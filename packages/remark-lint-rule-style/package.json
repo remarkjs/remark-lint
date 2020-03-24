@@ -7,8 +7,8 @@
     "remark",
     "lint",
     "rule",
+    "remark-lint-rule",
     "horizontal",
-    "rule",
     "thematic",
     "break"
   ],

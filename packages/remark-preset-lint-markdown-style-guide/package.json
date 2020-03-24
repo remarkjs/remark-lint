@@ -12,6 +12,10 @@
   ],
   "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"

@@ -14,6 +14,10 @@
   ],
   "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-link-title-style",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"

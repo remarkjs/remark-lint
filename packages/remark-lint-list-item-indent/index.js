@@ -152,7 +152,7 @@ function listItemIndent(tree, file, pref) {
         .slice(start(item).offset, final.offset)
         .replace(/\[[x ]?]\s*$/i, '')
 
-      bulletSize = marker.trimRight().length
+      bulletSize = marker.replace(/\s+$/, '').length
 
       style =
         pref === 'tab-size' || (pref === 'mixed' && spread)

@@ -8,7 +8,7 @@ find.all = findAll
 function find(tags, key) {
   var value = null
 
-  tags.some(function(tag) {
+  tags.some(function (tag) {
     if (tag && tag.type === key) {
       value = tag
 
@@ -24,10 +24,10 @@ function find(tags, key) {
 // Find the first tag in `tags` with a type set to `key`.
 function findAll(tags, key) {
   return tags
-    .filter(function(tag) {
+    .filter(function (tag) {
       return tag && tag.type === key
     })
-    .map(function(tag) {
+    .map(function (tag) {
       return tag.string
     })
 }

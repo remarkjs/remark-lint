@@ -44,12 +44,12 @@ function noEmphasisAsHeading(tree, file) {
 
   function visitor(node, index, parent) {
     var head = node.children[0]
-    var prev = parent.children[index - 1]
+    var previous = parent.children[index - 1]
     var next = parent.children[index + 1]
 
     if (
       !generated(node) &&
-      (!prev || prev.type !== 'heading') &&
+      (!previous || previous.type !== 'heading') &&
       next &&
       next.type === 'paragraph' &&
       node.children.length === 1 &&

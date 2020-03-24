@@ -13,8 +13,8 @@ var noMultipleToplevelHeadings = require('./packages/remark-lint-no-multiple-top
 var finalNewline = require('./packages/remark-lint-final-newline')
 var chars = require('./script/characters')
 
-test('core', function(t) {
-  t.test('should work', function(st) {
+test('core', function (t) {
+  t.test('should work', function (st) {
     var doc = [
       '# A heading',
       '',
@@ -31,7 +31,10 @@ test('core', function(t) {
       .use(noHeadingPunctuation)
       .use(noMultipleToplevelHeadings)
       .use(lint)
-      .process(vfile({path: 'virtual.md', contents: doc}), function(err, file) {
+      .process(vfile({path: 'virtual.md', contents: doc}), function (
+        err,
+        file
+      ) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [
@@ -47,7 +50,10 @@ test('core', function(t) {
       .use(lint)
       .use(noHeadingPunctuation)
       .use(noMultipleToplevelHeadings)
-      .process(vfile({path: 'virtual.md', contents: doc}), function(err, file) {
+      .process(vfile({path: 'virtual.md', contents: doc}), function (
+        err,
+        file
+      ) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [
@@ -60,12 +66,12 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support no rules', function(st) {
+  t.test('should support no rules', function (st) {
     st.plan(1)
 
     remark()
       .use(lint)
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null],
@@ -74,12 +80,12 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support successful rules', function(st) {
+  t.test('should support successful rules', function (st) {
     st.plan(1)
 
     remark()
       .use(finalNewline)
-      .process('', function(err, file) {
+      .process('', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null],
@@ -88,12 +94,12 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support a list with a severity', function(st) {
+  t.test('should support a list with a severity', function (st) {
     st.plan(2)
 
     remark()
       .use(finalNewline, [2])
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
@@ -103,13 +109,13 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support a boolean (`true`)', function(st) {
+  t.test('should support a boolean (`true`)', function (st) {
     // Note! This is handled by unified.
     st.plan(1)
 
     remark()
       .use(finalNewline, true)
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
@@ -118,13 +124,13 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support a boolean (`false`)', function(st) {
+  t.test('should support a boolean (`false`)', function (st) {
     // Note! This is handled by unified.
     st.plan(1)
 
     remark()
       .use(finalNewline, false)
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null],
@@ -135,12 +141,12 @@ test('core', function(t) {
 
   t.test(
     'should support a list with a boolean severity (true, for on)',
-    function(st) {
+    function (st) {
       st.plan(1)
 
       remark()
         .use(finalNewline, [true])
-        .process('.', function(err, file) {
+        .process('.', function (err, file) {
           st.deepEqual(
             [err].concat(file.messages.map(String)),
             [null, '1:1: Missing newline character at end of file'],
@@ -152,12 +158,12 @@ test('core', function(t) {
 
   t.test(
     'should support a list with boolean severity (false, for off)',
-    function(st) {
+    function (st) {
       st.plan(1)
 
       remark()
         .use(finalNewline, [false])
-        .process('.', function(err, file) {
+        .process('.', function (err, file) {
           st.deepEqual(
             [err].concat(file.messages.map(String)),
             [null],
@@ -167,12 +173,12 @@ test('core', function(t) {
     }
   )
 
-  t.test('should support a list with string severity (`error`)', function(st) {
+  t.test('should support a list with string severity (`error`)', function (st) {
     st.plan(2)
 
     remark()
       .use(finalNewline, ['error'])
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
@@ -182,12 +188,12 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support a list with a string severity (`on`)', function(st) {
+  t.test('should support a list with a string severity (`on`)', function (st) {
     st.plan(2)
 
     remark()
       .use(finalNewline, ['on'])
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
@@ -197,12 +203,14 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support a list with a string severity (`warn`)', function(st) {
+  t.test('should support a list with a string severity (`warn`)', function (
+    st
+  ) {
     st.plan(2)
 
     remark()
       .use(finalNewline, ['warn'])
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
@@ -212,12 +220,12 @@ test('core', function(t) {
       })
   })
 
-  t.test('should support a list with a string severity (`off`)', function(st) {
+  t.test('should support a list with a string severity (`off`)', function (st) {
     st.plan(1)
 
     remark()
       .use(finalNewline, ['off'])
-      .process('.', function(err, file) {
+      .process('.', function (err, file) {
         st.deepEqual(
           [err].concat(file.messages.map(String)),
           [null],
@@ -226,22 +234,18 @@ test('core', function(t) {
       })
   })
 
-  t.test('should fail on invalid severities', function(st) {
+  t.test('should fail on invalid severities', function (st) {
     st.throws(
-      function() {
-        remark()
-          .use(finalNewline, [3])
-          .freeze()
+      function () {
+        remark().use(finalNewline, [3]).freeze()
       },
       /^Error: Invalid severity `3` for `final-newline`, expected 0, 1, or 2$/,
       'should throw when too high'
     )
 
     st.throws(
-      function() {
-        remark()
-          .use(finalNewline, [-1])
-          .freeze()
+      function () {
+        remark().use(finalNewline, [-1]).freeze()
       },
       /^Error: Invalid severity `-1` for `final-newline`, expected 0, 1, or 2$/,
       'should throw too low'
@@ -253,7 +257,7 @@ test('core', function(t) {
   t.end()
 })
 
-test('rules', function(t) {
+test('rules', function (t) {
   var root = path.join(process.cwd(), 'packages')
   var all = rules(root)
 
@@ -287,16 +291,16 @@ function assertRule(t, rule, info) {
 
   t.plan(settings.length)
 
-  settings.forEach(function(setting) {
+  settings.forEach(function (setting) {
     var fixture = tests[setting]
     var names = Object.keys(fixture)
     var config = JSON.parse(setting)
 
-    t.test(setting, function(st) {
+    t.test(setting, function (st) {
       st.plan(names.length)
 
-      names.forEach(function(name) {
-        st.test(name, function(sst) {
+      names.forEach(function (name) {
+        st.test(name, function (sst) {
           assertFixture(sst, rule, info, fixture[name], name, config)
         })
       })
@@ -310,9 +314,7 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
   var file = vfile(basename)
   var expected = fixture.output
   var positionless = fixture.config.positionless
-  var proc = remark()
-    .use(rule, setting)
-    .data('settings', fixture.config)
+  var proc = remark().use(rule, setting).data('settings', fixture.config)
 
   file.contents = preprocess(fixture.input || '')
 
@@ -326,7 +328,7 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
     }
   }
 
-  file.messages.forEach(function(message) {
+  file.messages.forEach(function (message) {
     if (message.ruleId !== ruleId) {
       throw new Error(
         'Expected `' +
@@ -344,10 +346,7 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
   if (!positionless) {
     file.messages = []
 
-    remark()
-      .use(clear)
-      .use(rule, setting)
-      .processSync(file)
+    remark().use(clear).use(rule, setting).processSync(file)
 
     t.deepEqual(normalize(file.messages), [], 'should equal without position')
   }
@@ -358,14 +357,14 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
 }
 
 function normalize(messages) {
-  return messages.map(function(message) {
+  return messages.map(function (message) {
     var value = String(message)
     return value.slice(value.indexOf(':') + 1)
   })
 }
 
 function preprocess(value) {
-  chars.forEach(function(char) {
+  chars.forEach(function (char) {
     value = value.replace(char.in, char.out)
   })
 

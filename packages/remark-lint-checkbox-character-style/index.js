@@ -133,10 +133,7 @@ function checkboxCharacterStyle(tree, file, pref) {
       .offset
 
     // For a checkbox to be parsed, it must be followed by a whitespace.
-    value = contents
-      .slice(initial, final)
-      .trimRight()
-      .slice(0, -1)
+    value = contents.slice(initial, final).replace(/\s+$/, '').slice(0, -1)
 
     // The checkbox character is behind a square bracket.
     character = value.charAt(value.length - 1)

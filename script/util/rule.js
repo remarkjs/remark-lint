@@ -42,10 +42,7 @@ function ruleSync(filePath) {
   result.tests = tests
   result.filePath = filePath
 
-  find
-    .all(tags, 'example')
-    .map(strip)
-    .forEach(check)
+  find.all(tags, 'example').map(strip).forEach(check)
 
   return result
 

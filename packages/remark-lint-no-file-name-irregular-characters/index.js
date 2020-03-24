@@ -41,7 +41,7 @@ module.exports = rule(
   noFileNameIrregularCharacters
 )
 
-var expression = /[^\\.a-zA-Z0-9-]/
+var expression = /[^\\.a-zA-Z\d-]/
 
 function noFileNameIrregularCharacters(tree, file, pref) {
   var style = pref || expression

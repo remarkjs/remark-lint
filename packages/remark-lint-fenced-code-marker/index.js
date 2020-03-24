@@ -98,12 +98,14 @@ function fencedCodeMarker(tree, file, pref) {
   visit(tree, 'code', visitor)
 
   function visitor(node) {
+    var start
     var marker
 
     if (!generated(node)) {
+      start = position.start(node).offset
       marker = contents
-        .substr(position.start(node).offset, 4)
-        .trimLeft()
+        .slice(start, start + 4)
+        .replace(/^\s+/, '')
         .charAt(0)
 
       // Ignore unfenced code blocks.

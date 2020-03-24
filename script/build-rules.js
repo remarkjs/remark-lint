@@ -15,11 +15,11 @@ var chars = require('./characters')
 
 var root = path.join(process.cwd(), 'packages')
 
-presets = presets(root).map(function(name) {
+presets = presets(root).map(function (name) {
   var doc = fs.readFileSync(path.join(root, name, 'index.js'), 'utf8')
   var packages = {}
 
-  doc.replace(/require\('(remark-lint-[^']+)'\)(?:, ([^\]]+)])?/g, function(
+  doc.replace(/require\('(remark-lint-[^']+)'\)(?:, ([^\]]+)])?/g, function (
     $0,
     rule,
     option
@@ -34,24 +34,18 @@ presets = presets(root).map(function(name) {
   }
 })
 
-rules(root).forEach(function(basename) {
+rules(root).forEach(function (basename) {
   var base = path.resolve(root, basename)
   var pack = require(path.join(base, 'package.json'))
   var info = rule(base)
   var tests = info.tests
   var author = parseAuthor(pack.author)
   var short = basename.replace(/^remark-/, '')
-  var org = remote
-    .split('/')
-    .slice(0, -1)
-    .join('/')
+  var org = remote.split('/').slice(0, -1).join('/')
   var master = remote + '/blob/master'
   var health = org + '/.github'
   var hMaster = health + '/blob/master'
-  var slug = remote
-    .split('/')
-    .slice(-2)
-    .join('/')
+  var slug = remote.split('/').slice(-2).join('/')
   var includes
   var children = [
     u('html', '<!--This file is generated-->'),
@@ -97,7 +91,7 @@ rules(root).forEach(function(basename) {
     )
   }
 
-  includes = presets.filter(function(preset) {
+  includes = presets.filter(function (preset) {
     return basename in preset.packages
   })
 
@@ -123,7 +117,7 @@ rules(root).forEach(function(basename) {
             u('tableCell', [u('text', 'Setting')])
           ])
         ].concat(
-          includes.map(function(preset) {
+          includes.map(function (preset) {
             var url = remote + '/tree/master/packages/' + preset.name
             var option = preset.packages[pack.name]
 
@@ -141,14 +135,14 @@ rules(root).forEach(function(basename) {
     )
   }
 
-  Object.keys(tests).forEach(function(setting, index) {
+  Object.keys(tests).forEach(function (setting, index) {
     var fixtures = tests[setting]
 
     if (index === 0) {
       children.push(u('heading', {depth: 2}, [u('text', 'Example')]))
     }
 
-    Object.keys(fixtures).forEach(function(fileName) {
+    Object.keys(fixtures).forEach(function (fileName) {
       var fixture = fixtures[fileName]
       var label = inspect(JSON.parse(setting))
       var clean = fixture.input
@@ -168,7 +162,7 @@ rules(root).forEach(function(basename) {
       if (fixture.input != null && fixture.input.trim() !== '') {
         children.push(u('heading', {depth: 6}, [u('text', 'In')]))
 
-        chars.forEach(function(char) {
+        chars.forEach(function (char) {
           var next = clean.replace(char.in, char.out)
 
           if (clean !== next) {
@@ -252,13 +246,7 @@ rules(root).forEach(function(basename) {
       ]),
       u('text', ' in '),
       u('linkReference', {identifier: 'health'}, [
-        u(
-          'inlineCode',
-          health
-            .split('/')
-            .slice(-2)
-            .join('/')
-        )
+        u('inlineCode', health.split('/').slice(-2).join('/'))
       ]),
       u('text', ' for ways\nto get started.\nSee '),
       u('linkReference', {identifier: 'support'}, [

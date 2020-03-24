@@ -15,7 +15,7 @@ var presets = require('./util/presets')
 
 var root = path.join(process.cwd(), 'packages')
 
-presets(root).forEach(function(basename) {
+presets(root).forEach(function (basename) {
   var base = path.resolve(root, basename)
   var pack = require(path.join(base, 'package.json'))
   var doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
@@ -25,17 +25,11 @@ presets(root).forEach(function(basename) {
   var rows = []
   var children
   var short = basename.replace(/^remark-/, '')
-  var org = remote
-    .split('/')
-    .slice(0, -1)
-    .join('/')
+  var org = remote.split('/').slice(0, -1).join('/')
   var master = remote + '/blob/master'
   var health = org + '/.github'
   var hMaster = health + '/blob/master'
-  var slug = remote
-    .split('/')
-    .slice(-2)
-    .join('/')
+  var slug = remote.split('/').slice(-2).join('/')
 
   if (basename !== pack.name) {
     throw new Error(
@@ -55,7 +49,7 @@ presets(root).forEach(function(basename) {
     ])
   )
 
-  doc.replace(/require\('remark-lint-([^']+)'\)(?:, ([^\]]+)])?/g, function(
+  doc.replace(/require\('remark-lint-([^']+)'\)(?:, ([^\]]+)])?/g, function (
     $0,
     rule,
     option
@@ -166,13 +160,7 @@ presets(root).forEach(function(basename) {
       ]),
       u('text', ' in '),
       u('linkReference', {identifier: 'health'}, [
-        u(
-          'inlineCode',
-          health
-            .split('/')
-            .slice(-2)
-            .join('/')
-        )
+        u('inlineCode', health.split('/').slice(-2).join('/'))
       ]),
       u('text', ' for ways\nto get started.\nSee '),
       u('linkReference', {identifier: 'support'}, [

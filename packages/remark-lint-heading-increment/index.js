@@ -34,7 +34,7 @@ module.exports = rule('remark-lint:heading-increment', headingIncrement)
 var reason = 'Heading levels should increment by one level at a time'
 
 function headingIncrement(tree, file) {
-  var prev = null
+  var previous = null
 
   visit(tree, 'heading', visitor)
 
@@ -44,11 +44,11 @@ function headingIncrement(tree, file) {
     if (!generated(node)) {
       depth = node.depth
 
-      if (prev && depth > prev + 1) {
+      if (previous && depth > previous + 1) {
         file.message(reason, node)
       }
 
-      prev = depth
+      previous = depth
     }
   }
 }

@@ -8,27 +8,27 @@
  *
  *   Options: `Object`, optional.
  *
- *   The object can have an `allow` property, an array of strings that may
- *   appear between `[` and `]` but that should not be treated as link
+ *   The object can have an `allow` field, set to an array of strings that may
+ *   appear between `[` and `]`, but that should not be treated as link
  *   identifiers.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [foo][]
  *
  *   [foo]: https://example.com
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "ok-allow.md", "setting": {"allow": ["...", "…"]}}
+ *
+ *   > Eliding a portion of a quoted passage […] is acceptable.
+ *
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [bar][]
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:8: Found reference to undefined definition
- *
- * @example {"name": "valid-allow.md", "setting": {"allow": ["..."]}}
- *
- *   > Eliding a portion of a quoted passage [...] is acceptable.
  */
 
 'use strict'
@@ -45,9 +45,10 @@ module.exports = rule(
 
 var reason = 'Found reference to undefined definition'
 
-//  The identifier is upcased to avoid naming collisions with properties
-//  inherited from `Object.prototype`. Were `Object.create(null)` to be
-//  used in place of `{}`, downcasing would work equally well.
+// The identifier is upcased to avoid naming collisions with fields inherited
+// from `Object.prototype`.
+// If `Object.create(null)` was used in place of `{}`, downcasing would work
+// equally well.
 function normalize(s) {
   return collapseWhiteSpace(s.toUpperCase())
 }

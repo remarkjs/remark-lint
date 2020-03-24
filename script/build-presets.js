@@ -128,11 +128,11 @@ presets(root).forEach(function (basename) {
       'code',
       {lang: 'diff'},
       [
-        ' ...',
+        ' …',
         ' "remarkConfig": {',
         '+  "plugins": ["' + short + '"]',
         ' }',
-        ' ...'
+        ' …'
       ].join('\n')
     ),
     u('paragraph', [u('text', 'Or use it on the CLI directly')]),
@@ -142,14 +142,14 @@ presets(root).forEach(function (basename) {
       'code',
       {lang: 'diff'},
       [
-        " var remark = require('remark');",
-        " var report = require('vfile-reporter');",
+        " var remark = require('remark')",
+        " var report = require('vfile-reporter')",
         '',
         ' remark()',
         "+  .use(require('" + basename + "'))",
         "   .process('_Emphasis_ and **importance**', function (err, file) {",
-        '     console.error(report(err || file));',
-        '   });'
+        '     console.error(report(err || file))',
+        '   })'
       ].join('\n')
     ),
     u('heading', {depth: 2}, [u('text', 'Contribute')]),
@@ -170,10 +170,10 @@ presets(root).forEach(function (basename) {
     ]),
     u('paragraph', [
       u('text', 'This project has a '),
-      u('linkReference', {identifier: 'coc'}, [u('text', 'Code of Conduct')]),
+      u('linkReference', {identifier: 'coc'}, [u('text', 'code of conduct')]),
       u(
         'text',
-        '.\nBy interacting with this repository, organisation, or community you agree to\nabide by its terms.'
+        '.\nBy interacting with this repository, organization, or community you agree to\nabide by its terms.'
       )
     ]),
     u('heading', {depth: 2}, [u('text', 'License')]),
@@ -228,8 +228,7 @@ presets(root).forEach(function (basename) {
     }),
     u('definition', {
       identifier: 'chat-badge',
-      url:
-        'https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg'
+      url: 'https://img.shields.io/badge/chat-spectrum.svg'
     }),
     u('definition', {
       identifier: 'chat',

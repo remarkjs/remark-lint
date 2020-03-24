@@ -4,10 +4,10 @@ This document describes how to configure rules and lists all available official
 rules.  Each rule is a separate package. See their readme’s for more
 information.
 
-## Table of Contents
+## Contents
 
 *   [Configuration](#configuration)
-*   [List of Rules](#list-of-rules)
+*   [List of rules](#list-of-rules)
 
 ## Configuration
 
@@ -16,7 +16,7 @@ information.
 ```js
 remark()
   .use(require('remark-lint-final-newline'), false)
-  // ...
+  // …
 ```
 
 `true` turns a rule on again:
@@ -24,7 +24,7 @@ remark()
 ```js
 remark()
   .use(require('remark-lint-final-newline'), true)
-  // ...
+  // …
 ```
 
 Rules can be configured with a severity too.  The following ignores all
@@ -33,16 +33,16 @@ messages from the plugin:
 ```js
 remark()
   .use(require('remark-lint-final-newline'), [0])
-  // ...
+  // …
 ```
 
-...and passing `[1]` explicitly sets the normal behaviour (warn for problems).
+…and passing `[1]` explicitly sets the normal behavior (warn for problems).
 To trigger an error instead of a warning, pass `2`:
 
 ```js
 remark()
   .use(require('remark-lint-final-newline'), [2])
-  // ...
+  // …
 ```
 
 It’s also possible to pass both a severity and configuration:
@@ -50,7 +50,7 @@ It’s also possible to pass both a severity and configuration:
 ```js
 remark()
   .use(require('remark-lint-maximum-line-length'), [2, 70])
-  // ...
+  // …
 ```
 
 Lastly, strings can also be passed, instead of numbers:
@@ -60,10 +60,10 @@ Lastly, strings can also be passed, instead of numbers:
 ```js
 remark()
   .use(require('remark-lint-maximum-line-length'), ['error', 70])
-  // ...
+  // …
 ```
 
-## List of Rules
+## List of rules
 
 This lists contains all “official” rules, developed in this repository.
 For rules developed outside of this repo, view the [List of External
@@ -71,10 +71,10 @@ Rules][external].
 
 <!--rules start-->
 
-*   [`blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) — warn when blockquotes are either indented too much or too little
+*   [`blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) — warn when block quotes are either indented too much or too little
 *   [`checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
 *   [`checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
-*   [`code-block-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-code-block-style) — warn when code-blocks do not adhere to a given style
+*   [`code-block-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-code-block-style) — warn when code blocks do not adhere to a given style
 *   [`definition-case`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
 *   [`definition-spacing`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 *   [`emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
@@ -95,8 +95,8 @@ Rules][external].
 *   [`list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
 *   [`maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 *   [`maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-maximum-line-length) — warn when lines are too long
-*   [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) — warn for angle-bracketed links without protocol
-*   [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a blockquote
+*   [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) — warn for angle bracketed links without protocol
+*   [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
 *   [`no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
 *   [`no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-duplicate-definitions) — warn on duplicate definitions
 *   [`no-duplicate-headings`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-duplicate-headings) — warn on duplicate headings
@@ -114,9 +114,9 @@ Rules][external].
 *   [`no-heading-punctuation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-heading-punctuation) — warn when headings end in illegal characters
 *   [`no-html`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-html) — warn when HTML nodes are used
 *   [`no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-inline-padding) — warn when inline nodes are padded with spaces
-*   [`no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-literal-urls) — warn when URLs without angle-brackets are used
+*   [`no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-literal-urls) — warn when URLs without angle brackets are used
 *   [`no-missing-blank-lines`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-missing-blank-lines) — warn when missing blank lines
-*   [`no-multiple-toplevel-headings`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-multiple-toplevel-headings) — warn when multiple top-level headings are used
+*   [`no-multiple-toplevel-headings`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-multiple-toplevel-headings) — warn when multiple top level headings are used
 *   [`no-paragraph-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-paragraph-content-indent) — warn when the content in paragraphs are indented
 *   [`no-reference-like-url`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-reference-like-url) — warn when URLs are also defined identifiers
 *   [`no-shell-dollars`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shell-dollars) — warn when shell code is prefixed by dollars

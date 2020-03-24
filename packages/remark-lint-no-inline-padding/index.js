@@ -9,15 +9,15 @@
  *
  *   Warns for emphasis, strong, delete, image, and link.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   Alpha, *bravo*, _charlie_, [delta](http://echo.fox/trot)
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   Alpha, * bravo *, _ charlie _, [ delta ](http://echo.fox/trot)
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:8-1:17: Don’t pad `emphasis` with inner spaces
  *   1:19-1:30: Don’t pad `emphasis` with inner spaces

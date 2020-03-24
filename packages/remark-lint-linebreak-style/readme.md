@@ -19,7 +19,7 @@ a file).  Default: `'consistent'`.
 ## Fix
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
-always uses unix-style linebreaks.
+always uses unix linebreaks.
 
 See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
@@ -30,7 +30,7 @@ This rule is not included in any default preset
 
 ## Example
 
-##### `valid-consistent-as-windows.md`
+##### `ok-consistent-as-windows.md`
 
 ###### In
 
@@ -45,7 +45,7 @@ Bravo␍␊
 
 No messages.
 
-##### `valid-consistent-as-unix.md`
+##### `ok-consistent-as-unix.md`
 
 ###### In
 
@@ -60,7 +60,7 @@ Bravo␊
 
 No messages.
 
-##### `invalid-unix.md`
+##### `not-ok-unix.md`
 
 When configured with `'unix'`.
 
@@ -78,7 +78,7 @@ Alpha␍␊
 1:7: Expected linebreaks to be unix (`\n`), not windows (`\r\n`)
 ```
 
-##### `invalid-windows.md`
+##### `not-ok-windows.md`
 
 When configured with `'windows'`.
 
@@ -109,16 +109,16 @@ npm install remark-lint-linebreak-style
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-linebreak-style",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -130,15 +130,15 @@ remark -u lint -u lint-linebreak-style readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-linebreak-style'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -147,8 +147,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -177,7 +177,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

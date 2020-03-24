@@ -5,7 +5,7 @@
  * @module no-auto-link-without-protocol
  * @fileoverview
  *   Warn for autolinks without protocol.
- *   Autolinks are URLs enclosed in `<` (less-than) and `>` (greater-than)
+ *   Autolinks are URLs enclosed in `<` (less than) and `>` (greater than)
  *   characters.
  *
  *   ## Fix
@@ -16,7 +16,7 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   <http://www.example.com>
  *   <mailto:foo@bar.com>
@@ -24,11 +24,11 @@
  *   Most Markdown vendors don’t recognize the following as a link:
  *   <www.example.com>
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   <foo@bar.com>
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:14: All automatic links must start with a protocol
  */

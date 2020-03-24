@@ -14,21 +14,21 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   Paragraph.
  *
  *   * List item
  *   * List item
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   Paragraph.
  *
  *   ·* List item
  *   ·* List item
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:3: Incorrect indentation before bullet: remove 1 space
  *   4:3: Incorrect indentation before bullet: remove 1 space

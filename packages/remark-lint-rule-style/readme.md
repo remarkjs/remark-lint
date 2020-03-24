@@ -13,8 +13,8 @@
 Warn when the thematic breaks (horizontal rules) violate a given or
 detected style.
 
-Options: `string`, either a valid thematic breaks, or `'consistent'`,
-default: `'consistent'`.
+Options: `string`, either a corect thematic breaks such as `***`, or
+`'consistent'`, default: `'consistent'`.
 
 `'consistent'` detects the first used thematic break style and warns when
 subsequent rules use different styles.
@@ -45,7 +45,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'* * *'`.
 
@@ -61,7 +61,7 @@ When configured with `'* * *'`.
 
 No messages.
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'_______'`.
 
@@ -77,7 +77,7 @@ _______
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -93,14 +93,14 @@ No messages.
 3:1-3:6: Rules should use `***`
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'!!!'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`
+1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
 ```
 
 ## Install
@@ -116,16 +116,16 @@ npm install remark-lint-rule-style
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-rule-style",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -137,15 +137,15 @@ remark -u lint -u lint-rule-style readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-rule-style'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -154,8 +154,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -184,7 +184,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

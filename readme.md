@@ -21,17 +21,17 @@ That’s up to you, but there are sensible [presets][].
 `remark-lint` is built on [**remark**][remark], a powerful Markdown processor
 powered by [plugins][remark-plugins] (such as these).
 
-## Table of Contents
+## Contents
 
 *   [Install](#install)
 *   [CLI](#cli)
 *   [API](#api)
-*   [Configuring remark-lint](#configuring-remark-lint)
+*   [Configuring `remark-lint`](#configuring-remark-lint)
 *   [Using remark to fix your Markdown](#using-remark-to-fix-your-markdown)
 *   [Integrations](#integrations)
 *   [Rules](#rules)
-*   [List of Presets](#list-of-presets)
-*   [List of External Rules](#list-of-external-rules)
+*   [List of presets](#list-of-presets)
+*   [List of external rules](#list-of-external-rules)
 *   [Security](#security)
 *   [Related](#related)
 *   [Contribute](#contribute)
@@ -47,7 +47,7 @@ npm install remark-lint
 
 ## CLI
 
-![Example of how remark-lint looks on screen][screenshot]
+![][screenshot]
 
 Use `remark-lint` with [`remark-cli`][cli] through a
 [preset][preset-recommended].
@@ -59,15 +59,15 @@ npm install --save remark-cli remark-preset-lint-recommended
 Then, configure **remark** in your `package.json`:
 
 ```js
-  // ...
+  // …
   "scripts": {
     "lint-md": "remark ."
   },
-  // ...
+  // …
   "remarkConfig": {
     "plugins": ["remark-preset-lint-recommended"]
   }
-  // ...
+  // …
 ```
 
 Let’s say there’s an `example.md` that looks as follows:
@@ -120,7 +120,7 @@ Now, running `node example.js` yields:
 ⚠ 1 warning
 ```
 
-## Configuring remark-lint
+## Configuring `remark-lint`
 
 `remark-lint` is a **remark** plugin and when used on the CLI supports
 configuration through its [configuration files][cli].
@@ -174,7 +174,7 @@ The following file will warn twice for the duplicate headings:
 ```
 
 The following file will warn once (the second heading is ignored, but the third
-is re-enabled):
+is enabled again):
 
 ```markdown
 # Hello
@@ -269,8 +269,8 @@ previous example.
 If you’re using [`remark-cli`][cli], [`remark-stringify`][remark-stringify] is
 included unless an output format other than markdown (such as HTML) is defined.
 In this case you can configure `remark-stringify` settings using the [`-s,
---settings`][cli-settings] flag or a `"settings"` property in [remark
-configuration files][cli-config].
+--settings`][cli-settings] flag or a `"settings"` field in [remark configuration
+files][cli-config].
 
 Say we have the following file, `example.md`:
 
@@ -281,7 +281,7 @@ _Hello_, __world__!
 And our `package.json` looks as follows:
 
 ```js
-  // ...
+  // …
   "remarkConfig": {
     "settings": {
       "emphasis": "*",
@@ -292,7 +292,7 @@ And our `package.json` looks as follows:
       "remark-lint-strong-marker"
     ]
   }
-  // ...
+  // …
 ```
 
 Now, running `remark example.md` yields warnings and a formatted file:
@@ -314,9 +314,9 @@ example.md
 
 ## Integrations
 
-*   [linter-markdown][] ([Atom][]) — use remark-lint from Atom
+*   [linter-markdown][] ([Atom][]) — use `remark-lint` from Atom
 *   [linter-remark][] ([Atom][]) — use all of remark from Atom
-*   [SublimeLinter-contrib-remark-lint][] ([Sublime][]) — use remark-lint from Sublime Text
+*   [SublimeLinter-contrib-remark-lint][] ([Sublime][]) — use `remark-lint` from Sublime Text
 *   [ale][] ([Vim][]) — use remark-lint from Vim
 *   [gulp-remark][] ([Gulp][]) — use all of remark with Gulp
 *   [grunt-remark][] ([Grunt][]) — use all of remark with Grunt
@@ -329,7 +329,7 @@ Let us know if we can help.
 
 [`doc/rules.md`][rules] lists all available official rules.
 
-## List of Presets
+## List of presets
 
 Presets can be loaded just like other plugins.
 
@@ -341,7 +341,7 @@ Presets can be loaded just like other plugins.
 
 <!--presets end-->
 
-## List of External Rules
+## List of external rules
 
 External rules can be loaded just like normal rules.
 
@@ -353,7 +353,7 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
     — Ensure list items are in alphabetical order
 *   [`remark-lint-appropriate-heading`](https://github.com/RichardLitt/remark-lint-appropriate-heading)
-    — Check that the top-level heading matches the directory name
+    — Check that the top level heading matches the directory name
 *   [`remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
     — Ensure a specific number of lines between blocks
 *   [`remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
@@ -364,7 +364,7 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-match-punctuation)
     — Ensures punctuations are used in pairs if necessary.
 *   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
-    — Ensure mdash style follows a standard format
+    — Ensure em-dash (`—`) style follows a standard format
 *   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-chinese-punctuation-in-number)
     — Ensures that Chinese punctuation will not be used in number, such as 1，000 or 12：34.
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
@@ -390,7 +390,7 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
-    — Wrapper for write-good
+    — Wrapper for `write-good`
 
 ## Security
 
@@ -410,8 +410,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -432,7 +432,7 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/remark-lint
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

@@ -22,7 +22,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -34,7 +34,7 @@ This rule is included in the following presets:
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -47,7 +47,7 @@ Note: `·` represents a space.
 ###### Out
 
 ```text
-1:1-1:57: Do not use consecutive white-space in definition labels
+1:1-1:57: Do not use consecutive whitespace in definition labels
 ```
 
 ## Install
@@ -63,16 +63,16 @@ npm install remark-lint-definition-spacing
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-definition-spacing",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -84,15 +84,15 @@ remark -u lint -u lint-definition-spacing readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-definition-spacing'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -101,8 +101,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -131,7 +131,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

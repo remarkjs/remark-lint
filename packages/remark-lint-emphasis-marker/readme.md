@@ -39,7 +39,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'*'`.
 
@@ -53,7 +53,7 @@ When configured with `'*'`.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'*'`.
 
@@ -69,7 +69,7 @@ _foo_
 1:1-1:6: Emphasis should use `*` as a marker
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'_'`.
 
@@ -83,7 +83,7 @@ _foo_
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'_'`.
 
@@ -99,7 +99,7 @@ When configured with `'_'`.
 1:1-1:6: Emphasis should use `_` as a marker
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -114,14 +114,14 @@ _bar_
 2:1-2:6: Emphasis should use `*` as a marker
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'invalid'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid emphasis marker `invalid`: use either `'consistent'`, `'*'`, or `'_'`
+1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
 ```
 
 ## Install
@@ -137,16 +137,16 @@ npm install remark-lint-emphasis-marker
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-emphasis-marker",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -158,15 +158,15 @@ remark -u lint -u lint-emphasis-marker readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-emphasis-marker'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -175,8 +175,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -205,7 +205,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

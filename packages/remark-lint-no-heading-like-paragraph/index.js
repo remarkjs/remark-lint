@@ -6,19 +6,19 @@
  * @fileoverview
  *   Warn for h7+ “headings”.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   ###### Alpha
  *
  *   Bravo.
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ####### Charlie
  *
  *   Delta.
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:16: This looks like a heading but has too many hashes
  */

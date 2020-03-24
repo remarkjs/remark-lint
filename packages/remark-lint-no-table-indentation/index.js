@@ -14,7 +14,7 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   Paragraph.
  *
@@ -22,7 +22,7 @@
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   Paragraph.
  *
@@ -30,7 +30,7 @@
  *   ···| ----- | ----- |
  *   ···| Alpha | Bravo |
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:21: Do not indent table rows
  *   5:1-5:21: Do not indent table rows

@@ -6,7 +6,7 @@
  * @fileoverview
  *   Warn when the content in paragraphs is indented.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   Alpha
  *
@@ -34,7 +34,7 @@
  *
  *   [![][text]][text]
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ·Alpha
  *
@@ -60,7 +60,7 @@
  *
  *   [![ ][text]][text]
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1: Expected no indentation in paragraph content
  *   4:1: Expected no indentation in paragraph content

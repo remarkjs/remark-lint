@@ -12,21 +12,21 @@
  *   rule still warns anyway.
  *   In that case, you can escape the reference like so: `\[foo]`.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [foo][]
  *
  *   [foo]: http://foo.bar/baz
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [foo]
  *
  *   [foo]: http://foo.bar/baz
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
- *   1:1-1:6: Use the trailing [] on reference links
+ *   1:1-1:6: Use the trailing `[]` on reference links
  */
 
 'use strict'
@@ -40,7 +40,7 @@ module.exports = rule(
   noShortcutReferenceLink
 )
 
-var reason = 'Use the trailing [] on reference links'
+var reason = 'Use the trailing `[]` on reference links'
 
 function noShortcutReferenceLink(tree, file) {
   visit(tree, 'linkReference', visitor)

@@ -234,12 +234,12 @@ test('core', function (t) {
       })
   })
 
-  t.test('should fail on invalid severities', function (st) {
+  t.test('should fail on incorrect severities', function (st) {
     st.throws(
       function () {
         remark().use(finalNewline, [3]).freeze()
       },
-      /^Error: Invalid severity `3` for `final-newline`, expected 0, 1, or 2$/,
+      /^Error: Incorrect severity `3` for `final-newline`, expected 0, 1, or 2$/,
       'should throw when too high'
     )
 
@@ -247,7 +247,7 @@ test('core', function (t) {
       function () {
         remark().use(finalNewline, [-1]).freeze()
       },
-      /^Error: Invalid severity `-1` for `final-newline`, expected 0, 1, or 2$/,
+      /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/,
       'should throw too low'
     )
 

@@ -6,13 +6,13 @@
  * @fileoverview
  *   Warn when duplicate headings are found.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   # Foo
  *
  *   ## Bar
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   # Foo
  *
@@ -20,7 +20,7 @@
  *
  *   ## [Foo](http://foo.com/bar)
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:7: Do not use headings with similar content (1:1)
  *   5:1-5:29: Do not use headings with similar content (3:1)

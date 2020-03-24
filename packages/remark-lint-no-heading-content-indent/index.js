@@ -14,7 +14,7 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   #·Foo
  *
@@ -27,7 +27,7 @@
  *   Baz
  *   ===
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   #··Foo
  *
@@ -35,7 +35,7 @@
  *
  *     ##··Baz
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:4: Remove 1 space before this heading’s content
  *   3:7: Remove 1 space after this heading’s content
@@ -136,8 +136,8 @@ function noHeadingContentIndent(tree, file) {
       }
     }
 
-    // Closed ATX-heading always must have a space between their content and the
-    // final hashes, thus, there is no `add x spaces`.
+    // Closed ATX headings always must have a space between their content and
+    // the final hashes, thus, there is no `add x spaces`.
     if (type === 'atx-closed') {
       final = end(children[children.length - 1])
       diff = end(node).column - final.column - 1 - depth

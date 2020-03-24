@@ -37,7 +37,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'"'`.
 
@@ -59,7 +59,7 @@ You can use parens in URLs if they’re not a title (see GH-166):
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'"'`.
 
@@ -75,7 +75,7 @@ When configured with `'"'`.
 1:31-1:47: Titles should use `"` as a quote
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `"'"`.
 
@@ -93,7 +93,7 @@ When configured with `"'"`.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `"'"`.
 
@@ -109,7 +109,7 @@ When configured with `"'"`.
 1:31-1:47: Titles should use `'` as a quote
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'()'`.
 
@@ -127,7 +127,7 @@ When configured with `'()'`.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'()'`.
 
@@ -143,7 +143,7 @@ When configured with `'()'`.
 1:30-1:46: Titles should use `()` as a quote
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -158,14 +158,14 @@ When configured with `'()'`.
 2:30-2:46: Titles should use `"` as a quote
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'.'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid link title style marker `.`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
+1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
 ```
 
 ## Install
@@ -181,16 +181,16 @@ npm install remark-lint-link-title-style
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-link-title-style",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -202,15 +202,15 @@ remark -u lint -u lint-link-title-style readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-link-title-style'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -219,8 +219,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -249,7 +249,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

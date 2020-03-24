@@ -7,8 +7,8 @@
  *   Warn when the thematic breaks (horizontal rules) violate a given or
  *   detected style.
  *
- *   Options: `string`, either a valid thematic breaks, or `'consistent'`,
- *   default: `'consistent'`.
+ *   Options: `string`, either a corect thematic breaks such as `***`, or
+ *   `'consistent'`, default: `'consistent'`.
  *
  *   `'consistent'` detects the first used thematic break style and warns when
  *   subsequent rules use different styles.
@@ -28,31 +28,31 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md", "setting": "* * *"}
+ * @example {"name": "ok.md", "setting": "* * *"}
  *
  *   * * *
  *
  *   * * *
  *
- * @example {"name": "valid.md", "setting": "_______"}
+ * @example {"name": "ok.md", "setting": "_______"}
  *
  *   _______
  *
  *   _______
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ***
  *
  *   * * *
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:6: Rules should use `***`
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "!!!", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
  *
- *   1:1: Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`
+ *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
  */
 
 'use strict'
@@ -74,7 +74,7 @@ function ruleStyle(tree, file, pref) {
 
   if (pref !== null && /[^-_* ]/.test(pref)) {
     file.fail(
-      "Invalid preferred rule-style: provide a valid markdown rule, or `'consistent'`"
+      "Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`"
     )
   }
 

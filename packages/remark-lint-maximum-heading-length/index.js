@@ -10,17 +10,17 @@
  *
  *   Ignores Markdown syntax, only checks the plain text content.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   # Alpha bravo charlie delta echo foxtrot golf hotel
  *
  *   # ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
  *
- * @example {"name": "invalid.md", "setting": 40, "label": "input"}
+ * @example {"name": "not-ok.md", "setting": 40, "label": "input"}
  *
  *   # Alpha bravo charlie delta echo foxtrot golf hotel
  *
- * @example {"name": "invalid.md", "setting": 40, "label": "output"}
+ * @example {"name": "not-ok.md", "setting": 40, "label": "output"}
  *
  *   1:1-1:52: Use headings shorter than `40`
  */

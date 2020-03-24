@@ -6,17 +6,17 @@
  * @fileoverview
  *   Warn when duplicate definitions are found.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [foo]: bar
  *   [baz]: qux
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [foo]: bar
  *   [foo]: qux
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:11: Do not use definitions with the same identifier (1:1)
  */
@@ -39,9 +39,9 @@ var reason = 'Do not use definitions with the same identifier'
 function noDuplicateDefinitions(tree, file) {
   var map = {}
 
-  visit(tree, ['definition', 'footnoteDefinition'], validate)
+  visit(tree, ['definition', 'footnoteDefinition'], check)
 
-  function validate(node) {
+  function check(node) {
     var identifier
     var duplicate
 

@@ -8,7 +8,7 @@
  *
  *   Ignores indented code blocks and fenced code blocks without language flag.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   ```sh
  *   echo a
@@ -32,16 +32,16 @@
  *   $('div').remove();
  *   ```
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ```bash
  *   $ echo a
  *   $ echo a > file
  *   ```
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
- *   1:1-4:4: Do not use dollar signs before shell-commands
+ *   1:1-4:4: Do not use dollar signs before shell commands
  */
 
 'use strict'
@@ -52,7 +52,7 @@ var generated = require('unist-util-generated')
 
 module.exports = rule('remark-lint:no-shell-dollars', noShellDollars)
 
-var reason = 'Do not use dollar signs before shell-commands'
+var reason = 'Do not use dollar signs before shell commands'
 
 // List of shell script file extensions (also used as code flags for syntax
 // highlighting on GitHub):

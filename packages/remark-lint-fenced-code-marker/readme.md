@@ -39,7 +39,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -53,7 +53,7 @@ Indented code blocks are not affected by this rule:
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -70,10 +70,10 @@ charlie();
 ###### Out
 
 ```text
-5:1-7:4: Fenced code should use ` as a marker
+5:1-7:4: Fenced code should use `` '`' `` as a marker
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with ``'`'``.
 
@@ -93,7 +93,7 @@ charlie();
 
 No messages.
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'~'`.
 
@@ -113,14 +113,14 @@ charlie();
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'!'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid fenced code marker `!`: use either `'consistent'`, `` '`' ``, or `'~'`
+1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
 ```
 
 ## Install
@@ -136,16 +136,16 @@ npm install remark-lint-fenced-code-marker
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-fenced-code-marker",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -157,15 +157,15 @@ remark -u lint -u lint-fenced-code-marker readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-fenced-code-marker'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -174,8 +174,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -204,7 +204,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

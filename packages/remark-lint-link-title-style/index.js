@@ -20,7 +20,7 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md", "setting": "\""}
+ * @example {"name": "ok.md", "setting": "\""}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com "Example Domain")
@@ -32,15 +32,15 @@
  *
  *   [Example](#Heading-(optional))
  *
- * @example {"name": "invalid.md", "label": "input", "setting": "\""}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "\""}
  *
  *   [Example]: http://example.com 'Example Domain'
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "\""}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "\""}
  *
  *   1:31-1:47: Titles should use `"` as a quote
  *
- * @example {"name": "valid.md", "setting": "'"}
+ * @example {"name": "ok.md", "setting": "'"}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com 'Example Domain')
@@ -48,15 +48,15 @@
  *
  *   [Example]: http://example.com 'Example Domain'
  *
- * @example {"name": "invalid.md", "label": "input", "setting": "'"}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "'"}
  *
  *   [Example]: http://example.com "Example Domain"
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "'"}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "'"}
  *
  *   1:31-1:47: Titles should use `'` as a quote
  *
- * @example {"name": "valid.md", "setting": "()"}
+ * @example {"name": "ok.md", "setting": "()"}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com (Example Domain))
@@ -64,26 +64,26 @@
  *
  *   [Example]: http://example.com (Example Domain)
  *
- * @example {"name": "invalid.md", "label": "input", "setting": "()"}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "()"}
  *
  *   [Example](http://example.com 'Example Domain')
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "()"}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "()"}
  *
  *   1:30-1:46: Titles should use `()` as a quote
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [Example](http://example.com "Example Domain")
  *   [Example](http://example.com 'Example Domain')
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   2:30-2:46: Titles should use `"` as a quote
  *
- * @example {"name": "invalid.md", "setting": ".", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid link title style marker `.`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
+ *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */
 
 'use strict'
@@ -116,15 +116,15 @@ function linkTitleStyle(tree, file, pref) {
 
   if (pref && !own.call(markers, pref)) {
     file.fail(
-      'Invalid link title style marker `' +
+      'Incorrect link title style marker `' +
         pref +
         "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
     )
   }
 
-  visit(tree, ['link', 'image', 'definition'], validate)
+  visit(tree, ['link', 'image', 'definition'], check)
 
-  function validate(node) {
+  function check(node) {
     var tail
     var begin
     var last

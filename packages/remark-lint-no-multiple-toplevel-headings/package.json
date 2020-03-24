@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-no-multiple-toplevel-headings",
   "version": "1.0.4",
-  "description": "remark-lint rule to warn when multiple top-level headings are used",
+  "description": "remark-lint rule to warn when multiple top level headings are used",
   "license": "MIT",
   "keywords": [
     "remark",

@@ -6,17 +6,17 @@
  * @fileoverview
  *   Warn when unused definitions are found.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [foo][]
  *
  *   [foo]: https://example.com
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [bar]: https://example.com
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:27: Found unused definition
  */

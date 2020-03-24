@@ -6,19 +6,19 @@
  * @fileoverview
  *   Warn when URLs are also defined identifiers.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [Alpha](http://example.com).
  *
  *   [bravo]: https://example.com
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [Charlie](delta).
  *
  *   [delta]: https://example.com
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
  */

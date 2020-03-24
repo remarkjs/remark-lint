@@ -19,7 +19,7 @@
  *
  *   ## Example
  *
- *   ##### `valid.md`
+ *   ##### `ok.md`
  *
  *   ###### In
  *
@@ -33,7 +33,7 @@
  *
  *   No messages.
  *
- *   ##### `invalid.md`
+ *   ##### `not-ok.md`
  *
  *   ###### In
  *

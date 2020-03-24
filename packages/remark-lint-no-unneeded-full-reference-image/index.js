@@ -10,19 +10,19 @@
  *   collapsed reference (`[Remark][]`) if normalising the reference text yields
  *   the label.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   ![alpha][]
  *   ![Bravo][]
  *   ![Charlie][delta]
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ![alpha][alpha]
  *   ![Bravo][bravo]
  *   ![charlie][Charlie]
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:16: Remove the image label as it matches the reference text
  *   2:1-2:16: Remove the image label as it matches the reference text

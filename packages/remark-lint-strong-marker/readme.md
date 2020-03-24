@@ -39,7 +39,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -51,7 +51,7 @@ This rule is included in the following presets:
 
 No messages.
 
-##### `also-valid.md`
+##### `also-ok.md`
 
 ###### In
 
@@ -63,7 +63,7 @@ __foo__ and __bar__.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -77,7 +77,7 @@ No messages.
 1:13-1:20: Strong should use `*` as a marker
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'*'`.
 
@@ -91,7 +91,7 @@ When configured with `'*'`.
 
 No messages.
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'_'`.
 
@@ -105,14 +105,14 @@ __foo__.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'!'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid strong marker `!`: use either `'consistent'`, `'*'`, or `'_'`
+1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
 ```
 
 ## Install
@@ -128,16 +128,16 @@ npm install remark-lint-strong-marker
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-strong-marker",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -149,15 +149,15 @@ remark -u lint -u lint-strong-marker readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-strong-marker'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -166,8 +166,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -196,7 +196,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

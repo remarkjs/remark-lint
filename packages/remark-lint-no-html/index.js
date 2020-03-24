@@ -9,17 +9,17 @@
  *   Ignores comments, because they are used by `remark`, `remark-lint`, other
  *   Markdown tools, and because Markdown doesn’t have native comments.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   # Hello
  *
  *   <!--Comments are also OK-->
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   <h1>Hello</h1>
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:15: Do not use HTML in markdown
  */

@@ -10,7 +10,7 @@
  *   collapsed reference (`[Remark][]`) if normalising the reference text yields
  *   the label.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [alpha][]
  *   [Bravo][]
@@ -20,13 +20,13 @@
  *   [`echo`][]
  *   [*foxtrot*][]
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [alpha][alpha]
  *   [Bravo][bravo]
  *   [charlie][Charlie]
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:15: Remove the link label as it matches the reference text
  *   2:1-2:15: Remove the link label as it matches the reference text

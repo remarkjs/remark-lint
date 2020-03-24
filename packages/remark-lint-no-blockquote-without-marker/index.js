@@ -4,32 +4,32 @@
  * @license MIT
  * @module no-blockquote-without-marker
  * @fileoverview
- *   Warn when blank lines without `>` (greater-than) markers are found in a
- *   blockquote.
+ *   Warn when blank lines without `>` (greater than) markers are found in a
+ *   block quote.
  *
  *   ## Fix
  *
  *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
- *   adds markers to every line in a blockquote.
+ *   adds markers to every line in a block quote.
  *
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   > Foo…
  *   > …bar…
  *   > …baz.
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   > Foo…
  *   …bar…
  *   > …baz.
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
- *   2:1: Missing marker in blockquote
+ *   2:1: Missing marker in block quote
  */
 
 'use strict'
@@ -45,7 +45,7 @@ module.exports = rule(
   noBlockquoteWithoutMarker
 )
 
-var reason = 'Missing marker in blockquote'
+var reason = 'Missing marker in block quote'
 
 function noBlockquoteWithoutMarker(tree, file) {
   var contents = String(file)

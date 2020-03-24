@@ -12,14 +12,14 @@
 
 Warn for literal URLs in text.
 URLs are treated as links in some Markdown vendors, but not in others.
-To make sure they are always linked, wrap them in `<` (less-than) and `>`
-(greater-than).
+To make sure they are always linked, wrap them in `<` (less than) and `>`
+(greater than).
 
 ## Fix
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
-never creates literal URLs and always uses `<` (less-than) and `>`
-(greater-than).
+never creates literal URLs and always uses `<` (less than) and `>`
+(greater than).
 
 See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
 on how to automatically fix warnings for this rule.
@@ -35,7 +35,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -47,7 +47,7 @@ This rule is included in the following presets:
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 ###### In
 
@@ -74,16 +74,16 @@ npm install remark-lint-no-literal-urls
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-no-literal-urls",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -95,15 +95,15 @@ remark -u lint -u lint-no-literal-urls readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-no-literal-urls'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -112,8 +112,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -142,7 +142,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

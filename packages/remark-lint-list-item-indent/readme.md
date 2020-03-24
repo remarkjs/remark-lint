@@ -39,7 +39,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -67,7 +67,7 @@ Paragraph.
 
 No messages.
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'mixed'`.
 
@@ -95,7 +95,7 @@ Paragraph.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'mixed'`.
 
@@ -113,7 +113,7 @@ Note: `·` represents a space.
 1:5: Incorrect list-item indent: remove 2 spaces
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'space'`.
 
@@ -141,7 +141,7 @@ Paragraph.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'space'`.
 
@@ -160,7 +160,7 @@ Note: `·` represents a space.
 1:5: Incorrect list-item indent: remove 2 spaces
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'tab-size'`.
 
@@ -179,14 +179,14 @@ Note: `·` represents a space.
 1:3: Incorrect list-item indent: add 2 spaces
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'invalid'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid list-item indent style `invalid`: use either `'tab-size'`, `'space'`, or `'mixed'`
+1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
 ```
 
 ## Install
@@ -202,16 +202,16 @@ npm install remark-lint-list-item-indent
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-list-item-indent",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -223,15 +223,15 @@ remark -u lint -u lint-list-item-indent readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-list-item-indent'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -240,8 +240,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -270,7 +270,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-no-literal-urls",
   "version": "1.0.3",
-  "description": "remark-lint rule to warn when URLs without angle-brackets are used",
+  "description": "remark-lint rule to warn when URLs without angle brackets are used",
   "license": "MIT",
   "keywords": [
     "remark",

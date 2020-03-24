@@ -6,19 +6,19 @@
  * @fileoverview
  *   Warn for empty URLs in links and images.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [alpha](http://bravo.com).
  *
  *   ![charlie](http://delta.com/echo.png "foxtrott").
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [golf]().
  *
  *   ![hotel]().
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:9: Don’t use links without URL
  *   3:1-3:11: Don’t use images without URL

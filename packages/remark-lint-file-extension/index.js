@@ -17,7 +17,7 @@
  *
  * @example {"name": "readme.mkd", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid extension: use `md`
+ *   1:1: Incorrect extension: use `md`
  *
  * @example {"name": "readme.mkd", "setting": "mkd"}
  */
@@ -34,6 +34,6 @@ function fileExtension(tree, file, pref) {
   pref = typeof pref === 'string' ? pref : 'md'
 
   if (ext && ext.slice(1) !== pref) {
-    file.message('Invalid extension: use `' + pref + '`')
+    file.message('Incorrect extension: use `' + pref + '`')
   }
 }

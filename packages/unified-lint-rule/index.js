@@ -101,7 +101,7 @@ function coerce(name, value) {
 
   if (level < 0 || level > 2) {
     throw new Error(
-      'Invalid severity `' +
+      'Incorrect severity `' +
         level +
         '` for `' +
         name +

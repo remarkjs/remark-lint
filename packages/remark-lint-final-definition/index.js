@@ -7,13 +7,13 @@
  *   Warn when definitions are placed somewhere other than at the end of
  *   the file.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   Paragraph.
  *
  *   [example]: http://example.com "Example Domain"
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   Paragraph.
  *
@@ -21,7 +21,7 @@
  *
  *   Another paragraph.
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
  */

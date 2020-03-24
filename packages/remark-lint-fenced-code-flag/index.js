@@ -10,58 +10,58 @@
  *
  *   Providing an array is as passing `{flags: Array}`.
  *
- *   The object can have an array of `'flags'` which are deemed valid.
- *   In addition it can have the property `allowEmpty` (`boolean`, default:
- *   `false`) which signifies whether or not to warn for fenced code blocks
- *   without language flags.
+ *   The object can have an array of `'flags'` which are allowed: other flags
+ *   will not be allowed.
+ *   An `allowEmpty` field (`boolean`, default: `false`) can be set to allow
+ *   code blocks without language flags.
  *
- * @example {"name": "valid.md"}
- *
- *   ```alpha
- *   bravo();
- *   ```
- *
- * @example {"name": "invalid.md", "label": "input"}
- *
- *   ```
- *   alpha();
- *   ```
- *
- * @example {"name": "invalid.md", "label": "output"}
- *
- *   1:1-3:4: Missing code-language flag
- *
- * @example {"name": "valid.md", "setting": {"allowEmpty": true}}
- *
- *   ```
- *   alpha();
- *   ```
- *
- * @example {"name": "invalid.md", "setting": {"allowEmpty": false}, "label": "input"}
- *
- *   ```
- *   alpha();
- *   ```
- *
- * @example {"name": "invalid.md", "setting": {"allowEmpty": false}, "label": "output"}
- *
- *   1:1-3:4: Missing code-language flag
- *
- * @example {"name": "valid.md", "setting": ["alpha"]}
+ * @example {"name": "ok.md"}
  *
  *   ```alpha
  *   bravo();
  *   ```
  *
- * @example {"name": "invalid.md", "setting": ["charlie"], "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
+ *
+ *   ```
+ *   alpha();
+ *   ```
+ *
+ * @example {"name": "not-ok.md", "label": "output"}
+ *
+ *   1:1-3:4: Missing code language flag
+ *
+ * @example {"name": "ok.md", "setting": {"allowEmpty": true}}
+ *
+ *   ```
+ *   alpha();
+ *   ```
+ *
+ * @example {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "input"}
+ *
+ *   ```
+ *   alpha();
+ *   ```
+ *
+ * @example {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "output"}
+ *
+ *   1:1-3:4: Missing code language flag
+ *
+ * @example {"name": "ok.md", "setting": ["alpha"]}
  *
  *   ```alpha
  *   bravo();
  *   ```
  *
- * @example {"name": "invalid.md", "setting": ["charlie"], "label": "output"}
+ * @example {"name": "not-ok.md", "setting": ["charlie"], "label": "input"}
  *
- *   1:1-3:4: Invalid code-language flag
+ *   ```alpha
+ *   bravo();
+ *   ```
+ *
+ * @example {"name": "not-ok.md", "setting": ["charlie"], "label": "output"}
+ *
+ *   1:1-3:4: Incorrect code language flag
  */
 
 'use strict'
@@ -77,8 +77,8 @@ var start = position.start
 var end = position.end
 
 var fence = /^ {0,3}([~`])\1{2,}/
-var reasonInvalid = 'Invalid code-language flag'
-var reasonMissing = 'Missing code-language flag'
+var reasonIncorrect = 'Incorrect code language flag'
+var reasonMissing = 'Missing code language flag'
 
 function fencedCodeFlag(tree, file, pref) {
   var contents = String(file)
@@ -102,7 +102,7 @@ function fencedCodeFlag(tree, file, pref) {
     if (!generated(node)) {
       if (node.lang) {
         if (flags.length !== 0 && flags.indexOf(node.lang) === -1) {
-          file.message(reasonInvalid, node)
+          file.message(reasonIncorrect, node)
         }
       } else {
         value = contents.slice(start(node).offset, end(node).offset)

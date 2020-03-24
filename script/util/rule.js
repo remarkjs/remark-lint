@@ -27,7 +27,7 @@ function ruleSync(filePath) {
 
   /* istanbul ignore if */
   if (name !== ruleId) {
-    throw new Error(ruleId + ' has an invalid `@module`: ' + name)
+    throw new Error(ruleId + ' has an incorrect `@module`: ' + name)
   }
 
   /* istanbul ignore if */

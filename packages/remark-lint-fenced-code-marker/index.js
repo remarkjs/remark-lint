@@ -22,13 +22,13 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   Indented code blocks are not affected by this rule:
  *
  *       bravo();
  *
- * @example {"name": "valid.md", "setting": "`"}
+ * @example {"name": "ok.md", "setting": "`"}
  *
  *   ```alpha
  *   bravo();
@@ -38,7 +38,7 @@
  *   charlie();
  *   ```
  *
- * @example {"name": "valid.md", "setting": "~"}
+ * @example {"name": "ok.md", "setting": "~"}
  *
  *   ~~~alpha
  *   bravo();
@@ -48,7 +48,7 @@
  *   charlie();
  *   ~~~
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ```alpha
  *   bravo();
@@ -58,13 +58,13 @@
  *   charlie();
  *   ~~~
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
- *   5:1-7:4: Fenced code should use ` as a marker
+ *   5:1-7:4: Fenced code should use `` '`' `` as a marker
  *
- * @example {"name": "invalid.md", "setting": "!", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid fenced code marker `!`: use either `'consistent'`, `` '`' ``, or `'~'`
+ *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */
 
 'use strict'
@@ -82,15 +82,15 @@ var markers = {
   null: true
 }
 
-function fencedCodeMarker(tree, file, pref) {
+function fencedCodeMarker(tree, file, option) {
   var contents = String(file)
+  var preferred =
+    typeof option === 'string' && option !== 'consistent' ? option : null
 
-  pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
-
-  if (markers[pref] !== true) {
+  if (markers[preferred] !== true) {
     file.fail(
-      'Invalid fenced code marker `' +
-        pref +
+      'Incorrect fenced code marker `' +
+        preferred +
         "`: use either `'consistent'`, `` '`' ``, or `'~'`"
     )
   }
@@ -100,6 +100,7 @@ function fencedCodeMarker(tree, file, pref) {
   function visitor(node) {
     var start
     var marker
+    var label
 
     if (!generated(node)) {
       start = position.start(node).offset
@@ -110,15 +111,16 @@ function fencedCodeMarker(tree, file, pref) {
 
       // Ignore unfenced code blocks.
       if (markers[marker] === true) {
-        if (pref) {
-          if (marker !== pref) {
+        if (preferred) {
+          if (marker !== preferred) {
+            label = preferred === '~' ? preferred : "`` '`' ``"
             file.message(
-              'Fenced code should use ' + pref + ' as a marker',
+              'Fenced code should use ' + label + ' as a marker',
               node
             )
           }
         } else {
-          pref = marker
+          preferred = marker
         }
       }
     }

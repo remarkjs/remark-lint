@@ -9,7 +9,7 @@
  *   Options: `'consistent'`, `'fenced'`, or `'indented'`, default: `'consistent'`.
  *
  *   `'consistent'` detects the first used code block style and warns when
- *   subsequent code-blocks uses different styles.
+ *   subsequent code blocks uses different styles.
  *
  *   ## Fix
  *
@@ -23,7 +23,7 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"setting": "indented", "name": "valid.md"}
+ * @example {"setting": "indented", "name": "ok.md"}
  *
  *       alpha();
  *
@@ -31,7 +31,7 @@
  *
  *       bravo();
  *
- * @example {"setting": "indented", "name": "invalid.md", "label": "input"}
+ * @example {"setting": "indented", "name": "not-ok.md", "label": "input"}
  *
  *   ```
  *   alpha();
@@ -43,12 +43,12 @@
  *   bravo();
  *   ```
  *
- * @example {"setting": "indented", "name": "invalid.md", "label": "output"}
+ * @example {"setting": "indented", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-3:4: Code blocks should be indented
  *   7:1-9:4: Code blocks should be indented
  *
- * @example {"setting": "fenced", "name": "valid.md"}
+ * @example {"setting": "fenced", "name": "ok.md"}
  *
  *   ```
  *   alpha();
@@ -60,7 +60,7 @@
  *   bravo();
  *   ```
  *
- * @example {"setting": "fenced", "name": "invalid.md", "label": "input"}
+ * @example {"setting": "fenced", "name": "not-ok.md", "label": "input"}
  *
  *       alpha();
  *
@@ -68,12 +68,12 @@
  *
  *       bravo();
  *
- * @example {"setting": "fenced", "name": "invalid.md", "label": "output"}
+ * @example {"setting": "fenced", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:13: Code blocks should be fenced
  *   5:1-5:13: Code blocks should be fenced
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *       alpha();
  *
@@ -83,13 +83,13 @@
  *   bravo();
  *   ```
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   5:1-7:4: Code blocks should be indented
  *
- * @example {"setting": "invalid", "name": "invalid.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid code block style `invalid`: use either `'consistent'`, `'fenced'`, or `'indented'`
+ *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */
 
 'use strict'
@@ -113,7 +113,7 @@ function codeBlockStyle(tree, file, pref) {
 
   if (styles[pref] !== true) {
     file.fail(
-      'Invalid code block style `' +
+      'Incorrect code block style `' +
         pref +
         "`: use either `'consistent'`, `'fenced'`, or `'indented'`"
     )

@@ -6,17 +6,17 @@
  * @fileoverview
  *   Warn when definition labels are not lowercase.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   [example]: http://example.com "Example Domain"
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [Example]: http://example.com "Example Domain"
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
- *   1:1-1:47: Do not use upper-case characters in definition labels
+ *   1:1-1:47: Do not use uppercase characters in definition labels
  */
 
 'use strict'
@@ -29,15 +29,14 @@ var generated = require('unist-util-generated')
 module.exports = rule('remark-lint:definition-case', definitionCase)
 
 var label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
-var reason = 'Do not use upper-case characters in definition labels'
+var reason = 'Do not use uppercase characters in definition labels'
 
 function definitionCase(tree, file) {
   var contents = String(file)
 
-  visit(tree, ['definition', 'footnoteDefinition'], validate)
+  visit(tree, ['definition', 'footnoteDefinition'], check)
 
-  // Validate a node, either a normal definition or a footnote definition.
-  function validate(node) {
+  function check(node) {
     var start = position.start(node).offset
     var end = position.end(node).offset
     var value

@@ -22,13 +22,13 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md", "setting": "padded"}
+ * @example {"name": "ok.md", "setting": "padded"}
  *
  *   | A     | B     |
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "invalid.md", "label": "input", "setting": "padded"}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "padded"}
  *
  *   | A    |    B |
  *   | :----|----: |
@@ -44,7 +44,7 @@
  *   | :---- | -------- | :----: | -----: |
  *   | Echo  | Foxtrot  |  Golf  |  Hotel |
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "padded"}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "padded"}
  *
  *   3:8: Cell should be padded
  *   3:9: Cell should be padded
@@ -53,13 +53,13 @@
  *   13:23: Cell should be padded with 1 space, not 2
  *   13:32: Cell should be padded with 1 space, not 2
  *
- * @example {"name": "valid.md", "setting": "compact"}
+ * @example {"name": "ok.md", "setting": "compact"}
  *
  *   |A    |B    |
  *   |-----|-----|
  *   |Alpha|Bravo|
  *
- * @example {"name": "invalid.md", "label": "input", "setting": "compact"}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "compact"}
  *
  *   |   A    | B    |
  *   |   -----| -----|
@@ -69,13 +69,13 @@
  *   |:------|-----:|
  *   |Charlie|Delta |
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "compact"}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "compact"}
  *
  *   3:5: Cell should be compact
  *   3:12: Cell should be compact
  *   7:15: Cell should be compact
  *
- * @example {"name": "valid-padded.md", "setting": "consistent"}
+ * @example {"name": "ok-padded.md", "setting": "consistent"}
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -85,7 +85,7 @@
  *   | ------- | ----- |
  *   | Charlie | Delta |
  *
- * @example {"name": "invalid-padded.md", "label": "input", "setting": "consistent"}
+ * @example {"name": "not-ok-padded.md", "label": "input", "setting": "consistent"}
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -95,11 +95,11 @@
  *   | :----- | ----: |
  *   |Charlie | Delta |
  *
- * @example {"name": "invalid-padded.md", "label": "output", "setting": "consistent"}
+ * @example {"name": "not-ok-padded.md", "label": "output", "setting": "consistent"}
  *
  *   7:2: Cell should be padded
  *
- * @example {"name": "valid-compact.md", "setting": "consistent"}
+ * @example {"name": "ok-compact.md", "setting": "consistent"}
  *
  *   |A    |B    |
  *   |-----|-----|
@@ -109,7 +109,7 @@
  *   |-------|-----|
  *   |Charlie|Delta|
  *
- * @example {"name": "invalid-compact.md", "label": "input", "setting": "consistent"}
+ * @example {"name": "not-ok-compact.md", "label": "input", "setting": "consistent"}
  *
  *   |A    |B    |
  *   |-----|-----|
@@ -119,13 +119,13 @@
  *   |:------|-----:|
  *   |Charlie|Delta |
  *
- * @example {"name": "invalid-compact.md", "label": "output", "setting": "consistent"}
+ * @example {"name": "not-ok-compact.md", "label": "output", "setting": "consistent"}
  *
  *   7:15: Cell should be compact
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "invalid", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
  *
- *   1:1: Invalid table-cell-padding style `invalid`
+ *   1:1: Incorrect table cell padding style `💩`, expected `'padded'`, `'compact'`, or `'consistent'`
  *
  * @example {"name": "empty.md", "label": "input", "setting": "padded"}
  *
@@ -171,7 +171,11 @@ function tableCellPadding(tree, file, pref) {
   pref = typeof pref === 'string' && pref !== 'consistent' ? pref : null
 
   if (styles[pref] !== true) {
-    file.fail('Invalid table-cell-padding style `' + pref + '`')
+    file.fail(
+      'Incorrect table cell padding style `' +
+        pref +
+        "`, expected `'padded'`, `'compact'`, or `'consistent'`"
+    )
   }
 
   visit(tree, 'table', visitor)

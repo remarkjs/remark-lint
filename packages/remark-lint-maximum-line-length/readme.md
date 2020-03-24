@@ -30,7 +30,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid-mixed-line-endings.md`
+##### `ok-mixed-line-endings.md`
 
 When configured with `10`.
 
@@ -51,7 +51,7 @@ Note: `␊` represents a line feed.
 
 No messages.
 
-##### `invalid-mixed-line-endings.md`
+##### `not-ok-mixed-line-endings.md`
 
 When configured with `10`.
 
@@ -77,7 +77,7 @@ Note: `␊` represents a line feed.
 4:12: Line must be at most 10 characters
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `80`.
 
@@ -91,7 +91,7 @@ Just like thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiis
 
 And this one is also very wrong: because the link starts aaaaaaafter the column: <http://line.com>
 
-<http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables> and such.
+<http://this-long-url-with-a-long-domain-is-not-ok.co.uk/a-long-path?query=variables> and such.
 
 And this one is also very wrong: because the code starts aaaaaaafter the column: `alpha.bravo()`
 
@@ -103,12 +103,12 @@ And this one is also very wrong: because the code starts aaaaaaafter the column:
 ```text
 4:86: Line must be at most 80 characters
 6:99: Line must be at most 80 characters
-8:97: Line must be at most 80 characters
+8:96: Line must be at most 80 characters
 10:97: Line must be at most 80 characters
 12:99: Line must be at most 80 characters
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -122,11 +122,11 @@ This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?qu
 
 `alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscarPapaQuebec.romeo()`
 
-[foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
+[foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
 
-<http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables>
+<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
 
-![foo](http://this-long-url-with-a-long-domain-is-valid.co.uk/a-long-path?query=variables)
+![foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
 
 | An | exception | is | line | length | in | long | tables | because | those | can’t | just |
 | -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |
@@ -136,11 +136,11 @@ This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?qu
 
 The following is also fine, because there is no whitespace.
 
-<http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>.
+<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>.
 
 In addition, definitions are also fine:
 
-[foo]: <http://this-long-url-with-a-long-domain-is-invalid.co.uk/a-long-path?query=variables>
+[foo]: <http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
 ```
 
 ###### Out
@@ -160,16 +160,16 @@ npm install remark-lint-maximum-line-length
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-maximum-line-length",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -181,15 +181,15 @@ remark -u lint -u lint-maximum-line-length readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-maximum-line-length'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -198,8 +198,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -228,7 +228,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

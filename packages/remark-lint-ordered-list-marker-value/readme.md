@@ -43,7 +43,7 @@ This rule is included in the following presets:
 
 ## Example
 
-##### `valid.md`
+##### `ok.md`
 
 ###### In
 
@@ -70,7 +70,7 @@ Unordered lists are not affected by this rule.
 
 No messages.
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'one'`.
 
@@ -92,7 +92,7 @@ Paragraph.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'one'`.
 
@@ -109,7 +109,7 @@ When configured with `'one'`.
 2:1-2:8: Marker should be `1`, was `2`
 ```
 
-##### `also-invalid.md`
+##### `also-not-ok.md`
 
 When configured with `'one'`.
 
@@ -126,7 +126,7 @@ When configured with `'one'`.
 1:1-1:8: Marker should be `1`, was `2`
 ```
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'single'`.
 
@@ -154,7 +154,7 @@ Paragraph.
 
 No messages.
 
-##### `valid.md`
+##### `ok.md`
 
 When configured with `'ordered'`.
 
@@ -182,7 +182,7 @@ Paragraph.
 
 No messages.
 
-##### `invalid.md`
+##### `not-ok.md`
 
 When configured with `'ordered'`.
 
@@ -199,14 +199,14 @@ When configured with `'ordered'`.
 2:1-2:8: Marker should be `2`, was `1`
 ```
 
-##### `invalid.md`
+##### `not-ok.md`
 
-When configured with `'invalid'`.
+When configured with `'💩'`.
 
 ###### Out
 
 ```text
-1:1: Invalid ordered list-item marker value `invalid`: use either `'ordered'` or `'one'`
+1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'` or `'one'`
 ```
 
 ## Install
@@ -222,16 +222,16 @@ npm install remark-lint-ordered-list-marker-value
 You probably want to use it on the CLI through a config file:
 
 ```diff
- ...
+ …
  "remarkConfig": {
    "plugins": [
-     ...
+     …
      "lint",
 +    "lint-ordered-list-marker-value",
-     ...
+     …
    ]
  }
- ...
+ …
 ```
 
 Or use it on the CLI directly
@@ -243,15 +243,15 @@ remark -u lint -u lint-ordered-list-marker-value readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark');
- var report = require('vfile-reporter');
+ var remark = require('remark')
+ var report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
 +  .use(require('remark-lint-ordered-list-marker-value'))
    .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file));
-   });
+     console.error(report(err || file))
+   })
 ```
 
 ## Contribute
@@ -260,8 +260,8 @@ See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -290,7 +290,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
 
 [chat]: https://spectrum.chat/unified/remark
 

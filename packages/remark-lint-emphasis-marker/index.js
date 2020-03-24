@@ -22,42 +22,42 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"setting": "*", "name": "valid.md"}
+ * @example {"setting": "*", "name": "ok.md"}
  *
  *   *foo*
  *
- * @example {"setting": "*", "name": "invalid.md", "label": "input"}
+ * @example {"setting": "*", "name": "not-ok.md", "label": "input"}
  *
  *   _foo_
  *
- * @example {"setting": "*", "name": "invalid.md", "label": "output"}
+ * @example {"setting": "*", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `*` as a marker
  *
- * @example {"setting": "_", "name": "valid.md"}
+ * @example {"setting": "_", "name": "ok.md"}
  *
  *   _foo_
  *
- * @example {"setting": "_", "name": "invalid.md", "label": "input"}
+ * @example {"setting": "_", "name": "not-ok.md", "label": "input"}
  *
  *   *foo*
  *
- * @example {"setting": "_", "name": "invalid.md", "label": "output"}
+ * @example {"setting": "_", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `_` as a marker
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   *foo*
  *   _bar_
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:6: Emphasis should use `*` as a marker
  *
- * @example {"setting": "invalid", "name": "invalid.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid emphasis marker `invalid`: use either `'consistent'`, `'*'`, or `'_'`
+ *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */
 
 'use strict'
@@ -78,7 +78,7 @@ function emphasisMarker(tree, file, pref) {
 
   if (markers[pref] !== true) {
     file.fail(
-      'Invalid emphasis marker `' +
+      'Incorrect emphasis marker `' +
         pref +
         "`: use either `'consistent'`, `'*'`, or `'_'`"
     )

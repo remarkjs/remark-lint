@@ -13,7 +13,7 @@
  *
  *   Note: `)` is only supported in CommonMark.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   1.  Foo
  *
@@ -24,13 +24,13 @@
  *
  *   * Foo
  *
- * @example {"name": "valid.md", "setting": "."}
+ * @example {"name": "ok.md", "setting": "."}
  *
  *   1.  Foo
  *
  *   2.  Bar
  *
- * @example {"name": "valid.md", "setting": ")", "config": {"commonmark": true}}
+ * @example {"name": "ok.md", "setting": ")", "config": {"commonmark": true}}
  *
  *   <!-- This requires commonmark. -->
  *
@@ -38,19 +38,19 @@
  *
  *   2)  Bar
  *
- * @example {"name": "invalid.md", "label": "input", "config": {"commonmark": true}}
+ * @example {"name": "not-ok.md", "label": "input", "config": {"commonmark": true}}
  *
  *   1.  Foo
  *
  *   2)  Bar
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:8: Marker style should be `.`
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "!", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
  *
- *   1:1: Invalid ordered list-item marker style `!`: use either `'.'` or `')'`
+ *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */
 
 'use strict'
@@ -80,7 +80,7 @@ function orderedListMarkerStyle(tree, file, pref) {
 
   if (styles[pref] !== true) {
     file.fail(
-      'Invalid ordered list-item marker style `' +
+      'Incorrect ordered list item marker style `' +
         pref +
         "`: use either `'.'` or `')'`"
     )

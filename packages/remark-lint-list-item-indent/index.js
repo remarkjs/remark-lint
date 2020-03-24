@@ -22,7 +22,7 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   *···List
  *   ····item.
@@ -40,7 +40,7 @@
  *   *···List
  *   ····item.
  *
- * @example {"name": "valid.md", "setting": "mixed"}
+ * @example {"name": "ok.md", "setting": "mixed"}
  *
  *   *·List item.
  *
@@ -56,7 +56,7 @@
  *   *···List
  *   ····item.
  *
- * @example {"name": "valid.md", "setting": "space"}
+ * @example {"name": "ok.md", "setting": "space"}
  *
  *   *·List item.
  *
@@ -72,35 +72,35 @@
  *   *·List
  *   ··item.
  *
- * @example {"name": "invalid.md", "setting": "space", "label": "input"}
+ * @example {"name": "not-ok.md", "setting": "space", "label": "input"}
  *
  *   *···List
  *   ····item.
  *
- * @example {"name": "invalid.md", "setting": "space", "label": "output"}
+ * @example {"name": "not-ok.md", "setting": "space", "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
- * @example {"name": "invalid.md", "setting": "tab-size", "label": "input"}
+ * @example {"name": "not-ok.md", "setting": "tab-size", "label": "input"}
  *
  *   *·List
  *   ··item.
  *
- * @example {"name": "invalid.md", "setting": "tab-size", "label": "output"}
+ * @example {"name": "not-ok.md", "setting": "tab-size", "label": "output"}
  *
  *    1:3: Incorrect list-item indent: add 2 spaces
  *
- * @example {"name": "invalid.md", "setting": "mixed", "label": "input"}
+ * @example {"name": "not-ok.md", "setting": "mixed", "label": "input"}
  *
  *   *···List item.
  *
- * @example {"name": "invalid.md", "setting": "mixed", "label": "output"}
+ * @example {"name": "not-ok.md", "setting": "mixed", "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
- * @example {"name": "invalid.md", "setting": "invalid", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
  *
- *    1:1: Invalid list-item indent style `invalid`: use either `'tab-size'`, `'space'`, or `'mixed'`
+ *    1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
  */
 
 'use strict'
@@ -124,7 +124,7 @@ function listItemIndent(tree, file, pref) {
 
   if (styles[pref] !== true) {
     file.fail(
-      'Invalid list-item indent style `' +
+      'Incorrect list-item indent style `' +
         pref +
         "`: use either `'tab-size'`, `'space'`, or `'mixed'`"
     )

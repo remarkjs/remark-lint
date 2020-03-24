@@ -26,47 +26,47 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md", "setting": {"checked": "x"}}
+ * @example {"name": "ok.md", "setting": {"checked": "x"}}
  *
  *   - [x] List item
  *   - [x] List item
  *
- * @example {"name": "valid.md", "setting": {"checked": "X"}}
+ * @example {"name": "ok.md", "setting": {"checked": "X"}}
  *
  *   - [X] List item
  *   - [X] List item
  *
- * @example {"name": "valid.md", "setting": {"unchecked": " "}}
+ * @example {"name": "ok.md", "setting": {"unchecked": " "}}
  *
  *   - [ ] List item
  *   - [ ] List item
  *   - [ ]··
  *   - [ ]
  *
- * @example {"name": "valid.md", "setting": {"unchecked": "\t"}}
+ * @example {"name": "ok.md", "setting": {"unchecked": "\t"}}
  *
  *   - [»] List item
  *   - [»] List item
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   - [x] List item
  *   - [X] List item
  *   - [ ] List item
  *   - [»] List item
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   2:4-2:5: Checked checkboxes should use `x` as a marker
  *   4:4-4:5: Unchecked checkboxes should use ` ` as a marker
  *
- * @example {"setting": {"unchecked": "!"}, "name": "invalid.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid unchecked checkbox marker `!`: use either `'\t'`, or `' '`
+ *   1:1: Incorrect unchecked checkbox marker `💩`: use either `'\t'`, or `' '`
  *
- * @example {"setting": {"checked": "!"}, "name": "invalid.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
  *
- *   1:1: Invalid checked checkbox marker `!`: use either `'x'`, or `'X'`
+ *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
  */
 
 'use strict'
@@ -97,7 +97,7 @@ function checkboxCharacterStyle(tree, file, pref) {
 
   if (pref.unchecked && unchecked[pref.unchecked] !== true) {
     file.fail(
-      'Invalid unchecked checkbox marker `' +
+      'Incorrect unchecked checkbox marker `' +
         pref.unchecked +
         "`: use either `'\\t'`, or `' '`"
     )
@@ -105,7 +105,7 @@ function checkboxCharacterStyle(tree, file, pref) {
 
   if (pref.checked && checked[pref.checked] !== true) {
     file.fail(
-      'Invalid checked checkbox marker `' +
+      'Incorrect checked checkbox marker `' +
         pref.checked +
         "`: use either `'x'`, or `'X'`"
     )

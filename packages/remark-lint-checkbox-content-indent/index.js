@@ -6,21 +6,21 @@
  * @fileoverview
  *   Warn when list item checkboxes are followed by too much whitespace.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   - [ ] List item
  *   +  [x] List Item
  *   *   [X] List item
  *   -    [ ] List item
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   - [ ] List item
  *   + [x]  List item
  *   * [X]   List item
  *   - [ ]    List item
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   2:7-2:8: Checkboxes should be followed by a single character
  *   3:7-3:9: Checkboxes should be followed by a single character

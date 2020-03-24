@@ -7,7 +7,7 @@
  *   Warn when duplicate headings are found, but only when on the same level,
  *   “in” the same section.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   ## Alpha
  *
@@ -25,7 +25,7 @@
  *
  *   ##### Bravo
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ## Foxtrot
  *
@@ -33,7 +33,7 @@
  *
  *   ### Golf
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   5:1-5:9: Do not use headings with similar content per section (3:1)
  */

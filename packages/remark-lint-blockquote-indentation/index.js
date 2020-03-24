@@ -4,14 +4,14 @@
  * @license MIT
  * @module blockquote-indentation
  * @fileoverview
- *   Warn when blockquotes are indented too much or too little.
+ *   Warn when block quotes are indented too much or too little.
  *
  *   Options: `number` or `'consistent'`, default: `'consistent'`.
  *
  *   `'consistent'` detects the first used indentation and will warn when
- *   other blockquotes use a different indentation.
+ *   other block quotes use a different indentation.
  *
- * @example {"name": "valid.md", "setting": 4}
+ * @example {"name": "ok.md", "setting": 4}
  *
  *   >   Hello
  *
@@ -19,7 +19,7 @@
  *
  *   >   World
  *
- * @example {"name": "valid.md", "setting": 2}
+ * @example {"name": "ok.md", "setting": 2}
  *
  *   > Hello
  *
@@ -27,7 +27,7 @@
  *
  *   > World
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   >  Hello
  *
@@ -39,10 +39,10 @@
  *
  *   > World
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
- *   5:3: Remove 1 space between blockquote and content
- *   9:3: Add 1 space between blockquote and content
+ *   5:3: Remove 1 space between block quote and content
+ *   9:3: Add 1 space between block quote and content
  */
 
 'use strict'
@@ -82,7 +82,7 @@ function blockquoteIndentation(tree, file, pref) {
           Math.abs(diff) +
           ' ' +
           plural('space', diff) +
-          ' between blockquote and content'
+          ' between block quote and content'
 
         file.message(reason, position.start(node.children[0]))
       }

@@ -22,33 +22,33 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   **foo** and **bar**.
  *
- * @example {"name": "also-valid.md"}
+ * @example {"name": "also-ok.md"}
  *
  *   __foo__ and __bar__.
  *
- * @example {"name": "valid.md", "setting": "*"}
+ * @example {"name": "ok.md", "setting": "*"}
  *
  *   **foo**.
  *
- * @example {"name": "valid.md", "setting": "_"}
+ * @example {"name": "ok.md", "setting": "_"}
  *
  *   __foo__.
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   **foo** and __bar__.
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   1:13-1:20: Strong should use `*` as a marker
  *
- * @example {"name": "invalid.md", "label": "output", "setting": "!", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
  *
- *   1:1: Invalid strong marker `!`: use either `'consistent'`, `'*'`, or `'_'`
+ *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */
 
 'use strict'
@@ -69,7 +69,7 @@ function strongMarker(tree, file, pref) {
 
   if (markers[pref] !== true) {
     file.fail(
-      'Invalid strong marker `' +
+      'Incorrect strong marker `' +
         pref +
         "`: use either `'consistent'`, `'*'`, or `'_'`"
     )

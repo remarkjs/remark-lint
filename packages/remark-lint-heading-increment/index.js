@@ -6,19 +6,19 @@
  * @fileoverview
  *   Warn when headings increment with more than 1 level at a time.
  *
- * @example {"name": "valid.md"}
+ * @example {"name": "ok.md"}
  *
  *   # Alpha
  *
  *   ## Bravo
  *
- * @example {"name": "invalid.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   # Charlie
  *
  *   ### Delta
  *
- * @example {"name": "invalid.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:10: Heading levels should increment by one level at a time
  */

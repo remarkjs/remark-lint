@@ -8,19 +8,19 @@
  *
  *   Options: `number`, default: `1`.
  *
- * @example {"name": "valid.md", "setting": 1}
+ * @example {"name": "ok.md", "setting": 1}
  *
  *   # Foo
  *
  *   ## Bar
  *
- * @example {"name": "invalid.md", "setting": 1, "label": "input"}
+ * @example {"name": "not-ok.md", "setting": 1, "label": "input"}
  *
  *   # Foo
  *
  *   # Bar
  *
- * @example {"name": "invalid.md", "setting": 1, "label": "output"}
+ * @example {"name": "not-ok.md", "setting": 1, "label": "output"}
  *
  *   3:1-3:6: Don’t use multiple top level headings (1:1)
  */

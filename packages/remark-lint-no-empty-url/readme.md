@@ -25,7 +25,7 @@ This rule is not included in any default preset
 ```markdown
 [alpha](http://bravo.com).
 
-![charlie](http://delta.com/echo.png "foxtrott").
+![charlie](http://delta.com/echo.png "foxtrot").
 ```
 
 ###### Out

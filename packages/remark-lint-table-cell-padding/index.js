@@ -145,10 +145,10 @@
  *
  *   <!-- Missing cells are fine as well. -->
  *
- *   | Alpha | Bravo    | Charlie |
- *   | ----- | -------- | ------- |
+ *   | Alpha | Bravo   | Charlie |
+ *   | ----- | ------- | ------- |
  *   | Delta |
- *   | Echo  | Foxtrott |
+ *   | Echo  | Foxtrot |
  */
 
 'use strict'

@@ -10,7 +10,7 @@
  *
  *   [alpha](http://bravo.com).
  *
- *   ![charlie](http://delta.com/echo.png "foxtrott").
+ *   ![charlie](http://delta.com/echo.png "foxtrot").
  *
  * @example {"name": "not-ok.md", "label": "input"}
  *

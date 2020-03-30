@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-link-title-style",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn when link and definition titles occur with incorrect quotes",
   "license": "MIT",
   "keywords": [

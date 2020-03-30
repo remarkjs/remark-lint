@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-fenced-code-flag",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn when fenced code blocks occur without language flag",
   "license": "MIT",
   "keywords": [

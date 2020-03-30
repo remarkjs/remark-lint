@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-rule-style",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn when horizontal rules violate a given style",
   "license": "MIT",
   "keywords": [

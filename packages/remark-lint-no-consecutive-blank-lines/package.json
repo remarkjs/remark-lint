@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-consecutive-blank-lines",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn for too many consecutive blank lines",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-unneeded-full-reference-image",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn when full reference images are used if they can be collapsed",
   "license": "MIT",
   "keywords": [

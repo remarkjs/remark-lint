@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-shortcut-reference-image",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn when shortcut reference images are used",
   "license": "MIT",
   "keywords": [

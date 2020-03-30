@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-duplicate-defined-urls",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "remark-lint rule to warn on definitions that define the same urls",
   "license": "MIT",
   "keywords": [

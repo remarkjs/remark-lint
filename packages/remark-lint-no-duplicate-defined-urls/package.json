@@ -1,0 +1,36 @@
+{
+  "name": "remark-lint-no-duplicate-defined-urls",
+  "version": "0.0.0",
+  "description": "remark-lint rule to warn on definitions that define the same urls",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "remark-lint-rule",
+    "duplicate",
+    "definition",
+    "url"
+  ],
+  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-duplicate-defined-urls",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "unified-lint-rule": "^1.0.0",
+    "unist-util-generated": "^1.0.0",
+    "unist-util-position": "^3.0.0",
+    "unist-util-stringify-position": "^2.0.0",
+    "unist-util-visit": "^2.0.0"
+  },
+  "xo": false
+}

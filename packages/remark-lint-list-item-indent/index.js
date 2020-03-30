@@ -106,7 +106,7 @@
 'use strict'
 
 var rule = require('unified-lint-rule')
-var plural = require('plur')
+var plural = require('pluralize')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
@@ -146,6 +146,7 @@ function listItemIndent(tree, file, option) {
       var style
       var diff
       var reason
+      var abs
 
       marker = contents
         .slice(start(item).offset, final.offset)
@@ -160,14 +161,15 @@ function listItemIndent(tree, file, option) {
 
       if (marker.length !== style) {
         diff = style - marker.length
+        abs = Math.abs(diff)
 
         reason =
           'Incorrect list-item indent: ' +
           (diff > 0 ? 'add' : 'remove') +
           ' ' +
-          Math.abs(diff) +
+          abs +
           ' ' +
-          plural('space', diff)
+          plural('space', abs)
 
         file.message(reason, final)
       }

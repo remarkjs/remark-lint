@@ -52,7 +52,7 @@
 'use strict'
 
 var rule = require('unified-lint-rule')
-var plural = require('plur')
+var plural = require('pluralize')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
@@ -102,7 +102,7 @@ function noConsecutiveBlankLines(tree, file) {
         'Remove ' +
         lines +
         ' ' +
-        plural('line', lines) +
+        plural('line', Math.abs(lines)) +
         ' ' +
         (diff > 0 ? 'before' : 'after') +
         ' node'

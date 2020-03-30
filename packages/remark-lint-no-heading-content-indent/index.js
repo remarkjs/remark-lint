@@ -62,7 +62,7 @@
 var rule = require('unified-lint-rule')
 var visit = require('unist-util-visit')
 var style = require('mdast-util-heading-style')
-var plural = require('plur')
+var plural = require('pluralize')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
 
@@ -90,6 +90,7 @@ function noHeadingContentIndent(tree, file) {
     var index
     var char
     var reason
+    var abs
 
     if (generated(node)) {
       return
@@ -124,12 +125,14 @@ function noHeadingContentIndent(tree, file) {
       diff = head - initial.column - 1 - index
 
       if (diff) {
+        abs = Math.abs(diff)
+
         reason =
           (diff > 0 ? 'Remove' : 'Add') +
           ' ' +
-          Math.abs(diff) +
+          abs +
           ' ' +
-          plural('space', diff) +
+          plural('space', abs) +
           ' before this heading’s content'
 
         file.message(reason, start(children[0]))

@@ -28,7 +28,7 @@
   "dependencies": {
     "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",
-    "unist-util-visit": "^1.4.0"
+    "unist-util-visit": "^2.0.0"
   },
   "xo": false
 }

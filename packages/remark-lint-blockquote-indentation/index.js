@@ -48,7 +48,7 @@
 'use strict'
 
 var rule = require('unified-lint-rule')
-var plural = require('plur')
+var plural = require('pluralize')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
@@ -65,6 +65,7 @@ function blockquoteIndentation(tree, file, option) {
   visit(tree, 'blockquote', visitor)
 
   function visitor(node) {
+    var abs
     var diff
     var reason
 
@@ -76,12 +77,13 @@ function blockquoteIndentation(tree, file, option) {
       diff = preferred - check(node)
 
       if (diff !== 0) {
+        abs = Math.abs(diff)
         reason =
           (diff > 0 ? 'Add' : 'Remove') +
           ' ' +
-          Math.abs(diff) +
+          abs +
           ' ' +
-          plural('space', diff) +
+          plural('space', abs) +
           ' between block quote and content'
 
         file.message(reason, position.start(node.children[0]))

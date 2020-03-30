@@ -30,7 +30,7 @@
     "mdast-util-heading-style": "^1.0.2",
     "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",
-    "unist-util-visit": "^1.1.1"
+    "unist-util-visit": "^2.0.0"
   },
   "xo": false
 }

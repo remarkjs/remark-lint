@@ -24,7 +24,7 @@
 'use strict'
 
 var rule = require('unified-lint-rule')
-var plural = require('plur')
+var plural = require('pluralize')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
@@ -52,6 +52,7 @@ function listItemContentIndent(tree, file) {
       var char
       var diff
       var reason
+      var abs
 
       if (generated(item)) {
         return
@@ -83,15 +84,16 @@ function listItemContentIndent(tree, file) {
       // Warn for violating children.
       if (column !== style) {
         diff = style - column
+        abs = Math.abs(diff)
 
         reason =
           'Don’t use mixed indentation for children, ' +
           /* istanbul ignore next - hard to test, I couldn’t find it at least. */
           (diff > 0 ? 'add' : 'remove') +
           ' ' +
-          Math.abs(diff) +
+          abs +
           ' ' +
-          plural('space', diff)
+          plural('space', abs)
 
         file.message(reason, {
           line: start(item).line,

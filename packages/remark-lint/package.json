@@ -27,7 +27,7 @@
     "index.js"
   ],
   "dependencies": {
-    "remark-message-control": "^4.0.0"
+    "remark-message-control": "^6.0.0"
   },
   "xo": false
 }

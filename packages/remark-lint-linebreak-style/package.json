@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "unified-lint-rule": "^1.0.0",
-    "vfile-location": "^2.0.1"
+    "vfile-location": "^3.0.0"
   },
   "xo": false
 }

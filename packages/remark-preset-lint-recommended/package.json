@@ -23,22 +23,22 @@
     "index.js"
   ],
   "dependencies": {
-    "remark-lint": "^6.0.0",
+    "remark-lint": "^7.0.0",
     "remark-lint-final-newline": "^1.0.0",
-    "remark-lint-list-item-bullet-indent": "^1.0.0",
-    "remark-lint-list-item-indent": "^1.0.0",
-    "remark-lint-no-auto-link-without-protocol": "^1.0.0",
-    "remark-lint-no-blockquote-without-marker": "^2.0.0",
-    "remark-lint-no-literal-urls": "^1.0.0",
-    "remark-lint-ordered-list-marker-style": "^1.0.0",
-    "remark-lint-hard-break-spaces": "^1.0.0",
-    "remark-lint-no-duplicate-definitions": "^1.0.0",
-    "remark-lint-no-heading-content-indent": "^1.0.0",
-    "remark-lint-no-inline-padding": "^1.0.0",
-    "remark-lint-no-shortcut-reference-image": "^1.0.0",
-    "remark-lint-no-shortcut-reference-link": "^1.0.0",
-    "remark-lint-no-undefined-references": "^1.0.0",
-    "remark-lint-no-unused-definitions": "^1.0.0"
+    "remark-lint-list-item-bullet-indent": "^2.0.0",
+    "remark-lint-list-item-indent": "^2.0.0",
+    "remark-lint-no-auto-link-without-protocol": "^2.0.0",
+    "remark-lint-no-blockquote-without-marker": "^3.0.0",
+    "remark-lint-no-literal-urls": "^2.0.0",
+    "remark-lint-ordered-list-marker-style": "^2.0.0",
+    "remark-lint-hard-break-spaces": "^2.0.0",
+    "remark-lint-no-duplicate-definitions": "^2.0.0",
+    "remark-lint-no-heading-content-indent": "^2.0.0",
+    "remark-lint-no-inline-padding": "^2.0.0",
+    "remark-lint-no-shortcut-reference-image": "^2.0.0",
+    "remark-lint-no-shortcut-reference-link": "^2.0.0",
+    "remark-lint-no-undefined-references": "^2.0.0",
+    "remark-lint-no-unused-definitions": "^2.0.0"
   },
   "xo": false
 }

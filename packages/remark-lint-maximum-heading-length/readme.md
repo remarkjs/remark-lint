@@ -21,8 +21,8 @@ Ignores Markdown syntax, only checks the plain text content.
 This rule is included in the following presets:
 
 | Preset | Setting |
-| ------ | ------- |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) |  |
+| - | - |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) | |
 
 ## Example
 

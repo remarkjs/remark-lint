@@ -1,4 +1,4 @@
-exports.settings = {bullet: '*', paddedTable: false}
+exports.settings = {bullet: '*', tablePipeAlign: false}
 
 exports.plugins = [
   require('./packages/remark-preset-lint-recommended'),

@@ -5,7 +5,7 @@ This table documents the similarity and difference between
 rules and **remark-lint**’s rules.
 
 | markdownlint | remark | note |
-| ------------ | ------ | ---- |
+| - | - | - |
 | MD001 | heading-increment | - |
 | MD002 | first-heading-level | - |
 | MD003 | heading-style | - |

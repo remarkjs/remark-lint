@@ -17,8 +17,8 @@ Warn when unused definitions are found.
 This rule is included in the following presets:
 
 | Preset | Setting |
-| ------ | ------- |
-| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-recommended) |  |
+| - | - |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-recommended) | |
 
 ## Example
 

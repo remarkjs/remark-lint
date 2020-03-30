@@ -18,22 +18,22 @@ mistakes or syntaxes that do not work correctly across vendors.
 This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) with the following rules:
 
 | Rule | Setting |
-| ---- | ------- |
-| [`final-newline`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-final-newline) |  |
-| [`list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-bullet-indent) |  |
+| - | - |
+| [`final-newline`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-final-newline) | |
+| [`list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-bullet-indent) | |
 | [`list-item-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-indent) | `'tab-size'` |
-| [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) |  |
-| [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) |  |
-| [`no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-literal-urls) |  |
+| [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) | |
+| [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) | |
+| [`no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-literal-urls) | |
 | [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-style) | `'.'` |
-| [`hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-hard-break-spaces) |  |
-| [`no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-duplicate-definitions) |  |
-| [`no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-heading-content-indent) |  |
-| [`no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-inline-padding) |  |
-| [`no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-image) |  |
-| [`no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-link) |  |
-| [`no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-undefined-references) |  |
-| [`no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unused-definitions) |  |
+| [`hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-hard-break-spaces) | |
+| [`no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-duplicate-definitions) | |
+| [`no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-heading-content-indent) | |
+| [`no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-inline-padding) | |
+| [`no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-image) | |
+| [`no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-link) | |
+| [`no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-undefined-references) | |
+| [`no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unused-definitions) | |
 
 ## Install
 

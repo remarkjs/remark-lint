@@ -314,6 +314,7 @@ example.md
 
 ## Integrations
 
+*   [vscode-remark-lint][] ([VS Code][vs-code]) - use `remark-lint` from Visual Studio Code
 *   [linter-markdown][] ([Atom][]) — use `remark-lint` from Atom
 *   [linter-remark][] ([Atom][]) — use all of remark from Atom
 *   [SublimeLinter-contrib-remark-lint][] ([Sublime][]) — use `remark-lint` from Sublime Text
@@ -474,6 +475,8 @@ abide by its terms.
 
 [message-control]: https://github.com/remarkjs/remark-message-control#markers
 
+[vscode-remark-lint]: https://github.com/drewbourne/vscode-remark-lint
+
 [linter-markdown]: https://atom.io/packages/linter-markdown
 
 [linter-remark]: https://github.com/wooorm/linter-remark
@@ -487,6 +490,8 @@ abide by its terms.
 [jest-runner-remark]: https://github.com/keplersj/jest-runner-remark
 
 [ale]: https://github.com/w0rp/ale
+
+[vs-code]: https://github.com/drewbourne/vscode-remark-lint
 
 [atom]: https://atom.io
 

@@ -29,6 +29,10 @@ This rule is included in the following presets:
 ###### In
 
 ````markdown
+```bash
+echo a
+```
+
 ```sh
 echo a
 echo a > file
@@ -61,6 +65,10 @@ No messages.
 ###### In
 
 ````markdown
+```sh
+$ echo a
+```
+
 ```bash
 $ echo a
 $ echo a > file
@@ -70,7 +78,8 @@ $ echo a > file
 ###### Out
 
 ```text
-1:1-4:4: Do not use dollar signs before shell commands
+1:1-3:4: Do not use dollar signs before shell commands
+5:1-8:4: Do not use dollar signs before shell commands
 ```
 
 ## Install

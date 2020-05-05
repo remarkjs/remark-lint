@@ -10,6 +10,10 @@
  *
  * @example {"name": "ok.md"}
  *
+ *   ```bash
+ *   echo a
+ *   ```
+ *
  *   ```sh
  *   echo a
  *   echo a > file
@@ -34,6 +38,10 @@
  *
  * @example {"name": "not-ok.md", "label": "input"}
  *
+ *   ```sh
+ *   $ echo a
+ *   ```
+ *
  *   ```bash
  *   $ echo a
  *   $ echo a > file
@@ -41,7 +49,8 @@
  *
  * @example {"name": "not-ok.md", "label": "output"}
  *
- *   1:1-4:4: Do not use dollar signs before shell commands
+ *   1:1-3:4: Do not use dollar signs before shell commands
+ *   5:1-8:4: Do not use dollar signs before shell commands
  */
 
 'use strict'
@@ -81,11 +90,13 @@ function noShellDollars(tree, file) {
 
     // Check both known shell code and unknown code.
     if (!generated(node) && node.lang && flags.indexOf(node.lang) !== -1) {
-      lines = node.value.split('\n')
+      lines = node.value.split('\n').filter(function (line) {
+        return line
+      })
       length = lines.length
       index = -1
 
-      if (length <= 1) {
+      if (length === 0) {
         return
       }
 

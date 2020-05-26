@@ -90,9 +90,7 @@ function noShellDollars(tree, file) {
 
     // Check both known shell code and unknown code.
     if (!generated(node) && node.lang && flags.indexOf(node.lang) !== -1) {
-      lines = node.value.split('\n').filter(function (line) {
-        return line
-      })
+      lines = node.value.split('\n').filter(notEmpty)
       length = lines.length
       index = -1
 
@@ -110,5 +108,9 @@ function noShellDollars(tree, file) {
 
       file.message(reason, node)
     }
+  }
+
+  function notEmpty(line) {
+    return line.trim().length !== 0
   }
 }

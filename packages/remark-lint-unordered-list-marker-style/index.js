@@ -7,7 +7,7 @@
  *   Warn when the list item marker style of unordered lists violate a given
  *   style.
  *
- *   Options: `'consistent'`, `'-'`, `'*'`, or `'*'`, default: `'consistent'`.
+ *   Options: `'consistent'`, `'-'`, `'*'`, or `'+'`, default: `'consistent'`.
  *
  *   `'consistent'` detects the first used list style and warns when subsequent
  *   lists use different styles.

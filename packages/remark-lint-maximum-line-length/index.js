@@ -157,18 +157,18 @@ function maximumLineLength(tree, file, option) {
       return
     }
 
-    allowlist(initial.line - 1, final.line)
+    allowList(initial.line - 1, final.line)
   }
 
   function ignore(node) {
     /* istanbul ignore else - Hard to test, as we only run this case on `position: true` */
     if (!generated(node)) {
-      allowlist(start(node).line - 1, end(node).line)
+      allowList(start(node).line - 1, end(node).line)
     }
   }
 
   // Allowlist from `initial` to `final`, zero-based.
-  function allowlist(initial, final) {
+  function allowList(initial, final) {
     while (initial < final) {
       lines[initial++] = ''
     }

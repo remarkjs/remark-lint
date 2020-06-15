@@ -53,11 +53,11 @@
     "unist-builder": "^2.0.0",
     "unist-util-remove-position": "^2.0.0",
     "vfile-reporter": "^6.0.0",
-    "xo": "^0.30.0"
+    "xo": "^0.32.0"
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
-    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
+    "format": "remark . -qfo && prettier . --write && xo --fix",
     "generate:presets": "node script/build-presets",
     "generate:rules": "node script/build-rules",
     "generate": "npm run generate:presets && npm run generate:rules",
@@ -87,9 +87,10 @@
     "esnext": false,
     "rules": {
       "unicorn/no-fn-reference-in-iterator": "off",
-      "unicorn/prefer-number-properties": "off",
-      "unicorn/string-content": "off",
       "unicorn/prefer-includes": "off",
+      "unicorn/prefer-number-properties": "off",
+      "unicorn/prefer-optional-catch-binding": "off",
+      "unicorn/string-content": "off",
       "guard-for-in": "off",
       "no-eq-null": "off",
       "eqeqeq": [

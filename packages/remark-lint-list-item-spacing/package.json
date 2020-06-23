@@ -13,7 +13,7 @@
     "loose",
     "tight"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-spacing",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

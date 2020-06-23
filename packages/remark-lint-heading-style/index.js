@@ -14,12 +14,12 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   formats headings as ATX by default.
  *   This can be configured with the
- *   [`setext`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionssetext)
+ *   [`setext`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionssetext)
  *   and
- *   [`closeAtx`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionscloseatx)
+ *   [`closeAtx`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionscloseatx)
  *   options.
  *
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)

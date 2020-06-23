@@ -11,7 +11,7 @@
     "heading",
     "character"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-heading-punctuation",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

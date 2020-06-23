@@ -10,7 +10,7 @@
     "consistent",
     "consistency"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-consistent",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

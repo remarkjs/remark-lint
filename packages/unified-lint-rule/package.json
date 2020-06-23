@@ -10,7 +10,7 @@
     "lint",
     "rule"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/unified-lint-rule",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/unified-lint-rule",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

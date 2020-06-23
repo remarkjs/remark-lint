@@ -19,18 +19,18 @@ This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) 
 
 | Rule | Setting |
 | - | - |
-| [`blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-blockquote-indentation) | `'consistent'` |
-| [`checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-checkbox-character-style) | `'consistent'` |
-| [`code-block-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-code-block-style) | `'consistent'` |
-| [`emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-emphasis-marker) | `'consistent'` |
-| [`fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-fenced-code-marker) | `'consistent'` |
-| [`heading-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-heading-style) | `'consistent'` |
-| [`link-title-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-link-title-style) | `'consistent'` |
-| [`list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-content-indent) | |
-| [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-style) | `'consistent'` |
-| [`rule-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-rule-style) | `'consistent'` |
-| [`strong-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-strong-marker) | `'consistent'` |
-| [`table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-table-cell-padding) | `'consistent'` |
+| [`blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation) | `'consistent'` |
+| [`checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) | `'consistent'` |
+| [`code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) | `'consistent'` |
+| [`emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) | `'consistent'` |
+| [`fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) | `'consistent'` |
+| [`heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) | `'consistent'` |
+| [`link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) | `'consistent'` |
+| [`list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) | |
+| [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) | `'consistent'` |
+| [`rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) | `'consistent'` |
+| [`strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) | `'consistent'` |
+| [`table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding) | `'consistent'` |
 
 ## Install
 
@@ -85,7 +85,7 @@ abide by its terms.
 
 [MIT][license] © [Titus Wormer][author]
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -115,12 +115,12 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/license
+[license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com

@@ -12,7 +12,7 @@
     "link",
     "protocol"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-auto-link-without-protocol",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

@@ -19,7 +19,7 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   formats checked checkboxes using `x` (lowercase X) and unchecked checkboxes
  *   as `·` (a single space).
  *

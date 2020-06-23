@@ -11,11 +11,11 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   uses `'tab-size'` (named `'tab'` there) by default to ensure Markdown is
  *   seen the same way across vendors.
  *   This can be configured with the
- *   [`listItemIndent`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionslistitemindent)
+ *   [`listItemIndent`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionslistitemindent)
  *   option.
  *   This rule’s `'space'` option is named `'1'` there.
  *

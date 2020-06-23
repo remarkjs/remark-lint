@@ -13,7 +13,7 @@
     "basename",
     "article"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-file-name-articles",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-articles",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

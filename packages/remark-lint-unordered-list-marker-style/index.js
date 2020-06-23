@@ -14,10 +14,10 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   formats unordered lists using `-` (hyphen-minus) by default.
  *   Pass
- *   [`bullet: '*'` or `bullet: '+'`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsbullet)
+ *   [`bullet: '*'` or `bullet: '+'`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsbullet)
  *   to use `*` (asterisk) or `+` (plus sign) instead.
  *
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)

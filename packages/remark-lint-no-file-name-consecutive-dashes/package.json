@@ -14,7 +14,7 @@
     "dash",
     "hyphen"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-file-name-consecutive-dashes",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-consecutive-dashes",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

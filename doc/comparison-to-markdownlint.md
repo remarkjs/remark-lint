@@ -1,7 +1,7 @@
 # [markdownlint](https://github.com/mivok/markdownlint)
 
 This table documents the similarity and difference between
-[**markdownlint**](https://github.com/mivok/markdownlint/blob/master/docs/RULES.md)
+[**markdownlint**](https://github.com/mivok/markdownlint/blob/HEAD/docs/RULES.md)
 rules and **remark-lint**’s rules.
 
 | markdownlint | remark | note |

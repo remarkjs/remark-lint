@@ -17,11 +17,11 @@ Options: `'tab-size'`, `'mixed'`, or `'space'`, default: `'tab-size'`.
 
 ## Fix
 
-[`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
 uses `'tab-size'` (named `'tab'` there) by default to ensure Markdown is
 seen the same way across vendors.
 This can be configured with the
-[`listItemIndent`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionslistitemindent)
+[`listItemIndent`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionslistitemindent)
 option.
 This rule’s `'space'` option is named `'1'` there.
 
@@ -34,8 +34,8 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | - | - |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) | `'mixed'` |
-| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-recommended) | `'tab-size'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'mixed'` |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | `'tab-size'` |
 
 ## Example
 
@@ -248,7 +248,7 @@ abide by its terms.
 
 [MIT][license] © [Titus Wormer][author]
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -278,12 +278,12 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/license
+[license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com

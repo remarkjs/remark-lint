@@ -11,7 +11,7 @@
     "definition",
     "spacing"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-definition-spacing",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

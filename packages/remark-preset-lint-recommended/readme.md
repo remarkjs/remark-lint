@@ -19,21 +19,21 @@ This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) 
 
 | Rule | Setting |
 | - | - |
-| [`final-newline`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-final-newline) | |
-| [`list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-bullet-indent) | |
-| [`list-item-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-list-item-indent) | `'tab-size'` |
-| [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-auto-link-without-protocol) | |
-| [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-blockquote-without-marker) | |
-| [`no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-literal-urls) | |
-| [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-ordered-list-marker-style) | `'.'` |
-| [`hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-hard-break-spaces) | |
-| [`no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-duplicate-definitions) | |
-| [`no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-heading-content-indent) | |
-| [`no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-inline-padding) | |
-| [`no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-image) | |
-| [`no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-shortcut-reference-link) | |
-| [`no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-undefined-references) | |
-| [`no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-unused-definitions) | |
+| [`final-newline`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline) | |
+| [`list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) | |
+| [`list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) | `'tab-size'` |
+| [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-auto-link-without-protocol) | |
+| [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) | |
+| [`no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) | |
+| [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) | `'.'` |
+| [`hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) | |
+| [`no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions) | |
+| [`no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent) | |
+| [`no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-inline-padding) | |
+| [`no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-image) | |
+| [`no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link) | |
+| [`no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) | |
+| [`no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) | |
 
 ## Install
 
@@ -88,7 +88,7 @@ abide by its terms.
 
 [MIT][license] © [Titus Wormer][author]
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -118,12 +118,12 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/license
+[license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com

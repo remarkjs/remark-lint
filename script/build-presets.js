@@ -26,9 +26,9 @@ presets(root).forEach(function (basename) {
   var children
   var short = basename.replace(/^remark-/, '')
   var org = remote.split('/').slice(0, -1).join('/')
-  var master = remote + '/blob/master'
+  var main = remote + '/blob/main'
   var health = org + '/.github'
-  var hMaster = health + '/blob/master'
+  var hMain = health + '/blob/HEAD'
   var slug = remote.split('/').slice(-2).join('/')
 
   if (basename !== pack.name) {
@@ -54,7 +54,7 @@ presets(root).forEach(function (basename) {
     rule,
     option
   ) {
-    var url = remote + '/tree/master/packages/remark-lint-' + rule
+    var url = remote + '/tree/main/packages/remark-lint-' + rule
 
     rows.push(
       u('tableRow', [
@@ -184,7 +184,7 @@ presets(root).forEach(function (basename) {
     ]),
     u('definition', {
       identifier: 'build-badge',
-      url: 'https://img.shields.io/travis/' + slug + '/master.svg'
+      url: 'https://img.shields.io/travis/' + slug + '/main.svg'
     }),
     u('definition', {
       identifier: 'build',
@@ -241,14 +241,14 @@ presets(root).forEach(function (basename) {
     u('definition', {identifier: 'health', url: health}),
     u('definition', {
       identifier: 'contributing',
-      url: hMaster + '/contributing.md'
+      url: hMain + '/contributing.md'
     }),
-    u('definition', {identifier: 'support', url: hMaster + '/support.md'}),
+    u('definition', {identifier: 'support', url: hMain + '/support.md'}),
     u('definition', {
       identifier: 'coc',
-      url: hMaster + '/code-of-conduct.md'
+      url: hMain + '/code-of-conduct.md'
     }),
-    u('definition', {identifier: 'license', url: master + '/license'}),
+    u('definition', {identifier: 'license', url: main + '/license'}),
     u('definition', {identifier: 'author', url: author.url})
   )
 

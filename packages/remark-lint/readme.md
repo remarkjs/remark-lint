@@ -77,7 +77,7 @@ abide by its terms.
 
 [logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -107,13 +107,13 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/license
+[license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
 

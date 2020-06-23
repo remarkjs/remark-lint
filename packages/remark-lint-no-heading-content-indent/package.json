@@ -12,7 +12,7 @@
     "content",
     "indent"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-heading-content-indent",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

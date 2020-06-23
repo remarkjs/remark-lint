@@ -19,7 +19,7 @@ between their contents by passing `{exceptTightLists: true}` (default:
 
 ## Fix
 
-[`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
 always uses one blank line between blocks if possible, or two lines when
 needed.
 The style of the list items persists.
@@ -155,7 +155,7 @@ abide by its terms.
 
 [MIT][license] © [Titus Wormer][author]
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -185,12 +185,12 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/license
+[license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com

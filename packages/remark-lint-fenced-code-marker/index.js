@@ -13,10 +13,10 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   formats fences using ``'`'`` (grave accent) by default.
  *   Pass
- *   [`fence: '~'`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsfence)
+ *   [`fence: '~'`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsfence)
  *   to use `~` (tilde) instead.
  *
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)

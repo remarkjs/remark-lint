@@ -14,17 +14,17 @@ Warn when table pipes are not aligned.
 
 ## Fix
 
-[`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
 tries to align tables by default.
 Pass
-[`paddedTable: false`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionspaddedtable)
+[`paddedTable: false`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionspaddedtable)
 to not align cells.
 
 Aligning cells perfectly is impossible as some characters (such as emoji or
 Chinese characters) are rendered differently in different browsers,
 terminals, and editors.
 You can pass your own
-[`stringLength`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsstringlength)
+[`stringLength`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsstringlength)
 function to customize how cells are aligned.
 In that case, this rule must be turned off.
 
@@ -37,7 +37,7 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | - | - |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) | |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | |
 
 ## Example
 
@@ -131,7 +131,7 @@ abide by its terms.
 
 [MIT][license] © [Titus Wormer][author]
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -161,12 +161,12 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
-[license]: https://github.com/remarkjs/remark-lint/blob/master/license
+[license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com

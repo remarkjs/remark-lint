@@ -12,7 +12,7 @@
     "name",
     "case"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-file-name-mixed-case",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-mixed-case",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

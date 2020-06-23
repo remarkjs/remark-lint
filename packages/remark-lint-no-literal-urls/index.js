@@ -11,7 +11,7 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   never creates literal URLs and always uses `<` (less than) and `>`
  *   (greater than).
  *

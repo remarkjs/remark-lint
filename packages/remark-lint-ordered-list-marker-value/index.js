@@ -17,11 +17,11 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   retains the number of the first list item bullet, and by default
  *   increments the other items.
  *   Pass
- *   [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsincrementlistmarker)
+ *   [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsincrementlistmarker)
  *   to not increment further list items.
  *
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)

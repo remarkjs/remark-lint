@@ -8,17 +8,17 @@
  *
  *   ## Fix
  *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify)
+ *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
  *   tries to align tables by default.
  *   Pass
- *   [`paddedTable: false`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionspaddedtable)
+ *   [`paddedTable: false`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionspaddedtable)
  *   to not align cells.
  *
  *   Aligning cells perfectly is impossible as some characters (such as emoji or
  *   Chinese characters) are rendered differently in different browsers,
  *   terminals, and editors.
  *   You can pass your own
- *   [`stringLength`](https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#optionsstringlength)
+ *   [`stringLength`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsstringlength)
  *   function to customize how cells are aligned.
  *   In that case, this rule must be turned off.
  *

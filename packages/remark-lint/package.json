@@ -13,7 +13,7 @@
     "lint",
     "validate"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

@@ -12,7 +12,7 @@
     "url",
     "definition"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/master/packages/remark-lint-no-reference-like-url",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

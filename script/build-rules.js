@@ -42,9 +42,9 @@ rules(root).forEach(function (basename) {
   var author = parseAuthor(pack.author)
   var short = basename.replace(/^remark-/, '')
   var org = remote.split('/').slice(0, -1).join('/')
-  var master = remote + '/blob/master'
+  var main = remote + '/blob/main'
   var health = org + '/.github'
-  var hMaster = health + '/blob/master'
+  var hMain = health + '/blob/HEAD'
   var slug = remote.split('/').slice(-2).join('/')
   var includes
   var children = [
@@ -118,7 +118,7 @@ rules(root).forEach(function (basename) {
           ])
         ].concat(
           includes.map(function (preset) {
-            var url = remote + '/tree/master/packages/' + preset.name
+            var url = remote + '/tree/main/packages/' + preset.name
             var option = preset.packages[pack.name]
 
             return u('tableRow', [
@@ -270,7 +270,7 @@ rules(root).forEach(function (basename) {
     ]),
     u('definition', {
       identifier: 'build-badge',
-      url: 'https://img.shields.io/travis/' + slug + '/master.svg'
+      url: 'https://img.shields.io/travis/' + slug + '/main.svg'
     }),
     u('definition', {
       identifier: 'build',
@@ -327,14 +327,14 @@ rules(root).forEach(function (basename) {
     u('definition', {identifier: 'health', url: health}),
     u('definition', {
       identifier: 'contributing',
-      url: hMaster + '/contributing.md'
+      url: hMain + '/contributing.md'
     }),
-    u('definition', {identifier: 'support', url: hMaster + '/support.md'}),
+    u('definition', {identifier: 'support', url: hMain + '/support.md'}),
     u('definition', {
       identifier: 'coc',
-      url: hMaster + '/code-of-conduct.md'
+      url: hMain + '/code-of-conduct.md'
     }),
-    u('definition', {identifier: 'license', url: master + '/license'}),
+    u('definition', {identifier: 'license', url: main + '/license'}),
     u('definition', {identifier: 'author', url: author.url})
   ])
 

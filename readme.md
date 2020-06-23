@@ -336,9 +336,9 @@ Presets can be loaded just like other plugins.
 
 <!--presets start-->
 
-*   [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-consistent) — rules that enforce consistency
-*   [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
-*   [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
+*   [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) — rules that enforce consistency
+*   [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
+*   [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
 
 <!--presets end-->
 
@@ -362,17 +362,17 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
     — Lint fenced code blocks by corresponding language tags,
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
-*   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-match-punctuation)
+*   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-match-punctuation)
     — Ensures punctuations are used in pairs if necessary.
 *   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
     — Ensure em-dash (`—`) style follows a standard format
-*   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-chinese-punctuation-in-number)
+*   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-chinese-punctuation-in-number)
     — Ensures that Chinese punctuation will not be used in number, such as 1，000 or 12：34.
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
     — Check that external links are alive
-*   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-long-code)
+*   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-long-code)
     — Ensures that each line in code block won't be too long.
-*   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-no-repeat-punctuation)
+*   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-repeat-punctuation)
     — Ensures that punctuation will not be used multiple times, such as `"！！！"` or `"？？？"`.
 *   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
     — Enforce a limit of emoji per paragraph
@@ -384,9 +384,9 @@ This list is ordered based on the name without prefix, so excluding
     — Ensure headings parsing is not broken by accidental irregular whitespaces
 *   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
     — Check if your links are reachable and/or unique
-*   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-spaces-around-number)
+*   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-number)
     — Ensures there are spaces around number and Chinese.
-*   [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/master/packages/remark-lint-spaces-around-word)
+*   [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-word)
     — Ensures there are spaces around English word and Chinese.
 *   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
     — Ensure that the `href` of links has no trailing slash
@@ -421,7 +421,7 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/master.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-lint
 
@@ -447,11 +447,11 @@ abide by its terms.
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/master/support.md
+[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
 
 [license]: license
 
@@ -459,19 +459,19 @@ abide by its terms.
 
 [cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
 
-[cli-config]: https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
+[cli-config]: https://github.com/unifiedjs/unified-engine/blob/HEAD/doc/configure.md
 
 [remark]: https://github.com/remarkjs/remark
 
-[remark-plugins]: https://github.com/remarkjs/remark/blob/master/doc/plugins.md
+[remark-plugins]: https://github.com/remarkjs/remark/blob/HEAD/doc/plugins.md
 
-[remark-stringify]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify
+[remark-stringify]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify
 
-[remark-stringify-options]: https://github.com/remarkjs/remark/tree/master/packages/remark-stringify#options
+[remark-stringify-options]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#options
 
-[api]: https://github.com/remarkjs/remark/tree/master/packages/remark
+[api]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark
 
-[cli]: https://github.com/remarkjs/remark/tree/master/packages/remark-cli
+[cli]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-cli
 
 [message-control]: https://github.com/remarkjs/remark-message-control#markers
 
@@ -505,7 +505,7 @@ abide by its terms.
 
 [jest]: https://jestjs.io
 
-[preset-recommended]: https://github.com/remarkjs/remark-lint/blob/master/packages/remark-preset-lint-recommended
+[preset-recommended]: https://github.com/remarkjs/remark-lint/blob/main/packages/remark-preset-lint-recommended
 
 [logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
 

@@ -111,7 +111,11 @@ function maximumLineLength(tree, file, option) {
   var lineLength
 
   // Note: JSX is from MDX: <https://github.com/mdx-js/specification>.
-  visit(tree, ['heading', 'table', 'code', 'definition', 'html', 'jsx'], ignore)
+  visit(
+    tree,
+    ['heading', 'table', 'code', 'definition', 'html', 'jsx', 'yaml'],
+    ignore
+  )
   visit(tree, ['link', 'image', 'inlineCode'], inline)
 
   // Iterate over every line, and warn for violating lines.

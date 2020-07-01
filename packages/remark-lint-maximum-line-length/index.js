@@ -113,7 +113,7 @@ function maximumLineLength(tree, file, option) {
   // Note: JSX is from MDX: <https://github.com/mdx-js/specification>.
   visit(
     tree,
-    ['heading', 'table', 'code', 'definition', 'html', 'jsx', 'yaml'],
+    ['heading', 'table', 'code', 'definition', 'html', 'jsx', 'yaml', 'toml'],
     ignore
   )
   visit(tree, ['link', 'image', 'inlineCode'], inline)

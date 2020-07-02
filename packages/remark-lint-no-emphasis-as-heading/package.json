@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-emphasis-as-heading",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "remark-lint rule to warn when emphasis or importance is used instead of a heading",
   "license": "MIT",
   "keywords": [

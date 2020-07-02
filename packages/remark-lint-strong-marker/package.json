@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-strong-marker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "remark-lint rule to warn when importance (strong) markers violate the given style",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-unused-definitions",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "remark-lint rule to warn when unused definitions are found",
   "license": "MIT",
   "keywords": [

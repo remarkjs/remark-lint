@@ -392,6 +392,8 @@ This list is ordered based on the name without prefix, so excluding
     — Ensure that the `href` of links has no trailing slash
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
     — Wrapper for `write-good`
+*   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
+    — Check double link 
 
 ## Security
 

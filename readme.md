@@ -393,7 +393,7 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
     — Wrapper for `write-good`
 *   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
-    — Check double link 
+    — This rule ensures that there will be no duplicate links URL in the list.
 
 ## Security
 

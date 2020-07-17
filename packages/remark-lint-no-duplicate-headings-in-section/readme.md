@@ -63,6 +63,28 @@ No messages.
 5:1-5:9: Do not use headings with similar content per section (3:1)
 ```
 
+##### `not-ok-tolerant-heading-increment.md`
+
+###### In
+
+```markdown
+# Alpha
+
+#### Bravo
+
+###### Charlie
+
+#### Bravo
+
+###### Delta
+```
+
+###### Out
+
+```text
+7:1-7:11: Do not use headings with similar content per section (3:1)
+```
+
 ## Install
 
 [npm][]:

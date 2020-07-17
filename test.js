@@ -261,9 +261,6 @@ test('rules', function (t) {
   var root = path.join(process.cwd(), 'packages')
   var all = rules(root)
 
-  // TODO: Remove next line
-  all = ["remark-lint-no-duplicate-headings-in-section"]
-
   t.plan(all.length)
 
   all.forEach(each)

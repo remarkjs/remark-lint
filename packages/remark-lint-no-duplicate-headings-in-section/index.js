@@ -39,15 +39,19 @@
  *
  * @example {"name": "not-ok-tolerant-heading-increment.md", "label": "input"}
  *
- *   # Foxtrot
+ *   # Alpha
  *
- *   #### Golf
+ *   #### Bravo
  *
- *   #### Golf
+ *   ###### Charlie
+ *
+ *   #### Bravo
+ *
+ *   ###### Delta
  *
  * @example {"name": "not-ok-tolerant-heading-increment.md", "label": "output"}
  *
- *   5:1-5:10: Do not use headings with similar content per section (3:1)
+ *   7:1-7:11: Do not use headings with similar content per section (3:1)
  */
 
 'use strict'
@@ -73,20 +77,19 @@ function noDuplicateHeadingsInSection(tree, file) {
 
   function visitor(node) {
     var depth = node.depth
-    var index = depth - 1
     var value = toString(node).toUpperCase()
+    var index = depth - 1
+    var scope = stack[index] || (stack[index] = {})
+    var duplicate = scope[value]
 
-    stack = stack.slice(0, depth)
-    if (!stack[index]) stack[index] = {}
-
-    var possibleDuplicate = stack[index][value]
-    if (!generated(node) && possibleDuplicate && possibleDuplicate.type === 'heading') {
+    if (!generated(node) && duplicate) {
       file.message(
-        reason + ' (' + stringify(position.start(possibleDuplicate)) + ')',
+        reason + ' (' + stringify(position.start(duplicate)) + ')',
         node
       )
     }
 
-    stack[index][value] = node
+    scope[value] = node
+    stack = stack.slice(0, depth)
   }
 }

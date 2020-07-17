@@ -36,6 +36,22 @@
  * @example {"name": "not-ok.md", "label": "output"}
  *
  *   5:1-5:9: Do not use headings with similar content per section (3:1)
+ *
+ * @example {"name": "not-ok-tolerant-heading-increment.md", "label": "input"}
+ *
+ *   # Alpha
+ *
+ *   #### Bravo
+ *
+ *   ###### Charlie
+ *
+ *   #### Bravo
+ *
+ *   ###### Delta
+ *
+ * @example {"name": "not-ok-tolerant-heading-increment.md", "label": "output"}
+ *
+ *   7:1-7:11: Do not use headings with similar content per section (3:1)
  */
 
 'use strict'
@@ -55,25 +71,25 @@ module.exports = rule(
 var reason = 'Do not use headings with similar content per section'
 
 function noDuplicateHeadingsInSection(tree, file) {
-  var stack = [{}]
+  var stack = []
 
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
     var depth = node.depth
-    var siblings = stack[depth - 1] || {}
     var value = toString(node).toUpperCase()
-    var duplicate = siblings[value]
+    var index = depth - 1
+    var scope = stack[index] || (stack[index] = {})
+    var duplicate = scope[value]
 
-    stack = stack.slice(0, depth)
-    stack[depth] = {}
-    siblings[value] = node
-
-    if (!generated(node) && duplicate && duplicate.type === 'heading') {
+    if (!generated(node) && duplicate) {
       file.message(
         reason + ' (' + stringify(position.start(duplicate)) + ')',
         node
       )
     }
+
+    scope[value] = node
+    stack = stack.slice(0, depth)
   }
 }

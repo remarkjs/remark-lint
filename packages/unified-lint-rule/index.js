@@ -47,8 +47,8 @@ function factory(id, rule) {
 
         while (index < messages.length) {
           message = messages[index]
-          message.ruleId = ruleId
-          message.source = source
+          if(!message.ruleId){ message.ruleId = ruleId }
+          if(!message.source){ message.source = source }
           message.fatal = fatal
 
           index++

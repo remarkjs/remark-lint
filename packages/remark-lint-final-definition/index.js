@@ -46,7 +46,7 @@ function finalDefinition(tree, file) {
     var line = start(node).line
 
     // Ignore generated nodes.
-    if (node.type === 'root' || generated(node)) {
+    if (node.type === 'root' || generated(node) || /^\s*<!--/.test(node.value)) {
       return
     }
 

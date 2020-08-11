@@ -45,8 +45,8 @@ function finalDefinition(tree, file) {
   function visitor(node) {
     var line = start(node).line
 
-    // Ignore generated nodes.
-    if (node.type === 'root' || generated(node) || /^\s*<!--/.test(node.value)) {
+    // Ignore generated and HTML comment nodes.
+    if (node.type === 'root' || generated(node) || (node.type == 'html' && /^\s*<!--/.test(node.value))) {
       return
     }
 

@@ -46,7 +46,7 @@ function finalDefinition(tree, file) {
     var line = start(node).line
 
     // Ignore generated and HTML comment nodes.
-    if (node.type === 'root' || generated(node) || (node.type == 'html' && /^\s*<!--/.test(node.value))) {
+    if (node.type === 'root' || generated(node) || (node.type === 'html' && /^\s*<!--/.test(node.value))) {
       return
     }
 

@@ -380,13 +380,13 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
     — Ensure em-dash (`—`) style follows a standard format
 *   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-chinese-punctuation-in-number)
-    — Ensures that Chinese punctuation will not be used in number, such as 1，000 or 12：34.
+    — Ensures that Chinese punctuation’s not used in numbers
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
     — Check that external links are alive
 *   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-long-code)
     — Ensures that each line in code block won't be too long.
 *   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-repeat-punctuation)
-    — Ensures that punctuation will not be used multiple times, such as `"！！！"` or `"？？？"`.
+    — Ensures punctuation is not repeated
 *   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
     — Enforce a limit of emoji per paragraph
 *   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
@@ -394,7 +394,7 @@ This list is ordered based on the name without prefix, so excluding
 *   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
     — Ensure headings have the appropriate length
 *   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
-    — Ensure headings parsing is not broken by accidental irregular whitespaces
+    — Ensure heading parsing is not broken by weird whitespace
 *   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
     — Check if your links are reachable and/or unique
 *   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-number)

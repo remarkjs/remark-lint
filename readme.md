@@ -314,14 +314,27 @@ example.md
 
 ## Integrations
 
-*   [vscode-remark-lint][] ([VS Code][vs-code]) - use `remark-lint` from Visual Studio Code
-*   [linter-markdown][] ([Atom][]) — use `remark-lint` from Atom
-*   [linter-remark][] ([Atom][]) — use all of remark from Atom
-*   [SublimeLinter-contrib-remark-lint][] ([Sublime][]) — use `remark-lint` from Sublime Text
-*   [ale][] ([Vim][]) — use remark-lint from Vim
-*   [gulp-remark][] ([Gulp][]) — use all of remark with Gulp
-*   [grunt-remark][] ([Grunt][]) — use all of remark with Grunt
-*   [jest-runner-remark][] ([Jest][]) - use all of remark with Jest
+*   [`linter-remark`](https://github.com/wooorm/linter-remark)
+    ([Atom](https://atom.io))
+    — use all of remark from Atom
+*   [`vscode-remark-lint`](https://github.com/drewbourne/vscode-remark-lint)
+    ([VS Code](https://code.visualstudio.com))
+    — use `remark-lint` from Visual Studio Code
+*   [`SublimeLinter-contrib-remark-lint`](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint)
+    ([Sublime](https://www.sublimetext.com))
+    — use `remark-lint` from Sublime Text
+*   [`ale`](https://github.com/w0rp/ale)
+    ([Vim](https://www.vim.org))
+    — use `remark-lint` from Vim
+*   [`gulp-remark`](https://github.com/remarkjs/gulp-remark)
+    ([Gulp](https://gulpjs.com))
+    — use all of remark with Gulp
+*   [`grunt-remark`](https://github.com/remarkjs/grunt-remark)
+    ([Grunt](https://gruntjs.com/))
+    — use all of remark with Grunt
+*   [`jest-runner-remark`](https://github.com/keplersj/jest-runner-remark)
+    ([Jest](https://jestjs.io))
+    — use all of remark with Jest
 
 We’re interested in more integrations.
 Let us know if we can help.
@@ -476,36 +489,6 @@ abide by its terms.
 [cli]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-cli
 
 [message-control]: https://github.com/remarkjs/remark-message-control#markers
-
-[vscode-remark-lint]: https://github.com/drewbourne/vscode-remark-lint
-
-[linter-markdown]: https://atom.io/packages/linter-markdown
-
-[linter-remark]: https://github.com/wooorm/linter-remark
-
-[SublimeLinter-contrib-remark-lint]: https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint
-
-[gulp-remark]: https://github.com/remarkjs/gulp-remark
-
-[grunt-remark]: https://github.com/remarkjs/grunt-remark
-
-[jest-runner-remark]: https://github.com/keplersj/jest-runner-remark
-
-[ale]: https://github.com/w0rp/ale
-
-[vs-code]: https://github.com/drewbourne/vscode-remark-lint
-
-[atom]: https://atom.io
-
-[sublime]: https://www.sublimetext.com
-
-[vim]: https://www.vim.org
-
-[grunt]: https://gruntjs.com/
-
-[gulp]: https://gulpjs.com
-
-[jest]: https://jestjs.io
 
 [preset-recommended]: https://github.com/remarkjs/remark-lint/blob/main/packages/remark-preset-lint-recommended
 

@@ -314,11 +314,11 @@ rules(root).forEach(function (basename) {
     }),
     u('definition', {
       identifier: 'chat-badge',
-      url: 'https://img.shields.io/badge/chat-spectrum.svg'
+      url: 'https://img.shields.io/badge/chat-discussions-success.svg'
     }),
     u('definition', {
       identifier: 'chat',
-      url: 'https://spectrum.chat/unified/remark'
+      url: 'https://github.com/remarkjs/remark/discussions'
     }),
     u('definition', {
       identifier: 'npm',

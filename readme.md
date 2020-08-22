@@ -435,9 +435,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/remark-lint
 
-[chat-badge]: https://img.shields.io/badge/chat-spectrum.svg
+[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
 
-[chat]: https://spectrum.chat/unified/remark
+[chat]: https://github.com/remarkjs/remark/discussions
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 

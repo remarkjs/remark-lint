@@ -24,6 +24,16 @@
  * @example {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
+ *
+ * @example {"name": "ok-comments.md"}
+ *
+ *   Paragraph.
+ *
+ *   [example-1]: http://example.com/one/
+ *
+ *   <!-- Comments are fine between and after definitions -->
+ *
+ *   [example-2]: http://example.com/two/
  */
 
 'use strict'
@@ -45,8 +55,8 @@ function finalDefinition(tree, file) {
   function visitor(node) {
     var line = start(node).line
 
-    // Ignore generated nodes.
-    if (node.type === 'root' || generated(node)) {
+    // Ignore generated and HTML comment nodes.
+    if (node.type === 'root' || generated(node) || (node.type === 'html' && /^\s*<!--/.test(node.value))) {
       return
     }
 

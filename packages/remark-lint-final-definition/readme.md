@@ -55,6 +55,24 @@ Another paragraph.
 3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
 ```
 
+##### `ok-comments.md`
+
+###### In
+
+```markdown
+Paragraph.
+
+[example-1]: http://example.com/one/
+
+<!-- Comments are fine between and after definitions -->
+
+[example-2]: http://example.com/two/
+```
+
+###### Out
+
+No messages.
+
 ## Install
 
 [npm][]:

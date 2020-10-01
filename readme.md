@@ -53,7 +53,7 @@ Use `remark-lint` with [`remark-cli`][cli] through a
 [preset][preset-recommended].
 
 ```sh
-npm install --save remark-cli remark-preset-lint-recommended
+npm install --save-dev remark-cli remark-preset-lint-recommended
 ```
 
 Then, configure **remark** in your `package.json`:

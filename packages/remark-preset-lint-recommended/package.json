@@ -25,7 +25,7 @@
   "dependencies": {
     "remark-lint": "^7.0.0",
     "remark-lint-final-newline": "^1.0.0",
-    "remark-lint-list-item-bullet-indent": "^2.0.0",
+    "remark-lint-list-item-bullet-indent": "^3.0.0",
     "remark-lint-list-item-indent": "^2.0.0",
     "remark-lint-no-auto-link-without-protocol": "^2.0.0",
     "remark-lint-no-blockquote-without-marker": "^3.0.0",

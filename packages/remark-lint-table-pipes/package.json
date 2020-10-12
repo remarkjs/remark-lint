@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-table-pipes",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when table rows are not fenced with pipes",
   "license": "MIT",
   "keywords": [

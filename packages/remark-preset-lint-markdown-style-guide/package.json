@@ -43,7 +43,7 @@
     "remark-lint-maximum-heading-length": "^2.0.0",
     "remark-lint-no-heading-punctuation": "^2.0.0",
     "remark-lint-blockquote-indentation": "^2.0.0",
-    "remark-lint-no-blockquote-without-marker": "^3.0.0",
+    "remark-lint-no-blockquote-without-marker": "^4.0.0",
     "remark-lint-unordered-list-marker-style": "^2.0.0",
     "remark-lint-ordered-list-marker-style": "^2.0.0",
     "remark-lint-ordered-list-marker-value": "^2.0.0",

@@ -54,7 +54,7 @@
     "remark-lint-fenced-code-flag": "^2.0.0",
     "remark-lint-fenced-code-marker": "^2.0.0",
     "remark-lint-rule-style": "^2.0.0",
-    "remark-lint-no-table-indentation": "^2.0.0",
+    "remark-lint-no-table-indentation": "^3.0.0",
     "remark-lint-table-pipes": "^2.0.0",
     "remark-lint-table-pipe-alignment": "^2.0.0",
     "remark-lint-table-cell-padding": "^2.0.0",

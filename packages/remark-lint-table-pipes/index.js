@@ -17,19 +17,19 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example {"name": "ok.md", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   A     | B
  *   ----- | -----
  *   Alpha | Bravo
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1: Missing initial pipe in table fence
  *   1:10: Missing final pipe in table fence
@@ -62,27 +62,16 @@ function tablePipes(tree, file) {
     var length = rows.length
     var index = -1
     var row
-    var cells
-    var head
-    var tail
-    var initial
-    var final
 
     while (++index < length) {
       row = rows[index]
 
       if (!generated(row)) {
-        cells = row.children
-        head = cells[0]
-        tail = cells[cells.length - 1]
-        initial = contents.slice(start(row).offset, start(head).offset)
-        final = contents.slice(end(tail).offset, end(row).offset)
-
-        if (initial.indexOf('|') === -1) {
+        if (contents.charCodeAt(start(row).offset) !== 124) {
           file.message(reasonStart, start(row))
         }
 
-        if (final.indexOf('|') === -1) {
+        if (contents.charCodeAt(end(row).offset - 1) !== 124) {
           file.message(reasonEnd, end(row))
         }
       }

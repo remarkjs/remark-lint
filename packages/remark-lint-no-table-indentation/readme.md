@@ -34,6 +34,8 @@ This rule is included in the following presets:
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 Paragraph.
 
@@ -50,6 +52,8 @@ No messages.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 Note: `·` represents a space.
 
 ```markdown
@@ -63,8 +67,49 @@ Paragraph.
 ###### Out
 
 ```text
-3:1-3:21: Do not indent table rows
-5:1-5:21: Do not indent table rows
+3:4: Do not indent table rows
+4:4: Do not indent table rows
+5:4: Do not indent table rows
+```
+
+##### `not-ok-blockquote.md`
+
+###### In
+
+Note: this example uses [GFM][].
+
+Note: `·` represents a space.
+
+```markdown
+>··| A |
+>·| - |
+```
+
+###### Out
+
+```text
+1:4: Do not indent table rows
+```
+
+##### `not-ok-list.md`
+
+###### In
+
+Note: this example uses [GFM][].
+
+Note: `·` represents a space.
+
+```markdown
+-···paragraph
+
+·····| A |
+····| - |
+```
+
+###### Out
+
+```text
+3:6: Do not indent table rows
 ```
 
 ## Install
@@ -165,3 +210,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

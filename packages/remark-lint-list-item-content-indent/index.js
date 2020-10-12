@@ -6,17 +6,17 @@
  * @fileoverview
  *   Warn when the content of a list item has mixed indentation.
  *
- * @example {"name": "ok.md"}
+ * @example {"name": "ok.md", "gfm": true}
  *
  *   1.·[x] Alpha
  *   ···1. Bravo
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   1.·[x] Charlie
  *   ····1. Delta
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   2:5: Don’t use mixed indentation for children, remove 1 space
  */
@@ -44,9 +44,9 @@ function listItemContentIndent(tree, file) {
   function visitor(node) {
     var style
 
-    node.children.forEach(visitItem)
+    node.children.forEach(visitInItem)
 
-    function visitItem(item, index) {
+    function visitInItem(item, index) {
       var begin
       var column
       var char
@@ -69,7 +69,7 @@ function listItemContentIndent(tree, file) {
         if (typeof node.checked === 'boolean') {
           char = begin.offset - 1
 
-          while (contents.charAt(char) !== '[') {
+          while (char > 0 && contents.charAt(char) !== '[') {
             char--
           }
 

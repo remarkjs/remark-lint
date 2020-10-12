@@ -45,6 +45,8 @@ This rule is included in the following presets:
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 | A     | B     |
 | ----- | ----- |
@@ -58,6 +60,8 @@ No messages.
 ##### `not-ok.md`
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 | A | B |
@@ -170,3 +174,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

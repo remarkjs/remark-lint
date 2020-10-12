@@ -8,7 +8,7 @@
  *
  * @example {"name": "plug-ins.md"}
  *
- * @example {"name": "plug--ins.md", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "plug--ins.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use consecutive dashes in a file name
  */

@@ -22,11 +22,11 @@
  *
  *   <http://foo.bar/baz>
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   http://foo.bar/baz
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:19: Don’t use literal URLs without angle brackets
  */

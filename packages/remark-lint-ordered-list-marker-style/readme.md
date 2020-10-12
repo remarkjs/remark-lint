@@ -17,8 +17,6 @@ Options: `'consistent'`, `'.'`, or `')'`, default: `'consistent'`.
 `'consistent'` detects the first used list style and warns when subsequent
 lists use different styles.
 
-Note: `)` is only supported in CommonMark.
-
 ## Presets
 
 This rule is included in the following presets:
@@ -89,8 +87,6 @@ When configured with `')'`.
 ###### In
 
 ```markdown
-<!-- This requires commonmark. -->
-
 1)  Foo
 
 2)  Bar

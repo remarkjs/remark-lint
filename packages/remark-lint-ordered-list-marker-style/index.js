@@ -11,8 +11,6 @@
  *   `'consistent'` detects the first used list style and warns when subsequent
  *   lists use different styles.
  *
- *   Note: `)` is only supported in CommonMark.
- *
  * @example {"name": "ok.md"}
  *
  *   1.  Foo
@@ -30,15 +28,13 @@
  *
  *   2.  Bar
  *
- * @example {"name": "ok.md", "setting": ")", "config": {"commonmark": true}}
- *
- *   <!-- This requires commonmark. -->
+ * @example {"name": "ok.md", "setting": ")"}
  *
  *   1)  Foo
  *
  *   2)  Bar
  *
- * @example {"name": "not-ok.md", "label": "input", "config": {"commonmark": true}}
+ * @example {"name": "not-ok.md", "label": "input"}
  *
  *   1.  Foo
  *
@@ -48,7 +44,7 @@
  *
  *   3:1-3:8: Marker style should be `.`
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */

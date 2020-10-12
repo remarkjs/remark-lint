@@ -6,6 +6,7 @@ var inspect = require('util').inspect
 var u = require('unist-builder')
 var chalk = require('chalk')
 var remark = require('remark')
+var gfm = require('remark-gfm')
 var parseAuthor = require('parse-author')
 var remote = require('../package.json').repository
 var rules = require('./util/rules')
@@ -47,6 +48,7 @@ rules(root).forEach(function (basename) {
   var hMain = health + '/blob/HEAD'
   var slug = remote.split('/').slice(-2).join('/')
   var includes
+  var hasGfm
   var children = [
     u('html', '<!--This file is generated-->'),
     u('heading', {depth: 1}, [u('text', basename)]),
@@ -161,6 +163,19 @@ rules(root).forEach(function (basename) {
 
       if (fixture.input != null && fixture.input.trim() !== '') {
         children.push(u('heading', {depth: 6}, [u('text', 'In')]))
+
+        if (fixture.gfm) {
+          hasGfm = true
+          children.push(
+            u('paragraph', [
+              u('text', 'Note: this example uses '),
+              u('linkReference', {label: 'GFM', referenceType: 'collapsed'}, [
+                u('text', 'GFM')
+              ]),
+              u('text', '.')
+            ])
+          )
+        }
 
         chars.forEach(function (char) {
           var next = clean.replace(char.in, char.out)
@@ -338,9 +353,18 @@ rules(root).forEach(function (basename) {
     u('definition', {identifier: 'author', url: author.url})
   ])
 
+  if (hasGfm) {
+    children.push(
+      u('definition', {
+        identifier: 'gfm',
+        url: 'https://github.com/remarkjs/remark-gfm'
+      })
+    )
+  }
+
   fs.writeFileSync(
     path.join(base, 'readme.md'),
-    remark().stringify(u('root', children))
+    remark().use(gfm).stringify(u('root', children))
   )
 
   console.log(chalk.green('✓') + ' wrote `readme.md` in `' + basename + '`')

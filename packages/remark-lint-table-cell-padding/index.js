@@ -22,13 +22,13 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": "padded"}
+ * @example {"name": "ok.md", "setting": "padded", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "padded"}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "padded", "gfm": true}
  *
  *   | A    |    B |
  *   | :----|----: |
@@ -44,22 +44,25 @@
  *   | :---- | -------- | :----: | -----: |
  *   | Echo  | Foxtrot  |  Golf  |  Hotel |
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "padded"}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "padded", "gfm": true}
  *
  *   3:8: Cell should be padded
  *   3:9: Cell should be padded
  *   7:2: Cell should be padded
  *   7:17: Cell should be padded
- *   13:23: Cell should be padded with 1 space, not 2
- *   13:32: Cell should be padded with 1 space, not 2
+ *   13:9: Cell should be padded with 1 space, not 2
+ *   13:20: Cell should be padded with 1 space, not 2
+ *   13:21: Cell should be padded with 1 space, not 2
+ *   13:29: Cell should be padded with 1 space, not 2
+ *   13:30: Cell should be padded with 1 space, not 2
  *
- * @example {"name": "ok.md", "setting": "compact"}
+ * @example {"name": "ok.md", "setting": "compact", "gfm": true}
  *
  *   |A    |B    |
  *   |-----|-----|
  *   |Alpha|Bravo|
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "compact"}
+ * @example {"name": "not-ok.md", "label": "input", "setting": "compact", "gfm": true}
  *
  *   |   A    | B    |
  *   |   -----| -----|
@@ -69,13 +72,13 @@
  *   |:------|-----:|
  *   |Charlie|Delta |
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "compact"}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "compact", "gfm": true}
  *
- *   3:5: Cell should be compact
- *   3:12: Cell should be compact
- *   7:15: Cell should be compact
+ *   3:2: Cell should be compact
+ *   3:11: Cell should be compact
+ *   7:16: Cell should be compact
  *
- * @example {"name": "ok-padded.md", "setting": "consistent"}
+ * @example {"name": "ok-padded.md", "setting": "consistent", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -85,7 +88,7 @@
  *   | ------- | ----- |
  *   | Charlie | Delta |
  *
- * @example {"name": "not-ok-padded.md", "label": "input", "setting": "consistent"}
+ * @example {"name": "not-ok-padded.md", "label": "input", "setting": "consistent", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -95,11 +98,11 @@
  *   | :----- | ----: |
  *   |Charlie | Delta |
  *
- * @example {"name": "not-ok-padded.md", "label": "output", "setting": "consistent"}
+ * @example {"name": "not-ok-padded.md", "label": "output", "setting": "consistent", "gfm": true}
  *
  *   7:2: Cell should be padded
  *
- * @example {"name": "ok-compact.md", "setting": "consistent"}
+ * @example {"name": "ok-compact.md", "setting": "consistent", "gfm": true}
  *
  *   |A    |B    |
  *   |-----|-----|
@@ -109,7 +112,7 @@
  *   |-------|-----|
  *   |Charlie|Delta|
  *
- * @example {"name": "not-ok-compact.md", "label": "input", "setting": "consistent"}
+ * @example {"name": "not-ok-compact.md", "label": "input", "setting": "consistent", "gfm": true}
  *
  *   |A    |B    |
  *   |-----|-----|
@@ -119,15 +122,15 @@
  *   |:------|-----:|
  *   |Charlie|Delta |
  *
- * @example {"name": "not-ok-compact.md", "label": "output", "setting": "consistent"}
+ * @example {"name": "not-ok-compact.md", "label": "output", "setting": "consistent", "gfm": true}
  *
- *   7:15: Cell should be compact
+ *   7:16: Cell should be compact
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect table cell padding style `💩`, expected `'padded'`, `'compact'`, or `'consistent'`
  *
- * @example {"name": "empty.md", "label": "input", "setting": "padded"}
+ * @example {"name": "empty.md", "label": "input", "setting": "padded", "gfm": true}
  *
  *   <!-- Empty cells are OK, but those surrounding them may not be. -->
  *
@@ -135,13 +138,13 @@
  *   | ------ | ----- | ---: |
  *   | Charlie|       |  Echo|
  *
- * @example {"name": "empty.md", "label": "output", "setting": "padded"}
+ * @example {"name": "empty.md", "label": "output", "setting": "padded", "gfm": true}
  *
  *   3:25: Cell should be padded
  *   5:10: Cell should be padded
  *   5:25: Cell should be padded
  *
- * @example {"name": "missing-body.md", "setting": "padded"}
+ * @example {"name": "missing-body.md", "setting": "padded", "gfm": true}
  *
  *   <!-- Missing cells are fine as well. -->
  *
@@ -166,7 +169,6 @@ var end = position.end
 var styles = {null: true, padded: true, compact: true}
 
 function tableCellPadding(tree, file, option) {
-  var contents = String(file)
   var preferred =
     typeof option === 'string' && option !== 'consistent' ? option : null
 
@@ -192,46 +194,37 @@ function tableCellPadding(tree, file, option) {
     var column
     var cellCount
     var cell
-    var next
-    var fence
-    var pos
     var entry
-    var final
+    var contentStart
+    var contentEnd
 
     // Check rows.
     while (++index < length) {
       row = rows[index]
       cells = row.children
       cellCount = cells.length
-      column = -2 // Start without a first cell.
-      next = null
-      final = undefined
+      column = -1
 
       // Check fences (before, between, and after cells).
       while (++column < cellCount) {
-        cell = next
-        next = cells[column + 1]
+        cell = cells[column]
 
-        fence = contents.slice(
-          cell ? end(cell).offset : start(row).offset,
-          next ? start(next).offset : end(row).offset
-        )
+        if (cell && cell.children.length !== 0) {
+          contentStart = start(cell.children[0]).offset
+          contentEnd = end(cell.children[cell.children.length - 1]).offset
 
-        pos = fence.indexOf('|')
-
-        if (cell && cell.children.length !== 0 && final !== undefined) {
-          entries.push({node: cell, start: final, end: pos, index: column})
+          entries.push({
+            node: cell,
+            start: contentStart - start(cell).offset - (column ? 0 : 1),
+            end: end(cell).offset - contentEnd - 1,
+            column: column
+          })
 
           // Detect max space per column.
-          sizes[column] = Math.max(sizes[column] || 0, size(cell))
-        } else {
-          final = undefined
-        }
-
-        if (next && next.children.length !== 0) {
-          final = fence.length - pos - 1
-        } else {
-          final = undefined
+          sizes[column] = Math.max(
+            sizes[column] || 0,
+            contentEnd - contentStart
+          )
         }
       }
     }
@@ -257,8 +250,9 @@ function tableCellPadding(tree, file, option) {
   function checkSide(side, entry, style, sizes) {
     var cell = entry.node
     var spacing = entry[side]
-    var index = entry.index
+    var column = entry.column
     var reason
+    var point
 
     if (spacing === undefined || spacing === style) {
       return
@@ -267,29 +261,44 @@ function tableCellPadding(tree, file, option) {
     reason = 'Cell should be '
 
     if (style === 0) {
-      reason += 'compact'
-
       // Ignore every cell except the biggest in the column.
-      if (size(cell) < sizes[index]) {
+      if (size(cell) < sizes[column]) {
         return
       }
+
+      reason += 'compact'
     } else {
       reason += 'padded'
 
       if (spacing > style) {
-        reason += ' with 1 space, not ' + spacing
-
         // May be right or center aligned.
-        if (size(cell) < sizes[index]) {
+        if (size(cell) < sizes[column]) {
           return
         }
+
+        reason += ' with 1 space, not ' + spacing
       }
     }
 
-    file.message(reason, cell.position[side])
+    if (side === 'start') {
+      point = start(cell)
+      if (!column) {
+        point.column++
+        point.offset++
+      }
+    } else {
+      point = end(cell)
+      point.column--
+      point.offset--
+    }
+
+    file.message(reason, point)
   }
 }
 
 function size(node) {
-  return end(node).offset - start(node).offset
+  return (
+    end(node.children[node.children.length - 1]).offset -
+    start(node.children[0]).offset
+  )
 }

@@ -10,7 +10,7 @@
  *
  * @example {"name": "readme.md"}
  *
- * @example {"name": "Readme.md", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "Readme.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not mix casing in file names
  */

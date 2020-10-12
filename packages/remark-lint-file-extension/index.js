@@ -15,7 +15,7 @@
  *
  * @example {"name": "readme"}
  *
- * @example {"name": "readme.mkd", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "readme.mkd", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect extension: use `md`
  *

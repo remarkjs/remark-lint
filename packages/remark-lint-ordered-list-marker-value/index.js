@@ -121,7 +121,7 @@
  *
  *   2:1-2:8: Marker should be `2`, was `1`
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'` or `'one'`
  */

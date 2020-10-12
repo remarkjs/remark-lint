@@ -28,7 +28,7 @@
  *   Alpha␊
  *   Bravo␊
  *
- * @example {"name": "not-ok-unix.md", "label": "input", "setting": "unix", "config": {"positionless": true}}
+ * @example {"name": "not-ok-unix.md", "label": "input", "setting": "unix", "positionless": true}
  *
  *   Alpha␍␊
  *
@@ -36,7 +36,7 @@
  *
  *   1:7: Expected linebreaks to be unix (`\n`), not windows (`\r\n`)
  *
- * @example {"name": "not-ok-windows.md", "label": "input", "setting": "windows", "config": {"positionless": true}}
+ * @example {"name": "not-ok-windows.md", "label": "input", "setting": "windows", "positionless": true}
  *
  *   Alpha␊
  *

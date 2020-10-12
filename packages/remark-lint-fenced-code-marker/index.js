@@ -76,7 +76,7 @@
  *
  *   5:1-7:4: Fenced code should use `~` as a marker
  *
- * @example {"name": "not-ok-incorrect.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok-incorrect.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */

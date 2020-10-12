@@ -87,7 +87,7 @@
  *
  *   5:1-7:4: Code blocks should be indented
  *
- * @example {"setting": "💩", "name": "not-ok-incorrect.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": "💩", "name": "not-ok-incorrect.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */

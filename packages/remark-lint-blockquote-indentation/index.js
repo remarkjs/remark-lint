@@ -41,7 +41,7 @@
  *
  * @example {"name": "not-ok.md", "label": "output"}
  *
- *   5:3: Remove 1 space between block quote and content
+ *   5:5: Remove 1 space between block quote and content
  *   9:3: Add 1 space between block quote and content
  */
 
@@ -52,7 +52,6 @@ var plural = require('pluralize')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
 
 module.exports = rule(
   'remark-lint:blockquote-indentation',
@@ -95,13 +94,5 @@ function blockquoteIndentation(tree, file, option) {
 }
 
 function check(node) {
-  var head = node.children[0]
-  var indentation = position.start(head).column - position.start(node).column
-  var padding = toString(head).match(/^ +/)
-
-  if (padding) {
-    indentation += padding[0].length
-  }
-
-  return indentation
+  return position.start(node.children[0]).column - position.start(node).column
 }

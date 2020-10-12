@@ -83,7 +83,7 @@ Paragraph.
 ###### Out
 
 ```text
-5:3: Remove 1 space between block quote and content
+5:5: Remove 1 space between block quote and content
 9:3: Add 1 space between block quote and content
 ```
 

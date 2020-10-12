@@ -65,40 +65,37 @@ Note: `·` represents a space.
 
 Bravo
 ·Charlie.
-**·Delta**.
 
-*   Echo
-    ·Foxtrot.
+*   Delta
+    ·Echo.
 
-> Golf
-> ·Hotel.
+> Foxtrot
+> ·Golf.
 
-`india()`
-·juliett.
+`hotel()`
+·india.
 
--   `kilo()`
-    ·lima.
+-   `juliett()`
+    ·kilo.
 
-![ image]() text
+·![lima]() mike
 
-![ image reference][] text
-
-[![ ][text]][text]
+* november
+oscar
+  ·papa.
 ```
 
 ###### Out
 
 ```text
-1:1: Expected no indentation in paragraph content
-4:1: Expected no indentation in paragraph content
-5:3: Expected no indentation in paragraph content
-8:5: Expected no indentation in paragraph content
-11:3: Expected no indentation in paragraph content
-14:1: Expected no indentation in paragraph content
-17:5: Expected no indentation in paragraph content
-19:1: Expected no indentation in paragraph content
-21:1: Expected no indentation in paragraph content
-23:2: Expected no indentation in paragraph content
+1:2: Expected no indentation in paragraph content
+4:2: Expected no indentation in paragraph content
+7:6: Expected no indentation in paragraph content
+10:4: Expected no indentation in paragraph content
+13:2: Expected no indentation in paragraph content
+16:6: Expected no indentation in paragraph content
+18:2: Expected no indentation in paragraph content
+22:4: Expected no indentation in paragraph content
 ```
 
 ## Install

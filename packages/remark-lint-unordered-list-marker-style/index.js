@@ -61,7 +61,7 @@
  *   2:1-2:6: Marker style should be `*`
  *   3:1-3:6: Marker style should be `*`
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
  */

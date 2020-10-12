@@ -55,7 +55,7 @@
  *
  *   2:1-2:6: Emphasis should use `*` as a marker
  *
- * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */

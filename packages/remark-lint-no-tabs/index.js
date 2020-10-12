@@ -21,7 +21,7 @@
  *
  *   ····Foo
  *
- * @example {"name": "not-ok.md", "label": "input", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "input", "positionless": true}
  *
  *   »Here's one before a code block.
  *

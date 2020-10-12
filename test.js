@@ -5,6 +5,7 @@ var test = require('tape')
 var vfile = require('to-vfile')
 var removePosition = require('unist-util-remove-position')
 var remark = require('remark')
+var gfm = require('remark-gfm')
 var rules = require('./script/util/rules')
 var rule = require('./script/util/rule')
 var lint = require('./packages/remark-lint')
@@ -294,14 +295,14 @@ function assertRule(t, rule, info) {
   settings.forEach(function (setting) {
     var fixture = tests[setting]
     var names = Object.keys(fixture)
-    var config = JSON.parse(setting)
+    var settings = JSON.parse(setting)
 
     t.test(setting, function (st) {
       st.plan(names.length)
 
       names.forEach(function (name) {
         st.test(name, function (sst) {
-          assertFixture(sst, rule, info, fixture[name], name, config)
+          assertFixture(sst, rule, info, fixture[name], name, settings)
         })
       })
     })
@@ -309,12 +310,14 @@ function assertRule(t, rule, info) {
 }
 
 /* eslint-disable-next-line max-params */
-function assertFixture(t, rule, info, fixture, basename, setting) {
+function assertFixture(t, rule, info, fixture, basename, settings) {
   var ruleId = info.ruleId
   var file = vfile(basename)
   var expected = fixture.output
-  var positionless = fixture.config.positionless
-  var proc = remark().use(rule, setting).data('settings', fixture.config)
+  var positionless = fixture.positionless
+  var proc = remark().use(rule, settings)
+
+  if (fixture.gfm) proc.use(gfm)
 
   file.contents = preprocess(fixture.input || '')
 
@@ -345,8 +348,9 @@ function assertFixture(t, rule, info, fixture, basename, setting) {
 
   if (!positionless) {
     file.messages = []
-
-    remark().use(clear).use(rule, setting).processSync(file)
+    proc = remark().use(clear).use(rule, settings)
+    if (fixture.gfm) proc.use(gfm)
+    proc.processSync(file)
 
     t.deepEqual(normalize(file.messages), [], 'should equal without position')
   }

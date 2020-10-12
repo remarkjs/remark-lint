@@ -22,6 +22,8 @@ This rule is not included in any default preset
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 - [ ] List item
 +  [x] List Item
@@ -36,6 +38,8 @@ No messages.
 ##### `not-ok.md`
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 - [ ] List item
@@ -150,3 +154,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

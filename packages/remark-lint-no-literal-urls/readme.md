@@ -51,6 +51,8 @@ No messages.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 http://foo.bar/baz
 ```
@@ -159,3 +161,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

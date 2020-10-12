@@ -30,6 +30,10 @@ This rule is not included in any default preset
 ![alpha][]
 ![Bravo][]
 ![Charlie][delta]
+
+[alpha]: a
+[bravo]: b
+[delta]: d
 ```
 
 ###### Out
@@ -44,6 +48,10 @@ No messages.
 ![alpha][alpha]
 ![Bravo][bravo]
 ![charlie][Charlie]
+
+[alpha]: a
+[bravo]: b
+[charlie]: c
 ```
 
 ###### Out

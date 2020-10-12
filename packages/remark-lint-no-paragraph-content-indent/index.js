@@ -40,38 +40,35 @@
  *
  *   Bravo
  *   ·Charlie.
- *   **·Delta**.
  *
- *   *   Echo
- *       ·Foxtrot.
+ *   *   Delta
+ *       ·Echo.
  *
- *   > Golf
- *   > ·Hotel.
+ *   > Foxtrot
+ *   > ·Golf.
  *
- *   `india()`
- *   ·juliett.
+ *   `hotel()`
+ *   ·india.
  *
- *   -   `kilo()`
- *       ·lima.
+ *   -   `juliett()`
+ *       ·kilo.
  *
- *   ![ image]() text
+ *   ·![lima]() mike
  *
- *   ![ image reference][] text
- *
- *   [![ ][text]][text]
+ *   * november
+ *   oscar
+ *     ·papa.
  *
  * @example {"name": "not-ok.md", "label": "output"}
  *
- *   1:1: Expected no indentation in paragraph content
- *   4:1: Expected no indentation in paragraph content
- *   5:3: Expected no indentation in paragraph content
- *   8:5: Expected no indentation in paragraph content
- *   11:3: Expected no indentation in paragraph content
- *   14:1: Expected no indentation in paragraph content
- *   17:5: Expected no indentation in paragraph content
- *   19:1: Expected no indentation in paragraph content
- *   21:1: Expected no indentation in paragraph content
- *   23:2: Expected no indentation in paragraph content
+ *   1:2: Expected no indentation in paragraph content
+ *   4:2: Expected no indentation in paragraph content
+ *   7:6: Expected no indentation in paragraph content
+ *   10:4: Expected no indentation in paragraph content
+ *   13:2: Expected no indentation in paragraph content
+ *   16:6: Expected no indentation in paragraph content
+ *   18:2: Expected no indentation in paragraph content
+ *   22:4: Expected no indentation in paragraph content
  */
 
 'use strict'
@@ -79,6 +76,7 @@
 var rule = require('unified-lint-rule')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
+var vfileLocation = require('vfile-location')
 
 module.exports = rule(
   'remark-lint:no-paragraph-content-indent',
@@ -88,91 +86,63 @@ module.exports = rule(
 var reason = 'Expected no indentation in paragraph content'
 
 function noParagraphContentIndent(tree, file) {
+  var content = String(file)
+  var location = vfileLocation(content)
+
   visit(tree, 'paragraph', visitor)
 
-  function visitor(node) {
-    var first = true
+  function visitor(node, _, parent) {
+    var line = position.start(node).line
+    var end = position.end(node).line
+    var column
+    var offset
+    var lineColumn
 
-    visit(node, check)
+    /* istanbul ignore else - Custom nodes may be containers. */
+    if (parent && parent.type === 'root') {
+      column = 1
+    } else if (parent && parent.type === 'blockquote') {
+      column = position.start(parent).column + 2
+    } else if (parent && parent.type === 'listItem') {
+      column = position.start(parent.children[0]).column
 
-    return visit.SKIP
-
-    function check(node, pos, parent) {
-      var start = position.start(node)
-      var value
-      var index
-      var line
-      var cumulative
-      var indent
-
-      if (!applicable(node)) {
-        return
-      }
-
-      if (!start.line || !node.position.indent) {
-        first = false
-        return
-      }
-
-      if (first && ws(toString(node).charAt(0))) {
-        file.message(reason, node.position.start)
-      }
-
-      first = false
-      value = toString(node)
-      index = value.indexOf('\n')
-      line = 0
-      cumulative = 0
-      indent = node.position.indent
-
-      while (index !== -1) {
-        cumulative += indent[line]
-
-        if (ws(value.charAt(index + 1))) {
-          file.message(reason, {
-            line: start.line + line + 1,
-            column: indent[line],
-            offset: start.offset + index + cumulative
-          })
-        }
-
-        index = value.indexOf('\n', index + 1)
+      // Skip past the first line if we’re the first child of a list item.
+      if (parent.children[0] === node) {
         line++
       }
+    }
 
-      if (value.charAt(value.length - 1) === '\n') {
-        node = head(parent.children[pos + 1])
+    // In a parent we don’t know, exit.
+    if (!column || !line) {
+      return
+    }
 
-        if (node && ws(toString(node).charAt(0))) {
-          file.message(reason, node.position.start)
+    while (line <= end) {
+      offset = location.toOffset({line: line, column: column})
+      lineColumn = offset
+
+      while (/[ \t]/.test(content.charAt(offset - 1))) {
+        offset--
+      }
+
+      // Exit if we find some other content before this line.
+      // This might be because the paragraph line is lazy, which isn’t this
+      // rule.
+      if (!offset || /[\r\n>]/.test(content.charAt(offset - 1))) {
+        offset = lineColumn
+
+        while (/[ \t]/.test(content.charAt(offset))) {
+          offset++
+        }
+
+        if (lineColumn !== offset) {
+          file.message(reason, location.toPosition(offset))
         }
       }
+
+      line++
     }
+
+    return visit.SKIP
   }
-}
-
-function ws(character) {
-  return character === ' ' || character === '\t'
-}
-
-function head(node) {
-  while (node && 'children' in node) {
-    node = node.children[0]
-  }
-
-  /* istanbul ignore if - shouldn’t happen by default, could happen for void
-   * nodes though. */
-  if (!node || !applicable(node)) {
-    return null
-  }
-
-  return node
-}
-
-function applicable(node) {
-  return 'value' in node || node.alt
-}
-
-function toString(node) {
-  return 'value' in node ? node.value : node.alt
 }

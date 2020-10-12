@@ -21,6 +21,12 @@
  *   > …bar…
  *   > …baz.
  *
+ * @example {"name": "ok-tabs.md"}
+ *
+ *   >»Foo…
+ *   >»…bar…
+ *   >»…baz.
+ *
  * @example {"name": "not-ok.md", "label": "input"}
  *
  *   > Foo…
@@ -30,6 +36,17 @@
  * @example {"name": "not-ok.md", "label": "output"}
  *
  *   2:1: Missing marker in block quote
+ *
+ * @example {"name": "not-ok-tabs.md", "label": "input"}
+ *
+ *   >»Foo…
+ *   »…bar…
+ *   …baz.
+ *
+ * @example {"name": "not-ok-tabs.md", "label": "output"}
+ *
+ *   2:1: Missing marker in block quote
+ *   3:1: Missing marker in block quote
  */
 
 'use strict'
@@ -50,46 +67,35 @@ var reason = 'Missing marker in block quote'
 function noBlockquoteWithoutMarker(tree, file) {
   var contents = String(file)
   var location = vfileLocation(file)
-  var last = contents.length
 
   visit(tree, 'blockquote', visitor)
 
-  function visitor(node) {
-    var indent = node.position && node.position.indent
-    var start
-    var length
-    var index
+  function onquotedchild(node) {
     var line
+    var end
+    var column
     var offset
-    var character
-    var pos
 
-    if (generated(node) || !indent || indent.length === 0) {
-      return
-    }
+    if (node.type === 'paragraph' && !generated(node)) {
+      line = position.start(node).line
+      end = position.end(node).line
+      column = position.start(node).column
 
-    start = position.start(node).line
-    length = indent.length
-    index = -1
+      // Skip past the first line.
+      while (++line <= end) {
+        offset = location.toOffset({line: line, column: column})
 
-    while (++index < length) {
-      line = start + index + 1
-      pos = {line: line, column: indent[index]}
-      offset = location.toOffset(pos) - 1
-
-      while (++offset < last) {
-        character = contents.charAt(offset)
-
-        if (character === '>') {
-          break
+        if (/>[\t ]+$/.test(contents.slice(offset - 5, offset))) {
+          continue
         }
 
-        /* istanbul ignore else - just for safety */
-        if (character !== ' ' && character !== '\t') {
-          file.message(reason, pos)
-          break
-        }
+        // Roughly here.
+        file.message(reason, {line: line, column: column - 2})
       }
     }
+  }
+
+  function visitor(node) {
+    node.children.forEach(onquotedchild)
   }
 }

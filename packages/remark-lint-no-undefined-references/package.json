@@ -28,7 +28,9 @@
     "collapse-white-space": "^1.0.4",
     "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^1.1.0",
-    "unist-util-visit": "^2.0.0"
+    "unist-util-position": "^3.1.0",
+    "unist-util-visit": "^2.0.0",
+    "vfile-location": "^3.1.0"
   },
   "xo": false
 }

@@ -23,15 +23,6 @@
  *   ␊
  *   …Bar.
  *
- * @example {"name": "ok-for-code.md"}
- *
- *   Paragraph.
- *
- *   *   List
- *   ␊
- *   ␊
- *       bravo();
- *
  * @example {"name": "empty-document.md"}
  *
  * @example {"name": "not-ok.md", "label": "input"}
@@ -113,17 +104,9 @@ function noConsecutiveBlankLines(tree, file) {
 
   function visitChild(child, index, all) {
     var previous = all[index - 1]
-    var max = 2
 
     if (previous && !generated(previous) && !generated(child)) {
-      if (
-        (previous.type === 'list' && child.type === 'list') ||
-        (child.type === 'code' && previous.type === 'list' && !child.lang)
-      ) {
-        max++
-      }
-
-      compare(position.end(previous), position.start(child), max)
+      compare(position.end(previous), position.start(child), 2)
     }
   }
 }

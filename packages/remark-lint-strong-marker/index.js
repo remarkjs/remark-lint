@@ -46,7 +46,7 @@
  *
  *   1:13-1:20: Strong should use `*` as a marker
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */

@@ -49,25 +49,6 @@ Foo…
 
 No messages.
 
-##### `ok-for-code.md`
-
-###### In
-
-Note: `␊` represents a line feed.
-
-```markdown
-Paragraph.
-
-*   List
-␊
-␊
-    bravo();
-```
-
-###### Out
-
-No messages.
-
 ##### `empty-document.md`
 
 ###### Out

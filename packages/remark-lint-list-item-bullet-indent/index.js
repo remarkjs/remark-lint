@@ -30,8 +30,8 @@
  *
  * @example {"name": "not-ok.md", "label": "output"}
  *
- *   3:3: Incorrect indentation before bullet: remove 1 space
- *   4:3: Incorrect indentation before bullet: remove 1 space
+ *   3:2: Incorrect indentation before bullet: remove 1 space
+ *   4:2: Incorrect indentation before bullet: remove 1 space
  */
 
 'use strict'
@@ -39,7 +39,6 @@
 var rule = require('unified-lint-rule')
 var plural = require('pluralize')
 var visit = require('unist-util-visit')
-var position = require('unist-util-position')
 var generated = require('unist-util-generated')
 
 module.exports = rule(
@@ -47,38 +46,33 @@ module.exports = rule(
   listItemBulletIndent
 )
 
-var start = position.start
-
 function listItemBulletIndent(tree, file) {
-  var contents = String(file)
-
   visit(tree, 'list', visitor)
 
-  function visitor(node) {
-    node.children.forEach(visitItems)
-  }
+  function visitor(list, _, grandparent) {
+    list.children.forEach(visitItems)
 
-  function visitItems(item) {
-    var final
-    var indent
-    var reason
+    function visitItems(item) {
+      var indent
+      var reason
 
-    if (!generated(item)) {
-      final = start(item.children[0])
-      indent = contents.slice(start(item).offset, final.offset).match(/^\s*/)[0]
-        .length
+      if (
+        grandparent &&
+        grandparent.type === 'root' &&
+        !generated(item) &&
+        !generated(grandparent)
+      ) {
+        indent = item.position.start.column - grandparent.position.start.column
 
-      if (indent !== 0) {
-        reason =
-          'Incorrect indentation before bullet: remove ' +
-          indent +
-          ' ' +
-          plural('space', indent)
+        if (indent) {
+          reason =
+            'Incorrect indentation before bullet: remove ' +
+            indent +
+            ' ' +
+            plural('space', indent)
 
-        file.message(reason, {
-          line: final.line,
-          column: final.column - indent
-        })
+          file.message(reason, item.position.start)
+        }
       }
     }
   }

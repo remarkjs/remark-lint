@@ -48,6 +48,8 @@ When configured with `{ checked: 'x' }`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 - [x] List item
 - [x] List item
@@ -63,6 +65,8 @@ When configured with `{ checked: 'X' }`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 - [X] List item
 - [X] List item
@@ -77,6 +81,8 @@ No messages.
 When configured with `{ unchecked: ' ' }`.
 
 ###### In
+
+Note: this example uses [GFM][].
 
 Note: `·` represents a space.
 
@@ -97,6 +103,8 @@ When configured with `{ unchecked: '\t' }`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 Note: `»` represents a tab.
 
 ```markdown
@@ -112,6 +120,8 @@ No messages.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 Note: `»` represents a tab.
 
 ```markdown
@@ -124,8 +134,8 @@ Note: `»` represents a tab.
 ###### Out
 
 ```text
-2:4-2:5: Checked checkboxes should use `x` as a marker
-4:4-4:5: Unchecked checkboxes should use ` ` as a marker
+2:5: Checked checkboxes should use `x` as a marker
+4:5: Unchecked checkboxes should use ` ` as a marker
 ```
 
 ##### `not-ok.md`
@@ -246,3 +256,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

@@ -11,17 +11,15 @@
  *
  * @example {"name": "ok.md"}
  *
- *   Alpha, *bravo*, _charlie_, [delta](http://echo.fox/trot)
+ *   Alpha [bravo](http://echo.fox/trot)
  *
  * @example {"name": "not-ok.md", "label": "input"}
  *
- *   Alpha, * bravo *, _ charlie _, [ delta ](http://echo.fox/trot)
+ *   Alpha [ bravo ](http://echo.fox/trot)
  *
  * @example {"name": "not-ok.md", "label": "output"}
  *
- *   1:8-1:17: Don’t pad `emphasis` with inner spaces
- *   1:19-1:30: Don’t pad `emphasis` with inner spaces
- *   1:32-1:63: Don’t pad `link` with inner spaces
+ *   1:7-1:38: Don’t pad `link` with inner spaces
  */
 
 'use strict'
@@ -34,7 +32,9 @@ var toString = require('mdast-util-to-string')
 module.exports = rule('remark-lint:no-inline-padding', noInlinePadding)
 
 function noInlinePadding(tree, file) {
-  visit(tree, ['emphasis', 'strong', 'delete', 'image', 'link'], visitor)
+  // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore
+  // since CM.
+  visit(tree, ['link', 'linkReference'], visitor)
 
   function visitor(node) {
     var contents

@@ -18,7 +18,11 @@ function transformer(tree) {
 }
 
 function replace(start, nodes, end) {
-  return [start, u('list', {ordered: false}, presets(root).map(item)), end]
+  return [
+    start,
+    u('list', {ordered: false, spread: false}, presets(root).map(item)),
+    end
+  ]
 
   function item(basename) {
     var pack = require(path.join(root, basename, 'package.json'))
@@ -27,7 +31,7 @@ function replace(start, nodes, end) {
       ''
     )
 
-    return u('listItem', [
+    return u('listItem', {spread: false}, [
       u('paragraph', [
         u('link', {url: pack.repository}, [u('inlineCode', basename)]),
         u('text', ' — ' + description)

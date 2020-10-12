@@ -34,6 +34,12 @@ This rule is not included in any default preset
 This only works if the link text is a `text` node:
 [`echo`][]
 [*foxtrot*][]
+
+[alpha]: a
+[bravo]: b
+[delta]: d
+[`echo`]: e
+[*foxtrot*]: f
 ```
 
 ###### Out
@@ -48,6 +54,10 @@ No messages.
 [alpha][alpha]
 [Bravo][bravo]
 [charlie][Charlie]
+
+[alpha]: a
+[bravo]: b
+[charlie]: c
 ```
 
 ###### Out

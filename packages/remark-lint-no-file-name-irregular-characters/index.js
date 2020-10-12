@@ -19,15 +19,15 @@
  *
  * @example {"name": "plugins.md"}
  *
- * @example {"name": "plug_ins.md", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "plug_ins.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use `_` in a file name
  *
- * @example {"name": "README.md", "label": "output", "setting": "\\.a-z0-9", "config": {"positionless": true}}
+ * @example {"name": "README.md", "label": "output", "setting": "\\.a-z0-9", "positionless": true}
  *
  *   1:1: Do not use `R` in a file name
  *
- * @example {"name": "plug ins.md", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "plug ins.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use ` ` in a file name
  */

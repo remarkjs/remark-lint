@@ -6,6 +6,7 @@ var u = require('unist-builder')
 var dox = require('dox')
 var chalk = require('chalk')
 var remark = require('remark')
+var gfm = require('remark-gfm')
 var strip = require('strip-indent')
 var trim = require('trim')
 var parseAuthor = require('parse-author')
@@ -254,7 +255,7 @@ presets(root).forEach(function (basename) {
 
   fs.writeFileSync(
     path.join(base, 'readme.md'),
-    remark().stringify(u('root', children))
+    remark().use(gfm).stringify(u('root', children))
   )
 
   console.log(chalk.green('✓') + ' wrote `readme.md` in `' + basename + '`')

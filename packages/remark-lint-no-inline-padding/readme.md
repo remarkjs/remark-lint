@@ -31,7 +31,7 @@ This rule is included in the following presets:
 ###### In
 
 ```markdown
-Alpha, *bravo*, _charlie_, [delta](http://echo.fox/trot)
+Alpha [bravo](http://echo.fox/trot)
 ```
 
 ###### Out
@@ -43,15 +43,13 @@ No messages.
 ###### In
 
 ```markdown
-Alpha, * bravo *, _ charlie _, [ delta ](http://echo.fox/trot)
+Alpha [ bravo ](http://echo.fox/trot)
 ```
 
 ###### Out
 
 ```text
-1:8-1:17: Don’t pad `emphasis` with inner spaces
-1:19-1:30: Don’t pad `emphasis` with inner spaces
-1:32-1:63: Don’t pad `link` with inner spaces
+1:7-1:38: Don’t pad `link` with inner spaces
 ```
 
 ## Install

@@ -6,21 +6,21 @@
  * @fileoverview
  *   Warn when list item checkboxes are followed by too much whitespace.
  *
- * @example {"name": "ok.md"}
+ * @example {"name": "ok.md", "gfm": true}
  *
  *   - [ ] List item
  *   +  [x] List Item
  *   *   [X] List item
  *   -    [ ] List item
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   - [ ] List item
  *   + [x]  List item
  *   * [X]   List item
  *   - [ ]    List item
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   2:7-2:8: Checkboxes should be followed by a single character
  *   3:7-3:9: Checkboxes should be followed by a single character
@@ -55,28 +55,36 @@ function checkboxContentIndent(tree, file) {
     var initial
     var final
     var value
+    var point
 
     // Exit early for items without checkbox.
     if (typeof node.checked !== 'boolean' || generated(node)) {
       return
     }
 
-    initial = start(node).offset
-    /* istanbul ignore next - hard to test, couldn’t find a case. */
-    final = (node.children.length === 0 ? end(node) : start(node.children[0]))
-      .offset
+    /* istanbul ignore next - a list item cannot be checked and empty, according
+     * to GFM, but theoretically it makes sense to get the end if that were
+     * possible. */
+    point = node.children.length === 0 ? end(node) : start(node.children[0])
 
-    while (/[^\S\n]/.test(contents.charAt(final))) {
-      final++
-    }
+    // Assume we start with a checkbox, because well, `checked` is set.
+    value = /\[([\t xX])]/.exec(
+      contents.slice(point.offset - 4, point.offset + 1)
+    )
 
-    // For a checkbox to be parsed, it must be followed by a whitespace.
-    value = contents.slice(initial, final)
-    value = value.slice(value.indexOf(']') + 1)
+    /* istanbul ignore if - failsafe to make sure we don‘t crash if there
+     * actually isn’t a checkbox. */
+    if (!value) return
 
-    if (value.length !== 1) {
+    // Move past checkbox.
+    initial = point.offset
+    final = initial
+
+    while (/[\t ]/.test(contents.charAt(final))) final++
+
+    if (final - initial > 0) {
       file.message(reason, {
-        start: location.toPosition(final - value.length + 1),
+        start: location.toPosition(initial),
         end: location.toPosition(final)
       })
     }

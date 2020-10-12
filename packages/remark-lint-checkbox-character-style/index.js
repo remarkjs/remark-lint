@@ -26,45 +26,45 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": {"checked": "x"}}
+ * @example {"name": "ok.md", "setting": {"checked": "x"}, "gfm": true}
  *
  *   - [x] List item
  *   - [x] List item
  *
- * @example {"name": "ok.md", "setting": {"checked": "X"}}
+ * @example {"name": "ok.md", "setting": {"checked": "X"}, "gfm": true}
  *
  *   - [X] List item
  *   - [X] List item
  *
- * @example {"name": "ok.md", "setting": {"unchecked": " "}}
+ * @example {"name": "ok.md", "setting": {"unchecked": " "}, "gfm": true}
  *
  *   - [ ] List item
  *   - [ ] List item
  *   - [ ]··
  *   - [ ]
  *
- * @example {"name": "ok.md", "setting": {"unchecked": "\t"}}
+ * @example {"name": "ok.md", "setting": {"unchecked": "\t"}, "gfm": true}
  *
  *   - [»] List item
  *   - [»] List item
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   - [x] List item
  *   - [X] List item
  *   - [ ] List item
  *   - [»] List item
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output", "gfm": true}
  *
- *   2:4-2:5: Checked checkboxes should use `x` as a marker
- *   4:4-4:5: Unchecked checkboxes should use ` ` as a marker
+ *   2:5: Checked checkboxes should use `x` as a marker
+ *   4:5: Unchecked checkboxes should use ` ` as a marker
  *
- * @example {"setting": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect unchecked checkbox marker `💩`: use either `'\t'`, or `' '`
  *
- * @example {"setting": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "config": {"positionless": true}}
+ * @example {"setting": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
  */
@@ -72,7 +72,6 @@
 'use strict'
 
 var rule = require('unified-lint-rule')
-var vfileLocation = require('vfile-location')
 var visit = require('unist-util-visit')
 var position = require('unist-util-position')
 var generated = require('unist-util-generated')
@@ -91,7 +90,6 @@ var types = {true: 'checked', false: 'unchecked'}
 
 function checkboxCharacterStyle(tree, file, option) {
   var contents = String(file)
-  var location = vfileLocation(file)
   var preferred = typeof option === 'object' ? option : {}
 
   if (preferred.unchecked && unchecked[preferred.unchecked] !== true) {
@@ -114,11 +112,9 @@ function checkboxCharacterStyle(tree, file, option) {
 
   function visitor(node) {
     var type
-    var initial
-    var final
+    var point
     var value
     var style
-    var character
     var reason
 
     // Exit early for items without checkbox.
@@ -127,19 +123,28 @@ function checkboxCharacterStyle(tree, file, option) {
     }
 
     type = types[node.checked]
-    initial = start(node).offset
-    final = (node.children.length === 0 ? end(node) : start(node.children[0]))
-      .offset
 
-    // For a checkbox to be parsed, it must be followed by a whitespace.
-    value = contents.slice(initial, final).replace(/\s+$/, '').slice(0, -1)
+    /* istanbul ignore next - a list item cannot be checked and empty, according
+     * to GFM, but theoretically it makes sense to get the end if that were
+     * possible. */
+    point = node.children.length === 0 ? end(node) : start(node.children[0])
+    // Move back to before `] `.
+    point.offset -= 2
+    point.column -= 2
 
-    // The checkbox character is behind a square bracket.
-    character = value.charAt(value.length - 1)
+    // Assume we start with a checkbox, because well, `checked` is set.
+    value = /\[([\t Xx])]/.exec(
+      contents.slice(point.offset - 2, point.offset + 1)
+    )
+
+    /* istanbul ignore if - failsafe to make sure we don‘t crash if there
+     * actually isn’t a checkbox. */
+    if (!value) return
+
     style = preferred[type]
 
     if (style) {
-      if (character !== style) {
+      if (value[1] !== style) {
         reason =
           type.charAt(0).toUpperCase() +
           type.slice(1) +
@@ -147,13 +152,10 @@ function checkboxCharacterStyle(tree, file, option) {
           style +
           '` as a marker'
 
-        file.message(reason, {
-          start: location.toPosition(initial + value.length - 1),
-          end: location.toPosition(initial + value.length)
-        })
+        file.message(reason, point)
       }
     } else {
-      preferred[type] = character
+      preferred[type] = value[1]
     }
   }
 }

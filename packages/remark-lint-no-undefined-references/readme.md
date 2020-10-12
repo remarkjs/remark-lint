@@ -35,6 +35,13 @@ This rule is included in the following presets:
 ```markdown
 [foo][]
 
+Just a [ bracket.
+
+Typically, you’d want to use escapes (with a backslash: \\) to escape what
+could turn into a \[reference otherwise].
+
+Just two braces can’t link: [].
+
 [foo]: https://example.com
 ```
 
@@ -47,13 +54,37 @@ No messages.
 ###### In
 
 ```markdown
-[bar][]
+[bar]
+
+[baz][]
+
+[text][qux]
+
+Spread [over
+lines][]
+
+> in [a
+> block quote][]
+
+[asd][a
+
+Can include [*emphasis*].
+
+Multiple pairs: [a][b][c].
 ```
 
 ###### Out
 
 ```text
-1:1-1:8: Found reference to undefined definition
+1:1-1:6: Found reference to undefined definition
+3:1-3:8: Found reference to undefined definition
+5:1-5:12: Found reference to undefined definition
+7:8-8:9: Found reference to undefined definition
+10:6-11:17: Found reference to undefined definition
+13:1-13:6: Found reference to undefined definition
+15:13-15:25: Found reference to undefined definition
+17:17-17:23: Found reference to undefined definition
+17:23-17:26: Found reference to undefined definition
 ```
 
 ##### `ok-allow.md`

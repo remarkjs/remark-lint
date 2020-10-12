@@ -112,6 +112,8 @@ And this one is also very wrong: because the code starts aaaaaaafter the column:
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
 long.
@@ -245,3 +247,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

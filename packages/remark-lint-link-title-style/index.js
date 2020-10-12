@@ -81,7 +81,7 @@
  *
  *   2:30-2:46: Titles should use `"` as a quote
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */

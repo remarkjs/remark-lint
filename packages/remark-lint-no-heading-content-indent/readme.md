@@ -89,25 +89,6 @@ Note: `·` represents a space.
 
 No messages.
 
-##### `tight.md`
-
-###### In
-
-Note: `·` represents a space.
-
-```markdown
-In pedantic mode, headings without spacing can also be detected:
-
-##No spacing left, too much right··##
-```
-
-###### Out
-
-```text
-3:3: Add 1 space before this heading’s content
-3:34: Remove 1 space after this heading’s content
-```
-
 ## Install
 
 [npm][]:

@@ -20,11 +20,21 @@
  *   [`echo`][]
  *   [*foxtrot*][]
  *
+ *   [alpha]: a
+ *   [bravo]: b
+ *   [delta]: d
+ *   [`echo`]: e
+ *   [*foxtrot*]: f
+ *
  * @example {"name": "not-ok.md", "label": "input"}
  *
  *   [alpha][alpha]
  *   [Bravo][bravo]
  *   [charlie][Charlie]
+ *
+ *   [alpha]: a
+ *   [bravo]: b
+ *   [charlie]: c
  *
  * @example {"name": "not-ok.md", "label": "output"}
  *

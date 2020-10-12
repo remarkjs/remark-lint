@@ -45,6 +45,8 @@ When configured with `'padded'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 | A     | B     |
 | ----- | ----- |
@@ -60,6 +62,8 @@ No messages.
 When configured with `'padded'`.
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 | A    |    B |
@@ -84,8 +88,11 @@ Too much padding isn’t good either:
 3:9: Cell should be padded
 7:2: Cell should be padded
 7:17: Cell should be padded
-13:23: Cell should be padded with 1 space, not 2
-13:32: Cell should be padded with 1 space, not 2
+13:9: Cell should be padded with 1 space, not 2
+13:20: Cell should be padded with 1 space, not 2
+13:21: Cell should be padded with 1 space, not 2
+13:29: Cell should be padded with 1 space, not 2
+13:30: Cell should be padded with 1 space, not 2
 ```
 
 ##### `empty.md`
@@ -93,6 +100,8 @@ Too much padding isn’t good either:
 When configured with `'padded'`.
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 <!-- Empty cells are OK, but those surrounding them may not be. -->
@@ -116,6 +125,8 @@ When configured with `'padded'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 <!-- Missing cells are fine as well. -->
 
@@ -135,6 +146,8 @@ When configured with `'compact'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 |A    |B    |
 |-----|-----|
@@ -151,6 +164,8 @@ When configured with `'compact'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 |   A    | B    |
 |   -----| -----|
@@ -164,9 +179,9 @@ When configured with `'compact'`.
 ###### Out
 
 ```text
-3:5: Cell should be compact
-3:12: Cell should be compact
-7:15: Cell should be compact
+3:2: Cell should be compact
+3:11: Cell should be compact
+7:16: Cell should be compact
 ```
 
 ##### `ok-padded.md`
@@ -174,6 +189,8 @@ When configured with `'compact'`.
 When configured with `'consistent'`.
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 | A     | B     |
@@ -194,6 +211,8 @@ No messages.
 When configured with `'consistent'`.
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 | A     | B     |
@@ -217,6 +236,8 @@ When configured with `'consistent'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 |A    |B    |
 |-----|-----|
@@ -237,6 +258,8 @@ When configured with `'consistent'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 |A    |B    |
 |-----|-----|
@@ -250,7 +273,7 @@ When configured with `'consistent'`.
 ###### Out
 
 ```text
-7:15: Cell should be compact
+7:16: Cell should be compact
 ```
 
 ##### `not-ok.md`
@@ -361,3 +384,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

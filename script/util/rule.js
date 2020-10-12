@@ -74,7 +74,8 @@ function ruleSync(filePath) {
 
     if (!info.label) {
       context[name] = {
-        config: info.config || {},
+        positionless: info.positionless,
+        gfm: info.gfm,
         setting: setting,
         input: value,
         output: []
@@ -95,7 +96,7 @@ function ruleSync(filePath) {
     }
 
     if (!context[name]) {
-      context[name] = {config: info.config || {}}
+      context[name] = {positionless: info.positionless, gfm: info.gfm}
     }
 
     context[name].setting = setting

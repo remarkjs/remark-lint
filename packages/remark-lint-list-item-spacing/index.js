@@ -12,12 +12,12 @@
  *   required to have blank lines between each item.
  *   And otherwise, there should not be blank lines between items.
  *
- *   By default, all items must be “loose” (a blank line must be between them)
- *   if one or more items are multiline (span more than one line).
+ *   By default, all items must be spread out (a blank line must be between
+ *   them) if one or more items are multiline (span more than one line).
  *   Otherwise, the list must be tight (no blank line must be between items).
  *
- *   If you pass `{checkBlanks: true}`, all items must be “loose” if one or more
- *   items contain blank lines.
+ *   If you pass `{checkBlanks: true}`, all items must be spread out if one or
+ *   more items contain blank lines.
  *   Otherwise, the list must be tight.
  *
  * @example {"name": "ok.md"}
@@ -58,8 +58,8 @@
  *
  *   4:9-5:1: Missing new line after list item
  *   5:11-6:1: Missing new line after list item
- *   11:1-12:1: Extraneous new line after list item
- *   13:1-14:1: Extraneous new line after list item
+ *   10:11-12:1: Extraneous new line after list item
+ *   12:11-14:1: Extraneous new line after list item
  *
  * @example {"name": "ok.md", "setting": {"checkBlanks": true}}
  *
@@ -104,7 +104,7 @@
  *
  *   5:15-6:1: Missing new line after list item
  *   8:18-9:1: Missing new line after list item
- *   15:1-16:1: Extraneous new line after list item
+ *   14:15-16:1: Extraneous new line after list item
  */
 
 'use strict'
@@ -132,7 +132,6 @@ function listItemSpacing(tree, file, option) {
 
   function visitor(node) {
     var tight = true
-    var indent
     var children
     var length
     var index
@@ -151,14 +150,13 @@ function listItemSpacing(tree, file, option) {
         }
       }
 
-      indent = start(node).column
       child = children[0]
-      index = 0
+      index = 0 // Skip over first.
 
       while (++index < length) {
         next = children[index]
 
-        if (end(child).column > indent !== tight) {
+        if (start(next).line - end(child).line < 2 !== tight) {
           file.message(tight ? reasonTight : reasonLoose, {
             start: end(child),
             end: start(next)

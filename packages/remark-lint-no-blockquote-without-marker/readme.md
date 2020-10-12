@@ -46,6 +46,22 @@ This rule is included in the following presets:
 
 No messages.
 
+##### `ok-tabs.md`
+
+###### In
+
+Note: `»` represents a tab.
+
+```markdown
+>»Foo…
+>»…bar…
+>»…baz.
+```
+
+###### Out
+
+No messages.
+
 ##### `not-ok.md`
 
 ###### In
@@ -60,6 +76,25 @@ No messages.
 
 ```text
 2:1: Missing marker in block quote
+```
+
+##### `not-ok-tabs.md`
+
+###### In
+
+Note: `»` represents a tab.
+
+```markdown
+>»Foo…
+»…bar…
+…baz.
+```
+
+###### Out
+
+```text
+2:1: Missing marker in block quote
+3:1: Missing marker in block quote
 ```
 
 ## Install

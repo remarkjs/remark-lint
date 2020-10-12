@@ -44,17 +44,6 @@
  * @example {"name": "empty-heading.md"}
  *
  *   #··
- *
- * @example {"name": "tight.md", "config":{"pedantic":true}, "label": "input"}
- *
- *   In pedantic mode, headings without spacing can also be detected:
- *
- *   ##No spacing left, too much right··##
- *
- * @example {"name": "tight.md", "label": "output"}
- *
- *   3:3: Add 1 space before this heading’s content
- *   3:34: Remove 1 space after this heading’s content
  */
 
 'use strict'
@@ -75,8 +64,6 @@ var start = position.start
 var end = position.end
 
 function noHeadingContentIndent(tree, file) {
-  var contents = String(file)
-
   visit(tree, 'heading', visitor)
 
   function visitor(node) {
@@ -84,11 +71,8 @@ function noHeadingContentIndent(tree, file) {
     var children
     var type
     var head
-    var initial
     var final
     var diff
-    var index
-    var char
     var reason
     var abs
 
@@ -101,20 +85,6 @@ function noHeadingContentIndent(tree, file) {
     type = style(node, 'atx')
 
     if (type === 'atx' || type === 'atx-closed') {
-      initial = start(node)
-      index = initial.offset
-      char = contents.charAt(index)
-
-      while (char && char !== '#') {
-        char = contents.charAt(++index)
-      }
-
-      /* istanbul ignore if - CR/LF bug: remarkjs/remark#195. */
-      if (!char) {
-        return
-      }
-
-      index = depth + (index - initial.offset)
       head = start(children[0]).column
 
       // Ignore empty headings.
@@ -122,14 +92,13 @@ function noHeadingContentIndent(tree, file) {
         return
       }
 
-      diff = head - initial.column - 1 - index
+      diff = head - start(node).column - 1 - depth
 
       if (diff) {
         abs = Math.abs(diff)
 
         reason =
-          (diff > 0 ? 'Remove' : 'Add') +
-          ' ' +
+          'Remove ' +
           abs +
           ' ' +
           plural('space', abs) +

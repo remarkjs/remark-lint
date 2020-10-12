@@ -61,8 +61,8 @@ Paragraph.
 ###### Out
 
 ```text
-3:3: Incorrect indentation before bullet: remove 1 space
-4:3: Incorrect indentation before bullet: remove 1 space
+3:2: Incorrect indentation before bullet: remove 1 space
+4:2: Incorrect indentation before bullet: remove 1 space
 ```
 
 ## Install

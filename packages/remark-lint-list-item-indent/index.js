@@ -98,7 +98,7 @@
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *    1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
  */

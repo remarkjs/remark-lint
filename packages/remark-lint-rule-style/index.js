@@ -50,7 +50,7 @@
  *
  *   3:1-3:6: Rules should use `***`
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "config": {"positionless": true}}
+ * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
  */

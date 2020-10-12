@@ -59,43 +59,23 @@ module.exports = rule('remark-lint:no-heading-indent', noHeadingIndent)
 var start = position.start
 
 function noHeadingIndent(tree, file) {
-  var contents = String(file)
-  var length = contents.length
-
   visit(tree, 'heading', visitor)
 
-  function visitor(node) {
-    var initial
-    var begin
-    var index
-    var character
+  function visitor(node, _, parent) {
     var diff
 
-    if (generated(node)) {
+    // Note: it’s rather complex to detect what the expected indent is in block
+    // quotes and lists, so let’s only do directly in root for now.
+    if (generated(node) || (parent && parent.type !== 'root')) {
       return
     }
 
-    initial = start(node)
-    begin = initial.offset
-    index = begin - 1
-
-    while (++index < length) {
-      character = contents.charAt(index)
-
-      if (character !== ' ' && character !== '\t') {
-        break
-      }
-    }
-
-    diff = index - begin
+    diff = start(node).column - 1
 
     if (diff) {
       file.message(
         'Remove ' + diff + ' ' + plural('space', diff) + ' before this heading',
-        {
-          line: initial.line,
-          column: initial.column + diff
-        }
+        start(node)
       )
     }
   }

@@ -34,7 +34,7 @@
     "remark-lint-hard-break-spaces": "^2.0.0",
     "remark-lint-no-duplicate-definitions": "^2.0.0",
     "remark-lint-no-heading-content-indent": "^3.0.0",
-    "remark-lint-no-inline-padding": "^2.0.0",
+    "remark-lint-no-inline-padding": "^3.0.0",
     "remark-lint-no-shortcut-reference-image": "^2.0.0",
     "remark-lint-no-shortcut-reference-link": "^2.0.0",
     "remark-lint-no-undefined-references": "^2.0.0",

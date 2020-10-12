@@ -25,7 +25,7 @@
     "index.js"
   ],
   "dependencies": {
-    "remark-lint": "^7.0.0",
+    "remark-lint": "^8.0.0",
     "remark-lint-file-extension": "^1.0.0",
     "remark-lint-no-file-name-mixed-case": "^1.0.0",
     "remark-lint-no-file-name-articles": "^1.0.0",

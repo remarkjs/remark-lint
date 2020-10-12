@@ -23,7 +23,7 @@
     "index.js"
   ],
   "dependencies": {
-    "remark-lint": "^7.0.0",
+    "remark-lint": "^8.0.0",
     "remark-lint-final-newline": "^1.0.0",
     "remark-lint-list-item-bullet-indent": "^3.0.0",
     "remark-lint-list-item-indent": "^2.0.0",

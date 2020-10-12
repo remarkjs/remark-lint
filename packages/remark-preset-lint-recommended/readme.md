@@ -11,7 +11,7 @@
 [![Chat][chat-badge]][chat]
 
 remark preset to configure `remark-lint` with settings that prevent
-mistakes or syntaxes that do not work correctly across vendors.
+mistakes or stuff that fails across vendors.
 
 ## Rules
 

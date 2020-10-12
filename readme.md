@@ -9,8 +9,6 @@
 
 [**remark**][remark] plugins to lint Markdown.
 
-Another linter?
-Yes.
 Ensuring the Markdown you (and contributors) write is of great quality will
 provide better rendering in all the different markdown parsers, and makes sure
 less refactoring is needed afterwards.
@@ -195,7 +193,7 @@ is enabled again):
 [`remark-stringify`][remark-stringify] can format markdown syntax.
 It ensures a single style is used: list items use one type of bullet (`*`, `-`,
 `+`), emphasis (`*` or `_`) and importance (`__` or `**`) use a standard marker,
-table fences are aligned, [and more][remark-stringify-options].
+[and more][remark-stringify-options].
 
 ###### Example
 
@@ -351,7 +349,7 @@ Presets can be loaded just like other plugins.
 
 *   [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) — rules that enforce consistency
 *   [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
-*   [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) — rules that prevent mistakes or syntaxes that do not work correctly across vendors
+*   [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) — rules that prevent mistakes or stuff that fails across vendors.
 
 <!--presets end-->
 

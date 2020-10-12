@@ -36,7 +36,7 @@
     "remark-lint-ordered-list-marker-style": "^2.0.0",
     "remark-lint-rule-style": "^2.0.0",
     "remark-lint-strong-marker": "^2.0.0",
-    "remark-lint-table-cell-padding": "^2.0.0"
+    "remark-lint-table-cell-padding": "^3.0.0"
   },
   "xo": false
 }

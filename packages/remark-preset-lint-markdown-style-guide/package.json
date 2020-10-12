@@ -1,6 +1,6 @@
 {
   "name": "remark-preset-lint-markdown-style-guide",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "remark preset to configure remark-lint with rules that enforce the markdown style guide",
   "license": "MIT",
   "keywords": [

@@ -49,7 +49,7 @@
     "remark-lint-ordered-list-marker-value": "^2.0.0",
     "remark-lint-list-item-indent": "^2.0.0",
     "remark-lint-list-item-content-indent": "^2.0.0",
-    "remark-lint-list-item-spacing": "^2.0.0",
+    "remark-lint-list-item-spacing": "^3.0.0",
     "remark-lint-code-block-style": "^2.0.0",
     "remark-lint-fenced-code-flag": "^2.0.0",
     "remark-lint-fenced-code-marker": "^2.0.0",

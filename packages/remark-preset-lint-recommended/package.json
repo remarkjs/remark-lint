@@ -37,7 +37,7 @@
     "remark-lint-no-inline-padding": "^3.0.0",
     "remark-lint-no-shortcut-reference-image": "^2.0.0",
     "remark-lint-no-shortcut-reference-link": "^2.0.0",
-    "remark-lint-no-undefined-references": "^2.0.0",
+    "remark-lint-no-undefined-references": "^3.0.0",
     "remark-lint-no-unused-definitions": "^2.0.0"
   },
   "xo": false

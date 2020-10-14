@@ -4,11 +4,9 @@ var fs = require('fs')
 var path = require('path')
 var u = require('unist-builder')
 var dox = require('dox')
-var chalk = require('chalk')
 var remark = require('remark')
 var gfm = require('remark-gfm')
 var strip = require('strip-indent')
-var trim = require('trim')
 var parseAuthor = require('parse-author')
 var remote = require('../package.json').repository
 var find = require('./util/find')
@@ -22,7 +20,7 @@ presets(root).forEach(function (basename) {
   var doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
   var tags = dox.parseComments(doc)[0].tags
   var author = parseAuthor(pack.author)
-  var description = trim(strip(find(tags, 'fileoverview')))
+  var description = strip(find(tags, 'fileoverview')).trim()
   var rows = []
   var children
   var short = basename.replace(/^remark-/, '')
@@ -258,5 +256,5 @@ presets(root).forEach(function (basename) {
     remark().use(gfm).stringify(u('root', children))
   )
 
-  console.log(chalk.green('✓') + ' wrote `readme.md` in `' + basename + '`')
+  console.log('✓ wrote `readme.md` in `' + basename + '`')
 })

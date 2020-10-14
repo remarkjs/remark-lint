@@ -103,9 +103,7 @@ var report = require('vfile-reporter')
 var remark = require('remark')
 var styleGuide = require('remark-preset-lint-markdown-style-guide')
 
-var file = remark()
-  .use(styleGuide)
-  .processSync('_Hello world_')
+var file = remark().use(styleGuide).processSync('_Hello world_')
 
 console.log(report(file))
 ```
@@ -204,10 +202,10 @@ Say we have the following file, `example.js`, showing how formatting rules can
 be used:
 
 ```js
-var report = require('vfile-reporter');
-var remark = require('remark');
-var emphasisMarker = require('remark-lint-emphasis-marker');
-var strongMarker = require('remark-lint-strong-marker');
+var report = require('vfile-reporter')
+var remark = require('remark')
+var emphasisMarker = require('remark-lint-emphasis-marker')
+var strongMarker = require('remark-lint-strong-marker')
 
 remark()
   .use(emphasisMarker, '*')
@@ -218,9 +216,9 @@ remark()
     // ^ `remark-stringify` settings.
   })
   .process('_Hello_, __world__!', function (err, file) {
-    console.error(report(err || file));
-    console.log(String(file));
-  });
+    console.error(report(err || file))
+    console.log(String(file))
+  })
 ```
 
 Now, running `node example` yields warnings and a formatted file:
@@ -239,12 +237,12 @@ If you’re using [`remark-stringify`][remark-stringify] explicitly, you can pas
 options like any other plugin, like so:
 
 ```js
-var report = require('vfile-reporter');
-var unified = require('unified');
-var parse = require('remark-parse');
-var stringify = require('remark-stringify');
-var emphasisMarker = require('remark-lint-emphasis-marker');
-var strongMarker = require('remark-lint-strong-marker');
+var report = require('vfile-reporter')
+var unified = require('unified')
+var parse = require('remark-parse')
+var stringify = require('remark-stringify')
+var emphasisMarker = require('remark-lint-emphasis-marker')
+var strongMarker = require('remark-lint-strong-marker')
 
 unified()
   .use(parse)
@@ -254,9 +252,9 @@ unified()
   .use(stringify, {emphasis: '*', strong: '*'})
   // ^ `remark-stringify` with settings.
   .process('_Hello_, __world__!', function (err, file) {
-    console.error(report(err || file));
-    console.log(String(file));
-  });
+    console.error(report(err || file))
+    console.log(String(file))
+  })
 ```
 
 Now, when running `node example`, this results in the same output as the

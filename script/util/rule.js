@@ -4,7 +4,6 @@ var fs = require('fs')
 var path = require('path')
 var dox = require('dox')
 var strip = require('strip-indent')
-var trim = require('trim')
 var find = require('./find')
 
 module.exports = ruleSync
@@ -38,7 +37,7 @@ function ruleSync(filePath) {
   description = strip(description)
 
   result.ruleId = ruleId
-  result.description = trim(description)
+  result.description = description.trim()
   result.tests = tests
   result.filePath = filePath
 

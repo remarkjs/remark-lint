@@ -4,7 +4,6 @@ var fs = require('fs')
 var path = require('path')
 var inspect = require('util').inspect
 var u = require('unist-builder')
-var chalk = require('chalk')
 var remark = require('remark')
 var gfm = require('remark-gfm')
 var parseAuthor = require('parse-author')
@@ -367,5 +366,5 @@ rules(root).forEach(function (basename) {
     remark().use(gfm).stringify(u('root', children))
   )
 
-  console.log(chalk.green('✓') + ' wrote `readme.md` in `' + basename + '`')
+  console.log('✓ wrote `readme.md` in `' + basename + '`')
 })

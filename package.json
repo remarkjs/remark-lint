@@ -31,7 +31,7 @@
     "David Chambers <dc@davidchambers.me>"
   ],
   "devDependencies": {
-    "browserify": "^16.0.0",
+    "browserify": "^17.0.0",
     "chalk": "^4.0.0",
     "dox": "^0.9.0",
     "lerna": "^3.0.0",
@@ -39,8 +39,8 @@
     "nyc": "^15.0.0",
     "parse-author": "^2.0.0",
     "prettier": "^2.0.0",
-    "remark": "^13.0.0-alpha.1",
-    "remark-cli": "^9.0.0-alpha.1",
+    "remark": "^13.0.0",
+    "remark-cli": "^9.0.0",
     "remark-comment-config": "^6.0.0",
     "remark-gfm": "^1.0.0",
     "remark-github": "^10.0.0",

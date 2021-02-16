@@ -19,14 +19,13 @@ presets = presets(root).map(function (name) {
   var doc = fs.readFileSync(path.join(root, name, 'index.js'), 'utf8')
   var packages = {}
 
-  doc.replace(/require\('(remark-lint-[^']+)'\)(?:, ([^\]]+)])?/g, function (
-    $0,
-    rule,
-    option
-  ) {
-    packages[rule] = option || null
-    return ''
-  })
+  doc.replace(
+    /require\('(remark-lint-[^']+)'\)(?:, ([^\]]+)])?/g,
+    function ($0, rule, option) {
+      packages[rule] = option || null
+      return ''
+    }
+  )
 
   return {
     name: name,

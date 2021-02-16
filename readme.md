@@ -264,9 +264,9 @@ previous example.
 
 If you’re using [`remark-cli`][cli], [`remark-stringify`][remark-stringify] is
 included unless an output format other than markdown (such as HTML) is defined.
-In this case you can configure `remark-stringify` settings using the [`-s,
---settings`][cli-settings] flag or a `"settings"` field in [remark configuration
-files][cli-config].
+In this case you can configure `remark-stringify` settings using the
+[`-s, --settings`][cli-settings] flag or a `"settings"` field in [remark
+configuration files][cli-config].
 
 Say we have the following file, `example.md`:
 

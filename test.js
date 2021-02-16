@@ -32,39 +32,39 @@ test('core', function (t) {
       .use(noHeadingPunctuation)
       .use(noMultipleToplevelHeadings)
       .use(lint)
-      .process(vfile({path: 'virtual.md', contents: doc}), function (
-        err,
-        file
-      ) {
-        st.deepEqual(
-          [err].concat(file.messages.map(String)),
-          [
-            null,
-            'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-            'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
-          ],
-          'should support `remark-lint` last'
-        )
-      })
+      .process(
+        vfile({path: 'virtual.md', contents: doc}),
+        function (error, file) {
+          st.deepEqual(
+            [error].concat(file.messages.map(String)),
+            [
+              null,
+              'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
+              'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
+            ],
+            'should support `remark-lint` last'
+          )
+        }
+      )
 
     remark()
       .use(lint)
       .use(noHeadingPunctuation)
       .use(noMultipleToplevelHeadings)
-      .process(vfile({path: 'virtual.md', contents: doc}), function (
-        err,
-        file
-      ) {
-        st.deepEqual(
-          [err].concat(file.messages.map(String)),
-          [
-            null,
-            'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-            'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
-          ],
-          'should support `remark-lint` first'
-        )
-      })
+      .process(
+        vfile({path: 'virtual.md', contents: doc}),
+        function (error, file) {
+          st.deepEqual(
+            [error].concat(file.messages.map(String)),
+            [
+              null,
+              'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
+              'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
+            ],
+            'should support `remark-lint` first'
+          )
+        }
+      )
   })
 
   t.test('should support no rules', function (st) {
@@ -72,9 +72,9 @@ test('core', function (t) {
 
     remark()
       .use(lint)
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null],
           'should warn for missing new lines'
         )
@@ -86,9 +86,9 @@ test('core', function (t) {
 
     remark()
       .use(finalNewline)
-      .process('', function (err, file) {
+      .process('', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null],
           'should support successful rules'
         )
@@ -100,9 +100,9 @@ test('core', function (t) {
 
     remark()
       .use(finalNewline, [2])
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
           'should emit fatally (1)'
         )
@@ -116,9 +116,9 @@ test('core', function (t) {
 
     remark()
       .use(finalNewline, true)
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
           'should emit'
         )
@@ -131,9 +131,9 @@ test('core', function (t) {
 
     remark()
       .use(finalNewline, false)
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null],
           'should not emit'
         )
@@ -147,9 +147,9 @@ test('core', function (t) {
 
       remark()
         .use(finalNewline, [true])
-        .process('.', function (err, file) {
+        .process('.', function (error, file) {
           st.deepEqual(
-            [err].concat(file.messages.map(String)),
+            [error].concat(file.messages.map(String)),
             [null, '1:1: Missing newline character at end of file'],
             'should emit'
           )
@@ -164,9 +164,9 @@ test('core', function (t) {
 
       remark()
         .use(finalNewline, [false])
-        .process('.', function (err, file) {
+        .process('.', function (error, file) {
           st.deepEqual(
-            [err].concat(file.messages.map(String)),
+            [error].concat(file.messages.map(String)),
             [null],
             'should not emit'
           )
@@ -179,9 +179,9 @@ test('core', function (t) {
 
     remark()
       .use(finalNewline, ['error'])
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
           'should emit fatally (1)'
         )
@@ -194,9 +194,9 @@ test('core', function (t) {
 
     remark()
       .use(finalNewline, ['on'])
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null, '1:1: Missing newline character at end of file'],
           'should message'
         )
@@ -204,31 +204,32 @@ test('core', function (t) {
       })
   })
 
-  t.test('should support a list with a string severity (`warn`)', function (
-    st
-  ) {
-    st.plan(2)
+  t.test(
+    'should support a list with a string severity (`warn`)',
+    function (st) {
+      st.plan(2)
 
-    remark()
-      .use(finalNewline, ['warn'])
-      .process('.', function (err, file) {
-        st.deepEqual(
-          [err].concat(file.messages.map(String)),
-          [null, '1:1: Missing newline character at end of file'],
-          'should message'
-        )
-        st.equal(file.messages[0].fatal, false, 'should not emit fatally')
-      })
-  })
+      remark()
+        .use(finalNewline, ['warn'])
+        .process('.', function (error, file) {
+          st.deepEqual(
+            [error].concat(file.messages.map(String)),
+            [null, '1:1: Missing newline character at end of file'],
+            'should message'
+          )
+          st.equal(file.messages[0].fatal, false, 'should not emit fatally')
+        })
+    }
+  )
 
   t.test('should support a list with a string severity (`off`)', function (st) {
     st.plan(1)
 
     remark()
       .use(finalNewline, ['off'])
-      .process('.', function (err, file) {
+      .process('.', function (error, file) {
         st.deepEqual(
-          [err].concat(file.messages.map(String)),
+          [error].concat(file.messages.map(String)),
           [null],
           'should disable `final-newline`'
         )

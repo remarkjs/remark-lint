@@ -33,15 +33,15 @@ function factory(id, rule) {
 
       fn(tree, file, options, done)
 
-      function done(err) {
+      function done(error) {
         var messages = file.messages
         var message
 
         // Add the error, if not already properly added.
         /* istanbul ignore if - only happens for incorrect plugins */
-        if (err && messages.indexOf(err) === -1) {
+        if (error && messages.indexOf(error) === -1) {
           try {
-            file.fail(err)
+            file.fail(error)
           } catch (_) {}
         }
 

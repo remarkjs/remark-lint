@@ -48,24 +48,23 @@ presets(root).forEach(function (basename) {
     ])
   )
 
-  doc.replace(/require\('remark-lint-([^']+)'\)(?:, ([^\]]+)])?/g, function (
-    $0,
-    rule,
-    option
-  ) {
-    var url = remote + '/tree/main/packages/remark-lint-' + rule
+  doc.replace(
+    /require\('remark-lint-([^']+)'\)(?:, ([^\]]+)])?/g,
+    function ($0, rule, option) {
+      var url = remote + '/tree/main/packages/remark-lint-' + rule
 
-    rows.push(
-      u('tableRow', [
-        u('tableCell', [
-          u('link', {url: url, title: null}, [u('inlineCode', rule)])
-        ]),
-        u('tableCell', option ? [u('inlineCode', option)] : [])
-      ])
-    )
+      rows.push(
+        u('tableRow', [
+          u('tableCell', [
+            u('link', {url: url, title: null}, [u('inlineCode', rule)])
+          ]),
+          u('tableCell', option ? [u('inlineCode', option)] : [])
+        ])
+      )
 
-    return ''
-  })
+      return ''
+    }
+  )
 
   children = [
     u('html', '<!--This file is generated-->'),

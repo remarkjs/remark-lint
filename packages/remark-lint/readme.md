@@ -77,9 +77,9 @@ abide by its terms.
 
 [logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-lint/main.svg
+[build-badge]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/remarkjs/remark-lint
+[build]: https://github.com/remarkjs/remark-lint/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
 

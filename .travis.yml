@@ -1,8 +1,0 @@
-language: node_js
-os:
-  - windows
-  - linux
-node_js:
-  - lts/dubnium
-  - node
-after_script: bash <(curl -s https://codecov.io/bash)

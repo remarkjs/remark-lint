@@ -16,40 +16,40 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"setting": "~", "name": "ok.md"}
+ * @example {"setting": "~", "name": "ok.md", "gfm": true}
  *
  *   ~foo~
  *
- * @example {"setting": "~", "name": "not-ok.md", "label": "input"}
+ * @example {"setting": "~", "name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~~foo~~
  *
- * @example {"setting": "~", "name": "not-ok.md", "label": "output"}
+ * @example {"setting": "~", "name": "not-ok.md", "label": "output", "gfm": true}
  *
- *   1:1-1:6: Strikethrough should use `~` as a marker
+ *   1:1-1:8: Strikethrough should use `~` as a marker
  *
- * @example {"setting": "~~", "name": "ok.md"}
+ * @example {"setting": "~~", "name": "ok.md", "gfm": true}
  *
  *   ~~foo~~
  *
- * @example {"setting": "~~", "name": "not-ok.md", "label": "input"}
+ * @example {"setting": "~~", "name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~foo~
  *
- * @example {"setting": "~~", "name": "not-ok.md", "label": "output"}
+ * @example {"setting": "~~", "name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:6: Strikethrough should use `~~` as a marker
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~~foo~~
  *   ~bar~
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   2:1-2:6: Strikethrough should use `~~` as a marker
  *
- * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
+ * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
  */
@@ -84,9 +84,11 @@ function strikethroughMarker(tree, file, option) {
     var marker
 
     if (!generated(node)) {
-      marker = contents.substr(position.start(node).offset, 2) === '~~' ? 
-        contents.substr(position.start(node).offset, 2) :
-        contents.substr(position.start(node).offset, 1)
+      var offset = position.start(node).offset
+      marker =
+        contents.slice(offset, offset + 2) === '~~'
+          ? contents.slice(offset, offset + 2)
+          : contents.slice(offset, offset + 1)
 
       if (preferred) {
         if (marker !== preferred) {

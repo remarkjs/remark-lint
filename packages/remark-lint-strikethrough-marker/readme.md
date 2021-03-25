@@ -34,6 +34,8 @@ When configured with `'~'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 ~foo~
 ```
@@ -48,6 +50,8 @@ When configured with `'~'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 ~~foo~~
 ```
@@ -55,7 +59,7 @@ When configured with `'~'`.
 ###### Out
 
 ```text
-1:1-1:6: Strikethrough should use `~` as a marker
+1:1-1:8: Strikethrough should use `~` as a marker
 ```
 
 ##### `ok.md`
@@ -63,6 +67,8 @@ When configured with `'~'`.
 When configured with `'~~'`.
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 ~~foo~~
@@ -78,6 +84,8 @@ When configured with `'~~'`.
 
 ###### In
 
+Note: this example uses [GFM][].
+
 ```markdown
 ~foo~
 ```
@@ -91,6 +99,8 @@ When configured with `'~~'`.
 ##### `not-ok.md`
 
 ###### In
+
+Note: this example uses [GFM][].
 
 ```markdown
 ~~foo~~
@@ -211,3 +221,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

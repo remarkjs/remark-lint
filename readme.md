@@ -30,6 +30,7 @@ powered by [plugins][remark-plugins] (such as these).
 *   [Rules](#rules)
 *   [List of presets](#list-of-presets)
 *   [List of external rules](#list-of-external-rules)
+*   [Create a custom rule](#create-a-custom-rule)
 *   [Security](#security)
 *   [Related](#related)
 *   [Contribute](#contribute)
@@ -403,6 +404,10 @@ This list is ordered based on the name without prefix, so excluding
     — Wrapper for `write-good`
 *   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
     — Ensure the same URL is not linked multiple times.
+
+## Create a custom rule
+
+Follow this [step by step guide](https://github.com/remarkjs/remark-lint/blob/main/doc/create-a-custom-rule.md) on how to create your own custom rule for `remark-lint`.
 
 ## Security
 

@@ -2,7 +2,8 @@
 
 This tutorial will help you setting up a JavaScript project, and creating your first linting plugin for `remark`.
 
-## Table of Contents
+### Table of Contents
+
 *   [Set up the project](#set-up-the-project)
 *   [Set up remark](#set-up-remark)
 *   [The no-invalid-gif rule:](#the-no-invalid-gif-rule)
@@ -12,7 +13,7 @@ This tutorial will help you setting up a JavaScript project, and creating your f
 *   [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
 *   [Apply the rule](#apply-the-rule)
 
-### Set up the project
+\## Set up the project
 
 Let's set up the project and start adding our dependencies.
 
@@ -38,7 +39,7 @@ yarn unified-lint-rule unist-util-generated unist-util-visit
 
 These will help us creating and managing our custom rules.
 
-### Set up remark
+## Set up remark
 
 With our dependencies all installed, we can start creating a `.remarkrc.js`, which will contain all the plugins that will be consumed by the remark processor.
 For details about alternative or advanced configurations, please refer to [Configuring remark-lint](https://github.com/remarkjs/remark-lint#configuring-remark-lint).
@@ -81,7 +82,7 @@ doc.md: no issues found
 
 All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
 
-### The no-invalid-gif rule
+## The no-invalid-gif rule
 
 Let's imagine we want to write a rule that checks whether a `.gif` file is used within an image.
 
@@ -99,7 +100,7 @@ Some funny images of our favourite pets
 
 We would expect an *error* or *warning* pointing to `funny-cat.gif`, because the file extension `.gif` violates our rule.
 
-### Create the custom rule
+## Create the custom rule
 
 Let's create a new folder `rules` under the root directory, where we will place all of our custom rules, and create a new file in it named `no-gif-allowed.js`.
 
@@ -126,7 +127,7 @@ module.exports = rule("my-project:no-gif-allowed", noGifAllowed);
 
 This can help you when wanting to create a group of rules under the same *label* or *namespace*.
 
-### Rule arguments
+## Rule arguments
 
 Your rule function will receive three arguments.
 
@@ -138,7 +139,7 @@ function noGifAllowed(tree, file, options) {}
 *   `file` (*required*): a [virtual file format](https://github.com/vfile/vfile).
 *   `options` (*optional*): additional information passed to the rule by the remark plugins definition.
 
-### Rule implementation
+## Rule implementation
 
 Because we will be inspecting a [mdast](https://github.com/syntax-tree/mdast), which is a markdown abstract syntax tree built upon [unist](https://github.com/syntax-tree/unist), we can take advantage of the many existing [unist utilities](https://github.com/syntax-tree/unist#utilities) to inspect our tree's nodes.
 
@@ -182,7 +183,7 @@ function noGifAllowed(tree, file, options) {
 module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
 ```
 
-### Import the rule in your remark config
+## Import the rule in your remark config
 
 Now that our custom rule is defined, and ready to be used, we need to add it to our `remark` configuration.
 
@@ -197,7 +198,7 @@ module.exports = {
 };
 ```
 
-### Apply the rule
+## Apply the rule
 
 If you run `yarn lint`, you should see the following message in the terminal:
 

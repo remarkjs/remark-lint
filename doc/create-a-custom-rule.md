@@ -2,6 +2,17 @@
 
 The following is a short guide on how to setup a JavaScript project and create a linting plugin for `remark` using `remark-lint`.
 
+## Table of Contents
+
+* [Set up the project](#1-set-up-the-project)
+* [Set up remark](#2-set-up-remark)
+* [The no-invalid-gif rule](#3-the-no-invalid-gif-rule)
+* [Create the custom rule](#4-create-the-custom-rule)
+* [Rule arguments](#5-rule-arguments)
+* [Rule implementation](#6-rule-implementation)
+* [Import the rule in your remark config](#7-import-the-rule-in-your-remark-config)
+* [Apply the rule](#8-apply-the-rule)
+
 
 ### 1. Set up the project
 
@@ -72,7 +83,7 @@ doc.md: no issues found
 
 All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
 
-### 3. The `no-invalid-gif` rule:
+### 3. The no-invalid-gif rule:
 
 Let's imagine we want to write a rule that checks whether a `.gif` file is used within an image.
 
@@ -188,7 +199,7 @@ module.exports = {
 };
 ```
 
-### 8. Run the linter
+### 8. Apply the rule
 
 If you run `yarn lint`, you should see the following message in the terminal:
 

@@ -407,7 +407,7 @@ This list is ordered based on the name without prefix, so excluding
 
 ## Create a custom rule
 
-Follow this [step by step guide](https://github.com/remarkjs/remark-lint/blob/main/doc/create-a-custom-rule.md) on how to create your own custom rule for `remark-lint`.
+Follow this comprehensive [tutorial](https://github.com/remarkjs/remark-lint/blob/main/doc/create-a-custom-rule.md) on how to create your own custom rule for `remark`.
 
 ## Security
 

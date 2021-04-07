@@ -1,12 +1,13 @@
 # Create a custom `remark-lint` rule
 
-This tutorial will help you setting up a JavaScript project, and creating your first linting plugin for `remark`.
+This tutorial will help you creating your first linting plugin for `remark`.
 
 ### Table of Contents
 
-*   [Set up the project](#set-up-the-project)
+<!-- *   [Set up the project](#set-up-the-project) -->
+
 *   [Set up remark](#set-up-remark)
-*   [The no-invalid-gif rule:](#the-no-invalid-gif-rule)
+*   [The no-invalid-gif rule](#the-no-invalid-gif-rule)
 *   [Create the custom rule](#create-the-custom-rule)
 *   [Rule arguments](#rule-arguments)
 *   [Rule implementation](#rule-implementation)
@@ -15,21 +16,25 @@ This tutorial will help you setting up a JavaScript project, and creating your f
 
 \## Set up the project
 
-Let's set up the project and start adding our dependencies.
+Create a new folder and navigate inside it from your Terminal. For this example I will be using UNIX commands (macOS and Linux compatible).
+Now we can generate our `package.json`
 
 ```bash
+mkdir my-custom-rule
+
+cd my-custom-rule
+
 yarn init -y
 ```
 
-Now that we have a `package.json`, we can install our processor and lint plugin:
+Now we can start installing our dependencies.
 
 ```bash
-yarn add remark remark-lint remark-cli
+yarn add remark-lint remark-cli
 ```
 
-*   [remark](https://github.com/remarkjs/remark): a markdown processor.
-*   [remark-lint](https://github.com/remarkjs/remark-lint): remark plugins to lint markdown.
-*   [remark-cli](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): CLI.
+*   [remark-lint](https://github.com/remarkjs/remark-lint): a plugin to lint markdown built on [remark](https://github.com/remarkjs/remark): (a markdown processor).
+*   [remark-cli](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): remark CLI.
 
 Because we will be working with [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree), we will also need some utilities:
 
@@ -206,6 +211,4 @@ If you run `yarn lint`, you should see the following message in the terminal:
  5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
 ```
 
-**Congratulations!**
-
-The violation has been correctly found and reported.
+**Congratulations! The rule works!**

@@ -95,7 +95,7 @@ If we run `npm run lint` we should expect to see in our terminal:
 doc.md: no issues found
 ```
 
-All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
+All good, the file has been processed, and because we haven’t specified any plugins nor lint rules, no issues are found.
 
 [Back to Top](#contents)
 

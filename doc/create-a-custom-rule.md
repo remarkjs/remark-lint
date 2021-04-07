@@ -75,7 +75,7 @@ Let’s create a `doc.md`, the markdown file we want to lint:
 touch doc.md
 ```
 
-...and copy/paste the following:
+…and copy/paste the following:
 
 ```markdown
 ## Best pets! <3

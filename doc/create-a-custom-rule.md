@@ -230,7 +230,7 @@ module.exports = {
 
 ## Apply the rule on the Markdown file
 
-If you run `npm lint`, you should see the following message in the terminal:
+If you run `npm run lint`, you should see the following message in the terminal:
 
 ```sh
  5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint

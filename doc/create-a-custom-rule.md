@@ -25,7 +25,7 @@ cd my-custom-rule
 npm init -y
 ```
 
-Now we can start installing our dependencies.
+Now we can start installing our dependencies:
 
 ```sh
  npm install remark-lint remark-cli

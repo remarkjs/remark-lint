@@ -122,6 +122,7 @@ Let's create a new folder `rules` under the root directory, where we will place 
 $ mkdir rules
 $ cd rules
 $ touch no-gif-allowed.js
+$ cd .. # return to project root
 ```
 
 *Remember*: the name of the folder and files, and where to place them within your project, is entirely up to you.

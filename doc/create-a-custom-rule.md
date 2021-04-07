@@ -72,7 +72,7 @@ Then, in our `package.json`, add the following script to process all the markdow
 Let’s create a `doc.md`, the markdown file we want to lint:
 
 ```sh
- touch doc.md
+touch doc.md
 ```
 
 ...and copy/paste the following:

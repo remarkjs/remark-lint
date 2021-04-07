@@ -2,7 +2,7 @@
 
 This guide is part of [a step-by-step tutorial](https://dev.to/floroz/how-to-create-a-custom-lint-rule-for-markdown-and-mdx-using-remark-and-eslint-2jim), and will help you getting started to create your first linting plugin for `remark`.
 
-## Table of Contents
+## Contents
 
 *   [Set up the project](#set-up-the-project)
 *   [Set up remark](#set-up-remark)
@@ -15,43 +15,44 @@ This guide is part of [a step-by-step tutorial](https://dev.to/floroz/how-to-cre
 
 ## Set up the project
 
-Create a new folder and navigate inside it from your Terminal. For this example I will be using UNIX commands (macOS and Linux compatible).
+Create a new folder and enter it from your terminal. For this example I will be using Unix commands (macOS and Linux compatible).
 Now we can generate our `package.json`
 
-```bash
-$ mkdir my-custom-rule
+```sh
+ mkdir my-custom-rule
 
-$ cd my-custom-rule
+ cd my-custom-rule
 
-$ yarn init -y
+ npm init -y
 ```
 
 Now we can start installing our dependencies.
 
-```bash
-$ yarn add remark-lint remark-cli
+```sh
+ npm install remark-lint remark-cli
 ```
 
-*   [remark-lint](https://github.com/remarkjs/remark-lint): a plugin to lint markdown built on [remark](https://github.com/remarkjs/remark): (a markdown processor).
-*   [remark-cli](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): remark CLI.
+*   [`remark-lint`](https://github.com/remarkjs/remark-lint): Core lint plugin
+*   [`remark-cli`](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): Command-line interface
 
-Because we will be working with [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree), we will also need some utilities:
+We will also need some utilities:
 
-```bash
-$ yarn unified-lint-rule unist-util-generated unist-util-visit
+```sh
+ npm install unified-lint-rule unist-util-generated unist-util-visit
 ```
 
 These will help us creating and managing our custom rules.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
 ## Set up remark
 
-With our dependencies all installed, we can start creating a `.remarkrc.js`, which will contain all the plugins that will be consumed by the remark processor.
-For details about alternative or advanced configurations, please refer to [Configuring remark-lint](https://github.com/remarkjs/remark-lint#configuring-remark-lint).
+With everything installed, we can now create a `.remarkrc.js` that will contain the plugins we’ll use.
 
-```bash
-$ touch .remarkrc.js
+For more info on configuration, see [Configuring `remark-lint`](https://github.com/remarkjs/remark-lint#configuring-remark-lint).
+
+```sh
+ touch .remarkrc.js
 ```
 
 ```js
@@ -70,15 +71,15 @@ Then, in our `package.json`, let's add the following script, which will process 
 }
 ```
 
-Let's create a `doc.md`, the markdown file we want to lint,
+Let's create a `doc.md`, the markdown file we want to lint:
 
-```bash
-$ touch doc.md
+```sh
+ touch doc.md
 ```
 
-and copy/paste this content:
+...and copy/paste the following:
 
-```md
+```markdown
 ## Best pets! <3
 
 Some funny images of our favorite pets
@@ -90,44 +91,45 @@ Some funny images of our favorite pets
 
 At this point, we have a working `remark` configuration and a markdown file in the project.
 
-If we run `yarn run lint` we should expect to see in our terminal:
+If we run `npm run lint` we should expect to see in our terminal:
 
-```bash
-$ doc.md: no issues found
+```sh
+ doc.md: no issues found
 ```
 
 All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
-## The no-invalid-gif rule
+## The `no-invalid-gif` rule
 
-Let's imagine we want to write a rule that checks whether a `.gif` file is used within an image.
+Let’s imagine we want to write a rule that checks whether a `.gif` file is used as an image.
 
 Given the content of our `doc.md` file declared above, we would expect an *error* or *warning* pointing to:
 
-```md
+```markdown
 ![a funny cat](funny-cat.gif)
 ```
 
-Because the file extension `.gif` in the image tag, violates our rule.
+Because the file extension `.gif` in the image tag violates our rule.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
 ## Create the custom rule
 
 Let's create a new folder `rules` under the root directory, where we will place all of our custom rules, and create a new file in it named `no-gif-allowed.js`.
 
-```bash
-$ mkdir rules
-$ cd rules
-$ touch no-gif-allowed.js
-$ cd .. # return to project root
+```sh
+ mkdir rules
+ cd rules
+ touch no-gif-allowed.js
+ cd .. # return to project root
 ```
 
-*Remember*: the name of the folder and files, and where to place them within your project, is entirely up to you.
+*Note*: the name of folders and files, and where to place them within your project, is up to you.
 
-In `./rules/no-gif-allowed.js`, let's import the `unified-lint-rule`.
+In `./rules/no-gif-allowed.js`, let's import `unified-lint-rule`.
+
 We then export the result of calling `rule` by providing the *namespace and rule name* (`remark-lint:no-gif-allowed`) as the first argument, and our implementation of the rule (`noGifAllowed`) as the second argument.
 
 ```js
@@ -148,9 +150,9 @@ module.exports = rule("my-project-name:no-gif-allowed", noGifAllowed);
 module.exports = rule("my-npm-published-package:no-gif-allowed", noGifAllowed);
 ```
 
-This can help you when wanting to create a group of rules under the same *label* or *namespace*.
+This can help you when wanting to create a group of rules under the same *namespace*.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
 ## Rule arguments
 
@@ -160,15 +162,15 @@ Your rule function will receive three arguments.
 function noGifAllowed(tree, file, options) {}
 ```
 
-*   `tree` (*required*): a [mdast](https://github.com/syntax-tree/mdast).
-*   `file` (*required*): a [virtual file format](https://github.com/vfile/vfile).
-*   `options` (*optional*): additional information passed to the rule by the remark plugins definition.
+*   `tree` (*required*): [mdast](https://github.com/syntax-tree/mdast)
+*   `file` (*required*): [virtual file](https://github.com/vfile/vfile)
+*   `options` (*optional*): additional information passed to the rule by users
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
 ## Rule implementation
 
-Because we will be inspecting a [mdast](https://github.com/syntax-tree/mdast), which is a markdown abstract syntax tree built upon [unist](https://github.com/syntax-tree/unist), we can take advantage of the many existing [unist utilities](https://github.com/syntax-tree/unist#utilities) to inspect our tree's nodes.
+Because we will be inspecting [mdast](https://github.com/syntax-tree/mdast), which is a markdown abstract syntax tree built upon [unist](https://github.com/syntax-tree/unist), we can take advantage of the many existing [unist utilities](https://github.com/syntax-tree/unist#utilities) to inspect our tree’s nodes.
 
 For this example, we will use [`unist-util-visit`](https://github.com/syntax-tree/unist-util-visit) to recursively inspect all the image nodes, and [`unist-util-generated`](https://github.com/syntax-tree/unist-util-generated) to ensure we are not inspecting nodes that we have generated ourselves and do not belong to the `doc.md`.
 
@@ -178,8 +180,8 @@ const visit = require("unist-visit-util");
 const generated = require("unist-util-generated");
 
 function isValidNode(node) {
-  // here we check whether the given node violates our rule
-  // implementation details are not relevant to the scope of this example.
+  // Here we check whether the given node violates our rule.
+  // Implementation details are not relevant to the scope of this example.
   // This is an overly simplified solution for demonstration purposes
   if (node.url && typeof node.url === "string") {
     return !node.url.endsWith(".gif");
@@ -189,12 +191,10 @@ function noGifAllowed(tree, file, options) {
   visit(tree, "image", visitor);
   function visitor(node) {
     if (!generated(node)) {
-      /**
-       * This is an extremely simplified example of how to structure
-       * the logic to check whether a node violates your rule.
-       * You have complete freedom over how to visit/inspect the tree,
-       * and on how to implement the validation logic for your node.
-       * */
+       // This is an extremely simplified example of how to structure
+       // the logic to check whether a node violates your rule.
+       // You have complete freedom over how to visit/inspect the tree,
+       //and on how to implement the validation logic for your node.
       const isValid = isValidNode(node);
       if (!isValid) {
         // remember to provide the node as second argument to the message,
@@ -210,13 +210,13 @@ function noGifAllowed(tree, file, options) {
 module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
 ```
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
 ## Import the rule in your remark config
 
 Now that our custom rule is defined, and ready to be used, we need to add it to our `remark` configuration.
 
-All you have to do is to import your rule into the `remark` configuration plugins array:
+You can do that by importing your rule and adding it in `plugins` array:
 
 ```js
 // .remarkrc.js
@@ -227,16 +227,16 @@ module.exports = {
 };
 ```
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)
 
 ## Apply the rule on the Markdown file
 
-If you run `yarn lint`, you should see the following message in the terminal:
+If you run `npm lint`, you should see the following message in the terminal:
 
-```bash
+```sh
  5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
 ```
 
 **Congratulations! The rule works!**
 
-[Back to Top](#table-of-contents)
+[Back to Top](#contents)

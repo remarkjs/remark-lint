@@ -197,7 +197,7 @@ function noGifAllowed(tree, file, options) {
        //and on how to implement the validation logic for your node.
       const isValid = isValidNode(node);
       if (!isValid) {
-        // remember to provide the node as second argument to the message,
+        // Remember to provide the node as second argument to the message,
         // in order to obtain the position and column where the violation occurred.
         file.message(
           `Invalid image file extentions. Please do not use gifs`,

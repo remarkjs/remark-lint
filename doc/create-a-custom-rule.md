@@ -232,8 +232,8 @@ module.exports = {
 
 If you run `npm run lint`, you should see the following message in the terminal:
 
-```sh
- 5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
+```text
+5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
 ```
 
 **Congratulations! The rule works!**

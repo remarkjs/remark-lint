@@ -1,6 +1,6 @@
 # Create a custom `remark-lint` rule
 
-This tutorial will help you creating your first linting plugin for `remark`.
+This guide is part of [a step-by-step tutorial](https://dev.to/floroz/how-to-create-a-custom-lint-rule-for-markdown-and-mdx-using-remark-and-eslint-2jim), and will help you getting started to create your first linting plugin for `remark`.
 
 ## Table of Contents
 

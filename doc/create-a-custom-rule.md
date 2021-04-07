@@ -34,7 +34,7 @@ npm install remark-lint remark-cli
 *   [`remark-lint`](https://github.com/remarkjs/remark-lint): Core lint plugin
 *   [`remark-cli`](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): Command-line interface
 
-We will also need some utilities:
+We will also use some utilities:
 
 ```sh
 npm install unified-lint-rule unist-util-generated unist-util-visit

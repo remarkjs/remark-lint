@@ -15,7 +15,8 @@ This guide is part of [a step-by-step tutorial](https://dev.to/floroz/how-to-cre
 
 ## Set up the project
 
-Create a new folder and enter it from your terminal. For this example I will be using Unix commands (macOS and Linux compatible).
+Create a new folder and enter it from your terminal.
+For this example I will be using Unix commands (macOS and Linux compatible).
 Now we can generate our `package.json`
 
 ```sh

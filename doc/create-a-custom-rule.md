@@ -37,7 +37,7 @@ Now we can start installing our dependencies:
 We will also need some utilities:
 
 ```sh
- npm install unified-lint-rule unist-util-generated unist-util-visit
+npm install unified-lint-rule unist-util-generated unist-util-visit
 ```
 
 These will help us creating and managing our custom rules.

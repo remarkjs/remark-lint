@@ -6,7 +6,7 @@ This guide is part of [a step-by-step tutorial](https://dev.to/floroz/how-to-cre
 
 *   [Set up the project](#set-up-the-project)
 *   [Set up remark](#set-up-remark)
-*   [The no-invalid-gif rule](#the-no-invalid-gif-rule)
+*   [The `no-invalid-gif` rule](#the-no-invalid-gif-rule)
 *   [Create the custom rule](#create-the-custom-rule)
 *   [Rule arguments](#rule-arguments)
 *   [Rule implementation](#rule-implementation)

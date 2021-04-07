@@ -198,9 +198,9 @@ function noGifAllowed(tree, file, options) {
         // Remember to provide the node as second argument to the message,
         // in order to obtain the position and column where the violation occurred.
         file.message(
-          `Invalid image file extentions. Please do not use gifs`,
+          'Invalid image file extentions. Please do not use gifs',
           node
-        );
+        )
       }
     }
   }

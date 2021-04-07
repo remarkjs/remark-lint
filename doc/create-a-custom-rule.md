@@ -17,7 +17,7 @@ This guide is part of [a step-by-step tutorial](https://dev.to/floroz/how-to-cre
 
 Create a new folder and enter it from your terminal.
 For this example I will be using Unix commands (macOS and Linux compatible).
-Now we can generate our `package.json`
+Then generate a `package.json`:
 
 ```sh
 mkdir my-custom-rule

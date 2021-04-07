@@ -132,11 +132,11 @@ We then export the result of calling `rule` by providing the *namespace and rule
 ```js
 // rules/no-gif-allowed.js
 
-var rule = require("unified-lint-rule");
+var rule = require('unified-lint-rule')
 function noGifAllowed(tree, file, options) {
-  // rule implementation
+  // Rule implementation
 }
-module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
+module.exports = rule('remark-lint:no-gif-allowed', noGifAllowed)
 ```
 
 Let’s say you want all your custom rules to be defined as part of your project namespace.

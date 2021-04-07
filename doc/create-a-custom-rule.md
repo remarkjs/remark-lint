@@ -181,8 +181,8 @@ function isValidNode(node) {
   // Here we check whether the given node violates our rule.
   // Implementation details are not relevant to the scope of this example.
   // This is an overly simplified solution for demonstration purposes
-  if (node.url && typeof node.url === "string") {
-    return !node.url.endsWith(".gif");
+  if (node.url && typeof node.url === 'string') {
+    return !node.url.endsWith('.gif')
   }
 }
 function noGifAllowed(tree, file, options) {

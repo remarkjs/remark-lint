@@ -154,7 +154,7 @@ This can help you when wanting to create a group of rules under the same *namesp
 
 ## Rule arguments
 
-Your rule function will receive three arguments.
+Your rule function will receive three arguments:
 
 ```js
 function noGifAllowed(tree, file, options) {}

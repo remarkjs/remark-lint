@@ -117,10 +117,10 @@ Because the file extension `.gif` in the image violates our rule.
 Let’s create a new folder `rules` under the root directory, where we will place all of our custom rules, and create a new file in it named `no-gif-allowed.js`.
 
 ```sh
- mkdir rules
- cd rules
- touch no-gif-allowed.js
- cd .. # return to project root
+mkdir rules
+cd rules
+touch no-gif-allowed.js
+cd .. # return to project root
 ```
 
 *Note*: the name of folders and files, and where to place them within your project, is up to you.

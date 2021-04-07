@@ -102,7 +102,6 @@ All good, the file has been processed, and because we haven’t specified any pl
 ## The `no-invalid-gif` rule
 
 Let’s imagine we want to write a rule that checks whether a `.gif` file is used as an image.
-
 Given the content of our `doc.md` file declared above, we would expect an *error* or *warning* pointing to:
 
 ```markdown

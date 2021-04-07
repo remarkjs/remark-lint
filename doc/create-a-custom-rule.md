@@ -114,7 +114,7 @@ Because the file extension `.gif` in the image violates our rule.
 
 ## Create the custom rule
 
-Let's create a new folder `rules` under the root directory, where we will place all of our custom rules, and create a new file in it named `no-gif-allowed.js`.
+Let’s create a new folder `rules` under the root directory, where we will place all of our custom rules, and create a new file in it named `no-gif-allowed.js`.
 
 ```sh
  mkdir rules

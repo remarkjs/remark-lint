@@ -125,7 +125,7 @@ cd .. # return to project root
 
 *Note*: the name of folders and files, and where to place them within your project, is up to you.
 
-In `./rules/no-gif-allowed.js`, let's import `unified-lint-rule`.
+In `./rules/no-gif-allowed.js`, let’s import `unified-lint-rule`.
 
 We then export the result of calling `rule` by providing the *namespace and rule name* (`remark-lint:no-gif-allowed`) as the first argument, and our implementation of the rule (`noGifAllowed`) as the second argument.
 

@@ -213,7 +213,7 @@ module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
 
 ## Import the rule in your remark config
 
-Now that our custom rule is defined, and ready to be used, we need to add it to our `remark` configuration.
+Now that our custom rule is defined and ready to be used we need to add it to our `remark` configuration.
 
 You can do that by importing your rule and adding it in `plugins` array:
 

@@ -219,11 +219,11 @@ You can do that by importing your rule and adding it in `plugins` array:
 
 ```js
 // .remarkrc.js
-const noGifAllowed = require("./rules/no-gif-allowed.js");
+const noGifAllowed = require('./rules/no-gif-allowed.js')
 
 module.exports = {
-  plugins: [noGifAllowed],
-};
+  plugins: [noGifAllowed]
+}
 ```
 
 [Back to Top](#contents)

@@ -206,7 +206,7 @@ function noGifAllowed(tree, file, options) {
     }
   }
 }
-module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
+module.exports = rule('remark-lint:no-gif-allowed', noGifAllowed)
 ```
 
 [Back to Top](#contents)

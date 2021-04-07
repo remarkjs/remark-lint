@@ -61,7 +61,7 @@ module.exports = {
 }
 ```
 
-Then, in our `package.json`, let's add the following script, which will process all the markdown file within our project:
+Then, in our `package.json`, add the following script to process all the markdown files in our project:
 
 ```json
 "scripts": {

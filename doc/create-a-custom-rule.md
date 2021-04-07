@@ -139,7 +139,8 @@ function noGifAllowed(tree, file, options) {
 module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
 ```
 
-Let's say you want all your custom rules to be defined as part of your project namespace. If your project was named `my-project`, then you can export your rule as:
+Let’s say you want all your custom rules to be defined as part of your project namespace.
+If your project was named `my-project`, then you can export your rule as:
 
 ```js
 module.exports = rule("my-project-name:no-gif-allowed", noGifAllowed);

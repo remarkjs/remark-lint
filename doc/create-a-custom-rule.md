@@ -13,8 +13,6 @@ This tutorial will help you creating your first linting plugin for `remark`.
 *   [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
 *   [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
 
-Fork this [repository](https://github.com/floroz/blog-posts/tree/main/how-to-create-custom-lint-rule-markdown-mdx) with the complete tutorial, if you don't want to start from scratch.
-
 \## Set up the project
 
 Create a new folder and navigate inside it from your Terminal. For this example I will be using UNIX commands (macOS and Linux compatible).

@@ -51,7 +51,7 @@ With everything installed, we can now create a `.remarkrc.js` that will contain 
 For more info on configuration, see [Configuring `remark-lint`](https://github.com/remarkjs/remark-lint#configuring-remark-lint).
 
 ```sh
- touch .remarkrc.js
+touch .remarkrc.js
 ```
 
 ```js

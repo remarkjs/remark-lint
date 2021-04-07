@@ -173,9 +173,9 @@ Because we will be inspecting [mdast](https://github.com/syntax-tree/mdast), whi
 For this example, we will use [`unist-util-visit`](https://github.com/syntax-tree/unist-util-visit) to recursively inspect all the image nodes, and [`unist-util-generated`](https://github.com/syntax-tree/unist-util-generated) to ensure we are not inspecting nodes that we have generated ourselves and do not belong to the `doc.md`.
 
 ```js
-const rule = require("unified-lint-rule");
-const visit = require("unist-visit-util");
-const generated = require("unist-util-generated");
+const rule = require('unified-lint-rule')
+const visit = require('unist-visit-util')
+const generated = require('unist-util-generated')
 
 function isValidNode(node) {
   // Here we check whether the given node violates our rule.

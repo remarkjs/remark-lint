@@ -108,7 +108,7 @@ Given the content of our `doc.md` file declared above, we would expect an *error
 ![a funny cat](funny-cat.gif)
 ```
 
-Because the file extension `.gif` in the image tag violates our rule.
+Because the file extension `.gif` in the image violates our rule.
 
 [Back to Top](#contents)
 

@@ -186,7 +186,7 @@ function isValidNode(node) {
   }
 }
 function noGifAllowed(tree, file, options) {
-  visit(tree, "image", visitor);
+  visit(tree, 'image', visitor)
   function visitor(node) {
     if (!generated(node)) {
        // This is an extremely simplified example of how to structure

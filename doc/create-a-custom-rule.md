@@ -28,7 +28,7 @@ npm init -y
 Now we can start installing our dependencies:
 
 ```sh
- npm install remark-lint remark-cli
+npm install remark-lint remark-cli
 ```
 
 *   [`remark-lint`](https://github.com/remarkjs/remark-lint): Core lint plugin

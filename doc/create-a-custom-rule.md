@@ -13,7 +13,7 @@ This tutorial will help you creating your first linting plugin for `remark`.
 *   [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
 *   [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
 
-\## Set up the project
+## Set up the project
 
 Create a new folder and navigate inside it from your Terminal. For this example I will be using UNIX commands (macOS and Linux compatible).
 Now we can generate our `package.json`

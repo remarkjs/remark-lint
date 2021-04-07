@@ -56,10 +56,9 @@ touch .remarkrc.js
 
 ```js
 // .remarkrc.js
-
 module.exports = {
-  plugins: [],
-};
+  plugins: []
+}
 ```
 
 Then, in our `package.json`, let's add the following script, which will process all the markdown file within our project:

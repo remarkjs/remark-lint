@@ -143,9 +143,9 @@ Let’s say you want all your custom rules to be defined as part of your project
 If your project was named `my-project`, then you can export your rule as:
 
 ```js
-module.exports = rule("my-project-name:no-gif-allowed", noGifAllowed);
-// or
-module.exports = rule("my-npm-published-package:no-gif-allowed", noGifAllowed);
+module.exports = rule('my-project-name:no-gif-allowed', noGifAllowed)
+// Or:
+module.exports = rule('my-npm-published-package:no-gif-allowed', noGifAllowed)
 ```
 
 This can help you when wanting to create a group of rules under the same *namespace*.

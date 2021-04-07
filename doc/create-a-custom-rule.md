@@ -19,11 +19,9 @@ Create a new folder and enter it from your terminal. For this example I will be 
 Now we can generate our `package.json`
 
 ```sh
- mkdir my-custom-rule
-
- cd my-custom-rule
-
- npm init -y
+mkdir my-custom-rule
+cd my-custom-rule
+npm init -y
 ```
 
 Now we can start installing our dependencies.

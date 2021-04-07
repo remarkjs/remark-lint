@@ -192,8 +192,8 @@ function noGifAllowed(tree, file, options) {
        // This is an extremely simplified example of how to structure
        // the logic to check whether a node violates your rule.
        // You have complete freedom over how to visit/inspect the tree,
-       //and on how to implement the validation logic for your node.
-      const isValid = isValidNode(node);
+       // and on how to implement the validation logic for your node.
+      const isValid = isValidNode(node)
       if (!isValid) {
         // Remember to provide the node as second argument to the message,
         // in order to obtain the position and column where the violation occurred.

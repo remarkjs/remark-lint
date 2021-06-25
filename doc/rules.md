@@ -132,6 +132,7 @@ Rules][external].
 *   [`ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) — warn when the markers of ordered lists violate a given style
 *   [`ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) — warn when the marker value of ordered lists violates a given style
 *   [`rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) — warn when horizontal rules violate a given style
+*   [`strikethrough-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker) — warn when strikethrough markers violate the given style
 *   [`strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) — warn when importance (strong) markers violate the given style
 *   [`table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding) — warn when table cells are incorrectly padded
 *   [`table-pipe-alignment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment) — warn when table pipes are not aligned

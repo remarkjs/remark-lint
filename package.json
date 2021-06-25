@@ -28,7 +28,8 @@
     "David Clark <dclark@mapbox.com>",
     "Саша Черных <SashaChernykhEmpressOfUniverse@kristinita.ru>",
     "Bob “Wombat” Hogg <wombat@rwhogg.site>",
-    "David Chambers <dc@davidchambers.me>"
+    "David Chambers <dc@davidchambers.me>",
+    "Denis Augsburger <denis.augsburger@simpleen.io> (https://simpleen.io)"
   ],
   "devDependencies": {
     "browserify": "^17.0.0",

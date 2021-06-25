@@ -9,8 +9,8 @@ var gfm = require('remark-gfm')
 var strip = require('strip-indent')
 var parseAuthor = require('parse-author')
 var remote = require('../package.json').repository
-var find = require('./util/find')
-var presets = require('./util/presets')
+var find = require('./util/find.js')
+var presets = require('./util/presets.js')
 
 var root = path.join(process.cwd(), 'packages')
 

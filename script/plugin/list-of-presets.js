@@ -3,7 +3,7 @@
 var path = require('path')
 var zone = require('mdast-zone')
 var u = require('unist-builder')
-var presets = require('../util/presets')
+var presets = require('../util/presets.js')
 
 var root = path.join(process.cwd(), 'packages')
 

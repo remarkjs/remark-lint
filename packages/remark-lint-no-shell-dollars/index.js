@@ -101,7 +101,7 @@ function noShellDollars(tree, file) {
       while (++index < length) {
         line = lines[index]
 
-        if (line.trim() && !line.match(/^\s*\$\s*/)) {
+        if (line.trim() && !/^\s*\$\s*/.test(line)) {
           return
         }
       }

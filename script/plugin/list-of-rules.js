@@ -3,7 +3,7 @@
 var path = require('path')
 var zone = require('mdast-zone')
 var u = require('unist-builder')
-var rules = require('../util/rules')
+var rules = require('../util/rules.js')
 
 var root = path.join(process.cwd(), 'packages')
 

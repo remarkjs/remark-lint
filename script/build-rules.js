@@ -8,10 +8,10 @@ var remark = require('remark')
 var gfm = require('remark-gfm')
 var parseAuthor = require('parse-author')
 var remote = require('../package.json').repository
-var rules = require('./util/rules')
-var rule = require('./util/rule')
-var presets = require('./util/presets')
-var chars = require('./characters')
+var rules = require('./util/rules.js')
+var rule = require('./util/rule.js')
+var presets = require('./util/presets.js')
+var chars = require('./characters.js')
 
 var root = path.join(process.cwd(), 'packages')
 

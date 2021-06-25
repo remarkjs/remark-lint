@@ -4,7 +4,7 @@ var fs = require('fs')
 var path = require('path')
 var dox = require('dox')
 var strip = require('strip-indent')
-var find = require('./find')
+var find = require('./find.js')
 
 module.exports = ruleSync
 

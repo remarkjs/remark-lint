@@ -47,9 +47,9 @@
 
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintBlockquoteIndentation = lintRule(
   'remark-lint:blockquote-indentation',
@@ -85,7 +85,7 @@ function blockquoteIndentation(tree, file, option) {
           plural('space', abs) +
           ' between block quote and content'
 
-        file.message(reason, position.start(node.children[0]))
+        file.message(reason, pointStart(node.children[0]))
       }
     } else {
       preferred = check(node)
@@ -94,5 +94,5 @@ function blockquoteIndentation(tree, file, option) {
 }
 
 function check(node) {
-  return position.start(node.children[0]).column - position.start(node).column
+  return pointStart(node.children[0]).column - pointStart(node).column
 }

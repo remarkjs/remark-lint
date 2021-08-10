@@ -25,8 +25,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmptyUrl = lintRule('remark-lint:no-empty-url', noEmptyURL)
 

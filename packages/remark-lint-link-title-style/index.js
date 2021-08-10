@@ -87,10 +87,10 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import vfileLocation from 'vfile-location'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {location} from 'vfile-location'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintLinkTitleStyle = lintRule(
   'remark-lint:link-title-style',
@@ -101,9 +101,6 @@ export default remarkLintLinkTitleStyle
 
 var own = {}.hasOwnProperty
 
-var start = position.start
-var end = position.end
-
 var markers = {
   '"': '"',
   "'": "'",
@@ -112,7 +109,7 @@ var markers = {
 
 function linkTitleStyle(tree, file, option) {
   var contents = String(file)
-  var location = vfileLocation(file)
+  var loc = location(file)
   var preferred =
     typeof option === 'string' && option !== 'consistent' ? option : null
 
@@ -143,9 +140,9 @@ function linkTitleStyle(tree, file, option) {
       return
     }
 
-    last = end(node).offset - 1
+    last = pointEnd(node).offset - 1
     tail = node.children ? node.children[node.children.length - 1] : null
-    begin = tail ? end(tail) : start(node)
+    begin = tail ? pointEnd(tail) : pointStart(node)
 
     if (node.type !== 'definition') {
       last--
@@ -188,8 +185,8 @@ function linkTitleStyle(tree, file, option) {
           '` as a quote'
 
         file.message(reason, {
-          start: location.toPosition(first),
-          end: location.toPosition(last + 1)
+          start: loc.toPoint(first),
+          end: loc.toPoint(last + 1)
         })
       }
     } else {

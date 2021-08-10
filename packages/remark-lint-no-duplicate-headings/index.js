@@ -27,11 +27,11 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
-import visit from 'unist-util-visit'
-import stringify from 'unist-util-stringify-position'
-import toString from 'mdast-util-to-string'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {stringifyPosition} from 'unist-util-stringify-position'
+import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadings = lintRule(
   'remark-lint:no-duplicate-headings',
@@ -57,7 +57,7 @@ function noDuplicateHeadings(tree, file) {
 
       if (duplicate && duplicate.type === 'heading') {
         file.message(
-          reason + ' (' + stringify(position.start(duplicate)) + ')',
+          reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
           node
         )
       }

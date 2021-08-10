@@ -44,9 +44,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintTablePipeAlignment = lintRule(
   'remark-lint:table-pipe-alignment',
@@ -54,9 +54,6 @@ const remarkLintTablePipeAlignment = lintRule(
 )
 
 export default remarkLintTablePipeAlignment
-
-var start = position.start
-var end = position.end
 
 var reason = 'Misaligned table fence'
 
@@ -85,7 +82,7 @@ function tablePipeAlignment(tree, file) {
 
     while (++index < length) {
       row = rows[index]
-      begin = start(row)
+      begin = pointStart(row)
       cells = row.children
       columns = cells.length
       column = -2 // Start without a first cell.
@@ -96,8 +93,8 @@ function tablePipeAlignment(tree, file) {
         nextIndex = column + 1
         next = cells[nextIndex]
 
-        initial = cell ? end(cell).offset : start(row).offset
-        final = next ? start(next).offset : end(row).offset
+        initial = cell ? pointEnd(cell).offset : pointStart(row).offset
+        final = next ? pointStart(next).offset : pointEnd(row).offset
         fence = contents.slice(initial, final)
         pos = initial + fence.indexOf('|') - begin.offset + 1
 

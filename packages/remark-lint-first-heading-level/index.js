@@ -78,8 +78,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
+import {visit, EXIT} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
 
 const remarkLintFirstHeadingLevel = lintRule(
   'remark-lint:first-heading-level',
@@ -113,7 +113,7 @@ function firstHeadingLevel(tree, file, option) {
           )
         }
 
-        return visit.EXIT
+        return EXIT
       }
     }
   }

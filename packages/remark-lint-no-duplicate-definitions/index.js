@@ -22,10 +22,10 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
-import stringify from 'unist-util-stringify-position'
-import visit from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
+import {stringifyPosition} from 'unist-util-stringify-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateDefinitions = lintRule(
   'remark-lint:no-duplicate-definitions',
@@ -51,7 +51,7 @@ function noDuplicateDefinitions(tree, file) {
 
       if (duplicate && duplicate.type) {
         file.message(
-          reason + ' (' + stringify(position.start(duplicate)) + ')',
+          reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
           node
         )
       }

@@ -64,9 +64,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoMissingBlankLines = lintRule(
   'remark-lint:no-missing-blank-lines',
@@ -107,7 +107,7 @@ function noMissingBlankLines(tree, file, option) {
       if (
         next &&
         types.indexOf(next.type) !== -1 &&
-        position.start(next).line === position.end(node).line + 1
+        pointStart(next).line === pointEnd(node).line + 1
       ) {
         file.message(reason, next)
       }

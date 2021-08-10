@@ -108,9 +108,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintListItemSpacing = lintRule(
   'remark-lint:list-item-spacing',
@@ -118,9 +118,6 @@ const remarkLintListItemSpacing = lintRule(
 )
 
 export default remarkLintListItemSpacing
-
-var start = position.start
-var end = position.end
 
 var reasonLoose = 'Missing new line after list item'
 var reasonTight = 'Extraneous new line after list item'
@@ -159,10 +156,10 @@ function listItemSpacing(tree, file, option) {
       while (++index < length) {
         next = children[index]
 
-        if (start(next).line - end(child).line < 2 !== tight) {
+        if (pointStart(next).line - pointEnd(child).line < 2 !== tight) {
           file.message(tight ? reasonTight : reasonLoose, {
-            start: end(child),
-            end: start(next)
+            start: pointEnd(child),
+            end: pointStart(next)
           })
         }
 
@@ -183,7 +180,7 @@ function inferBlankLine(node) {
     next = children[index]
 
     // All children in `listItem`s are block.
-    if (start(next).line - end(child).line > 1) {
+    if (pointStart(next).line - pointEnd(child).line > 1) {
       return true
     }
 
@@ -195,5 +192,9 @@ function inferBlankLine(node) {
 
 function inferMultiline(node) {
   var children = node.children
-  return end(children[children.length - 1]).line - start(children[0]).line > 0
+  return (
+    pointEnd(children[children.length - 1]).line -
+      pointStart(children[0]).line >
+    0
+  )
 }

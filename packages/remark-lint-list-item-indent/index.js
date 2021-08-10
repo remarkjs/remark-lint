@@ -105,9 +105,9 @@
 
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintListItemIndent = lintRule(
   'remark-lint:list-item-indent',
@@ -115,8 +115,6 @@ const remarkLintListItemIndent = lintRule(
 )
 
 export default remarkLintListItemIndent
-
-var start = position.start
 
 var styles = {'tab-size': true, mixed: true, space: true}
 
@@ -143,7 +141,7 @@ function listItemIndent(tree, file, option) {
 
     function visitItem(item) {
       var head = item.children[0]
-      var final = start(head)
+      var final = pointStart(head)
       var marker
       var bulletSize
       var style
@@ -152,7 +150,7 @@ function listItemIndent(tree, file, option) {
       var abs
 
       marker = contents
-        .slice(start(item).offset, final.offset)
+        .slice(pointStart(item).offset, final.offset)
         .replace(/\[[x ]?]\s*$/i, '')
 
       bulletSize = marker.replace(/\s+$/, '').length

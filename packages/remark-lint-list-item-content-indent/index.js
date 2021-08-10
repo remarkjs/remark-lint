@@ -23,9 +23,9 @@
 
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintListItemContentIndent = lintRule(
   'remark-lint:list-item-content-indent',
@@ -33,8 +33,6 @@ const remarkLintListItemContentIndent = lintRule(
 )
 
 export default remarkLintListItemContentIndent
-
-var start = position.start
 
 function listItemContentIndent(tree, file) {
   var contents = String(file)
@@ -58,7 +56,7 @@ function listItemContentIndent(tree, file) {
         return
       }
 
-      begin = start(item)
+      begin = pointStart(item)
       column = begin.column
 
       // Get indentation for the first child.  Only the first item can have a
@@ -97,7 +95,7 @@ function listItemContentIndent(tree, file) {
           plural('space', abs)
 
         file.message(reason, {
-          line: start(item).line,
+          line: pointStart(item).line,
           column: column
         })
       }

@@ -70,9 +70,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintCheckboxCharacterStyle = lintRule(
   'remark-lint:checkbox-character-style',
@@ -80,9 +80,6 @@ const remarkLintCheckboxCharacterStyle = lintRule(
 )
 
 export default remarkLintCheckboxCharacterStyle
-
-var start = position.start
-var end = position.end
 
 var checked = {x: true, X: true}
 var unchecked = {' ': true, '\t': true}
@@ -127,7 +124,8 @@ function checkboxCharacterStyle(tree, file, option) {
     // A list item cannot be checked and empty, according to GFM, but
     // theoretically it makes sense to get the end if that were possible.
     /* c8 ignore next */
-    point = node.children.length === 0 ? end(node) : start(node.children[0])
+    point =
+      node.children.length === 0 ? pointEnd(node) : pointStart(node.children[0])
     // Move back to before `] `.
     point.offset -= 2
     point.column -= 2

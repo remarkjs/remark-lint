@@ -22,8 +22,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import generated from 'unist-util-generated'
-import visit from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoUnusedDefinitions = lintRule(
   'remark-lint:no-unused-definitions',

@@ -24,8 +24,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import generated from 'unist-util-generated'
-import visit from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoReferenceLikeUrl = lintRule(
   'remark-lint:no-reference-like-url',

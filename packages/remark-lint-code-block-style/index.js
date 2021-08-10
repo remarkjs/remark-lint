@@ -93,9 +93,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintCodeBlockStyle = lintRule(
   'remark-lint:code-block-style',
@@ -103,9 +103,6 @@ const remarkLintCodeBlockStyle = lintRule(
 )
 
 export default remarkLintCodeBlockStyle
-
-var start = position.start
-var end = position.end
 
 var styles = {null: true, fenced: true, indented: true}
 
@@ -133,8 +130,8 @@ function codeBlockStyle(tree, file, option) {
       return null
     }
 
-    initial = start(node).offset
-    final = end(node).offset
+    initial = pointStart(node).offset
+    final = pointEnd(node).offset
 
     current =
       node.lang || /^\s*([~`])\1{2,}/.test(contents.slice(initial, final))

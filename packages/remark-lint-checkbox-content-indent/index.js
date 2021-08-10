@@ -28,10 +28,10 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import vfileLocation from 'vfile-location'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {location} from 'vfile-location'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintCheckboxContentIndent = lintRule(
   'remark-lint:checkbox-content-indent',
@@ -40,14 +40,11 @@ const remarkLintCheckboxContentIndent = lintRule(
 
 export default remarkLintCheckboxContentIndent
 
-var start = position.start
-var end = position.end
-
 var reason = 'Checkboxes should be followed by a single character'
 
 function checkboxContentIndent(tree, file) {
   var contents = String(file)
-  var location = vfileLocation(file)
+  var loc = location(file)
 
   visit(tree, 'listItem', visitor)
 
@@ -65,7 +62,8 @@ function checkboxContentIndent(tree, file) {
     // A list item cannot be checked and empty, according to GFM, but
     // theoretically it makes sense to get the end if that were possible.
     /* c8 ignore next */
-    point = node.children.length === 0 ? end(node) : start(node.children[0])
+    point =
+      node.children.length === 0 ? pointEnd(node) : pointStart(node.children[0])
 
     // Assume we start with a checkbox, because well, `checked` is set.
     value = /\[([\t xX])]/.exec(
@@ -84,8 +82,8 @@ function checkboxContentIndent(tree, file) {
 
     if (final - initial > 0) {
       file.message(reason, {
-        start: location.toPosition(initial),
-        end: location.toPosition(final)
+        start: loc.toPoint(initial),
+        end: loc.toPoint(final)
       })
     }
   }

@@ -91,9 +91,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintMaximumLineLength = lintRule(
   'remark-lint:maximum-line-length',
@@ -101,9 +101,6 @@ const remarkLintMaximumLineLength = lintRule(
 )
 
 export default remarkLintMaximumLineLength
-
-var start = position.start
-var end = position.end
 
 function maximumLineLength(tree, file, option) {
   var preferred = typeof option === 'number' && !isNaN(option) ? option : 80
@@ -148,8 +145,8 @@ function maximumLineLength(tree, file, option) {
       return
     }
 
-    initial = start(node)
-    final = end(node)
+    initial = pointStart(node)
+    final = pointEnd(node)
 
     // Not allowing when starting after the border, or ending before it.
     if (initial.column > preferred || final.column < preferred) {
@@ -159,7 +156,7 @@ function maximumLineLength(tree, file, option) {
     // Not allowing when there’s whitespace after the link.
     if (
       next &&
-      start(next).line === initial.line &&
+      pointStart(next).line === initial.line &&
       (!next.value || /^(.+?[ \t].+?)/.test(next.value))
     ) {
       return
@@ -172,7 +169,7 @@ function maximumLineLength(tree, file, option) {
     // Hard to test, as we only run this case on `position: true`.
     /* c8 ignore next 3 */
     if (!generated(node)) {
-      allowList(start(node).line - 1, end(node).line)
+      allowList(pointStart(node).line - 1, pointEnd(node).line)
     }
   }
 

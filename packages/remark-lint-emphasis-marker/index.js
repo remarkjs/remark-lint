@@ -61,9 +61,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintEmphasisMarker = lintRule(
   'remark-lint:emphasis-marker',
@@ -93,7 +93,7 @@ function emphasisMarker(tree, file, option) {
     var marker
 
     if (!generated(node)) {
-      marker = contents.charAt(position.start(node).offset)
+      marker = contents.charAt(pointStart(node).offset)
 
       if (preferred) {
         if (marker !== preferred) {

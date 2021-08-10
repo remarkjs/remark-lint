@@ -62,12 +62,12 @@
  *   17:23-17:26: Found reference to undefined definition
  */
 
-import collapseWhiteSpace from 'collapse-white-space'
-import vfileLocation from 'vfile-location'
+import {collapseWhiteSpace} from 'collapse-white-space'
+import {location} from 'vfile-location'
 import {lintRule} from 'unified-lint-rule'
-import generated from 'unist-util-generated'
-import position from 'unist-util-position'
-import visit from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {visit, SKIP, EXIT} from 'unist-util-visit'
 
 const remarkLintNoUndefinedReferences = lintRule(
   'remark-lint:no-undefined-references',
@@ -88,7 +88,7 @@ function normalize(s) {
 
 function noUndefinedReferences(tree, file, option) {
   var contents = String(file)
-  var location = vfileLocation(file)
+  var loc = location(file)
   var lineEnding = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
   var allow = ((option || {}).allow || []).map(normalize)
   var map = {}
@@ -120,7 +120,7 @@ function noUndefinedReferences(tree, file, option) {
 
     ranges.forEach(handleRange)
 
-    return visit.SKIP
+    return SKIP
 
     function onchild(child) {
       var start
@@ -142,17 +142,17 @@ function noUndefinedReferences(tree, file, option) {
       // Can’t have links in links, so reset ranges.
       if (child.type === 'link' || child.type === 'linkReference') {
         ranges = []
-        return visit.SKIP
+        return SKIP
       }
 
       // Enter non-text.
       if (child.type !== 'text') return
 
-      start = position.start(child).offset
-      end = position.end(child).offset
+      start = pointStart(child).offset
+      end = pointEnd(child).offset
 
       // Bail if there’s no positional info.
-      if (!end) return visit.EXIT
+      if (!end) return EXIT
 
       source = contents.slice(start, end)
       lines = [[start, '']]
@@ -247,8 +247,8 @@ function noUndefinedReferences(tree, file, option) {
           .slice(range[0 + offset] + 1, range[1 + offset] - 1)
           .replace(lineEnding, ' '),
         position: {
-          start: location.toPosition(range[0]),
-          end: location.toPosition(range[range.length - 1])
+          start: loc.toPoint(range[0]),
+          end: loc.toPoint(range[range.length - 1])
         }
       })
     }

@@ -50,10 +50,10 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import vfileLocation from 'vfile-location'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {location} from 'vfile-location'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
   'remark-lint:no-blockquote-without-marker',
@@ -66,7 +66,7 @@ var reason = 'Missing marker in block quote'
 
 function noBlockquoteWithoutMarker(tree, file) {
   var contents = String(file)
-  var location = vfileLocation(file)
+  var loc = location(file)
 
   visit(tree, 'blockquote', visitor)
 
@@ -77,13 +77,13 @@ function noBlockquoteWithoutMarker(tree, file) {
     var offset
 
     if (node.type === 'paragraph' && !generated(node)) {
-      line = position.start(node).line
-      end = position.end(node).line
-      column = position.start(node).column
+      line = pointStart(node).line
+      end = pointEnd(node).line
+      column = pointStart(node).column
 
       // Skip past the first line.
       while (++line <= end) {
-        offset = location.toOffset({line: line, column: column})
+        offset = loc.toOffset({line: line, column: column})
 
         if (/>[\t ]+$/.test(contents.slice(offset - 5, offset))) {
           continue

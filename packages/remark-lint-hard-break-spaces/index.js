@@ -22,9 +22,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintHardBreakSpaces = lintRule(
   'remark-lint:hard-break-spaces',
@@ -45,7 +45,7 @@ function hardBreakSpaces(tree, file) {
 
     if (!generated(node)) {
       value = contents
-        .slice(position.start(node).offset, position.end(node).offset)
+        .slice(pointStart(node).offset, pointEnd(node).offset)
         .split('\n', 1)[0]
         .replace(/\r$/, '')
 

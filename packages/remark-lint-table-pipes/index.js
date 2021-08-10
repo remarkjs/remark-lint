@@ -38,16 +38,13 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintTablePipes = lintRule('remark-lint:table-pipes', tablePipes)
 
 export default remarkLintTablePipes
-
-var start = position.start
-var end = position.end
 
 var reasonStart = 'Missing initial pipe in table fence'
 var reasonEnd = 'Missing final pipe in table fence'
@@ -67,12 +64,12 @@ function tablePipes(tree, file) {
       row = rows[index]
 
       if (!generated(row)) {
-        if (contents.charCodeAt(start(row).offset) !== 124) {
-          file.message(reasonStart, start(row))
+        if (contents.charCodeAt(pointStart(row).offset) !== 124) {
+          file.message(reasonStart, pointStart(row))
         }
 
-        if (contents.charCodeAt(end(row).offset - 1) !== 124) {
-          file.message(reasonEnd, end(row))
+        if (contents.charCodeAt(pointEnd(row).offset - 1) !== 124) {
+          file.message(reasonEnd, pointEnd(row))
         }
       }
     }

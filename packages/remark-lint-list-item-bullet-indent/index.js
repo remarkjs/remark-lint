@@ -36,8 +36,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
 
 const remarkLintListItemBulletIndent = lintRule(
   'remark-lint:list-item-bullet-indent',

@@ -48,9 +48,9 @@
 
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingIndent = lintRule(
   'remark-lint:no-heading-indent',
@@ -58,8 +58,6 @@ const remarkLintNoHeadingIndent = lintRule(
 )
 
 export default remarkLintNoHeadingIndent
-
-var start = position.start
 
 function noHeadingIndent(tree, file) {
   visit(tree, 'heading', visitor)
@@ -73,12 +71,12 @@ function noHeadingIndent(tree, file) {
       return
     }
 
-    diff = start(node).column - 1
+    diff = pointStart(node).column - 1
 
     if (diff) {
       file.message(
         'Remove ' + diff + ' ' + plural('space', diff) + ' before this heading',
-        start(node)
+        pointStart(node)
       )
     }
   }

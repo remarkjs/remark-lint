@@ -50,9 +50,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintOrderedListMarkerStyle = lintRule(
   'remark-lint:ordered-list-marker-style',
@@ -60,8 +60,6 @@ const remarkLintOrderedListMarkerStyle = lintRule(
 )
 
 export default remarkLintOrderedListMarkerStyle
-
-var start = position.start
 
 var styles = {
   ')': true,
@@ -96,7 +94,7 @@ function orderedListMarkerStyle(tree, file, option) {
 
       if (!generated(child)) {
         marker = contents
-          .slice(start(child).offset, start(child.children[0]).offset)
+          .slice(pointStart(child).offset, pointStart(child.children[0]).offset)
           .replace(/\s|\d/g, '')
           .replace(/\[[x ]?]\s*$/i, '')
 

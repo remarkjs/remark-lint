@@ -56,16 +56,13 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintRuleStyle = lintRule('remark-lint:rule-style', ruleStyle)
 
 export default remarkLintRuleStyle
-
-var start = position.start
-var end = position.end
 
 function ruleStyle(tree, file, option) {
   var contents = String(file)
@@ -81,8 +78,8 @@ function ruleStyle(tree, file, option) {
   visit(tree, 'thematicBreak', visitor)
 
   function visitor(node) {
-    var initial = start(node).offset
-    var final = end(node).offset
+    var initial = pointStart(node).offset
+    var final = pointEnd(node).offset
     var rule
 
     if (!generated(node)) {

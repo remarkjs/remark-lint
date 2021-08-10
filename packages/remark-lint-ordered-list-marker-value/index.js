@@ -127,9 +127,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintOrderedListMarkerValue = lintRule(
   'remark-lint:ordered-list-marker-value',
@@ -137,8 +137,6 @@ const remarkLintOrderedListMarkerValue = lintRule(
 )
 
 export default remarkLintOrderedListMarkerValue
-
-var start = position.start
 
 var styles = {ordered: true, single: true, one: true}
 
@@ -179,7 +177,7 @@ function orderedListMarkerValue(tree, file, option) {
 
       marker = Number(
         contents
-          .slice(start(child).offset, start(child.children[0]).offset)
+          .slice(pointStart(child).offset, pointStart(child.children[0]).offset)
           .replace(/[\s.)]/g, '')
           .replace(/\[[x ]?]\s*$/i, '')
       )

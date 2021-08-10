@@ -67,9 +67,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import headingStyle from 'mdast-util-heading-style'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {headingStyle} from 'mdast-util-heading-style'
+import {generated} from 'unist-util-generated'
 
 var types = ['atx', 'atx-closed', 'setext']
 

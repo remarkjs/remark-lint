@@ -55,11 +55,11 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
-import visit from 'unist-util-visit'
-import stringify from 'unist-util-stringify-position'
-import toString from 'mdast-util-to-string'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {stringifyPosition} from 'unist-util-stringify-position'
+import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadingsInSection = lintRule(
   'remark-lint:no-duplicate-headings-in-section',
@@ -84,7 +84,7 @@ function noDuplicateHeadingsInSection(tree, file) {
 
     if (!generated(node) && duplicate) {
       file.message(
-        reason + ' (' + stringify(position.start(duplicate)) + ')',
+        reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
         node
       )
     }

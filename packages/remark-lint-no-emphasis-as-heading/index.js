@@ -30,8 +30,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
   'remark-lint:no-emphasis-as-heading',

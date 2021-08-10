@@ -41,9 +41,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
-import toString from 'mdast-util-to-string'
+import {visit} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
+import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoHeadingPunctuation = lintRule(
   'remark-lint:no-heading-punctuation',

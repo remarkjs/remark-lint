@@ -67,9 +67,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintUnorderedListMarkerStyle = lintRule(
   'remark-lint:unordered-list-marker-style',
@@ -77,8 +77,6 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
 )
 
 export default remarkLintUnorderedListMarkerStyle
-
-var start = position.start
 
 var styles = {
   '-': true,
@@ -114,7 +112,7 @@ function unorderedListMarkerStyle(tree, file, option) {
 
       if (!generated(child)) {
         marker = contents
-          .slice(start(child).offset, start(child.children[0]).offset)
+          .slice(pointStart(child).offset, pointStart(child.children[0]).offset)
           .replace(/\[[x ]?]\s*$/i, '')
           .replace(/\s/g, '')
 

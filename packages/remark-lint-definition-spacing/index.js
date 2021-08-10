@@ -20,9 +20,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintDefinitionSpacing = lintRule(
   'remark-lint:definition-spacing',
@@ -40,8 +40,8 @@ function definitionSpacing(tree, file) {
   visit(tree, ['definition', 'footnoteDefinition'], check)
 
   function check(node) {
-    var start = position.start(node).offset
-    var end = position.end(node).offset
+    var start = pointStart(node).offset
+    var end = pointEnd(node).offset
 
     if (
       !generated(node) &&

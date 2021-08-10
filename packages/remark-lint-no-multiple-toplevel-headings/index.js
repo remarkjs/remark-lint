@@ -26,10 +26,10 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
-import stringify from 'unist-util-stringify-position'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
+import {stringifyPosition} from 'unist-util-stringify-position'
 
 const remarkLintNoMultipleToplevelHeadings = lintRule(
   'remark-lint:no-multiple-toplevel-headings',
@@ -52,7 +52,7 @@ function noMultipleToplevelHeadings(tree, file, option) {
           node
         )
       } else {
-        duplicate = stringify(position.start(node))
+        duplicate = stringifyPosition(pointStart(node))
       }
     }
   }

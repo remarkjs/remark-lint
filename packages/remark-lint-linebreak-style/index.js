@@ -46,7 +46,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import location from 'vfile-location'
+import {location} from 'vfile-location'
 
 const remarkLintLinebreakStyle = lintRule(
   'remark-lint:linebreak-style',
@@ -62,7 +62,7 @@ function linebreakStyle(tree, file, option) {
   var preferred =
     typeof option === 'string' && option !== 'consistent' ? option : null
   var content = String(file)
-  var position = location(content).toPosition
+  var toPoint = location(content).toPoint
   var index = content.indexOf('\n')
   var type
   var reason
@@ -83,7 +83,7 @@ function linebreakStyle(tree, file, option) {
           escaped[type] +
           '`)'
 
-        file.message(reason, position(index))
+        file.message(reason, toPoint(index))
       }
     } else {
       preferred = type

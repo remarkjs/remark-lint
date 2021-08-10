@@ -30,10 +30,10 @@
     "index.js"
   ],
   "dependencies": {
-    "collapse-white-space": "^1.0.0",
+    "collapse-white-space": "^2.0.0",
     "unified-lint-rule": "^1.0.0",
-    "unist-util-generated": "^1.1.0",
-    "unist-util-visit": "^2.0.0"
+    "unist-util-generated": "^2.0.0",
+    "unist-util-visit": "^4.0.0"
   },
   "xo": false
 }

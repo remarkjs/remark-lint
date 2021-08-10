@@ -52,9 +52,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintStrongMarker = lintRule(
   'remark-lint:strong-marker',
@@ -81,7 +81,7 @@ function strongMarker(tree, file, option) {
   visit(tree, 'strong', visitor)
 
   function visitor(node) {
-    var marker = contents.charAt(position.start(node).offset)
+    var marker = contents.charAt(pointStart(node).offset)
 
     if (!generated(node)) {
       if (preferred) {

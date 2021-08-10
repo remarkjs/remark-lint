@@ -30,8 +30,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoShortcutReferenceImage = lintRule(
   'remark-lint:no-shortcut-reference-image',

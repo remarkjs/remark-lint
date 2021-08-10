@@ -44,9 +44,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import generated from 'unist-util-generated'
-import collapseWhiteSpace from 'collapse-white-space'
+import {visit} from 'unist-util-visit'
+import {generated} from 'unist-util-generated'
+import {collapseWhiteSpace} from 'collapse-white-space'
 
 const remarkLintNoUnneededFullReferenceLink = lintRule(
   'remark-lint:no-unneeded-full-reference-link',

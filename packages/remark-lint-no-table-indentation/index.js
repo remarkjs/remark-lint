@@ -58,9 +58,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import vfileLocation from 'vfile-location'
+import {visit, SKIP} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {location} from 'vfile-location'
 
 const remarkLintNoTableIndentation = lintRule(
   'remark-lint:no-table-indentation',
@@ -73,13 +73,13 @@ var reason = 'Do not indent table rows'
 
 function noTableIndentation(tree, file) {
   var content = String(file)
-  var location = vfileLocation(content)
+  var loc = location(content)
 
   visit(tree, 'table', visitor)
 
   function visitor(node, _, parent) {
-    var line = position.start(node).line
-    var end = position.end(node).line
+    var line = pointStart(node).line
+    var end = pointEnd(node).line
     var column
     var offset
     var lineColumn
@@ -87,9 +87,9 @@ function noTableIndentation(tree, file) {
     if (parent && parent.type === 'root') {
       column = 1
     } else if (parent && parent.type === 'blockquote') {
-      column = position.start(parent).column + 2
+      column = pointStart(parent).column + 2
     } else if (parent && parent.type === 'listItem') {
-      column = position.start(parent.children[0]).column
+      column = pointStart(parent.children[0]).column
 
       // Skip past the first line if we’re the first child of a list item.
       /* c8 ignore next 3 */
@@ -104,7 +104,7 @@ function noTableIndentation(tree, file) {
     }
 
     while (line <= end) {
-      offset = location.toOffset({line: line, column: column})
+      offset = loc.toOffset({line: line, column: column})
       lineColumn = offset
 
       while (/[ \t]/.test(content.charAt(offset - 1))) {
@@ -119,13 +119,13 @@ function noTableIndentation(tree, file) {
         }
 
         if (lineColumn !== offset) {
-          file.message(reason, location.toPosition(offset))
+          file.message(reason, loc.toPoint(offset))
         }
       }
 
       line++
     }
 
-    return visit.SKIP
+    return SKIP
   }
 }

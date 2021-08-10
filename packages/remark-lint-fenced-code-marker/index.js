@@ -82,9 +82,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintFencedCodeMarker = lintRule(
   'remark-lint:fenced-code-marker',
@@ -120,7 +120,7 @@ function fencedCodeMarker(tree, file, option) {
     var label
 
     if (!generated(node)) {
-      start = position.start(node).offset
+      start = pointStart(node).offset
       marker = contents
         .slice(start, start + 4)
         .replace(/^\s+/, '')

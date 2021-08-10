@@ -37,9 +37,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintFinalDefinition = lintRule(
   'remark-lint:final-definition',
@@ -48,15 +48,13 @@ const remarkLintFinalDefinition = lintRule(
 
 export default remarkLintFinalDefinition
 
-var start = position.start
-
 function finalDefinition(tree, file) {
   var last = null
 
   visit(tree, visitor, true)
 
   function visitor(node) {
-    var line = start(node).line
+    var line = pointStart(node).line
 
     // Ignore generated and HTML comment nodes.
     if (

@@ -55,9 +55,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintStrikethroughMarker = lintRule(
   'remark-lint:strikethrough-marker',
@@ -87,7 +87,7 @@ function strikethroughMarker(tree, file, option) {
     var marker
 
     if (!generated(node)) {
-      var offset = position.start(node).offset
+      var offset = pointStart(node).offset
       marker =
         contents.slice(offset, offset + 2) === '~~'
           ? contents.slice(offset, offset + 2)

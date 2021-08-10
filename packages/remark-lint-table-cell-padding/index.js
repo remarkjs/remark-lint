@@ -155,9 +155,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit, SKIP} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintTableCellPadding = lintRule(
   'remark-lint:table-cell-padding',
@@ -165,9 +165,6 @@ const remarkLintTableCellPadding = lintRule(
 )
 
 export default remarkLintTableCellPadding
-
-var start = position.start
-var end = position.end
 
 var styles = {null: true, padded: true, compact: true}
 
@@ -213,13 +210,13 @@ function tableCellPadding(tree, file, option) {
         cell = cells[column]
 
         if (cell && cell.children.length !== 0) {
-          contentStart = start(cell.children[0]).offset
-          contentEnd = end(cell.children[cell.children.length - 1]).offset
+          contentStart = pointStart(cell.children[0]).offset
+          contentEnd = pointEnd(cell.children[cell.children.length - 1]).offset
 
           entries.push({
             node: cell,
-            start: contentStart - start(cell).offset - (column ? 0 : 1),
-            end: end(cell).offset - contentEnd - 1,
+            start: contentStart - pointStart(cell).offset - (column ? 0 : 1),
+            end: pointEnd(cell).offset - contentEnd - 1,
             column: column
           })
 
@@ -247,7 +244,7 @@ function tableCellPadding(tree, file, option) {
       checkSide('end', entry, style, sizes)
     }
 
-    return visit.SKIP
+    return SKIP
   }
 
   function checkSide(side, entry, style, sizes) {
@@ -284,13 +281,13 @@ function tableCellPadding(tree, file, option) {
     }
 
     if (side === 'start') {
-      point = start(cell)
+      point = pointStart(cell)
       if (!column) {
         point.column++
         point.offset++
       }
     } else {
-      point = end(cell)
+      point = pointEnd(cell)
       point.column--
       point.offset--
     }
@@ -301,7 +298,7 @@ function tableCellPadding(tree, file, option) {
 
 function size(node) {
   return (
-    end(node.children[node.children.length - 1]).offset -
-    start(node.children[0]).offset
+    pointEnd(node.children[node.children.length - 1]).offset -
+    pointStart(node.children[0]).offset
   )
 }

@@ -47,11 +47,11 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import headingStyle from 'mdast-util-heading-style'
+import {visit} from 'unist-util-visit'
+import {headingStyle} from 'mdast-util-heading-style'
 import plural from 'pluralize'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   'remark-lint:no-heading-content-indent',
@@ -59,9 +59,6 @@ const remarkLintNoHeadingContentIndent = lintRule(
 )
 
 export default remarkLintNoHeadingContentIndent
-
-var start = position.start
-var end = position.end
 
 function noHeadingContentIndent(tree, file) {
   visit(tree, 'heading', visitor)
@@ -85,14 +82,14 @@ function noHeadingContentIndent(tree, file) {
     type = headingStyle(node, 'atx')
 
     if (type === 'atx' || type === 'atx-closed') {
-      head = start(children[0]).column
+      head = pointStart(children[0]).column
 
       // Ignore empty headings.
       if (!head) {
         return
       }
 
-      diff = head - start(node).column - 1 - depth
+      diff = head - pointStart(node).column - 1 - depth
 
       if (diff) {
         abs = Math.abs(diff)
@@ -104,15 +101,15 @@ function noHeadingContentIndent(tree, file) {
           plural('space', abs) +
           ' before this heading’s content'
 
-        file.message(reason, start(children[0]))
+        file.message(reason, pointStart(children[0]))
       }
     }
 
     // Closed ATX headings always must have a space between their content and
     // the final hashes, thus, there is no `add x spaces`.
     if (type === 'atx-closed') {
-      final = end(children[children.length - 1])
-      diff = end(node).column - final.column - 1 - depth
+      final = pointEnd(children[children.length - 1])
+      diff = pointEnd(node).column - final.column - 1 - depth
 
       if (diff) {
         reason =

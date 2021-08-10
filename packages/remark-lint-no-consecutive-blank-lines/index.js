@@ -42,9 +42,9 @@
 
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintNoConsecutiveBlankLines = lintRule(
   'remark-lint:no-consecutive-blank-lines',
@@ -66,7 +66,7 @@ function noConsecutiveBlankLines(tree, file) {
 
       if (head && !generated(head)) {
         // Compare parent and first child.
-        compare(position.start(node), position.start(head), 0)
+        compare(pointStart(node), pointStart(head), 0)
 
         // Compare between each child.
         children.forEach(visitChild)
@@ -75,7 +75,7 @@ function noConsecutiveBlankLines(tree, file) {
 
         // Compare parent and last child.
         if (tail !== head && !generated(tail)) {
-          compare(position.end(node), position.end(tail), 1)
+          compare(pointEnd(node), pointEnd(tail), 1)
         }
       }
     }
@@ -106,7 +106,7 @@ function noConsecutiveBlankLines(tree, file) {
     var previous = all[index - 1]
 
     if (previous && !generated(previous) && !generated(child)) {
-      compare(position.end(previous), position.start(child), 2)
+      compare(pointEnd(previous), pointStart(child), 2)
     }
   }
 }

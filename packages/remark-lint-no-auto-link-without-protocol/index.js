@@ -34,10 +34,10 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
-import toString from 'mdast-util-to-string'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
+import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoAutoLinkWithoutProtocol = lintRule(
   'remark-lint:no-auto-link-without-protocol',
@@ -45,9 +45,6 @@ const remarkLintNoAutoLinkWithoutProtocol = lintRule(
 )
 
 export default remarkLintNoAutoLinkWithoutProtocol
-
-var start = position.start
-var end = position.end
 
 // Protocol expression.
 // See: <https://en.wikipedia.org/wiki/URI_scheme#Generic_syntax>.
@@ -65,8 +62,9 @@ function noAutoLinkWithoutProtocol(tree, file) {
       children = node.children
 
       if (
-        start(node).column === start(children[0]).column - 1 &&
-        end(node).column === end(children[children.length - 1]).column + 1 &&
+        pointStart(node).column === pointStart(children[0]).column - 1 &&
+        pointEnd(node).column ===
+          pointEnd(children[children.length - 1]).column + 1 &&
         !protocol.test(toString(node))
       ) {
         file.message(reason, node)

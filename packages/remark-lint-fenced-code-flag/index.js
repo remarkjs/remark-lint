@@ -65,9 +65,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import generated from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {generated} from 'unist-util-generated'
 
 const remarkLintFencedCodeFlag = lintRule(
   'remark-lint:fenced-code-flag',
@@ -75,9 +75,6 @@ const remarkLintFencedCodeFlag = lintRule(
 )
 
 export default remarkLintFencedCodeFlag
-
-var start = position.start
-var end = position.end
 
 var fence = /^ {0,3}([~`])\1{2,}/
 var reasonIncorrect = 'Incorrect code language flag'
@@ -109,7 +106,7 @@ function fencedCodeFlag(tree, file, option) {
           file.message(reasonIncorrect, node)
         }
       } else {
-        value = contents.slice(start(node).offset, end(node).offset)
+        value = contents.slice(pointStart(node).offset, pointEnd(node).offset)
 
         if (!allowEmpty && fence.test(value)) {
           file.message(reasonMissing, node)

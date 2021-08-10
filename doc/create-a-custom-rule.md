@@ -131,21 +131,25 @@ We then export the result of calling `rule` by providing the *namespace and rule
 
 ```js
 // rules/no-gif-allowed.js
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
-function noGifAllowed(tree, file, options) {
-  // Rule implementation
-}
-module.exports = rule('remark-lint:no-gif-allowed', noGifAllowed)
+const remarkLintNoGifAllowed = lintRule(
+  'remark-lint:no-gif-allowed',
+  (tree, file, options) => {
+    // Rule implementation
+  }
+)
+
+export default remarkLintNoGifAllowed
 ```
 
 Let’s say you want all your custom rules to be defined as part of your project namespace.
 If your project was named `my-project`, then you can export your rule as:
 
 ```js
-module.exports = rule('my-project-name:no-gif-allowed', noGifAllowed)
+const remarkLintNoGifAllowed = lintRule('my-project-name:no-gif-allowed', () => {})
 // Or:
-module.exports = rule('my-npm-published-package:no-gif-allowed', noGifAllowed)
+const remarkLintNoGifAllowed = lintRule('my-npm-published-package:no-gif-allowed', () => {})
 ```
 
 This can help you when wanting to create a group of rules under the same *namespace*.
@@ -157,7 +161,7 @@ This can help you when wanting to create a group of rules under the same *namesp
 Your rule function will receive three arguments:
 
 ```js
-function noGifAllowed(tree, file, options) {}
+(tree, file, options) => {}
 ```
 
 *   `tree` (*required*): [mdast](https://github.com/syntax-tree/mdast)
@@ -173,9 +177,9 @@ Because we will be inspecting [mdast](https://github.com/syntax-tree/mdast), whi
 For this example, we will use [`unist-util-visit`](https://github.com/syntax-tree/unist-util-visit) to recursively inspect all the image nodes, and [`unist-util-generated`](https://github.com/syntax-tree/unist-util-generated) to ensure we are not inspecting nodes that we have generated ourselves and do not belong to the `doc.md`.
 
 ```js
-const rule = require('unified-lint-rule')
-const visit = require('unist-visit-util')
-const generated = require('unist-util-generated')
+import {lintRule} from 'unified-lint-rule'
+import {visit} from 'unist-visit-util'
+import {generated} from 'unist-util-generated'
 
 function isValidNode(node) {
   // Here we check whether the given node violates our rule.
@@ -185,27 +189,32 @@ function isValidNode(node) {
     return !node.url.endsWith('.gif')
   }
 }
-function noGifAllowed(tree, file, options) {
-  visit(tree, 'image', visitor)
-  function visitor(node) {
-    if (!generated(node)) {
-       // This is an extremely simplified example of how to structure
-       // the logic to check whether a node violates your rule.
-       // You have complete freedom over how to visit/inspect the tree,
-       // and on how to implement the validation logic for your node.
-      const isValid = isValidNode(node)
-      if (!isValid) {
-        // Remember to provide the node as second argument to the message,
-        // in order to obtain the position and column where the violation occurred.
-        file.message(
-          'Invalid image file extentions. Please do not use gifs',
-          node
-        )
+
+const remarkLintNoGifAllowed = lintRule(
+  'remark-lint:no-gif-allowed',
+  (tree, file, options) => {
+    visit(tree, 'image', (node) => {
+      if (!generated(node)) {
+        // This is an extremely simplified example of how to structure
+        // the logic to check whether a node violates your rule.
+        // You have complete freedom over how to visit/inspect the tree,
+        // and on how to implement the validation logic for your node.
+        const isValid = isValidNode(node)
+
+        if (!isValid) {
+          // Remember to provide the node as second argument to the message,
+          // in order to obtain the position and column where the violation occurred.
+          file.message(
+            'Invalid image file extentions. Please do not use gifs',
+            node
+          )
+        }
       }
-    }
+    })
   }
-}
-module.exports = rule('remark-lint:no-gif-allowed', noGifAllowed)
+)
+
+export default remarkLintNoGifAllowed
 ```
 
 [Back to Top](#contents)
@@ -218,11 +227,15 @@ You can do that by importing your rule and adding it in `plugins` array:
 
 ```js
 // .remarkrc.js
-const noGifAllowed = require('./rules/no-gif-allowed.js')
+import remarkLintNoGifAllowed from './rules/no-gif-allowed.js'
 
-module.exports = {
-  plugins: [noGifAllowed]
+const plugins = {
+  plugins: [remarkLintNoGifAllowed]
 }
+
+const preset = {plugins}
+
+export default preset
 ```
 
 [Back to Top](#contents)

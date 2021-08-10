@@ -109,14 +109,17 @@ remark -u lint -u lint-no-heading-indent readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintNoHeadingIndent from 'remark-lint-no-heading-indent'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-no-heading-indent'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintNoHeadingIndent)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

@@ -82,14 +82,17 @@ remark -u lint -u lint-definition-case readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintDefinitionCase from 'remark-lint-definition-case'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-definition-case'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintDefinitionCase)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

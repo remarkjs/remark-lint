@@ -135,14 +135,17 @@ remark -u lint -u lint-no-undefined-references readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-no-undefined-references'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintNoUndefinedReferences)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

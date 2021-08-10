@@ -185,13 +185,15 @@ remark -u preset-lint-markdown-style-guide readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide'
 
  remark()
-+  .use(require('remark-preset-lint-markdown-style-guide'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
++  .use(remarkPresetLintMarkdownStyleGuide)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

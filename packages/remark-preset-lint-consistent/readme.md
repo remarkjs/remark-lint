@@ -61,13 +61,15 @@ remark -u preset-lint-consistent readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkPresetLintConsistent from 'remark-preset-lint-consistent'
 
  remark()
-+  .use(require('remark-preset-lint-consistent'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
++  .use(remarkPresetLintConsistent)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

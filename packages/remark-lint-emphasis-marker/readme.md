@@ -158,14 +158,17 @@ remark -u lint -u lint-emphasis-marker readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-emphasis-marker'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintEmphasisMarker)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

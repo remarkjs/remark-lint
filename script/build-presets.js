@@ -27,6 +27,7 @@ presetObjects.forEach(function ({name, packages}) {
   var rows = []
   var children
   var short = name.replace(/^remark-/, '')
+  var camelcased = name.replace(/-(\w)/g, (_, $1) => $1.toUpperCase())
   var org = remote.split('/').slice(0, -1).join('/')
   var main = remote + '/blob/main'
   var health = org + '/.github'
@@ -143,13 +144,15 @@ presetObjects.forEach(function ({name, packages}) {
       'code',
       {lang: 'diff'},
       [
-        " var remark = require('remark')",
-        " var report = require('vfile-reporter')",
+        " import {remark} from 'remark'",
+        " import {reporter} from 'vfile-reporter'",
+        ' import ' + camelcased + " from '" + name + "'",
         '',
         ' remark()',
-        "+  .use(require('" + name + "'))",
-        "   .process('_Emphasis_ and **importance**', function (err, file) {",
-        '     console.error(report(err || file))',
+        '+  .use(' + camelcased + ')',
+        "   .process('_Emphasis_ and **importance**')",
+        '   .then((file) => {',
+        '     console.error(reporter(file))',
         '   })'
       ].join('\n')
     ),

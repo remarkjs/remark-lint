@@ -14,6 +14,9 @@ Each rule in [`remark-lint`][lint] uses this project, so see that for examples!
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -23,20 +26,21 @@ npm install unified-lint-rule
 ## Use
 
 ```js
-import unifiedLintRule from 'unified-lint-rule'
+import {lintRule} from 'unified-lint-rule'
 
-const remarkLintFileExtension = lintRule('remark-lint:file-extension', fileExtension)
+const remarkLintFileExtension = lintRule(
+  'remark-lint:file-extension',
+  (tree, file, option) => {
+    var ext = file.extname
+    var preferred = typeof option === 'string' ? option : 'md'
+
+    if (ext && ext.slice(1) !== preferred) {
+      file.message('Incorrect extension: use `' + preferred + '`')
+    }
+  }
+)
 
 export default remarkLintFileExtension
-
-function fileExtension(tree, file, option) {
-  var ext = file.extname
-  var preferred = typeof option === 'string' ? option : 'md'
-
-  if (ext && ext.slice(1) !== preferred) {
-    file.message('Incorrect extension: use `' + preferred + '`')
-  }
-}
 ```
 
 ## Contribute

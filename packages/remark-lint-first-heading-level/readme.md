@@ -194,14 +194,17 @@ remark -u lint -u lint-first-heading-level readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintFirstHeadingLevel from 'remark-lint-first-heading-level'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-first-heading-level'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintFirstHeadingLevel)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

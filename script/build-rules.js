@@ -23,6 +23,7 @@ rules(root).forEach(function (basename) {
   var tests = info.tests
   var author = parseAuthor(pack.author)
   var short = basename.replace(/^remark-/, '')
+  var camelcased = basename.replace(/-(\w)/g, (_, $1) => $1.toUpperCase())
   var org = remote.split('/').slice(0, -1).join('/')
   var main = remote + '/blob/main'
   var health = org + '/.github'
@@ -223,14 +224,17 @@ rules(root).forEach(function (basename) {
       'code',
       {lang: 'diff'},
       [
-        " var remark = require('remark')",
-        " var report = require('vfile-reporter')",
+        " import {remark} from 'remark'",
+        " import {reporter} from 'vfile-reporter'",
+        " import remarkLint from 'remark-lint'",
+        ' import ' + camelcased + " from '" + basename + "'",
         '',
         ' remark()',
-        "   .use(require('remark-lint'))",
-        "+  .use(require('" + basename + "'))",
-        "   .process('_Emphasis_ and **importance**', function (err, file) {",
-        '     console.error(report(err || file))',
+        '   .use(remarkLint)',
+        '+  .use(' + camelcased + ')',
+        "   .process('_Emphasis_ and **importance**')",
+        '   .then((file) => {',
+        '     console.error(reporter(file))',
         '   })'
       ].join('\n')
     ),

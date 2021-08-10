@@ -14,16 +14,20 @@ information.
 `false` turns rules off — the code no longer runs:
 
 ```js
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+
 remark()
-  .use(require('remark-lint-final-newline'), false)
+  .use(remarkLintFinalNewline, false)
   // …
 ```
 
 `true` turns a rule on again:
 
 ```js
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+
 remark()
-  .use(require('remark-lint-final-newline'), true)
+  .use(remarkLintFinalNewline, true)
   // …
 ```
 
@@ -31,8 +35,10 @@ Rules can be configured with a severity too.  The following ignores all
 messages from the plugin:
 
 ```js
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+
 remark()
-  .use(require('remark-lint-final-newline'), [0])
+  .use(remarkLintFinalNewline, [0])
   // …
 ```
 
@@ -40,16 +46,20 @@ remark()
 To trigger an error instead of a warning, pass `2`:
 
 ```js
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+
 remark()
-  .use(require('remark-lint-final-newline'), [2])
+  .use(remarkLintFinalNewline, [2])
   // …
 ```
 
 It’s also possible to pass both a severity and configuration:
 
 ```js
+import remarkLintMaximumLineLength from 'remark-lint-maximum-line-length'
+
 remark()
-  .use(require('remark-lint-maximum-line-length'), [2, 70])
+  .use(remarkLintMaximumLineLength, [2, 70])
   // …
 ```
 
@@ -58,8 +68,10 @@ Lastly, strings can also be passed, instead of numbers:
 `error` instead of `2`.
 
 ```js
+import remarkLintMaximumLineLength from 'remark-lint-maximum-line-length'
+
 remark()
-  .use(require('remark-lint-maximum-line-length'), ['error', 70])
+  .use(remarkLintMaximumLineLength, ['error', 70])
   // …
 ```
 

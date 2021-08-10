@@ -38,6 +38,9 @@ powered by [plugins][remark-plugins] (such as these).
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -100,13 +103,15 @@ npm install remark remark-preset-lint-markdown-style-guide
 Let’s say `example.js` looks as follows:
 
 ```js
-var report = require('vfile-reporter')
-var remark = require('remark')
-var styleGuide = require('remark-preset-lint-markdown-style-guide')
+import {remark} from 'remark'
+import {reporter} from 'vfile-reporter'
+import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide'
 
-var file = remark().use(styleGuide).processSync('_Hello world_')
+const file = remark()
+  .use(remarkPresetLintMarkdownStyleGuide)
+  .processSync('_Hello world_')
 
-console.log(report(file))
+console.log(reporter(file))
 ```
 
 Now, running `node example.js` yields:
@@ -196,28 +201,29 @@ It ensures a single style is used: list items use one type of bullet (`*`, `-`,
 
 ###### Example
 
-If you `require('remark')`, [`remark-stringify`][remark-stringify] is included
+If you `import('remark')`, [`remark-stringify`][remark-stringify] is included
 unless an output format other than markdown (such as HTML) is defined.
 
 Say we have the following file, `example.js`, showing how formatting rules can
 be used:
 
 ```js
-var report = require('vfile-reporter')
-var remark = require('remark')
-var emphasisMarker = require('remark-lint-emphasis-marker')
-var strongMarker = require('remark-lint-strong-marker')
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
+import remarkLintStrongMarker from 'remark-lint-strong-marker'
 
 remark()
-  .use(emphasisMarker, '*')
-  .use(strongMarker, '*')
+  .use(remarkLintEmphasisMarker, '*')
+  .use(remarkLintStrongMarker, '*')
   // ^ two `remark-lint` rules.
   .use({
     settings: {emphasis: '*', strong: '*'}
     // ^ `remark-stringify` settings.
   })
-  .process('_Hello_, __world__!', function (err, file) {
-    console.error(report(err || file))
+  .process('_Hello_, __world__!')
+  .then((file) => {
+    console.error(reporter(file))
     console.log(String(file))
   })
 ```
@@ -238,22 +244,23 @@ If you’re using [`remark-stringify`][remark-stringify] explicitly, you can pas
 options like any other plugin, like so:
 
 ```js
-var report = require('vfile-reporter')
-var unified = require('unified')
-var parse = require('remark-parse')
-var stringify = require('remark-stringify')
-var emphasisMarker = require('remark-lint-emphasis-marker')
-var strongMarker = require('remark-lint-strong-marker')
+import {reporter} from 'vfile-reporter'
+import {unified} from 'unified'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
+import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
+import remarkLintStrongMarker from 'remark-lint-strong-marker'
 
 unified()
-  .use(parse)
-  .use(emphasisMarker, '*')
-  .use(strongMarker, '*')
+  .use(remarkParse)
+  .use(remarkLintEmphasisMarker, '*')
+  .use(remarkLintStrongMarker, '*')
   // ^ two `remark-lint` rules.
-  .use(stringify, {emphasis: '*', strong: '*'})
+  .use(remarkStringify, {emphasis: '*', strong: '*'})
   // ^ `remark-stringify` with settings.
-  .process('_Hello_, __world__!', function (err, file) {
-    console.error(report(err || file))
+  .process('_Hello_, __world__!')
+  .then((file) => {
+    console.error(reporter(file))
     console.log(String(file))
   })
 ```

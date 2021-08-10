@@ -84,14 +84,17 @@ remark -u lint -u lint-no-duplicate-definitions readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintNoDuplicateDefinitions from 'remark-lint-no-duplicate-definitions'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-no-duplicate-definitions'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintNoDuplicateDefinitions)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

@@ -90,14 +90,17 @@ remark -u lint -u lint-maximum-heading-length readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintMaximumHeadingLength from 'remark-lint-maximum-heading-length'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-maximum-heading-length'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintMaximumHeadingLength)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

@@ -83,14 +83,17 @@ remark -u lint -u lint-no-empty-url readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintNoEmptyUrl from 'remark-lint-no-empty-url'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-no-empty-url'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintNoEmptyUrl)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

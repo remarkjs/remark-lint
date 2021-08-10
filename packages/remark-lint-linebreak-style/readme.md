@@ -130,14 +130,17 @@ remark -u lint -u lint-linebreak-style readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remark-lint'
+ import remarkLintLinebreakStyle from 'remark-lint-linebreak-style'
 
  remark()
-   .use(require('remark-lint'))
-+  .use(require('remark-lint-linebreak-style'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
+   .use(remarkLint)
++  .use(remarkLintLinebreakStyle)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
    })
 ```
 

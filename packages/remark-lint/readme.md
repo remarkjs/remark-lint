@@ -20,6 +20,9 @@ If you’re using just plugins, you have to include `remark-lint` explicitly.
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -51,14 +54,16 @@ remark -u lint readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ import {remark} from 'remark'
+ import {reporter} from 'vfile-reporter'
+ import remarkLint from 'remarkLint'
 
  remark()
-+  .use(require('remark-lint'))
-   .process('_Emphasis_ and **importance**', function (err, file) {
-     console.error(report(err || file))
-   });
++  .use(remarkLint)
+   .process('_Emphasis_ and **importance**')
+   .then((file) => {
+     console.error(reporter(file))
+   })
 ```
 
 ## Contribute

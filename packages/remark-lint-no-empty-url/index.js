@@ -24,13 +24,13 @@
  *   3:1-3:11: Don’t use images without URL
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
+const remarkLintNoEmptyUrl = lintRule('remark-lint:no-empty-url', noEmptyURL)
 
-module.exports = rule('remark-lint:no-empty-url', noEmptyURL)
+export default remarkLintNoEmptyUrl
 
 function noEmptyURL(tree, file) {
   visit(tree, ['link', 'image'], visitor)

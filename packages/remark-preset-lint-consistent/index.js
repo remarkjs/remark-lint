@@ -4,20 +4,36 @@
  *   consistency.
  */
 
-'use strict'
+import remarkLint from 'remark-lint'
+import remarkLintBlockquoteIndentation from 'remark-lint-blockquote-indentation'
+import remarkLintCheckboxCharacterStyle from 'remark-lint-checkbox-character-style'
+import remarkLintCodeBlockStyle from 'remark-lint-code-block-style'
+import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
+import remarkLintFencedCodeMarker from 'remark-lint-fenced-code-marker'
+import remarkLintHeadingStyle from 'remark-lint-heading-style'
+import remarkLintLinkTitleStyle from 'remark-lint-link-title-style'
+import remarkLintListItemContentIndent from 'remark-lint-list-item-content-indent'
+import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
+import remarkLintRuleStyle from 'remark-lint-rule-style'
+import remarkLintStrongMarker from 'remark-lint-strong-marker'
+import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
 
-module.exports.plugins = [
-  require('remark-lint'),
-  [require('remark-lint-blockquote-indentation'), 'consistent'],
-  [require('remark-lint-checkbox-character-style'), 'consistent'],
-  [require('remark-lint-code-block-style'), 'consistent'],
-  [require('remark-lint-emphasis-marker'), 'consistent'],
-  [require('remark-lint-fenced-code-marker'), 'consistent'],
-  [require('remark-lint-heading-style'), 'consistent'],
-  [require('remark-lint-link-title-style'), 'consistent'],
-  require('remark-lint-list-item-content-indent'),
-  [require('remark-lint-ordered-list-marker-style'), 'consistent'],
-  [require('remark-lint-rule-style'), 'consistent'],
-  [require('remark-lint-strong-marker'), 'consistent'],
-  [require('remark-lint-table-cell-padding'), 'consistent']
+const plugins = [
+  remarkLint,
+  [remarkLintBlockquoteIndentation, 'consistent'],
+  [remarkLintCheckboxCharacterStyle, 'consistent'],
+  [remarkLintCodeBlockStyle, 'consistent'],
+  [remarkLintEmphasisMarker, 'consistent'],
+  [remarkLintFencedCodeMarker, 'consistent'],
+  [remarkLintHeadingStyle, 'consistent'],
+  [remarkLintLinkTitleStyle, 'consistent'],
+  remarkLintListItemContentIndent,
+  [remarkLintOrderedListMarkerStyle, 'consistent'],
+  [remarkLintRuleStyle, 'consistent'],
+  [remarkLintStrongMarker, 'consistent'],
+  [remarkLintTableCellPadding, 'consistent']
 ]
+
+const remarkPresetLintConsistent = {plugins}
+
+export default remarkPresetLintConsistent

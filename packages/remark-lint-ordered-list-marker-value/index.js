@@ -126,17 +126,17 @@
  *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'` or `'one'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintOrderedListMarkerValue = lintRule(
   'remark-lint:ordered-list-marker-value',
   orderedListMarkerValue
 )
+
+export default remarkLintOrderedListMarkerValue
 
 var start = position.start
 

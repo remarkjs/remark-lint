@@ -31,15 +31,18 @@
  *   1:1-1:19: Don’t use literal URLs without angle brackets
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
+import toString from 'mdast-util-to-string'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
+const remarkLintNoLiteralUrls = lintRule(
+  'remark-lint:no-literal-urls',
+  noLiteralURLs
+)
 
-module.exports = rule('remark-lint:no-literal-urls', noLiteralURLs)
+export default remarkLintNoLiteralUrls
 
 var start = position.start
 var end = position.end

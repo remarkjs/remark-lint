@@ -25,11 +25,14 @@
  *   1:1: Do not start file names with `an`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
+const remarkLintNoFileNameArticles = lintRule(
+  'remark-lint:no-file-name-articles',
+  noFileNameArticles
+)
 
-module.exports = rule('remark-lint:no-file-name-articles', noFileNameArticles)
+export default remarkLintNoFileNameArticles
 
 function noFileNameArticles(tree, file) {
   var match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)

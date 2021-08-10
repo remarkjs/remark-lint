@@ -23,9 +23,11 @@ npm install unified-lint-rule
 ## Use
 
 ```js
-var rule = require('unified-lint-rule')
+import unifiedLintRule from 'unified-lint-rule'
 
-module.exports = rule('remark-lint:file-extension', fileExtension)
+const remarkLintFileExtension = lintRule('remark-lint:file-extension', fileExtension)
+
+export default remarkLintFileExtension
 
 function fileExtension(tree, file, option) {
   var ext = file.extname

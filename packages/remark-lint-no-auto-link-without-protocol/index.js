@@ -33,18 +33,18 @@
  *   1:1-1:14: All automatic links must start with a protocol
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
+import toString from 'mdast-util-to-string'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
-
-module.exports = rule(
+const remarkLintNoAutoLinkWithoutProtocol = lintRule(
   'remark-lint:no-auto-link-without-protocol',
   noAutoLinkWithoutProtocol
 )
+
+export default remarkLintNoAutoLinkWithoutProtocol
 
 var start = position.start
 var end = position.end

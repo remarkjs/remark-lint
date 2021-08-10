@@ -34,17 +34,17 @@
  *   4:2: Incorrect indentation before bullet: remove 1 space
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import plural from 'pluralize'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var plural = require('pluralize')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintListItemBulletIndent = lintRule(
   'remark-lint:list-item-bullet-indent',
   listItemBulletIndent
 )
+
+export default remarkLintListItemBulletIndent
 
 function listItemBulletIndent(tree, file) {
   visit(tree, 'list', visitor)

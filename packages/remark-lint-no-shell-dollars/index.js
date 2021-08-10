@@ -53,13 +53,16 @@
  *   5:1-8:4: Do not use dollar signs before shell commands
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
+const remarkLintNoShellDollars = lintRule(
+  'remark-lint:no-shell-dollars',
+  noShellDollars
+)
 
-module.exports = rule('remark-lint:no-shell-dollars', noShellDollars)
+export default remarkLintNoShellDollars
 
 var reason = 'Do not use dollar signs before shell commands'
 

@@ -103,15 +103,18 @@
  *    1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import plural from 'pluralize'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var plural = require('pluralize')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintListItemIndent = lintRule(
+  'remark-lint:list-item-indent',
+  listItemIndent
+)
 
-module.exports = rule('remark-lint:list-item-indent', listItemIndent)
+export default remarkLintListItemIndent
 
 var start = position.start
 

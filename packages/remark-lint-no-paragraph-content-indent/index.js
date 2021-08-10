@@ -71,17 +71,17 @@
  *   22:4: Expected no indentation in paragraph content
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import vfileLocation from 'vfile-location'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var vfileLocation = require('vfile-location')
-
-module.exports = rule(
+const remarkLintNoParagraphContentIndent = lintRule(
   'remark-lint:no-paragraph-content-indent',
   noParagraphContentIndent
 )
+
+export default remarkLintNoParagraphContentIndent
 
 var reason = 'Expected no indentation in paragraph content'
 

@@ -1,11 +1,5 @@
-'use strict'
-
-module.exports = find
-
-find.all = findAll
-
 // Find the first tag in `tags` with a type set to `key`.
-function find(tags, key) {
+export function find(tags, key) {
   var value = null
 
   tags.some(function (tag) {
@@ -22,7 +16,7 @@ function find(tags, key) {
 }
 
 // Find the first tag in `tags` with a type set to `key`.
-function findAll(tags, key) {
+export function findAll(tags, key) {
   return tags
     .filter(function (tag) {
       return tag && tag.type === key

@@ -23,16 +23,16 @@
  *   1:1-1:16: This looks like a heading but has too many hashes
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintNoHeadingLikeParagraph = lintRule(
   'remark-lint:no-heading-like-paragraph',
   noHeadingLikeParagraph
 )
+
+export default remarkLintNoHeadingLikeParagraph
 
 var fence = '#######'
 var reason = 'This looks like a heading but has too many hashes'

@@ -25,17 +25,17 @@
  *   1:1-1:52: Use headings shorter than `40`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
+import toString from 'mdast-util-to-string'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
-
-module.exports = rule(
+const remarkLintMaximumHeadingLength = lintRule(
   'remark-lint:maximum-heading-length',
   maximumHeadingLength
 )
+
+export default remarkLintMaximumHeadingLength
 
 function maximumHeadingLength(tree, file, option) {
   var preferred = typeof option === 'number' && !isNaN(option) ? option : 60

@@ -66,31 +66,32 @@
  *   6:1-6:13: Headings should use setext
  */
 
-'use strict'
-
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var style = require('mdast-util-heading-style')
-var generated = require('unist-util-generated')
-
-module.exports = rule('remark-lint:heading-style', headingStyle)
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import headingStyle from 'mdast-util-heading-style'
+import generated from 'unist-util-generated'
 
 var types = ['atx', 'atx-closed', 'setext']
 
-function headingStyle(tree, file, option) {
-  var preferred = types.indexOf(option) === -1 ? null : option
+const remarkLintHeadingStyle = lintRule(
+  'remark-lint:heading-style',
+  function (tree, file, option) {
+    var preferred = types.indexOf(option) === -1 ? null : option
 
-  visit(tree, 'heading', visitor)
+    visit(tree, 'heading', visitor)
 
-  function visitor(node) {
-    if (!generated(node)) {
-      if (preferred) {
-        if (style(node, preferred) !== preferred) {
-          file.message('Headings should use ' + preferred, node)
+    function visitor(node) {
+      if (!generated(node)) {
+        if (preferred) {
+          if (headingStyle(node, preferred) !== preferred) {
+            file.message('Headings should use ' + preferred, node)
+          }
+        } else {
+          preferred = headingStyle(node, preferred)
         }
-      } else {
-        preferred = style(node, preferred)
       }
     }
   }
-}
+)
+
+export default remarkLintHeadingStyle

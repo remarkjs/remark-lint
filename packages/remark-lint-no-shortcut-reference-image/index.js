@@ -29,16 +29,16 @@
  *   1:1-1:7: Use the trailing [] on reference images
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintNoShortcutReferenceImage = lintRule(
   'remark-lint:no-shortcut-reference-image',
   noShortcutReferenceImage
 )
+
+export default remarkLintNoShortcutReferenceImage
 
 var reason = 'Use the trailing [] on reference images'
 

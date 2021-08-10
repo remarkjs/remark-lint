@@ -40,17 +40,17 @@
  *   9:1-9:9: Don’t add a trailing `;` to headings
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
+import toString from 'mdast-util-to-string'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
-
-module.exports = rule(
+const remarkLintNoHeadingPunctuation = lintRule(
   'remark-lint:no-heading-punctuation',
   noHeadingPunctuation
 )
+
+export default remarkLintNoHeadingPunctuation
 
 var defaults = '\\.,;:!?'
 

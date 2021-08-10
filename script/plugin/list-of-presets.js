@@ -1,15 +1,13 @@
-'use strict'
-
-var path = require('path')
-var zone = require('mdast-zone')
-var u = require('unist-builder')
-var presets = require('../util/presets.js')
+import fs from 'fs'
+import path from 'path'
+import zone from 'mdast-zone'
+import u from 'unist-builder'
+import {presets} from '../util/presets.js'
 
 var root = path.join(process.cwd(), 'packages')
+const presetObjects = await presets(root)
 
-module.exports = listOfPresets
-
-function listOfPresets() {
+export default function listOfPresets() {
   return transformer
 }
 
@@ -20,12 +18,14 @@ function transformer(tree) {
 function replace(start, nodes, end) {
   return [
     start,
-    u('list', {ordered: false, spread: false}, presets(root).map(item)),
+    u('list', {ordered: false, spread: false}, presetObjects.map(item)),
     end
   ]
 
-  function item(basename) {
-    var pack = require(path.join(root, basename, 'package.json'))
+  function item({name}) {
+    var pack = JSON.parse(
+      fs.readFileSync(path.join(root, name, 'package.json'))
+    )
     var description = pack.description.replace(
       /^remark preset to configure remark-lint with ?/i,
       ''
@@ -33,7 +33,7 @@ function replace(start, nodes, end) {
 
     return u('listItem', {spread: false}, [
       u('paragraph', [
-        u('link', {url: pack.repository}, [u('inlineCode', basename)]),
+        u('link', {url: pack.repository}, [u('inlineCode', name)]),
         u('text', ' — ' + description)
       ])
     ])

@@ -43,14 +43,17 @@
  *   3:17-3:18: Misaligned table fence
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintTablePipeAlignment = lintRule(
+  'remark-lint:table-pipe-alignment',
+  tablePipeAlignment
+)
 
-module.exports = rule('remark-lint:table-pipe-alignment', tablePipeAlignment)
+export default remarkLintTablePipeAlignment
 
 var start = position.start
 var end = position.end

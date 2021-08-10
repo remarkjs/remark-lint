@@ -46,19 +46,19 @@
  *   #··
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import headingStyle from 'mdast-util-heading-style'
+import plural from 'pluralize'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var style = require('mdast-util-heading-style')
-var plural = require('pluralize')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintNoHeadingContentIndent = lintRule(
   'remark-lint:no-heading-content-indent',
   noHeadingContentIndent
 )
+
+export default remarkLintNoHeadingContentIndent
 
 var start = position.start
 var end = position.end
@@ -82,7 +82,7 @@ function noHeadingContentIndent(tree, file) {
 
     depth = node.depth
     children = node.children
-    type = style(node, 'atx')
+    type = headingStyle(node, 'atx')
 
     if (type === 'atx' || type === 'atx-closed') {
       head = start(children[0]).column

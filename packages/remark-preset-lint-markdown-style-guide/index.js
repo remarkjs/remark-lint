@@ -96,35 +96,79 @@
  *   ```
  */
 
-'use strict'
+import remarkLint from 'remark-lint'
+import remarkLintFileExtension from 'remark-lint-file-extension'
+import remarkLintNoFileNameMixedCase from 'remark-lint-no-file-name-mixed-case'
+import remarkLintNoFileNameArticles from 'remark-lint-no-file-name-articles'
+import remarkLintNoFileNameIrregularCharacters from 'remark-lint-no-file-name-irregular-characters'
+import remarkLintNoFileNameConsecutiveDashes from 'remark-lint-no-file-name-consecutive-dashes'
+import remarkLintNoFileNameOuterDashes from 'remark-lint-no-file-name-outer-dashes'
+import remarkLintNoConsecutiveBlankLines from 'remark-lint-no-consecutive-blank-lines'
+import remarkLintMaximumLineLength from 'remark-lint-maximum-line-length'
+import remarkLintNoShellDollars from 'remark-lint-no-shell-dollars'
+import remarkLintHardBreakSpaces from 'remark-lint-hard-break-spaces'
+import remarkLintHeadingStyle from 'remark-lint-heading-style'
+import remarkLintHeadingIncrement from 'remark-lint-heading-increment'
+import remarkLintNoDuplicateHeadings from 'remark-lint-no-duplicate-headings'
+import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
+import remarkLintMaximumHeadingLength from 'remark-lint-maximum-heading-length'
+import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
+import remarkLintBlockquoteIndentation from 'remark-lint-blockquote-indentation'
+import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
+import remarkLintUnorderedListMarkerStyle from 'remark-lint-unordered-list-marker-style'
+import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
+import remarkLintOrderedListMarkerValue from 'remark-lint-ordered-list-marker-value'
+import remarkLintListItemIndent from 'remark-lint-list-item-indent'
+import remarkLintListItemContentIndent from 'remark-lint-list-item-content-indent'
+import remarkLintListItemSpacing from 'remark-lint-list-item-spacing'
+import remarkLintCodeBlockStyle from 'remark-lint-code-block-style'
+import remarkLintFencedCodeFlag from 'remark-lint-fenced-code-flag'
+import remarkLintFencedCodeMarker from 'remark-lint-fenced-code-marker'
+import remarkLintRuleStyle from 'remark-lint-rule-style'
+import remarkLintNoTableIndentation from 'remark-lint-no-table-indentation'
+import remarkLintTablePipes from 'remark-lint-table-pipes'
+import remarkLintTablePipeAlignment from 'remark-lint-table-pipe-alignment'
+import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
+import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
+import remarkLintNoShortcutReferenceImage from 'remark-lint-no-shortcut-reference-image'
+import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference-link'
+import remarkLintFinalDefinition from 'remark-lint-final-definition'
+import remarkLintDefinitionCase from 'remark-lint-definition-case'
+import remarkLintDefinitionSpacing from 'remark-lint-definition-spacing'
+import remarkLintLinkTitleStyle from 'remark-lint-link-title-style'
+import remarkLintStrongMarker from 'remark-lint-strong-marker'
+import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
+import remarkLintNoEmphasisAsHeading from 'remark-lint-no-emphasis-as-heading'
+import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
+import remarkLintNoAutoLinkWithoutProtocol from 'remark-lint-no-auto-link-without-protocol'
 
-module.exports.plugins = [
-  require('remark-lint'),
+const plugins = [
+  remarkLint,
 
   // http://www.cirosantilli.com/markdown-style-guide/#file-extension
-  [require('remark-lint-file-extension'), 'md'],
+  [remarkLintFileExtension, 'md'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#file-name
-  require('remark-lint-no-file-name-mixed-case'),
-  require('remark-lint-no-file-name-articles'),
-  require('remark-lint-no-file-name-irregular-characters'),
-  require('remark-lint-no-file-name-consecutive-dashes'),
-  require('remark-lint-no-file-name-outer-dashes'),
+  remarkLintNoFileNameMixedCase,
+  remarkLintNoFileNameArticles,
+  remarkLintNoFileNameIrregularCharacters,
+  remarkLintNoFileNameConsecutiveDashes,
+  remarkLintNoFileNameOuterDashes,
 
   // http://www.cirosantilli.com/markdown-style-guide/#newlines
   // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-around-lists
   // http://www.cirosantilli.com/markdown-style-guide/#tables
-  require('remark-lint-no-consecutive-blank-lines'),
+  remarkLintNoConsecutiveBlankLines,
 
   // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-sentences.
   // Not enforced, cannot be done properly without false positives, if you
   // want this, use remark-retext and retext-sentence-spacing.
 
   // http://www.cirosantilli.com/markdown-style-guide/#line-wrapping
-  [require('remark-lint-maximum-line-length'), 80],
+  [remarkLintMaximumLineLength, 80],
 
   // http://www.cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
-  require('remark-lint-no-shell-dollars'),
+  remarkLintNoShellDollars,
 
   // http://www.cirosantilli.com/markdown-style-guide/#what-to-mark-as-code.
   // This is a tip, not a rule.
@@ -134,15 +178,15 @@ module.exports.plugins = [
   // use remark-retext and retext-spell.
 
   // http://www.cirosantilli.com/markdown-style-guide/#line-breaks
-  require('remark-lint-hard-break-spaces'),
+  remarkLintHardBreakSpaces,
 
   // http://www.cirosantilli.com/markdown-style-guide/#headers
-  [require('remark-lint-heading-style'), 'atx'],
-  require('remark-lint-heading-increment'),
-  require('remark-lint-no-duplicate-headings'),
+  [remarkLintHeadingStyle, 'atx'],
+  remarkLintHeadingIncrement,
+  remarkLintNoDuplicateHeadings,
 
   // http://www.cirosantilli.com/markdown-style-guide/#top-level-header
-  require('remark-lint-no-multiple-toplevel-headings'),
+  remarkLintNoMultipleToplevelHeadings,
 
   // http://www.cirosantilli.com/markdown-style-guide/#header-case.
   // Heading case isn’t tested yet: new rules to fix this are ok though!
@@ -151,33 +195,33 @@ module.exports.plugins = [
   // Cannot be checked?
 
   // http://www.cirosantilli.com/markdown-style-guide/#header-length
-  require('remark-lint-maximum-heading-length'),
+  remarkLintMaximumHeadingLength,
 
   // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-headers
-  [require('remark-lint-no-heading-punctuation'), ':.'],
+  [remarkLintNoHeadingPunctuation, ':.'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#header-synonyms.
   // Cannot be checked?
 
   // http://www.cirosantilli.com/markdown-style-guide/#blockquotes
-  [require('remark-lint-blockquote-indentation'), 2],
-  require('remark-lint-no-blockquote-without-marker'),
+  [remarkLintBlockquoteIndentation, 2],
+  remarkLintNoBlockquoteWithoutMarker,
 
   // http://www.cirosantilli.com/markdown-style-guide/#unordered
-  [require('remark-lint-unordered-list-marker-style'), '-'],
+  [remarkLintUnorderedListMarkerStyle, '-'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#ordered
-  [require('remark-lint-ordered-list-marker-style'), '.'],
-  [require('remark-lint-ordered-list-marker-value'), 'one'],
+  [remarkLintOrderedListMarkerStyle, '.'],
+  [remarkLintOrderedListMarkerValue, 'one'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
-  [require('remark-lint-list-item-indent'), 'mixed'],
+  [remarkLintListItemIndent, 'mixed'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
-  require('remark-lint-list-item-content-indent'),
+  remarkLintListItemContentIndent,
 
   // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-inside-lists
-  require('remark-lint-list-item-spacing'),
+  remarkLintListItemSpacing,
 
   // http://www.cirosantilli.com/markdown-style-guide/#case-of-first-letter-of-list-item
   // Not checked.
@@ -189,53 +233,57 @@ module.exports.plugins = [
   // Not checked.
 
   // http://www.cirosantilli.com/markdown-style-guide/#code-blocks
-  [require('remark-lint-code-block-style'), 'fenced'],
-  [require('remark-lint-fenced-code-flag'), {allowEmpty: false}],
-  [require('remark-lint-fenced-code-marker'), '`'],
+  [remarkLintCodeBlockStyle, 'fenced'],
+  [remarkLintFencedCodeFlag, {allowEmpty: false}],
+  [remarkLintFencedCodeMarker, '`'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#horizontal-rules
-  [require('remark-lint-rule-style'), '---'],
+  [remarkLintRuleStyle, '---'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#tables
-  require('remark-lint-no-table-indentation'),
-  require('remark-lint-table-pipes'),
-  require('remark-lint-table-pipe-alignment'),
-  [require('remark-lint-table-cell-padding'), 'padded'],
+  remarkLintNoTableIndentation,
+  remarkLintTablePipes,
+  remarkLintTablePipeAlignment,
+  [remarkLintTableCellPadding, 'padded'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
   // Not checked.
 
   // http://www.cirosantilli.com/markdown-style-guide/#span-elements
-  require('remark-lint-no-inline-padding'),
+  remarkLintNoInlinePadding,
 
   // http://www.cirosantilli.com/markdown-style-guide/#reference-style-links
-  require('remark-lint-no-shortcut-reference-image'),
-  require('remark-lint-no-shortcut-reference-link'),
-  require('remark-lint-final-definition'),
-  require('remark-lint-definition-case'),
-  require('remark-lint-definition-spacing'),
+  remarkLintNoShortcutReferenceImage,
+  remarkLintNoShortcutReferenceLink,
+  remarkLintFinalDefinition,
+  remarkLintDefinitionCase,
+  remarkLintDefinitionSpacing,
 
   // http://www.cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
-  [require('remark-lint-link-title-style'), '"'],
+  [remarkLintLinkTitleStyle, '"'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#bold
-  [require('remark-lint-strong-marker'), '*'],
+  [remarkLintStrongMarker, '*'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#italic
-  [require('remark-lint-emphasis-marker'), '*'],
+  [remarkLintEmphasisMarker, '*'],
 
   // http://www.cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
   // Not checked.
 
   // http://www.cirosantilli.com/markdown-style-guide/#emphasis-vs-headers
-  require('remark-lint-no-emphasis-as-heading'),
+  remarkLintNoEmphasisAsHeading,
 
   // http://www.cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
-  require('remark-lint-no-literal-urls'),
+  remarkLintNoLiteralUrls,
 
   // http://www.cirosantilli.com/markdown-style-guide/#content-of-automatic-links
-  require('remark-lint-no-auto-link-without-protocol')
+  remarkLintNoAutoLinkWithoutProtocol
 
   // http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
   // Not checked.
 ]
+
+const remarkPresetLintMarkdownStyleGuide = {plugins}
+
+export default remarkPresetLintMarkdownStyleGuide

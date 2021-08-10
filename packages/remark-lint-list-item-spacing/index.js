@@ -107,14 +107,17 @@
  *   14:15-16:1: Extraneous new line after list item
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintListItemSpacing = lintRule(
+  'remark-lint:list-item-spacing',
+  listItemSpacing
+)
 
-module.exports = rule('remark-lint:list-item-spacing', listItemSpacing)
+export default remarkLintListItemSpacing
 
 var start = position.start
 var end = position.end

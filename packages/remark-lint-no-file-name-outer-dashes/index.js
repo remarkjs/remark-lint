@@ -17,14 +17,14 @@
  *   1:1: Do not use initial or final dashes in a file name
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
-
-module.exports = rule(
+const remarkLintNofileNameOuterDashes = lintRule(
   'remark-lint:no-file-name-outer-dashes',
   noFileNameOuterDashes
 )
+
+export default remarkLintNofileNameOuterDashes
 
 var reason = 'Do not use initial or final dashes in a file name'
 

@@ -50,11 +50,14 @@
  *   ```
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
+const remarkLintFinalNewline = lintRule(
+  'remark-lint:final-newline',
+  finalNewline
+)
 
-module.exports = rule('remark-lint:final-newline', finalNewline)
+export default remarkLintFinalNewline
 
 function finalNewline(tree, file) {
   var contents = String(file)

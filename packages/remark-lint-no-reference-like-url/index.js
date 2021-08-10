@@ -23,13 +23,16 @@
  *   1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import generated from 'unist-util-generated'
+import visit from 'unist-util-visit'
 
-var rule = require('unified-lint-rule')
-var generated = require('unist-util-generated')
-var visit = require('unist-util-visit')
+const remarkLintNoReferenceLikeUrl = lintRule(
+  'remark-lint:no-reference-like-url',
+  noReferenceLikeURL
+)
 
-module.exports = rule('remark-lint:no-reference-like-url', noReferenceLikeURL)
+export default remarkLintNoReferenceLikeUrl
 
 function noReferenceLikeURL(tree, file) {
   var identifiers = []

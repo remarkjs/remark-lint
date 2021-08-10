@@ -32,14 +32,14 @@
  *   1:1: Do not use ` ` in a file name
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
-
-module.exports = rule(
+const remarkLintNoFileNameIrregularCharacters = lintRule(
   'remark-lint:no-file-name-irregular-characters',
   noFileNameIrregularCharacters
 )
+
+export default remarkLintNoFileNameIrregularCharacters
 
 var expression = /[^\\.a-zA-Z\d-]/
 

@@ -1,15 +1,11 @@
-'use strict'
-
-var fs = require('fs')
-var path = require('path')
-var dox = require('dox')
-var strip = require('strip-indent')
-var find = require('./find.js')
-
-module.exports = ruleSync
+import fs from 'fs'
+import path from 'path'
+import dox from 'dox'
+import strip from 'strip-indent'
+import {find, findAll} from './find.js'
 
 // Get information for a rule at `filePath`.
-function ruleSync(filePath) {
+export function rule(filePath) {
   var ruleId = path.basename(filePath)
   var result = {}
   var tests = {}
@@ -41,7 +37,7 @@ function ruleSync(filePath) {
   result.tests = tests
   result.filePath = filePath
 
-  find.all(tags, 'example').map(strip).forEach(check)
+  findAll(tags, 'example').map(strip).forEach(check)
 
   return result
 

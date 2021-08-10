@@ -1,42 +1,45 @@
-'use strict'
+import fs from 'fs'
+import path from 'path'
+import {inspect} from 'util'
+import u from 'unist-builder'
+import dox from 'dox'
+import remark from 'remark'
+import gfm from 'remark-gfm'
+import strip from 'strip-indent'
+import parseAuthor from 'parse-author'
+import {find} from './util/find.js'
+import {presets} from './util/presets.js'
 
-var fs = require('fs')
-var path = require('path')
-var u = require('unist-builder')
-var dox = require('dox')
-var remark = require('remark')
-var gfm = require('remark-gfm')
-var strip = require('strip-indent')
-var parseAuthor = require('parse-author')
-var remote = require('../package.json').repository
-var find = require('./util/find.js')
-var presets = require('./util/presets.js')
+const pkg = JSON.parse(fs.readFileSync('package.json'))
+const remote = pkg.repository
 
 var root = path.join(process.cwd(), 'packages')
 
-presets(root).forEach(function (basename) {
-  var base = path.resolve(root, basename)
-  var pack = require(path.join(base, 'package.json'))
+const presetObjects = await presets(root)
+
+presetObjects.forEach(function ({name, packages}) {
+  var base = path.resolve(root, name)
+  var pack = JSON.parse(fs.readFileSync(path.join(base, 'package.json')))
   var doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
   var tags = dox.parseComments(doc)[0].tags
   var author = parseAuthor(pack.author)
   var description = strip(find(tags, 'fileoverview')).trim()
   var rows = []
   var children
-  var short = basename.replace(/^remark-/, '')
+  var short = name.replace(/^remark-/, '')
   var org = remote.split('/').slice(0, -1).join('/')
   var main = remote + '/blob/main'
   var health = org + '/.github'
   var hMain = health + '/blob/HEAD'
   var slug = remote.split('/').slice(-2).join('/')
 
-  if (basename !== pack.name) {
+  if (name !== pack.name) {
     throw new Error(
       'Expected package name (`' +
         pack.name +
         '`) to be the same as ' +
         'directory name (`' +
-        basename +
+        name +
         '`)'
     )
   }
@@ -48,27 +51,27 @@ presets(root).forEach(function (basename) {
     ])
   )
 
-  doc.replace(
-    /require\('remark-lint-([^']+)'\)(?:, ([^\]]+)])?/g,
-    function ($0, rule, option) {
-      var url = remote + '/tree/main/packages/remark-lint-' + rule
+  let rule
 
-      rows.push(
-        u('tableRow', [
-          u('tableCell', [
-            u('link', {url: url, title: null}, [u('inlineCode', rule)])
-          ]),
-          u('tableCell', option ? [u('inlineCode', option)] : [])
-        ])
-      )
+  for (rule in packages) {
+    var url = remote + '/tree/main/packages/' + rule
+    const option = packages[rule]
 
-      return ''
-    }
-  )
+    if (rule === 'remark-lint') continue
+
+    rows.push(
+      u('tableRow', [
+        u('tableCell', [
+          u('link', {url: url, title: null}, [u('inlineCode', rule)])
+        ]),
+        u('tableCell', option ? [u('inlineCode', inspect(option))] : [])
+      ])
+    )
+  }
 
   children = [
     u('html', '<!--This file is generated-->'),
-    u('heading', {depth: 1}, [u('text', basename)]),
+    u('heading', {depth: 1}, [u('text', name)]),
     u('paragraph', [
       u('linkReference', {identifier: 'build'}, [
         u('imageReference', {identifier: 'build-badge', alt: 'Build'})
@@ -117,7 +120,7 @@ presets(root).forEach(function (basename) {
       ]),
       u('text', ':')
     ]),
-    u('code', {lang: 'sh'}, 'npm install ' + basename),
+    u('code', {lang: 'sh'}, 'npm install ' + name),
     u('heading', {depth: 2}, [u('text', 'Use')]),
     u('paragraph', [
       u('text', 'You probably want to use it on the CLI through a config file:')
@@ -144,7 +147,7 @@ presets(root).forEach(function (basename) {
         " var report = require('vfile-reporter')",
         '',
         ' remark()',
-        "+  .use(require('" + basename + "'))",
+        "+  .use(require('" + name + "'))",
         "   .process('_Emphasis_ and **importance**', function (err, file) {",
         '     console.error(report(err || file))',
         '   })'
@@ -198,19 +201,19 @@ presets(root).forEach(function (basename) {
     }),
     u('definition', {
       identifier: 'downloads-badge',
-      url: 'https://img.shields.io/npm/dm/' + basename + '.svg'
+      url: 'https://img.shields.io/npm/dm/' + name + '.svg'
     }),
     u('definition', {
       identifier: 'downloads',
-      url: 'https://www.npmjs.com/package/' + basename
+      url: 'https://www.npmjs.com/package/' + name
     }),
     u('definition', {
       identifier: 'size-badge',
-      url: 'https://img.shields.io/bundlephobia/minzip/' + basename + '.svg'
+      url: 'https://img.shields.io/bundlephobia/minzip/' + name + '.svg'
     }),
     u('definition', {
       identifier: 'size',
-      url: 'https://bundlephobia.com/result?p=' + basename
+      url: 'https://bundlephobia.com/result?p=' + name
     }),
     u('definition', {
       identifier: 'sponsors-badge',
@@ -255,5 +258,5 @@ presets(root).forEach(function (basename) {
     remark().use(gfm).stringify(u('root', children))
   )
 
-  console.log('✓ wrote `readme.md` in `' + basename + '`')
+  console.log('✓ wrote `readme.md` in `' + name + '`')
 })

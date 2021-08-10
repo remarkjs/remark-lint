@@ -50,12 +50,12 @@
  *   13:41: Use spaces instead of tabs
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import location from 'vfile-location'
 
-var rule = require('unified-lint-rule')
-var location = require('vfile-location')
+const remarkLintNoTabs = lintRule('remark-lint:no-tabs', noTabs)
 
-module.exports = rule('remark-lint:no-tabs', noTabs)
+export default remarkLintNoTabs
 
 var reason = 'Use spaces instead of tabs'
 

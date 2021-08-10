@@ -15,14 +15,14 @@
  *   1:1: Do not mix casing in file names
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
-
-module.exports = rule(
+const remarkLintNofileNameMixedCase = lintRule(
   'remark-lint:no-file-name-mixed-case',
   noFileNameMixedCase
 )
+
+export default remarkLintNofileNameMixedCase
 
 var reason = 'Do not mix casing in file names'
 

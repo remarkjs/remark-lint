@@ -22,14 +22,17 @@
  *   1:7-1:38: Don’t pad `link` with inner spaces
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
+import toString from 'mdast-util-to-string'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
+const remarkLintNoInlinePadding = lintRule(
+  'remark-lint:no-inline-padding',
+  noInlinePadding
+)
 
-module.exports = rule('remark-lint:no-inline-padding', noInlinePadding)
+export default remarkLintNoInlinePadding
 
 function noInlinePadding(tree, file) {
   // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore

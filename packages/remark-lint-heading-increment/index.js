@@ -23,13 +23,16 @@
  *   3:1-3:10: Heading levels should increment by one level at a time
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
+const remarkLintHeadingIncrement = lintRule(
+  'remark-lint:heading-increment',
+  headingIncrement
+)
 
-module.exports = rule('remark-lint:heading-increment', headingIncrement)
+export default remarkLintHeadingIncrement
 
 var reason = 'Heading levels should increment by one level at a time'
 

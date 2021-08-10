@@ -1,16 +1,12 @@
-'use strict'
-
-var control = require('remark-message-control')
-
-module.exports = lint
+import remarkMessageControl from 'remark-message-control'
 
 // `remark-lint`.
 // This adds support for ignoring stuff from messages (`<!--lint ignore-->`).
 // All rules are in their own packages and presets.
-function lint() {
+export default function remarkLint() {
   this.use(lintMessageControl)
 }
 
 function lintMessageControl() {
-  return control({name: 'lint', source: 'remark-lint'})
+  return remarkMessageControl({name: 'lint', source: 'remark-lint'})
 }

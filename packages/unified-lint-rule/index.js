@@ -1,10 +1,6 @@
-'use strict'
+import wrapped from 'wrapped'
 
-var wrapped = require('wrapped')
-
-module.exports = factory
-
-function factory(id, rule) {
+export function lintRule(id, rule) {
   var parts = id.split(':')
   var source = parts[0]
   var ruleId = parts[1]

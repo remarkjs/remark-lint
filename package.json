@@ -31,6 +31,7 @@
     "David Chambers <dc@davidchambers.me>",
     "Denis Augsburger <denis.augsburger@simpleen.io> (https://simpleen.io)"
   ],
+  "type": "module",
   "devDependencies": {
     "c8": "^7.0.0",
     "dox": "^0.9.0",

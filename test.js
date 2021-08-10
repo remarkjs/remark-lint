@@ -1,18 +1,17 @@
-'use strict'
-
-var path = require('path')
-var test = require('tape')
-var vfile = require('to-vfile')
-var removePosition = require('unist-util-remove-position')
-var remark = require('remark')
-var gfm = require('remark-gfm')
-var rules = require('./script/util/rules.js')
-var rule = require('./script/util/rule.js')
-var lint = require('./packages/remark-lint/index.js')
-var noHeadingPunctuation = require('./packages/remark-lint-no-heading-punctuation/index.js')
-var noMultipleToplevelHeadings = require('./packages/remark-lint-no-multiple-toplevel-headings/index.js')
-var finalNewline = require('./packages/remark-lint-final-newline/index.js')
-var chars = require('./script/characters.js')
+import url from 'url'
+import path from 'path'
+import test from 'tape'
+import vfile from 'to-vfile'
+import removePosition from 'unist-util-remove-position'
+import remark from 'remark'
+import gfm from 'remark-gfm'
+import {rules} from './script/util/rules.js'
+import {rule} from './script/util/rule.js'
+import {characters} from './script/characters.js'
+import lint from './packages/remark-lint/index.js'
+import noHeadingPunctuation from './packages/remark-lint-no-heading-punctuation/index.js'
+import noMultipleToplevelHeadings from './packages/remark-lint-no-multiple-toplevel-headings/index.js'
+import finalNewline from './packages/remark-lint-final-newline/index.js'
 
 test('core', function (t) {
   t.test('should work', function (st) {
@@ -267,10 +266,10 @@ test('rules', function (t) {
 
   all.forEach(each)
 
-  function each(basename) {
+  async function each(basename) {
     var base = path.resolve(root, basename)
     var info = rule(base)
-    var fn = require(base)
+    var fn = (await import(url.pathToFileURL(base).href + '/index.js')).default
     var handle = Object.keys(info.tests).length === 0 ? ignore : one
 
     t.test(info.ruleId, handle)
@@ -369,7 +368,7 @@ function normalize(messages) {
 }
 
 function preprocess(value) {
-  chars.forEach(function (char) {
+  characters.forEach(function (char) {
     value = value.replace(char.in, char.out)
   })
 

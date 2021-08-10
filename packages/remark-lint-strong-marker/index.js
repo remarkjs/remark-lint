@@ -51,14 +51,17 @@
  *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintStrongMarker = lintRule(
+  'remark-lint:strong-marker',
+  strongMarker
+)
 
-module.exports = rule('remark-lint:strong-marker', strongMarker)
+export default remarkLintStrongMarker
 
 var markers = {'*': true, _: true, null: true}
 

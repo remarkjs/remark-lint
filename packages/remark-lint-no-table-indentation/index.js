@@ -57,14 +57,17 @@
  *   3:6: Do not indent table rows
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import vfileLocation from 'vfile-location'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var vfileLocation = require('vfile-location')
+const remarkLintNoTableIndentation = lintRule(
+  'remark-lint:no-table-indentation',
+  noTableIndentation
+)
 
-module.exports = rule('remark-lint:no-table-indentation', noTableIndentation)
+export default remarkLintNoTableIndentation
 
 var reason = 'Do not indent table rows'
 

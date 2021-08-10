@@ -86,15 +86,18 @@
  *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import vfileLocation from 'vfile-location'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var vfileLocation = require('vfile-location')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintLinkTitleStyle = lintRule(
+  'remark-lint:link-title-style',
+  linkTitleStyle
+)
 
-module.exports = rule('remark-lint:link-title-style', linkTitleStyle)
+export default remarkLintLinkTitleStyle
 
 var own = {}.hasOwnProperty
 

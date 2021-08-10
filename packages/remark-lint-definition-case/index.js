@@ -19,14 +19,17 @@
  *   1:1-1:47: Do not use uppercase characters in definition labels
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintDefinitionCase = lintRule(
+  'remark-lint:definition-case',
+  definitionCase
+)
 
-module.exports = rule('remark-lint:definition-case', definitionCase)
+export default remarkLintDefinitionCase
 
 var label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
 var reason = 'Do not use uppercase characters in definition labels'

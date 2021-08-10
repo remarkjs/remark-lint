@@ -27,18 +27,18 @@
  *   4:7-4:10: Checkboxes should be followed by a single character
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import vfileLocation from 'vfile-location'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var vfileLocation = require('vfile-location')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintCheckboxContentIndent = lintRule(
   'remark-lint:checkbox-content-indent',
   checkboxContentIndent
 )
+
+export default remarkLintCheckboxContentIndent
 
 var start = position.start
 var end = position.end

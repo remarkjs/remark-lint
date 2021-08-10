@@ -4,27 +4,46 @@
  *   mistakes or stuff that fails across vendors.
  */
 
-'use strict'
+import remarkLint from 'remark-lint'
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+import remarkLintListItemBulletIndent from 'remark-lint-list-item-bullet-indent'
+import remarkLintListItemIndent from 'remark-lint-list-item-indent'
+import remarkLintNoAutoLinkWithoutProtocol from 'remark-lint-no-auto-link-without-protocol'
+import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
+import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
+import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
+import remarkLintHardBreakSpaces from 'remark-lint-hard-break-spaces'
+import remarkLintNoDuplicateDefinitions from 'remark-lint-no-duplicate-definitions'
+import remarkLintNoHeadingContentIndent from 'remark-lint-no-heading-content-indent'
+import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
+import remarkLintNoShortcutReferenceImage from 'remark-lint-no-shortcut-reference-image'
+import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference-link'
+import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
+import remarkLintNoUnusedDefinitions from 'remark-lint-no-unused-definitions'
 
-module.exports.plugins = [
-  require('remark-lint'),
+const plugins = [
+  remarkLint,
   // Unix compatibility.
-  require('remark-lint-final-newline'),
+  remarkLintFinalNewline,
   // Rendering across vendors differs greatly if using other styles.
-  require('remark-lint-list-item-bullet-indent'),
-  [require('remark-lint-list-item-indent'), 'tab-size'],
+  remarkLintListItemBulletIndent,
+  [remarkLintListItemIndent, 'tab-size'],
   // Differs or unsupported across vendors.
-  require('remark-lint-no-auto-link-without-protocol'),
-  require('remark-lint-no-blockquote-without-marker'),
-  require('remark-lint-no-literal-urls'),
-  [require('remark-lint-ordered-list-marker-style'), '.'],
+  remarkLintNoAutoLinkWithoutProtocol,
+  remarkLintNoBlockquoteWithoutMarker,
+  remarkLintNoLiteralUrls,
+  [remarkLintOrderedListMarkerStyle, '.'],
   // Mistakes.
-  require('remark-lint-hard-break-spaces'),
-  require('remark-lint-no-duplicate-definitions'),
-  require('remark-lint-no-heading-content-indent'),
-  require('remark-lint-no-inline-padding'),
-  require('remark-lint-no-shortcut-reference-image'),
-  require('remark-lint-no-shortcut-reference-link'),
-  require('remark-lint-no-undefined-references'),
-  require('remark-lint-no-unused-definitions')
+  remarkLintHardBreakSpaces,
+  remarkLintNoDuplicateDefinitions,
+  remarkLintNoHeadingContentIndent,
+  remarkLintNoInlinePadding,
+  remarkLintNoShortcutReferenceImage,
+  remarkLintNoShortcutReferenceLink,
+  remarkLintNoUndefinedReferences,
+  remarkLintNoUnusedDefinitions
 ]
+
+const remarkPresetLintRecommended = {plugins}
+
+export default remarkPresetLintRecommended

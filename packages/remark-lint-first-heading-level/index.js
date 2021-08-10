@@ -77,13 +77,16 @@
  *   1:1-1:14: First heading level should be `2`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
+const remarkLintFirstHeadingLevel = lintRule(
+  'remark-lint:first-heading-level',
+  firstHeadingLevel
+)
 
-module.exports = rule('remark-lint:first-heading-level', firstHeadingLevel)
+export default remarkLintFirstHeadingLevel
 
 var re = /<h([1-6])/
 

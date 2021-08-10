@@ -26,16 +26,19 @@
  *   5:1-5:29: Do not use headings with similar content (3:1)
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
+import visit from 'unist-util-visit'
+import stringify from 'unist-util-stringify-position'
+import toString from 'mdast-util-to-string'
 
-var rule = require('unified-lint-rule')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-var visit = require('unist-util-visit')
-var stringify = require('unist-util-stringify-position')
-var toString = require('mdast-util-to-string')
+const remarkLintNoDuplicateHeadings = lintRule(
+  'remark-lint:no-duplicate-headings',
+  noDuplicateHeadings
+)
 
-module.exports = rule('remark-lint:no-duplicate-headings', noDuplicateHeadings)
+export default remarkLintNoDuplicateHeadings
 
 var reason = 'Do not use headings with similar content'
 

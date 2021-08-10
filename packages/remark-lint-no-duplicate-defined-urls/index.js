@@ -21,18 +21,18 @@
  *   2:1-2:19: Do not use different definitions with the same URL (1:1)
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
+import stringify from 'unist-util-stringify-position'
+import visit from 'unist-util-visit'
 
-var rule = require('unified-lint-rule')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-var stringify = require('unist-util-stringify-position')
-var visit = require('unist-util-visit')
-
-module.exports = rule(
+const remarkLintNoDuplicateDefinedUrls = lintRule(
   'remark-lint:no-duplicate-defined-urls',
   noDuplicateDefinedUrls
 )
+
+export default remarkLintNoDuplicateDefinedUrls
 
 var reason = 'Do not use different definitions with the same URL'
 

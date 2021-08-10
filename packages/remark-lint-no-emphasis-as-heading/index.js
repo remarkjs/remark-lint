@@ -29,13 +29,16 @@
  *   5:1-5:8: Don’t use emphasis to introduce a section, use a heading
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
+const remarkLintNoEmphasisAsHeading = lintRule(
+  'remark-lint:no-emphasis-as-heading',
+  noEmphasisAsHeading
+)
 
-module.exports = rule('remark-lint:no-emphasis-as-heading', noEmphasisAsHeading)
+export default remarkLintNoEmphasisAsHeading
 
 var reason = 'Don’t use emphasis to introduce a section, use a heading'
 

@@ -49,18 +49,18 @@
  *   3:1: Missing marker in block quote
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import vfileLocation from 'vfile-location'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var vfileLocation = require('vfile-location')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintNoBlockquoteWithoutMarker = lintRule(
   'remark-lint:no-blockquote-without-marker',
   noBlockquoteWithoutMarker
 )
+
+export default remarkLintNoBlockquoteWithoutMarker
 
 var reason = 'Missing marker in block quote'
 

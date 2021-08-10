@@ -25,18 +25,18 @@
  *   3:1-3:6: Don’t use multiple top level headings (1:1)
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
+import stringify from 'unist-util-stringify-position'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var start = require('unist-util-position').start
-var generated = require('unist-util-generated')
-var stringify = require('unist-util-stringify-position')
-
-module.exports = rule(
+const remarkLintNoMultipleToplevelHeadings = lintRule(
   'remark-lint:no-multiple-toplevel-headings',
   noMultipleToplevelHeadings
 )
+
+export default remarkLintNoMultipleToplevelHeadings
 
 function noMultipleToplevelHeadings(tree, file, option) {
   var preferred = option || 1
@@ -52,7 +52,7 @@ function noMultipleToplevelHeadings(tree, file, option) {
           node
         )
       } else {
-        duplicate = stringify(start(node))
+        duplicate = stringify(position.start(node))
       }
     }
   }

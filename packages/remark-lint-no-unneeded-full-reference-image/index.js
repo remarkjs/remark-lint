@@ -37,17 +37,17 @@
  *   3:1-3:20: Remove the image label as it matches the reference text
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
+import collapseWhiteSpace from 'collapse-white-space'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-var collapseWhiteSpace = require('collapse-white-space')
-
-module.exports = rule(
+const remarkLintNoUnneededFullReferenceImage = lintRule(
   'remark-lint:no-unneeded-full-reference-image',
   noUnneededFullReferenceImage
 )
+
+export default remarkLintNoUnneededFullReferenceImage
 
 var reason = 'Remove the image label as it matches the reference text'
 

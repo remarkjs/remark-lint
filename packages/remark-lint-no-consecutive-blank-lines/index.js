@@ -40,18 +40,18 @@
  *   4:5: Remove 2 lines after node
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import plural from 'pluralize'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var plural = require('pluralize')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintNoConsecutiveBlankLines = lintRule(
   'remark-lint:no-consecutive-blank-lines',
   noConsecutiveBlankLines
 )
+
+export default remarkLintNoConsecutiveBlankLines
 
 function noConsecutiveBlankLines(tree, file) {
   visit(tree, visitor)

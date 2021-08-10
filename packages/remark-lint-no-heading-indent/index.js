@@ -46,15 +46,18 @@
  *   8:4: Remove 3 spaces before this heading
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import plural from 'pluralize'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var plural = require('pluralize')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintNoHeadingIndent = lintRule(
+  'remark-lint:no-heading-indent',
+  noHeadingIndent
+)
 
-module.exports = rule('remark-lint:no-heading-indent', noHeadingIndent)
+export default remarkLintNoHeadingIndent
 
 var start = position.start
 

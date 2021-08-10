@@ -55,14 +55,14 @@
  *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintRuleStyle = lintRule('remark-lint:rule-style', ruleStyle)
 
-module.exports = rule('remark-lint:rule-style', ruleStyle)
+export default remarkLintRuleStyle
 
 var start = position.start
 var end = position.end

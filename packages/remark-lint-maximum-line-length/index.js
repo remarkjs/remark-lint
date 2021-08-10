@@ -90,14 +90,17 @@
  *   4:12: Line must be at most 10 characters
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintMaximumLineLength = lintRule(
+  'remark-lint:maximum-line-length',
+  maximumLineLength
+)
 
-module.exports = rule('remark-lint:maximum-line-length', maximumLineLength)
+export default remarkLintMaximumLineLength
 
 var start = position.start
 var end = position.end

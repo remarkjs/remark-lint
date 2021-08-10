@@ -21,14 +21,17 @@
  *   1:12-2:1: Use two spaces for hard line breaks
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintHardBreakSpaces = lintRule(
+  'remark-lint:hard-break-spaces',
+  hardBreakSpaces
+)
 
-module.exports = rule('remark-lint:hard-break-spaces', hardBreakSpaces)
+export default remarkLintHardBreakSpaces
 
 var reason = 'Use two spaces for hard line breaks'
 

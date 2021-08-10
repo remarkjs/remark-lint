@@ -1,10 +1,6 @@
-'use strict'
+import fs from 'fs'
 
-var fs = require('fs')
-
-module.exports = rulesSync
-
-function rulesSync(filePath) {
+export function rules(filePath) {
   return fs.readdirSync(filePath).filter(filter)
 }
 

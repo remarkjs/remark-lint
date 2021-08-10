@@ -1,6 +1,4 @@
-'use strict'
-
-module.exports = [
+export const characters = [
   {
     name: 'a space',
     in: /·/g,

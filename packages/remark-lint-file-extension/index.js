@@ -22,11 +22,14 @@
  * @example {"name": "readme.mkd", "setting": "mkd"}
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
+const remarkLintFileExtension = lintRule(
+  'remark-lint:file-extension',
+  fileExtension
+)
 
-module.exports = rule('remark-lint:file-extension', fileExtension)
+export default remarkLintFileExtension
 
 function fileExtension(tree, file, option) {
   var ext = file.extname

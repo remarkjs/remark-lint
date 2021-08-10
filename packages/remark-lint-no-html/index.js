@@ -24,13 +24,13 @@
  *   1:1-1:15: Do not use HTML in markdown
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
+const remarkLintNoHtml = lintRule('remark-lint:no-html', noHTML)
 
-module.exports = rule('remark-lint:no-html', noHTML)
+export default remarkLintNoHtml
 
 var reason = 'Do not use HTML in markdown'
 

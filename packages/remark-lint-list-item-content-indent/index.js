@@ -21,18 +21,18 @@
  *   2:5: Don’t use mixed indentation for children, remove 1 space
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import plural from 'pluralize'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var plural = require('pluralize')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintListItemContentIndent = lintRule(
   'remark-lint:list-item-content-indent',
   listItemContentIndent
 )
+
+export default remarkLintListItemContentIndent
 
 var start = position.start
 

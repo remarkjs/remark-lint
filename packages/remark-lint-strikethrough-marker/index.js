@@ -54,14 +54,17 @@
  *   1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintStrikethroughMarker = lintRule(
+  'remark-lint:strikethrough-marker',
+  strikethroughMarker
+)
 
-module.exports = rule('remark-lint:strikethrough-marker', strikethroughMarker)
+export default remarkLintStrikethroughMarker
 
 var markers = {null: true, '~': true, '~~': true}
 

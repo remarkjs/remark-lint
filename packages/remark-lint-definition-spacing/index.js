@@ -19,14 +19,17 @@
  *   1:1-1:57: Do not use consecutive whitespace in definition labels
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintDefinitionSpacing = lintRule(
+  'remark-lint:definition-spacing',
+  definitionSpacing
+)
 
-module.exports = rule('remark-lint:definition-spacing', definitionSpacing)
+export default remarkLintDefinitionSpacing
 
 var label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
 var reason = 'Do not use consecutive whitespace in definition labels'

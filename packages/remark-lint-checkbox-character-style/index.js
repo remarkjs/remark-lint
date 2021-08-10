@@ -69,17 +69,17 @@
  *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintCheckboxCharacterStyle = lintRule(
   'remark-lint:checkbox-character-style',
   checkboxCharacterStyle
 )
+
+export default remarkLintCheckboxCharacterStyle
 
 var start = position.start
 var end = position.end

@@ -13,14 +13,14 @@
  *   1:1: Do not use consecutive dashes in a file name
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
 
-var rule = require('unified-lint-rule')
-
-module.exports = rule(
+const remarkLintNoFileNameConsecutiveDashes = lintRule(
   'remark-lint:no-file-name-consecutive-dashes',
   noFileNameConsecutiveDashes
 )
+
+export default remarkLintNoFileNameConsecutiveDashes
 
 var reason = 'Do not use consecutive dashes in a file name'
 

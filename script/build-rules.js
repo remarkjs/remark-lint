@@ -1,41 +1,24 @@
-'use strict'
+import fs from 'fs'
+import path from 'path'
+import {inspect} from 'util'
+import u from 'unist-builder'
+import remark from 'remark'
+import gfm from 'remark-gfm'
+import parseAuthor from 'parse-author'
+import {rules} from './util/rules.js'
+import {rule} from './util/rule.js'
+import {presets} from './util/presets.js'
+import {characters} from './characters.js'
 
-var fs = require('fs')
-var path = require('path')
-var inspect = require('util').inspect
-var u = require('unist-builder')
-var remark = require('remark')
-var gfm = require('remark-gfm')
-var parseAuthor = require('parse-author')
-var remote = require('../package.json').repository
-var rules = require('./util/rules.js')
-var rule = require('./util/rule.js')
-var presets = require('./util/presets.js')
-var chars = require('./characters.js')
-
+const pkg = JSON.parse(fs.readFileSync('package.json'))
+const remote = pkg.repository
 var root = path.join(process.cwd(), 'packages')
 
-presets = presets(root).map(function (name) {
-  var doc = fs.readFileSync(path.join(root, name, 'index.js'), 'utf8')
-  var packages = {}
-
-  doc.replace(
-    /require\('(remark-lint-[^']+)'\)(?:, ([^\]]+)])?/g,
-    function ($0, rule, option) {
-      packages[rule] = option || null
-      return ''
-    }
-  )
-
-  return {
-    name: name,
-    packages: packages
-  }
-})
+const presetObjects = await presets(root)
 
 rules(root).forEach(function (basename) {
   var base = path.resolve(root, basename)
-  var pack = require(path.join(base, 'package.json'))
+  var pack = JSON.parse(fs.readFileSync(path.join(base, 'package.json')))
   var info = rule(base)
   var tests = info.tests
   var author = parseAuthor(pack.author)
@@ -91,7 +74,7 @@ rules(root).forEach(function (basename) {
     )
   }
 
-  includes = presets.filter(function (preset) {
+  includes = presetObjects.filter(function (preset) {
     return basename in preset.packages
   })
 
@@ -127,7 +110,7 @@ rules(root).forEach(function (basename) {
                   u('inlineCode', preset.name)
                 ])
               ]),
-              u('tableCell', option ? [u('inlineCode', option)] : [])
+              u('tableCell', option ? [u('inlineCode', inspect(option))] : [])
             ])
           })
         )
@@ -175,7 +158,7 @@ rules(root).forEach(function (basename) {
           )
         }
 
-        chars.forEach(function (char) {
+        characters.forEach(function (char) {
           var next = clean.replace(char.in, char.out)
 
           if (clean !== next) {

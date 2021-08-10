@@ -37,14 +37,14 @@
  *   3:14: Missing final pipe in table fence
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintTablePipes = lintRule('remark-lint:table-pipes', tablePipes)
 
-module.exports = rule('remark-lint:table-pipes', tablePipes)
+export default remarkLintTablePipes
 
 var start = position.start
 var end = position.end

@@ -36,14 +36,17 @@
  *   [example-2]: http://example.com/two/
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
+const remarkLintFinalDefinition = lintRule(
+  'remark-lint:final-definition',
+  finalDefinition
+)
 
-module.exports = rule('remark-lint:final-definition', finalDefinition)
+export default remarkLintFinalDefinition
 
 var start = position.start
 

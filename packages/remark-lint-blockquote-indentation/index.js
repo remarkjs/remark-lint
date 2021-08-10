@@ -45,18 +45,18 @@
  *   9:3: Add 1 space between block quote and content
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import plural from 'pluralize'
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import generated from 'unist-util-generated'
 
-var rule = require('unified-lint-rule')
-var plural = require('pluralize')
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var generated = require('unist-util-generated')
-
-module.exports = rule(
+const remarkLintBlockquoteIndentation = lintRule(
   'remark-lint:blockquote-indentation',
   blockquoteIndentation
 )
+
+export default remarkLintBlockquoteIndentation
 
 function blockquoteIndentation(tree, file, option) {
   var preferred = typeof option === 'number' && !isNaN(option) ? option : null

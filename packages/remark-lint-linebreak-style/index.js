@@ -45,12 +45,15 @@
  *   1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import location from 'vfile-location'
 
-var rule = require('unified-lint-rule')
-var location = require('vfile-location')
+const remarkLintLinebreakStyle = lintRule(
+  'remark-lint:linebreak-style',
+  linebreakStyle
+)
 
-module.exports = rule('remark-lint:linebreak-style', linebreakStyle)
+export default remarkLintLinebreakStyle
 
 var escaped = {unix: '\\n', windows: '\\r\\n'}
 var types = {true: 'windows', false: 'unix'}

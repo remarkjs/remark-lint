@@ -21,13 +21,16 @@
  *   1:1-1:27: Found unused definition
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import generated from 'unist-util-generated'
+import visit from 'unist-util-visit'
 
-var rule = require('unified-lint-rule')
-var generated = require('unist-util-generated')
-var visit = require('unist-util-visit')
+const remarkLintNoUnusedDefinitions = lintRule(
+  'remark-lint:no-unused-definitions',
+  noUnusedDefinitions
+)
 
-module.exports = rule('remark-lint:no-unused-definitions', noUnusedDefinitions)
+export default remarkLintNoUnusedDefinitions
 
 var reason = 'Found unused definition'
 

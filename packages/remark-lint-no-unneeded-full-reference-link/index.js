@@ -43,17 +43,17 @@
  *   3:1-3:19: Remove the link label as it matches the reference text
  */
 
-'use strict'
+import {lintRule} from 'unified-lint-rule'
+import visit from 'unist-util-visit'
+import generated from 'unist-util-generated'
+import collapseWhiteSpace from 'collapse-white-space'
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-var collapseWhiteSpace = require('collapse-white-space')
-
-module.exports = rule(
+const remarkLintNoUnneededFullReferenceLink = lintRule(
   'remark-lint:no-unneeded-full-reference-link',
   noUnneededFullReferenceLink
 )
+
+export default remarkLintNoUnneededFullReferenceLink
 
 var reason = 'Remove the link label as it matches the reference text'
 

@@ -62,19 +62,19 @@
  *   17:23-17:26: Found reference to undefined definition
  */
 
-'use strict'
+import collapseWhiteSpace from 'collapse-white-space'
+import vfileLocation from 'vfile-location'
+import {lintRule} from 'unified-lint-rule'
+import generated from 'unist-util-generated'
+import position from 'unist-util-position'
+import visit from 'unist-util-visit'
 
-var collapseWhiteSpace = require('collapse-white-space')
-var vfileLocation = require('vfile-location')
-var rule = require('unified-lint-rule')
-var generated = require('unist-util-generated')
-var position = require('unist-util-position')
-var visit = require('unist-util-visit')
-
-module.exports = rule(
+const remarkLintNoUndefinedReferences = lintRule(
   'remark-lint:no-undefined-references',
   noUndefinedReferences
 )
+
+export default remarkLintNoUndefinedReferences
 
 var reason = 'Found reference to undefined definition'
 

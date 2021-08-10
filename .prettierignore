@@ -1,5 +1,2 @@
 coverage/
-remark-lint.js
-remark-lint.min.js
-*.json
 *.md

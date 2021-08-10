@@ -32,7 +32,6 @@
     "Denis Augsburger <denis.augsburger@simpleen.io> (https://simpleen.io)"
   ],
   "devDependencies": {
-    "browserify": "^17.0.0",
     "dox": "^0.9.0",
     "lerna": "^3.0.0",
     "mdast-zone": "^4.0.0",
@@ -48,7 +47,6 @@
     "remark-validate-links": "^10.0.0",
     "strip-indent": "^3.0.0",
     "tape": "^5.0.0",
-    "tinyify": "^3.0.0",
     "to-vfile": "^6.0.0",
     "unist-builder": "^2.0.0",
     "unist-util-remove-position": "^3.0.0",
@@ -60,12 +58,9 @@
     "generate:presets": "node script/build-presets",
     "generate:rules": "node script/build-rules",
     "generate": "npm run generate:presets && npm run generate:rules",
-    "build:bundle": "browserify packages/remark-lint -s remarkLint > remark-lint.js",
-    "build:mangle": "browserify packages/remark-lint -s remarkLint -p tinyify > remark-lint.min.js",
-    "build": "npm run build:bundle && npm run build:mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
-    "test": "npm run generate && npm run format && npm run build && npm run test-coverage"
+    "test": "npm run generate && npm run format && npm run test-coverage"
   },
   "nyc": {
     "check-coverage": true,
@@ -104,9 +99,6 @@
           "null": "ignore"
         }
       ]
-    },
-    "ignores": [
-      "remark-lint.js"
-    ]
+    }
   }
 }

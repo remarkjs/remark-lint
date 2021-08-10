@@ -81,7 +81,6 @@ function noTableIndentation(tree, file) {
     var offset
     var lineColumn
 
-    /* istanbul ignore else - Custom nodes may be containers. */
     if (parent && parent.type === 'root') {
       column = 1
     } else if (parent && parent.type === 'blockquote') {
@@ -90,6 +89,7 @@ function noTableIndentation(tree, file) {
       column = position.start(parent.children[0]).column
 
       // Skip past the first line if we’re the first child of a list item.
+      /* c8 ignore next 3 */
       if (parent.children[0] === node) {
         line++
       }
@@ -108,10 +108,6 @@ function noTableIndentation(tree, file) {
         offset--
       }
 
-      /* istanbul ignore else - Exit if we find some other content before this
-       * line.
-       * This might be because the paragraph line is lazy, which isn’t this
-       * rule. */
       if (!offset || /[\r\n>]/.test(content.charAt(offset - 1))) {
         offset = lineColumn
 

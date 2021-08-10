@@ -98,7 +98,6 @@ function noParagraphContentIndent(tree, file) {
     var offset
     var lineColumn
 
-    /* istanbul ignore else - Custom nodes may be containers. */
     if (parent && parent.type === 'root') {
       column = 1
     } else if (parent && parent.type === 'blockquote') {

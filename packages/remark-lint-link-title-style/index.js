@@ -152,7 +152,8 @@ function linkTitleStyle(tree, file, option) {
     while (last) {
       final = contents.charAt(last)
 
-      /* istanbul ignore if - remark before 8.0.0 */
+      // Legacy for remark before 8.0.0
+      /* c8 ignore next 2 */
       if (/\s/.test(final)) {
         last--
       } else {

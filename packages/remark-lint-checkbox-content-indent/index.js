@@ -62,9 +62,9 @@ function checkboxContentIndent(tree, file) {
       return
     }
 
-    /* istanbul ignore next - a list item cannot be checked and empty, according
-     * to GFM, but theoretically it makes sense to get the end if that were
-     * possible. */
+    // A list item cannot be checked and empty, according to GFM, but
+    // theoretically it makes sense to get the end if that were possible.
+    /* c8 ignore next */
     point = node.children.length === 0 ? end(node) : start(node.children[0])
 
     // Assume we start with a checkbox, because well, `checked` is set.
@@ -72,8 +72,8 @@ function checkboxContentIndent(tree, file) {
       contents.slice(point.offset - 4, point.offset + 1)
     )
 
-    /* istanbul ignore if - failsafe to make sure we don‘t crash if there
-     * actually isn’t a checkbox. */
+    // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
+    /* c8 ignore next */
     if (!value) return
 
     // Move past checkbox.

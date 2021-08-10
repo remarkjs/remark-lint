@@ -124,9 +124,9 @@ function checkboxCharacterStyle(tree, file, option) {
 
     type = types[node.checked]
 
-    /* istanbul ignore next - a list item cannot be checked and empty, according
-     * to GFM, but theoretically it makes sense to get the end if that were
-     * possible. */
+    // A list item cannot be checked and empty, according to GFM, but
+    // theoretically it makes sense to get the end if that were possible.
+    /* c8 ignore next */
     point = node.children.length === 0 ? end(node) : start(node.children[0])
     // Move back to before `] `.
     point.offset -= 2
@@ -137,8 +137,8 @@ function checkboxCharacterStyle(tree, file, option) {
       contents.slice(point.offset - 2, point.offset + 1)
     )
 
-    /* istanbul ignore if - failsafe to make sure we don‘t crash if there
-     * actually isn’t a checkbox. */
+    // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
+    /* c8 ignore next */
     if (!value) return
 
     style = preferred[type]

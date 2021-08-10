@@ -24,12 +24,12 @@ function ruleSync(filePath) {
   description = find(tags, 'fileoverview')
   name = find(tags, 'module')
 
-  /* istanbul ignore if */
+  /* c8 ignore next 3 */
   if (name !== ruleId) {
     throw new Error(ruleId + ' has an incorrect `@module`: ' + name)
   }
 
-  /* istanbul ignore if */
+  /* c8 ignore next 3 */
   if (!description) {
     throw new Error(ruleId + ' is missing a `@fileoverview`')
   }
@@ -55,8 +55,8 @@ function ruleSync(filePath) {
 
     try {
       info = JSON.parse(lines[0])
+      /* c8 ignore next 5 */
     } catch (error) {
-      /* istanbul ignore next */
       throw new Error(
         'Could not parse example in ' + ruleId + ':\n' + error.stack
       )
@@ -83,7 +83,7 @@ function ruleSync(filePath) {
       return
     }
 
-    /* istanbul ignore if */
+    /* c8 ignore next 9 */
     if (info.label !== 'input' && info.label !== 'output') {
       throw new Error(
         'Expected `input` or `ouput` for `label` in ' +

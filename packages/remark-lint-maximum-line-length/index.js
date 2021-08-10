@@ -139,7 +139,8 @@ function maximumLineLength(tree, file, option) {
     var initial
     var final
 
-    /* istanbul ignore if - Nothing to allow when generated. */
+    // Nothing to allow when generated.
+    /* c8 ignore next 3 */
     if (generated(node)) {
       return
     }
@@ -165,7 +166,8 @@ function maximumLineLength(tree, file, option) {
   }
 
   function ignore(node) {
-    /* istanbul ignore else - Hard to test, as we only run this case on `position: true` */
+    // Hard to test, as we only run this case on `position: true`.
+    /* c8 ignore next 3 */
     if (!generated(node)) {
       allowList(start(node).line - 1, end(node).line)
     }

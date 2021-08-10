@@ -10,7 +10,8 @@ function factory(id, rule) {
   var ruleId = parts[1]
   var fn = wrapped(rule)
 
-  /* istanbul ignore if - possibly useful if externalised later. */
+  // Possibly useful if externalised later.
+  /* c8 ignore next 4 */
   if (!ruleId) {
     ruleId = source
     source = null
@@ -38,7 +39,8 @@ function factory(id, rule) {
         var message
 
         // Add the error, if not already properly added.
-        /* istanbul ignore if - only happens for incorrect plugins */
+        // Only happens for incorrect plugins.
+        /* c8 ignore next 5 */
         if (error && messages.indexOf(error) === -1) {
           try {
             file.fail(error)
@@ -66,7 +68,8 @@ function coerce(name, value) {
   var result
   var level
 
-  /* istanbul ignore if - Handled by unified in v6.0.0 */
+  // Handled by unified in v6.0.0.
+  /* c8 ignore next 3 */
   if (typeof value === 'boolean') {
     result = [value]
   } else if (value == null) {

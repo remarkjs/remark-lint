@@ -88,7 +88,8 @@ function listItemContentIndent(tree, file) {
 
         reason =
           'Don’t use mixed indentation for children, ' +
-          /* istanbul ignore next - hard to test, I couldn’t find it at least. */
+          // Hard to test, I couldn’t find it at least.
+          /* c8 ignore next */
           (diff > 0 ? 'add' : 'remove') +
           ' ' +
           abs +

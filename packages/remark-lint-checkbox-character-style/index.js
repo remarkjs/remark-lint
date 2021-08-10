@@ -123,8 +123,8 @@ function checkboxCharacterStyle(tree, file, option) {
 
     // A list item cannot be checked and empty, according to GFM, but
     // theoretically it makes sense to get the end if that were possible.
-    /* c8 ignore next */
     point =
+      /* c8 ignore next */
       node.children.length === 0 ? pointEnd(node) : pointStart(node.children[0])
     // Move back to before `] `.
     point.offset -= 2

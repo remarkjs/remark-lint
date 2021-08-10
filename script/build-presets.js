@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 import {inspect} from 'util'
-import u from 'unist-builder'
+import {u} from 'unist-builder'
 import dox from 'dox'
-import remark from 'remark'
-import gfm from 'remark-gfm'
+import {remark} from 'remark'
+import remarkGfm from 'remark-gfm'
 import strip from 'strip-indent'
 import parseAuthor from 'parse-author'
 import {find} from './util/find.js'
@@ -258,7 +258,7 @@ presetObjects.forEach(function ({name, packages}) {
 
   fs.writeFileSync(
     path.join(base, 'readme.md'),
-    remark().use(gfm).stringify(u('root', children))
+    remark().use(remarkGfm).stringify(u('root', children))
   )
 
   console.log('✓ wrote `readme.md` in `' + name + '`')

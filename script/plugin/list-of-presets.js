@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import zone from 'mdast-zone'
-import u from 'unist-builder'
+import {zone} from 'mdast-zone'
+import {u} from 'unist-builder'
 import {presets} from '../util/presets.js'
 
 var root = path.join(process.cwd(), 'packages')

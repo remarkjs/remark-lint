@@ -1,10 +1,10 @@
 import url from 'url'
 import path from 'path'
 import test from 'tape'
-import vfile from 'to-vfile'
-import removePosition from 'unist-util-remove-position'
-import remark from 'remark'
-import gfm from 'remark-gfm'
+import {toVFile} from 'to-vfile'
+import {removePosition} from 'unist-util-remove-position'
+import {remark} from 'remark'
+import remarkGfm from 'remark-gfm'
 import {rules} from './script/util/rules.js'
 import {rule} from './script/util/rule.js'
 import {characters} from './script/characters.js'
@@ -32,7 +32,7 @@ test('core', function (t) {
       .use(noMultipleToplevelHeadings)
       .use(lint)
       .process(
-        vfile({path: 'virtual.md', contents: doc}),
+        toVFile({path: 'virtual.md', value: doc}),
         function (error, file) {
           st.deepEqual(
             [error].concat(file.messages.map(String)),
@@ -51,7 +51,7 @@ test('core', function (t) {
       .use(noHeadingPunctuation)
       .use(noMultipleToplevelHeadings)
       .process(
-        vfile({path: 'virtual.md', contents: doc}),
+        toVFile({path: 'virtual.md', value: doc}),
         function (error, file) {
           st.deepEqual(
             [error].concat(file.messages.map(String)),
@@ -312,14 +312,14 @@ function assertRule(t, rule, info) {
 /* eslint-disable-next-line max-params */
 function assertFixture(t, rule, info, fixture, basename, settings) {
   var ruleId = info.ruleId
-  var file = vfile(basename)
+  var file = toVFile(basename)
   var expected = fixture.output
   var positionless = fixture.positionless
   var proc = remark().use(rule, settings)
 
-  if (fixture.gfm) proc.use(gfm)
+  if (fixture.gfm) proc.use(remarkGfm)
 
-  file.contents = preprocess(fixture.input || '')
+  file.value = preprocess(fixture.input || '')
 
   t.plan(positionless ? 1 : 2)
 
@@ -349,7 +349,7 @@ function assertFixture(t, rule, info, fixture, basename, settings) {
   if (!positionless) {
     file.messages = []
     proc = remark().use(clear).use(rule, settings)
-    if (fixture.gfm) proc.use(gfm)
+    if (fixture.gfm) proc.use(remarkGfm)
     proc.processSync(file)
 
     t.deepEqual(normalize(file.messages), [], 'should equal without position')

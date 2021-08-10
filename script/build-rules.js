@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import {inspect} from 'util'
-import u from 'unist-builder'
-import remark from 'remark'
-import gfm from 'remark-gfm'
+import {u} from 'unist-builder'
+import {remark} from 'remark'
+import remarkGfm from 'remark-gfm'
 import parseAuthor from 'parse-author'
 import {rules} from './util/rules.js'
 import {rule} from './util/rule.js'
@@ -349,7 +349,7 @@ rules(root).forEach(function (basename) {
 
   fs.writeFileSync(
     path.join(base, 'readme.md'),
-    remark().use(gfm).stringify(u('root', children))
+    remark().use(remarkGfm).stringify(u('root', children))
   )
 
   console.log('✓ wrote `readme.md` in `' + basename + '`')

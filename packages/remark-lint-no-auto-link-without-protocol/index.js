@@ -16,7 +16,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   <http://www.example.com>
  *   <mailto:foo@bar.com>
@@ -24,11 +25,13 @@
  *   Most Markdown vendors don’t recognize the following as a link:
  *   <www.example.com>
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   <foo@bar.com>
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:14: All automatic links must start with a protocol
  */

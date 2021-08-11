@@ -27,7 +27,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   The default value is `ordered`, so unless changed, the below
  *   is OK.
@@ -46,7 +47,8 @@
  *
  *   *   Anton
  *
- * @example {"name": "ok.md", "setting": "one"}
+ * @example
+ *   {"name": "ok.md", "setting": "one"}
  *
  *   1.  Foo
  *   1.  Bar
@@ -58,7 +60,8 @@
  *   1.  Bravo
  *   1.  Charlie
  *
- * @example {"name": "ok.md", "setting": "single"}
+ * @example
+ *   {"name": "ok.md", "setting": "single"}
  *
  *   1.  Foo
  *   1.  Bar
@@ -76,7 +79,8 @@
  *   0.  Echo
  *   0.  Foxtrot
  *
- * @example {"name": "ok.md", "setting": "ordered"}
+ * @example
+ *   {"name": "ok.md", "setting": "ordered"}
  *
  *   1.  Foo
  *   2.  Bar
@@ -94,34 +98,41 @@
  *   1.  Echo
  *   2.  Foxtrot
  *
- * @example {"name": "not-ok.md", "setting": "one", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "one", "label": "input"}
  *
  *   1.  Foo
  *   2.  Bar
  *
- * @example {"name": "not-ok.md", "setting": "one", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "one", "label": "output"}
  *
  *   2:1-2:8: Marker should be `1`, was `2`
  *
- * @example {"name": "also-not-ok.md", "setting": "one", "label": "input"}
+ * @example
+ *   {"name": "also-not-ok.md", "setting": "one", "label": "input"}
  *
  *   2.  Foo
  *   1.  Bar
  *
- * @example {"name": "also-not-ok.md", "setting": "one", "label": "output"}
+ * @example
+ *   {"name": "also-not-ok.md", "setting": "one", "label": "output"}
  *
  *   1:1-1:8: Marker should be `1`, was `2`
  *
- * @example {"name": "not-ok.md", "setting": "ordered", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "ordered", "label": "input"}
  *
  *   1.  Foo
  *   1.  Bar
  *
- * @example {"name": "not-ok.md", "setting": "ordered", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "ordered", "label": "output"}
  *
  *   2:1-2:8: Marker should be `2`, was `1`
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'` or `'one'`
  */

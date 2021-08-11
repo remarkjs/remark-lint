@@ -25,7 +25,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": "atx"}
+ * @example
+ *   {"name": "ok.md", "setting": "atx"}
  *
  *   # Alpha
  *
@@ -33,7 +34,8 @@
  *
  *   ### Charlie
  *
- * @example {"name": "ok.md", "setting": "atx-closed"}
+ * @example
+ *   {"name": "ok.md", "setting": "atx-closed"}
  *
  *   # Delta ##
  *
@@ -41,7 +43,8 @@
  *
  *   ### Foxtrot ###
  *
- * @example {"name": "ok.md", "setting": "setext"}
+ * @example
+ *   {"name": "ok.md", "setting": "setext"}
  *
  *   Golf
  *   ====
@@ -51,7 +54,8 @@
  *
  *   ### India
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   Juliett
  *   =======
@@ -60,7 +64,8 @@
  *
  *   ### Lima ###
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   4:1-4:8: Headings should use setext
  *   6:1-6:13: Headings should use setext

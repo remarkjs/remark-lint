@@ -22,13 +22,15 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   Indented code blocks are not affected by this rule:
  *
  *       bravo()
  *
- * @example {"name": "ok.md", "setting": "`"}
+ * @example
+ *   {"name": "ok.md", "setting": "`"}
  *
  *   ```alpha
  *   bravo()
@@ -38,7 +40,8 @@
  *   charlie()
  *   ```
  *
- * @example {"name": "ok.md", "setting": "~"}
+ * @example
+ *   {"name": "ok.md", "setting": "~"}
  *
  *   ~~~alpha
  *   bravo()
@@ -48,7 +51,8 @@
  *   charlie()
  *   ~~~
  *
- * @example {"name": "not-ok-consistent-tick.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok-consistent-tick.md", "label": "input"}
  *
  *   ```alpha
  *   bravo()
@@ -58,11 +62,13 @@
  *   charlie()
  *   ~~~
  *
- * @example {"name": "not-ok-consistent-tick.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok-consistent-tick.md", "label": "output"}
  *
  *   5:1-7:4: Fenced code should use `` ` `` as a marker
  *
- * @example {"name": "not-ok-consistent-tilde.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok-consistent-tilde.md", "label": "input"}
  *
  *   ~~~alpha
  *   bravo()
@@ -72,11 +78,13 @@
  *   charlie()
  *   ```
  *
- * @example {"name": "not-ok-consistent-tilde.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok-consistent-tilde.md", "label": "output"}
  *
  *   5:1-7:4: Fenced code should use `~` as a marker
  *
- * @example {"name": "not-ok-incorrect.md", "setting": "💩", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "not-ok-incorrect.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */

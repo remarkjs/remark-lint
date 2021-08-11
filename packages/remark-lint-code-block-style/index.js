@@ -23,7 +23,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"setting": "indented", "name": "ok.md"}
+ * @example
+ *   {"setting": "indented", "name": "ok.md"}
  *
  *       alpha()
  *
@@ -31,7 +32,8 @@
  *
  *       bravo()
  *
- * @example {"setting": "indented", "name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"setting": "indented", "name": "not-ok.md", "label": "input"}
  *
  *   ```
  *   alpha()
@@ -43,12 +45,14 @@
  *   bravo()
  *   ```
  *
- * @example {"setting": "indented", "name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"setting": "indented", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-3:4: Code blocks should be indented
  *   7:1-9:4: Code blocks should be indented
  *
- * @example {"setting": "fenced", "name": "ok.md"}
+ * @example
+ *   {"setting": "fenced", "name": "ok.md"}
  *
  *   ```
  *   alpha()
@@ -60,7 +64,8 @@
  *   bravo()
  *   ```
  *
- * @example {"setting": "fenced", "name": "not-ok-fenced.md", "label": "input"}
+ * @example
+ *   {"setting": "fenced", "name": "not-ok-fenced.md", "label": "input"}
  *
  *       alpha()
  *
@@ -68,12 +73,14 @@
  *
  *       bravo()
  *
- * @example {"setting": "fenced", "name": "not-ok-fenced.md", "label": "output"}
+ * @example
+ *   {"setting": "fenced", "name": "not-ok-fenced.md", "label": "output"}
  *
  *   1:1-1:12: Code blocks should be fenced
  *   5:1-5:12: Code blocks should be fenced
  *
- * @example {"name": "not-ok-consistent.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok-consistent.md", "label": "input"}
  *
  *       alpha()
  *
@@ -83,11 +90,13 @@
  *   bravo()
  *   ```
  *
- * @example {"name": "not-ok-consistent.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok-consistent.md", "label": "output"}
  *
  *   5:1-7:4: Code blocks should be indented
  *
- * @example {"setting": "💩", "name": "not-ok-incorrect.md", "label": "output", "positionless": true}
+ * @example
+ *   {"setting": "💩", "name": "not-ok-incorrect.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */

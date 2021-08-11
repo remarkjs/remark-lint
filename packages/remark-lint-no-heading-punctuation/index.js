@@ -11,15 +11,18 @@
  *   Note: these are added to a regex, in a group (`'[' + char + ']'`), be
  *   careful to escape the string correctly.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   # Hello
  *
- * @example {"name": "ok.md", "setting": ",;:!?"}
+ * @example
+ *   {"name": "ok.md", "setting": ",;:!?"}
  *
  *   # Hello…
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   # Hello:
  *
@@ -31,7 +34,8 @@
  *
  *   # Hello;
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:9: Don’t add a trailing `:` to headings
  *   3:1-3:9: Don’t add a trailing `?` to headings

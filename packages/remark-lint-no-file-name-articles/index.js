@@ -6,21 +6,26 @@
  * @fileoverview
  *   Warn when file names start with an article.
  *
- * @example {"name": "title.md"}
+ * @example
+ *   {"name": "title.md"}
  *
- * @example {"name": "a-title.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "a-title.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not start file names with `a`
  *
- * @example {"name": "the-title.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "the-title.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not start file names with `the`
  *
- * @example {"name": "teh-title.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "teh-title.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not start file names with `teh`
  *
- * @example {"name": "an-article.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "an-article.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not start file names with `an`
  */

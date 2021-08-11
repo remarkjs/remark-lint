@@ -17,19 +17,22 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "gfm": true}
+ * @example
+ *   {"name": "ok.md", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   A     | B
  *   ----- | -----
  *   Alpha | Bravo
  *
- * @example {"name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1: Missing initial pipe in table fence
  *   1:10: Missing final pipe in table fence

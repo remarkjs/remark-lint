@@ -6,11 +6,14 @@
  * @fileoverview
  *   Warn when file names use mixed case: both upper- and lowercase characters.
  *
- * @example {"name": "README.md"}
+ * @example
+ *   {"name": "README.md"}
  *
- * @example {"name": "readme.md"}
+ * @example
+ *   {"name": "readme.md"}
  *
- * @example {"name": "Readme.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "Readme.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not mix casing in file names
  */

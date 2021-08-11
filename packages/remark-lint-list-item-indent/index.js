@@ -22,7 +22,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   *···List
  *   ····item.
@@ -40,7 +41,8 @@
  *   *···List
  *   ····item.
  *
- * @example {"name": "ok.md", "setting": "mixed"}
+ * @example
+ *   {"name": "ok.md", "setting": "mixed"}
  *
  *   *·List item.
  *
@@ -56,7 +58,8 @@
  *   *···List
  *   ····item.
  *
- * @example {"name": "ok.md", "setting": "space"}
+ * @example
+ *   {"name": "ok.md", "setting": "space"}
  *
  *   *·List item.
  *
@@ -72,33 +75,40 @@
  *   *·List
  *   ··item.
  *
- * @example {"name": "not-ok.md", "setting": "space", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "space", "label": "input"}
  *
  *   *···List
  *   ····item.
  *
- * @example {"name": "not-ok.md", "setting": "space", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "space", "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
- * @example {"name": "not-ok.md", "setting": "tab-size", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "tab-size", "label": "input"}
  *
  *   *·List
  *   ··item.
  *
- * @example {"name": "not-ok.md", "setting": "tab-size", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "tab-size", "label": "output"}
  *
  *    1:3: Incorrect list-item indent: add 2 spaces
  *
- * @example {"name": "not-ok.md", "setting": "mixed", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "mixed", "label": "input"}
  *
  *   *···List item.
  *
- * @example {"name": "not-ok.md", "setting": "mixed", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": "mixed", "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *    1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
  */

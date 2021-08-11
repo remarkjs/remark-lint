@@ -11,15 +11,16 @@
  *   `'consistent'` detects the first used indentation and will warn when
  *   other block quotes use a different indentation.
  *
- * @example {"name": "ok.md", "setting": 4}
+ * @example
+ *   {"name": "ok.md", "setting": 4}
  *
  *   >   Hello
  *
  *   Paragraph.
  *
  *   >   World
- *
- * @example {"name": "ok.md", "setting": 2}
+ * @example
+ *   {"name": "ok.md", "setting": 2}
  *
  *   > Hello
  *
@@ -27,7 +28,8 @@
  *
  *   > World
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   >  Hello
  *
@@ -39,7 +41,8 @@
  *
  *   > World
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   5:5: Remove 1 space between block quote and content
  *   9:3: Add 1 space between block quote and content

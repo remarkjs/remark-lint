@@ -22,31 +22,38 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   **foo** and **bar**.
  *
- * @example {"name": "also-ok.md"}
+ * @example
+ *   {"name": "also-ok.md"}
  *
  *   __foo__ and __bar__.
  *
- * @example {"name": "ok.md", "setting": "*"}
+ * @example
+ *   {"name": "ok.md", "setting": "*"}
  *
  *   **foo**.
  *
- * @example {"name": "ok.md", "setting": "_"}
+ * @example
+ *   {"name": "ok.md", "setting": "_"}
  *
  *   __foo__.
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   **foo** and __bar__.
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:13-1:20: Strong should use `*` as a marker
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */

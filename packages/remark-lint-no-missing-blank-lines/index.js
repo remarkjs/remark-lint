@@ -21,7 +21,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   # Foo
  *
@@ -33,7 +34,8 @@
  *
  *   Paragraph.
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   # Foo
  *   ## Bar
@@ -43,12 +45,14 @@
  *
  *   Paragraph.
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:7: Missing blank line before block node
  *   5:3-5:10: Missing blank line before block node
  *
- * @example {"name": "tight.md", "setting": {"exceptTightLists": true}, "label": "input"}
+ * @example
+ *   {"name": "tight.md", "setting": {"exceptTightLists": true}, "label": "input"}
  *
  *   # Foo
  *   ## Bar
@@ -58,7 +62,8 @@
  *
  *   Paragraph.
  *
- * @example {"name": "tight.md", "setting": {"exceptTightLists": true}, "label": "output"}
+ * @example
+ *   {"name": "tight.md", "setting": {"exceptTightLists": true}, "label": "output"}
  *
  *   2:1-2:7: Missing blank line before block node
  */

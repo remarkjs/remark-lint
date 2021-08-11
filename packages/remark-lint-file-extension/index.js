@@ -11,15 +11,19 @@
  *
  *   Options: `string`, default: `'md'` — Expected file extension.
  *
- * @example {"name": "readme.md"}
+ * @example
+ *   {"name": "readme.md"}
  *
- * @example {"name": "readme"}
+ * @example
+ *   {"name": "readme"}
  *
- * @example {"name": "readme.mkd", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "readme.mkd", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect extension: use `md`
  *
- * @example {"name": "readme.mkd", "setting": "mkd"}
+ * @example
+ *   {"name": "readme.mkd", "setting": "mkd"}
  */
 
 import {lintRule} from 'unified-lint-rule'

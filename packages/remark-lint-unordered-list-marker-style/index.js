@@ -23,7 +23,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   By default (`'consistent'`), if the file uses only one marker,
  *   that’s OK.
@@ -38,30 +39,36 @@
  *   2. Bar
  *   3. Baz
  *
- * @example {"name": "ok.md", "setting": "*"}
+ * @example
+ *   {"name": "ok.md", "setting": "*"}
  *
  *   * Foo
  *
- * @example {"name": "ok.md", "setting": "-"}
+ * @example
+ *   {"name": "ok.md", "setting": "-"}
  *
  *   - Foo
  *
- * @example {"name": "ok.md", "setting": "+"}
+ * @example
+ *   {"name": "ok.md", "setting": "+"}
  *
  *   + Foo
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   * Foo
  *   - Bar
  *   + Baz
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:6: Marker style should be `*`
  *   3:1-3:6: Marker style should be `*`
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
  */

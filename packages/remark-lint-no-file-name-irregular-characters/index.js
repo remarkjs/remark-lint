@@ -15,19 +15,24 @@
  *
  *   Any match by the wrapped or given expressions creates a message.
  *
- * @example {"name": "plug-ins.md"}
+ * @example
+ *   {"name": "plug-ins.md"}
  *
- * @example {"name": "plugins.md"}
+ * @example
+ *   {"name": "plugins.md"}
  *
- * @example {"name": "plug_ins.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "plug_ins.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use `_` in a file name
  *
- * @example {"name": "README.md", "label": "output", "setting": "\\.a-z0-9", "positionless": true}
+ * @example
+ *   {"name": "README.md", "label": "output", "setting": "\\.a-z0-9", "positionless": true}
  *
  *   1:1: Do not use `R` in a file name
  *
- * @example {"name": "plug ins.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "plug ins.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use ` ` in a file name
  */

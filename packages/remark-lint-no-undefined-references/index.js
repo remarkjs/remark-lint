@@ -12,7 +12,8 @@
  *   appear between `[` and `]`, but that should not be treated as link
  *   identifiers.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   [foo][]
  *
@@ -25,11 +26,13 @@
  *
  *   [foo]: https://example.com
  *
- * @example {"name": "ok-allow.md", "setting": {"allow": ["...", "…"]}}
+ * @example
+ *   {"name": "ok-allow.md", "setting": {"allow": ["...", "…"]}}
  *
  *   > Eliding a portion of a quoted passage […] is acceptable.
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   [bar]
  *
@@ -49,7 +52,8 @@
  *
  *   Multiple pairs: [a][b][c].
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Found reference to undefined definition
  *   3:1-3:8: Found reference to undefined definition

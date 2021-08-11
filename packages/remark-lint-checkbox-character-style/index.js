@@ -26,45 +26,53 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": {"checked": "x"}, "gfm": true}
+ * @example
+ *   {"name": "ok.md", "setting": {"checked": "x"}, "gfm": true}
  *
  *   - [x] List item
  *   - [x] List item
  *
- * @example {"name": "ok.md", "setting": {"checked": "X"}, "gfm": true}
+ * @example
+ *   {"name": "ok.md", "setting": {"checked": "X"}, "gfm": true}
  *
  *   - [X] List item
  *   - [X] List item
  *
- * @example {"name": "ok.md", "setting": {"unchecked": " "}, "gfm": true}
+ * @example
+ *   {"name": "ok.md", "setting": {"unchecked": " "}, "gfm": true}
  *
  *   - [ ] List item
  *   - [ ] List item
  *   - [ ]··
  *   - [ ]
  *
- * @example {"name": "ok.md", "setting": {"unchecked": "\t"}, "gfm": true}
+ * @example
+ *   {"name": "ok.md", "setting": {"unchecked": "\t"}, "gfm": true}
  *
  *   - [»] List item
  *   - [»] List item
  *
- * @example {"name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   - [x] List item
  *   - [X] List item
  *   - [ ] List item
  *   - [»] List item
  *
- * @example {"name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   2:5: Checked checkboxes should use `x` as a marker
  *   4:5: Unchecked checkboxes should use ` ` as a marker
  *
- * @example {"setting": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ * @example
+ *   {"setting": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect unchecked checkbox marker `💩`: use either `'\t'`, or `' '`
  *
- * @example {"setting": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ * @example
+ *   {"setting": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
  */

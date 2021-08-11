@@ -1,8 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import dox from 'dox'
+import {parse} from 'comment-parser'
 import strip from 'strip-indent'
-import {find, findAll} from './find.js'
 
 // Get information for a rule at `filePath`.
 export function rule(filePath) {
@@ -10,9 +9,9 @@ export function rule(filePath) {
   const result = {}
   const tests = {}
   const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8')
-  const tags = dox.parseComments(code)[0].tags
-  const name = find(tags, 'module')
-  let description = find(tags, 'fileoverview')
+  const tags = parse(code, {spacing: 'preserve'})[0].tags
+  const name = tags.find((d) => d.tag === 'module').name
+  let description = tags.find((d) => d.tag === 'fileoverview').description
 
   /* c8 ignore next 3 */
   if (name !== ruleId) {
@@ -31,17 +30,18 @@ export function rule(filePath) {
   result.tests = tests
   result.filePath = filePath
 
-  const examples = findAll(tags, 'example')
+  const examples = tags
+    .filter((d) => d.tag === 'example')
+    .map((d) => d.description.replace(/^\r?\n|\r?\n$/g, ''))
   let index = -1
 
   while (++index < examples.length) {
-    const example = strip(examples[index])
-    const lines = example.split('\n')
-    const value = strip(lines.slice(1).join('\n'))
+    const lines = examples[index].split('\n')
     let info
 
     try {
       info = JSON.parse(lines[0])
+      lines.splice(0, 1)
       /* c8 ignore next 5 */
     } catch (error) {
       throw new Error(
@@ -49,6 +49,7 @@ export function rule(filePath) {
       )
     }
 
+    const exampleValue = strip(lines.join('\n').replace(/^\r?\n/g, ''))
     const setting = JSON.stringify(info.setting || true)
     const name = info.name
     let context = tests[setting]
@@ -63,7 +64,7 @@ export function rule(filePath) {
         positionless: info.positionless,
         gfm: info.gfm,
         setting,
-        input: value,
+        input: exampleValue,
         output: []
       }
 
@@ -88,9 +89,9 @@ export function rule(filePath) {
     context[name].setting = setting
 
     if (info.label === 'output') {
-      context[name][info.label] = value.split('\n')
+      context[name][info.label] = exampleValue.split('\n')
     } else {
-      context[name][info.label] = value
+      context[name][info.label] = exampleValue
     }
   }
 

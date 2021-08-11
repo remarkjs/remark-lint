@@ -22,40 +22,49 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"setting": "*", "name": "ok.md"}
+ * @example
+ *   {"setting": "*", "name": "ok.md"}
  *
  *   *foo*
  *
- * @example {"setting": "*", "name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"setting": "*", "name": "not-ok.md", "label": "input"}
  *
  *   _foo_
  *
- * @example {"setting": "*", "name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"setting": "*", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `*` as a marker
  *
- * @example {"setting": "_", "name": "ok.md"}
+ * @example
+ *   {"setting": "_", "name": "ok.md"}
  *
  *   _foo_
  *
- * @example {"setting": "_", "name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"setting": "_", "name": "not-ok.md", "label": "input"}
  *
  *   *foo*
  *
- * @example {"setting": "_", "name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"setting": "_", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `_` as a marker
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   *foo*
  *   _bar_
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:6: Emphasis should use `*` as a marker
  *
- * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
+ * @example
+ *   {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */

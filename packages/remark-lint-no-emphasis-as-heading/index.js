@@ -7,13 +7,15 @@
  *   Warn when emphasis (including strong), instead of a heading, introduces
  *   a paragraph.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   # Foo
  *
  *   Bar.
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   *Foo*
  *
@@ -23,7 +25,8 @@
  *
  *   Quux.
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Don’t use emphasis to introduce a section, use a heading
  *   5:1-5:8: Don’t use emphasis to introduce a section, use a heading

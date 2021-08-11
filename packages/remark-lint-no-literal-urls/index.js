@@ -18,15 +18,18 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   <http://foo.bar/baz>
  *
- * @example {"name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   http://foo.bar/baz
  *
- * @example {"name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:19: Don’t use literal URLs without angle brackets
  */

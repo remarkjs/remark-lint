@@ -8,7 +8,8 @@
  *
  *   Ignores indented code blocks and fenced code blocks without language flag.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   ```bash
  *   echo a
@@ -36,7 +37,8 @@
  *   $('div').remove()
  *   ```
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   ```sh
  *   $ echo a
@@ -47,7 +49,8 @@
  *   $ echo a > file
  *   ```
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-3:4: Do not use dollar signs before shell commands
  *   5:1-8:4: Do not use dollar signs before shell commands

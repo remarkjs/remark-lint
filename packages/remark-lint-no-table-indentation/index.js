@@ -14,7 +14,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "gfm": true}
+ * @example
+ *   {"name": "ok.md", "gfm": true}
  *
  *   Paragraph.
  *
@@ -22,7 +23,8 @@
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   Paragraph.
  *
@@ -30,29 +32,34 @@
  *   ···| ----- | ----- |
  *   ···| Alpha | Bravo |
  *
- * @example {"name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   3:4: Do not indent table rows
  *   4:4: Do not indent table rows
  *   5:4: Do not indent table rows
  *
- * @example {"name": "not-ok-blockquote.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok-blockquote.md", "label": "input", "gfm": true}
  *
  *   >··| A |
  *   >·| - |
  *
- * @example {"name": "not-ok-blockquote.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok-blockquote.md", "label": "output", "gfm": true}
  *
  *   1:4: Do not indent table rows
  *
- * @example {"name": "not-ok-list.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok-list.md", "label": "input", "gfm": true}
  *
  *   -···paragraph
  *
  *   ·····| A |
  *   ····| - |
  *
- * @example {"name": "not-ok-list.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok-list.md", "label": "output", "gfm": true}
  *
  *   3:6: Do not indent table rows
  */

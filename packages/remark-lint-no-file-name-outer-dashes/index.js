@@ -6,13 +6,16 @@
  * @fileoverview
  *   Warn when file names contain initial or final dashes (hyphen-minus, `-`).
  *
- * @example {"name": "readme.md"}
+ * @example
+ *   {"name": "readme.md"}
  *
- * @example {"name": "-readme.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "-readme.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use initial or final dashes in a file name
  *
- * @example {"name": "readme-.md", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "readme-.md", "label": "output", "positionless": true}
  *
  *   1:1: Do not use initial or final dashes in a file name
  */

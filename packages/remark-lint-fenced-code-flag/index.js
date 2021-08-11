@@ -15,51 +15,60 @@
  *   An `allowEmpty` field (`boolean`, default: `false`) can be set to allow
  *   code blocks without language flags.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   ```alpha
  *   bravo()
  *   ```
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   ```
  *   alpha()
  *   ```
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-3:4: Missing code language flag
  *
- * @example {"name": "ok.md", "setting": {"allowEmpty": true}}
+ * @example
+ *   {"name": "ok.md", "setting": {"allowEmpty": true}}
  *
  *   ```
  *   alpha()
  *   ```
  *
- * @example {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "input"}
  *
  *   ```
  *   alpha()
  *   ```
  *
- * @example {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "output"}
  *
  *   1:1-3:4: Missing code language flag
  *
- * @example {"name": "ok.md", "setting": ["alpha"]}
+ * @example
+ *   {"name": "ok.md", "setting": ["alpha"]}
  *
  *   ```alpha
  *   bravo()
  *   ```
  *
- * @example {"name": "not-ok.md", "setting": ["charlie"], "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": ["charlie"], "label": "input"}
  *
  *   ```alpha
  *   bravo()
  *   ```
  *
- * @example {"name": "not-ok.md", "setting": ["charlie"], "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": ["charlie"], "label": "output"}
  *
  *   1:1-3:4: Incorrect code language flag
  */

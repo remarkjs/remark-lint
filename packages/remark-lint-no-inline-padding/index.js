@@ -9,15 +9,18 @@
  *
  *   Warns for emphasis, strong, delete, image, and link.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   Alpha [bravo](http://echo.fox/trot)
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   Alpha [ bravo ](http://echo.fox/trot)
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:7-1:38: Don’t pad `link` with inner spaces
  */

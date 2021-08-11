@@ -6,15 +6,18 @@
  * @fileoverview
  *   Warn when consecutive whitespace is used in a definition.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   [example domain]: http://example.com "Example Domain"
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   [example····domain]: http://example.com "Example Domain"
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:57: Do not use consecutive whitespace in definition labels
  */

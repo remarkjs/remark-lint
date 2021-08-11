@@ -7,7 +7,8 @@
  *   Warn when duplicate headings are found, but only when on the same level,
  *   “in” the same section.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   ## Alpha
  *
@@ -25,7 +26,8 @@
  *
  *   ##### Bravo
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   ## Foxtrot
  *
@@ -33,11 +35,13 @@
  *
  *   ### Golf
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   5:1-5:9: Do not use headings with similar content per section (3:1)
  *
- * @example {"name": "not-ok-tolerant-heading-increment.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok-tolerant-heading-increment.md", "label": "input"}
  *
  *   # Alpha
  *
@@ -49,7 +53,8 @@
  *
  *   ###### Delta
  *
- * @example {"name": "not-ok-tolerant-heading-increment.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok-tolerant-heading-increment.md", "label": "output"}
  *
  *   7:1-7:11: Do not use headings with similar content per section (3:1)
  */

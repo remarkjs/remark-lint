@@ -6,17 +6,20 @@
  * @fileoverview
  *   Warn when the content of a list item has mixed indentation.
  *
- * @example {"name": "ok.md", "gfm": true}
+ * @example
+ *   {"name": "ok.md", "gfm": true}
  *
  *   1.·[x] Alpha
  *   ···1. Bravo
  *
- * @example {"name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   1.·[x] Charlie
  *   ····1. Delta
  *
- * @example {"name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   2:5: Don’t use mixed indentation for children, remove 1 space
  */

@@ -14,7 +14,8 @@
  *   Ignores images, links, and inline code if they start before the wrap, end
  *   after the wrap, and there’s no whitespace after them.
  *
- * @example {"name": "ok.md", "positionless": true, "gfm": true}
+ * @example
+ *   {"name": "ok.md", "positionless": true, "gfm": true}
  *
  *   This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
  *   long.
@@ -45,7 +46,8 @@
  *
  *   [foo]: <http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
  *
- * @example {"name": "not-ok.md", "setting": 80, "label": "input", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "setting": 80, "label": "input", "positionless": true}
  *
  *   This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
  *   long.
@@ -60,7 +62,8 @@
  *
  *   `alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscar.papa()` and such.
  *
- * @example {"name": "not-ok.md", "setting": 80, "label": "output", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "setting": 80, "label": "output", "positionless": true}
  *
  *   4:86: Line must be at most 80 characters
  *   6:99: Line must be at most 80 characters
@@ -68,21 +71,24 @@
  *   10:97: Line must be at most 80 characters
  *   12:99: Line must be at most 80 characters
  *
- * @example {"name": "ok-mixed-line-endings.md", "setting": 10, "positionless": true}
+ * @example
+ *   {"name": "ok-mixed-line-endings.md", "setting": 10, "positionless": true}
  *
  *   0123456789␍␊
  *   0123456789␊
  *   01234␍␊
  *   01234␊
  *
- * @example {"name": "not-ok-mixed-line-endings.md", "setting": 10, "label": "input", "positionless": true}
+ * @example
+ *   {"name": "not-ok-mixed-line-endings.md", "setting": 10, "label": "input", "positionless": true}
  *
  *   012345678901␍␊
  *   012345678901␊
  *   01234567890␍␊
  *   01234567890␊
  *
- * @example {"name": "not-ok-mixed-line-endings.md", "setting": 10, "label": "output", "positionless": true}
+ * @example
+ *   {"name": "not-ok-mixed-line-endings.md", "setting": 10, "label": "output", "positionless": true}
  *
  *   1:13: Line must be at most 10 characters
  *   2:13: Line must be at most 10 characters

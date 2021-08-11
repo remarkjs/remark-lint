@@ -34,7 +34,7 @@
   "type": "module",
   "devDependencies": {
     "c8": "^7.0.0",
-    "dox": "^0.9.0",
+    "comment-parser": "^1.0.0",
     "lerna": "^4.0.0",
     "mdast-zone": "^5.0.0",
     "parse-author": "^2.0.0",

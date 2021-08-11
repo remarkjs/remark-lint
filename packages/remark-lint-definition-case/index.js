@@ -6,15 +6,18 @@
  * @fileoverview
  *   Warn when definition labels are not lowercase.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   [example]: http://example.com "Example Domain"
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   [Example]: http://example.com "Example Domain"
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:47: Do not use uppercase characters in definition labels
  */

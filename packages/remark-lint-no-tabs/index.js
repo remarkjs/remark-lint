@@ -15,13 +15,15 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   Foo Bar
  *
  *   ····Foo
  *
- * @example {"name": "not-ok.md", "label": "input", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "positionless": true}
  *
  *   »Here's one before a code block.
  *
@@ -37,7 +39,8 @@
  *
  *   And this is a tab as the last character.»
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1: Use spaces instead of tabs
  *   3:14: Use spaces instead of tabs

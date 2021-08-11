@@ -12,19 +12,22 @@
  *   rule still warns anyway.
  *   In that case, you can escape the reference like so: `!\[foo]`.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   ![foo][]
  *
  *   [foo]: http://foo.bar/baz.png
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   ![foo]
  *
  *   [foo]: http://foo.bar/baz.png
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:7: Use the trailing [] on reference images
  */

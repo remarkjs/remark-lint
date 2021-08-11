@@ -14,7 +14,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   #·Foo
  *
@@ -27,7 +28,8 @@
  *   Baz
  *   ===
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   #··Foo
  *
@@ -35,13 +37,15 @@
  *
  *     ##··Baz
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:4: Remove 1 space before this heading’s content
  *   3:7: Remove 1 space after this heading’s content
  *   5:7: Remove 1 space before this heading’s content
  *
- * @example {"name": "empty-heading.md"}
+ * @example
+ *   {"name": "empty-heading.md"}
  *
  *   #··
  */

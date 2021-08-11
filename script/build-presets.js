@@ -2,12 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import {inspect} from 'util'
 import {u} from 'unist-builder'
-import dox from 'dox'
+import {parse} from 'comment-parser'
 import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
 import strip from 'strip-indent'
 import parseAuthor from 'parse-author'
-import {find} from './util/find.js'
 import {presets} from './util/presets.js'
 
 const pkg = JSON.parse(fs.readFileSync('package.json'))
@@ -24,9 +23,11 @@ presets(root).then((presetObjects) => {
     const base = path.resolve(root, name)
     const pack = JSON.parse(fs.readFileSync(path.join(base, 'package.json')))
     const doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
-    const tags = dox.parseComments(doc)[0].tags
+    const tags = parse(doc, {spacing: 'preserve'})[0].tags
     const author = parseAuthor(pack.author)
-    const description = strip(find(tags, 'fileoverview')).trim()
+    const description = strip(
+      tags.find((d) => d.tag === 'fileoverview').description
+    ).trim()
     const rows = []
     let children
     const short = name.replace(/^remark-/, '')

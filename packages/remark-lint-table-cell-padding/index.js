@@ -22,13 +22,15 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": "padded", "gfm": true}
+ * @example
+ *   {"name": "ok.md", "setting": "padded", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
  *   | Alpha | Bravo |
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "padded", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "setting": "padded", "gfm": true}
  *
  *   | A    |    B |
  *   | :----|----: |
@@ -44,7 +46,8 @@
  *   | :---- | -------- | :----: | -----: |
  *   | Echo  | Foxtrot  |  Golf  |  Hotel |
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "padded", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "padded", "gfm": true}
  *
  *   3:8: Cell should be padded
  *   3:9: Cell should be padded
@@ -56,13 +59,15 @@
  *   13:29: Cell should be padded with 1 space, not 2
  *   13:30: Cell should be padded with 1 space, not 2
  *
- * @example {"name": "ok.md", "setting": "compact", "gfm": true}
+ * @example
+ *   {"name": "ok.md", "setting": "compact", "gfm": true}
  *
  *   |A    |B    |
  *   |-----|-----|
  *   |Alpha|Bravo|
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "compact", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "setting": "compact", "gfm": true}
  *
  *   |   A    | B    |
  *   |   -----| -----|
@@ -72,13 +77,15 @@
  *   |:------|-----:|
  *   |Charlie|Delta |
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "compact", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "compact", "gfm": true}
  *
  *   3:2: Cell should be compact
  *   3:11: Cell should be compact
  *   7:16: Cell should be compact
  *
- * @example {"name": "ok-padded.md", "setting": "consistent", "gfm": true}
+ * @example
+ *   {"name": "ok-padded.md", "setting": "consistent", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -88,7 +95,8 @@
  *   | ------- | ----- |
  *   | Charlie | Delta |
  *
- * @example {"name": "not-ok-padded.md", "label": "input", "setting": "consistent", "gfm": true}
+ * @example
+ *   {"name": "not-ok-padded.md", "label": "input", "setting": "consistent", "gfm": true}
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -98,11 +106,13 @@
  *   | :----- | ----: |
  *   |Charlie | Delta |
  *
- * @example {"name": "not-ok-padded.md", "label": "output", "setting": "consistent", "gfm": true}
+ * @example
+ *   {"name": "not-ok-padded.md", "label": "output", "setting": "consistent", "gfm": true}
  *
  *   7:2: Cell should be padded
  *
- * @example {"name": "ok-compact.md", "setting": "consistent", "gfm": true}
+ * @example
+ *   {"name": "ok-compact.md", "setting": "consistent", "gfm": true}
  *
  *   |A    |B    |
  *   |-----|-----|
@@ -112,7 +122,8 @@
  *   |-------|-----|
  *   |Charlie|Delta|
  *
- * @example {"name": "not-ok-compact.md", "label": "input", "setting": "consistent", "gfm": true}
+ * @example
+ *   {"name": "not-ok-compact.md", "label": "input", "setting": "consistent", "gfm": true}
  *
  *   |A    |B    |
  *   |-----|-----|
@@ -122,15 +133,18 @@
  *   |:------|-----:|
  *   |Charlie|Delta |
  *
- * @example {"name": "not-ok-compact.md", "label": "output", "setting": "consistent", "gfm": true}
+ * @example
+ *   {"name": "not-ok-compact.md", "label": "output", "setting": "consistent", "gfm": true}
  *
  *   7:16: Cell should be compact
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true, "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect table cell padding style `💩`, expected `'padded'`, `'compact'`, or `'consistent'`
  *
- * @example {"name": "empty.md", "label": "input", "setting": "padded", "gfm": true}
+ * @example
+ *   {"name": "empty.md", "label": "input", "setting": "padded", "gfm": true}
  *
  *   <!-- Empty cells are OK, but those surrounding them may not be. -->
  *
@@ -138,13 +152,15 @@
  *   | ------ | ----- | ---: |
  *   | Charlie|       |  Echo|
  *
- * @example {"name": "empty.md", "label": "output", "setting": "padded", "gfm": true}
+ * @example
+ *   {"name": "empty.md", "label": "output", "setting": "padded", "gfm": true}
  *
  *   3:25: Cell should be padded
  *   5:10: Cell should be padded
  *   5:25: Cell should be padded
  *
- * @example {"name": "missing-body.md", "setting": "padded", "gfm": true}
+ * @example
+ *   {"name": "missing-body.md", "setting": "padded", "gfm": true}
  *
  *   <!-- Missing cells are fine as well. -->
  *

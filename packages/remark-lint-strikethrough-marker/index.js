@@ -16,40 +16,49 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"setting": "~", "name": "ok.md", "gfm": true}
+ * @example
+ *   {"setting": "~", "name": "ok.md", "gfm": true}
  *
  *   ~foo~
  *
- * @example {"setting": "~", "name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"setting": "~", "name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~~foo~~
  *
- * @example {"setting": "~", "name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"setting": "~", "name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:8: Strikethrough should use `~` as a marker
  *
- * @example {"setting": "~~", "name": "ok.md", "gfm": true}
+ * @example
+ *   {"setting": "~~", "name": "ok.md", "gfm": true}
  *
  *   ~~foo~~
  *
- * @example {"setting": "~~", "name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"setting": "~~", "name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~foo~
  *
- * @example {"setting": "~~", "name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"setting": "~~", "name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:6: Strikethrough should use `~~` as a marker
  *
- * @example {"name": "not-ok.md", "label": "input", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~~foo~~
  *   ~bar~
  *
- * @example {"name": "not-ok.md", "label": "output", "gfm": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   2:1-2:6: Strikethrough should use `~~` as a marker
  *
- * @example {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ * @example
+ *   {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
  */

@@ -11,7 +11,8 @@
  *   `'consistent'` detects the first used list style and warns when subsequent
  *   lists use different styles.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   1.  Foo
  *
@@ -22,29 +23,34 @@
  *
  *   * Foo
  *
- * @example {"name": "ok.md", "setting": "."}
+ * @example
+ *   {"name": "ok.md", "setting": "."}
  *
  *   1.  Foo
  *
  *   2.  Bar
  *
- * @example {"name": "ok.md", "setting": ")"}
+ * @example
+ *   {"name": "ok.md", "setting": ")"}
  *
  *   1)  Foo
  *
  *   2)  Bar
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   1.  Foo
  *
  *   2)  Bar
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:8: Marker style should be `.`
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */

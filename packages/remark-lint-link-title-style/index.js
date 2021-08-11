@@ -20,7 +20,8 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": "\""}
+ * @example
+ *   {"name": "ok.md", "setting": "\""}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com "Example Domain")
@@ -32,15 +33,18 @@
  *
  *   [Example](#Heading-(optional))
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "\""}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "setting": "\""}
  *
  *   [Example]: http://example.com 'Example Domain'
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "\""}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "\""}
  *
  *   1:31-1:47: Titles should use `"` as a quote
  *
- * @example {"name": "ok.md", "setting": "'"}
+ * @example
+ *   {"name": "ok.md", "setting": "'"}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com 'Example Domain')
@@ -48,15 +52,18 @@
  *
  *   [Example]: http://example.com 'Example Domain'
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "'"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "setting": "'"}
  *
  *   [Example]: http://example.com "Example Domain"
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "'"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "'"}
  *
  *   1:31-1:47: Titles should use `'` as a quote
  *
- * @example {"name": "ok.md", "setting": "()"}
+ * @example
+ *   {"name": "ok.md", "setting": "()"}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com (Example Domain))
@@ -64,24 +71,29 @@
  *
  *   [Example]: http://example.com (Example Domain)
  *
- * @example {"name": "not-ok.md", "label": "input", "setting": "()"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "setting": "()"}
  *
  *   [Example](http://example.com 'Example Domain')
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "()"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "()"}
  *
  *   1:30-1:46: Titles should use `()` as a quote
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   [Example](http://example.com "Example Domain")
  *   [Example](http://example.com 'Example Domain')
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:30-2:46: Titles should use `"` as a quote
  *
- * @example {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */

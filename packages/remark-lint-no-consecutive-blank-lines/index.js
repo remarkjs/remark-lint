@@ -17,15 +17,18 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   Foo…
  *   ␊
  *   …Bar.
  *
- * @example {"name": "empty-document.md"}
+ * @example
+ *   {"name": "empty-document.md"}
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   Foo…
  *   ␊
@@ -34,7 +37,8 @@
  *   ␊
  *   ␊
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   4:1: Remove 1 line before node
  *   4:5: Remove 2 lines after node

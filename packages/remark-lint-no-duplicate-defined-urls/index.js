@@ -6,17 +6,20 @@
  * @fileoverview
  *   Warn when definitions define the same URL.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   [alpha]: alpha.com
  *   [bravo]: bravo.com
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   [alpha]: alpha.com
  *   [bravo]: alpha.com
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:19: Do not use different definitions with the same URL (1:1)
  */

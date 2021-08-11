@@ -28,29 +28,34 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md", "setting": "* * *"}
+ * @example
+ *   {"name": "ok.md", "setting": "* * *"}
  *
  *   * * *
  *
  *   * * *
  *
- * @example {"name": "ok.md", "setting": "_______"}
+ * @example
+ *   {"name": "ok.md", "setting": "_______"}
  *
  *   _______
  *
  *   _______
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   ***
  *
  *   * * *
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:6: Rules should use `***`
  *
- * @example {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
  *
  *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
  */

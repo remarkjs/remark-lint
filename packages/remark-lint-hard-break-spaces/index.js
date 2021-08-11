@@ -6,17 +6,20 @@
  * @fileoverview
  *   Warn when too many spaces are used to create a hard break.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   Lorem ipsum··
  *   dolor sit amet
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   Lorem ipsum···
  *   dolor sit amet.
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:12-2:1: Use two spaces for hard line breaks
  */

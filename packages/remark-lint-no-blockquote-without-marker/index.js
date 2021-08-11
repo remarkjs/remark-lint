@@ -15,35 +15,41 @@
  *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
  *   on how to automatically fix warnings for this rule.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   > Foo…
  *   > …bar…
  *   > …baz.
  *
- * @example {"name": "ok-tabs.md"}
+ * @example
+ *   {"name": "ok-tabs.md"}
  *
  *   >»Foo…
  *   >»…bar…
  *   >»…baz.
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   > Foo…
  *   …bar…
  *   > …baz.
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:1: Missing marker in block quote
  *
- * @example {"name": "not-ok-tabs.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok-tabs.md", "label": "input"}
  *
  *   >»Foo…
  *   »…bar…
  *   …baz.
  *
- * @example {"name": "not-ok-tabs.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok-tabs.md", "label": "output"}
  *
  *   2:1: Missing marker in block quote
  *   3:1: Missing marker in block quote

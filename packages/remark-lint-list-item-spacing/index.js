@@ -20,7 +20,8 @@
  *   more items contain blank lines.
  *   Otherwise, the list must be tight.
  *
- * @example {"name": "ok.md"}
+ * @example
+ *   {"name": "ok.md"}
  *
  *   A tight list:
  *
@@ -37,7 +38,8 @@
  *
  *   -   item 3
  *
- * @example {"name": "not-ok.md", "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "label": "input"}
  *
  *   A tight list:
  *
@@ -54,14 +56,16 @@
  *
  *   -   item 3
  *
- * @example {"name": "not-ok.md", "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "label": "output"}
  *
  *   4:9-5:1: Missing new line after list item
  *   5:11-6:1: Missing new line after list item
  *   10:11-12:1: Extraneous new line after list item
  *   12:11-14:1: Extraneous new line after list item
  *
- * @example {"name": "ok.md", "setting": {"checkBlanks": true}}
+ * @example
+ *   {"name": "ok.md", "setting": {"checkBlanks": true}}
  *
  *   A tight list:
  *
@@ -80,7 +84,8 @@
  *
  *       > Block quote
  *
- * @example {"name": "not-ok.md", "setting": {"checkBlanks": true}, "label": "input"}
+ * @example
+ *   {"name": "not-ok.md", "setting": {"checkBlanks": true}, "label": "input"}
  *
  *   A tight list:
  *
@@ -100,7 +105,8 @@
  *   -   item 2
  *       > Block quote
  *
- * @example {"name": "not-ok.md", "setting": {"checkBlanks": true}, "label": "output"}
+ * @example
+ *   {"name": "not-ok.md", "setting": {"checkBlanks": true}, "label": "output"}
  *
  *   5:15-6:1: Missing new line after list item
  *   8:18-9:1: Missing new line after list item

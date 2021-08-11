@@ -25,22 +25,22 @@
  *
  * @example {"setting": "indented", "name": "ok.md"}
  *
- *       alpha();
+ *       alpha()
  *
  *   Paragraph.
  *
- *       bravo();
+ *       bravo()
  *
  * @example {"setting": "indented", "name": "not-ok.md", "label": "input"}
  *
  *   ```
- *   alpha();
+ *   alpha()
  *   ```
  *
  *   Paragraph.
  *
  *   ```
- *   bravo();
+ *   bravo()
  *   ```
  *
  * @example {"setting": "indented", "name": "not-ok.md", "label": "output"}
@@ -51,36 +51,36 @@
  * @example {"setting": "fenced", "name": "ok.md"}
  *
  *   ```
- *   alpha();
+ *   alpha()
  *   ```
  *
  *   Paragraph.
  *
  *   ```
- *   bravo();
+ *   bravo()
  *   ```
  *
  * @example {"setting": "fenced", "name": "not-ok-fenced.md", "label": "input"}
  *
- *       alpha();
+ *       alpha()
  *
  *   Paragraph.
  *
- *       bravo();
+ *       bravo()
  *
  * @example {"setting": "fenced", "name": "not-ok-fenced.md", "label": "output"}
  *
- *   1:1-1:13: Code blocks should be fenced
- *   5:1-5:13: Code blocks should be fenced
+ *   1:1-1:12: Code blocks should be fenced
+ *   5:1-5:12: Code blocks should be fenced
  *
  * @example {"name": "not-ok-consistent.md", "label": "input"}
  *
- *       alpha();
+ *       alpha()
  *
  *   Paragraph.
  *
  *   ```
- *   bravo();
+ *   bravo()
  *   ```
  *
  * @example {"name": "not-ok-consistent.md", "label": "output"}

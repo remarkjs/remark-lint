@@ -46,7 +46,7 @@ This rule is included in the following presets:
 ```markdown
 Indented code blocks are not affected by this rule:
 
-    bravo();
+    bravo()
 ```
 
 ###### Out
@@ -59,11 +59,11 @@ No messages.
 
 ````markdown
 ```alpha
-bravo();
+bravo()
 ```
 
 ~~~
-charlie();
+charlie()
 ~~~
 ````
 
@@ -79,11 +79,11 @@ charlie();
 
 ````markdown
 ~~~alpha
-bravo();
+bravo()
 ~~~
 
 ```
-charlie();
+charlie()
 ```
 ````
 
@@ -101,11 +101,11 @@ When configured with ``'`'``.
 
 ````markdown
 ```alpha
-bravo();
+bravo()
 ```
 
 ```
-charlie();
+charlie()
 ```
 ````
 
@@ -121,11 +121,11 @@ When configured with `'~'`.
 
 ```markdown
 ~~~alpha
-bravo();
+bravo()
 ~~~
 
 ~~~
-charlie();
+charlie()
 ~~~
 ```
 

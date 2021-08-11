@@ -26,36 +26,36 @@
  *
  *   Indented code blocks are not affected by this rule:
  *
- *       bravo();
+ *       bravo()
  *
  * @example {"name": "ok.md", "setting": "`"}
  *
  *   ```alpha
- *   bravo();
+ *   bravo()
  *   ```
  *
  *   ```
- *   charlie();
+ *   charlie()
  *   ```
  *
  * @example {"name": "ok.md", "setting": "~"}
  *
  *   ~~~alpha
- *   bravo();
+ *   bravo()
  *   ~~~
  *
  *   ~~~
- *   charlie();
+ *   charlie()
  *   ~~~
  *
  * @example {"name": "not-ok-consistent-tick.md", "label": "input"}
  *
  *   ```alpha
- *   bravo();
+ *   bravo()
  *   ```
  *
  *   ~~~
- *   charlie();
+ *   charlie()
  *   ~~~
  *
  * @example {"name": "not-ok-consistent-tick.md", "label": "output"}
@@ -65,11 +65,11 @@
  * @example {"name": "not-ok-consistent-tilde.md", "label": "input"}
  *
  *   ~~~alpha
- *   bravo();
+ *   bravo()
  *   ~~~
  *
  *   ```
- *   charlie();
+ *   charlie()
  *   ```
  *
  * @example {"name": "not-ok-consistent-tilde.md", "label": "output"}

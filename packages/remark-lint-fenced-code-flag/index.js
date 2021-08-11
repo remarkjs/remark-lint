@@ -18,13 +18,13 @@
  * @example {"name": "ok.md"}
  *
  *   ```alpha
- *   bravo();
+ *   bravo()
  *   ```
  *
  * @example {"name": "not-ok.md", "label": "input"}
  *
  *   ```
- *   alpha();
+ *   alpha()
  *   ```
  *
  * @example {"name": "not-ok.md", "label": "output"}
@@ -34,13 +34,13 @@
  * @example {"name": "ok.md", "setting": {"allowEmpty": true}}
  *
  *   ```
- *   alpha();
+ *   alpha()
  *   ```
  *
  * @example {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "input"}
  *
  *   ```
- *   alpha();
+ *   alpha()
  *   ```
  *
  * @example {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "output"}
@@ -50,13 +50,13 @@
  * @example {"name": "ok.md", "setting": ["alpha"]}
  *
  *   ```alpha
- *   bravo();
+ *   bravo()
  *   ```
  *
  * @example {"name": "not-ok.md", "setting": ["charlie"], "label": "input"}
  *
  *   ```alpha
- *   bravo();
+ *   bravo()
  *   ```
  *
  * @example {"name": "not-ok.md", "setting": ["charlie"], "label": "output"}

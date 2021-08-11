@@ -47,11 +47,11 @@ When configured with `'indented'`.
 ###### In
 
 ```markdown
-    alpha();
+    alpha()
 
 Paragraph.
 
-    bravo();
+    bravo()
 ```
 
 ###### Out
@@ -66,13 +66,13 @@ When configured with `'indented'`.
 
 ````markdown
 ```
-alpha();
+alpha()
 ```
 
 Paragraph.
 
 ```
-bravo();
+bravo()
 ```
 ````
 
@@ -91,13 +91,13 @@ When configured with `'fenced'`.
 
 ````markdown
 ```
-alpha();
+alpha()
 ```
 
 Paragraph.
 
 ```
-bravo();
+bravo()
 ```
 ````
 
@@ -112,18 +112,18 @@ When configured with `'fenced'`.
 ###### In
 
 ```markdown
-    alpha();
+    alpha()
 
 Paragraph.
 
-    bravo();
+    bravo()
 ```
 
 ###### Out
 
 ```text
-1:1-1:13: Code blocks should be fenced
-5:1-5:13: Code blocks should be fenced
+1:1-1:12: Code blocks should be fenced
+5:1-5:12: Code blocks should be fenced
 ```
 
 ##### `not-ok-consistent.md`
@@ -131,12 +131,12 @@ Paragraph.
 ###### In
 
 ````markdown
-    alpha();
+    alpha()
 
 Paragraph.
 
 ```
-bravo();
+bravo()
 ```
 ````
 

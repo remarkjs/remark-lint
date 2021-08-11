@@ -52,7 +52,7 @@ Some empty code:
 It’s fine to use dollars in non-shell code.
 
 ```js
-$('div').remove();
+$('div').remove()
 ```
 ````
 

@@ -37,7 +37,7 @@ This rule is included in the following presets:
 
 ````markdown
 ```alpha
-bravo();
+bravo()
 ```
 ````
 
@@ -51,7 +51,7 @@ No messages.
 
 ````markdown
 ```
-alpha();
+alpha()
 ```
 ````
 
@@ -69,7 +69,7 @@ When configured with `{ allowEmpty: true }`.
 
 ````markdown
 ```
-alpha();
+alpha()
 ```
 ````
 
@@ -85,7 +85,7 @@ When configured with `{ allowEmpty: false }`.
 
 ````markdown
 ```
-alpha();
+alpha()
 ```
 ````
 
@@ -103,7 +103,7 @@ When configured with `[ 'alpha' ]`.
 
 ````markdown
 ```alpha
-bravo();
+bravo()
 ```
 ````
 
@@ -119,7 +119,7 @@ When configured with `[ 'charlie' ]`.
 
 ````markdown
 ```alpha
-bravo();
+bravo()
 ```
 ````
 

@@ -28,7 +28,7 @@
     "index.js"
   ],
   "dependencies": {
-    "collapse-white-space": "^2.0.0",
+    "micromark-util-normalize-identifier": "^1.0.0",
     "unified-lint-rule": "^1.0.0",
     "unist-util-generated": "^2.0.0",
     "unist-util-position": "^4.0.0",

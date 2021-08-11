@@ -40,7 +40,7 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
-import {collapseWhiteSpace} from 'collapse-white-space'
+import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 
 const remarkLintNoUnneededFullReferenceImage = lintRule(
   'remark-lint:no-unneeded-full-reference-image',
@@ -49,7 +49,7 @@ const remarkLintNoUnneededFullReferenceImage = lintRule(
       if (
         generated(node) ||
         node.referenceType !== 'full' ||
-        normalize(node.alt) !== node.identifier
+        normalizeIdentifier(node.alt) !== node.identifier.toUpperCase()
       ) {
         return
       }
@@ -63,8 +63,3 @@ const remarkLintNoUnneededFullReferenceImage = lintRule(
 )
 
 export default remarkLintNoUnneededFullReferenceImage
-
-// See: <https://github.com/remarkjs/remark/blob/cc7867b/packages/remark-parse/lib/util/normalize.js>
-function normalize(value) {
-  return collapseWhiteSpace(value).toLowerCase()
-}

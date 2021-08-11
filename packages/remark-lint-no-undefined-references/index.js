@@ -62,7 +62,7 @@
  *   17:23-17:26: Found reference to undefined definition
  */
 
-import {collapseWhiteSpace} from 'collapse-white-space'
+import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 import {location} from 'vfile-location'
 import {lintRule} from 'unified-lint-rule'
 import {generated} from 'unist-util-generated'
@@ -75,7 +75,9 @@ const remarkLintNoUndefinedReferences = lintRule(
     const contents = String(file)
     const loc = location(file)
     const lineEnding = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
-    const allow = new Set((option.allow || []).map((d) => normalize(d)))
+    const allow = new Set(
+      (option.allow || []).map((d) => normalizeIdentifier(d))
+    )
     const map = {}
 
     visit(tree, (node) => {
@@ -83,7 +85,7 @@ const remarkLintNoUndefinedReferences = lintRule(
         (node.type === 'definition' || node.type === 'footnoteDefinition') &&
         !generated(node)
       ) {
-        map[normalize(node.identifier)] = true
+        map[normalizeIdentifier(node.identifier)] = true
       }
     })
 
@@ -96,8 +98,8 @@ const remarkLintNoUndefinedReferences = lintRule(
           node.type === 'linkReference' ||
           node.type === 'footnoteReference') &&
         !generated(node) &&
-        !(normalize(node.identifier) in map) &&
-        !allow.has(normalize(node.identifier))
+        !(normalizeIdentifier(node.identifier) in map) &&
+        !allow.has(normalizeIdentifier(node.identifier))
       ) {
         file.message('Found reference to undefined definition', node)
       }
@@ -233,8 +235,8 @@ const remarkLintNoUndefinedReferences = lintRule(
 
         if (
           !generated({position: pos}) &&
-          !(normalize(id) in map) &&
-          !allow.has(normalize(id))
+          !(normalizeIdentifier(id) in map) &&
+          !allow.has(normalizeIdentifier(id))
         ) {
           file.message('Found reference to undefined definition', pos)
         }
@@ -244,11 +246,3 @@ const remarkLintNoUndefinedReferences = lintRule(
 )
 
 export default remarkLintNoUndefinedReferences
-
-// The identifier is upcased to avoid naming collisions with fields inherited
-// from `Object.prototype`.
-// If `Object.create(null)` was used in place of `{}`, downcasing would work
-// equally well.
-function normalize(s) {
-  return collapseWhiteSpace(s.toUpperCase())
-}

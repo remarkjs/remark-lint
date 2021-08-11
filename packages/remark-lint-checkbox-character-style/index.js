@@ -74,86 +74,78 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const checked = {x: true, X: true}
+const unchecked = {' ': true, '\t': true}
+const types = {true: 'checked', false: 'unchecked'}
+
 const remarkLintCheckboxCharacterStyle = lintRule(
   'remark-lint:checkbox-character-style',
-  checkboxCharacterStyle
+  (tree, file, option) => {
+    const value = String(file)
+    const preferred = typeof option === 'object' ? option : {}
+
+    if (preferred.unchecked && unchecked[preferred.unchecked] !== true) {
+      file.fail(
+        'Incorrect unchecked checkbox marker `' +
+          preferred.unchecked +
+          "`: use either `'\\t'`, or `' '`"
+      )
+    }
+
+    if (preferred.checked && checked[preferred.checked] !== true) {
+      file.fail(
+        'Incorrect checked checkbox marker `' +
+          preferred.checked +
+          "`: use either `'x'`, or `'X'`"
+      )
+    }
+
+    visit(tree, 'listItem', (node) => {
+      // Exit early for items without checkbox.
+      if (typeof node.checked !== 'boolean' || generated(node)) {
+        return
+      }
+
+      const type = types[node.checked]
+
+      // A list item cannot be checked and empty, according to GFM, but
+      // theoretically it makes sense to get the end if that were possible.
+      const point =
+        /* c8 ignore next 2 */
+        node.children.length === 0
+          ? pointEnd(node)
+          : pointStart(node.children[0])
+      // Move back to before `] `.
+      point.offset -= 2
+      point.column -= 2
+
+      // Assume we start with a checkbox, because well, `checked` is set.
+      const match = /\[([\t Xx])]/.exec(
+        value.slice(point.offset - 2, point.offset + 1)
+      )
+
+      // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
+      /* c8 ignore next */
+      if (!match) return
+
+      const style = preferred[type]
+
+      if (style) {
+        if (match[1] !== style) {
+          file.message(
+            type.charAt(0).toUpperCase() +
+              type.slice(1) +
+              ' checkboxes should use `' +
+              style +
+              '` as a marker',
+            point
+          )
+        }
+      } else {
+        preferred[type] = match[1]
+      }
+    })
+  }
 )
 
 export default remarkLintCheckboxCharacterStyle
-
-var checked = {x: true, X: true}
-var unchecked = {' ': true, '\t': true}
-var types = {true: 'checked', false: 'unchecked'}
-
-function checkboxCharacterStyle(tree, file, option) {
-  var contents = String(file)
-  var preferred = typeof option === 'object' ? option : {}
-
-  if (preferred.unchecked && unchecked[preferred.unchecked] !== true) {
-    file.fail(
-      'Incorrect unchecked checkbox marker `' +
-        preferred.unchecked +
-        "`: use either `'\\t'`, or `' '`"
-    )
-  }
-
-  if (preferred.checked && checked[preferred.checked] !== true) {
-    file.fail(
-      'Incorrect checked checkbox marker `' +
-        preferred.checked +
-        "`: use either `'x'`, or `'X'`"
-    )
-  }
-
-  visit(tree, 'listItem', visitor)
-
-  function visitor(node) {
-    var type
-    var point
-    var value
-    var style
-    var reason
-
-    // Exit early for items without checkbox.
-    if (typeof node.checked !== 'boolean' || generated(node)) {
-      return
-    }
-
-    type = types[node.checked]
-
-    // A list item cannot be checked and empty, according to GFM, but
-    // theoretically it makes sense to get the end if that were possible.
-    point =
-      /* c8 ignore next */
-      node.children.length === 0 ? pointEnd(node) : pointStart(node.children[0])
-    // Move back to before `] `.
-    point.offset -= 2
-    point.column -= 2
-
-    // Assume we start with a checkbox, because well, `checked` is set.
-    value = /\[([\t Xx])]/.exec(
-      contents.slice(point.offset - 2, point.offset + 1)
-    )
-
-    // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
-    /* c8 ignore next */
-    if (!value) return
-
-    style = preferred[type]
-
-    if (style) {
-      if (value[1] !== style) {
-        reason =
-          type.charAt(0).toUpperCase() +
-          type.slice(1) +
-          ' checkboxes should use `' +
-          style +
-          '` as a marker'
-
-        file.message(reason, point)
-      }
-    } else {
-      preferred[type] = value[1]
-    }
-  }
-}

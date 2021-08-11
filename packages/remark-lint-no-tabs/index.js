@@ -53,19 +53,15 @@
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 
-const remarkLintNoTabs = lintRule('remark-lint:no-tabs', noTabs)
-
-export default remarkLintNoTabs
-
-var reason = 'Use spaces instead of tabs'
-
-function noTabs(tree, file) {
-  var content = String(file)
-  var toPoint = location(file).toPoint
-  var index = content.indexOf('\t')
+const remarkLintNoTabs = lintRule('remark-lint:no-tabs', (tree, file) => {
+  const value = String(file)
+  const toPoint = location(file).toPoint
+  let index = value.indexOf('\t')
 
   while (index !== -1) {
-    file.message(reason, toPoint(index))
-    index = content.indexOf('\t', index + 1)
+    file.message('Use spaces instead of tabs', toPoint(index))
+    index = value.indexOf('\t', index + 1)
   }
-}
+})
+
+export default remarkLintNoTabs

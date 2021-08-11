@@ -54,30 +54,28 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingIndent = lintRule(
   'remark-lint:no-heading-indent',
-  noHeadingIndent
+  (tree, file) => {
+    visit(tree, 'heading', (node, _, parent) => {
+      // Note: it’s rather complex to detect what the expected indent is in block
+      // quotes and lists, so let’s only do directly in root for now.
+      if (generated(node) || (parent && parent.type !== 'root')) {
+        return
+      }
+
+      const diff = pointStart(node).column - 1
+
+      if (diff) {
+        file.message(
+          'Remove ' +
+            diff +
+            ' ' +
+            plural('space', diff) +
+            ' before this heading',
+          pointStart(node)
+        )
+      }
+    })
+  }
 )
 
 export default remarkLintNoHeadingIndent
-
-function noHeadingIndent(tree, file) {
-  visit(tree, 'heading', visitor)
-
-  function visitor(node, _, parent) {
-    var diff
-
-    // Note: it’s rather complex to detect what the expected indent is in block
-    // quotes and lists, so let’s only do directly in root for now.
-    if (generated(node) || (parent && parent.type !== 'root')) {
-      return
-    }
-
-    diff = pointStart(node).column - 1
-
-    if (diff) {
-      file.message(
-        'Remove ' + diff + ' ' + plural('space', diff) + ' before this heading',
-        pointStart(node)
-      )
-    }
-  }
-}

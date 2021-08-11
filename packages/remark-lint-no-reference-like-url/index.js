@@ -29,39 +29,32 @@ import {visit} from 'unist-util-visit'
 
 const remarkLintNoReferenceLikeUrl = lintRule(
   'remark-lint:no-reference-like-url',
-  noReferenceLikeURL
+  (tree, file) => {
+    const identifiers = []
+
+    visit(tree, 'definition', (node) => {
+      if (!generated(node)) {
+        identifiers.push(node.identifier.toLowerCase())
+      }
+    })
+
+    visit(tree, (node) => {
+      if (
+        (node.type === 'image' || node.type === 'link') &&
+        identifiers.includes(node.url.toLowerCase())
+      ) {
+        file.message(
+          'Did you mean to use `[' +
+            node.url +
+            ']` instead of ' +
+            '`(' +
+            node.url +
+            ')`, a reference?',
+          node
+        )
+      }
+    })
+  }
 )
 
 export default remarkLintNoReferenceLikeUrl
-
-function noReferenceLikeURL(tree, file) {
-  var identifiers = []
-
-  visit(tree, 'definition', find)
-  visit(tree, ['image', 'link'], check)
-
-  // Find identifiers.
-  function find(node) {
-    if (!generated(node)) {
-      identifiers.push(node.identifier.toLowerCase())
-    }
-  }
-
-  // Check `node`.
-  function check(node) {
-    var url = node.url
-    var reason
-
-    if (identifiers.indexOf(url.toLowerCase()) !== -1) {
-      reason =
-        'Did you mean to use `[' +
-        url +
-        ']` instead of ' +
-        '`(' +
-        url +
-        ')`, a reference?'
-
-      file.message(reason, node)
-    }
-  }
-}

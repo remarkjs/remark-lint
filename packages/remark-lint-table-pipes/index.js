@@ -42,36 +42,32 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const remarkLintTablePipes = lintRule('remark-lint:table-pipes', tablePipes)
+const reasonStart = 'Missing initial pipe in table fence'
+const reasonEnd = 'Missing final pipe in table fence'
 
-export default remarkLintTablePipes
+const remarkLintTablePipes = lintRule(
+  'remark-lint:table-pipes',
+  (tree, file) => {
+    const value = String(file)
 
-var reasonStart = 'Missing initial pipe in table fence'
-var reasonEnd = 'Missing final pipe in table fence'
+    visit(tree, 'table', (node) => {
+      let index = -1
 
-function tablePipes(tree, file) {
-  var contents = String(file)
+      while (++index < node.children.length) {
+        const row = node.children[index]
 
-  visit(tree, 'table', visitor)
+        if (!generated(row)) {
+          if (value.charCodeAt(pointStart(row).offset) !== 124) {
+            file.message(reasonStart, pointStart(row))
+          }
 
-  function visitor(node) {
-    var rows = node.children
-    var length = rows.length
-    var index = -1
-    var row
-
-    while (++index < length) {
-      row = rows[index]
-
-      if (!generated(row)) {
-        if (contents.charCodeAt(pointStart(row).offset) !== 124) {
-          file.message(reasonStart, pointStart(row))
-        }
-
-        if (contents.charCodeAt(pointEnd(row).offset - 1) !== 124) {
-          file.message(reasonEnd, pointEnd(row))
+          if (value.charCodeAt(pointEnd(row).offset - 1) !== 124) {
+            file.message(reasonEnd, pointEnd(row))
+          }
         }
       }
-    }
+    })
   }
-}
+)
+
+export default remarkLintTablePipes

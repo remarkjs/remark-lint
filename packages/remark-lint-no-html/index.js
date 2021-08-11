@@ -28,18 +28,12 @@ import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
-const remarkLintNoHtml = lintRule('remark-lint:no-html', noHTML)
+const remarkLintNoHtml = lintRule('remark-lint:no-html', (tree, file) => {
+  visit(tree, 'html', (node) => {
+    if (!generated(node) && !/^\s*<!--/.test(node.value)) {
+      file.message('Do not use HTML in markdown', node)
+    }
+  })
+})
 
 export default remarkLintNoHtml
-
-var reason = 'Do not use HTML in markdown'
-
-function noHTML(tree, file) {
-  visit(tree, 'html', visitor)
-
-  function visitor(node) {
-    if (!generated(node) && !/^\s*<!--/.test(node.value)) {
-      file.message(reason, node)
-    }
-  }
-}

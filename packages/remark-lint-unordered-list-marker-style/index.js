@@ -71,59 +71,57 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const remarkLintUnorderedListMarkerStyle = lintRule(
-  'remark-lint:unordered-list-marker-style',
-  unorderedListMarkerStyle
-)
-
-export default remarkLintUnorderedListMarkerStyle
-
-var styles = {
+const styles = {
   '-': true,
   '*': true,
   '+': true,
-  null: true
+  undefined: true
 }
 
-function unorderedListMarkerStyle(tree, file, option) {
-  var contents = String(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
+const remarkLintUnorderedListMarkerStyle = lintRule(
+  'remark-lint:unordered-list-marker-style',
+  (tree, file, option) => {
+    const value = String(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : undefined
 
-  if (styles[preferred] !== true) {
-    file.fail(
-      'Incorrect unordered list item marker style `' +
-        preferred +
-        "`: use either `'-'`, `'*'`, or `'+'`"
-    )
-  }
+    if (styles[preferred] !== true) {
+      file.fail(
+        'Incorrect unordered list item marker style `' +
+          preferred +
+          "`: use either `'-'`, `'*'`, or `'+'`"
+      )
+    }
 
-  visit(tree, 'list', visitor)
+    visit(tree, 'list', (node) => {
+      if (node.ordered) return
 
-  function visitor(node) {
-    var children = node.children
-    var length = node.ordered ? 0 : children.length
-    var index = -1
-    var child
-    var marker
+      const children = node.children
+      let index = -1
 
-    while (++index < length) {
-      child = children[index]
+      while (++index < children.length) {
+        const child = children[index]
 
-      if (!generated(child)) {
-        marker = contents
-          .slice(pointStart(child).offset, pointStart(child.children[0]).offset)
-          .replace(/\[[x ]?]\s*$/i, '')
-          .replace(/\s/g, '')
+        if (!generated(child)) {
+          const marker = value
+            .slice(
+              pointStart(child).offset,
+              pointStart(child.children[0]).offset
+            )
+            .replace(/\[[x ]?]\s*$/i, '')
+            .replace(/\s/g, '')
 
-        if (preferred) {
-          if (marker !== preferred) {
-            file.message('Marker style should be `' + preferred + '`', child)
+          if (preferred) {
+            if (marker !== preferred) {
+              file.message('Marker style should be `' + preferred + '`', child)
+            }
+          } else {
+            preferred = marker
           }
-        } else {
-          preferred = marker
         }
       }
-    }
+    })
   }
-}
+)
+
+export default remarkLintUnorderedListMarkerStyle

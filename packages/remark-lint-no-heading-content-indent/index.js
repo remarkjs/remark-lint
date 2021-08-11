@@ -55,72 +55,55 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   'remark-lint:no-heading-content-indent',
-  noHeadingContentIndent
-)
-
-export default remarkLintNoHeadingContentIndent
-
-function noHeadingContentIndent(tree, file) {
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    var depth
-    var children
-    var type
-    var head
-    var final
-    var diff
-    var reason
-    var abs
-
-    if (generated(node)) {
-      return
-    }
-
-    depth = node.depth
-    children = node.children
-    type = headingStyle(node, 'atx')
-
-    if (type === 'atx' || type === 'atx-closed') {
-      head = pointStart(children[0]).column
-
-      // Ignore empty headings.
-      if (!head) {
+  (tree, file) => {
+    visit(tree, 'heading', (node) => {
+      if (generated(node)) {
         return
       }
 
-      diff = head - pointStart(node).column - 1 - depth
+      const type = headingStyle(node, 'atx')
 
-      if (diff) {
-        abs = Math.abs(diff)
+      if (type === 'atx' || type === 'atx-closed') {
+        const head = pointStart(node.children[0]).column
 
-        reason =
-          'Remove ' +
-          abs +
-          ' ' +
-          plural('space', abs) +
-          ' before this heading’s content'
+        // Ignore empty headings.
+        if (!head) {
+          return
+        }
 
-        file.message(reason, pointStart(children[0]))
+        const diff = head - pointStart(node).column - 1 - node.depth
+
+        if (diff) {
+          file.message(
+            'Remove ' +
+              Math.abs(diff) +
+              ' ' +
+              plural('space', Math.abs(diff)) +
+              ' before this heading’s content',
+            pointStart(node.children[0])
+          )
+        }
       }
-    }
 
-    // Closed ATX headings always must have a space between their content and
-    // the final hashes, thus, there is no `add x spaces`.
-    if (type === 'atx-closed') {
-      final = pointEnd(children[children.length - 1])
-      diff = pointEnd(node).column - final.column - 1 - depth
+      // Closed ATX headings always must have a space between their content and
+      // the final hashes, thus, there is no `add x spaces`.
+      if (type === 'atx-closed') {
+        const final = pointEnd(node.children[node.children.length - 1])
+        const diff = pointEnd(node).column - final.column - 1 - node.depth
 
-      if (diff) {
-        reason =
-          'Remove ' +
-          diff +
-          ' ' +
-          plural('space', diff) +
-          ' after this heading’s content'
-
-        file.message(reason, final)
+        if (diff) {
+          file.message(
+            'Remove ' +
+              diff +
+              ' ' +
+              plural('space', diff) +
+              ' after this heading’s content',
+            final
+          )
+        }
       }
-    }
+    })
   }
-}
+)
+
+export default remarkLintNoHeadingContentIndent

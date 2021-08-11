@@ -68,16 +68,7 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const remarkLintNoMissingBlankLines = lintRule(
-  'remark-lint:no-missing-blank-lines',
-  noMissingBlankLines
-)
-
-export default remarkLintNoMissingBlankLines
-
-var reason = 'Missing blank line before block node'
-
-var types = [
+const types = new Set([
   'paragraph',
   'heading',
   'thematicBreak',
@@ -87,30 +78,31 @@ var types = [
   'html',
   'code',
   'yaml'
-]
+])
 
-function noMissingBlankLines(tree, file, option) {
-  var exceptTightLists = (option || {}).exceptTightLists
+const remarkLintNoMissingBlankLines = lintRule(
+  'remark-lint:no-missing-blank-lines',
+  (tree, file, option = {}) => {
+    const {exceptTightLists} = option
 
-  visit(tree, visitor)
-
-  function visitor(node, index, parent) {
-    var next
-
-    if (
-      parent &&
-      !generated(node) &&
-      (!exceptTightLists || parent.type !== 'listItem')
-    ) {
-      next = parent.children[index + 1]
-
+    visit(tree, (node, index, parent) => {
       if (
-        next &&
-        types.indexOf(next.type) !== -1 &&
-        pointStart(next).line === pointEnd(node).line + 1
+        parent &&
+        !generated(node) &&
+        (!exceptTightLists || parent.type !== 'listItem')
       ) {
-        file.message(reason, next)
+        const next = parent.children[index + 1]
+
+        if (
+          next &&
+          types.has(next.type) &&
+          pointStart(next).line === pointEnd(node).line + 1
+        ) {
+          file.message('Missing blank line before block node', next)
+        }
       }
-    }
+    })
   }
-}
+)
+
+export default remarkLintNoMissingBlankLines

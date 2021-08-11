@@ -63,33 +63,29 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadingsInSection = lintRule(
   'remark-lint:no-duplicate-headings-in-section',
-  noDuplicateHeadingsInSection
+  (tree, file) => {
+    let stack = []
+
+    visit(tree, 'heading', (node) => {
+      const depth = node.depth
+      const value = toString(node).toUpperCase()
+      const index = depth - 1
+      const scope = stack[index] || (stack[index] = {})
+      const duplicate = scope[value]
+
+      if (!generated(node) && duplicate) {
+        file.message(
+          'Do not use headings with similar content per section (' +
+            stringifyPosition(pointStart(duplicate)) +
+            ')',
+          node
+        )
+      }
+
+      scope[value] = node
+      stack = stack.slice(0, depth)
+    })
+  }
 )
 
 export default remarkLintNoDuplicateHeadingsInSection
-
-var reason = 'Do not use headings with similar content per section'
-
-function noDuplicateHeadingsInSection(tree, file) {
-  var stack = []
-
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    var depth = node.depth
-    var value = toString(node).toUpperCase()
-    var index = depth - 1
-    var scope = stack[index] || (stack[index] = {})
-    var duplicate = scope[value]
-
-    if (!generated(node) && duplicate) {
-      file.message(
-        reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
-        node
-      )
-    }
-
-    scope[value] = node
-    stack = stack.slice(0, depth)
-  }
-}

@@ -29,29 +29,22 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintHeadingIncrement = lintRule(
   'remark-lint:heading-increment',
-  headingIncrement
+  (tree, file) => {
+    let previous
+
+    visit(tree, 'heading', (node) => {
+      if (!generated(node)) {
+        if (previous && node.depth > previous + 1) {
+          file.message(
+            'Heading levels should increment by one level at a time',
+            node
+          )
+        }
+
+        previous = node.depth
+      }
+    })
+  }
 )
 
 export default remarkLintHeadingIncrement
-
-var reason = 'Heading levels should increment by one level at a time'
-
-function headingIncrement(tree, file) {
-  var previous = null
-
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    var depth
-
-    if (!generated(node)) {
-      depth = node.depth
-
-      if (previous && depth > previous + 1) {
-        file.message(reason, node)
-      }
-
-      previous = depth
-    }
-  }
-}

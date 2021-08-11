@@ -35,19 +35,13 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoShortcutReferenceLink = lintRule(
   'remark-lint:no-shortcut-reference-link',
-  noShortcutReferenceLink
+  (tree, file) => {
+    visit(tree, 'linkReference', (node) => {
+      if (!generated(node) && node.referenceType === 'shortcut') {
+        file.message('Use the trailing `[]` on reference links', node)
+      }
+    })
+  }
 )
 
 export default remarkLintNoShortcutReferenceLink
-
-var reason = 'Use the trailing `[]` on reference links'
-
-function noShortcutReferenceLink(tree, file) {
-  visit(tree, 'linkReference', visitor)
-
-  function visitor(node) {
-    if (!generated(node) && node.referenceType === 'shortcut') {
-      file.message(reason, node)
-    }
-  }
-}

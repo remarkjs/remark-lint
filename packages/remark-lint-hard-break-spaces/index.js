@@ -28,30 +28,22 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintHardBreakSpaces = lintRule(
   'remark-lint:hard-break-spaces',
-  hardBreakSpaces
+  (tree, file) => {
+    const value = String(file)
+
+    visit(tree, 'break', (node) => {
+      if (!generated(node)) {
+        const slice = value
+          .slice(pointStart(node).offset, pointEnd(node).offset)
+          .split('\n', 1)[0]
+          .replace(/\r$/, '')
+
+        if (slice.length > 2) {
+          file.message('Use two spaces for hard line breaks', node)
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintHardBreakSpaces
-
-var reason = 'Use two spaces for hard line breaks'
-
-function hardBreakSpaces(tree, file) {
-  var contents = String(file)
-
-  visit(tree, 'break', visitor)
-
-  function visitor(node) {
-    var value
-
-    if (!generated(node)) {
-      value = contents
-        .slice(pointStart(node).offset, pointEnd(node).offset)
-        .split('\n', 1)[0]
-        .replace(/\r$/, '')
-
-      if (value.length > 2) {
-        file.message(reason, node)
-      }
-    }
-  }
-}

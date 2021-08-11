@@ -29,34 +29,27 @@ import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateDefinedUrls = lintRule(
   'remark-lint:no-duplicate-defined-urls',
-  noDuplicateDefinedUrls
+  (tree, file) => {
+    const map = Object.create(null)
+
+    visit(tree, 'definition', (node) => {
+      if (!generated(node) && node.url) {
+        const url = String(node.url).toUpperCase()
+        const duplicate = map[url]
+
+        if (duplicate) {
+          file.message(
+            'Do not use different definitions with the same URL (' +
+              stringifyPosition(pointStart(duplicate)) +
+              ')',
+            node
+          )
+        }
+
+        map[url] = node
+      }
+    })
+  }
 )
 
 export default remarkLintNoDuplicateDefinedUrls
-
-var reason = 'Do not use different definitions with the same URL'
-
-function noDuplicateDefinedUrls(tree, file) {
-  var map = {}
-
-  visit(tree, 'definition', check)
-
-  function check(node) {
-    var url
-    var duplicate
-
-    if (!generated(node) && node.url) {
-      url = String(node.url).toUpperCase()
-      duplicate = map[url]
-
-      if (duplicate && duplicate.type) {
-        file.message(
-          reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
-          node
-        )
-      }
-
-      map[url] = node
-    }
-  }
-}

@@ -92,105 +92,100 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const remarkLintLinkTitleStyle = lintRule(
-  'remark-lint:link-title-style',
-  linkTitleStyle
-)
+const own = {}.hasOwnProperty
 
-export default remarkLintLinkTitleStyle
-
-var own = {}.hasOwnProperty
-
-var markers = {
+const markers = {
   '"': '"',
   "'": "'",
   ')': '('
 }
 
-function linkTitleStyle(tree, file, option) {
-  var contents = String(file)
-  var loc = location(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
+const remarkLintLinkTitleStyle = lintRule(
+  'remark-lint:link-title-style',
+  (tree, file, option) => {
+    const value = String(file)
+    const loc = location(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
 
-  if (preferred === '()' || preferred === '(') {
-    preferred = ')'
-  }
-
-  if (preferred && !own.call(markers, preferred)) {
-    file.fail(
-      'Incorrect link title style marker `' +
-        preferred +
-        "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
-    )
-  }
-
-  visit(tree, ['link', 'image', 'definition'], check)
-
-  function check(node) {
-    var tail
-    var begin
-    var last
-    var first
-    var final
-    var initial
-    var reason
-
-    if (generated(node)) {
-      return
+    if (preferred === '()' || preferred === '(') {
+      preferred = ')'
     }
 
-    last = pointEnd(node).offset - 1
-    tail = node.children ? node.children[node.children.length - 1] : null
-    begin = tail ? pointEnd(tail) : pointStart(node)
-
-    if (node.type !== 'definition') {
-      last--
+    if (preferred && !own.call(markers, preferred)) {
+      file.fail(
+        'Incorrect link title style marker `' +
+          preferred +
+          "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
+      )
     }
 
-    // Skip back to before whitespace.
-    while (last) {
-      final = contents.charAt(last)
+    visit(tree, (node) => {
+      if (
+        (node.type === 'link' ||
+          node.type === 'image' ||
+          node.type === 'definition') &&
+        !generated(node)
+      ) {
+        const tail = node.children
+          ? node.children[node.children.length - 1]
+          : null
+        const begin = tail ? pointEnd(tail) : pointStart(node)
+        let last = pointEnd(node).offset - 1
 
-      // Legacy for remark before 8.0.0
-      /* c8 ignore next 2 */
-      if (/\s/.test(final)) {
-        last--
-      } else {
-        break
+        if (node.type !== 'definition') {
+          last--
+        }
+
+        let final
+
+        // Skip back to before whitespace.
+        while (last) {
+          final = value.charAt(last)
+
+          // Legacy for remark before 8.0.0
+          /* c8 ignore next 2 */
+          if (/\s/.test(final)) {
+            last--
+          } else {
+            break
+          }
+        }
+
+        // Exit if the final marker is not a known marker.
+        if (!(final in markers)) {
+          return
+        }
+
+        const initial = markers[final]
+
+        // Find the starting delimiter
+        const first = value.lastIndexOf(initial, last - 1)
+
+        // Exit if there’s no starting delimiter, the starting delimiter is before
+        // the start of the node, or if it’s not preceded by whitespace.
+        if (first <= begin || !/\s/.test(value.charAt(first - 1))) {
+          return
+        }
+
+        if (preferred) {
+          if (preferred !== final) {
+            file.message(
+              'Titles should use `' +
+                (preferred === ')' ? '()' : preferred) +
+                '` as a quote',
+              {
+                start: loc.toPoint(first),
+                end: loc.toPoint(last + 1)
+              }
+            )
+          }
+        } else {
+          preferred = final
+        }
       }
-    }
-
-    // Exit if the final marker is not a known marker.
-    if (!(final in markers)) {
-      return
-    }
-
-    initial = markers[final]
-
-    // Find the starting delimiter
-    first = contents.lastIndexOf(initial, last - 1)
-
-    // Exit if there’s no starting delimiter, the starting delimiter is before
-    // the start of the node, or if it’s not preceded by whitespace.
-    if (first <= begin || !/\s/.test(contents.charAt(first - 1))) {
-      return
-    }
-
-    if (preferred) {
-      if (preferred !== final) {
-        reason =
-          'Titles should use `' +
-          (preferred === ')' ? '()' : preferred) +
-          '` as a quote'
-
-        file.message(reason, {
-          start: loc.toPoint(first),
-          end: loc.toPoint(last + 1)
-        })
-      }
-    } else {
-      preferred = final
-    }
+    })
   }
-}
+)
+
+export default remarkLintLinkTitleStyle

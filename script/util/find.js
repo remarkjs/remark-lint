@@ -1,8 +1,8 @@
 // Find the first tag in `tags` with a type set to `key`.
 export function find(tags, key) {
-  var value = null
+  let value = null
 
-  tags.some(function (tag) {
+  tags.some((tag) => {
     if (tag && tag.type === key) {
       value = tag
 
@@ -18,10 +18,10 @@ export function find(tags, key) {
 // Find the first tag in `tags` with a type set to `key`.
 export function findAll(tags, key) {
   return tags
-    .filter(function (tag) {
+    .filter((tag) => {
       return tag && tag.type === key
     })
-    .map(function (tag) {
+    .map((tag) => {
       return tag.string
     })
 }

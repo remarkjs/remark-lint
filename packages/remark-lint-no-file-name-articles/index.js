@@ -29,15 +29,13 @@ import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNoFileNameArticles = lintRule(
   'remark-lint:no-file-name-articles',
-  noFileNameArticles
+  (tree, file) => {
+    const match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)
+
+    if (match) {
+      file.message('Do not start file names with `' + match[0] + '`')
+    }
+  }
 )
 
 export default remarkLintNoFileNameArticles
-
-function noFileNameArticles(tree, file) {
-  var match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)
-
-  if (match) {
-    file.message('Do not start file names with `' + match[0] + '`')
-  }
-}

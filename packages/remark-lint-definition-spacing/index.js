@@ -24,30 +24,30 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
+
 const remarkLintDefinitionSpacing = lintRule(
   'remark-lint:definition-spacing',
-  definitionSpacing
+  (tree, file) => {
+    const value = String(file)
+
+    visit(tree, (node) => {
+      if (
+        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
+        !generated(node)
+      ) {
+        const start = pointStart(node).offset
+        const end = pointEnd(node).offset
+
+        if (/[ \t\n]{2,}/.test(value.slice(start, end).match(label)[1])) {
+          file.message(
+            'Do not use consecutive whitespace in definition labels',
+            node
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintDefinitionSpacing
-
-var label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
-var reason = 'Do not use consecutive whitespace in definition labels'
-
-function definitionSpacing(tree, file) {
-  var contents = String(file)
-
-  visit(tree, ['definition', 'footnoteDefinition'], check)
-
-  function check(node) {
-    var start = pointStart(node).offset
-    var end = pointEnd(node).offset
-
-    if (
-      !generated(node) &&
-      /[ \t\n]{2,}/.test(contents.slice(start, end).match(label)[1])
-    ) {
-      file.message(reason, node)
-    }
-  }
-}

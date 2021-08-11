@@ -97,6 +97,8 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const styles = {null: true, fenced: true, indented: true}
+
 const remarkLintCodeBlockStyle = lintRule(
   'remark-lint:code-block-style',
   codeBlockStyle
@@ -104,11 +106,9 @@ const remarkLintCodeBlockStyle = lintRule(
 
 export default remarkLintCodeBlockStyle
 
-var styles = {null: true, fenced: true, indented: true}
-
 function codeBlockStyle(tree, file, option) {
-  var contents = String(file)
-  var preferred =
+  const value = String(file)
+  let preferred =
     typeof option === 'string' && option !== 'consistent' ? option : null
 
   if (styles[preferred] !== true) {
@@ -119,22 +119,16 @@ function codeBlockStyle(tree, file, option) {
     )
   }
 
-  visit(tree, 'code', visitor)
-
-  function visitor(node) {
-    var initial
-    var final
-    var current
-
+  visit(tree, 'code', (node) => {
     if (generated(node)) {
-      return null
+      return
     }
 
-    initial = pointStart(node).offset
-    final = pointEnd(node).offset
+    const initial = pointStart(node).offset
+    const final = pointEnd(node).offset
 
-    current =
-      node.lang || /^\s*([~`])\1{2,}/.test(contents.slice(initial, final))
+    const current =
+      node.lang || /^\s*([~`])\1{2,}/.test(value.slice(initial, final))
         ? 'fenced'
         : 'indented'
 
@@ -145,5 +139,5 @@ function codeBlockStyle(tree, file, option) {
     } else {
       preferred = current
     }
-  }
+  })
 }

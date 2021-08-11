@@ -44,28 +44,25 @@ import {collapseWhiteSpace} from 'collapse-white-space'
 
 const remarkLintNoUnneededFullReferenceImage = lintRule(
   'remark-lint:no-unneeded-full-reference-image',
-  noUnneededFullReferenceImage
+  (tree, file) => {
+    visit(tree, 'imageReference', (node) => {
+      if (
+        generated(node) ||
+        node.referenceType !== 'full' ||
+        normalize(node.alt) !== node.identifier
+      ) {
+        return
+      }
+
+      file.message(
+        'Remove the image label as it matches the reference text',
+        node
+      )
+    })
+  }
 )
 
 export default remarkLintNoUnneededFullReferenceImage
-
-var reason = 'Remove the image label as it matches the reference text'
-
-function noUnneededFullReferenceImage(tree, file) {
-  visit(tree, 'imageReference', visitor)
-
-  function visitor(node) {
-    if (
-      generated(node) ||
-      node.referenceType !== 'full' ||
-      normalize(node.alt) !== node.identifier
-    ) {
-      return
-    }
-
-    file.message(reason, node)
-  }
-}
 
 // See: <https://github.com/remarkjs/remark/blob/cc7867b/packages/remark-parse/lib/util/normalize.js>
 function normalize(value) {

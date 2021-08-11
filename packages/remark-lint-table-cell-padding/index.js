@@ -159,142 +159,130 @@ import {visit, SKIP} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const styles = {null: true, padded: true, compact: true}
+
 const remarkLintTableCellPadding = lintRule(
   'remark-lint:table-cell-padding',
-  tableCellPadding
-)
+  (tree, file, option) => {
+    const preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
 
-export default remarkLintTableCellPadding
+    if (styles[preferred] !== true) {
+      file.fail(
+        'Incorrect table cell padding style `' +
+          preferred +
+          "`, expected `'padded'`, `'compact'`, or `'consistent'`"
+      )
+    }
 
-var styles = {null: true, padded: true, compact: true}
+    visit(tree, 'table', (node) => {
+      const rows = node.children
+      const sizes = Array.from({length: node.align.length})
+      const entries = []
+      let index = -1
 
-function tableCellPadding(tree, file, option) {
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
+      if (generated(node)) return
 
-  if (styles[preferred] !== true) {
-    file.fail(
-      'Incorrect table cell padding style `' +
-        preferred +
-        "`, expected `'padded'`, `'compact'`, or `'consistent'`"
-    )
-  }
+      // Check rows.
+      while (++index < rows.length) {
+        const row = rows[index]
+        let column = -1
 
-  visit(tree, 'table', visitor)
+        // Check fences (before, between, and after cells).
+        while (++column < row.children.length) {
+          const cell = row.children[column]
 
-  function visitor(node) {
-    var rows = node.children
-    var sizes = new Array(node.align.length)
-    var length = generated(node) ? -1 : rows.length
-    var index = -1
-    var entries = []
-    var style
-    var row
-    var cells
-    var column
-    var cellCount
-    var cell
-    var entry
-    var contentStart
-    var contentEnd
+          if (cell && cell.children.length > 0) {
+            const contentStart = pointStart(cell.children[0]).offset
+            const contentEnd = pointEnd(
+              cell.children[cell.children.length - 1]
+            ).offset
 
-    // Check rows.
-    while (++index < length) {
-      row = rows[index]
-      cells = row.children
-      cellCount = cells.length
-      column = -1
+            entries.push({
+              node: cell,
+              start: contentStart - pointStart(cell).offset - (column ? 0 : 1),
+              end: pointEnd(cell).offset - contentEnd - 1,
+              column
+            })
 
-      // Check fences (before, between, and after cells).
-      while (++column < cellCount) {
-        cell = cells[column]
-
-        if (cell && cell.children.length !== 0) {
-          contentStart = pointStart(cell.children[0]).offset
-          contentEnd = pointEnd(cell.children[cell.children.length - 1]).offset
-
-          entries.push({
-            node: cell,
-            start: contentStart - pointStart(cell).offset - (column ? 0 : 1),
-            end: pointEnd(cell).offset - contentEnd - 1,
-            column: column
-          })
-
-          // Detect max space per column.
-          sizes[column] = Math.max(
-            sizes[column] || 0,
-            contentEnd - contentStart
-          )
+            // Detect max space per column.
+            sizes[column] = Math.max(
+              sizes[column] || 0,
+              contentEnd - contentStart
+            )
+          }
         }
       }
-    }
 
-    if (preferred) {
-      style = preferred === 'padded' ? 1 : 0
-    } else {
-      style = entries[0] && (!entries[0].start || !entries[0].end) ? 0 : 1
-    }
+      const style = preferred
+        ? preferred === 'padded'
+          ? 1
+          : 0
+        : entries[0] && (!entries[0].start || !entries[0].end)
+        ? 0
+        : 1
 
-    index = -1
-    length = entries.length
+      index = -1
 
-    while (++index < length) {
-      entry = entries[index]
-      checkSide('start', entry, style, sizes)
-      checkSide('end', entry, style, sizes)
-    }
+      while (++index < entries.length) {
+        checkSide('start', entries[index], style, sizes)
+        checkSide('end', entries[index], style, sizes)
+      }
 
-    return SKIP
-  }
+      return SKIP
+    })
 
-  function checkSide(side, entry, style, sizes) {
-    var cell = entry.node
-    var spacing = entry[side]
-    var column = entry.column
-    var reason
-    var point
+    function checkSide(side, entry, style, sizes) {
+      const cell = entry.node
+      const column = entry.column
+      const spacing = entry[side]
 
-    if (spacing === undefined || spacing === style) {
-      return
-    }
-
-    reason = 'Cell should be '
-
-    if (style === 0) {
-      // Ignore every cell except the biggest in the column.
-      if (size(cell) < sizes[column]) {
+      if (spacing === undefined || spacing === style) {
         return
       }
 
-      reason += 'compact'
-    } else {
-      reason += 'padded'
+      let reason = 'Cell should be '
 
-      if (spacing > style) {
-        // May be right or center aligned.
+      if (style === 0) {
+        // Ignore every cell except the biggest in the column.
         if (size(cell) < sizes[column]) {
           return
         }
 
-        reason += ' with 1 space, not ' + spacing
-      }
-    }
+        reason += 'compact'
+      } else {
+        reason += 'padded'
 
-    if (side === 'start') {
-      point = pointStart(cell)
-      if (!column) {
-        point.column++
-        point.offset++
-      }
-    } else {
-      point = pointEnd(cell)
-      point.column--
-      point.offset--
-    }
+        if (spacing > style) {
+          // May be right or center aligned.
+          if (size(cell) < sizes[column]) {
+            return
+          }
 
-    file.message(reason, point)
+          reason += ' with 1 space, not ' + spacing
+        }
+      }
+
+      let point
+
+      if (side === 'start') {
+        point = pointStart(cell)
+        if (!column) {
+          point.column++
+          point.offset++
+        }
+      } else {
+        point = pointEnd(cell)
+        point.column--
+        point.offset--
+      }
+
+      file.message(reason, point)
+    }
   }
-}
+)
+
+export default remarkLintTableCellPadding
 
 function size(node) {
   return (

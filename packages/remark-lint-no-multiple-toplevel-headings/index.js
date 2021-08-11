@@ -33,27 +33,22 @@ import {stringifyPosition} from 'unist-util-stringify-position'
 
 const remarkLintNoMultipleToplevelHeadings = lintRule(
   'remark-lint:no-multiple-toplevel-headings',
-  noMultipleToplevelHeadings
+  (tree, file, option = 1) => {
+    let duplicate
+
+    visit(tree, 'heading', (node) => {
+      if (!generated(node) && node.depth === option) {
+        if (duplicate) {
+          file.message(
+            'Don’t use multiple top level headings (' + duplicate + ')',
+            node
+          )
+        } else {
+          duplicate = stringifyPosition(pointStart(node))
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintNoMultipleToplevelHeadings
-
-function noMultipleToplevelHeadings(tree, file, option) {
-  var preferred = option || 1
-  var duplicate
-
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    if (!generated(node) && node.depth === preferred) {
-      if (duplicate) {
-        file.message(
-          'Don’t use multiple top level headings (' + duplicate + ')',
-          node
-        )
-      } else {
-        duplicate = stringifyPosition(pointStart(node))
-      }
-    }
-  }
-}

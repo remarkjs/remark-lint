@@ -86,60 +86,53 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const remarkLintFencedCodeMarker = lintRule(
-  'remark-lint:fenced-code-marker',
-  fencedCodeMarker
-)
-
-export default remarkLintFencedCodeMarker
-
-var markers = {
+const markers = {
   '`': true,
   '~': true,
   null: true
 }
 
-function fencedCodeMarker(tree, file, option) {
-  var contents = String(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
+const remarkLintFencedCodeMarker = lintRule(
+  'remark-lint:fenced-code-marker',
+  (tree, file, option) => {
+    const contents = String(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
 
-  if (markers[preferred] !== true) {
-    file.fail(
-      'Incorrect fenced code marker `' +
-        preferred +
-        "`: use either `'consistent'`, `` '`' ``, or `'~'`"
-    )
-  }
+    if (markers[preferred] !== true) {
+      file.fail(
+        'Incorrect fenced code marker `' +
+          preferred +
+          "`: use either `'consistent'`, `` '`' ``, or `'~'`"
+      )
+    }
 
-  visit(tree, 'code', visitor)
+    visit(tree, 'code', (node) => {
+      if (!generated(node)) {
+        const start = pointStart(node).offset
+        const marker = contents
+          .slice(start, start + 4)
+          .replace(/^\s+/, '')
+          .charAt(0)
 
-  function visitor(node) {
-    var start
-    var marker
-    var label
-
-    if (!generated(node)) {
-      start = pointStart(node).offset
-      marker = contents
-        .slice(start, start + 4)
-        .replace(/^\s+/, '')
-        .charAt(0)
-
-      // Ignore unfenced code blocks.
-      if (markers[marker] === true) {
-        if (preferred) {
-          if (marker !== preferred) {
-            label = preferred === '~' ? preferred : '` ` `'
-            file.message(
-              'Fenced code should use `' + label + '` as a marker',
-              node
-            )
+        // Ignore unfenced code blocks.
+        if (markers[marker] === true) {
+          if (preferred) {
+            if (marker !== preferred) {
+              file.message(
+                'Fenced code should use `' +
+                  (preferred === '~' ? preferred : '` ` `') +
+                  '` as a marker',
+                node
+              )
+            }
+          } else {
+            preferred = marker
           }
-        } else {
-          preferred = marker
         }
       }
-    }
+    })
   }
-}
+)
+
+export default remarkLintFencedCodeMarker

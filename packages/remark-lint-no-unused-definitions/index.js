@@ -25,42 +25,48 @@ import {lintRule} from 'unified-lint-rule'
 import {generated} from 'unist-util-generated'
 import {visit} from 'unist-util-visit'
 
+const own = {}.hasOwnProperty
+
 const remarkLintNoUnusedDefinitions = lintRule(
   'remark-lint:no-unused-definitions',
-  noUnusedDefinitions
+  (tree, file) => {
+    const map = Object.create(null)
+
+    visit(tree, (node) => {
+      if (
+        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
+        !generated(node)
+      ) {
+        map[node.identifier.toUpperCase()] = {node, used: false}
+      }
+    })
+
+    visit(tree, (node) => {
+      if (
+        node.type === 'imageReference' ||
+        node.type === 'linkReference' ||
+        node.type === 'footnoteReference'
+      ) {
+        const info = map[node.identifier.toUpperCase()]
+
+        if (!generated(node) && info) {
+          info.used = true
+        }
+      }
+    })
+
+    let identifier
+
+    for (identifier in map) {
+      if (own.call(map, identifier)) {
+        const entry = map[identifier]
+
+        if (!entry.used) {
+          file.message('Found unused definition', entry.node)
+        }
+      }
+    }
+  }
 )
 
 export default remarkLintNoUnusedDefinitions
-
-var reason = 'Found unused definition'
-
-function noUnusedDefinitions(tree, file) {
-  var map = {}
-  var identifier
-  var entry
-
-  visit(tree, ['definition', 'footnoteDefinition'], find)
-  visit(tree, ['imageReference', 'linkReference', 'footnoteReference'], mark)
-
-  for (identifier in map) {
-    entry = map[identifier]
-
-    if (!entry.used) {
-      file.message(reason, entry.node)
-    }
-  }
-
-  function find(node) {
-    if (!generated(node)) {
-      map[node.identifier.toUpperCase()] = {node: node, used: false}
-    }
-  }
-
-  function mark(node) {
-    var info = map[node.identifier.toUpperCase()]
-
-    if (!generated(node) && info) {
-      info.used = true
-    }
-  }
-}

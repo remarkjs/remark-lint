@@ -48,65 +48,57 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoConsecutiveBlankLines = lintRule(
   'remark-lint:no-consecutive-blank-lines',
-  noConsecutiveBlankLines
-)
+  (tree, file) => {
+    visit(tree, (node) => {
+      if (!generated(node) && 'children' in node) {
+        const head = node.children[0]
 
-export default remarkLintNoConsecutiveBlankLines
+        if (head && !generated(head)) {
+          // Compare parent and first child.
+          compare(pointStart(node), pointStart(head), 0)
 
-function noConsecutiveBlankLines(tree, file) {
-  visit(tree, visitor)
+          // Compare between each child.
+          let index = -1
 
-  function visitor(node) {
-    var children = node.children
-    var head
-    var tail
+          while (++index < node.children.length) {
+            const previous = node.children[index - 1]
+            const child = node.children[index]
 
-    if (!generated(node) && children) {
-      head = children[0]
+            if (previous && !generated(previous) && !generated(child)) {
+              compare(pointEnd(previous), pointStart(child), 2)
+            }
+          }
 
-      if (head && !generated(head)) {
-        // Compare parent and first child.
-        compare(pointStart(node), pointStart(head), 0)
+          const tail = node.children[node.children.length - 1]
 
-        // Compare between each child.
-        children.forEach(visitChild)
-
-        tail = children[children.length - 1]
-
-        // Compare parent and last child.
-        if (tail !== head && !generated(tail)) {
-          compare(pointEnd(node), pointEnd(tail), 1)
+          // Compare parent and last child.
+          if (tail !== head && !generated(tail)) {
+            compare(pointEnd(node), pointEnd(tail), 1)
+          }
         }
+      }
+    })
+
+    // Compare the difference between `start` and `end`, and warn when that
+    // difference exceeds `max`.
+    function compare(start, end, max) {
+      const diff = end.line - start.line
+      const lines = Math.abs(diff) - max
+
+      if (lines > 0) {
+        file.message(
+          'Remove ' +
+            lines +
+            ' ' +
+            plural('line', Math.abs(lines)) +
+            ' ' +
+            (diff > 0 ? 'before' : 'after') +
+            ' node',
+          end
+        )
       }
     }
   }
+)
 
-  // Compare the difference between `start` and `end`, and warn when that
-  // difference exceeds `max`.
-  function compare(start, end, max) {
-    var diff = end.line - start.line
-    var lines = Math.abs(diff) - max
-    var reason
-
-    if (lines > 0) {
-      reason =
-        'Remove ' +
-        lines +
-        ' ' +
-        plural('line', Math.abs(lines)) +
-        ' ' +
-        (diff > 0 ? 'before' : 'after') +
-        ' node'
-
-      file.message(reason, end)
-    }
-  }
-
-  function visitChild(child, index, all) {
-    var previous = all[index - 1]
-
-    if (previous && !generated(previous) && !generated(child)) {
-      compare(pointEnd(previous), pointStart(child), 2)
-    }
-  }
-}
+export default remarkLintNoConsecutiveBlankLines

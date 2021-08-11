@@ -41,39 +41,35 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintListItemBulletIndent = lintRule(
   'remark-lint:list-item-bullet-indent',
-  listItemBulletIndent
+  (tree, file) => {
+    visit(tree, 'list', (list, _, grandparent) => {
+      let index = -1
+
+      while (++index < list.children.length) {
+        const item = list.children[index]
+
+        if (
+          grandparent &&
+          grandparent.type === 'root' &&
+          !generated(item) &&
+          !generated(grandparent)
+        ) {
+          const indent =
+            item.position.start.column - grandparent.position.start.column
+
+          if (indent) {
+            file.message(
+              'Incorrect indentation before bullet: remove ' +
+                indent +
+                ' ' +
+                plural('space', indent),
+              item.position.start
+            )
+          }
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintListItemBulletIndent
-
-function listItemBulletIndent(tree, file) {
-  visit(tree, 'list', visitor)
-
-  function visitor(list, _, grandparent) {
-    list.children.forEach(visitItems)
-
-    function visitItems(item) {
-      var indent
-      var reason
-
-      if (
-        grandparent &&
-        grandparent.type === 'root' &&
-        !generated(item) &&
-        !generated(grandparent)
-      ) {
-        indent = item.position.start.column - grandparent.position.start.column
-
-        if (indent) {
-          reason =
-            'Incorrect indentation before bullet: remove ' +
-            indent +
-            ' ' +
-            plural('space', indent)
-
-          file.message(reason, item.position.start)
-        }
-      }
-    }
-  }
-}

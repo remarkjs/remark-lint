@@ -78,70 +78,65 @@ import {location} from 'vfile-location'
 
 const remarkLintNoParagraphContentIndent = lintRule(
   'remark-lint:no-paragraph-content-indent',
-  noParagraphContentIndent
+  (tree, file) => {
+    const value = String(file)
+    const loc = location(value)
+
+    visit(tree, 'paragraph', (node, _, parent) => {
+      const end = pointEnd(node).line
+      let line = pointStart(node).line
+      let column = 0
+
+      if (parent && parent.type === 'root') {
+        column = 1
+      } else if (parent && parent.type === 'blockquote') {
+        column = pointStart(parent).column + 2
+      } else if (parent && parent.type === 'listItem') {
+        column = pointStart(parent.children[0]).column
+
+        // Skip past the first line if we’re the first child of a list item.
+        if (parent.children[0] === node) {
+          line++
+        }
+      }
+
+      // In a parent we don’t know, exit.
+      if (!column || !line) {
+        return
+      }
+
+      while (line <= end) {
+        let offset = loc.toOffset({line, column})
+        const lineColumn = offset
+
+        while (/[ \t]/.test(value.charAt(offset - 1))) {
+          offset--
+        }
+
+        // Exit if we find some other content before this line.
+        // This might be because the paragraph line is lazy, which isn’t this
+        // rule.
+        if (!offset || /[\r\n>]/.test(value.charAt(offset - 1))) {
+          offset = lineColumn
+
+          while (/[ \t]/.test(value.charAt(offset))) {
+            offset++
+          }
+
+          if (lineColumn !== offset) {
+            file.message(
+              'Expected no indentation in paragraph content',
+              loc.toPoint(offset)
+            )
+          }
+        }
+
+        line++
+      }
+
+      return SKIP
+    })
+  }
 )
 
 export default remarkLintNoParagraphContentIndent
-
-var reason = 'Expected no indentation in paragraph content'
-
-function noParagraphContentIndent(tree, file) {
-  var content = String(file)
-  var loc = location(content)
-
-  visit(tree, 'paragraph', visitor)
-
-  function visitor(node, _, parent) {
-    var line = pointStart(node).line
-    var end = pointEnd(node).line
-    var column
-    var offset
-    var lineColumn
-
-    if (parent && parent.type === 'root') {
-      column = 1
-    } else if (parent && parent.type === 'blockquote') {
-      column = pointStart(parent).column + 2
-    } else if (parent && parent.type === 'listItem') {
-      column = pointStart(parent.children[0]).column
-
-      // Skip past the first line if we’re the first child of a list item.
-      if (parent.children[0] === node) {
-        line++
-      }
-    }
-
-    // In a parent we don’t know, exit.
-    if (!column || !line) {
-      return
-    }
-
-    while (line <= end) {
-      offset = loc.toOffset({line: line, column: column})
-      lineColumn = offset
-
-      while (/[ \t]/.test(content.charAt(offset - 1))) {
-        offset--
-      }
-
-      // Exit if we find some other content before this line.
-      // This might be because the paragraph line is lazy, which isn’t this
-      // rule.
-      if (!offset || /[\r\n>]/.test(content.charAt(offset - 1))) {
-        offset = lineColumn
-
-        while (/[ \t]/.test(content.charAt(offset))) {
-          offset++
-        }
-
-        if (lineColumn !== offset) {
-          file.message(reason, loc.toPoint(offset))
-        }
-      }
-
-      line++
-    }
-
-    return SKIP
-  }
-}

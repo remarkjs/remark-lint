@@ -19,17 +19,13 @@ import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNofileNameMixedCase = lintRule(
   'remark-lint:no-file-name-mixed-case',
-  noFileNameMixedCase
+  (tree, file) => {
+    const name = file.stem
+
+    if (name && !(name === name.toLowerCase() || name === name.toUpperCase())) {
+      file.message('Do not mix casing in file names')
+    }
+  }
 )
 
 export default remarkLintNofileNameMixedCase
-
-var reason = 'Do not mix casing in file names'
-
-function noFileNameMixedCase(tree, file) {
-  var name = file.stem
-
-  if (name && !(name === name.toLowerCase() || name === name.toUpperCase())) {
-    file.message(reason)
-  }
-}

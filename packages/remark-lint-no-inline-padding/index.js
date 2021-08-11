@@ -29,28 +29,22 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoInlinePadding = lintRule(
   'remark-lint:no-inline-padding',
-  noInlinePadding
+  (tree, file) => {
+    // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore
+    // since CM.
+    visit(tree, (node) => {
+      if (
+        (node.type === 'link' || node.type === 'linkReference') &&
+        !generated(node)
+      ) {
+        const value = toString(node)
+
+        if (value.charAt(0) === ' ' || value.charAt(value.length - 1) === ' ') {
+          file.message('Don’t pad `' + node.type + '` with inner spaces', node)
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintNoInlinePadding
-
-function noInlinePadding(tree, file) {
-  // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore
-  // since CM.
-  visit(tree, ['link', 'linkReference'], visitor)
-
-  function visitor(node) {
-    var contents
-
-    if (!generated(node)) {
-      contents = toString(node)
-
-      if (
-        contents.charAt(0) === ' ' ||
-        contents.charAt(contents.length - 1) === ' '
-      ) {
-        file.message('Don’t pad `' + node.type + '` with inner spaces', node)
-      }
-    }
-  }
-}

@@ -50,30 +50,27 @@ import {collapseWhiteSpace} from 'collapse-white-space'
 
 const remarkLintNoUnneededFullReferenceLink = lintRule(
   'remark-lint:no-unneeded-full-reference-link',
-  noUnneededFullReferenceLink
+  (tree, file) => {
+    visit(tree, 'linkReference', (node) => {
+      if (
+        generated(node) ||
+        node.referenceType !== 'full' ||
+        node.children.length !== 1 ||
+        node.children[0].type !== 'text' ||
+        normalize(node.children[0].value) !== node.identifier
+      ) {
+        return
+      }
+
+      file.message(
+        'Remove the link label as it matches the reference text',
+        node
+      )
+    })
+  }
 )
 
 export default remarkLintNoUnneededFullReferenceLink
-
-var reason = 'Remove the link label as it matches the reference text'
-
-function noUnneededFullReferenceLink(tree, file) {
-  visit(tree, 'linkReference', visitor)
-
-  function visitor(node) {
-    if (
-      generated(node) ||
-      node.referenceType !== 'full' ||
-      node.children.length !== 1 ||
-      node.children[0].type !== 'text' ||
-      normalize(node.children[0].value) !== node.identifier
-    ) {
-      return
-    }
-
-    file.message(reason, node)
-  }
-}
 
 // See: <https://github.com/remarkjs/remark/blob/cc7867b/packages/remark-parse/lib/util/normalize.js>
 function normalize(value) {

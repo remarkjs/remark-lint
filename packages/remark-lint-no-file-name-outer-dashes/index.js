@@ -21,15 +21,11 @@ import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNofileNameOuterDashes = lintRule(
   'remark-lint:no-file-name-outer-dashes',
-  noFileNameOuterDashes
+  (tree, file) => {
+    if (file.stem && /^-|-$/.test(file.stem)) {
+      file.message('Do not use initial or final dashes in a file name')
+    }
+  }
 )
 
 export default remarkLintNofileNameOuterDashes
-
-var reason = 'Do not use initial or final dashes in a file name'
-
-function noFileNameOuterDashes(tree, file) {
-  if (file.stem && /^-|-$/.test(file.stem)) {
-    file.message(reason)
-  }
-}

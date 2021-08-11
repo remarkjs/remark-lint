@@ -32,19 +32,15 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintMaximumHeadingLength = lintRule(
   'remark-lint:maximum-heading-length',
-  maximumHeadingLength
+  (tree, file, option) => {
+    const preferred = typeof option === 'number' ? option : 60
+
+    visit(tree, 'heading', (node) => {
+      if (!generated(node) && toString(node).length > preferred) {
+        file.message('Use headings shorter than `' + preferred + '`', node)
+      }
+    })
+  }
 )
 
 export default remarkLintMaximumHeadingLength
-
-function maximumHeadingLength(tree, file, option) {
-  var preferred = typeof option === 'number' && !isNaN(option) ? option : 60
-
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    if (!generated(node) && toString(node).length > preferred) {
-      file.message('Use headings shorter than `' + preferred + '`', node)
-    }
-  }
-}

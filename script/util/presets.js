@@ -2,13 +2,15 @@ import {promises as fs} from 'fs'
 import path from 'path'
 
 export async function presets(base) {
-  const files = (await fs.readdir(base)).filter(filter)
+  const files = (await fs.readdir(base)).filter((basename) =>
+    /remark-preset-lint/.test(basename)
+  )
 
   return Promise.all(
-    files.map(async function (name) {
+    files.map(async (name) => {
       const plugins = (await import(path.join(base, name, 'index.js'))).default
         .plugins
-      var packages = {}
+      const packages = {}
 
       let index = -1
       while (++index < plugins.length) {
@@ -23,7 +25,7 @@ export async function presets(base) {
           option = plugin[1]
         }
 
-        let name = fn.displayName || fn.name
+        const name = fn.displayName || fn.name
 
         packages[
           name
@@ -32,11 +34,7 @@ export async function presets(base) {
         ] = option
       }
 
-      return {name: name, packages: packages}
+      return {name, packages}
     })
   )
-}
-
-function filter(basename) {
-  return /remark-preset-lint/.test(basename)
 }

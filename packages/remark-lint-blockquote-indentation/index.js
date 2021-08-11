@@ -59,38 +59,33 @@ const remarkLintBlockquoteIndentation = lintRule(
 export default remarkLintBlockquoteIndentation
 
 function blockquoteIndentation(tree, file, option) {
-  var preferred = typeof option === 'number' && !isNaN(option) ? option : null
+  let preferred = typeof option === 'number' ? option : null
 
-  visit(tree, 'blockquote', visitor)
-
-  function visitor(node) {
-    var abs
-    var diff
-    var reason
-
+  visit(tree, 'blockquote', (node) => {
     if (generated(node) || node.children.length === 0) {
       return
     }
 
     if (preferred) {
-      diff = preferred - check(node)
+      const diff = preferred - check(node)
 
       if (diff !== 0) {
-        abs = Math.abs(diff)
-        reason =
-          (diff > 0 ? 'Add' : 'Remove') +
-          ' ' +
-          abs +
-          ' ' +
-          plural('space', abs) +
-          ' between block quote and content'
+        const abs = Math.abs(diff)
 
-        file.message(reason, pointStart(node.children[0]))
+        file.message(
+          (diff > 0 ? 'Add' : 'Remove') +
+            ' ' +
+            abs +
+            ' ' +
+            plural('space', abs) +
+            ' between block quote and content',
+          pointStart(node.children[0])
+        )
       }
     } else {
       preferred = check(node)
     }
-  }
+  })
 }
 
 function check(node) {

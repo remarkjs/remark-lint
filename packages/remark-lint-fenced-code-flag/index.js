@@ -69,49 +69,44 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const fence = /^ {0,3}([~`])\1{2,}/
+
 const remarkLintFencedCodeFlag = lintRule(
   'remark-lint:fenced-code-flag',
-  fencedCodeFlag
+  (tree, file, option) => {
+    const value = String(file)
+    let allowEmpty = false
+    let allowed = []
+    let flags = option
+
+    if (typeof flags === 'object' && !Array.isArray(flags)) {
+      allowEmpty = Boolean(flags.allowEmpty)
+      flags = flags.flags
+    }
+
+    if (Array.isArray(flags)) {
+      allowed = String(flags).split(',')
+    }
+
+    visit(tree, 'code', (node) => {
+      if (!generated(node)) {
+        if (node.lang) {
+          if (allowed.length > 0 && !allowed.includes(node.lang)) {
+            file.message('Incorrect code language flag', node)
+          }
+        } else {
+          const slice = value.slice(
+            pointStart(node).offset,
+            pointEnd(node).offset
+          )
+
+          if (!allowEmpty && fence.test(slice)) {
+            file.message('Missing code language flag', node)
+          }
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintFencedCodeFlag
-
-var fence = /^ {0,3}([~`])\1{2,}/
-var reasonIncorrect = 'Incorrect code language flag'
-var reasonMissing = 'Missing code language flag'
-
-function fencedCodeFlag(tree, file, option) {
-  var contents = String(file)
-  var allowEmpty = false
-  var allowed = []
-  var flags = option
-
-  if (typeof flags === 'object' && !('length' in flags)) {
-    allowEmpty = Boolean(flags.allowEmpty)
-    flags = flags.flags
-  }
-
-  if (typeof flags === 'object' && 'length' in flags) {
-    allowed = String(flags).split(',')
-  }
-
-  visit(tree, 'code', visitor)
-
-  function visitor(node) {
-    var value
-
-    if (!generated(node)) {
-      if (node.lang) {
-        if (allowed.length !== 0 && allowed.indexOf(node.lang) === -1) {
-          file.message(reasonIncorrect, node)
-        }
-      } else {
-        value = contents.slice(pointStart(node).offset, pointEnd(node).offset)
-
-        if (!allowEmpty && fence.test(value)) {
-          file.message(reasonMissing, node)
-        }
-      }
-    }
-  }
-}

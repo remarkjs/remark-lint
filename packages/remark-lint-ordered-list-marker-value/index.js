@@ -131,63 +131,63 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const styles = {ordered: true, single: true, one: true}
+
 const remarkLintOrderedListMarkerValue = lintRule(
   'remark-lint:ordered-list-marker-value',
-  orderedListMarkerValue
+  (tree, file, option) => {
+    const value = String(file)
+    const preferred = typeof option === 'string' ? option : 'ordered'
+
+    if (styles[preferred] !== true) {
+      file.fail(
+        'Incorrect ordered list item marker value `' +
+          preferred +
+          "`: use either `'ordered'` or `'one'`"
+      )
+    }
+
+    visit(tree, 'list', (node) => {
+      if (!node.ordered) return
+
+      let expected =
+        preferred === 'one' || node.start === null || node.start === undefined
+          ? 1
+          : node.start
+      let index = -1
+
+      while (++index < node.children.length) {
+        const child = node.children[index]
+
+        // Ignore generated nodes, first items.
+        if (generated(child) || (index === 0 && preferred !== 'one')) {
+          continue
+        }
+
+        // Increase the expected line number when in `ordered` mode.
+        if (preferred === 'ordered') {
+          expected++
+        }
+
+        const marker = Number(
+          value
+            .slice(
+              pointStart(child).offset,
+              pointStart(child.children[0]).offset
+            )
+            .replace(/[\s.)]/g, '')
+            .replace(/\[[x ]?]\s*$/i, '')
+        )
+
+        if (marker !== expected) {
+          file.message(
+            'Marker should be `' + expected + '`, was `' + marker + '`',
+            child
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintOrderedListMarkerValue
-
-var styles = {ordered: true, single: true, one: true}
-
-function orderedListMarkerValue(tree, file, option) {
-  var contents = String(file)
-  var preferred = typeof option === 'string' ? option : 'ordered'
-
-  if (styles[preferred] !== true) {
-    file.fail(
-      'Incorrect ordered list item marker value `' +
-        preferred +
-        "`: use either `'ordered'` or `'one'`"
-    )
-  }
-
-  visit(tree, 'list', visitor)
-
-  function visitor(node) {
-    var children = node.children
-    var expected = preferred === 'one' ? 1 : node.start == null ? 1 : node.start
-    var length = node.ordered ? children.length : 0
-    var index = -1
-    var child
-    var marker
-
-    while (++index < length) {
-      child = children[index]
-
-      // Ignore generated nodes, first items.
-      if (generated(child) || (index === 0 && preferred !== 'one')) {
-        continue
-      }
-
-      // Increase the expected line number when in `ordered` mode.
-      if (preferred === 'ordered') {
-        expected++
-      }
-
-      marker = Number(
-        contents
-          .slice(pointStart(child).offset, pointStart(child.children[0]).offset)
-          .replace(/[\s.)]/g, '')
-          .replace(/\[[x ]?]\s*$/i, '')
-      )
-
-      if (marker !== expected) {
-        file.message(
-          'Marker should be `' + expected + '`, was `' + marker + '`',
-          child
-        )
-      }
-    }
-  }
-}

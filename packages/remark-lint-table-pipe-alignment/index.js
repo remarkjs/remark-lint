@@ -48,65 +48,50 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const reason = 'Misaligned table fence'
+
 const remarkLintTablePipeAlignment = lintRule(
   'remark-lint:table-pipe-alignment',
-  tablePipeAlignment
+  (tree, file) => {
+    const value = String(file)
+
+    visit(tree, 'table', (node) => {
+      const indices = []
+      let index = -1
+
+      if (generated(node)) {
+        return
+      }
+
+      while (++index < node.children.length) {
+        const row = node.children[index]
+        const begin = pointStart(row)
+        let column = -2 // Start without a first cell.
+
+        while (++column < row.children.length) {
+          const cell = row.children[column]
+          const nextColumn = column + 1
+          const next = row.children[nextColumn]
+          const initial = cell ? pointEnd(cell).offset : pointStart(row).offset
+          const final = next ? pointStart(next).offset : pointEnd(row).offset
+          const fence = value.slice(initial, final)
+          const pos = initial + fence.indexOf('|') - begin.offset + 1
+
+          if (
+            indices[nextColumn] === undefined ||
+            indices[nextColumn] === null
+          ) {
+            indices[nextColumn] = pos
+          } else if (pos !== indices[nextColumn]) {
+            file.message(reason, {
+              start: {line: begin.line, column: pos},
+              end: {line: begin.line, column: pos + 1}
+            })
+          }
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintTablePipeAlignment
-
-var reason = 'Misaligned table fence'
-
-function tablePipeAlignment(tree, file) {
-  var contents = String(file)
-
-  visit(tree, 'table', visitor)
-
-  function visitor(node) {
-    var rows = node.children
-    var length = generated(node) ? 0 : rows.length
-    var index = -1
-    var indices = []
-    var row
-    var cells
-    var begin
-    var column
-    var columns
-    var cell
-    var initial
-    var final
-    var next
-    var nextIndex
-    var fence
-    var pos
-
-    while (++index < length) {
-      row = rows[index]
-      begin = pointStart(row)
-      cells = row.children
-      columns = cells.length
-      column = -2 // Start without a first cell.
-      next = null
-
-      while (++column < columns) {
-        cell = next
-        nextIndex = column + 1
-        next = cells[nextIndex]
-
-        initial = cell ? pointEnd(cell).offset : pointStart(row).offset
-        final = next ? pointStart(next).offset : pointEnd(row).offset
-        fence = contents.slice(initial, final)
-        pos = initial + fence.indexOf('|') - begin.offset + 1
-
-        if (indices[nextIndex] === undefined || indices[nextIndex] === null) {
-          indices[nextIndex] = pos
-        } else if (pos !== indices[nextIndex]) {
-          file.message(reason, {
-            start: {line: begin.line, column: pos},
-            end: {line: begin.line, column: pos + 1}
-          })
-        }
-      }
-    }
-  }
-}

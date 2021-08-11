@@ -65,46 +65,40 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const markers = {null: true, '*': true, _: true}
+
 const remarkLintEmphasisMarker = lintRule(
   'remark-lint:emphasis-marker',
-  emphasisMarker
+  (tree, file, option) => {
+    const value = String(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
+
+    if (markers[preferred] !== true) {
+      file.fail(
+        'Incorrect emphasis marker `' +
+          preferred +
+          "`: use either `'consistent'`, `'*'`, or `'_'`"
+      )
+    }
+
+    visit(tree, 'emphasis', (node) => {
+      if (!generated(node)) {
+        const marker = value.charAt(pointStart(node).offset)
+
+        if (preferred) {
+          if (marker !== preferred) {
+            file.message(
+              'Emphasis should use `' + preferred + '` as a marker',
+              node
+            )
+          }
+        } else {
+          preferred = marker
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintEmphasisMarker
-
-var markers = {null: true, '*': true, _: true}
-
-function emphasisMarker(tree, file, option) {
-  var contents = String(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
-
-  if (markers[preferred] !== true) {
-    file.fail(
-      'Incorrect emphasis marker `' +
-        preferred +
-        "`: use either `'consistent'`, `'*'`, or `'_'`"
-    )
-  }
-
-  visit(tree, 'emphasis', visitor)
-
-  function visitor(node) {
-    var marker
-
-    if (!generated(node)) {
-      marker = contents.charAt(pointStart(node).offset)
-
-      if (preferred) {
-        if (marker !== preferred) {
-          file.message(
-            'Emphasis should use `' + preferred + '` as a marker',
-            node
-          )
-        }
-      } else {
-        preferred = marker
-      }
-    }
-  }
-}

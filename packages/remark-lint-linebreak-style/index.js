@@ -48,47 +48,43 @@
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 
+const escaped = {unix: '\\n', windows: '\\r\\n'}
+const types = {true: 'windows', false: 'unix'}
+
 const remarkLintLinebreakStyle = lintRule(
   'remark-lint:linebreak-style',
-  linebreakStyle
+  (tree, file, option) => {
+    const value = String(file)
+    const toPoint = location(value).toPoint
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
+    let index = value.indexOf('\n')
+
+    while (index !== -1) {
+      const type = types[value.charAt(index - 1) === '\r']
+
+      if (preferred) {
+        if (preferred !== type) {
+          file.message(
+            'Expected linebreaks to be ' +
+              preferred +
+              ' (`' +
+              escaped[preferred] +
+              '`), not ' +
+              type +
+              ' (`' +
+              escaped[type] +
+              '`)',
+            toPoint(index)
+          )
+        }
+      } else {
+        preferred = type
+      }
+
+      index = value.indexOf('\n', index + 1)
+    }
+  }
 )
 
 export default remarkLintLinebreakStyle
-
-var escaped = {unix: '\\n', windows: '\\r\\n'}
-var types = {true: 'windows', false: 'unix'}
-
-function linebreakStyle(tree, file, option) {
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
-  var content = String(file)
-  var toPoint = location(content).toPoint
-  var index = content.indexOf('\n')
-  var type
-  var reason
-
-  while (index !== -1) {
-    type = types[content.charAt(index - 1) === '\r']
-
-    if (preferred) {
-      if (preferred !== type) {
-        reason =
-          'Expected linebreaks to be ' +
-          preferred +
-          ' (`' +
-          escaped[preferred] +
-          '`), not ' +
-          type +
-          ' (`' +
-          escaped[type] +
-          '`)'
-
-        file.message(reason, toPoint(index))
-      }
-    } else {
-      preferred = type
-    }
-
-    index = content.indexOf('\n', index + 1)
-  }
-}

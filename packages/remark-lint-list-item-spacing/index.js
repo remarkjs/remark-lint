@@ -114,87 +114,64 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintListItemSpacing = lintRule(
   'remark-lint:list-item-spacing',
-  listItemSpacing
+  (tree, file, option = {}) => {
+    const {checkBlanks} = option
+    const infer = checkBlanks ? inferBlankLine : inferMultiline
+
+    visit(tree, 'list', (node) => {
+      if (!generated(node)) {
+        let tight = true
+        let index = -1
+
+        while (++index < node.children.length) {
+          if (infer(node.children[index])) {
+            tight = false
+            break
+          }
+        }
+
+        index = 0 // Skip over first.
+
+        while (++index < node.children.length) {
+          const child = node.children[index - 1]
+          const next = node.children[index]
+
+          if (pointStart(next).line - pointEnd(child).line < 2 !== tight) {
+            file.message(
+              tight
+                ? 'Extraneous new line after list item'
+                : 'Missing new line after list item',
+              {start: pointEnd(child), end: pointStart(next)}
+            )
+          }
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintListItemSpacing
 
-var reasonLoose = 'Missing new line after list item'
-var reasonTight = 'Extraneous new line after list item'
-
-function listItemSpacing(tree, file, option) {
-  var infer =
-    option && typeof option === 'object' && option.checkBlanks
-      ? inferBlankLine
-      : inferMultiline
-
-  visit(tree, 'list', visitor)
-
-  function visitor(node) {
-    var tight = true
-    var children
-    var length
-    var index
-    var child
-    var next
-
-    if (!generated(node)) {
-      children = node.children
-      length = children.length
-      index = -1
-
-      while (++index < length) {
-        if (infer(children[index])) {
-          tight = false
-          break
-        }
-      }
-
-      child = children[0]
-      index = 0 // Skip over first.
-
-      while (++index < length) {
-        next = children[index]
-
-        if (pointStart(next).line - pointEnd(child).line < 2 !== tight) {
-          file.message(tight ? reasonTight : reasonLoose, {
-            start: pointEnd(child),
-            end: pointStart(next)
-          })
-        }
-
-        child = next
-      }
-    }
-  }
-}
-
 function inferBlankLine(node) {
-  var children = node.children
-  var child = children[0]
-  var length = children.length
-  var index = 0
-  var next
+  let index = 0
 
-  while (++index < length) {
-    next = children[index]
+  while (++index < node.children.length) {
+    const child = node.children[index - 1]
+    const next = node.children[index]
 
     // All children in `listItem`s are block.
     if (pointStart(next).line - pointEnd(child).line > 1) {
       return true
     }
-
-    child = next
   }
 
   return false
 }
 
 function inferMultiline(node) {
-  var children = node.children
   return (
-    pointEnd(children[children.length - 1]).line -
-      pointStart(children[0]).line >
+    pointEnd(node.children[node.children.length - 1]).line -
+      pointStart(node.children[0]).line >
     0
   )
 }

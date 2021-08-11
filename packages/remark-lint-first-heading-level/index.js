@@ -81,45 +81,41 @@ import {lintRule} from 'unified-lint-rule'
 import {visit, EXIT} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
+const re = /<h([1-6])/
+
 const remarkLintFirstHeadingLevel = lintRule(
   'remark-lint:first-heading-level',
-  firstHeadingLevel
+  (tree, file, option) => {
+    const preferred = option && option !== true ? option : 1
+
+    visit(tree, (node) => {
+      if (!generated(node)) {
+        let rank
+
+        if (node.type === 'heading') {
+          rank = node.depth
+        } else if (node.type === 'html') {
+          rank = infer(node)
+        }
+
+        if (rank !== undefined) {
+          if (rank !== preferred) {
+            file.message(
+              'First heading level should be `' + preferred + '`',
+              node
+            )
+          }
+
+          return EXIT
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintFirstHeadingLevel
 
-var re = /<h([1-6])/
-
-function firstHeadingLevel(tree, file, option) {
-  var preferred = option && option !== true ? option : 1
-
-  visit(tree, visitor)
-
-  function visitor(node) {
-    var rank
-
-    if (!generated(node)) {
-      if (node.type === 'heading') {
-        rank = node.depth
-      } else if (node.type === 'html') {
-        rank = infer(node)
-      }
-
-      if (rank !== undefined) {
-        if (rank !== preferred) {
-          file.message(
-            'First heading level should be `' + preferred + '`',
-            node
-          )
-        }
-
-        return EXIT
-      }
-    }
-  }
-}
-
 function infer(node) {
-  var results = node.value.match(re)
+  const results = node.value.match(re)
   return results ? Number(results[1]) : undefined
 }

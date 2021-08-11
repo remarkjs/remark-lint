@@ -35,56 +35,47 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintCheckboxContentIndent = lintRule(
   'remark-lint:checkbox-content-indent',
-  checkboxContentIndent
+  (tree, file) => {
+    const value = String(file)
+    const loc = location(file)
+
+    visit(tree, 'listItem', (node) => {
+      // Exit early for items without checkbox.
+      if (typeof node.checked !== 'boolean' || generated(node)) {
+        return
+      }
+
+      // A list item cannot be checked and empty, according to GFM, but
+      // theoretically it makes sense to get the end if that were possible.
+      const point =
+        /* c8 ignore next 2 */
+        node.children.length === 0
+          ? pointEnd(node)
+          : pointStart(node.children[0])
+
+      // Assume we start with a checkbox, because well, `checked` is set.
+      const match = /\[([\t xX])]/.exec(
+        value.slice(point.offset - 4, point.offset + 1)
+      )
+
+      // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
+      /* c8 ignore next */
+      if (!match) return
+
+      // Move past checkbox.
+      const initial = point.offset
+      let final = initial
+
+      while (/[\t ]/.test(value.charAt(final))) final++
+
+      if (final - initial > 0) {
+        file.message('Checkboxes should be followed by a single character', {
+          start: loc.toPoint(initial),
+          end: loc.toPoint(final)
+        })
+      }
+    })
+  }
 )
 
 export default remarkLintCheckboxContentIndent
-
-var reason = 'Checkboxes should be followed by a single character'
-
-function checkboxContentIndent(tree, file) {
-  var contents = String(file)
-  var loc = location(file)
-
-  visit(tree, 'listItem', visitor)
-
-  function visitor(node) {
-    var initial
-    var final
-    var value
-    var point
-
-    // Exit early for items without checkbox.
-    if (typeof node.checked !== 'boolean' || generated(node)) {
-      return
-    }
-
-    // A list item cannot be checked and empty, according to GFM, but
-    // theoretically it makes sense to get the end if that were possible.
-    point =
-      /* c8 ignore next */
-      node.children.length === 0 ? pointEnd(node) : pointStart(node.children[0])
-
-    // Assume we start with a checkbox, because well, `checked` is set.
-    value = /\[([\t xX])]/.exec(
-      contents.slice(point.offset - 4, point.offset + 1)
-    )
-
-    // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
-    /* c8 ignore next */
-    if (!value) return
-
-    // Move past checkbox.
-    initial = point.offset
-    final = initial
-
-    while (/[\t ]/.test(contents.charAt(final))) final++
-
-    if (final - initial > 0) {
-      file.message(reason, {
-        start: loc.toPoint(initial),
-        end: loc.toPoint(final)
-      })
-    }
-  }
-}

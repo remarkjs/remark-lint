@@ -57,45 +57,39 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
   'remark-lint:no-blockquote-without-marker',
-  noBlockquoteWithoutMarker
+  (tree, file) => {
+    const value = String(file)
+    const loc = location(file)
+
+    visit(tree, 'blockquote', (node) => {
+      let index = -1
+
+      while (++index < node.children.length) {
+        const child = node.children[index]
+
+        if (child.type === 'paragraph' && !generated(child)) {
+          const end = pointEnd(child).line
+          const column = pointStart(child).column
+          let line = pointStart(child).line
+
+          // Skip past the first line.
+          while (++line <= end) {
+            const offset = loc.toOffset({line, column})
+
+            if (/>[\t ]+$/.test(value.slice(offset - 5, offset))) {
+              continue
+            }
+
+            // Roughly here.
+            file.message('Missing marker in block quote', {
+              line,
+              column: column - 2
+            })
+          }
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintNoBlockquoteWithoutMarker
-
-var reason = 'Missing marker in block quote'
-
-function noBlockquoteWithoutMarker(tree, file) {
-  var contents = String(file)
-  var loc = location(file)
-
-  visit(tree, 'blockquote', visitor)
-
-  function onquotedchild(node) {
-    var line
-    var end
-    var column
-    var offset
-
-    if (node.type === 'paragraph' && !generated(node)) {
-      line = pointStart(node).line
-      end = pointEnd(node).line
-      column = pointStart(node).column
-
-      // Skip past the first line.
-      while (++line <= end) {
-        offset = loc.toOffset({line: line, column: column})
-
-        if (/>[\t ]+$/.test(contents.slice(offset - 5, offset))) {
-          continue
-        }
-
-        // Roughly here.
-        file.message(reason, {line: line, column: column - 2})
-      }
-    }
-  }
-
-  function visitor(node) {
-    node.children.forEach(onquotedchild)
-  }
-}

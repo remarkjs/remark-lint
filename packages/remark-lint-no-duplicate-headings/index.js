@@ -35,34 +35,27 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadings = lintRule(
   'remark-lint:no-duplicate-headings',
-  noDuplicateHeadings
+  (tree, file) => {
+    const map = Object.create(null)
+
+    visit(tree, 'heading', (node) => {
+      if (!generated(node)) {
+        const value = toString(node).toUpperCase()
+        const duplicate = map[value]
+
+        if (duplicate) {
+          file.message(
+            'Do not use headings with similar content (' +
+              stringifyPosition(pointStart(duplicate)) +
+              ')',
+            node
+          )
+        }
+
+        map[value] = node
+      }
+    })
+  }
 )
 
 export default remarkLintNoDuplicateHeadings
-
-var reason = 'Do not use headings with similar content'
-
-function noDuplicateHeadings(tree, file) {
-  var map = {}
-
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    var value
-    var duplicate
-
-    if (!generated(node)) {
-      value = toString(node).toUpperCase()
-      duplicate = map[value]
-
-      if (duplicate && duplicate.type === 'heading') {
-        file.message(
-          reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
-          node
-        )
-      }
-
-      map[value] = node
-    }
-  }
-}

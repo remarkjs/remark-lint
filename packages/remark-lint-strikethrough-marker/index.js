@@ -59,50 +59,42 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const markers = {null: true, '~': true, '~~': true}
+
 const remarkLintStrikethroughMarker = lintRule(
   'remark-lint:strikethrough-marker',
-  strikethroughMarker
+  (tree, file, option) => {
+    const value = String(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
+
+    if (markers[preferred] !== true) {
+      file.fail(
+        'Incorrect strikethrough marker `' +
+          preferred +
+          "`: use either `'consistent'`, `'~'`, or `'~~'`"
+      )
+    }
+
+    visit(tree, 'delete', (node) => {
+      if (!generated(node)) {
+        const offset = pointStart(node).offset
+        const both = value.slice(offset, offset + 2)
+        const marker = both === '~~' ? '~~' : '~'
+
+        if (preferred) {
+          if (marker !== preferred) {
+            file.message(
+              'Strikethrough should use `' + preferred + '` as a marker',
+              node
+            )
+          }
+        } else {
+          preferred = marker
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintStrikethroughMarker
-
-var markers = {null: true, '~': true, '~~': true}
-
-function strikethroughMarker(tree, file, option) {
-  var contents = String(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
-
-  if (markers[preferred] !== true) {
-    file.fail(
-      'Incorrect strikethrough marker `' +
-        preferred +
-        "`: use either `'consistent'`, `'~'`, or `'~~'`"
-    )
-  }
-
-  visit(tree, 'delete', visitor)
-
-  function visitor(node) {
-    var marker
-
-    if (!generated(node)) {
-      var offset = pointStart(node).offset
-      marker =
-        contents.slice(offset, offset + 2) === '~~'
-          ? contents.slice(offset, offset + 2)
-          : contents.slice(offset, offset + 1)
-
-      if (preferred) {
-        if (marker !== preferred) {
-          file.message(
-            'Strikethrough should use `' + preferred + '` as a marker',
-            node
-          )
-        }
-      } else {
-        preferred = marker
-      }
-    }
-  }
-}

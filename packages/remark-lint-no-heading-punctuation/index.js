@@ -45,33 +45,26 @@ import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
+const defaults = '\\.,;:!?'
+
 const remarkLintNoHeadingPunctuation = lintRule(
   'remark-lint:no-heading-punctuation',
-  noHeadingPunctuation
+  (tree, file, option) => {
+    const expression = new RegExp(
+      '[' + (typeof option === 'string' ? option : defaults) + ']'
+    )
+
+    visit(tree, 'heading', (node) => {
+      if (!generated(node)) {
+        const value = toString(node)
+        const tail = value.charAt(value.length - 1)
+
+        if (expression.test(tail)) {
+          file.message('Don’t add a trailing `' + tail + '` to headings', node)
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintNoHeadingPunctuation
-
-var defaults = '\\.,;:!?'
-
-function noHeadingPunctuation(tree, file, option) {
-  var expression = new RegExp(
-    '[' + (typeof option === 'string' ? option : defaults) + ']'
-  )
-
-  visit(tree, 'heading', visitor)
-
-  function visitor(node) {
-    var value
-    var tail
-
-    if (!generated(node)) {
-      value = toString(node)
-      tail = value.charAt(value.length - 1)
-
-      if (expression.test(tail)) {
-        file.message('Don’t add a trailing `' + tail + '` to headings', node)
-      }
-    }
-  }
-}

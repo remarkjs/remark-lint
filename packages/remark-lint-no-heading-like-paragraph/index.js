@@ -27,32 +27,28 @@ import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
+const fence = '#######'
+
 const remarkLintNoHeadingLikeParagraph = lintRule(
   'remark-lint:no-heading-like-paragraph',
-  noHeadingLikeParagraph
+  (tree, file) => {
+    visit(tree, 'paragraph', (node) => {
+      if (!generated(node)) {
+        const head = node.children[0]
+
+        if (
+          head &&
+          head.type === 'text' &&
+          head.value.slice(0, fence.length) === fence
+        ) {
+          file.message(
+            'This looks like a heading but has too many hashes',
+            node
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintNoHeadingLikeParagraph
-
-var fence = '#######'
-var reason = 'This looks like a heading but has too many hashes'
-
-function noHeadingLikeParagraph(tree, file) {
-  visit(tree, 'paragraph', visitor)
-
-  function visitor(node) {
-    var head
-
-    if (!generated(node)) {
-      head = node.children[0]
-
-      if (
-        head &&
-        head.type === 'text' &&
-        head.value.slice(0, fence.length) === fence
-      ) {
-        file.message(reason, node)
-      }
-    }
-  }
-}

@@ -109,71 +109,61 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const styles = {'tab-size': true, mixed: true, space: true}
+
 const remarkLintListItemIndent = lintRule(
   'remark-lint:list-item-indent',
-  listItemIndent
+  (tree, file, option) => {
+    const preferred = typeof option === 'string' ? option : 'tab-size'
+    const value = String(file)
+
+    if (styles[preferred] !== true) {
+      file.fail(
+        'Incorrect list-item indent style `' +
+          preferred +
+          "`: use either `'tab-size'`, `'space'`, or `'mixed'`"
+      )
+    }
+
+    visit(tree, 'list', (node) => {
+      if (generated(node)) return
+
+      const spread = node.spread || node.loose
+      let index = -1
+
+      while (++index < node.children.length) {
+        const item = node.children[index]
+        const head = item.children[0]
+        const final = pointStart(head)
+
+        const marker = value
+          .slice(pointStart(item).offset, final.offset)
+          .replace(/\[[x ]?]\s*$/i, '')
+
+        const bulletSize = marker.replace(/\s+$/, '').length
+
+        const style =
+          preferred === 'tab-size' || (preferred === 'mixed' && spread)
+            ? Math.ceil(bulletSize / 4) * 4
+            : bulletSize + 1
+
+        if (marker.length !== style) {
+          const diff = style - marker.length
+          const abs = Math.abs(diff)
+
+          file.message(
+            'Incorrect list-item indent: ' +
+              (diff > 0 ? 'add' : 'remove') +
+              ' ' +
+              abs +
+              ' ' +
+              plural('space', abs),
+            final
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintListItemIndent
-
-var styles = {'tab-size': true, mixed: true, space: true}
-
-function listItemIndent(tree, file, option) {
-  var contents = String(file)
-  var preferred = typeof option === 'string' ? option : 'tab-size'
-
-  if (styles[preferred] !== true) {
-    file.fail(
-      'Incorrect list-item indent style `' +
-        preferred +
-        "`: use either `'tab-size'`, `'space'`, or `'mixed'`"
-    )
-  }
-
-  visit(tree, 'list', visitor)
-
-  function visitor(node) {
-    var spread = node.spread || node.loose
-
-    if (!generated(node)) {
-      node.children.forEach(visitItem)
-    }
-
-    function visitItem(item) {
-      var head = item.children[0]
-      var final = pointStart(head)
-      var marker
-      var bulletSize
-      var style
-      var diff
-      var reason
-      var abs
-
-      marker = contents
-        .slice(pointStart(item).offset, final.offset)
-        .replace(/\[[x ]?]\s*$/i, '')
-
-      bulletSize = marker.replace(/\s+$/, '').length
-
-      style =
-        preferred === 'tab-size' || (preferred === 'mixed' && spread)
-          ? Math.ceil(bulletSize / 4) * 4
-          : bulletSize + 1
-
-      if (marker.length !== style) {
-        diff = style - marker.length
-        abs = Math.abs(diff)
-
-        reason =
-          'Incorrect list-item indent: ' +
-          (diff > 0 ? 'add' : 'remove') +
-          ' ' +
-          abs +
-          ' ' +
-          plural('space', abs)
-
-        file.message(reason, final)
-      }
-    }
-  }
-}

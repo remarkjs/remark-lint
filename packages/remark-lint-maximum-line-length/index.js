@@ -103,73 +103,72 @@ const remarkLintMaximumLineLength = lintRule(
 export default remarkLintMaximumLineLength
 
 function maximumLineLength(tree, file, option) {
-  var preferred = typeof option === 'number' && !isNaN(option) ? option : 80
-  var content = String(file)
-  var lines = content.split(/\r?\n/)
-  var length = lines.length
-  var index = -1
-  var lineLength
+  const preferred = typeof option === 'number' ? option : 80
+  const value = String(file)
+  const lines = value.split(/\r?\n/)
 
-  // Note: JSX is from MDX: <https://github.com/mdx-js/specification>.
-  visit(
-    tree,
-    ['heading', 'table', 'code', 'definition', 'html', 'jsx', 'yaml', 'toml'],
-    ignore
-  )
-  visit(tree, ['link', 'image', 'inlineCode'], inline)
+  visit(tree, (node) => {
+    // Note: JSX is from MDX: <https://github.com/mdx-js/specification>.
+    if (
+      (node.type === 'heading' ||
+        node.type === 'table' ||
+        node.type === 'code' ||
+        node.type === 'definition' ||
+        node.type === 'html' ||
+        node.type === 'jsx' ||
+        node.type === 'yaml' ||
+        node.type === 'toml') &&
+      !generated(node)
+    ) {
+      allowList(pointStart(node).line - 1, pointEnd(node).line)
+    }
+  })
+
+  // Finally, allow some inline spans, but only if they occur at or after
+  // the wrap.
+  // However, when they do, and there’s whitespace after it, they are not
+  // allowed.
+  visit(tree, (node, pos, parent) => {
+    if (
+      (node.type === 'link' ||
+        node.type === 'image' ||
+        node.type === 'inlineCode') &&
+      !generated(node)
+    ) {
+      const initial = pointStart(node)
+      const final = pointEnd(node)
+
+      // Not allowing when starting after the border, or ending before it.
+      if (initial.column > preferred || final.column < preferred) {
+        return
+      }
+
+      const next = parent.children[pos + 1]
+
+      // Not allowing when there’s whitespace after the link.
+      if (
+        next &&
+        pointStart(next).line === initial.line &&
+        (!next.value || /^(.+?[ \t].+?)/.test(next.value))
+      ) {
+        return
+      }
+
+      allowList(initial.line - 1, final.line)
+    }
+  })
 
   // Iterate over every line, and warn for violating lines.
-  while (++index < length) {
-    lineLength = lines[index].length
+  let index = -1
+
+  while (++index < lines.length) {
+    const lineLength = lines[index].length
 
     if (lineLength > preferred) {
       file.message('Line must be at most ' + preferred + ' characters', {
         line: index + 1,
         column: lineLength + 1
       })
-    }
-  }
-
-  // Finally, allow some inline spans, but only if they occur at or after
-  // the wrap.
-  // However, when they do, and there’s whitespace after it, they are not
-  // allowed.
-  function inline(node, pos, parent) {
-    var next = parent.children[pos + 1]
-    var initial
-    var final
-
-    // Nothing to allow when generated.
-    /* c8 ignore next 3 */
-    if (generated(node)) {
-      return
-    }
-
-    initial = pointStart(node)
-    final = pointEnd(node)
-
-    // Not allowing when starting after the border, or ending before it.
-    if (initial.column > preferred || final.column < preferred) {
-      return
-    }
-
-    // Not allowing when there’s whitespace after the link.
-    if (
-      next &&
-      pointStart(next).line === initial.line &&
-      (!next.value || /^(.+?[ \t].+?)/.test(next.value))
-    ) {
-      return
-    }
-
-    allowList(initial.line - 1, final.line)
-  }
-
-  function ignore(node) {
-    // Hard to test, as we only run this case on `position: true`.
-    /* c8 ignore next 3 */
-    if (!generated(node)) {
-      allowList(pointStart(node).line - 1, pointEnd(node).line)
     }
   }
 

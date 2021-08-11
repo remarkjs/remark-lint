@@ -35,19 +35,13 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoShortcutReferenceImage = lintRule(
   'remark-lint:no-shortcut-reference-image',
-  noShortcutReferenceImage
+  (tree, file) => {
+    visit(tree, 'imageReference', (node) => {
+      if (!generated(node) && node.referenceType === 'shortcut') {
+        file.message('Use the trailing [] on reference images', node)
+      }
+    })
+  }
 )
 
 export default remarkLintNoShortcutReferenceImage
-
-var reason = 'Use the trailing [] on reference images'
-
-function noShortcutReferenceImage(tree, file) {
-  visit(tree, 'imageReference', visitor)
-
-  function visitor(node) {
-    if (!generated(node) && node.referenceType === 'shortcut') {
-      file.message(reason, node)
-    }
-  }
-}

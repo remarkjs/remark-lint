@@ -1,87 +1,72 @@
 import wrapped from 'wrapped'
 
 export function lintRule(id, rule) {
-  var parts = id.split(':')
-  var source = parts[0]
-  var ruleId = parts[1]
-  var fn = wrapped(rule)
-
+  const parts = id.split(':')
+  const fn = wrapped(rule)
   // Possibly useful if externalised later.
-  /* c8 ignore next 4 */
-  if (!ruleId) {
-    ruleId = source
-    source = null
-  }
+  /* c8 ignore next */
+  const source = parts[1] ? parts[0] : undefined
+  const ruleId = parts[1]
 
-  attacher.displayName = id
+  Object.defineProperty(plugin, 'name', {value: id})
 
-  return attacher
+  return plugin
 
-  function attacher(raw) {
-    var config = coerce(ruleId, raw)
-    var severity = config[0]
-    var options = config[1]
-    var fatal = severity === 2
+  function plugin(raw) {
+    const [severity, options] = coerce(ruleId, raw)
 
-    return severity ? transformer : undefined
+    if (!severity) return
 
-    function transformer(tree, file, next) {
-      var index = file.messages.length
+    const fatal = severity === 2
 
-      fn(tree, file, options, done)
+    return (tree, file, next) => {
+      let index = file.messages.length - 1
 
-      function done(error) {
-        var messages = file.messages
-        var message
+      fn(tree, file, options, (error) => {
+        const messages = file.messages
 
         // Add the error, if not already properly added.
         // Only happens for incorrect plugins.
         /* c8 ignore next 5 */
-        if (error && messages.indexOf(error) === -1) {
+        if (error && !messages.includes(error)) {
           try {
             file.fail(error)
-          } catch (_) {}
+          } catch {}
         }
 
-        while (index < messages.length) {
-          message = messages[index]
-          message.ruleId = ruleId
-          message.source = source
-          message.fatal = fatal
-
-          index++
+        while (++index < messages.length) {
+          Object.assign(messages[index], {ruleId, source, fatal})
         }
 
         next()
-      }
+      })
     }
   }
 }
 
 // Coerce a value to a severity--options tuple.
 function coerce(name, value) {
-  var def = 1
-  var result
-  var level
+  const def = 1
+  let result
 
   // Handled by unified in v6.0.0.
   /* c8 ignore next 3 */
   if (typeof value === 'boolean') {
     result = [value]
-  } else if (value == null) {
+  } else if (value === null || value === undefined) {
     result = [def]
   } else if (
-    typeof value === 'object' &&
+    Array.isArray(value) &&
     (typeof value[0] === 'number' ||
       typeof value[0] === 'boolean' ||
       typeof value[0] === 'string')
   ) {
-    result = value.concat()
+    result = [...value]
   } else {
     result = [1, value]
   }
 
-  level = result[0]
+  let level = result[0]
 
   if (typeof level === 'boolean') {
     level = level ? 1 : 0

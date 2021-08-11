@@ -34,26 +34,23 @@
 
 import {lintRule} from 'unified-lint-rule'
 
+const expression = /[^\\.a-zA-Z\d-]/
+
 const remarkLintNoFileNameIrregularCharacters = lintRule(
   'remark-lint:no-file-name-irregular-characters',
-  noFileNameIrregularCharacters
+  (tree, file, option) => {
+    let preferred = option || expression
+
+    if (typeof preferred === 'string') {
+      preferred = new RegExp('[^' + preferred + ']')
+    }
+
+    const match = file.stem && file.stem.match(preferred)
+
+    if (match) {
+      file.message('Do not use `' + match[0] + '` in a file name')
+    }
+  }
 )
 
 export default remarkLintNoFileNameIrregularCharacters
-
-var expression = /[^\\.a-zA-Z\d-]/
-
-function noFileNameIrregularCharacters(tree, file, option) {
-  var preferred = option || expression
-  var match
-
-  if (typeof preferred === 'string') {
-    preferred = new RegExp('[^' + preferred + ']')
-  }
-
-  match = file.stem && file.stem.match(preferred)
-
-  if (match) {
-    file.message('Do not use `' + match[0] + '` in a file name')
-  }
-}

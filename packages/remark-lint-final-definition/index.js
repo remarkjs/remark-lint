@@ -43,39 +43,39 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintFinalDefinition = lintRule(
   'remark-lint:final-definition',
-  finalDefinition
+  (tree, file) => {
+    let last = null
+
+    visit(
+      tree,
+      (node) => {
+        // Ignore generated and HTML comment nodes.
+        if (
+          node.type === 'root' ||
+          generated(node) ||
+          (node.type === 'html' && /^\s*<!--/.test(node.value))
+        ) {
+          return
+        }
+
+        const line = pointStart(node).line
+
+        if (node.type === 'definition') {
+          if (last !== null && last > line) {
+            file.message(
+              'Move definitions to the end of the file (after the node at line `' +
+                last +
+                '`)',
+              node
+            )
+          }
+        } else if (last === null) {
+          last = line
+        }
+      },
+      true
+    )
+  }
 )
 
 export default remarkLintFinalDefinition
-
-function finalDefinition(tree, file) {
-  var last = null
-
-  visit(tree, visitor, true)
-
-  function visitor(node) {
-    var line = pointStart(node).line
-
-    // Ignore generated and HTML comment nodes.
-    if (
-      node.type === 'root' ||
-      generated(node) ||
-      (node.type === 'html' && /^\s*<!--/.test(node.value))
-    ) {
-      return
-    }
-
-    if (node.type === 'definition') {
-      if (last !== null && last > line) {
-        file.message(
-          'Move definitions to the end of the file (after the node at line `' +
-            last +
-            '`)',
-          node
-        )
-      }
-    } else if (last === null) {
-      last = line
-    }
-  }
-}

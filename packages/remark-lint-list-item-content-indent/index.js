@@ -29,76 +29,63 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintListItemContentIndent = lintRule(
   'remark-lint:list-item-content-indent',
-  listItemContentIndent
+  (tree, file) => {
+    const value = String(file)
+
+    visit(tree, 'listItem', (node) => {
+      let index = -1
+      let style
+
+      while (++index < node.children.length) {
+        const item = node.children[index]
+
+        if (generated(item)) {
+          continue
+        }
+
+        const begin = pointStart(item)
+        let column = begin.column
+
+        // Get indentation for the first child.  Only the first item can have a
+        // checkbox, so here we remove that from the column.
+        if (index === 0) {
+          // If there’s a checkbox before the content, look backwards to find the
+          // start of that checkbox.
+          if (typeof node.checked === 'boolean') {
+            let char = begin.offset - 1
+
+            while (char > 0 && value.charAt(char) !== '[') {
+              char--
+            }
+
+            column -= begin.offset - char
+          }
+
+          style = column
+
+          continue
+        }
+
+        // Warn for violating children.
+        if (column !== style) {
+          const diff = style - column
+          const abs = Math.abs(diff)
+
+          file.message(
+            'Don’t use mixed indentation for children, ' +
+              // Hard to test, I couldn’t find it at least.
+              /* c8 ignore next */
+              (diff > 0 ? 'add' : 'remove') +
+              ' ' +
+              abs +
+              ' ' +
+              plural('space', abs),
+            {line: pointStart(item).line, column}
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintListItemContentIndent
-
-function listItemContentIndent(tree, file) {
-  var contents = String(file)
-
-  visit(tree, 'listItem', visitor)
-
-  function visitor(node) {
-    var style
-
-    node.children.forEach(visitInItem)
-
-    function visitInItem(item, index) {
-      var begin
-      var column
-      var char
-      var diff
-      var reason
-      var abs
-
-      if (generated(item)) {
-        return
-      }
-
-      begin = pointStart(item)
-      column = begin.column
-
-      // Get indentation for the first child.  Only the first item can have a
-      // checkbox, so here we remove that from the column.
-      if (index === 0) {
-        // If there’s a checkbox before the content, look backwards to find the
-        // start of that checkbox.
-        if (typeof node.checked === 'boolean') {
-          char = begin.offset - 1
-
-          while (char > 0 && contents.charAt(char) !== '[') {
-            char--
-          }
-
-          column -= begin.offset - char
-        }
-
-        style = column
-
-        return
-      }
-
-      // Warn for violating children.
-      if (column !== style) {
-        diff = style - column
-        abs = Math.abs(diff)
-
-        reason =
-          'Don’t use mixed indentation for children, ' +
-          // Hard to test, I couldn’t find it at least.
-          /* c8 ignore next */
-          (diff > 0 ? 'add' : 'remove') +
-          ' ' +
-          abs +
-          ' ' +
-          plural('space', abs)
-
-        file.message(reason, {
-          line: pointStart(item).line,
-          column: column
-        })
-      }
-    }
-  }
-}

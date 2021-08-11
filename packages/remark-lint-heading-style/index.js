@@ -71,16 +71,14 @@ import {visit} from 'unist-util-visit'
 import {headingStyle} from 'mdast-util-heading-style'
 import {generated} from 'unist-util-generated'
 
-var types = ['atx', 'atx-closed', 'setext']
+const types = new Set(['atx', 'atx-closed', 'setext'])
 
 const remarkLintHeadingStyle = lintRule(
   'remark-lint:heading-style',
-  function (tree, file, option) {
-    var preferred = types.indexOf(option) === -1 ? null : option
+  (tree, file, option) => {
+    let preferred = types.has(option) ? option : null
 
-    visit(tree, 'heading', visitor)
-
-    function visitor(node) {
+    visit(tree, 'heading', (node) => {
       if (!generated(node)) {
         if (preferred) {
           if (headingStyle(node, preferred) !== preferred) {
@@ -90,7 +88,7 @@ const remarkLintHeadingStyle = lintRule(
           preferred = headingStyle(node, preferred)
         }
       }
-    }
+    })
   }
 )
 

@@ -54,16 +54,14 @@ import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFinalNewline = lintRule(
   'remark-lint:final-newline',
-  finalNewline
+  (tree, file) => {
+    const value = String(file)
+    const last = value.length - 1
+
+    if (last > -1 && value.charAt(last) !== '\n') {
+      file.message('Missing newline character at end of file')
+    }
+  }
 )
 
 export default remarkLintFinalNewline
-
-function finalNewline(tree, file) {
-  var contents = String(file)
-  var last = contents.length - 1
-
-  if (last > -1 && contents.charAt(last) !== '\n') {
-    file.message('Missing newline character at end of file')
-  }
-}

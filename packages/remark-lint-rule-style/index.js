@@ -60,38 +60,36 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const remarkLintRuleStyle = lintRule('remark-lint:rule-style', ruleStyle)
+const remarkLintRuleStyle = lintRule(
+  'remark-lint:rule-style',
+  (tree, file, option) => {
+    const value = String(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
+
+    if (preferred !== null && /[^-_* ]/.test(preferred)) {
+      file.fail(
+        "Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`"
+      )
+    }
+
+    visit(tree, 'thematicBreak', (node) => {
+      const initial = pointStart(node).offset
+      const final = pointEnd(node).offset
+
+      if (!generated(node)) {
+        const rule = value.slice(initial, final)
+
+        if (preferred) {
+          if (rule !== preferred) {
+            file.message('Rules should use `' + preferred + '`', node)
+          }
+        } else {
+          preferred = rule
+        }
+      }
+    })
+  }
+)
 
 export default remarkLintRuleStyle
-
-function ruleStyle(tree, file, option) {
-  var contents = String(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
-
-  if (preferred !== null && /[^-_* ]/.test(preferred)) {
-    file.fail(
-      "Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`"
-    )
-  }
-
-  visit(tree, 'thematicBreak', visitor)
-
-  function visitor(node) {
-    var initial = pointStart(node).offset
-    var final = pointEnd(node).offset
-    var rule
-
-    if (!generated(node)) {
-      rule = contents.slice(initial, final)
-
-      if (preferred) {
-        if (rule !== preferred) {
-          file.message('Rules should use `' + preferred + '`', node)
-        }
-      } else {
-        preferred = rule
-      }
-    }
-  }
-}

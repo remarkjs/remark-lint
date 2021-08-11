@@ -35,30 +35,27 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
   'remark-lint:no-emphasis-as-heading',
-  noEmphasisAsHeading
+  (tree, file) => {
+    visit(tree, 'paragraph', (node, index, parent) => {
+      const head = node.children[0]
+      const previous = parent.children[index - 1]
+      const next = parent.children[index + 1]
+
+      if (
+        !generated(node) &&
+        (!previous || previous.type !== 'heading') &&
+        next &&
+        next.type === 'paragraph' &&
+        node.children.length === 1 &&
+        (head.type === 'emphasis' || head.type === 'strong')
+      ) {
+        file.message(
+          'Don’t use emphasis to introduce a section, use a heading',
+          node
+        )
+      }
+    })
+  }
 )
 
 export default remarkLintNoEmphasisAsHeading
-
-var reason = 'Don’t use emphasis to introduce a section, use a heading'
-
-function noEmphasisAsHeading(tree, file) {
-  visit(tree, 'paragraph', visitor)
-
-  function visitor(node, index, parent) {
-    var head = node.children[0]
-    var previous = parent.children[index - 1]
-    var next = parent.children[index + 1]
-
-    if (
-      !generated(node) &&
-      (!previous || previous.type !== 'heading') &&
-      next &&
-      next.type === 'paragraph' &&
-      node.children.length === 1 &&
-      (head.type === 'emphasis' || head.type === 'strong')
-    ) {
-      file.message(reason, node)
-    }
-  }
-}

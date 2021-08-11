@@ -59,17 +59,39 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoShellDollars = lintRule(
   'remark-lint:no-shell-dollars',
-  noShellDollars
+  (tree, file) => {
+    visit(tree, 'code', (node) => {
+      // Check both known shell code and unknown code.
+      if (!generated(node) && node.lang && flags.has(node.lang)) {
+        const lines = node.value
+          .split('\n')
+          .filter((line) => line.trim().length > 0)
+        let index = -1
+
+        if (lines.length === 0) {
+          return
+        }
+
+        while (++index < lines.length) {
+          const line = lines[index]
+
+          if (line.trim() && !/^\s*\$\s*/.test(line)) {
+            return
+          }
+        }
+
+        file.message('Do not use dollar signs before shell commands', node)
+      }
+    })
+  }
 )
 
 export default remarkLintNoShellDollars
 
-var reason = 'Do not use dollar signs before shell commands'
-
 // List of shell script file extensions (also used as code flags for syntax
 // highlighting on GitHub):
 // See: <https://github.com/github/linguist/blob/40992ba/lib/linguist/languages.yml#L4984>
-var flags = [
+const flags = new Set([
   'sh',
   'bash',
   'bats',
@@ -80,40 +102,4 @@ var flags = [
   'tmux',
   'tool',
   'zsh'
-]
-
-function noShellDollars(tree, file) {
-  visit(tree, 'code', visitor)
-
-  function visitor(node) {
-    var lines
-    var line
-    var length
-    var index
-
-    // Check both known shell code and unknown code.
-    if (!generated(node) && node.lang && flags.indexOf(node.lang) !== -1) {
-      lines = node.value.split('\n').filter(notEmpty)
-      length = lines.length
-      index = -1
-
-      if (length === 0) {
-        return
-      }
-
-      while (++index < length) {
-        line = lines[index]
-
-        if (line.trim() && !/^\s*\$\s*/.test(line)) {
-          return
-        }
-      }
-
-      file.message(reason, node)
-    }
-  }
-
-  function notEmpty(line) {
-    return line.trim().length !== 0
-  }
-}
+])

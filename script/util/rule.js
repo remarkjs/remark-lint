@@ -6,19 +6,13 @@ import {find, findAll} from './find.js'
 
 // Get information for a rule at `filePath`.
 export function rule(filePath) {
-  var ruleId = path.basename(filePath)
-  var result = {}
-  var tests = {}
-  var description
-  var code
-  var tags
-  var name
-
-  ruleId = ruleId.slice('remark-lint-'.length)
-  code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8')
-  tags = dox.parseComments(code)[0].tags
-  description = find(tags, 'fileoverview')
-  name = find(tags, 'module')
+  const ruleId = path.basename(filePath).slice('remark-lint-'.length)
+  const result = {}
+  const tests = {}
+  const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8')
+  const tags = dox.parseComments(code)[0].tags
+  const name = find(tags, 'module')
+  let description = find(tags, 'fileoverview')
 
   /* c8 ignore next 3 */
   if (name !== ruleId) {
@@ -37,17 +31,14 @@ export function rule(filePath) {
   result.tests = tests
   result.filePath = filePath
 
-  findAll(tags, 'example').map(strip).forEach(check)
+  const examples = findAll(tags, 'example')
+  let index = -1
 
-  return result
-
-  function check(example) {
-    var lines = example.split('\n')
-    var value = strip(lines.slice(1).join('\n'))
-    var info
-    var setting
-    var context
-    var name
+  while (++index < examples.length) {
+    const example = strip(examples[index])
+    const lines = example.split('\n')
+    const value = strip(lines.slice(1).join('\n'))
+    let info
 
     try {
       info = JSON.parse(lines[0])
@@ -58,9 +49,9 @@ export function rule(filePath) {
       )
     }
 
-    setting = JSON.stringify(info.setting || true)
-    context = tests[setting]
-    name = info.name
+    const setting = JSON.stringify(info.setting || true)
+    const name = info.name
+    let context = tests[setting]
 
     if (!context) {
       context = []
@@ -71,12 +62,12 @@ export function rule(filePath) {
       context[name] = {
         positionless: info.positionless,
         gfm: info.gfm,
-        setting: setting,
+        setting,
         input: value,
         output: []
       }
 
-      return
+      continue
     }
 
     /* c8 ignore next 9 */
@@ -97,9 +88,11 @@ export function rule(filePath) {
     context[name].setting = setting
 
     if (info.label === 'output') {
-      value = value.split('\n')
+      context[name][info.label] = value.split('\n')
+    } else {
+      context[name][info.label] = value
     }
-
-    context[name][info.label] = value
   }
+
+  return result
 }

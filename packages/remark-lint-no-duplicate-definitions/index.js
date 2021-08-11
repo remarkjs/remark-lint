@@ -29,34 +29,30 @@ import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateDefinitions = lintRule(
   'remark-lint:no-duplicate-definitions',
-  noDuplicateDefinitions
+  (tree, file) => {
+    const map = Object.create(null)
+
+    visit(tree, (node) => {
+      if (
+        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
+        !generated(node)
+      ) {
+        const identifier = node.identifier
+        const duplicate = map[identifier]
+
+        if (duplicate) {
+          file.message(
+            'Do not use definitions with the same identifier (' +
+              stringifyPosition(pointStart(duplicate)) +
+              ')',
+            node
+          )
+        }
+
+        map[identifier] = node
+      }
+    })
+  }
 )
 
 export default remarkLintNoDuplicateDefinitions
-
-var reason = 'Do not use definitions with the same identifier'
-
-function noDuplicateDefinitions(tree, file) {
-  var map = {}
-
-  visit(tree, ['definition', 'footnoteDefinition'], check)
-
-  function check(node) {
-    var identifier
-    var duplicate
-
-    if (!generated(node)) {
-      identifier = node.identifier
-      duplicate = map[identifier]
-
-      if (duplicate && duplicate.type) {
-        file.message(
-          reason + ' (' + stringifyPosition(pointStart(duplicate)) + ')',
-          node
-        )
-      }
-
-      map[identifier] = node
-    }
-  }
-}

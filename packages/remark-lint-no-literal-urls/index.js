@@ -39,29 +39,21 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoLiteralUrls = lintRule(
   'remark-lint:no-literal-urls',
-  noLiteralURLs
+  (tree, file) => {
+    visit(tree, 'link', (node) => {
+      const value = toString(node)
+
+      if (
+        !generated(node) &&
+        pointStart(node).column === pointStart(node.children[0]).column &&
+        pointEnd(node).column ===
+          pointEnd(node.children[node.children.length - 1]).column &&
+        (node.url === 'mailto:' + value || node.url === value)
+      ) {
+        file.message('Don’t use literal URLs without angle brackets', node)
+      }
+    })
+  }
 )
 
 export default remarkLintNoLiteralUrls
-
-var mailto = 'mailto:'
-var reason = 'Don’t use literal URLs without angle brackets'
-
-function noLiteralURLs(tree, file) {
-  visit(tree, 'link', visitor)
-
-  function visitor(node) {
-    var children = node.children
-    var value = toString(node)
-
-    if (
-      !generated(node) &&
-      pointStart(node).column === pointStart(children[0]).column &&
-      pointEnd(node).column ===
-        pointEnd(children[children.length - 1]).column &&
-      (node.url === mailto + value || node.url === value)
-    ) {
-      file.message(reason, node)
-    }
-  }
-}

@@ -24,32 +24,31 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
+
 const remarkLintDefinitionCase = lintRule(
   'remark-lint:definition-case',
-  definitionCase
+  (tree, file) => {
+    const value = String(file)
+
+    visit(tree, (node) => {
+      if (
+        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
+        !generated(node)
+      ) {
+        const start = pointStart(node).offset
+        const end = pointEnd(node).offset
+        const slice = value.slice(start, end).match(label)[1]
+
+        if (slice !== slice.toLowerCase()) {
+          file.message(
+            'Do not use uppercase characters in definition labels',
+            node
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintDefinitionCase
-
-var label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
-var reason = 'Do not use uppercase characters in definition labels'
-
-function definitionCase(tree, file) {
-  var contents = String(file)
-
-  visit(tree, ['definition', 'footnoteDefinition'], check)
-
-  function check(node) {
-    var start = pointStart(node).offset
-    var end = pointEnd(node).offset
-    var value
-
-    if (!generated(node)) {
-      value = contents.slice(start, end).match(label)[1]
-
-      if (value !== value.toLowerCase()) {
-        file.message(reason, node)
-      }
-    }
-  }
-}

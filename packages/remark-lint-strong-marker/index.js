@@ -56,44 +56,40 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const markers = {'*': true, _: true, null: true}
+
 const remarkLintStrongMarker = lintRule(
   'remark-lint:strong-marker',
-  strongMarker
+  (tree, file, option) => {
+    const value = String(file)
+    let preferred =
+      typeof option === 'string' && option !== 'consistent' ? option : null
+
+    if (markers[preferred] !== true) {
+      file.fail(
+        'Incorrect strong marker `' +
+          preferred +
+          "`: use either `'consistent'`, `'*'`, or `'_'`"
+      )
+    }
+
+    visit(tree, 'strong', (node) => {
+      const marker = value.charAt(pointStart(node).offset)
+
+      if (!generated(node)) {
+        if (preferred) {
+          if (marker !== preferred) {
+            file.message(
+              'Strong should use `' + preferred + '` as a marker',
+              node
+            )
+          }
+        } else {
+          preferred = marker
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintStrongMarker
-
-var markers = {'*': true, _: true, null: true}
-
-function strongMarker(tree, file, option) {
-  var contents = String(file)
-  var preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
-
-  if (markers[preferred] !== true) {
-    file.fail(
-      'Incorrect strong marker `' +
-        preferred +
-        "`: use either `'consistent'`, `'*'`, or `'_'`"
-    )
-  }
-
-  visit(tree, 'strong', visitor)
-
-  function visitor(node) {
-    var marker = contents.charAt(pointStart(node).offset)
-
-    if (!generated(node)) {
-      if (preferred) {
-        if (marker !== preferred) {
-          file.message(
-            'Strong should use `' + preferred + '` as a marker',
-            node
-          )
-        }
-      } else {
-        preferred = marker
-      }
-    }
-  }
-}

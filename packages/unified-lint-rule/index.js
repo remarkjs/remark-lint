@@ -1,8 +1,7 @@
-import wrapped from 'wrapped'
+import {wrap} from 'trough'
 
 export function lintRule(id, rule) {
   const parts = id.split(':')
-  const fn = wrapped(rule)
   // Possibly useful if externalised later.
   /* c8 ignore next */
   const source = parts[1] ? parts[0] : undefined
@@ -22,7 +21,7 @@ export function lintRule(id, rule) {
     return (tree, file, next) => {
       let index = file.messages.length - 1
 
-      fn(tree, file, options, (error) => {
+      wrap(rule, (error) => {
         const messages = file.messages
 
         // Add the error, if not already properly added.
@@ -39,7 +38,7 @@ export function lintRule(id, rule) {
         }
 
         next()
-      })
+      })(tree, file, options)
     }
   }
 }

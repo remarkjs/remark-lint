@@ -27,7 +27,7 @@
     "index.js"
   ],
   "dependencies": {
-    "wrapped": "^1.0.1"
+    "trough": "^2.0.0"
   },
   "xo": false
 }

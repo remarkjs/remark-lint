@@ -71,7 +71,7 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const checked = {x: true, X: true}
@@ -101,20 +101,17 @@ const remarkLintCheckboxCharacterStyle = lintRule(
     }
 
     visit(tree, 'listItem', (node) => {
+      const head = node.children[0]
       // Exit early for items without checkbox.
-      if (typeof node.checked !== 'boolean' || generated(node)) {
+      // A list item cannot be checked and empty, according to GFM.
+      if (typeof node.checked !== 'boolean' || generated(node) || !head) {
         return
       }
 
       const type = types[node.checked]
 
-      // A list item cannot be checked and empty, according to GFM, but
-      // theoretically it makes sense to get the end if that were possible.
-      const point =
-        /* c8 ignore next 2 */
-        node.children.length === 0
-          ? pointEnd(node)
-          : pointStart(node.children[0])
+      const point = pointStart(head)
+
       // Move back to before `] `.
       point.offset -= 2
       point.column -= 2

@@ -137,20 +137,7 @@ const remarkLintLinkTitleStyle = lintRule(
           last--
         }
 
-        let final
-
-        // Skip back to before whitespace.
-        while (last) {
-          final = value.charAt(last)
-
-          // Legacy for remark before 8.0.0
-          /* c8 ignore next 2 */
-          if (/\s/.test(final)) {
-            last--
-          } else {
-            break
-          }
-        }
+        const final = value.charAt(last)
 
         // Exit if the final marker is not a known marker.
         if (!(final in markers)) {

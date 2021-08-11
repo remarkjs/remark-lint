@@ -30,7 +30,7 @@
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintCheckboxContentIndent = lintRule(
@@ -40,18 +40,15 @@ const remarkLintCheckboxContentIndent = lintRule(
     const loc = location(file)
 
     visit(tree, 'listItem', (node) => {
+      const head = node.children[0]
+
       // Exit early for items without checkbox.
-      if (typeof node.checked !== 'boolean' || generated(node)) {
+      // A list item cannot be checked and empty, according to GFM.
+      if (typeof node.checked !== 'boolean' || generated(node) || !head) {
         return
       }
 
-      // A list item cannot be checked and empty, according to GFM, but
-      // theoretically it makes sense to get the end if that were possible.
-      const point =
-        /* c8 ignore next 2 */
-        node.children.length === 0
-          ? pointEnd(node)
-          : pointStart(node.children[0])
+      const point = pointStart(head)
 
       // Assume we start with a checkbox, because well, `checked` is set.
       const match = /\[([\t xX])]/.exec(

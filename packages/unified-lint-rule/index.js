@@ -48,8 +48,6 @@ function coerce(name, value) {
   const def = 1
   let result
 
-  // Handled by unified in v6.0.0.
-  /* c8 ignore next 3 */
   if (typeof value === 'boolean') {
     result = [value]
   } else if (value === null || value === undefined) {

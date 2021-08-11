@@ -1,5 +1,6 @@
 import {promises as fs} from 'fs'
 import path from 'path'
+import url from 'url'
 
 export async function presets(base) {
   const files = (await fs.readdir(base)).filter((basename) =>
@@ -8,8 +9,9 @@ export async function presets(base) {
 
   return Promise.all(
     files.map(async (name) => {
-      const plugins = (await import(path.join(base, name, 'index.js'))).default
-        .plugins
+      const plugins = (
+        await import(url.pathToFileURL(path.join(base, name, 'index.js')))
+      ).default.plugins
       const packages = {}
 
       let index = -1

@@ -141,8 +141,7 @@ const remarkLintListItemIndent = lintRule(
     visit(tree, 'list', (node) => {
       if (generated(node)) return
 
-      // @ts-expect-error: legacy.
-      const spread = Boolean(node.spread || node.loose)
+      const spread = node.spread
       let index = -1
 
       while (++index < node.children.length) {

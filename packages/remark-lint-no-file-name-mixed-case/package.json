@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-file-name-mixed-case",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "remark-lint rule to warn when file names use mixed case",
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/mdast": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0"
+    "unified-lint-rule": "^2.0.0"
   },
   "scripts": {
     "build": "rimraf \"*.d.ts\" && tsc && type-coverage"

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-list-item-bullet-indent",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "remark-lint rule to warn when list item bullets are indented",
   "license": "MIT",
   "keywords": [
@@ -34,7 +34,7 @@
     "@types/mdast": "^3.0.0",
     "pluralize": "^8.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "unist-util-visit": "^4.0.0"
   },
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-final-definition",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when definitions are not placed at the end of the file",
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/mdast": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "unist-util-generated": "^2.0.0",
     "unist-util-position": "^4.0.0",
     "unist-util-visit": "^4.0.0"

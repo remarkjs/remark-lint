@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-strong-marker",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when importance (strong) markers violate the given style",
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/mdast": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "unist-util-position": "^4.0.0",
     "unist-util-visit": "^4.0.0"
   },

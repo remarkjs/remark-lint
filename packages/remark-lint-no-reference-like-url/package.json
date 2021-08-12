@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-reference-like-url",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when URLs are also defined identifiers",
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/mdast": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "unist-util-generated": "^2.0.0",
     "unist-util-visit": "^4.0.0"
   },

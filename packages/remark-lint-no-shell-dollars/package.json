@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-shell-dollars",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when shell code is prefixed by dollars",
   "license": "MIT",
   "keywords": [
@@ -32,7 +32,7 @@
   "dependencies": {
     "@types/mdast": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "unist-util-generated": "^2.0.0",
     "unist-util-visit": "^4.0.0"
   },

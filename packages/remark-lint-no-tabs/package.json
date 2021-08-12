@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-tabs",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when hard tabs are used instead of spaces",
   "license": "MIT",
   "keywords": [
@@ -31,7 +31,7 @@
   "dependencies": {
     "@types/mdast": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "vfile-location": "^4.0.0"
   },
   "scripts": {

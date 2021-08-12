@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-duplicate-headings-in-section",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn on duplicate headings in a section",
   "license": "MIT",
   "keywords": [
@@ -34,7 +34,7 @@
     "@types/mdast": "^3.0.0",
     "mdast-util-to-string": "^3.0.0",
     "unified": "^10.0.0",
-    "unified-lint-rule": "^1.0.0",
+    "unified-lint-rule": "^2.0.0",
     "unist-util-generated": "^2.0.0",
     "unist-util-position": "^4.0.0",
     "unist-util-stringify-position": "^3.0.0",

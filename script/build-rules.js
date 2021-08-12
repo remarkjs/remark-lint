@@ -4,9 +4,10 @@
  * @typedef {import('mdast').TableContent} TableContent
  */
 
-import fs from 'fs'
-import path from 'path'
-import {inspect} from 'util'
+import fs from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
+import {inspect} from 'node:util'
 import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
 import parseAuthor from 'parse-author'
@@ -71,9 +72,9 @@ presets(root).then((presetObjects) => {
       )
     }
 
-    const includes = presetObjects.filter((preset) => {
-      return basename in preset.packages
-    })
+    const includes = presetObjects.filter(
+      (preset) => basename in preset.packages
+    )
 
     /** @type {BlockContent[]} */
     const children = [

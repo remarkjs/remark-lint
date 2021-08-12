@@ -4,9 +4,10 @@
  * @typedef {import('mdast').BlockContent|import('mdast').DefinitionContent} BlockContent
  */
 
-import fs from 'fs'
-import path from 'path'
-import {inspect} from 'util'
+import fs from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
+import {inspect} from 'node:util'
 import {parse} from 'comment-parser'
 import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'

@@ -6,8 +6,9 @@
  * @typedef {import('./script/util/rule').Check} Check
  */
 
-import url from 'url'
-import path from 'path'
+import url from 'node:url'
+import path from 'node:path'
+import process from 'node:process'
 import test from 'tape'
 import {toVFile} from 'to-vfile'
 import {removePosition} from 'unist-util-remove-position'

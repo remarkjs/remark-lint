@@ -113,6 +113,14 @@
  *   14:15-16:1: Extraneous new line after list item
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').ListItem} ListItem
+ *
+ * @typedef Options
+ * @property {boolean} [checkBlanks=false]
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -120,6 +128,7 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintListItemSpacing = lintRule(
   'remark-lint:list-item-spacing',
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = {}) => {
     const {checkBlanks} = option
     const infer = checkBlanks ? inferBlankLine : inferMultiline
@@ -158,6 +167,10 @@ const remarkLintListItemSpacing = lintRule(
 
 export default remarkLintListItemSpacing
 
+/**
+ * @param {ListItem} node
+ * @returns {boolean}
+ */
 function inferBlankLine(node) {
   let index = 0
 
@@ -174,6 +187,10 @@ function inferBlankLine(node) {
   return false
 }
 
+/**
+ * @param {ListItem} node
+ * @returns {boolean}
+ */
 function inferMultiline(node) {
   return (
     pointEnd(node.children[node.children.length - 1]).line -

@@ -170,34 +170,50 @@
  *   | Echo  | Foxtrot |
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').TableCell} TableCell
+ * @typedef {import('unist').Point} Point
+ * @typedef {'padded'|'compact'} Style
+ * @typedef {'consistent'|Style} Options
+ *
+ * @typedef Entry
+ * @property {TableCell} node
+ * @property {number} start
+ * @property {number} end
+ * @property {number} column
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit, SKIP} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-
-const styles = {null: true, padded: true, compact: true}
 
 const remarkLintTableCellPadding = lintRule(
   'remark-lint:table-cell-padding',
-  (tree, file, option) => {
-    const preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : null
-
-    if (styles[preferred] !== true) {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
+    if (
+      option !== 'padded' &&
+      option !== 'compact' &&
+      option !== 'consistent'
+    ) {
       file.fail(
         'Incorrect table cell padding style `' +
-          preferred +
+          option +
           "`, expected `'padded'`, `'compact'`, or `'consistent'`"
       )
     }
 
     visit(tree, 'table', (node) => {
       const rows = node.children
-      const sizes = Array.from({length: node.align.length})
+      // To do: fix types to always have `align` defined.
+      /* c8 ignore next */
+      const align = node.align || []
+      /** @type {number[]} */
+      const sizes = Array.from({length: align.length})
+      /** @type {Entry[]} */
       const entries = []
       let index = -1
-
-      if (generated(node)) return
 
       // Check rows.
       while (++index < rows.length) {
@@ -208,16 +224,27 @@ const remarkLintTableCellPadding = lintRule(
         while (++column < row.children.length) {
           const cell = row.children[column]
 
-          if (cell && cell.children.length > 0) {
+          if (cell.children.length > 0) {
+            const cellStart = pointStart(cell).offset
+            const cellEnd = pointEnd(cell).offset
             const contentStart = pointStart(cell.children[0]).offset
             const contentEnd = pointEnd(
               cell.children[cell.children.length - 1]
             ).offset
 
+            if (
+              typeof cellStart !== 'number' ||
+              typeof cellEnd !== 'number' ||
+              typeof contentStart !== 'number' ||
+              typeof contentEnd !== 'number'
+            ) {
+              continue
+            }
+
             entries.push({
               node: cell,
-              start: contentStart - pointStart(cell).offset - (column ? 0 : 1),
-              end: pointEnd(cell).offset - contentEnd - 1,
+              start: contentStart - cellStart - (column ? 0 : 1),
+              end: cellEnd - contentEnd - 1,
               column
             })
 
@@ -230,13 +257,14 @@ const remarkLintTableCellPadding = lintRule(
         }
       }
 
-      const style = preferred
-        ? preferred === 'padded'
+      const style =
+        option === 'consistent'
+          ? entries[0] && (!entries[0].start || !entries[0].end)
+            ? 0
+            : 1
+          : option === 'padded'
           ? 1
           : 0
-        : entries[0] && (!entries[0].start || !entries[0].end)
-        ? 0
-        : 1
 
       index = -1
 
@@ -248,6 +276,12 @@ const remarkLintTableCellPadding = lintRule(
       return SKIP
     })
 
+    /**
+     * @param {'start'|'end'} side
+     * @param {Entry} entry
+     * @param {0|1} style
+     * @param {number[]} sizes
+     */
     function checkSide(side, entry, style, sizes) {
       const cell = entry.node
       const column = entry.column
@@ -279,18 +313,25 @@ const remarkLintTableCellPadding = lintRule(
         }
       }
 
+      /** @type {Point} */
       let point
 
       if (side === 'start') {
         point = pointStart(cell)
         if (!column) {
           point.column++
-          point.offset++
+
+          if (typeof point.offset === 'number') {
+            point.offset++
+          }
         }
       } else {
         point = pointEnd(cell)
         point.column--
-        point.offset--
+
+        if (typeof point.offset === 'number') {
+          point.offset--
+        }
       }
 
       file.message(reason, point)
@@ -300,9 +341,14 @@ const remarkLintTableCellPadding = lintRule(
 
 export default remarkLintTableCellPadding
 
+/**
+ * @param {TableCell} node
+ * @returns {number}
+ */
 function size(node) {
-  return (
-    pointEnd(node.children[node.children.length - 1]).offset -
-    pointStart(node.children[0]).offset
-  )
+  const head = pointStart(node.children[0]).offset
+  const tail = pointEnd(node.children[node.children.length - 1]).offset
+  // Only called when we’re sure offsets exist.
+  /* c8 ignore next */
+  return typeof head === 'number' && typeof tail === 'number' ? tail - head : 0
 }

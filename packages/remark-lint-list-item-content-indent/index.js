@@ -24,30 +24,37 @@
  *   2:5: Don’t use mixed indentation for children, remove 1 space
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintListItemContentIndent = lintRule(
   'remark-lint:list-item-content-indent',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
 
     visit(tree, 'listItem', (node) => {
       let index = -1
+      /** @type {number|undefined} */
       let style
 
       while (++index < node.children.length) {
         const item = node.children[index]
-
-        if (generated(item)) {
-          continue
-        }
-
         const begin = pointStart(item)
         let column = begin.column
+
+        if (
+          typeof begin.column !== 'number' ||
+          typeof begin.offset !== 'number'
+        ) {
+          continue
+        }
 
         // Get indentation for the first child.  Only the first item can have a
         // checkbox, so here we remove that from the column.
@@ -70,7 +77,7 @@ const remarkLintListItemContentIndent = lintRule(
         }
 
         // Warn for violating children.
-        if (column !== style) {
+        if (style && column !== style) {
           const diff = style - column
           const abs = Math.abs(diff)
 

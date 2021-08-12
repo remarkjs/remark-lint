@@ -1,5 +1,9 @@
 import fs from 'fs'
 
+/**
+ * @param {string} filePath
+ * @returns {string[]}
+ */
 export function rules(filePath) {
   return fs
     .readdirSync(filePath)

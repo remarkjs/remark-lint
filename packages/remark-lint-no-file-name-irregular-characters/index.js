@@ -37,13 +37,20 @@
  *   1:1: Do not use ` ` in a file name
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ *
+ * @typedef {RegExp|string} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 
 const expression = /[^\\.a-zA-Z\d-]/
 
 const remarkLintNoFileNameIrregularCharacters = lintRule(
   'remark-lint:no-file-name-irregular-characters',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (_, file, option) => {
     let preferred = option || expression
 
     if (typeof preferred === 'string') {

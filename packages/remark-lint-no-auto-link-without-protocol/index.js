@@ -36,6 +36,10 @@
  *   1:1-1:14: All automatic links must start with a protocol
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -48,6 +52,7 @@ const protocol = /^[a-z][a-z+.-]+:\/?/i
 
 const remarkLintNoAutoLinkWithoutProtocol = lintRule(
   'remark-lint:no-auto-link-without-protocol',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'link', (node) => {
       if (

@@ -32,12 +32,17 @@
  *   1:1-1:7: Use the trailing [] on reference images
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoShortcutReferenceImage = lintRule(
   'remark-lint:no-shortcut-reference-image',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'imageReference', (node) => {
       if (!generated(node) && node.referenceType === 'shortcut') {

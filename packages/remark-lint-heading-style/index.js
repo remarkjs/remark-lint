@@ -69,6 +69,17 @@
  *
  *   4:1-4:8: Headings should use setext
  *   6:1-6:13: Headings should use setext
+ *
+ * @example
+ *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ *
+ *   1:1: Incorrect heading style type `💩`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`
+ */
+
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'atx'|'atx-closed'|'setext'} Type
+ * @typedef {'consistent'|Type} Options
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -76,21 +87,31 @@ import {visit} from 'unist-util-visit'
 import {headingStyle} from 'mdast-util-heading-style'
 import {generated} from 'unist-util-generated'
 
-const types = new Set(['atx', 'atx-closed', 'setext'])
-
 const remarkLintHeadingStyle = lintRule(
   'remark-lint:heading-style',
-  (tree, file, option) => {
-    let preferred = types.has(option) ? option : null
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
+    if (
+      option !== 'consistent' &&
+      option !== 'atx' &&
+      option !== 'atx-closed' &&
+      option !== 'setext'
+    ) {
+      file.fail(
+        'Incorrect heading style type `' +
+          option +
+          "`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`"
+      )
+    }
 
     visit(tree, 'heading', (node) => {
       if (!generated(node)) {
-        if (preferred) {
-          if (headingStyle(node, preferred) !== preferred) {
-            file.message('Headings should use ' + preferred, node)
-          }
-        } else {
-          preferred = headingStyle(node, preferred)
+        if (option === 'consistent') {
+          // Funky nodes perhaps cannot be detected.
+          /* c8 ignore next */
+          option = headingStyle(node) || 'consistent'
+        } else if (headingStyle(node, option) !== option) {
+          file.message('Headings should use ' + option, node)
         }
       }
     })

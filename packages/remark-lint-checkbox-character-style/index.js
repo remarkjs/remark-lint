@@ -77,48 +77,64 @@
  *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ *
+ * @typedef Styles
+ * @property {'x'|'X'|'consistent'} [checked='consistent']
+ * @property {' '|'\x09'|'consistent'} [unchecked='consistent']
+ *
+ * @typedef {'consistent'|Styles} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-
-const checked = {x: true, X: true}
-const unchecked = {' ': true, '\t': true}
-const types = {true: 'checked', false: 'unchecked'}
 
 const remarkLintCheckboxCharacterStyle = lintRule(
   'remark-lint:checkbox-character-style',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const value = String(file)
-    const preferred = typeof option === 'object' ? option : {}
+    /** @type {'x'|'X'|'consistent'} */
+    let checked = 'consistent'
+    /** @type {' '|'\x09'|'consistent'} */
+    let unchecked = 'consistent'
 
-    if (preferred.unchecked && unchecked[preferred.unchecked] !== true) {
+    if (typeof option === 'object') {
+      checked = option.checked || 'consistent'
+      unchecked = option.unchecked || 'consistent'
+    }
+
+    if (unchecked !== 'consistent' && unchecked !== ' ' && unchecked !== '\t') {
       file.fail(
         'Incorrect unchecked checkbox marker `' +
-          preferred.unchecked +
+          unchecked +
           "`: use either `'\\t'`, or `' '`"
       )
     }
 
-    if (preferred.checked && checked[preferred.checked] !== true) {
+    if (checked !== 'consistent' && checked !== 'x' && checked !== 'X') {
       file.fail(
         'Incorrect checked checkbox marker `' +
-          preferred.checked +
+          checked +
           "`: use either `'x'`, or `'X'`"
       )
     }
 
     visit(tree, 'listItem', (node) => {
       const head = node.children[0]
+      const point = pointStart(head)
+
       // Exit early for items without checkbox.
       // A list item cannot be checked and empty, according to GFM.
-      if (typeof node.checked !== 'boolean' || generated(node) || !head) {
+      if (
+        typeof node.checked !== 'boolean' ||
+        !head ||
+        typeof point.offset !== 'number'
+      ) {
         return
       }
-
-      const type = types[node.checked]
-
-      const point = pointStart(head)
 
       // Move back to before `] `.
       point.offset -= 2
@@ -133,21 +149,24 @@ const remarkLintCheckboxCharacterStyle = lintRule(
       /* c8 ignore next */
       if (!match) return
 
-      const style = preferred[type]
+      const style = node.checked ? checked : unchecked
 
-      if (style) {
-        if (match[1] !== style) {
-          file.message(
-            type.charAt(0).toUpperCase() +
-              type.slice(1) +
-              ' checkboxes should use `' +
-              style +
-              '` as a marker',
-            point
-          )
+      if (style === 'consistent') {
+        if (node.checked) {
+          // @ts-expect-error: valid marker.
+          checked = match[1]
+        } else {
+          // @ts-expect-error: valid marker.
+          unchecked = match[1]
         }
-      } else {
-        preferred[type] = match[1]
+      } else if (match[1] !== style) {
+        file.message(
+          (node.checked ? 'Checked' : 'Unchecked') +
+            ' checkboxes should use `' +
+            style +
+            '` as a marker',
+          point
+        )
       }
     })
   }

@@ -40,6 +40,10 @@
  *   [example-2]: http://example.com/two/
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
@@ -47,8 +51,9 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintFinalDefinition = lintRule(
   'remark-lint:final-definition',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
-    let last = null
+    let last = 0
 
     visit(
       tree,
@@ -65,7 +70,7 @@ const remarkLintFinalDefinition = lintRule(
         const line = pointStart(node).line
 
         if (node.type === 'definition') {
-          if (last !== null && last > line) {
+          if (last && last > line) {
             file.message(
               'Move definitions to the end of the file (after the node at line `' +
                 last +
@@ -73,7 +78,7 @@ const remarkLintFinalDefinition = lintRule(
               node
             )
           }
-        } else if (last === null) {
+        } else if (last === 0) {
           last = line
         }
       },

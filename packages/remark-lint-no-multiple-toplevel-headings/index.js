@@ -28,6 +28,12 @@
  *   3:1-3:6: Don’t use multiple top level headings (1:1)
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Heading} Heading
+ * @typedef {Heading['depth']} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
@@ -36,7 +42,9 @@ import {stringifyPosition} from 'unist-util-stringify-position'
 
 const remarkLintNoMultipleToplevelHeadings = lintRule(
   'remark-lint:no-multiple-toplevel-headings',
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 1) => {
+    /** @type {string|undefined} */
     let duplicate
 
     visit(tree, 'heading', (node) => {

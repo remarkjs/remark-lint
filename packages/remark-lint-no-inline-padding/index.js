@@ -25,6 +25,10 @@
  *   1:7-1:38: Don’t pad `link` with inner spaces
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
@@ -32,6 +36,7 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoInlinePadding = lintRule(
   'remark-lint:no-inline-padding',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore
     // since CM.

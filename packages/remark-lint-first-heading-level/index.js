@@ -90,6 +90,13 @@
  *   1:1-1:14: First heading level should be `2`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').HTML} HTML
+ * @typedef {import('mdast').Heading['depth']} Depth
+ * @typedef {Depth} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit, EXIT} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
@@ -98,11 +105,11 @@ const re = /<h([1-6])/
 
 const remarkLintFirstHeadingLevel = lintRule(
   'remark-lint:first-heading-level',
-  (tree, file, option) => {
-    const preferred = option && option !== true ? option : 1
-
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 1) => {
     visit(tree, (node) => {
       if (!generated(node)) {
+        /** @type {Depth|undefined} */
         let rank
 
         if (node.type === 'heading') {
@@ -112,11 +119,8 @@ const remarkLintFirstHeadingLevel = lintRule(
         }
 
         if (rank !== undefined) {
-          if (rank !== preferred) {
-            file.message(
-              'First heading level should be `' + preferred + '`',
-              node
-            )
+          if (rank !== option) {
+            file.message('First heading level should be `' + option + '`', node)
           }
 
           return EXIT
@@ -128,7 +132,12 @@ const remarkLintFirstHeadingLevel = lintRule(
 
 export default remarkLintFirstHeadingLevel
 
+/**
+ * @param {HTML} node
+ * @returns {Depth|undefined}
+ */
 function infer(node) {
   const results = node.value.match(re)
+  // @ts-expect-error: can be castes fine.
   return results ? Number(results[1]) : undefined
 }

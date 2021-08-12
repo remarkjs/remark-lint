@@ -26,6 +26,10 @@
  *   1:1-1:16: This looks like a heading but has too many hashes
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
@@ -34,6 +38,7 @@ const fence = '#######'
 
 const remarkLintNoHeadingLikeParagraph = lintRule(
   'remark-lint:no-heading-like-paragraph',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'paragraph', (node) => {
       if (!generated(node)) {

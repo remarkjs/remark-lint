@@ -1,3 +1,11 @@
+/**
+ * @typedef {import('unified').Plugin} Plugin
+ * @typedef {import('vfile-message').VFileMessage} VFileMessage
+ * @typedef {import('tape').Test} Test
+ * @typedef {import('./script/util/rule').Rule} Rule
+ * @typedef {import('./script/util/rule').Check} Check
+ */
+
 import url from 'url'
 import path from 'path'
 import test from 'tape'
@@ -15,240 +23,204 @@ import finalNewline from './packages/remark-lint-final-newline/index.js'
 
 const own = {}.hasOwnProperty
 
-test('core', (t) => {
-  t.test('should work', (t) => {
-    const doc = [
-      '# A heading',
-      '',
-      '# Another main heading.',
-      '',
-      '<!--lint ignore-->',
-      '',
-      '# Another main heading.'
-    ].join('\n')
+test('core', async (t) => {
+  const doc = [
+    '# A heading',
+    '',
+    '# Another main heading.',
+    '',
+    '<!--lint ignore-->',
+    '',
+    '# Another main heading.'
+  ].join('\n')
 
-    t.plan(2)
-
-    remark()
-      .use(noHeadingPunctuation)
-      .use(noMultipleToplevelHeadings)
-      .use(lint)
-      .process(toVFile({path: 'virtual.md', value: doc}), (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [
-            null,
-            'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-            'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
-          ],
-          'should support `remark-lint` last'
-        )
-      })
-
-    remark()
-      .use(lint)
-      .use(noHeadingPunctuation)
-      .use(noMultipleToplevelHeadings)
-      .process(toVFile({path: 'virtual.md', value: doc}), (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [
-            null,
-            'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-            'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
-          ],
-          'should support `remark-lint` first'
-        )
-      })
-  })
-
-  t.test('should support no rules', (t) => {
-    t.plan(1)
-
-    remark()
-      .use(lint)
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null],
-          'should warn for missing new lines'
-        )
-      })
-  })
-
-  t.test('should support successful rules', (t) => {
-    t.plan(1)
-
-    remark()
-      .use(finalNewline)
-      .process('', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null],
-          'should support successful rules'
-        )
-      })
-  })
-
-  t.test('should support a list with a severity', (t) => {
-    t.plan(2)
-
-    remark()
-      .use(finalNewline, [2])
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null, '1:1: Missing newline character at end of file'],
-          'should emit fatally (1)'
-        )
-        t.equal(file.messages[0].fatal, true, 'should emit fatally (2)')
-      })
-  })
-
-  t.test('should support a boolean (`true`)', (t) => {
-    // Note! This is handled by unified.
-    t.plan(1)
-
-    remark()
-      .use(finalNewline, true)
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null, '1:1: Missing newline character at end of file'],
-          'should emit'
-        )
-      })
-  })
-
-  t.test('should support a boolean (`false`)', (t) => {
-    // Note! This is handled by unified.
-    t.plan(1)
-
-    remark()
-      .use(finalNewline, false)
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null],
-          'should not emit'
-        )
-      })
-  })
-
-  t.test(
-    'should support a list with a boolean severity (true, for on)',
-    (t) => {
-      t.plan(1)
-
-      remark()
-        .use(finalNewline, [true])
-        .process('.', (error, file) => {
-          t.deepEqual(
-            [error].concat(file.messages.map((d) => String(d))),
-            [null, '1:1: Missing newline character at end of file'],
-            'should emit'
-          )
-        })
-    }
+  t.deepEqual(
+    asStrings(
+      (
+        await remark()
+          .use(noHeadingPunctuation)
+          .use(noMultipleToplevelHeadings)
+          .use(lint)
+          .process(toVFile({path: 'virtual.md', value: doc}))
+      ).messages
+    ),
+    [
+      'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
+      'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
+    ],
+    'should support `remark-lint` last'
   )
 
-  t.test(
-    'should support a list with boolean severity (false, for off)',
-    (t) => {
-      t.plan(1)
-
-      remark()
-        .use(finalNewline, [false])
-        .process('.', (error, file) => {
-          t.deepEqual(
-            [error].concat(file.messages.map((d) => String(d))),
-            [null],
-            'should not emit'
-          )
-        })
-    }
+  t.deepEqual(
+    asStrings(
+      (
+        await remark()
+          .use(lint)
+          .use(noHeadingPunctuation)
+          .use(noMultipleToplevelHeadings)
+          .process(toVFile({path: 'virtual.md', value: doc}))
+      ).messages
+    ),
+    [
+      'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
+      'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
+    ],
+    'should support `remark-lint` first'
   )
 
-  t.test('should support a list with string severity (`error`)', (t) => {
-    t.plan(2)
+  t.deepEqual(
+    asStrings((await remark().use(lint).process('.')).messages),
+    [],
+    'should support no rules'
+  )
 
-    remark()
-      .use(finalNewline, ['error'])
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null, '1:1: Missing newline character at end of file'],
-          'should emit fatally (1)'
-        )
-        t.equal(file.messages[0].fatal, true, 'should emit fatally (2)')
-      })
-  })
+  t.deepEqual(
+    asStrings((await remark().use(finalNewline).process('')).messages),
+    [],
+    'should support successful rules'
+  )
 
-  t.test('should support a list with a string severity (`on`)', (t) => {
-    t.plan(2)
+  t.deepEqual(
+    (await remark().use(finalNewline, [2]).process('.')).messages.map((d) =>
+      JSON.parse(JSON.stringify(d))
+    ),
+    [
+      {
+        name: '1:1',
+        message: 'Missing newline character at end of file',
+        reason: 'Missing newline character at end of file',
+        line: null,
+        column: null,
+        source: 'remark-lint',
+        ruleId: 'final-newline',
+        position: {
+          start: {line: null, column: null},
+          end: {line: null, column: null}
+        },
+        fatal: true
+      }
+    ],
+    'should support a list with a severity'
+  )
 
-    remark()
-      .use(finalNewline, ['on'])
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null, '1:1: Missing newline character at end of file'],
-          'should message'
-        )
-        t.equal(file.messages[0].fatal, false, 'should not emit fatally')
-      })
-  })
+  t.deepEqual(
+    asStrings((await remark().use(finalNewline, true).process('.')).messages),
+    ['1:1: Missing newline character at end of file'],
+    'should support a boolean (`true`)'
+  )
 
-  t.test('should support a list with a string severity (`warn`)', (t) => {
-    t.plan(2)
+  t.deepEqual(
+    asStrings((await remark().use(finalNewline, false).process('.')).messages),
+    [],
+    'should support a boolean (`false`)'
+  )
 
-    remark()
-      .use(finalNewline, ['warn'])
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null, '1:1: Missing newline character at end of file'],
-          'should message'
-        )
-        t.equal(file.messages[0].fatal, false, 'should not emit fatally')
-      })
-  })
+  t.deepEqual(
+    asStrings((await remark().use(finalNewline, [true]).process('.')).messages),
+    ['1:1: Missing newline character at end of file'],
+    'should support a list with a boolean severity (true, for on)'
+  )
 
-  t.test('should support a list with a string severity (`off`)', (t) => {
-    t.plan(1)
+  t.deepEqual(
+    asStrings(
+      (await remark().use(finalNewline, [false]).process('.')).messages
+    ),
+    [],
+    'should support a list with boolean severity (false, for off)'
+  )
 
-    remark()
-      .use(finalNewline, ['off'])
-      .process('.', (error, file) => {
-        t.deepEqual(
-          [error].concat(file.messages.map((d) => String(d))),
-          [null],
-          'should disable `final-newline`'
-        )
-      })
-  })
+  t.deepEqual(
+    (await remark().use(finalNewline, ['error']).process('.')).messages.map(
+      (d) => JSON.parse(JSON.stringify(d))
+    ),
+    [
+      {
+        name: '1:1',
+        message: 'Missing newline character at end of file',
+        reason: 'Missing newline character at end of file',
+        line: null,
+        column: null,
+        source: 'remark-lint',
+        ruleId: 'final-newline',
+        position: {
+          start: {line: null, column: null},
+          end: {line: null, column: null}
+        },
+        fatal: true
+      }
+    ],
+    'should support a list with string severity (`error`)'
+  )
 
-  t.test('should fail on incorrect severities', (t) => {
-    t.throws(
-      () => {
-        remark().use(finalNewline, [3]).freeze()
-      },
-      /^Error: Incorrect severity `3` for `final-newline`, expected 0, 1, or 2$/,
-      'should throw when too high'
-    )
+  t.deepEqual(
+    (await remark().use(finalNewline, ['on']).process('.')).messages.map((d) =>
+      JSON.parse(JSON.stringify(d))
+    ),
+    [
+      {
+        name: '1:1',
+        message: 'Missing newline character at end of file',
+        reason: 'Missing newline character at end of file',
+        line: null,
+        column: null,
+        source: 'remark-lint',
+        ruleId: 'final-newline',
+        position: {
+          start: {line: null, column: null},
+          end: {line: null, column: null}
+        },
+        fatal: false
+      }
+    ],
+    'should support a list with string severity (`on`)'
+  )
 
-    t.throws(
-      () => {
-        remark().use(finalNewline, [-1]).freeze()
-      },
-      /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/,
-      'should throw too low'
-    )
+  t.deepEqual(
+    (await remark().use(finalNewline, ['warn']).process('.')).messages.map(
+      (d) => JSON.parse(JSON.stringify(d))
+    ),
+    [
+      {
+        name: '1:1',
+        message: 'Missing newline character at end of file',
+        reason: 'Missing newline character at end of file',
+        line: null,
+        column: null,
+        source: 'remark-lint',
+        ruleId: 'final-newline',
+        position: {
+          start: {line: null, column: null},
+          end: {line: null, column: null}
+        },
+        fatal: false
+      }
+    ],
+    'should support a list with string severity (`warn`)'
+  )
 
-    t.end()
-  })
+  t.deepEqual(
+    asStrings(
+      (await remark().use(finalNewline, ['off']).process('.')).messages
+    ),
+    [],
+    'should support a list with string severity (`off`)'
+  )
 
-  t.end()
+  t.throws(
+    () => {
+      remark().use(finalNewline, [3]).freeze()
+    },
+    /^Error: Incorrect severity `3` for `final-newline`, expected 0, 1, or 2$/,
+    'should fail on incorrect severities (too high)'
+  )
+
+  t.throws(
+    () => {
+      remark().use(finalNewline, [-1]).freeze()
+    },
+    /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/,
+    'should fail on incorrect severities (too low)'
+  )
 })
 
 test('rules', async (t) => {
@@ -260,8 +232,11 @@ test('rules', async (t) => {
     const basename = all[index]
     const base = path.resolve(root, basename)
     const info = rule(base)
-    const fn = (await import(url.pathToFileURL(base).href + '/index.js'))
-      .default
+    const href = url.pathToFileURL(base).href + '/index.js'
+
+    /** @type {Plugin} */
+    // type-coverage:ignore-next-line
+    const fn = (await import(href)).default
 
     if (Object.keys(info.tests).length === 0) {
       t.pass(info.ruleId + ': no tests')
@@ -275,17 +250,26 @@ test('rules', async (t) => {
   t.end()
 })
 
-// Assert a rule.
+/**
+ * Assert a rule.
+ *
+ * @param {Test} t
+ * @param {Plugin} rule
+ * @param {Rule} info
+ */
 function assertRule(t, rule, info) {
   const tests = info.tests
+  /** @type {string} */
   let setting
 
   for (setting in tests) {
     if (own.call(tests, setting)) {
       const checks = tests[setting]
+      /** @type {unknown} */
       const options = JSON.parse(setting)
 
       t.test(setting, (t) => {
+        /** @type {string} */
         let name
 
         for (name in checks) {
@@ -305,6 +289,14 @@ function assertRule(t, rule, info) {
   t.end()
 }
 
+/**
+ * @param {Test} t
+ * @param {Plugin} rule
+ * @param {Rule} info
+ * @param {Check} fixture
+ * @param {string} basename
+ * @param {unknown} settings
+ */
 /* eslint-disable-next-line max-params */
 function assertFixture(t, rule, info, fixture, basename, settings) {
   const ruleId = info.ruleId
@@ -346,25 +338,36 @@ function assertFixture(t, rule, info, fixture, basename, settings) {
 
   if (!positionless) {
     file.messages = []
-    proc = remark().use(clear).use(rule, settings)
+    proc = remark()
+      .use(() => (tree) => removePosition(tree))
+      .use(rule, settings)
     if (fixture.gfm) proc.use(remarkGfm)
     proc.processSync(file)
 
     t.deepEqual(normalize(file.messages), [], 'should equal without position')
   }
-
-  function clear() {
-    return removePosition
-  }
 }
 
+/**
+ * @param {VFileMessage[]} messages
+ * @returns {string[]}
+ */
 function normalize(messages) {
-  return messages.map((message) => {
-    const value = String(message)
-    return value.slice(value.indexOf(':') + 1)
-  })
+  return asStrings(messages).map((value) => value.slice(value.indexOf(':') + 1))
 }
 
+/**
+ * @param {VFileMessage[]} messages
+ * @returns {string[]}
+ */
+function asStrings(messages) {
+  return messages.map((message) => String(message))
+}
+
+/**
+ * @param {string} value
+ * @returns {string}
+ */
 function preprocess(value) {
   let index = -1
 

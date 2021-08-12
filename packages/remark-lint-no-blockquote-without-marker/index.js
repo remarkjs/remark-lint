@@ -55,6 +55,10 @@
  *   3:1: Missing marker in block quote
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 import {visit} from 'unist-util-visit'
@@ -63,6 +67,7 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
   'remark-lint:no-blockquote-without-marker',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
     const loc = location(file)

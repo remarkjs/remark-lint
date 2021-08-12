@@ -53,18 +53,26 @@
  *   13:41: Use spaces instead of tabs
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 
-const remarkLintNoTabs = lintRule('remark-lint:no-tabs', (tree, file) => {
-  const value = String(file)
-  const toPoint = location(file).toPoint
-  let index = value.indexOf('\t')
+const remarkLintNoTabs = lintRule(
+  'remark-lint:no-tabs',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
+  (_, file) => {
+    const value = String(file)
+    const toPoint = location(file).toPoint
+    let index = value.indexOf('\t')
 
-  while (index !== -1) {
-    file.message('Use spaces instead of tabs', toPoint(index))
-    index = value.indexOf('\t', index + 1)
+    while (index !== -1) {
+      file.message('Use spaces instead of tabs', toPoint(index))
+      index = value.indexOf('\t', index + 1)
+    }
   }
-})
+)
 
 export default remarkLintNoTabs

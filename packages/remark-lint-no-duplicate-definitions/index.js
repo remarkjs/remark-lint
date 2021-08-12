@@ -24,6 +24,10 @@
  *   2:1-2:11: Do not use definitions with the same identifier (1:1)
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
@@ -32,7 +36,9 @@ import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateDefinitions = lintRule(
   'remark-lint:no-duplicate-definitions',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {Record<string, string>} */
     const map = Object.create(null)
 
     visit(tree, (node) => {
@@ -46,13 +52,13 @@ const remarkLintNoDuplicateDefinitions = lintRule(
         if (duplicate) {
           file.message(
             'Do not use definitions with the same identifier (' +
-              stringifyPosition(pointStart(duplicate)) +
+              duplicate +
               ')',
             node
           )
         }
 
-        map[identifier] = node
+        map[identifier] = stringifyPosition(pointStart(node))
       }
     })
   }

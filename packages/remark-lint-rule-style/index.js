@@ -60,19 +60,22 @@
  *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {string} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintRuleStyle = lintRule(
   'remark-lint:rule-style',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const value = String(file)
-    let preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : null
 
-    if (preferred !== null && /[^-_* ]/.test(preferred)) {
+    if (option !== 'consistent' && /[^-_* ]/.test(option)) {
       file.fail(
         "Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`"
       )
@@ -82,15 +85,13 @@ const remarkLintRuleStyle = lintRule(
       const initial = pointStart(node).offset
       const final = pointEnd(node).offset
 
-      if (!generated(node)) {
+      if (typeof initial === 'number' && typeof final === 'number') {
         const rule = value.slice(initial, final)
 
-        if (preferred) {
-          if (rule !== preferred) {
-            file.message('Rules should use `' + preferred + '`', node)
-          }
-        } else {
-          preferred = rule
+        if (option === 'consistent') {
+          option = rule
+        } else if (rule !== option) {
+          file.message('Rules should use `' + option + '`', node)
         }
       }
     })

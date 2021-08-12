@@ -89,53 +89,50 @@
  *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'~'|'`'} Marker
+ * @typedef {'consistent'|Marker} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-
-const markers = {
-  '`': true,
-  '~': true,
-  null: true
-}
 
 const remarkLintFencedCodeMarker = lintRule(
   'remark-lint:fenced-code-marker',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const contents = String(file)
-    let preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : null
 
-    if (markers[preferred] !== true) {
+    if (option !== 'consistent' && option !== '~' && option !== '`') {
       file.fail(
         'Incorrect fenced code marker `' +
-          preferred +
+          option +
           "`: use either `'consistent'`, `` '`' ``, or `'~'`"
       )
     }
 
     visit(tree, 'code', (node) => {
-      if (!generated(node)) {
-        const start = pointStart(node).offset
+      const start = pointStart(node).offset
+
+      if (typeof start === 'number') {
         const marker = contents
           .slice(start, start + 4)
           .replace(/^\s+/, '')
           .charAt(0)
 
         // Ignore unfenced code blocks.
-        if (markers[marker] === true) {
-          if (preferred) {
-            if (marker !== preferred) {
-              file.message(
-                'Fenced code should use `' +
-                  (preferred === '~' ? preferred : '` ` `') +
-                  '` as a marker',
-                node
-              )
-            }
-          } else {
-            preferred = marker
+        if (marker === '~' || marker === '`') {
+          if (option === 'consistent') {
+            option = marker
+          } else if (marker !== option) {
+            file.message(
+              'Fenced code should use `' +
+                (option === '~' ? option : '` ` `') +
+                '` as a marker',
+              node
+            )
           }
         }
       }

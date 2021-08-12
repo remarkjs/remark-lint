@@ -29,6 +29,10 @@
  *   5:1-5:29: Do not use headings with similar content (3:1)
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
@@ -38,7 +42,9 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadings = lintRule(
   'remark-lint:no-duplicate-headings',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {Record<string, string>} */
     const map = Object.create(null)
 
     visit(tree, 'heading', (node) => {
@@ -48,14 +54,12 @@ const remarkLintNoDuplicateHeadings = lintRule(
 
         if (duplicate) {
           file.message(
-            'Do not use headings with similar content (' +
-              stringifyPosition(pointStart(duplicate)) +
-              ')',
+            'Do not use headings with similar content (' + duplicate + ')',
             node
           )
         }
 
-        map[value] = node
+        map[value] = stringifyPosition(pointStart(node))
       }
     })
   }

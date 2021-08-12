@@ -51,41 +51,43 @@
  *   1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'unix'|'windows'} Type
+ * @typedef {'consistent'|Type} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 
 const escaped = {unix: '\\n', windows: '\\r\\n'}
-const types = {true: 'windows', false: 'unix'}
 
 const remarkLintLinebreakStyle = lintRule(
   'remark-lint:linebreak-style',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (_, file, option = 'consistent') => {
     const value = String(file)
     const toPoint = location(value).toPoint
-    let preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : null
     let index = value.indexOf('\n')
 
     while (index !== -1) {
-      const type = types[value.charAt(index - 1) === '\r']
+      const type = value.charAt(index - 1) === '\r' ? 'windows' : 'unix'
 
-      if (preferred) {
-        if (preferred !== type) {
-          file.message(
-            'Expected linebreaks to be ' +
-              preferred +
-              ' (`' +
-              escaped[preferred] +
-              '`), not ' +
-              type +
-              ' (`' +
-              escaped[type] +
-              '`)',
-            toPoint(index)
-          )
-        }
-      } else {
-        preferred = type
+      if (option === 'consistent') {
+        option = type
+      } else if (option !== type) {
+        file.message(
+          'Expected linebreaks to be ' +
+            option +
+            ' (`' +
+            escaped[option] +
+            '`), not ' +
+            type +
+            ' (`' +
+            escaped[type] +
+            '`)',
+          toPoint(index)
+        )
       }
 
       index = value.indexOf('\n', index + 1)

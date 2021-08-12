@@ -46,6 +46,10 @@
  *   3:1-3:19: Remove the link label as it matches the reference text
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
@@ -53,6 +57,7 @@ import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 
 const remarkLintNoUnneededFullReferenceLink = lintRule(
   'remark-lint:no-unneeded-full-reference-link',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'linkReference', (node) => {
       if (

@@ -26,13 +26,19 @@
  *   1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {generated} from 'unist-util-generated'
 import {visit} from 'unist-util-visit'
 
 const remarkLintNoReferenceLikeUrl = lintRule(
   'remark-lint:no-reference-like-url',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {string[]} */
     const identifiers = []
 
     visit(tree, 'definition', (node) => {

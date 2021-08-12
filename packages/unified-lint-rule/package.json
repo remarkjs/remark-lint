@@ -23,11 +23,26 @@
   "sideEffects": false,
   "type": "module",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
+    "lib/",
+    "index.d.ts",
     "index.js"
   ],
   "dependencies": {
-    "trough": "^2.0.0"
+    "@types/unist": "^2.0.0",
+    "trough": "^2.0.0",
+    "unified": "^10.0.0",
+    "vfile": "^5.0.0"
   },
-  "xo": false
+  "scripts": {
+    "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
+  },
+  "xo": false,
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  }
 }

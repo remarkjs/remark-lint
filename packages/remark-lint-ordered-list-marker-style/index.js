@@ -55,28 +55,27 @@
  *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'.'|')'} Marker
+ * @typedef {'consistent'|Marker} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const styles = {
-  ')': true,
-  '.': true,
-  null: true
-}
-
 const remarkLintOrderedListMarkerStyle = lintRule(
   'remark-lint:ordered-list-marker-style',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const value = String(file)
-    let preferred =
-      typeof option !== 'string' || option === 'consistent' ? null : option
 
-    if (styles[preferred] !== true) {
+    if (option !== 'consistent' && option !== '.' && option !== ')') {
       file.fail(
         'Incorrect ordered list item marker style `' +
-          preferred +
+          option +
           "`: use either `'.'` or `')'`"
       )
     }
@@ -90,20 +89,20 @@ const remarkLintOrderedListMarkerStyle = lintRule(
         const child = node.children[index]
 
         if (!generated(child)) {
-          const marker = value
-            .slice(
-              pointStart(child).offset,
-              pointStart(child.children[0]).offset
-            )
-            .replace(/\s|\d/g, '')
-            .replace(/\[[x ]?]\s*$/i, '')
+          const marker = /** @type {Marker} */ (
+            value
+              .slice(
+                pointStart(child).offset,
+                pointStart(child.children[0]).offset
+              )
+              .replace(/\s|\d/g, '')
+              .replace(/\[[x ]?]\s*$/i, '')
+          )
 
-          if (preferred) {
-            if (marker !== preferred) {
-              file.message('Marker style should be `' + preferred + '`', child)
-            }
-          } else {
-            preferred = marker
+          if (option === 'consistent') {
+            option = marker
+          } else if (marker !== option) {
+            file.message('Marker style should be `' + option + '`', child)
           }
         }
       }

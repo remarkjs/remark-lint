@@ -24,6 +24,10 @@
  *   1:12-2:1: Use two spaces for hard line breaks
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -31,6 +35,7 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintHardBreakSpaces = lintRule(
   'remark-lint:hard-break-spaces',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
 

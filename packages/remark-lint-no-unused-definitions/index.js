@@ -24,6 +24,11 @@
  *   1:1-1:27: Found unused definition
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').DefinitionContent} DefinitionContent
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {generated} from 'unist-util-generated'
 import {visit} from 'unist-util-visit'
@@ -32,7 +37,9 @@ const own = {}.hasOwnProperty
 
 const remarkLintNoUnusedDefinitions = lintRule(
   'remark-lint:no-unused-definitions',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {Record<string, {node: DefinitionContent, used: boolean}>} */
     const map = Object.create(null)
 
     visit(tree, (node) => {
@@ -58,6 +65,7 @@ const remarkLintNoUnusedDefinitions = lintRule(
       }
     })
 
+    /** @type {string} */
     let identifier
 
     for (identifier in map) {

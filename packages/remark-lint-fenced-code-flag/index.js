@@ -61,6 +61,13 @@
  *   ```
  *
  * @example
+ *   {"name": "ok.md", "setting": {"flags":["alpha"]}}
+ *
+ *   ```alpha
+ *   bravo()
+ *   ```
+ *
+ * @example
  *   {"name": "not-ok.md", "setting": ["charlie"], "label": "input"}
  *
  *   ```alpha
@@ -73,6 +80,18 @@
  *   1:1-3:4: Incorrect code language flag
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ *
+ * @typedef {string[]} Flags
+ *
+ * @typedef FlagMap
+ * @property {Flags} [flags]
+ * @property {boolean} [allowEmpty=false]
+ *
+ * @typedef {Flags|FlagMap} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -82,19 +101,23 @@ const fence = /^ {0,3}([~`])\1{2,}/
 
 const remarkLintFencedCodeFlag = lintRule(
   'remark-lint:fenced-code-flag',
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option) => {
     const value = String(file)
     let allowEmpty = false
+    /** @type {string[]} */
     let allowed = []
-    let flags = option
 
-    if (typeof flags === 'object' && !Array.isArray(flags)) {
-      allowEmpty = Boolean(flags.allowEmpty)
-      flags = flags.flags
-    }
+    if (typeof option === 'object') {
+      if (Array.isArray(option)) {
+        allowed = option
+      } else {
+        allowEmpty = Boolean(option.allowEmpty)
 
-    if (Array.isArray(flags)) {
-      allowed = String(flags).split(',')
+        if (option.flags) {
+          allowed = option.flags
+        }
+      }
     }
 
     visit(tree, 'code', (node) => {

@@ -49,6 +49,10 @@
  *   8:4: Remove 3 spaces before this heading
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
@@ -57,6 +61,7 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingIndent = lintRule(
   'remark-lint:no-heading-indent',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'heading', (node, _, parent) => {
       // Note: it’s rather complex to detect what the expected indent is in block

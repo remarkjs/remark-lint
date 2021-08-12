@@ -40,6 +40,11 @@
  *   3:1-3:20: Remove the image label as it matches the reference text
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'-'|'*'|'+'} Marker
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
@@ -47,12 +52,15 @@ import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 
 const remarkLintNoUnneededFullReferenceImage = lintRule(
   'remark-lint:no-unneeded-full-reference-image',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'imageReference', (node) => {
       if (
         generated(node) ||
         node.referenceType !== 'full' ||
-        normalizeIdentifier(node.alt) !== node.identifier.toUpperCase()
+        // To do: update types to force `alt` existing.
+        /* c8 ignore next */
+        normalizeIdentifier(node.alt || '') !== node.identifier.toUpperCase()
       ) {
         return
       }

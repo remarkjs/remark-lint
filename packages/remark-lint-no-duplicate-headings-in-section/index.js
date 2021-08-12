@@ -59,6 +59,11 @@
  *   7:1-7:11: Do not use headings with similar content per section (3:1)
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Heading} Heading
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
@@ -68,7 +73,9 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadingsInSection = lintRule(
   'remark-lint:no-duplicate-headings-in-section',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {Array.<Record<string, Heading>>} */
     let stack = []
 
     visit(tree, 'heading', (node) => {

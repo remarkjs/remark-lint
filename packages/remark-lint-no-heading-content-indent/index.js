@@ -50,6 +50,10 @@
  *   #··
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {headingStyle} from 'mdast-util-heading-style'
@@ -59,6 +63,7 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   'remark-lint:no-heading-content-indent',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'heading', (node) => {
       if (generated(node)) {

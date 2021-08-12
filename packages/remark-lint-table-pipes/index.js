@@ -40,16 +40,20 @@
  *   3:14: Missing final pipe in table fence
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const reasonStart = 'Missing initial pipe in table fence'
 const reasonEnd = 'Missing final pipe in table fence'
 
 const remarkLintTablePipes = lintRule(
   'remark-lint:table-pipes',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
 
@@ -58,15 +62,21 @@ const remarkLintTablePipes = lintRule(
 
       while (++index < node.children.length) {
         const row = node.children[index]
+        const start = pointStart(row)
+        const end = pointEnd(row)
 
-        if (!generated(row)) {
-          if (value.charCodeAt(pointStart(row).offset) !== 124) {
-            file.message(reasonStart, pointStart(row))
-          }
+        if (
+          typeof start.offset === 'number' &&
+          value.charCodeAt(start.offset) !== 124
+        ) {
+          file.message(reasonStart, start)
+        }
 
-          if (value.charCodeAt(pointEnd(row).offset - 1) !== 124) {
-            file.message(reasonEnd, pointEnd(row))
-          }
+        if (
+          typeof end.offset === 'number' &&
+          value.charCodeAt(end.offset - 1) !== 124
+        ) {
+          file.message(reasonEnd, end)
         }
       }
     })

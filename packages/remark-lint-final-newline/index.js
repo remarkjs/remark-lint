@@ -50,11 +50,16 @@
  *   ```
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFinalNewline = lintRule(
   'remark-lint:final-newline',
-  (tree, file) => {
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
+  (_, file) => {
     const value = String(file)
     const last = value.length - 1
 

@@ -32,30 +32,41 @@
  *   5:1-5:8: Don’t use emphasis to introduce a section, use a heading
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
   'remark-lint:no-emphasis-as-heading',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'paragraph', (node, index, parent) => {
       const head = node.children[0]
-      const previous = parent.children[index - 1]
-      const next = parent.children[index + 1]
 
       if (
+        parent &&
+        typeof index === 'number' &&
         !generated(node) &&
-        (!previous || previous.type !== 'heading') &&
-        next &&
-        next.type === 'paragraph' &&
         node.children.length === 1 &&
         (head.type === 'emphasis' || head.type === 'strong')
       ) {
-        file.message(
-          'Don’t use emphasis to introduce a section, use a heading',
-          node
-        )
+        const previous = parent.children[index - 1]
+        const next = parent.children[index + 1]
+
+        if (
+          (!previous || previous.type !== 'heading') &&
+          next &&
+          next.type === 'paragraph'
+        ) {
+          file.message(
+            'Don’t use emphasis to introduce a section, use a heading',
+            node
+          )
+        }
       }
     })
   }

@@ -27,12 +27,17 @@
  *   3:1-3:11: Don’t use images without URL
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmptyUrl = lintRule(
   'remark-lint:no-empty-url',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, (node) => {
       if (

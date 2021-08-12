@@ -63,43 +63,44 @@
  *   1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'~'|'~~'} Marker
+ * @typedef {'consistent'|Marker} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-
-const markers = {null: true, '~': true, '~~': true}
 
 const remarkLintStrikethroughMarker = lintRule(
   'remark-lint:strikethrough-marker',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const value = String(file)
-    let preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : null
 
-    if (markers[preferred] !== true) {
+    if (option !== '~' && option !== '~~' && option !== 'consistent') {
       file.fail(
         'Incorrect strikethrough marker `' +
-          preferred +
+          option +
           "`: use either `'consistent'`, `'~'`, or `'~~'`"
       )
     }
 
     visit(tree, 'delete', (node) => {
-      if (!generated(node)) {
-        const offset = pointStart(node).offset
-        const both = value.slice(offset, offset + 2)
+      const start = pointStart(node).offset
+
+      if (typeof start === 'number') {
+        const both = value.slice(start, start + 2)
         const marker = both === '~~' ? '~~' : '~'
 
-        if (preferred) {
-          if (marker !== preferred) {
-            file.message(
-              'Strikethrough should use `' + preferred + '` as a marker',
-              node
-            )
-          }
-        } else {
-          preferred = marker
+        if (option === 'consistent') {
+          option = marker
+        } else if (marker !== option) {
+          file.message(
+            'Strikethrough should use `' + option + '` as a marker',
+            node
+          )
         }
       }
     })

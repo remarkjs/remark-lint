@@ -1,43 +1,61 @@
+/**
+ * @typedef {import('type-fest').PackageJson} PackageJson
+ * @typedef {import('mdast').ListItem} ListItem
+ * @typedef {import('mdast').List} List
+ * @typedef {import('mdast').Root} Root
+ */
+
 import fs from 'fs'
 import path from 'path'
 import {zone} from 'mdast-zone'
-import {u} from 'unist-builder'
 import {rules} from '../util/rules.js'
 
 const root = path.join(process.cwd(), 'packages')
 
+/** @type {import('unified').Plugin<void[], Root>} */
 export default function listOfRules() {
-  return transformer
-}
+  return (tree) => {
+    zone(tree, 'rules', (start, _, end) => {
+      /** @type {List} */
+      const list = {
+        type: 'list',
+        ordered: false,
+        spread: false,
+        children: rules(root).map((basename) => {
+          const name = basename.slice('remark-lint-'.length)
+          /** @type {PackageJson} */
+          const pack = JSON.parse(
+            String(fs.readFileSync(path.join(root, basename, 'package.json')))
+          )
+          const description = String(pack.description || '').replace(
+            /^remark-lint rule to ?/i,
+            ''
+          )
 
-function transformer(tree) {
-  zone(tree, 'rules', replace)
-}
+          /** @type {ListItem} */
+          const item = {
+            type: 'listItem',
+            spread: false,
+            children: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    type: 'link',
+                    url: String(pack.repository || ''),
+                    children: [{type: 'inlineCode', value: name}]
+                  },
+                  {type: 'text', value: ' — ' + description}
+                ]
+              }
+            ]
+          }
 
-function replace(start, nodes, end) {
-  return [
-    start,
-    u(
-      'list',
-      {ordered: false, spread: false},
-      rules(root).map((basename) => {
-        const name = basename.slice('remark-lint-'.length)
-        const pack = JSON.parse(
-          fs.readFileSync(path.join(root, basename, 'package.json'))
-        )
-        const description = pack.description.replace(
-          /^remark-lint rule to ?/i,
-          ''
-        )
+          return item
+        })
+      }
 
-        return u('listItem', {spread: false}, [
-          u('paragraph', [
-            u('link', {url: pack.repository}, [u('inlineCode', name)]),
-            u('text', ' — ' + description)
-          ])
-        ])
-      })
-    ),
-    end
-  ]
+      return [start, list, end]
+    })
+  }
 }

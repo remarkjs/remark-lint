@@ -113,24 +113,27 @@
  *    1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'tab-size'|'space'|'mixed'} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const styles = {'tab-size': true, mixed: true, space: true}
-
 const remarkLintListItemIndent = lintRule(
   'remark-lint:list-item-indent',
-  (tree, file, option) => {
-    const preferred = typeof option === 'string' ? option : 'tab-size'
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'tab-size') => {
     const value = String(file)
 
-    if (styles[preferred] !== true) {
+    if (option !== 'tab-size' && option !== 'space' && option !== 'mixed') {
       file.fail(
         'Incorrect list-item indent style `' +
-          preferred +
+          option +
           "`: use either `'tab-size'`, `'space'`, or `'mixed'`"
       )
     }
@@ -138,7 +141,8 @@ const remarkLintListItemIndent = lintRule(
     visit(tree, 'list', (node) => {
       if (generated(node)) return
 
-      const spread = node.spread || node.loose
+      // @ts-expect-error: legacy.
+      const spread = Boolean(node.spread || node.loose)
       let index = -1
 
       while (++index < node.children.length) {
@@ -153,7 +157,7 @@ const remarkLintListItemIndent = lintRule(
         const bulletSize = marker.replace(/\s+$/, '').length
 
         const style =
-          preferred === 'tab-size' || (preferred === 'mixed' && spread)
+          option === 'tab-size' || (option === 'mixed' && spread)
             ? Math.ceil(bulletSize / 4) * 4
             : bulletSize + 1
 

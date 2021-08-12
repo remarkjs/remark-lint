@@ -68,6 +68,13 @@
  *   2:1-2:7: Missing blank line before block node
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ *
+ * @typedef Options
+ * @property {boolean} [exceptTightLists=false]
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -87,12 +94,14 @@ const types = new Set([
 
 const remarkLintNoMissingBlankLines = lintRule(
   'remark-lint:no-missing-blank-lines',
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = {}) => {
     const {exceptTightLists} = option
 
     visit(tree, (node, index, parent) => {
       if (
         parent &&
+        typeof index === 'number' &&
         !generated(node) &&
         (!exceptTightLists || parent.type !== 'listItem')
       ) {

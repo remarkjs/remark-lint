@@ -118,13 +118,29 @@ Juliett
 6:1-6:13: Headings should use setext
 ```
 
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect heading style type `💩`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`
+```
+
 ## Install
+
+This package is [ESM only][esm]:
+Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
 
 [npm][]:
 
 ```sh
 npm install remark-lint-heading-style
 ```
+
+This package exports no identifiers.
+The default export is `remarkLintHeadingStyle`.
 
 ## Use
 
@@ -205,6 +221,8 @@ abide by its terms.
 [chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
 
 [chat]: https://github.com/remarkjs/remark/discussions
+
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [npm]: https://docs.npmjs.com/cli/install
 

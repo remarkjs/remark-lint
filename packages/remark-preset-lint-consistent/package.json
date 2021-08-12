@@ -23,10 +23,13 @@
   "sideEffects": false,
   "type": "module",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "index.js"
   ],
   "dependencies": {
+    "@types/mdast": "^3.0.0",
     "remark-lint": "^8.0.0",
     "remark-lint-blockquote-indentation": "^2.0.0",
     "remark-lint-checkbox-character-style": "^3.0.0",
@@ -39,7 +42,17 @@
     "remark-lint-ordered-list-marker-style": "^2.0.0",
     "remark-lint-rule-style": "^2.0.0",
     "remark-lint-strong-marker": "^2.0.0",
-    "remark-lint-table-cell-padding": "^3.0.0"
+    "remark-lint-table-cell-padding": "^3.0.0",
+    "unified": "^10.0.0"
   },
-  "xo": false
+  "scripts": {
+    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
+  },
+  "xo": false,
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  }
 }

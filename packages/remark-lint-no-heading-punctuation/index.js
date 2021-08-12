@@ -44,19 +44,21 @@
  *   9:1-9:9: Don’t add a trailing `;` to headings
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {string} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
-const defaults = '\\.,;:!?'
-
 const remarkLintNoHeadingPunctuation = lintRule(
   'remark-lint:no-heading-punctuation',
-  (tree, file, option) => {
-    const expression = new RegExp(
-      '[' + (typeof option === 'string' ? option : defaults) + ']'
-    )
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = '\\.,;:!?') => {
+    const expression = new RegExp('[' + option + ']')
 
     visit(tree, 'heading', (node) => {
       if (!generated(node)) {

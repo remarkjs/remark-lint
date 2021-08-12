@@ -30,28 +30,35 @@
  *   4:7-4:10: Checkboxes should be followed by a single character
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintCheckboxContentIndent = lintRule(
   'remark-lint:checkbox-content-indent',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
     const loc = location(file)
 
     visit(tree, 'listItem', (node) => {
       const head = node.children[0]
+      const point = pointStart(head)
 
       // Exit early for items without checkbox.
       // A list item cannot be checked and empty, according to GFM.
-      if (typeof node.checked !== 'boolean' || generated(node) || !head) {
+      if (
+        typeof node.checked !== 'boolean' ||
+        !head ||
+        typeof point.offset !== 'number'
+      ) {
         return
       }
-
-      const point = pointStart(head)
 
       // Assume we start with a checkbox, because well, `checked` is set.
       const match = /\[([\t xX])]/.exec(

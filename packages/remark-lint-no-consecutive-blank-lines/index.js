@@ -44,6 +44,11 @@
  *   4:5: Remove 2 lines after node
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('unist').Point} Point
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
@@ -52,6 +57,7 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintNoConsecutiveBlankLines = lintRule(
   'remark-lint:no-consecutive-blank-lines',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, (node) => {
       if (!generated(node) && 'children' in node) {
@@ -83,8 +89,14 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
       }
     })
 
-    // Compare the difference between `start` and `end`, and warn when that
-    // difference exceeds `max`.
+    /**
+     * Compare the difference between `start` and `end`, and warn when that
+     * difference exceeds `max`.
+     *
+     * @param {Point} start
+     * @param {Point} end
+     * @param {0|1|2} max
+     */
     function compare(start, end, max) {
       const diff = end.line - start.line
       const lines = Math.abs(diff) - max

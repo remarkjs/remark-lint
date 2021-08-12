@@ -34,6 +34,10 @@
  *   1:1-1:19: Don’t use literal URLs without angle brackets
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -42,6 +46,7 @@ import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoLiteralUrls = lintRule(
   'remark-lint:no-literal-urls',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'link', (node) => {
       const value = toString(node)

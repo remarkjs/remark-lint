@@ -101,52 +101,55 @@
  *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'fenced'|'indented'} Style
+ * @typedef {'consistent'|Style} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const styles = {null: true, fenced: true, indented: true}
-
 const remarkLintCodeBlockStyle = lintRule(
   'remark-lint:code-block-style',
-  codeBlockStyle
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
+    const value = String(file)
+
+    if (
+      option !== 'consistent' &&
+      option !== 'fenced' &&
+      option !== 'indented'
+    ) {
+      file.fail(
+        'Incorrect code block style `' +
+          option +
+          "`: use either `'consistent'`, `'fenced'`, or `'indented'`"
+      )
+    }
+
+    visit(tree, 'code', (node) => {
+      if (generated(node)) {
+        return
+      }
+
+      const initial = pointStart(node).offset
+      const final = pointEnd(node).offset
+
+      const current =
+        node.lang || /^\s*([~`])\1{2,}/.test(value.slice(initial, final))
+          ? 'fenced'
+          : 'indented'
+
+      if (option === 'consistent') {
+        option = current
+      } else if (option !== current) {
+        file.message('Code blocks should be ' + option, node)
+      }
+    })
+  }
 )
 
 export default remarkLintCodeBlockStyle
-
-function codeBlockStyle(tree, file, option) {
-  const value = String(file)
-  let preferred =
-    typeof option === 'string' && option !== 'consistent' ? option : null
-
-  if (styles[preferred] !== true) {
-    file.fail(
-      'Incorrect code block style `' +
-        preferred +
-        "`: use either `'consistent'`, `'fenced'`, or `'indented'`"
-    )
-  }
-
-  visit(tree, 'code', (node) => {
-    if (generated(node)) {
-      return
-    }
-
-    const initial = pointStart(node).offset
-    const final = pointEnd(node).offset
-
-    const current =
-      node.lang || /^\s*([~`])\1{2,}/.test(value.slice(initial, final))
-        ? 'fenced'
-        : 'indented'
-
-    if (preferred) {
-      if (preferred !== current) {
-        file.message('Code blocks should be ' + preferred, node)
-      }
-    } else {
-      preferred = current
-    }
-  })
-}

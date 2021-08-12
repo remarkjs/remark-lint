@@ -66,6 +66,17 @@
  *   17:23-17:26: Found reference to undefined definition
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('mdast').Paragraph} Paragraph
+ *
+ * @typedef Options
+ * @property {string[]} [allow]
+ *
+ * @typedef {number[]} Range
+ */
+
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 import {location} from 'vfile-location'
 import {lintRule} from 'unified-lint-rule'
@@ -75,6 +86,7 @@ import {visit, SKIP, EXIT} from 'unist-util-visit'
 
 const remarkLintNoUndefinedReferences = lintRule(
   'remark-lint:no-undefined-references',
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = {}) => {
     const contents = String(file)
     const loc = location(file)
@@ -82,7 +94,8 @@ const remarkLintNoUndefinedReferences = lintRule(
     const allow = new Set(
       (option.allow || []).map((d) => normalizeIdentifier(d))
     )
-    const map = {}
+    /** @type {Record<string, boolean>} */
+    const map = Object.create(null)
 
     visit(tree, (node) => {
       if (
@@ -113,7 +126,11 @@ const remarkLintNoUndefinedReferences = lintRule(
       }
     })
 
+    /**
+     * @param {Heading|Paragraph} node
+     */
     function findInPhrasing(node) {
+      /** @type {Range[]} */
       let ranges = []
 
       visit(node, (child) => {
@@ -133,9 +150,12 @@ const remarkLintNoUndefinedReferences = lintRule(
         const end = pointEnd(child).offset
 
         // Bail if there’s no positional info.
-        if (!end) return EXIT
+        if (typeof start !== 'number' || typeof end !== 'number') {
+          return EXIT
+        }
 
         const source = contents.slice(start, end)
+        /** @type {Array.<[number, string]>} */
         const lines = [[start, '']]
         let last = 0
 
@@ -184,25 +204,35 @@ const remarkLintNoUndefinedReferences = lintRule(
 
                 // Collapsed or full.
                 let range = ranges.pop()
-                range.push(lines[lineIndex][0] + index)
 
-                // This is the end of a reference already.
+                // Range should always exist.
                 // eslint-disable-next-line max-depth
-                if (range.length === 4) {
-                  handleRange(range)
-                  range = []
-                }
+                if (range) {
+                  range.push(lines[lineIndex][0] + index)
 
-                range.push(lines[lineIndex][0] + index)
-                ranges.push(range)
-                index++
+                  // This is the end of a reference already.
+                  // eslint-disable-next-line max-depth
+                  if (range.length === 4) {
+                    handleRange(range)
+                    range = []
+                  }
+
+                  range.push(lines[lineIndex][0] + index)
+                  ranges.push(range)
+                  index++
+                }
               } else {
                 index++
 
                 // Shortcut or typical end of a reference.
                 const range = ranges.pop()
-                range.push(lines[lineIndex][0] + index)
-                handleRange(range)
+
+                // Range should always exist.
+                // eslint-disable-next-line max-depth
+                if (range) {
+                  range.push(lines[lineIndex][0] + index)
+                  handleRange(range)
+                }
               }
             }
             // Anything else.
@@ -221,6 +251,9 @@ const remarkLintNoUndefinedReferences = lintRule(
 
       return SKIP
 
+      /**
+       * @param {Range} range
+       */
       function handleRange(range) {
         if (range.length === 1) return
         if (range.length === 3) range.length = 2

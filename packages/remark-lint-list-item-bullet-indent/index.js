@@ -37,13 +37,17 @@
  *   4:2: Incorrect indentation before bullet: remove 1 space
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 const remarkLintListItemBulletIndent = lintRule(
   'remark-lint:list-item-bullet-indent',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'list', (list, _, grandparent) => {
       let index = -1
@@ -54,8 +58,10 @@ const remarkLintListItemBulletIndent = lintRule(
         if (
           grandparent &&
           grandparent.type === 'root' &&
-          !generated(item) &&
-          !generated(grandparent)
+          grandparent.position &&
+          typeof grandparent.position.start.column === 'number' &&
+          item.position &&
+          typeof item.position.start.column === 'number'
         ) {
           const indent =
             item.position.start.column - grandparent.position.start.column

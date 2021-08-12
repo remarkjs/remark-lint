@@ -1,17 +1,52 @@
+/**
+ * @typedef Rule
+ * @property {string} ruleId
+ * @property {string} description
+ * @property {Record<string, Checks>} tests
+ * @property {string} filePath
+ *
+ * @typedef {Record<string, Check>} Checks
+ *
+ * @typedef Check
+ * @property {string} input
+ * @property {string[]} output
+ * @property {string} setting
+ * @property {boolean} gfm
+ * @property {boolean} positionless
+ */
+
 import fs from 'fs'
 import path from 'path'
 import {parse} from 'comment-parser'
 import strip from 'strip-indent'
 
-// Get information for a rule at `filePath`.
+/**
+ * Get information for a rule at `filePath`.
+ *
+ * @param {string} filePath
+ * @returns {Rule}
+ */
 export function rule(filePath) {
   const ruleId = path.basename(filePath).slice('remark-lint-'.length)
-  const result = {}
+  /** @type {Record<string, Checks>} */
   const tests = {}
   const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8')
   const tags = parse(code, {spacing: 'preserve'})[0].tags
-  const name = tags.find((d) => d.tag === 'module').name
-  let description = tags.find((d) => d.tag === 'fileoverview').description
+  const moduleTag = tags.find((d) => d.tag === 'module')
+  const fileoverviewTag = tags.find((d) => d.tag === 'fileoverview')
+
+  /* c8 ignore next 3 */
+  if (!moduleTag) {
+    throw new Error('Expected `@module` in JSDoc')
+  }
+
+  /* c8 ignore next 3 */
+  if (!fileoverviewTag) {
+    throw new Error('Expected `@fileoverview` in JSDoc')
+  }
+
+  const name = moduleTag.name
+  let description = fileoverviewTag.description
 
   /* c8 ignore next 3 */
   if (name !== ruleId) {
@@ -25,10 +60,13 @@ export function rule(filePath) {
 
   description = strip(description)
 
-  result.ruleId = ruleId
-  result.description = description.trim()
-  result.tests = tests
-  result.filePath = filePath
+  /** @type {Rule} */
+  const result = {
+    ruleId,
+    description: description.trim(),
+    tests,
+    filePath
+  }
 
   const examples = tags
     .filter((d) => d.tag === 'example')
@@ -37,6 +75,7 @@ export function rule(filePath) {
 
   while (++index < examples.length) {
     const lines = examples[index].split('\n')
+    /** @type {{name: string, label?: 'input'|'output', setting?: unknown, positionless?: boolean, gfm?: boolean}} */
     let info
 
     try {
@@ -52,17 +91,12 @@ export function rule(filePath) {
     const exampleValue = strip(lines.join('\n').replace(/^\r?\n/g, ''))
     const setting = JSON.stringify(info.setting || true)
     const name = info.name
-    let context = tests[setting]
-
-    if (!context) {
-      context = []
-      tests[setting] = context
-    }
+    const context = setting in tests ? tests[setting] : (tests[setting] = {})
 
     if (!info.label) {
       context[name] = {
-        positionless: info.positionless,
-        gfm: info.gfm,
+        positionless: info.positionless || false,
+        gfm: info.gfm || false,
         setting,
         input: exampleValue,
         output: []
@@ -83,7 +117,13 @@ export function rule(filePath) {
     }
 
     if (!context[name]) {
-      context[name] = {positionless: info.positionless, gfm: info.gfm}
+      context[name] = {
+        positionless: info.positionless || false,
+        gfm: info.gfm || false,
+        setting: '',
+        input: '',
+        output: []
+      }
     }
 
     context[name].setting = setting

@@ -56,12 +56,33 @@
  *   5:1-8:4: Do not use dollar signs before shell commands
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
+// List of shell script file extensions (also used as code flags for syntax
+// highlighting on GitHub):
+// See: <https://github.com/github/linguist/blob/40992ba/lib/linguist/languages.yml#L4984>
+const flags = new Set([
+  'sh',
+  'bash',
+  'bats',
+  'cgi',
+  'command',
+  'fcgi',
+  'ksh',
+  'tmux',
+  'tool',
+  'zsh'
+])
+
 const remarkLintNoShellDollars = lintRule(
   'remark-lint:no-shell-dollars',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'code', (node) => {
       // Check both known shell code and unknown code.
@@ -90,19 +111,3 @@ const remarkLintNoShellDollars = lintRule(
 )
 
 export default remarkLintNoShellDollars
-
-// List of shell script file extensions (also used as code flags for syntax
-// highlighting on GitHub):
-// See: <https://github.com/github/linguist/blob/40992ba/lib/linguist/languages.yml#L4984>
-const flags = new Set([
-  'sh',
-  'bash',
-  'bats',
-  'cgi',
-  'command',
-  'fcgi',
-  'ksh',
-  'tmux',
-  'tool',
-  'zsh'
-])

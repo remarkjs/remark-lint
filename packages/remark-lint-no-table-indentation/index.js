@@ -64,6 +64,10 @@
  *   3:6: Do not indent table rows
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit, SKIP} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -71,6 +75,7 @@ import {location} from 'vfile-location'
 
 const remarkLintNoTableIndentation = lintRule(
   'remark-lint:no-table-indentation',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
     const loc = location(value)

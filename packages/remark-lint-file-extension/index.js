@@ -26,11 +26,17 @@
  *   {"name": "readme.mkd", "setting": "mkd"}
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {string} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFileExtension = lintRule(
   'remark-lint:file-extension',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (_, file, option) => {
     const ext = file.extname
     const preferred = typeof option === 'string' ? option : 'md'
 

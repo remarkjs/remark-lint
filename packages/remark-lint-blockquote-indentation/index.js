@@ -48,6 +48,12 @@
  *   9:3: Add 1 space between block quote and content
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Blockquote} Blockquote
+ * @typedef {'consistent'|number} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
@@ -56,41 +62,42 @@ import {generated} from 'unist-util-generated'
 
 const remarkLintBlockquoteIndentation = lintRule(
   'remark-lint:blockquote-indentation',
-  blockquoteIndentation
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
+    visit(tree, 'blockquote', (node) => {
+      if (generated(node) || node.children.length === 0) {
+        return
+      }
+
+      if (option === 'consistent') {
+        option = check(node)
+      } else {
+        const diff = option - check(node)
+
+        if (diff !== 0) {
+          const abs = Math.abs(diff)
+
+          file.message(
+            (diff > 0 ? 'Add' : 'Remove') +
+              ' ' +
+              abs +
+              ' ' +
+              plural('space', abs) +
+              ' between block quote and content',
+            pointStart(node.children[0])
+          )
+        }
+      }
+    })
+  }
 )
 
 export default remarkLintBlockquoteIndentation
 
-function blockquoteIndentation(tree, file, option) {
-  let preferred = typeof option === 'number' ? option : null
-
-  visit(tree, 'blockquote', (node) => {
-    if (generated(node) || node.children.length === 0) {
-      return
-    }
-
-    if (preferred) {
-      const diff = preferred - check(node)
-
-      if (diff !== 0) {
-        const abs = Math.abs(diff)
-
-        file.message(
-          (diff > 0 ? 'Add' : 'Remove') +
-            ' ' +
-            abs +
-            ' ' +
-            plural('space', abs) +
-            ' between block quote and content',
-          pointStart(node.children[0])
-        )
-      }
-    } else {
-      preferred = check(node)
-    }
-  })
-}
-
+/**
+ * @param {Blockquote} node
+ * @returns {number}
+ */
 function check(node) {
   return pointStart(node.children[0]).column - pointStart(node).column
 }

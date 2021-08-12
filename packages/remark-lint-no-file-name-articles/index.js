@@ -30,11 +30,16 @@
  *   1:1: Do not start file names with `an`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNoFileNameArticles = lintRule(
   'remark-lint:no-file-name-articles',
-  (tree, file) => {
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
+  (_, file) => {
     const match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)
 
     if (match) {

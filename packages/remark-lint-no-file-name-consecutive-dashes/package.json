@@ -27,11 +27,24 @@
   "sideEffects": false,
   "type": "module",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "index.js"
   ],
   "dependencies": {
+    "@types/mdast": "^3.0.0",
+    "unified": "^10.0.0",
     "unified-lint-rule": "^1.0.0"
   },
-  "xo": false
+  "scripts": {
+    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
+  },
+  "xo": false,
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  }
 }

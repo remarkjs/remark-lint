@@ -27,16 +27,24 @@
  *   1:1-1:15: Do not use HTML in markdown
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
-const remarkLintNoHtml = lintRule('remark-lint:no-html', (tree, file) => {
-  visit(tree, 'html', (node) => {
-    if (!generated(node) && !/^\s*<!--/.test(node.value)) {
-      file.message('Do not use HTML in markdown', node)
-    }
-  })
-})
+const remarkLintNoHtml = lintRule(
+  'remark-lint:no-html',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
+  (tree, file) => {
+    visit(tree, 'html', (node) => {
+      if (!generated(node) && !/^\s*<!--/.test(node.value)) {
+        file.message('Do not use HTML in markdown', node)
+      }
+    })
+  }
+)
 
 export default remarkLintNoHtml

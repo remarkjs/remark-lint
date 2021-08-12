@@ -46,25 +46,26 @@
  *   3:17-3:18: Misaligned table fence
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'-'|'*'|'+'} Marker
+ * @typedef {'consistent'|Marker} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-
-const reason = 'Misaligned table fence'
 
 const remarkLintTablePipeAlignment = lintRule(
   'remark-lint:table-pipe-alignment',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
 
     visit(tree, 'table', (node) => {
+      /** @type {number[]} */
       const indices = []
       let index = -1
-
-      if (generated(node)) {
-        return
-      }
 
       while (++index < node.children.length) {
         const row = node.children[index]
@@ -77,16 +78,22 @@ const remarkLintTablePipeAlignment = lintRule(
           const next = row.children[nextColumn]
           const initial = cell ? pointEnd(cell).offset : pointStart(row).offset
           const final = next ? pointStart(next).offset : pointEnd(row).offset
+
+          if (
+            typeof initial !== 'number' ||
+            typeof final !== 'number' ||
+            typeof begin.offset !== 'number'
+          ) {
+            continue
+          }
+
           const fence = value.slice(initial, final)
           const pos = initial + fence.indexOf('|') - begin.offset + 1
 
-          if (
-            indices[nextColumn] === undefined ||
-            indices[nextColumn] === null
-          ) {
+          if (indices[nextColumn] === undefined) {
             indices[nextColumn] = pos
           } else if (pos !== indices[nextColumn]) {
-            file.message(reason, {
+            file.message('Misaligned table fence', {
               start: {line: begin.line, column: pos},
               end: {line: begin.line, column: pos + 1}
             })

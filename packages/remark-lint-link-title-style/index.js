@@ -98,11 +98,16 @@
  *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'"'|"'"|'()'} Marker
+ * @typedef {'consistent'|Marker} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const own = {}.hasOwnProperty
 
@@ -114,42 +119,48 @@ const markers = {
 
 const remarkLintLinkTitleStyle = lintRule(
   'remark-lint:link-title-style',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const value = String(file)
     const loc = location(file)
-    let preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : null
+    // @ts-expect-error: allow other paren combos.
+    let look = option === '()' || option === '(' ? ')' : option
 
-    if (preferred === '()' || preferred === '(') {
-      preferred = ')'
-    }
-
-    if (preferred && !own.call(markers, preferred)) {
+    if (look !== 'consistent' && !own.call(markers, look)) {
       file.fail(
         'Incorrect link title style marker `' +
-          preferred +
+          look +
           "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
       )
     }
 
     visit(tree, (node) => {
       if (
-        (node.type === 'link' ||
-          node.type === 'image' ||
-          node.type === 'definition') &&
-        !generated(node)
+        node.type === 'link' ||
+        node.type === 'image' ||
+        node.type === 'definition'
       ) {
-        const tail = node.children
-          ? node.children[node.children.length - 1]
-          : null
+        const tail =
+          'children' in node
+            ? node.children[node.children.length - 1]
+            : undefined
         const begin = tail ? pointEnd(tail) : pointStart(node)
-        let last = pointEnd(node).offset - 1
+        const end = pointEnd(node)
+
+        if (
+          typeof begin.offset !== 'number' ||
+          typeof end.offset !== 'number'
+        ) {
+          return
+        }
+
+        let last = end.offset - 1
 
         if (node.type !== 'definition') {
           last--
         }
 
-        const final = value.charAt(last)
+        const final = /** @type {keyof markers} */ (value.charAt(last))
 
         // Exit if the final marker is not a known marker.
         if (!(final in markers)) {
@@ -163,24 +174,22 @@ const remarkLintLinkTitleStyle = lintRule(
 
         // Exit if there’s no starting delimiter, the starting delimiter is before
         // the start of the node, or if it’s not preceded by whitespace.
-        if (first <= begin || !/\s/.test(value.charAt(first - 1))) {
+        if (first <= begin.offset || !/\s/.test(value.charAt(first - 1))) {
           return
         }
 
-        if (preferred) {
-          if (preferred !== final) {
-            file.message(
-              'Titles should use `' +
-                (preferred === ')' ? '()' : preferred) +
-                '` as a quote',
-              {
-                start: loc.toPoint(first),
-                end: loc.toPoint(last + 1)
-              }
-            )
-          }
-        } else {
-          preferred = final
+        if (look === 'consistent') {
+          look = final
+        } else if (look !== final) {
+          file.message(
+            'Titles should use `' +
+              (look === ')' ? '()' : look) +
+              '` as a quote',
+            {
+              start: loc.toPoint(first),
+              end: loc.toPoint(last + 1)
+            }
+          )
         }
       }
     })

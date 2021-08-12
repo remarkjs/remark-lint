@@ -22,31 +22,36 @@
  *   1:1-1:57: Do not use consecutive whitespace in definition labels
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
 
 const remarkLintDefinitionSpacing = lintRule(
   'remark-lint:definition-spacing',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)
 
     visit(tree, (node) => {
-      if (
-        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
-        !generated(node)
-      ) {
+      if (node.type === 'definition' || node.type === 'footnoteDefinition') {
         const start = pointStart(node).offset
         const end = pointEnd(node).offset
 
-        if (/[ \t\n]{2,}/.test(value.slice(start, end).match(label)[1])) {
-          file.message(
-            'Do not use consecutive whitespace in definition labels',
-            node
-          )
+        if (typeof start === 'number' && typeof end === 'number') {
+          const match = value.slice(start, end).match(label)
+
+          if (match && /[ \t\n]{2,}/.test(match[1])) {
+            file.message(
+              'Do not use consecutive whitespace in definition labels',
+              node
+            )
+          }
         }
       }
     })

@@ -18,11 +18,16 @@
  *   1:1: Do not mix casing in file names
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNofileNameMixedCase = lintRule(
   'remark-lint:no-file-name-mixed-case',
-  (tree, file) => {
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
+  (_, file) => {
     const name = file.stem
 
     if (name && !(name === name.toLowerCase() || name === name.toUpperCase())) {

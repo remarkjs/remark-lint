@@ -26,13 +26,20 @@
  *   3:1-3:10: Heading levels should increment by one level at a time
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Heading['depth']} Depth
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintHeadingIncrement = lintRule(
   'remark-lint:heading-increment',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {Depth} */
     let previous
 
     visit(tree, 'heading', (node) => {

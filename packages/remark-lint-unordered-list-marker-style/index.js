@@ -73,29 +73,29 @@
  *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'-'|'*'|'+'} Marker
+ * @typedef {'consistent'|Marker} Options
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const styles = {
-  '-': true,
-  '*': true,
-  '+': true,
-  undefined: true
-}
+const markers = new Set(['-', '*', '+'])
 
 const remarkLintUnorderedListMarkerStyle = lintRule(
   'remark-lint:unordered-list-marker-style',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'consistent') => {
     const value = String(file)
-    let preferred =
-      typeof option === 'string' && option !== 'consistent' ? option : undefined
 
-    if (styles[preferred] !== true) {
+    if (option !== 'consistent' && !markers.has(option)) {
       file.fail(
         'Incorrect unordered list item marker style `' +
-          preferred +
+          option +
           "`: use either `'-'`, `'*'`, or `'+'`"
       )
     }
@@ -103,27 +103,26 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
     visit(tree, 'list', (node) => {
       if (node.ordered) return
 
-      const children = node.children
       let index = -1
 
-      while (++index < children.length) {
-        const child = children[index]
+      while (++index < node.children.length) {
+        const child = node.children[index]
 
         if (!generated(child)) {
-          const marker = value
-            .slice(
-              pointStart(child).offset,
-              pointStart(child.children[0]).offset
-            )
-            .replace(/\[[x ]?]\s*$/i, '')
-            .replace(/\s/g, '')
+          const marker = /** @type {Marker} */ (
+            value
+              .slice(
+                pointStart(child).offset,
+                pointStart(child.children[0]).offset
+              )
+              .replace(/\[[x ]?]\s*$/i, '')
+              .replace(/\s/g, '')
+          )
 
-          if (preferred) {
-            if (marker !== preferred) {
-              file.message('Marker style should be `' + preferred + '`', child)
-            }
-          } else {
-            preferred = marker
+          if (option === 'consistent') {
+            option = marker
+          } else if (marker !== option) {
+            file.message('Marker style should be `' + option + '`', child)
           }
         }
       }

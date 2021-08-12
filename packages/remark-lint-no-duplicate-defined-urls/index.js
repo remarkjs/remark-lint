@@ -24,6 +24,10 @@
  *   2:1-2:19: Do not use different definitions with the same URL (1:1)
  */
 
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
@@ -32,7 +36,9 @@ import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateDefinedUrls = lintRule(
   'remark-lint:no-duplicate-defined-urls',
+  /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
+    /** @type {Record<string, string>} */
     const map = Object.create(null)
 
     visit(tree, 'definition', (node) => {
@@ -43,13 +49,13 @@ const remarkLintNoDuplicateDefinedUrls = lintRule(
         if (duplicate) {
           file.message(
             'Do not use different definitions with the same URL (' +
-              stringifyPosition(pointStart(duplicate)) +
+              duplicate +
               ')',
             node
           )
         }
 
-        map[url] = node
+        map[url] = stringifyPosition(pointStart(node))
       }
     })
   }

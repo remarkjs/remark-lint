@@ -134,7 +134,12 @@
  * @example
  *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
- *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'` or `'one'`
+ *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'`, `'one'`, or `'single'`
+ */
+
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {'single'|'one'|'ordered'} Options
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -142,19 +147,17 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
-const styles = {ordered: true, single: true, one: true}
-
 const remarkLintOrderedListMarkerValue = lintRule(
   'remark-lint:ordered-list-marker-value',
-  (tree, file, option) => {
+  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
+  (tree, file, option = 'ordered') => {
     const value = String(file)
-    const preferred = typeof option === 'string' ? option : 'ordered'
 
-    if (styles[preferred] !== true) {
+    if (option !== 'ordered' && option !== 'one' && option !== 'single') {
       file.fail(
         'Incorrect ordered list item marker value `' +
-          preferred +
-          "`: use either `'ordered'` or `'one'`"
+          option +
+          "`: use either `'ordered'`, `'one'`, or `'single'`"
       )
     }
 
@@ -162,7 +165,7 @@ const remarkLintOrderedListMarkerValue = lintRule(
       if (!node.ordered) return
 
       let expected =
-        preferred === 'one' || node.start === null || node.start === undefined
+        option === 'one' || node.start === null || node.start === undefined
           ? 1
           : node.start
       let index = -1
@@ -171,12 +174,12 @@ const remarkLintOrderedListMarkerValue = lintRule(
         const child = node.children[index]
 
         // Ignore generated nodes, first items.
-        if (generated(child) || (index === 0 && preferred !== 'one')) {
+        if (generated(child) || (index === 0 && option !== 'one')) {
           continue
         }
 
         // Increase the expected line number when in `ordered` mode.
-        if (preferred === 'ordered') {
+        if (option === 'ordered') {
           expected++
         }
 

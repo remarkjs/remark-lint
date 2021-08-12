@@ -36,12 +36,11 @@ import {lintRule} from 'unified-lint-rule'
 const remarkLintFileExtension = lintRule(
   'remark-lint:file-extension',
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (_, file, option) => {
+  (_, file, option = 'md') => {
     const ext = file.extname
-    const preferred = typeof option === 'string' ? option : 'md'
 
-    if (ext && ext.slice(1) !== preferred) {
-      file.message('Incorrect extension: use `' + preferred + '`')
+    if (ext && ext.slice(1) !== option) {
+      file.message('Incorrect extension: use `' + option + '`')
     }
   }
 )

@@ -12,7 +12,11 @@
     "newline",
     "unix"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remarkjs/remark-lint",
+    "directory": "packages/remark-lint-final-newline"
+  },
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

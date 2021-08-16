@@ -1,7 +1,10 @@
 {
   "private": true,
   "license": "MIT",
-  "repository": "https://github.com/remarkjs/remark-lint",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remarkjs/remark-lint"
+  },
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [

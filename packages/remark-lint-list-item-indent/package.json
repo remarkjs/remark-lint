@@ -12,7 +12,11 @@
     "item",
     "indent"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remarkjs/remark-lint",
+    "directory": "packages/remark-lint-list-item-indent"
+  },
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

@@ -14,16 +14,9 @@ import remarkGfm from 'remark-gfm'
 import strip from 'strip-indent'
 import parseAuthor from 'parse-author'
 import {presets} from './util/presets.js'
+import {repoUrl} from './util/repo-url.js'
 
-/** @type {PackageJson} */
-const pkg = JSON.parse(String(fs.readFileSync('package.json')))
-const remote = pkg.repository
-
-if (typeof remote !== 'string') {
-  throw new TypeError(
-    'Expected `string` for `repository` in root `package.json`'
-  )
-}
+const remote = repoUrl('package.json')
 
 const own = {}.hasOwnProperty
 

@@ -14,19 +14,12 @@ import parseAuthor from 'parse-author'
 import {rules} from './util/rules.js'
 import {rule} from './util/rule.js'
 import {presets} from './util/presets.js'
+import {repoUrl} from './util/repo-url.js'
 import {characters} from './characters.js'
 
 const own = {}.hasOwnProperty
 
-/** @type {PackageJson} */
-const pkg = JSON.parse(String(fs.readFileSync('package.json')))
-const remote = pkg.repository
-
-if (typeof remote !== 'string') {
-  throw new TypeError(
-    'Expected `string` for `repository` in root `package.json`'
-  )
-}
+const remote = repoUrl('package.json')
 
 const root = path.join(process.cwd(), 'packages')
 

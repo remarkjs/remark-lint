@@ -11,7 +11,11 @@
     "emphasis",
     "heading"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remarkjs/remark-lint",
+    "directory": "packages/remark-lint-no-emphasis-as-heading"
+  },
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

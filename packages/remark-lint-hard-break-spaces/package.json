@@ -13,7 +13,11 @@
     "spaces",
     "size"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remarkjs/remark-lint",
+    "directory": "packages/remark-lint-hard-break-spaces"
+  },
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",

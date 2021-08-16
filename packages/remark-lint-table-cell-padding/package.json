@@ -12,7 +12,11 @@
     "cell",
     "padding"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remarkjs/remark-lint",
+    "directory": "packages/remark-lint-table-cell-padding"
+  },
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -31,8 +35,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/unist": "^2.0.0",
     "@types/mdast": "^3.0.0",
+    "@types/unist": "^2.0.0",
     "unified": "^10.0.0",
     "unified-lint-rule": "^2.0.0",
     "unist-util-position": "^4.0.0",

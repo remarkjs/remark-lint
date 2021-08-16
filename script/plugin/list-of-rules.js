@@ -10,6 +10,7 @@ import path from 'node:path'
 import process from 'node:process'
 import {zone} from 'mdast-zone'
 import {rules} from '../util/rules.js'
+import {repoUrl} from '../util/repo-url.js'
 
 const root = path.join(process.cwd(), 'packages')
 
@@ -43,7 +44,7 @@ export default function listOfRules() {
                 children: [
                   {
                     type: 'link',
-                    url: String(pack.repository || ''),
+                    url: repoUrl(pack),
                     children: [{type: 'inlineCode', value: name}]
                   },
                   {type: 'text', value: ' — ' + description}

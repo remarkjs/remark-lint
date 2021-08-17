@@ -4,6 +4,10 @@
  *   consistency.
  */
 
+/**
+ * @typedef {import('unified').Preset} Preset
+ */
+
 import remarkLint from 'remark-lint'
 import remarkLintBlockquoteIndentation from 'remark-lint-blockquote-indentation'
 import remarkLintCheckboxCharacterStyle from 'remark-lint-checkbox-character-style'
@@ -18,22 +22,23 @@ import remarkLintRuleStyle from 'remark-lint-rule-style'
 import remarkLintStrongMarker from 'remark-lint-strong-marker'
 import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
 
-const plugins = [
-  remarkLint,
-  [remarkLintBlockquoteIndentation, 'consistent'],
-  [remarkLintCheckboxCharacterStyle, 'consistent'],
-  [remarkLintCodeBlockStyle, 'consistent'],
-  [remarkLintEmphasisMarker, 'consistent'],
-  [remarkLintFencedCodeMarker, 'consistent'],
-  [remarkLintHeadingStyle, 'consistent'],
-  [remarkLintLinkTitleStyle, 'consistent'],
-  remarkLintListItemContentIndent,
-  [remarkLintOrderedListMarkerStyle, 'consistent'],
-  [remarkLintRuleStyle, 'consistent'],
-  [remarkLintStrongMarker, 'consistent'],
-  [remarkLintTableCellPadding, 'consistent']
-]
-
-const remarkPresetLintConsistent = {plugins}
+/** @type {Preset} */
+const remarkPresetLintConsistent = {
+  plugins: [
+    remarkLint,
+    [remarkLintBlockquoteIndentation, 'consistent'],
+    [remarkLintCheckboxCharacterStyle, 'consistent'],
+    [remarkLintCodeBlockStyle, 'consistent'],
+    [remarkLintEmphasisMarker, 'consistent'],
+    [remarkLintFencedCodeMarker, 'consistent'],
+    [remarkLintHeadingStyle, 'consistent'],
+    [remarkLintLinkTitleStyle, 'consistent'],
+    remarkLintListItemContentIndent,
+    [remarkLintOrderedListMarkerStyle, 'consistent'],
+    [remarkLintRuleStyle, 'consistent'],
+    [remarkLintStrongMarker, 'consistent'],
+    [remarkLintTableCellPadding, 'consistent']
+  ]
+}
 
 export default remarkPresetLintConsistent

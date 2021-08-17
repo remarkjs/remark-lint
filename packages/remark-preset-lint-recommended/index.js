@@ -4,6 +4,10 @@
  *   mistakes or stuff that fails across vendors.
  */
 
+/**
+ * @typedef {import('unified').Preset} Preset
+ */
+
 import remarkLint from 'remark-lint'
 import remarkLintFinalNewline from 'remark-lint-final-newline'
 import remarkLintListItemBulletIndent from 'remark-lint-list-item-bullet-indent'
@@ -21,29 +25,30 @@ import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
 import remarkLintNoUnusedDefinitions from 'remark-lint-no-unused-definitions'
 
-const plugins = [
-  remarkLint,
-  // Unix compatibility.
-  remarkLintFinalNewline,
-  // Rendering across vendors differs greatly if using other styles.
-  remarkLintListItemBulletIndent,
-  [remarkLintListItemIndent, 'tab-size'],
-  // Differs or unsupported across vendors.
-  remarkLintNoAutoLinkWithoutProtocol,
-  remarkLintNoBlockquoteWithoutMarker,
-  remarkLintNoLiteralUrls,
-  [remarkLintOrderedListMarkerStyle, '.'],
-  // Mistakes.
-  remarkLintHardBreakSpaces,
-  remarkLintNoDuplicateDefinitions,
-  remarkLintNoHeadingContentIndent,
-  remarkLintNoInlinePadding,
-  remarkLintNoShortcutReferenceImage,
-  remarkLintNoShortcutReferenceLink,
-  remarkLintNoUndefinedReferences,
-  remarkLintNoUnusedDefinitions
-]
-
-const remarkPresetLintRecommended = {plugins}
+/** @type {Preset} */
+const remarkPresetLintRecommended = {
+  plugins: [
+    remarkLint,
+    // Unix compatibility.
+    remarkLintFinalNewline,
+    // Rendering across vendors differs greatly if using other styles.
+    remarkLintListItemBulletIndent,
+    [remarkLintListItemIndent, 'tab-size'],
+    // Differs or unsupported across vendors.
+    remarkLintNoAutoLinkWithoutProtocol,
+    remarkLintNoBlockquoteWithoutMarker,
+    remarkLintNoLiteralUrls,
+    [remarkLintOrderedListMarkerStyle, '.'],
+    // Mistakes.
+    remarkLintHardBreakSpaces,
+    remarkLintNoDuplicateDefinitions,
+    remarkLintNoHeadingContentIndent,
+    remarkLintNoInlinePadding,
+    remarkLintNoShortcutReferenceImage,
+    remarkLintNoShortcutReferenceLink,
+    remarkLintNoUndefinedReferences,
+    remarkLintNoUnusedDefinitions
+  ]
+}
 
 export default remarkPresetLintRecommended

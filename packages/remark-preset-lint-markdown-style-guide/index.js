@@ -96,6 +96,10 @@
  *   ```
  */
 
+/**
+ * @typedef {import('unified').Preset} Preset
+ */
+
 import remarkLint from 'remark-lint'
 import remarkLintFileExtension from 'remark-lint-file-extension'
 import remarkLintNoFileNameMixedCase from 'remark-lint-no-file-name-mixed-case'
@@ -142,148 +146,149 @@ import remarkLintNoEmphasisAsHeading from 'remark-lint-no-emphasis-as-heading'
 import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
 import remarkLintNoAutoLinkWithoutProtocol from 'remark-lint-no-auto-link-without-protocol'
 
-const plugins = [
-  remarkLint,
+/** @type {Preset} */
+const remarkPresetLintMarkdownStyleGuide = {
+  plugins: [
+    remarkLint,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#file-extension
-  [remarkLintFileExtension, 'md'],
+    // http://www.cirosantilli.com/markdown-style-guide/#file-extension
+    [remarkLintFileExtension, 'md'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#file-name
-  remarkLintNoFileNameMixedCase,
-  remarkLintNoFileNameArticles,
-  remarkLintNoFileNameIrregularCharacters,
-  remarkLintNoFileNameConsecutiveDashes,
-  remarkLintNoFileNameOuterDashes,
+    // http://www.cirosantilli.com/markdown-style-guide/#file-name
+    remarkLintNoFileNameMixedCase,
+    remarkLintNoFileNameArticles,
+    remarkLintNoFileNameIrregularCharacters,
+    remarkLintNoFileNameConsecutiveDashes,
+    remarkLintNoFileNameOuterDashes,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#newlines
-  // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-around-lists
-  // http://www.cirosantilli.com/markdown-style-guide/#tables
-  remarkLintNoConsecutiveBlankLines,
+    // http://www.cirosantilli.com/markdown-style-guide/#newlines
+    // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-around-lists
+    // http://www.cirosantilli.com/markdown-style-guide/#tables
+    remarkLintNoConsecutiveBlankLines,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-sentences.
-  // Not enforced, cannot be done properly without false positives, if you
-  // want this, use remark-retext and retext-sentence-spacing.
+    // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-sentences.
+    // Not enforced, cannot be done properly without false positives, if you
+    // want this, use remark-retext and retext-sentence-spacing.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#line-wrapping
-  [remarkLintMaximumLineLength, 80],
+    // http://www.cirosantilli.com/markdown-style-guide/#line-wrapping
+    [remarkLintMaximumLineLength, 80],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
-  remarkLintNoShellDollars,
+    // http://www.cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
+    remarkLintNoShellDollars,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#what-to-mark-as-code.
-  // This is a tip, not a rule.
+    // http://www.cirosantilli.com/markdown-style-guide/#what-to-mark-as-code.
+    // This is a tip, not a rule.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#spelling-and-grammar.
-  // Spelling is not in the scope of remark-lint.  If you want this,
-  // use remark-retext and retext-spell.
+    // http://www.cirosantilli.com/markdown-style-guide/#spelling-and-grammar.
+    // Spelling is not in the scope of remark-lint.  If you want this,
+    // use remark-retext and retext-spell.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#line-breaks
-  remarkLintHardBreakSpaces,
+    // http://www.cirosantilli.com/markdown-style-guide/#line-breaks
+    remarkLintHardBreakSpaces,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#headers
-  [remarkLintHeadingStyle, 'atx'],
-  remarkLintHeadingIncrement,
-  remarkLintNoDuplicateHeadings,
+    // http://www.cirosantilli.com/markdown-style-guide/#headers
+    [remarkLintHeadingStyle, 'atx'],
+    remarkLintHeadingIncrement,
+    remarkLintNoDuplicateHeadings,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#top-level-header
-  remarkLintNoMultipleToplevelHeadings,
+    // http://www.cirosantilli.com/markdown-style-guide/#top-level-header
+    remarkLintNoMultipleToplevelHeadings,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#header-case.
-  // Heading case isn’t tested yet: new rules to fix this are ok though!
+    // http://www.cirosantilli.com/markdown-style-guide/#header-case.
+    // Heading case isn’t tested yet: new rules to fix this are ok though!
 
-  // http://www.cirosantilli.com/markdown-style-guide/#end-of-a-header.
-  // Cannot be checked?
+    // http://www.cirosantilli.com/markdown-style-guide/#end-of-a-header.
+    // Cannot be checked?
 
-  // http://www.cirosantilli.com/markdown-style-guide/#header-length
-  remarkLintMaximumHeadingLength,
+    // http://www.cirosantilli.com/markdown-style-guide/#header-length
+    remarkLintMaximumHeadingLength,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-headers
-  [remarkLintNoHeadingPunctuation, ':.'],
+    // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-headers
+    [remarkLintNoHeadingPunctuation, ':.'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#header-synonyms.
-  // Cannot be checked?
+    // http://www.cirosantilli.com/markdown-style-guide/#header-synonyms.
+    // Cannot be checked?
 
-  // http://www.cirosantilli.com/markdown-style-guide/#blockquotes
-  [remarkLintBlockquoteIndentation, 2],
-  remarkLintNoBlockquoteWithoutMarker,
+    // http://www.cirosantilli.com/markdown-style-guide/#blockquotes
+    [remarkLintBlockquoteIndentation, 2],
+    remarkLintNoBlockquoteWithoutMarker,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#unordered
-  [remarkLintUnorderedListMarkerStyle, '-'],
+    // http://www.cirosantilli.com/markdown-style-guide/#unordered
+    [remarkLintUnorderedListMarkerStyle, '-'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#ordered
-  [remarkLintOrderedListMarkerStyle, '.'],
-  [remarkLintOrderedListMarkerValue, 'one'],
+    // http://www.cirosantilli.com/markdown-style-guide/#ordered
+    [remarkLintOrderedListMarkerStyle, '.'],
+    [remarkLintOrderedListMarkerValue, 'one'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
-  [remarkLintListItemIndent, 'mixed'],
+    // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
+    [remarkLintListItemIndent, 'mixed'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
-  remarkLintListItemContentIndent,
+    // http://www.cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
+    remarkLintListItemContentIndent,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-inside-lists
-  remarkLintListItemSpacing,
+    // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-inside-lists
+    remarkLintListItemSpacing,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#case-of-first-letter-of-list-item
-  // Not checked.
+    // http://www.cirosantilli.com/markdown-style-guide/#case-of-first-letter-of-list-item
+    // Not checked.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-list-items.
-  // Not checked.
+    // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-list-items.
+    // Not checked.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#definition-lists.
-  // Not checked.
+    // http://www.cirosantilli.com/markdown-style-guide/#definition-lists.
+    // Not checked.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#code-blocks
-  [remarkLintCodeBlockStyle, 'fenced'],
-  [remarkLintFencedCodeFlag, {allowEmpty: false}],
-  [remarkLintFencedCodeMarker, '`'],
+    // http://www.cirosantilli.com/markdown-style-guide/#code-blocks
+    [remarkLintCodeBlockStyle, 'fenced'],
+    [remarkLintFencedCodeFlag, {allowEmpty: false}],
+    [remarkLintFencedCodeMarker, '`'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#horizontal-rules
-  [remarkLintRuleStyle, '---'],
+    // http://www.cirosantilli.com/markdown-style-guide/#horizontal-rules
+    [remarkLintRuleStyle, '---'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#tables
-  remarkLintNoTableIndentation,
-  remarkLintTablePipes,
-  remarkLintTablePipeAlignment,
-  [remarkLintTableCellPadding, 'padded'],
+    // http://www.cirosantilli.com/markdown-style-guide/#tables
+    remarkLintNoTableIndentation,
+    remarkLintTablePipes,
+    remarkLintTablePipeAlignment,
+    [remarkLintTableCellPadding, 'padded'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
-  // Not checked.
+    // http://www.cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
+    // Not checked.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#span-elements
-  remarkLintNoInlinePadding,
+    // http://www.cirosantilli.com/markdown-style-guide/#span-elements
+    remarkLintNoInlinePadding,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#reference-style-links
-  remarkLintNoShortcutReferenceImage,
-  remarkLintNoShortcutReferenceLink,
-  remarkLintFinalDefinition,
-  remarkLintDefinitionCase,
-  remarkLintDefinitionSpacing,
+    // http://www.cirosantilli.com/markdown-style-guide/#reference-style-links
+    remarkLintNoShortcutReferenceImage,
+    remarkLintNoShortcutReferenceLink,
+    remarkLintFinalDefinition,
+    remarkLintDefinitionCase,
+    remarkLintDefinitionSpacing,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
-  [remarkLintLinkTitleStyle, '"'],
+    // http://www.cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
+    [remarkLintLinkTitleStyle, '"'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#bold
-  [remarkLintStrongMarker, '*'],
+    // http://www.cirosantilli.com/markdown-style-guide/#bold
+    [remarkLintStrongMarker, '*'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#italic
-  [remarkLintEmphasisMarker, '*'],
+    // http://www.cirosantilli.com/markdown-style-guide/#italic
+    [remarkLintEmphasisMarker, '*'],
 
-  // http://www.cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
-  // Not checked.
+    // http://www.cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
+    // Not checked.
 
-  // http://www.cirosantilli.com/markdown-style-guide/#emphasis-vs-headers
-  remarkLintNoEmphasisAsHeading,
+    // http://www.cirosantilli.com/markdown-style-guide/#emphasis-vs-headers
+    remarkLintNoEmphasisAsHeading,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
-  remarkLintNoLiteralUrls,
+    // http://www.cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
+    remarkLintNoLiteralUrls,
 
-  // http://www.cirosantilli.com/markdown-style-guide/#content-of-automatic-links
-  remarkLintNoAutoLinkWithoutProtocol
+    // http://www.cirosantilli.com/markdown-style-guide/#content-of-automatic-links
+    remarkLintNoAutoLinkWithoutProtocol
 
-  // http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
-  // Not checked.
-]
-
-const remarkPresetLintMarkdownStyleGuide = {plugins}
+    // http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
+    // Not checked.
+  ]
+}
 
 export default remarkPresetLintMarkdownStyleGuide

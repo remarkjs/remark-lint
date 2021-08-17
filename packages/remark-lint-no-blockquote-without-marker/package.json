@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-blockquote-without-marker",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "remark-lint rule to warn when blank lines without markers (`>`) are found in a block quote",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-heading-punctuation",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "remark-lint rule to warn when headings end in illegal characters",
   "license": "MIT",
   "keywords": [

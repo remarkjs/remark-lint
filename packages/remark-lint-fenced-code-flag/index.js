@@ -100,7 +100,10 @@ import {generated} from 'unist-util-generated'
 const fence = /^ {0,3}([~`])\1{2,}/
 
 const remarkLintFencedCodeFlag = lintRule(
-  'remark-lint:fenced-code-flag',
+  {
+    origin: 'remark-lint:fenced-code-flag',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option) => {
     const value = String(file)

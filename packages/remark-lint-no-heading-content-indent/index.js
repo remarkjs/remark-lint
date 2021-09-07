@@ -62,7 +62,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingContentIndent = lintRule(
-  'remark-lint:no-heading-content-indent',
+  {
+    origin: 'remark-lint:no-heading-content-indent',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'heading', (node) => {

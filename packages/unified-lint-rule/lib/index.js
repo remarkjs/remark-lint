@@ -6,6 +6,8 @@
  * @typedef {'warn'|'on'|'off'|'error'} Label
  * @typedef {[Severity, ...unknown[]]} SeverityTuple
  *
+ * @typedef {{origin: string; url?: string;}} RuleMeta
+ *
  * @callback Rule
  * @param {Node} tree
  * @param {VFile} file
@@ -18,10 +20,12 @@ import {wrap} from 'trough'
 const primitives = new Set(['string', 'number', 'boolean'])
 
 /**
- * @param {string} id
+ * @param {string|RuleMeta} meta
  * @param {Rule} rule
  */
-export function lintRule(id, rule) {
+export function lintRule(meta, rule) {
+  const id = typeof meta === 'string' ? meta : meta.origin
+  const url = typeof meta === 'string' ? undefined : meta.url
   const parts = id.split(':')
   // Possibly useful if externalised later.
   /* c8 ignore next */
@@ -57,7 +61,7 @@ export function lintRule(id, rule) {
         }
 
         while (++index < messages.length) {
-          Object.assign(messages[index], {ruleId, source, fatal})
+          Object.assign(messages[index], {ruleId, source, fatal, url})
         }
 
         next()

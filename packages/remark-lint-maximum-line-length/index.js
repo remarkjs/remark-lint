@@ -108,7 +108,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintMaximumLineLength = lintRule(
-  'remark-lint:maximum-line-length',
+  {
+    origin: 'remark-lint:maximum-line-length',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 80) => {
     const value = String(file)

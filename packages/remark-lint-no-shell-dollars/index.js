@@ -81,7 +81,10 @@ const flags = new Set([
 ])
 
 const remarkLintNoShellDollars = lintRule(
-  'remark-lint:no-shell-dollars',
+  {
+    origin: 'remark-lint:no-shell-dollars',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shell-dollars#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'code', (node) => {

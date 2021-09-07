@@ -35,7 +35,10 @@ import {generated} from 'unist-util-generated'
 import {visit} from 'unist-util-visit'
 
 const remarkLintNoReferenceLikeUrl = lintRule(
-  'remark-lint:no-reference-like-url',
+  {
+    origin: 'remark-lint:no-reference-like-url',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     /** @type {string[]} */

@@ -36,7 +36,10 @@ import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintHeadingIncrement = lintRule(
-  'remark-lint:heading-increment',
+  {
+    origin: 'remark-lint:heading-increment',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     /** @type {Depth} */

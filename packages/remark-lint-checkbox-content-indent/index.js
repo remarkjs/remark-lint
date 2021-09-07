@@ -40,7 +40,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 
 const remarkLintCheckboxContentIndent = lintRule(
-  'remark-lint:checkbox-content-indent',
+  {
+    origin: 'remark-lint:checkbox-content-indent',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

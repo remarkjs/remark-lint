@@ -127,7 +127,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintListItemSpacing = lintRule(
-  'remark-lint:list-item-spacing',
+  {
+    origin: 'remark-lint:list-item-spacing',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = {}) => {
     const {checkBlanks} = option

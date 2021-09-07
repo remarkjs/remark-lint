@@ -72,7 +72,10 @@ import {stringifyPosition} from 'unist-util-stringify-position'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadingsInSection = lintRule(
-  'remark-lint:no-duplicate-headings-in-section',
+  {
+    origin: 'remark-lint:no-duplicate-headings-in-section',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings-in-section#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     /** @type {Array.<Record<string, Heading>>} */

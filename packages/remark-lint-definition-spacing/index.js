@@ -33,7 +33,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
 
 const remarkLintDefinitionSpacing = lintRule(
-  'remark-lint:definition-spacing',
+  {
+    origin: 'remark-lint:definition-spacing',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

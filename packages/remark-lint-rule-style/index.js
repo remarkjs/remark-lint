@@ -70,7 +70,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 
 const remarkLintRuleStyle = lintRule(
-  'remark-lint:rule-style',
+  {
+    origin: 'remark-lint:rule-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

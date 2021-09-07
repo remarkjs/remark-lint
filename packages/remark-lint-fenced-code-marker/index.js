@@ -100,7 +100,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 
 const remarkLintFencedCodeMarker = lintRule(
-  'remark-lint:fenced-code-marker',
+  {
+    origin: 'remark-lint:fenced-code-marker',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const contents = String(file)

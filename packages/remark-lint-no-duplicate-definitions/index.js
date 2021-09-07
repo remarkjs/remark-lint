@@ -35,7 +35,10 @@ import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateDefinitions = lintRule(
-  'remark-lint:no-duplicate-definitions',
+  {
+    origin: 'remark-lint:no-duplicate-definitions',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     /** @type {Record<string, string>} */

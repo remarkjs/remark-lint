@@ -41,7 +41,10 @@ import {stringifyPosition} from 'unist-util-stringify-position'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoDuplicateHeadings = lintRule(
-  'remark-lint:no-duplicate-headings',
+  {
+    origin: 'remark-lint:no-duplicate-headings',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     /** @type {Record<string, string>} */

@@ -104,7 +104,10 @@ import {generated} from 'unist-util-generated'
 const re = /<h([1-6])/
 
 const remarkLintFirstHeadingLevel = lintRule(
-  'remark-lint:first-heading-level',
+  {
+    origin: 'remark-lint:first-heading-level',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-first-heading-level#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 1) => {
     visit(tree, (node) => {

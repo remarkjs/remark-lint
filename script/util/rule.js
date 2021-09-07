@@ -82,7 +82,7 @@ export function rule(filePath) {
       info = JSON.parse(lines[0])
       lines.splice(0, 1)
       /* c8 ignore next 5 */
-    } catch (error) {
+    } catch (/** @type any */ error) {
       throw new Error(
         'Could not parse example in ' + ruleId + ':\n' + error.stack
       )

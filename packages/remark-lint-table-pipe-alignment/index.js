@@ -57,7 +57,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 
 const remarkLintTablePipeAlignment = lintRule(
-  'remark-lint:table-pipe-alignment',
+  {
+    origin: 'remark-lint:table-pipe-alignment',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

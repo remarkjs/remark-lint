@@ -48,7 +48,10 @@ import {lintRule} from 'unified-lint-rule'
 const expression = /[^\\.a-zA-Z\d-]/
 
 const remarkLintNoFileNameIrregularCharacters = lintRule(
-  'remark-lint:no-file-name-irregular-characters',
+  {
+    origin: 'remark-lint:no-file-name-irregular-characters',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-irregular-characters#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (_, file, option) => {
     let preferred = option || expression

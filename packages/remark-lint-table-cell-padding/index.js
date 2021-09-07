@@ -189,7 +189,10 @@ import {visit, SKIP} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 
 const remarkLintTableCellPadding = lintRule(
-  'remark-lint:table-cell-padding',
+  {
+    origin: 'remark-lint:table-cell-padding',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     if (

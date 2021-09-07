@@ -74,7 +74,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 
 const remarkLintStrikethroughMarker = lintRule(
-  'remark-lint:strikethrough-marker',
+  {
+    origin: 'remark-lint:strikethrough-marker',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

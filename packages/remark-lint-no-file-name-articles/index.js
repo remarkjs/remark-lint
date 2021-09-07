@@ -37,7 +37,10 @@
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNoFileNameArticles = lintRule(
-  'remark-lint:no-file-name-articles',
+  {
+    origin: 'remark-lint:no-file-name-articles',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-articles#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (_, file) => {
     const match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)

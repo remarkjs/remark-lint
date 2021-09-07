@@ -92,7 +92,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 
 const remarkLintCheckboxCharacterStyle = lintRule(
-  'remark-lint:checkbox-character-style',
+  {
+    origin: 'remark-lint:checkbox-character-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

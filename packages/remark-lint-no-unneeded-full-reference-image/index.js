@@ -51,7 +51,10 @@ import {generated} from 'unist-util-generated'
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 
 const remarkLintNoUnneededFullReferenceImage = lintRule(
-  'remark-lint:no-unneeded-full-reference-image',
+  {
+    origin: 'remark-lint:no-unneeded-full-reference-image',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'imageReference', (node) => {

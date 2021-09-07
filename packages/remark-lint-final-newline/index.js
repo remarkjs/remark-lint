@@ -57,7 +57,10 @@
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFinalNewline = lintRule(
-  'remark-lint:final-newline',
+  {
+    origin: 'remark-lint:final-newline',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (_, file) => {
     const value = String(file)

@@ -93,7 +93,10 @@ const types = new Set([
 ])
 
 const remarkLintNoMissingBlankLines = lintRule(
-  'remark-lint:no-missing-blank-lines',
+  {
+    origin: 'remark-lint:no-missing-blank-lines',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-missing-blank-lines#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = {}) => {
     const {exceptTightLists} = option

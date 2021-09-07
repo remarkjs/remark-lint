@@ -3,8 +3,13 @@ import type {VFile} from 'vfile'
 import type {Plugin} from 'unified'
 import type {Label, Severity} from './lib/index.js'
 
+export interface RuleMeta {
+  origin: string
+  url?: string
+}
+
 export function lintRule<Tree extends Node = Node, Settings = unknown>(
-  name: string,
+  name: string | RuleMeta,
   rule: Rule<Tree, Settings>
 ): Plugin<
   | void[]

@@ -85,7 +85,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {visit, SKIP, EXIT} from 'unist-util-visit'
 
 const remarkLintNoUndefinedReferences = lintRule(
-  'remark-lint:no-undefined-references',
+  {
+    origin: 'remark-lint:no-undefined-references',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = {}) => {
     const contents = String(file)

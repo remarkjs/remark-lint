@@ -41,7 +41,10 @@ import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
-  'remark-lint:no-emphasis-as-heading',
+  {
+    origin: 'remark-lint:no-emphasis-as-heading',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'paragraph', (node, index, parent) => {

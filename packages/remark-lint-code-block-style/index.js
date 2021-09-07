@@ -113,7 +113,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintCodeBlockStyle = lintRule(
-  'remark-lint:code-block-style',
+  {
+    origin: 'remark-lint:code-block-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

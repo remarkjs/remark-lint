@@ -51,7 +51,10 @@ import {toString} from 'mdast-util-to-string'
 const protocol = /^[a-z][a-z+.-]+:\/?/i
 
 const remarkLintNoAutoLinkWithoutProtocol = lintRule(
-  'remark-lint:no-auto-link-without-protocol',
+  {
+    origin: 'remark-lint:no-auto-link-without-protocol',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-auto-link-without-protocol#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'link', (node) => {

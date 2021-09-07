@@ -80,7 +80,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 
 const remarkLintEmphasisMarker = lintRule(
-  'remark-lint:emphasis-marker',
+  {
+    origin: 'remark-lint:emphasis-marker',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

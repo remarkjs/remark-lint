@@ -66,7 +66,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
-  'remark-lint:no-blockquote-without-marker',
+  {
+    origin: 'remark-lint:no-blockquote-without-marker',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

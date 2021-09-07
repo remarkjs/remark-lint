@@ -88,7 +88,10 @@ import {headingStyle} from 'mdast-util-heading-style'
 import {generated} from 'unist-util-generated'
 
 const remarkLintHeadingStyle = lintRule(
-  'remark-lint:heading-style',
+  {
+    origin: 'remark-lint:heading-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     if (

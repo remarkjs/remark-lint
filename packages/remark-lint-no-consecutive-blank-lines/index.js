@@ -56,7 +56,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoConsecutiveBlankLines = lintRule(
-  'remark-lint:no-consecutive-blank-lines',
+  {
+    origin: 'remark-lint:no-consecutive-blank-lines',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, (node) => {

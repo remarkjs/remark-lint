@@ -34,7 +34,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintHardBreakSpaces = lintRule(
-  'remark-lint:hard-break-spaces',
+  {
+    origin: 'remark-lint:hard-break-spaces',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

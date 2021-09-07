@@ -35,7 +35,10 @@ import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoInlinePadding = lintRule(
-  'remark-lint:no-inline-padding',
+  {
+    origin: 'remark-lint:no-inline-padding',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-inline-padding#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore

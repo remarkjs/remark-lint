@@ -22,7 +22,10 @@
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNoFileNameConsecutiveDashes = lintRule(
-  'remark-lint:no-file-name-consecutive-dashes',
+  {
+    origin: 'remark-lint:no-file-name-consecutive-dashes',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-consecutive-dashes#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (_, file) => {
     if (file.stem && /-{2,}/.test(file.stem)) {

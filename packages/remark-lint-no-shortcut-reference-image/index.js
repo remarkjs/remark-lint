@@ -41,7 +41,10 @@ import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoShortcutReferenceImage = lintRule(
-  'remark-lint:no-shortcut-reference-image',
+  {
+    origin: 'remark-lint:no-shortcut-reference-image',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-image#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'imageReference', (node) => {

@@ -34,7 +34,10 @@ import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
 
 const remarkLintListItemContentIndent = lintRule(
-  'remark-lint:list-item-content-indent',
+  {
+    origin: 'remark-lint:list-item-content-indent',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

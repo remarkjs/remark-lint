@@ -12,7 +12,7 @@ export interface RuleMeta {
   /**
    * Link to documentation
    */
-  url?: string
+  url?: string | undefined
 }
 
 export function lintRule<Tree extends Node = Node, Settings = unknown>(

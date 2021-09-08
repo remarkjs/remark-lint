@@ -6,7 +6,9 @@
  * @typedef {'warn'|'on'|'off'|'error'} Label
  * @typedef {[Severity, ...unknown[]]} SeverityTuple
  *
- * @typedef {{origin: string; url?: string;}} RuleMeta
+ * @typedef RuleMeta
+ * @property {string} origin name of the lint rule
+ * @property {string} [url] link to documentation
  *
  * @callback Rule
  * @param {Node} tree

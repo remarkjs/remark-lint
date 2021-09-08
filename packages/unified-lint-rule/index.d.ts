@@ -5,11 +5,12 @@ import type {Label, Severity} from './lib/index.js'
 
 export interface RuleMeta {
   /**
-   * name of the lint rule
+   * Name of the lint rule
    */
   origin: string
+
   /**
-   * link to documentation
+   * Link to documentation
    */
   url?: string
 }

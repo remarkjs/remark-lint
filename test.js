@@ -14,6 +14,7 @@ import {toVFile} from 'to-vfile'
 import {removePosition} from 'unist-util-remove-position'
 import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
+import {lintRule} from 'unified-lint-rule'
 import {rules} from './script/util/rules.js'
 import {rule} from './script/util/rule.js'
 import {characters} from './script/characters.js'
@@ -94,6 +95,7 @@ test('core', async (t) => {
         column: null,
         source: 'remark-lint',
         ruleId: 'final-newline',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
         position: {
           start: {line: null, column: null},
           end: {line: null, column: null}
@@ -143,6 +145,7 @@ test('core', async (t) => {
         column: null,
         source: 'remark-lint',
         ruleId: 'final-newline',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
         position: {
           start: {line: null, column: null},
           end: {line: null, column: null}
@@ -166,6 +169,7 @@ test('core', async (t) => {
         column: null,
         source: 'remark-lint',
         ruleId: 'final-newline',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
         position: {
           start: {line: null, column: null},
           end: {line: null, column: null}
@@ -189,6 +193,7 @@ test('core', async (t) => {
         column: null,
         source: 'remark-lint',
         ruleId: 'final-newline',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
         position: {
           start: {line: null, column: null},
           end: {line: null, column: null}
@@ -221,6 +226,36 @@ test('core', async (t) => {
     },
     /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/,
     'should fail on incorrect severities (too low)'
+  )
+
+  t.deepEqual(
+    (
+      await remark()
+        .use(
+          lintRule('test:rule', (tree, file) => {
+            file.message('Test message')
+          }),
+          ['warn']
+        )
+        .process('.')
+    ).messages.map((d) => JSON.parse(JSON.stringify(d))),
+    [
+      {
+        name: '1:1',
+        message: 'Test message',
+        reason: 'Test message',
+        line: null,
+        column: null,
+        source: 'test',
+        ruleId: 'rule',
+        position: {
+          start: {line: null, column: null},
+          end: {line: null, column: null}
+        },
+        fatal: false
+      }
+    ],
+    'should support string meta'
   )
 })
 

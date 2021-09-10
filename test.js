@@ -368,6 +368,21 @@ function assertFixture(t, rule, info, fixture, basename, settings) {
           message
       )
     }
+
+    const expectedUrl =
+      'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-' +
+      ruleId +
+      '#readme'
+    if (message.url !== expectedUrl) {
+      throw new Error(
+        'Expected `' +
+          expectedUrl +
+          '`, not `' +
+          message.url +
+          '` as `ruleId` for ' +
+          message
+      )
+    }
   }
 
   t.deepEqual(normalize(file.messages), expected, 'should equal with position')

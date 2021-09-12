@@ -349,9 +349,10 @@ function assertFixture(t, rule, info, fixture, basename, settings) {
 
   try {
     proc.runSync(proc.parse(file), file)
-  } catch (/** @type any */ error) {
-    if (error && error.source !== 'remark-lint') {
-      throw error
+  } catch (error) {
+    const exception = /** @type VFileMessage */ (error)
+    if (exception && exception.source !== 'remark-lint') {
+      throw exception
     }
   }
 

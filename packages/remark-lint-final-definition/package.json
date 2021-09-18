@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-final-definition",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "remark-lint rule to warn when definitions are not placed at the end of the file",
   "license": "MIT",
   "keywords": [

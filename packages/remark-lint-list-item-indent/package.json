@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-list-item-indent",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "remark-lint rule to warn when the spacing between a list item’s bullet and its content violates a given style",
   "license": "MIT",
   "keywords": [

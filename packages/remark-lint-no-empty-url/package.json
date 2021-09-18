@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-empty-url",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "remark-lint rule to warn on empty URLs in links and images",
   "license": "MIT",
   "keywords": [

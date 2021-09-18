@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-file-name-consecutive-dashes",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "remark-lint rule to warn when file names contain consecutive dashes",
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-first-heading-level",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "remark-lint rule to warn when the first heading has a level other than a specified value",
   "license": "MIT",
   "keywords": [

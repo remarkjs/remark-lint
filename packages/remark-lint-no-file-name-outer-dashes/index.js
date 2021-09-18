@@ -27,7 +27,10 @@
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNofileNameOuterDashes = lintRule(
-  'remark-lint:no-file-name-outer-dashes',
+  {
+    origin: 'remark-lint:no-file-name-outer-dashes',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-outer-dashes#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (_, file) => {
     if (file.stem && /^-|-$/.test(file.stem)) {

@@ -49,7 +49,10 @@ const reasonStart = 'Missing initial pipe in table fence'
 const reasonEnd = 'Missing final pipe in table fence'
 
 const remarkLintTablePipes = lintRule(
-  'remark-lint:table-pipes',
+  {
+    origin: 'remark-lint:table-pipes',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipes#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

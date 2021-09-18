@@ -36,7 +36,10 @@ import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoHtml = lintRule(
-  'remark-lint:no-html',
+  {
+    origin: 'remark-lint:no-html',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-html#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'html', (node) => {

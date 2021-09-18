@@ -87,7 +87,10 @@ import {generated} from 'unist-util-generated'
 const markers = new Set(['-', '*', '+'])
 
 const remarkLintUnorderedListMarkerStyle = lintRule(
-  'remark-lint:unordered-list-marker-style',
+  {
+    origin: 'remark-lint:unordered-list-marker-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

@@ -61,7 +61,10 @@ import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintBlockquoteIndentation = lintRule(
-  'remark-lint:blockquote-indentation',
+  {
+    origin: 'remark-lint:blockquote-indentation',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     visit(tree, 'blockquote', (node) => {

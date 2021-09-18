@@ -36,7 +36,10 @@ import {visit} from 'unist-util-visit'
 import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmptyUrl = lintRule(
-  'remark-lint:no-empty-url',
+  {
+    origin: 'remark-lint:no-empty-url',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-empty-url#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, (node) => {

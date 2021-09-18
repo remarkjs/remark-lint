@@ -46,7 +46,10 @@ import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
 
 const remarkLintListItemBulletIndent = lintRule(
-  'remark-lint:list-item-bullet-indent',
+  {
+    origin: 'remark-lint:list-item-bullet-indent',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'list', (list, _, grandparent) => {

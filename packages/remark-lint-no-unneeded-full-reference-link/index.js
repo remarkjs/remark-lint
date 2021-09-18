@@ -56,7 +56,10 @@ import {generated} from 'unist-util-generated'
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 
 const remarkLintNoUnneededFullReferenceLink = lintRule(
-  'remark-lint:no-unneeded-full-reference-link',
+  {
+    origin: 'remark-lint:no-unneeded-full-reference-link',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'linkReference', (node) => {

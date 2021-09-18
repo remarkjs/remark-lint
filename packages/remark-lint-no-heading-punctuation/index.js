@@ -55,7 +55,10 @@ import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoHeadingPunctuation = lintRule(
-  'remark-lint:no-heading-punctuation',
+  {
+    origin: 'remark-lint:no-heading-punctuation',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = '\\.,;:!?') => {
     const expression = new RegExp('[' + option + ']')

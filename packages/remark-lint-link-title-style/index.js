@@ -118,7 +118,10 @@ const markers = {
 }
 
 const remarkLintLinkTitleStyle = lintRule(
-  'remark-lint:link-title-style',
+  {
+    origin: 'remark-lint:link-title-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

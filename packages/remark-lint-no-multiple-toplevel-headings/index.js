@@ -41,7 +41,10 @@ import {generated} from 'unist-util-generated'
 import {stringifyPosition} from 'unist-util-stringify-position'
 
 const remarkLintNoMultipleToplevelHeadings = lintRule(
-  'remark-lint:no-multiple-toplevel-headings',
+  {
+    origin: 'remark-lint:no-multiple-toplevel-headings',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-multiple-toplevel-headings#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 1) => {
     /** @type {string|undefined} */

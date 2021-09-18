@@ -50,7 +50,10 @@ import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintFinalDefinition = lintRule(
-  'remark-lint:final-definition',
+  {
+    origin: 'remark-lint:final-definition',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     let last = 0

@@ -34,7 +34,10 @@
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFileExtension = lintRule(
-  'remark-lint:file-extension',
+  {
+    origin: 'remark-lint:file-extension',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (_, file, option = 'md') => {
     const ext = file.extname

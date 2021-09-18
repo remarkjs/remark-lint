@@ -37,7 +37,10 @@ import {generated} from 'unist-util-generated'
 const fence = '#######'
 
 const remarkLintNoHeadingLikeParagraph = lintRule(
-  'remark-lint:no-heading-like-paragraph',
+  {
+    origin: 'remark-lint:no-heading-like-paragraph',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-like-paragraph#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'paragraph', (node) => {

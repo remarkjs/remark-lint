@@ -25,7 +25,10 @@
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNofileNameMixedCase = lintRule(
-  'remark-lint:no-file-name-mixed-case',
+  {
+    origin: 'remark-lint:no-file-name-mixed-case',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-mixed-case#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (_, file) => {
     const name = file.stem

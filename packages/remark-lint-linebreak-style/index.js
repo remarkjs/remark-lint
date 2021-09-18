@@ -63,7 +63,10 @@ import {location} from 'vfile-location'
 const escaped = {unix: '\\n', windows: '\\r\\n'}
 
 const remarkLintLinebreakStyle = lintRule(
-  'remark-lint:linebreak-style',
+  {
+    origin: 'remark-lint:linebreak-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (_, file, option = 'consistent') => {
     const value = String(file)

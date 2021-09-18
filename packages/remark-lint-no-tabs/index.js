@@ -61,7 +61,10 @@ import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 
 const remarkLintNoTabs = lintRule(
-  'remark-lint:no-tabs',
+  {
+    origin: 'remark-lint:no-tabs',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-tabs#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (_, file) => {
     const value = String(file)

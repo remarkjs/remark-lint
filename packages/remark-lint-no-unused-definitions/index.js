@@ -36,7 +36,10 @@ import {visit} from 'unist-util-visit'
 const own = {}.hasOwnProperty
 
 const remarkLintNoUnusedDefinitions = lintRule(
-  'remark-lint:no-unused-definitions',
+  {
+    origin: 'remark-lint:no-unused-definitions',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     /** @type {Record<string, {node: DefinitionContent, used: boolean}>} */

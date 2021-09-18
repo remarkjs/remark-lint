@@ -67,7 +67,10 @@ import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintOrderedListMarkerStyle = lintRule(
-  'remark-lint:ordered-list-marker-style',
+  {
+    origin: 'remark-lint:ordered-list-marker-style',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)

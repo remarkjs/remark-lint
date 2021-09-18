@@ -33,7 +33,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
 
 const remarkLintDefinitionCase = lintRule(
-  'remark-lint:definition-case',
+  {
+    origin: 'remark-lint:definition-case',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

@@ -39,7 +39,10 @@ import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintMaximumHeadingLength = lintRule(
-  'remark-lint:maximum-heading-length',
+  {
+    origin: 'remark-lint:maximum-heading-length',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 60) => {
     visit(tree, 'heading', (node) => {

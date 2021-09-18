@@ -74,7 +74,10 @@ import {pointStart, pointEnd} from 'unist-util-position'
 import {location} from 'vfile-location'
 
 const remarkLintNoTableIndentation = lintRule(
-  'remark-lint:no-table-indentation',
+  {
+    origin: 'remark-lint:no-table-indentation',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     const value = String(file)

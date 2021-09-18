@@ -45,7 +45,10 @@ import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoLiteralUrls = lintRule(
-  'remark-lint:no-literal-urls',
+  {
+    origin: 'remark-lint:no-literal-urls',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'link', (node) => {

@@ -125,7 +125,10 @@ import {pointStart} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
 const remarkLintListItemIndent = lintRule(
-  'remark-lint:list-item-indent',
+  {
+    origin: 'remark-lint:list-item-indent',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme'
+  },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'tab-size') => {
     const value = String(file)

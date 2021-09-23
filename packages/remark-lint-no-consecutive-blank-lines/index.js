@@ -55,6 +55,8 @@ import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {generated} from 'unist-util-generated'
 
+const unknownContainerSize = new Set(['mdxJsxFlowElement', 'mdxJsxTextElement'])
+
 const remarkLintNoConsecutiveBlankLines = lintRule(
   {
     origin: 'remark-lint:no-consecutive-blank-lines',
@@ -67,8 +69,10 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
         const head = node.children[0]
 
         if (head && !generated(head)) {
-          // Compare parent and first child.
-          compare(pointStart(node), pointStart(head), 0)
+          if (!unknownContainerSize.has(node.type)) {
+            // Compare parent and first child.
+            compare(pointStart(node), pointStart(head), 0)
+          }
 
           // Compare between each child.
           let index = -1
@@ -85,7 +89,11 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
           const tail = node.children[node.children.length - 1]
 
           // Compare parent and last child.
-          if (tail !== head && !generated(tail)) {
+          if (
+            tail !== head &&
+            !generated(tail) &&
+            !unknownContainerSize.has(node.type)
+          ) {
             compare(pointEnd(node), pointEnd(tail), 1)
           }
         }

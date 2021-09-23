@@ -124,10 +124,20 @@ const remarkLintMaximumLineLength = lintRule(
           node.type === 'code' ||
           node.type === 'definition' ||
           node.type === 'html' ||
-          // @ts-expect-error: JSX is from MDX: <https://github.com/mdx-js/specification>.
+          // @ts-expect-error: These are from MDX@1 and MDX@2: <https://github.com/mdx-js/specification>.
           node.type === 'jsx' ||
+          // @ts-expect-error: MDX
+          node.type === 'mdxFlowExpression' ||
+          // @ts-expect-error: MDX
+          node.type === 'mdxJsxFlowElement' ||
+          // @ts-expect-error: MDX
+          node.type === 'mdxJsxTextElement' ||
+          // @ts-expect-error: MDX
+          node.type === 'mdxTextExpression' ||
+          // @ts-expect-error: MDX
+          node.type === 'mdxjsEsm' ||
           node.type === 'yaml' ||
-          // @ts-expect-error: TOML is from frontmatter.
+          // @ts-expect-error: YAML and TOML are from frontmatter.
           node.type === 'toml') &&
         !generated(node)
       ) {

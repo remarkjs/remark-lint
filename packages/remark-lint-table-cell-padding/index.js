@@ -213,10 +213,19 @@ const remarkLintTableCellPadding = lintRule(
       /* c8 ignore next */
       const align = node.align || []
       /** @type {number[]} */
-      const sizes = Array.from({length: align.length})
+      const sizes = []
       /** @type {Entry[]} */
       const entries = []
       let index = -1
+
+      // Check align row.
+      // Because there’s zero to two `:`, and there must be one `-`.
+      while (++index < align.length) {
+        const alignment = align[index]
+        sizes[index] = alignment === 'center' ? 3 : alignment ? 2 : 1
+      }
+
+      index = -1
 
       // Check rows.
       while (++index < rows.length) {
@@ -253,6 +262,8 @@ const remarkLintTableCellPadding = lintRule(
 
             // Detect max space per column.
             sizes[column] = Math.max(
+              // More cells could exist than the align row for generated tables.
+              /* c8 ignore next */
               sizes[column] || 0,
               contentEnd - contentStart
             )

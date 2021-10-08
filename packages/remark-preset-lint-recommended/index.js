@@ -12,7 +12,6 @@ import remarkLint from 'remark-lint'
 import remarkLintFinalNewline from 'remark-lint-final-newline'
 import remarkLintListItemBulletIndent from 'remark-lint-list-item-bullet-indent'
 import remarkLintListItemIndent from 'remark-lint-list-item-indent'
-import remarkLintNoAutoLinkWithoutProtocol from 'remark-lint-no-auto-link-without-protocol'
 import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
 import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
 import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
@@ -34,8 +33,6 @@ const remarkPresetLintRecommended = {
     // Rendering across vendors differs greatly if using other styles.
     remarkLintListItemBulletIndent,
     [remarkLintListItemIndent, 'tab-size'],
-    // Differs or unsupported across vendors.
-    remarkLintNoAutoLinkWithoutProtocol,
     remarkLintNoBlockquoteWithoutMarker,
     remarkLintNoLiteralUrls,
     [remarkLintOrderedListMarkerStyle, '.'],

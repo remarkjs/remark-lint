@@ -3,18 +3,12 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @module no-auto-link-without-protocol
- * @fileoverview
- *   Warn for autolinks without protocol.
- *   Autolinks are URLs enclosed in `<` (less than) and `>` (greater than)
- *   characters.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   adds a protocol where needed.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
+ * @deprecated
+ *   This rule is no longer recommended for use.
+ *   With CommonMark, all autolinks (except for emails) are required to have a
+ *   protocol.
+ *   Otherwise they don’t parse.
+ *   The previous suggestion to add a protocol to email autolinks was wrong.
  *
  * @example
  *   {"name": "ok.md"}

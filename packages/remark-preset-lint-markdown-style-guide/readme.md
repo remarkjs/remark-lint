@@ -154,7 +154,6 @@ This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) 
 | [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) | `'*'` |
 | [`remark-lint-no-emphasis-as-heading`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading) | |
 | [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) | |
-| [`remark-lint-no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-auto-link-without-protocol) | |
 
 ## Install
 

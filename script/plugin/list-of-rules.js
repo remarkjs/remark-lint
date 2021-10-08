@@ -23,38 +23,43 @@ export default function listOfRules() {
         type: 'list',
         ordered: false,
         spread: false,
-        children: rules(root).map((basename) => {
-          const name = basename.slice('remark-lint-'.length)
-          /** @type {PackageJson} */
-          const pack = JSON.parse(
-            String(fs.readFileSync(path.join(root, basename, 'package.json')))
-          )
-          const description = String(pack.description || '').replace(
-            /^remark-lint rule to ?/i,
-            ''
-          )
+        children: rules(root)
+          .map((basename) => {
+            const name = basename.slice('remark-lint-'.length)
+            /** @type {PackageJson} */
+            const pack = JSON.parse(
+              String(fs.readFileSync(path.join(root, basename, 'package.json')))
+            )
+            const description = String(pack.description || '').replace(
+              /^remark-lint rule to ?/i,
+              ''
+            )
+            const deprecated = /^deprecated/i.test(description)
 
-          /** @type {ListItem} */
-          const item = {
-            type: 'listItem',
-            spread: false,
-            children: [
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    type: 'link',
-                    url: repoUrl(pack),
-                    children: [{type: 'inlineCode', value: name}]
-                  },
-                  {type: 'text', value: ' — ' + description}
-                ]
-              }
-            ]
-          }
+            /** @type {ListItem} */
+            const item = {
+              type: 'listItem',
+              spread: false,
+              children: deprecated
+                ? []
+                : [
+                    {
+                      type: 'paragraph',
+                      children: [
+                        {
+                          type: 'link',
+                          url: repoUrl(pack),
+                          children: [{type: 'inlineCode', value: name}]
+                        },
+                        {type: 'text', value: ' — ' + description}
+                      ]
+                    }
+                  ]
+            }
 
-          return item
-        })
+            return item
+          })
+          .filter((d) => d.children.length > 0)
       }
 
       return [start, list, end]

@@ -2,6 +2,7 @@
  * @typedef Rule
  * @property {string} ruleId
  * @property {string} description
+ * @property {boolean} deprecated
  * @property {Record<string, Checks>} tests
  * @property {string} filePath
  *
@@ -26,6 +27,7 @@ import strip from 'strip-indent'
  * @param {string} filePath
  * @returns {Rule}
  */
+/* eslint-disable-next-line complexity */
 export function rule(filePath) {
   const ruleId = path.basename(filePath).slice('remark-lint-'.length)
   /** @type {Record<string, Checks>} */
@@ -34,6 +36,7 @@ export function rule(filePath) {
   const tags = parse(code, {spacing: 'preserve'})[0].tags
   const moduleTag = tags.find((d) => d.tag === 'module')
   const fileoverviewTag = tags.find((d) => d.tag === 'fileoverview')
+  const deprecatedTag = tags.find((d) => d.tag === 'deprecated')
 
   /* c8 ignore next 3 */
   if (!moduleTag) {
@@ -41,12 +44,14 @@ export function rule(filePath) {
   }
 
   /* c8 ignore next 3 */
-  if (!fileoverviewTag) {
-    throw new Error('Expected `@fileoverview` in JSDoc')
+  if (!fileoverviewTag && !deprecatedTag) {
+    throw new Error('Expected `@fileoverview` (or `@deprecated`) in JSDoc')
   }
 
   const name = moduleTag.name
-  let description = fileoverviewTag.description
+  let description =
+    (fileoverviewTag && fileoverviewTag.description) ||
+    (deprecatedTag && deprecatedTag.description)
 
   /* c8 ignore next 3 */
   if (name !== ruleId) {
@@ -55,7 +60,7 @@ export function rule(filePath) {
 
   /* c8 ignore next 3 */
   if (!description) {
-    throw new Error(ruleId + ' is missing a `@fileoverview`')
+    throw new Error(ruleId + ' is missing a `@fileoverview` or `@deprecated`')
   }
 
   description = strip(description)
@@ -64,6 +69,7 @@ export function rule(filePath) {
   const result = {
     ruleId,
     description: description.trim(),
+    deprecated: Boolean(deprecatedTag),
     tests,
     filePath
   }

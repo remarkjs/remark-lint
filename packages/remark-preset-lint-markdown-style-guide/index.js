@@ -144,7 +144,6 @@ import remarkLintStrongMarker from 'remark-lint-strong-marker'
 import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
 import remarkLintNoEmphasisAsHeading from 'remark-lint-no-emphasis-as-heading'
 import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
-import remarkLintNoAutoLinkWithoutProtocol from 'remark-lint-no-auto-link-without-protocol'
 
 /** @type {Preset} */
 const remarkPresetLintMarkdownStyleGuide = {
@@ -281,10 +280,7 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintNoEmphasisAsHeading,
 
     // http://www.cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
-    remarkLintNoLiteralUrls,
-
-    // http://www.cirosantilli.com/markdown-style-guide/#content-of-automatic-links
-    remarkLintNoAutoLinkWithoutProtocol
+    remarkLintNoLiteralUrls
 
     // http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
     // Not checked.

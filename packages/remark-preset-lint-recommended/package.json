@@ -38,7 +38,6 @@
     "remark-lint-hard-break-spaces": "^3.0.0",
     "remark-lint-list-item-bullet-indent": "^4.0.0",
     "remark-lint-list-item-indent": "^3.0.0",
-    "remark-lint-no-auto-link-without-protocol": "^3.0.0",
     "remark-lint-no-blockquote-without-marker": "^5.0.0",
     "remark-lint-no-duplicate-definitions": "^3.0.0",
     "remark-lint-no-heading-content-indent": "^4.0.0",

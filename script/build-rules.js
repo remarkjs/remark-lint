@@ -179,321 +179,327 @@ presets(root).then((presetObjects) => {
           }
         ]
       },
-      ...descriptionContent,
-      {
+      ...descriptionContent
+    ]
+
+    if (!info.deprecated) {
+      children.push({
         type: 'heading',
         depth: 2,
         children: [{type: 'text', value: 'Presets'}]
-      }
-    ]
-
-    if (includes.length === 0) {
-      children.push({
-        type: 'paragraph',
-        children: [
-          {
-            type: 'text',
-            value: 'This rule is not included in any default preset'
-          }
-        ]
       })
-    } else {
-      children.push(
-        {
+
+      if (includes.length === 0) {
+        children.push({
           type: 'paragraph',
           children: [
             {
               type: 'text',
-              value: 'This rule is included in the following presets:'
+              value: 'This rule is not included in any default preset'
             }
           ]
-        },
-        {
-          type: 'table',
-          align: [],
-          children: [
-            {
-              type: 'tableRow',
-              children: [
-                {
-                  type: 'tableCell',
-                  children: [{type: 'text', value: 'Preset'}]
-                },
-                {
-                  type: 'tableCell',
-                  children: [{type: 'text', value: 'Setting'}]
-                }
-              ]
-            },
-            ...includes.map((preset) => {
-              const option = preset.packages[basename]
-
-              /** @type {TableContent} */
-              const row = {
+        })
+      } else {
+        children.push(
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                value: 'This rule is included in the following presets:'
+              }
+            ]
+          },
+          {
+            type: 'table',
+            align: [],
+            children: [
+              {
                 type: 'tableRow',
                 children: [
                   {
                     type: 'tableCell',
-                    children: [
-                      {
-                        type: 'link',
-                        url: remote + '/tree/main/packages/' + preset.name,
-                        title: null,
-                        children: [{type: 'inlineCode', value: preset.name}]
-                      }
-                    ]
+                    children: [{type: 'text', value: 'Preset'}]
                   },
                   {
                     type: 'tableCell',
-                    children: option
-                      ? [{type: 'inlineCode', value: inspect(option)}]
-                      : []
+                    children: [{type: 'text', value: 'Setting'}]
                   }
                 ]
-              }
+              },
+              ...includes.map((preset) => {
+                const option = preset.packages[basename]
 
-              return row
-            })
-          ]
-        }
-      )
-    }
+                /** @type {TableContent} */
+                const row = {
+                  type: 'tableRow',
+                  children: [
+                    {
+                      type: 'tableCell',
+                      children: [
+                        {
+                          type: 'link',
+                          url: remote + '/tree/main/packages/' + preset.name,
+                          title: null,
+                          children: [{type: 'inlineCode', value: preset.name}]
+                        }
+                      ]
+                    },
+                    {
+                      type: 'tableCell',
+                      children: option
+                        ? [{type: 'inlineCode', value: inspect(option)}]
+                        : []
+                    }
+                  ]
+                }
 
-    let first = true
-    /** @type {string} */
-    let setting
+                return row
+              })
+            ]
+          }
+        )
+      }
 
-    for (setting in tests) {
-      if (own.call(tests, setting)) {
-        const fixtures = tests[setting]
+      let first = true
+      /** @type {string} */
+      let setting
 
-        if (first) {
-          children.push({
-            type: 'heading',
-            depth: 2,
-            children: [{type: 'text', value: 'Example'}]
-          })
-          first = false
-        }
+      for (setting in tests) {
+        if (own.call(tests, setting)) {
+          const fixtures = tests[setting]
 
-        /** @type {string} */
-        let fileName
-
-        for (fileName in fixtures) {
-          if (own.call(fixtures, fileName)) {
-            const fixture = fixtures[fileName]
-            const label = inspect(JSON.parse(setting))
-            let clean = fixture.input
-
+          if (first) {
             children.push({
               type: 'heading',
-              depth: 5,
-              children: [{type: 'inlineCode', value: fileName}]
+              depth: 2,
+              children: [{type: 'text', value: 'Example'}]
             })
+            first = false
+          }
 
-            if (label !== 'true') {
-              children.push({
-                type: 'paragraph',
-                children: [
-                  {type: 'text', value: 'When configured with '},
-                  {type: 'inlineCode', value: label},
-                  {type: 'text', value: '.'}
-                ]
-              })
-            }
+          /** @type {string} */
+          let fileName
 
-            if (
-              fixture.input !== null &&
-              fixture.input !== undefined &&
-              fixture.input.trim() !== ''
-            ) {
+          for (fileName in fixtures) {
+            if (own.call(fixtures, fileName)) {
+              const fixture = fixtures[fileName]
+              const label = inspect(JSON.parse(setting))
+              let clean = fixture.input
+
               children.push({
                 type: 'heading',
-                depth: 6,
-                children: [{type: 'text', value: 'In'}]
+                depth: 5,
+                children: [{type: 'inlineCode', value: fileName}]
               })
 
-              if (fixture.gfm) {
-                hasGfm = true
+              if (label !== 'true') {
                 children.push({
                   type: 'paragraph',
                   children: [
-                    {type: 'text', value: 'Note: this example uses '},
-                    {
-                      type: 'linkReference',
-                      label: 'GFM',
-                      identifier: 'gfm',
-                      referenceType: 'collapsed',
-                      children: [{type: 'text', value: 'GFM'}]
-                    },
+                    {type: 'text', value: 'When configured with '},
+                    {type: 'inlineCode', value: label},
                     {type: 'text', value: '.'}
                   ]
                 })
               }
 
-              let index = -1
-              while (++index < characters.length) {
-                const char = characters[index]
-                const next = clean.replace(char.in, char.out)
+              if (
+                fixture.input !== null &&
+                fixture.input !== undefined &&
+                fixture.input.trim() !== ''
+              ) {
+                children.push({
+                  type: 'heading',
+                  depth: 6,
+                  children: [{type: 'text', value: 'In'}]
+                })
 
-                if (clean !== next) {
+                if (fixture.gfm) {
+                  hasGfm = true
                   children.push({
                     type: 'paragraph',
                     children: [
-                      {type: 'text', value: 'Note: '},
-                      {type: 'inlineCode', value: char.char},
-                      {type: 'text', value: ' represents ' + char.name + '.'}
+                      {type: 'text', value: 'Note: this example uses '},
+                      {
+                        type: 'linkReference',
+                        label: 'GFM',
+                        identifier: 'gfm',
+                        referenceType: 'collapsed',
+                        children: [{type: 'text', value: 'GFM'}]
+                      },
+                      {type: 'text', value: '.'}
                     ]
                   })
-
-                  clean = next
                 }
+
+                let index = -1
+                while (++index < characters.length) {
+                  const char = characters[index]
+                  const next = clean.replace(char.in, char.out)
+
+                  if (clean !== next) {
+                    children.push({
+                      type: 'paragraph',
+                      children: [
+                        {type: 'text', value: 'Note: '},
+                        {type: 'inlineCode', value: char.char},
+                        {type: 'text', value: ' represents ' + char.name + '.'}
+                      ]
+                    })
+
+                    clean = next
+                  }
+                }
+
+                children.push({
+                  type: 'code',
+                  lang: 'markdown',
+                  value: fixture.input
+                })
               }
 
               children.push({
-                type: 'code',
-                lang: 'markdown',
-                value: fixture.input
+                type: 'heading',
+                depth: 6,
+                children: [{type: 'text', value: 'Out'}]
               })
-            }
 
-            children.push({
-              type: 'heading',
-              depth: 6,
-              children: [{type: 'text', value: 'Out'}]
-            })
-
-            if (fixture.output.length === 0) {
-              children.push({
-                type: 'paragraph',
-                children: [{type: 'text', value: 'No messages.'}]
-              })
-            } else {
-              children.push({
-                type: 'code',
-                lang: 'text',
-                value: fixture.output.join('\n')
-              })
+              if (fixture.output.length === 0) {
+                children.push({
+                  type: 'paragraph',
+                  children: [{type: 'text', value: 'No messages.'}]
+                })
+              } else {
+                children.push({
+                  type: 'code',
+                  lang: 'text',
+                  value: fixture.output.join('\n')
+                })
+              }
             }
           }
         }
       }
+
+      children.push(
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'Install'}]
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {type: 'text', value: 'This package is '},
+            {
+              type: 'linkReference',
+              identifier: 'esm',
+              referenceType: 'full',
+              children: [{type: 'text', value: 'ESM only'}]
+            },
+            {
+              type: 'text',
+              value: ':\nNode 12+ is needed to use it and it must be '
+            },
+            {type: 'inlineCode', value: 'imported'},
+            {type: 'text', value: 'ed instead of '},
+            {type: 'inlineCode', value: 'required'},
+            {type: 'text', value: 'd.'}
+          ]
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'linkReference',
+              identifier: 'npm',
+              referenceType: 'collapsed',
+              children: [{type: 'text', value: 'npm'}]
+            },
+            {type: 'text', value: ':'}
+          ]
+        },
+        {type: 'code', lang: 'sh', value: 'npm install ' + basename},
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'text',
+              value:
+                'This package exports no identifiers.\nThe default export is '
+            },
+            {
+              type: 'inlineCode',
+              value: basename.replace(/-(\w)/g, (_, /** @type {string} */ $1) =>
+                $1.toUpperCase()
+              )
+            },
+            {type: 'text', value: '.'}
+          ]
+        },
+        {type: 'heading', depth: 2, children: [{type: 'text', value: 'Use'}]},
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'text',
+              value:
+                'You probably want to use it on the CLI through a config file:'
+            }
+          ]
+        },
+        {
+          type: 'code',
+          lang: 'diff',
+          value: [
+            ' …',
+            ' "remarkConfig": {',
+            '   "plugins": [',
+            '     …',
+            '     "lint",',
+            '+    "' + short + '",',
+            '     …',
+            '   ]',
+            ' }',
+            ' …'
+          ].join('\n')
+        },
+        {
+          type: 'paragraph',
+          children: [{type: 'text', value: 'Or use it on the CLI directly'}]
+        },
+        {
+          type: 'code',
+          lang: 'sh',
+          value: 'remark -u lint -u ' + short + ' readme.md'
+        },
+        {
+          type: 'paragraph',
+          children: [{type: 'text', value: 'Or use this on the API:'}]
+        },
+        {
+          type: 'code',
+          lang: 'diff',
+          value: [
+            " import {remark} from 'remark'",
+            " import {reporter} from 'vfile-reporter'",
+            " import remarkLint from 'remark-lint'",
+            ' import ' + camelcased + " from '" + basename + "'",
+            '',
+            ' remark()',
+            '   .use(remarkLint)',
+            '+  .use(' + camelcased + ')',
+            "   .process('_Emphasis_ and **importance**')",
+            '   .then((file) => {',
+            '     console.error(reporter(file))',
+            '   })'
+          ].join('\n')
+        }
+      )
     }
 
     children.push(
-      {
-        type: 'heading',
-        depth: 2,
-        children: [{type: 'text', value: 'Install'}]
-      },
-      {
-        type: 'paragraph',
-        children: [
-          {type: 'text', value: 'This package is '},
-          {
-            type: 'linkReference',
-            identifier: 'esm',
-            referenceType: 'full',
-            children: [{type: 'text', value: 'ESM only'}]
-          },
-          {
-            type: 'text',
-            value: ':\nNode 12+ is needed to use it and it must be '
-          },
-          {type: 'inlineCode', value: 'imported'},
-          {type: 'text', value: 'ed instead of '},
-          {type: 'inlineCode', value: 'required'},
-          {type: 'text', value: 'd.'}
-        ]
-      },
-      {
-        type: 'paragraph',
-        children: [
-          {
-            type: 'linkReference',
-            identifier: 'npm',
-            referenceType: 'collapsed',
-            children: [{type: 'text', value: 'npm'}]
-          },
-          {type: 'text', value: ':'}
-        ]
-      },
-      {type: 'code', lang: 'sh', value: 'npm install ' + basename},
-      {
-        type: 'paragraph',
-        children: [
-          {
-            type: 'text',
-            value:
-              'This package exports no identifiers.\nThe default export is '
-          },
-          {
-            type: 'inlineCode',
-            value: basename.replace(/-(\w)/g, (_, /** @type {string} */ $1) =>
-              $1.toUpperCase()
-            )
-          },
-          {type: 'text', value: '.'}
-        ]
-      },
-      {type: 'heading', depth: 2, children: [{type: 'text', value: 'Use'}]},
-      {
-        type: 'paragraph',
-        children: [
-          {
-            type: 'text',
-            value:
-              'You probably want to use it on the CLI through a config file:'
-          }
-        ]
-      },
-      {
-        type: 'code',
-        lang: 'diff',
-        value: [
-          ' …',
-          ' "remarkConfig": {',
-          '   "plugins": [',
-          '     …',
-          '     "lint",',
-          '+    "' + short + '",',
-          '     …',
-          '   ]',
-          ' }',
-          ' …'
-        ].join('\n')
-      },
-      {
-        type: 'paragraph',
-        children: [{type: 'text', value: 'Or use it on the CLI directly'}]
-      },
-      {
-        type: 'code',
-        lang: 'sh',
-        value: 'remark -u lint -u ' + short + ' readme.md'
-      },
-      {
-        type: 'paragraph',
-        children: [{type: 'text', value: 'Or use this on the API:'}]
-      },
-      {
-        type: 'code',
-        lang: 'diff',
-        value: [
-          " import {remark} from 'remark'",
-          " import {reporter} from 'vfile-reporter'",
-          " import remarkLint from 'remark-lint'",
-          ' import ' + camelcased + " from '" + basename + "'",
-          '',
-          ' remark()',
-          '   .use(remarkLint)',
-          '+  .use(' + camelcased + ')',
-          "   .process('_Emphasis_ and **importance**')",
-          '   .then((file) => {',
-          '     console.error(reporter(file))',
-          '   })'
-        ].join('\n')
-      },
       {
         type: 'heading',
         depth: 2,
@@ -630,17 +636,25 @@ presets(root).then((presetObjects) => {
         type: 'definition',
         identifier: 'chat',
         url: 'https://github.com/remarkjs/remark/discussions'
-      },
-      {
-        type: 'definition',
-        identifier: 'esm',
-        url: 'https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c'
-      },
-      {
-        type: 'definition',
-        identifier: 'npm',
-        url: 'https://docs.npmjs.com/cli/install'
-      },
+      }
+    )
+
+    if (!info.deprecated) {
+      children.push(
+        {
+          type: 'definition',
+          identifier: 'esm',
+          url: 'https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c'
+        },
+        {
+          type: 'definition',
+          identifier: 'npm',
+          url: 'https://docs.npmjs.com/cli/install'
+        }
+      )
+    }
+
+    children.push(
       {
         type: 'definition',
         identifier: 'health',

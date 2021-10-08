@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-no-auto-link-without-protocol",
   "version": "3.1.0",
-  "description": "remark-lint rule to warn for angle bracketed links without protocol",
+  "description": "Deprecated",
   "license": "MIT",
   "keywords": [
     "remark",

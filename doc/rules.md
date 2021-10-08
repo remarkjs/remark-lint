@@ -107,7 +107,6 @@ Rules][external].
 *   [`list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
 *   [`maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 *   [`maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
-*   [`no-auto-link-without-protocol`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-auto-link-without-protocol) — warn for angle bracketed links without protocol
 *   [`no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
 *   [`no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
 *   [`no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls

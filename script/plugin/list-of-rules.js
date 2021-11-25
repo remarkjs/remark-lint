@@ -14,7 +14,7 @@ import {repoUrl} from '../util/repo-url.js'
 
 const root = path.join(process.cwd(), 'packages')
 
-/** @type {import('unified').Plugin<void[], Root>} */
+/** @type {import('unified').Plugin<Array<void>, Root>} */
 export default function listOfRules() {
   return (tree) => {
     zone(tree, 'rules', (start, _, end) => {

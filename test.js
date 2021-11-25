@@ -401,16 +401,16 @@ function assertFixture(t, rule, info, fixture, basename, settings) {
 }
 
 /**
- * @param {VFileMessage[]} messages
- * @returns {string[]}
+ * @param {Array<VFileMessage>} messages
+ * @returns {Array<string>}
  */
 function normalize(messages) {
   return asStrings(messages).map((value) => value.slice(value.indexOf(':') + 1))
 }
 
 /**
- * @param {VFileMessage[]} messages
- * @returns {string[]}
+ * @param {Array<VFileMessage>} messages
+ * @returns {Array<string>}
  */
 function asStrings(messages) {
   return messages.map((message) => String(message))

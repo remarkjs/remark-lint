@@ -212,9 +212,9 @@ const remarkLintTableCellPadding = lintRule(
       // To do: fix types to always have `align` defined.
       /* c8 ignore next */
       const align = node.align || []
-      /** @type {number[]} */
+      /** @type {Array<number>} */
       const sizes = []
-      /** @type {Entry[]} */
+      /** @type {Array<Entry>} */
       const entries = []
       let index = -1
 
@@ -294,7 +294,7 @@ const remarkLintTableCellPadding = lintRule(
      * @param {'start'|'end'} side
      * @param {Entry} entry
      * @param {0|1} style
-     * @param {number[]} sizes
+     * @param {Array<number>} sizes
      */
     function checkSide(side, entry, style, sizes) {
       const cell = entry.node

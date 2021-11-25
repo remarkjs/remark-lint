@@ -41,7 +41,7 @@ const remarkLintNoReferenceLikeUrl = lintRule(
   },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
-    /** @type {string[]} */
+    /** @type {Array<string>} */
     const identifiers = []
 
     visit(tree, 'definition', (node) => {

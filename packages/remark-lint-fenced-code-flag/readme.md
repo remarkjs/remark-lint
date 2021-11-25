@@ -12,7 +12,7 @@
 
 Check fenced code block flags.
 
-Options: `Array.<string>` or `Object`, optional.
+Options: `Array<string>` or `Object`, optional.
 
 Providing an array is as passing `{flags: Array}`.
 

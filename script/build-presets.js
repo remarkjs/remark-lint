@@ -64,7 +64,7 @@ presets(root).then((presetObjects) => {
       )
     }
 
-    /** @type {TableContent[]} */
+    /** @type {Array<TableContent>} */
     const rows = []
 
     rows.push({
@@ -110,11 +110,11 @@ presets(root).then((presetObjects) => {
       }
     }
 
-    /** @type {BlockContent[]} */
+    /** @type {Array<BlockContent>} */
     // @ts-expect-error: fine.
     const descriptionContent = remark().parse(description).children
 
-    /** @type {BlockContent[]} */
+    /** @type {Array<BlockContent>} */
     const children = [
       {type: 'html', value: '<!--This file is generated-->'},
       {

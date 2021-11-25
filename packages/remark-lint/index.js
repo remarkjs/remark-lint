@@ -9,13 +9,13 @@ import remarkMessageControl from 'remark-message-control'
  * This adds support for ignoring stuff from messages (`<!--lint ignore-->`).
  * All rules are in their own packages and presets.
  *
- * @type {import('unified').Plugin<void[], Root>}
+ * @type {import('unified').Plugin<Array<void>, Root>}
  */
 export default function remarkLint() {
   this.use(lintMessageControl)
 }
 
-/** @type {import('unified').Plugin<void[], Root>} */
+/** @type {import('unified').Plugin<Array<void>, Root>} */
 function lintMessageControl() {
   return remarkMessageControl({name: 'lint', source: 'remark-lint'})
 }

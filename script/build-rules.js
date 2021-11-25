@@ -51,7 +51,7 @@ presets(root).then((presetObjects) => {
     const slug = remote.split('/').slice(-2).join('/')
     let hasGfm = false
 
-    /** @type {BlockContent[]} */
+    /** @type {Array<BlockContent>} */
     // @ts-expect-error: fine.
     const descriptionContent = remark().parse(info.description).children
 
@@ -69,7 +69,7 @@ presets(root).then((presetObjects) => {
       (preset) => basename in preset.packages
     )
 
-    /** @type {BlockContent[]} */
+    /** @type {Array<BlockContent>} */
     const children = [
       {type: 'html', value: '<!--This file is generated-->'},
       {

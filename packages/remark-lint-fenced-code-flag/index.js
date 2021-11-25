@@ -6,7 +6,7 @@
  * @fileoverview
  *   Check fenced code block flags.
  *
- *   Options: `Array.<string>` or `Object`, optional.
+ *   Options: `Array<string>` or `Object`, optional.
  *
  *   Providing an array is as passing `{flags: Array}`.
  *
@@ -83,7 +83,7 @@
 /**
  * @typedef {import('mdast').Root} Root
  *
- * @typedef {string[]} Flags
+ * @typedef {Array<string>} Flags
  *
  * @typedef FlagMap
  * @property {Flags} [flags]
@@ -108,7 +108,7 @@ const remarkLintFencedCodeFlag = lintRule(
   (tree, file, option) => {
     const value = String(file)
     let allowEmpty = false
-    /** @type {string[]} */
+    /** @type {Array<string>} */
     let allowed = []
 
     if (typeof option === 'object') {

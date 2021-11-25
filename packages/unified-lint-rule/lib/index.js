@@ -4,7 +4,7 @@
  *
  * @typedef {0|1|2} Severity
  * @typedef {'warn'|'on'|'off'|'error'} Label
- * @typedef {[Severity, ...unknown[]]} SeverityTuple
+ * @typedef {[Severity, ...Array<unknown>]} SeverityTuple
  *
  * @typedef RuleMeta
  * @property {string} origin name of the lint rule
@@ -38,7 +38,7 @@ export function lintRule(meta, rule) {
 
   return plugin
 
-  /** @type {import('unified').Plugin<[unknown]|void[]>} */
+  /** @type {import('unified').Plugin<[unknown]|Array<void>>} */
   function plugin(raw) {
     const [severity, options] = coerce(ruleId, raw)
 
@@ -80,7 +80,7 @@ export function lintRule(meta, rule) {
  * @returns {SeverityTuple}
  */
 function coerce(name, value) {
-  /** @type {unknown[]} */
+  /** @type {Array<unknown>} */
   let result
 
   if (typeof value === 'boolean') {
@@ -89,11 +89,11 @@ function coerce(name, value) {
     result = [1]
   } else if (
     Array.isArray(value) &&
-    // `isArray(unknown)` is turned into `any[]`:
+    // `isArray(unknown)` is turned into `Array<any>`:
     // type-coverage:ignore-next-line
     primitives.has(typeof value[0])
   ) {
-    // `isArray(unknown)` is turned into `any[]`:
+    // `isArray(unknown)` is turned into `Array<any>`:
     // type-coverage:ignore-next-line
     result = [...value]
   } else {

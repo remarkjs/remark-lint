@@ -78,7 +78,7 @@ const remarkLintNoDuplicateHeadingsInSection = lintRule(
   },
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
-    /** @type {Array.<Record<string, Heading>>} */
+    /** @type {Array<Record<string, Heading>>} */
     let stack = []
 
     visit(tree, 'heading', (node) => {

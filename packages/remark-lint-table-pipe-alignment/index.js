@@ -66,7 +66,7 @@ const remarkLintTablePipeAlignment = lintRule(
     const value = String(file)
 
     visit(tree, 'table', (node) => {
-      /** @type {number[]} */
+      /** @type {Array<number>} */
       const indices = []
       let index = -1
 

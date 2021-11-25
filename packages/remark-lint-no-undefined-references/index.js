@@ -72,9 +72,9 @@
  * @typedef {import('mdast').Paragraph} Paragraph
  *
  * @typedef Options
- * @property {string[]} [allow]
+ * @property {Array<string>} [allow]
  *
- * @typedef {number[]} Range
+ * @typedef {Array<number>} Range
  */
 
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
@@ -133,7 +133,7 @@ const remarkLintNoUndefinedReferences = lintRule(
      * @param {Heading|Paragraph} node
      */
     function findInPhrasing(node) {
-      /** @type {Range[]} */
+      /** @type {Array<Range>} */
       let ranges = []
 
       visit(node, (child) => {
@@ -158,7 +158,7 @@ const remarkLintNoUndefinedReferences = lintRule(
         }
 
         const source = contents.slice(start, end)
-        /** @type {Array.<[number, string]>} */
+        /** @type {Array<[number, string]>} */
         const lines = [[start, '']]
         let last = 0
 

@@ -2,7 +2,7 @@ import fs from 'node:fs'
 
 /**
  * @param {string} filePath
- * @returns {string[]}
+ * @returns {Array<string>}
  */
 export function rules(filePath) {
   return fs

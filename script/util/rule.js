@@ -10,7 +10,7 @@
  *
  * @typedef Check
  * @property {string} input
- * @property {string[]} output
+ * @property {Array<string>} output
  * @property {string} setting
  * @property {boolean} gfm
  * @property {boolean} positionless

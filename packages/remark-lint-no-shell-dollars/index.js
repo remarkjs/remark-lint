@@ -1,13 +1,27 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that not all lines in shell code are
+ * preceded by dollars (`$`).
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Dollars make copy/pasting hard.
+ * Either put both dollars in front of some lines (to indicate shell commands)
+ * and don’t put them in front of other lines, or use fenced code to indicate
+ * shell commands on their own, followed by another fenced code that contains
+ * just the output.
+ *
+ * @module no-shell-dollars
+ * @summary
+ *   remark-lint rule to warn every line in shell code is preceded by `$`s.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-shell-dollars
- * @fileoverview
- *   Warn when shell code is prefixed by `$` (dollar sign) characters.
- *
- *   Ignores indented code blocks and fenced code blocks without language flag.
- *
  * @example
  *   {"name": "ok.md"}
  *

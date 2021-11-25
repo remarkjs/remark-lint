@@ -1,11 +1,22 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that identifiers are defined once.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * It’s a mistake when the same identifier is defined multiple times.
+ *
+ * @module no-duplicate-definitions
+ * @summary
+ *   remark-lint rule to warn when identifiers are defined multiple times.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-duplicate-definitions
- * @fileoverview
- *   Warn when duplicate definitions are found.
- *
  * @example
  *   {"name": "ok.md"}
  *

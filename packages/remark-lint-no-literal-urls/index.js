@@ -1,23 +1,30 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that autolink literal URLs are not used.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Autolink literal URLs (just a URL) are a feature enabled by GFM.
+ * They don’t work everywhere.
+ * Due to this, it’s recommended to instead use normal autolinks
+ * (`<https://url>`) or links (`[text](url)`).
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * never creates autolink literals and always uses normal autolinks (`<url>`).
+ *
+ * @module no-literal-urls
+ * @summary
+ *   remark-lint rule to warn for autolink literals.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-literal-urls
- * @fileoverview
- *   Warn for literal URLs in text.
- *   URLs are treated as links in some Markdown vendors, but not in others.
- *   To make sure they are always linked, wrap them in `<` (less than) and `>`
- *   (greater than).
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   never creates literal URLs and always uses `<` (less than) and `>`
- *   (greater than).
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md"}
  *

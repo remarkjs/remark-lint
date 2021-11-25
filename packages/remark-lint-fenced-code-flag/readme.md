@@ -10,16 +10,33 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Check fenced code block flags.
+[`remark-lint`][mono] rule to check that language flags of fenced code are used.
 
-Options: `Array<string>` or `Object`, optional.
+## Contents
 
-Providing an array is as passing `{flags: Array}`.
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintFencedCodeFlag[, config])`](#unifieduseremarklintfencedcodeflag-config)
+*   [Recommendation](#recommendation)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
 
-The object can have an array of `'flags'` which are allowed: other flags
-will not be allowed.
-An `allowEmpty` field (`boolean`, default: `false`) can be set to allow
-code blocks without language flags.
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that language flags of fenced code
+are used and consistent.
 
 ## Presets
 
@@ -29,7 +46,101 @@ This rule is included in the following presets:
 | - | - |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `{ allowEmpty: false }` |
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-fenced-code-flag
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintFencedCodeFlag from 'https://cdn.skypack.dev/remark-lint-fenced-code-flag@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintFencedCodeFlag from 'https://cdn.skypack.dev/remark-lint-fenced-code-flag@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintFencedCodeFlag from 'remark-lint-fenced-code-flag'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintFencedCodeFlag)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-fenced-code-flag example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-fenced-code-flag",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintFencedCodeFlag`.
+
+### `unified().use(remarkLintFencedCodeFlag[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+The following options (default: `undefined`) are accepted:
+
+*   `Array<string>`
+    — as if passing `{flags: options}`
+*   `Object` with the following fields:
+    *   `allowEmpty` (`boolean`, default: `false`)
+        — allow language flags to be omitted
+    *   `flags` (`Array<string>` default: `[]`)
+        — specific flags to allow (other flags will result in a warning)
+
+## Recommendation
+
+While omitting the language flag is perfectly fine to signal that the code is
+plain text, it *could* point to a mistake.
+It’s recommended to instead use a certain flag for plain text (such as `txt`)
+and to turn this rule on.
+
+## Examples
 
 ##### `ok.md`
 
@@ -145,59 +256,12 @@ bravo()
 1:1-3:4: Incorrect code language flag
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-fenced-code-flag
-```
-
-This package exports no identifiers.
-The default export is `remarkLintFencedCodeFlag`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-fenced-code-flag",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-fenced-code-flag readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintFencedCodeFlag from 'remark-lint-fenced-code-flag'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintFencedCodeFlag)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -239,17 +303,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

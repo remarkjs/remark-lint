@@ -1,26 +1,34 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that blank lines are used between blocks.
+ *
+ * ## API
+ *
+ * The following options (default: `undefined`) are accepted:
+ *
+ * *   `Object` with the following fields:
+ *     *   `exceptTightLists` (`boolean`, default: `false`)
+ *         — allow tight list items
+ *
+ * ## Recommendation
+ *
+ * While not always required, blank lines are required in certain, sometimes
+ * confusing, cases.
+ * Due to this, it’s recommended to always use blank lines between blocks.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * always uses blank lines between blocks.
+ * It has a `join` function to customize such behavior.
+ *
+ * @module no-missing-blank-lines
+ * @summary
+ *   remark-lint rule to warn when blank lines are missing.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-missing-blank-lines
- * @fileoverview
- *   Warn when missing blank lines before block content (and frontmatter
- *   content).
- *
- *   This rule can be configured to allow tight list items without blank lines
- *   between their contents by passing `{exceptTightLists: true}` (default:
- *   `false`).
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   always uses one blank line between blocks if possible, or two lines when
- *   needed.
- *   The style of the list items persists.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md"}
  *

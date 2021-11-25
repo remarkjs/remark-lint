@@ -1,12 +1,26 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that definitions are placed at the end of
+ * the document.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * There are different strategies for placing definitions.
+ * The simplest is perhaps to place them all at the bottem of documents.
+ * If you prefer that, turn on this rule.
+ *
+ * @module final-definition
+ * @summary
+ *   remark-lint rule to warn when definitions are used *in* the document
+ *   instead of at the end.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module final-definition
- * @fileoverview
- *   Warn when definitions are placed somewhere other than at the end of
- *   the file.
- *
  * @example
  *   {"name": "ok.md"}
  *

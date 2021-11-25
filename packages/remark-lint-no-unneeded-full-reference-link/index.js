@@ -1,15 +1,25 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that collapsed reference links are
+ * used instead of full references where possible.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Full reference syntax (`![Alt][alt]`) is quite verbose compared to
+ * the concise collapsed reference syntax (`![Alt][]`).
+ *
+ * @module no-unneeded-full-reference-link
+ * @summary
+ *   remark-lint rule to warn when full reference links are used that
+ *   could be collapsed.
  * @author Titus Wormer
  * @copyright 2019 Titus Wormer
  * @license MIT
- * @module no-unneeded-full-reference-link
- * @fileoverview
- *   Warn when full reference links are used that could be collapsed.
- *
- *   Full references (such as `[Remark][remark]`) can also be written as a
- *   collapsed reference (`[Remark][]`) if normalising the reference text yields
- *   the label.
- *
  * @example
  *   {"name": "ok.md"}
  *

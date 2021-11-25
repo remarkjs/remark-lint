@@ -1,11 +1,30 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that heading ranks increment with one
+ * at a time.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * While markdown is not only used for HTML, HTML accessibility guidelines
+ * state that headings should increment by one at a time.
+ * As in, say the previous heading had a rank of 2 (so `<h2>`), then the
+ * following heading that is to be considered “inside” it should have a rank of
+ * 3 (`<h3>`).
+ * Due to this, it’s recommended that when HTML output is a goal of the
+ * document, that this rule is turned on.
+ *
+ * @module heading-increment
+ * @summary
+ *   remark-lint rule to warn when heading ranks increment with more than
+ *   1 at a time.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module heading-increment
- * @fileoverview
- *   Warn when headings increment with more than 1 level at a time.
- *
  * @example
  *   {"name": "ok.md"}
  *

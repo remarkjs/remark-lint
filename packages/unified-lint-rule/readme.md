@@ -8,19 +8,56 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**unified**][unified] plugin to make it a bit easier to create linting rules.
+**[unified][]** plugin to help make lint rules.
 
-Each rule in [`remark-lint`][lint] uses this project, so see that for examples!
+See the [monorepo readme][mono] for more info on remark lint.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`lintRule(origin|meta, rule)`](#lintruleoriginmeta-rule)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] plugin that makes it a bit easier to create
+linting rules.
+
+**unified** is a project that transforms content with abstract syntax trees
+(ASTs).
+This is a plugin that make it easier to inspect trees.
+
+## When should I use this?
+
+You can use this package when you want to make custom lint rules.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install unified-lint-rule
+```
+
+In Deno with [Skypack][]:
+
+```js
+import {lintRule} from 'https://cdn.skypack.dev/unified-lint-rule@2?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import {lintRule} from 'https://cdn.skypack.dev/unified-lint-rule@2?min'
+</script>
 ```
 
 ## Use
@@ -41,6 +78,42 @@ const remarkLintFileExtension = lintRule(
 
 export default remarkLintFileExtension
 ```
+
+## API
+
+This package exports the following identifier: `lintRule`.
+There is no default export.
+
+### `lintRule(origin|meta, rule)`
+
+Create a plugin.
+
+###### Parameters
+
+*   `origin` (`string`)
+    — treated as a `meta` of `{origin}`
+*   `meta` (`Object`)
+    — rule metadata
+*   `meta.origin` (`string`)
+    — message origin, either a rule name (`'file-extension'`) or both
+    a rule source and name joined with `:` (`'remark-lint:file-extension'`)
+*   `meta.url` (`string`, optional)
+    — URL to documentation for messages
+*   `rule` (`Function`, optional)
+    — your code, like a transform function, except that an extra `option` is
+    passed
+
+###### Returns
+
+A unified plugin that handles all kinds of options (see [Configure][configure]
+in the monorepo readme for how them).
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -82,15 +155,19 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
+
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
@@ -98,4 +175,6 @@ abide by its terms.
 
 [unified]: https://github.com/unifiedjs/unified
 
-[lint]: https://github.com/remarkjs/remark-lint
+[mono]: https://github.com/remarkjs/remark-lint
+
+[configure]: https://github.com/remarkjs/remark-lint#configure

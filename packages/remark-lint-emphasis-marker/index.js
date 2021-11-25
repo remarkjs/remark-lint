@@ -1,27 +1,44 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that emphasis markers are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'*'`
+ *     — prefer asterisks
+ * *   `'_'`
+ *     — prefer underscores
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further emphasis differs
+ *
+ * ## Recommendation
+ *
+ * Underscores and asterisks work slightly different: asterisks can form
+ * emphasis in more cases than underscores.
+ * Because underscores are sometimes used to represent normal underscores inside
+ * words, there are extra rules supporting that.
+ * Asterisks can also be used as the marker of more constructs than underscores:
+ * lists.
+ * Due to having simpler parsing rules, looking more like syntax, and that they
+ * can be used for more constructs, it’s recommended to prefer asterisks.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats emphasis with asterisks by default.
+ * Pass
+ * [`emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis)
+ * to always use underscores.
+ *
+ * @module emphasis-marker
+ * @summary
+ *   remark-lint rule to warn when emphasis markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module emphasis-marker
- * @fileoverview
- *   Warn for violating emphasis markers.
- *
- *   Options: `'consistent'`, `'*'`, or `'_'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used emphasis style and warns when
- *   subsequent emphasis use different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   formats emphasis using `_` (underscore) by default.
- *   Pass
- *   [`emphasis: '*'`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsemphasis)
- *   to use `*` (asterisk) instead.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"setting": "*", "name": "ok.md"}
  *

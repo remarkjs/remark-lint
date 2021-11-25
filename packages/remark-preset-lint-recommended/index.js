@@ -1,7 +1,10 @@
 /**
- * @fileoverview
- *   remark preset to configure `remark-lint` with settings that prevent
- *   mistakes or stuff that fails across vendors.
+ * ## When should I use this?
+ *
+ * You can use this package to check that markdown follows some best practices.
+ *
+ * @summary
+ *   Preset of remark-lint rules to warn for some likely problems.
  */
 
 /**

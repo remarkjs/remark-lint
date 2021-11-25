@@ -1,27 +1,40 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that table cells are padded consistently.
+ * Tables are a GFM feature enabled with
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'padded'`
+ *     — prefer at least one space between pipes and content
+ * *   `'compact'`
+ *     — prefer zero spaces between pipes and content
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further tables differ
+ *
+ * ## Recommendation
+ *
+ * It’s recommended to use at least one space between pipes and content for
+ * legibility of the markup (`'padded'`).
+ *
+ * ## Fix
+ *
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
+ * formats all table cells as padded by default.
+ * Pass
+ * [`tableCellPadding: false`](https://github.com/remarkjs/remark-gfm#optionstablecellpadding)
+ * to use a more compact style.
+ *
+ * @module table-cell-padding
+ * @summary
+ *   remark-lint rule to warn when table cells are inconsistently padded.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module table-cell-padding
- * @fileoverview
- *   Warn when table cells are incorrectly padded.
- *
- *   Options: `'consistent'`, `'padded'`, or `'compact'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used cell padding style and warns when
- *   subsequent cells use different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   formats tables with padding by default.
- *   Pass
- *   [`spacedTable: false`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsspacedtable)
- *   to not use padding.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "setting": "padded", "gfm": true}
  *

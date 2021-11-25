@@ -1,27 +1,52 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that code blocks are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'fenced'`
+ *     — prefer fenced code blocks:
+ *     ````markdown
+ *     ```js
+ *     code()
+ *     ```
+ *     ````
+ * *   `'indented'`
+ *     — prefer indented code blocks:
+ *     ```markdown
+ *         code()
+ *     ```
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further code blocks differ
+ *
+ * ## Recommendation
+ *
+ * Indentation in markdown is complex, especially because lists and indented
+ * code can interfere in unexpected ways.
+ * Fenced code has more features than indented code: importantly, specifying a
+ * programming language.
+ * Since CommonMark took the idea of fenced code from GFM, fenced code became
+ * widely supported.
+ * Due to this, it’s recommended to configure this rule with `'fenced'`.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats code blocks as fenced code when they have a language flag and as
+ * indented code otherwise.
+ * Pass
+ * [`fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences)
+ * to always use fenced code.
+ *
+ * @module code-block-style
+ * @summary
+ *   remark-lint rule to warn when code blocks violate a given style.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module code-block-style
- * @fileoverview
- *   Warn when code blocks do not adhere to a given style.
- *
- *   Options: `'consistent'`, `'fenced'`, or `'indented'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used code block style and warns when
- *   subsequent code blocks uses different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   formats code blocks using a fence if they have a language flag and
- *   indentation if not.
- *   Pass
- *   [`fences: true`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsfences)
- *   to always use fences for code blocks.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
  *
  * @example
  *   {"setting": "indented", "name": "ok.md"}

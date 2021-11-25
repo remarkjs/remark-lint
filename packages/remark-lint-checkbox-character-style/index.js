@@ -1,31 +1,41 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that the style of GFM tasklists is
+ * consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `Object` with the following fields:
+ *     *   `checked` (`'x'`, `'X'`, or `'consistent'`, default: `'consistent'`)
+ *         — preferred character to use for checked checkboxes
+ *     *   `unchecked` (`'·'` (a space), `'»'` (a tab), or `'consistent'`,
+ *         default: `'consistent'`)
+ *         — preferred character to use for unchecked checkboxes
+ * *   `'consistent'`
+ *     — detect the first used styles and warn when further checkboxes differ
+ *
+ * ## Recommendation
+ *
+ * It’s recommended to set `options.checked` to `'x'` (a lowercase X) as it
+ * prevents an extra keyboard press and `options.unchecked` to `'·'` (a space)
+ * to make all checkboxes align.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats checked checkboxes using `'x'` (lowercase X) and unchecked checkboxes
+ * using `'·'` (a space).
+ *
+ * @module checkbox-character-style
+ * @summary
+ *   remark-lint rule to warn when list item checkboxes violate a given
+ *   style.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module checkbox-character-style
- * @fileoverview
- *   Warn when list item checkboxes violate a given style.
- *
- *   Options: `Object` or `'consistent'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used checked and unchecked checkbox
- *   styles and warns when subsequent checkboxes use different styles.
- *
- *   Styles can also be passed in like so:
- *
- *   ```js
- *   {checked: 'x', unchecked: ' '}
- *   ```
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   formats checked checkboxes using `x` (lowercase X) and unchecked checkboxes
- *   as `·` (a single space).
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "setting": {"checked": "x"}, "gfm": true}
  *

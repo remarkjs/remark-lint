@@ -7,349 +7,83 @@
 [![Sponsors][sponsors-badge]][collective]
 [![Backers][backers-badge]][collective]
 
-[**remark**][remark] plugins to lint Markdown.
-
-Ensuring the Markdown you (and contributors) write is of great quality will
-provide better rendering in all the different markdown parsers, and makes sure
-less refactoring is needed afterwards.
-
-What is quality?
-That’s up to you, but there are sensible [presets][].
-
-`remark-lint` is built on [**remark**][remark], a powerful Markdown processor
-powered by [plugins][remark-plugins] (such as these).
+**[remark][]** plugins to check (lint) markdown code style.
 
 ## Contents
 
-*   [Install](#install)
-*   [CLI](#cli)
-*   [API](#api)
-*   [Configuring `remark-lint`](#configuring-remark-lint)
-*   [Using remark to fix your Markdown](#using-remark-to-fix-your-markdown)
-*   [Integrations](#integrations)
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
 *   [Rules](#rules)
-*   [List of presets](#list-of-presets)
-*   [List of external rules](#list-of-external-rules)
-*   [Create a custom rule](#create-a-custom-rule)
+*   [Configure](#configure)
+*   [Ignore warnings](#ignore-warnings)
+*   [Examples](#examples)
+    *   [Example: check markdown on the API](#example-check-markdown-on-the-api)
+    *   [Example: check and format markdown on the API](#example-check-and-format-markdown-on-the-api)
+    *   [Example: check markdown on the CLI](#example-check-markdown-on-the-cli)
+    *   [Example: check and format markdown on the CLI](#example-check-and-format-markdown-on-the-cli)
+*   [Integrations](#integrations)
+*   [Syntax](#syntax)
+*   [Compatibility](#compatibility)
 *   [Security](#security)
-*   [Related](#related)
 *   [Contribute](#contribute)
 *   [License](#license)
 
-## Install
+## What is this?
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+![](screenshot.png)
 
-[npm][]:
+You can use this to check markdown.
+Say we have a markdown file `doc/example.md` that contains:
+
+```markdown
+1) Hello, _Jupiter_ and *Neptune*!
+```
+
+Then assuming we installed dependencies and run:
 
 ```sh
-npm install remark-lint
+npx remark doc/ --use remark-preset-lint-consistent --use remark-preset-lint-recommended
 ```
 
-## CLI
-
-![][screenshot]
-
-Use `remark-lint` with [`remark-cli`][cli] through a
-[preset][preset-recommended].
-
-```sh
-npm install --save-dev remark-cli remark-preset-lint-recommended
-```
-
-Then, configure **remark** in your `package.json`:
-
-```js
-  // …
-  "scripts": {
-    "lint-md": "remark ."
-  },
-  // …
-  "remarkConfig": {
-    "plugins": ["remark-preset-lint-recommended"]
-  }
-  // …
-```
-
-Let’s say there’s an `example.md` that looks as follows:
-
-```markdown
-* Hello
-
-[World][]
-```
-
-Now, running our `lint-md` script with `npm run lint-md` yields:
+We would get a report like this:
 
 ```txt
-example.md
-       1:3  warning  Incorrect list-item indent: add 2 spaces  list-item-indent
-  3:1-3:10  warning  Found reference to undefined definition   no-undefined-references
-⚠ 2 warnings
+doc/example.md
+   1:1-1:35  warning  Marker style should be `.`               ordered-list-marker-style  remark-lint
+        1:4  warning  Incorrect list-item indent: add 1 space  list-item-indent           remark-lint
+  1:25-1:34  warning  Emphasis should use `_` as a marker      emphasis-marker            remark-lint
+
+⚠ 3 warnings
 ```
 
-See [`doc/rules.md`][rules] for what those warnings are (and how to turn them
-off).
-
-## API
-
-Use `remark-lint` together with [`remark`][api]:
-
-```sh
-npm install remark remark-preset-lint-markdown-style-guide
-```
-
-Let’s say `example.js` looks as follows:
-
-```js
-import {remark} from 'remark'
-import {reporter} from 'vfile-reporter'
-import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide'
-
-const file = remark()
-  .use(remarkPresetLintMarkdownStyleGuide)
-  .processSync('_Hello world_')
-
-console.log(reporter(file))
-```
-
-Now, running `node example.js` yields:
-
-```txt
-  1:1-1:14  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
-
-⚠ 1 warning
-```
-
-## Configuring `remark-lint`
-
-`remark-lint` is a **remark** plugin and when used on the CLI supports
-configuration through its [configuration files][cli].
-
-An example `.remarkrc` file could look as follows:
-
-```json
-{
-  "plugins": [
-    "remark-preset-lint-recommended",
-    ["remark-lint-list-item-indent", false]
-  ]
-}
-```
-
-The preset turns on `remark-lint-list-item-indent`, but setting a plugin to
-`false` later turns it off again.
-
-Using our `example.md` from before:
-
-```markdown
-* Hello
-
-[World][]
-```
-
-Now, running `npm run lint-md` yields:
-
-```bash
-example.md
-   3:1-3:10  warning  Found reference to undefined definition   no-undefined-references  remark-lint
-
-⚠ 2 warnings
-```
-
-You can also provide configuration comments to turn a rule on or off inside a
-file.
-Note that you cannot change a setting, such as `maximum-line-length`, just
-whether messages are shown or not.
-Read more about configuration comments in
-[`remark-message-control`][message-control]s documentation.
-
-The following file will warn twice for the duplicate headings:
-
-```markdown
-# Hello
-
-## Hello
-
-### Hello
-```
-
-The following file will warn once (the second heading is ignored, but the third
-is enabled again):
-
-```markdown
-# Hello
-
-<!--lint disable no-duplicate-headings-->
-
-## Hello
-
-<!--lint enable no-duplicate-headings-->
-
-### Hello
-```
-
-> **Note**: You’ll need the blank lines between comments and other nodes!
-
-## Using remark to fix your Markdown
-
-[`remark-stringify`][remark-stringify] can format markdown syntax.
-It ensures a single style is used: list items use one type of bullet (`*`, `-`,
-`+`), emphasis (`*` or `_`) and importance (`__` or `**`) use a standard marker,
-[and more][remark-stringify-options].
-
-###### Example
-
-If you `import('remark')`, [`remark-stringify`][remark-stringify] is included
-unless an output format other than markdown (such as HTML) is defined.
-
-Say we have the following file, `example.js`, showing how formatting rules can
-be used:
-
-```js
-import {reporter} from 'vfile-reporter'
-import {remark} from 'remark'
-import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
-import remarkLintStrongMarker from 'remark-lint-strong-marker'
-
-remark()
-  .use(remarkLintEmphasisMarker, '*')
-  .use(remarkLintStrongMarker, '*')
-  // ^ two `remark-lint` rules.
-  .use({
-    settings: {emphasis: '*', strong: '*'}
-    // ^ `remark-stringify` settings.
-  })
-  .process('_Hello_, __world__!')
-  .then((file) => {
-    console.error(reporter(file))
-    console.log(String(file))
-  })
-```
-
-Now, running `node example` yields warnings and a formatted file:
-
-```txt
-    1:1-1:8  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
-  1:10-1:19  warning  Strong should use `*` as a marker    strong-marker    remark-lint
-
-⚠ 2 warnings
-*Hello*, **world**!
-```
-
-###### Example
-
-If you’re using [`remark-stringify`][remark-stringify] explicitly, you can pass
-options like any other plugin, like so:
-
-```js
-import {reporter} from 'vfile-reporter'
-import {unified} from 'unified'
-import remarkParse from 'remark-parse'
-import remarkStringify from 'remark-stringify'
-import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
-import remarkLintStrongMarker from 'remark-lint-strong-marker'
-
-unified()
-  .use(remarkParse)
-  .use(remarkLintEmphasisMarker, '*')
-  .use(remarkLintStrongMarker, '*')
-  // ^ two `remark-lint` rules.
-  .use(remarkStringify, {emphasis: '*', strong: '*'})
-  // ^ `remark-stringify` with settings.
-  .process('_Hello_, __world__!')
-  .then((file) => {
-    console.error(reporter(file))
-    console.log(String(file))
-  })
-```
-
-Now, when running `node example`, this results in the same output as the
-previous example.
-
-###### Example
-
-If you’re using [`remark-cli`][cli], [`remark-stringify`][remark-stringify] is
-included unless an output format other than markdown (such as HTML) is defined.
-In this case you can configure `remark-stringify` settings using the
-[`-s, --settings`][cli-settings] flag or a `"settings"` field in [remark
-configuration files][cli-config].
-
-Say we have the following file, `example.md`:
-
-```markdown
-_Hello_, __world__!
-```
-
-And our `package.json` looks as follows:
-
-```js
-  // …
-  "remarkConfig": {
-    "settings": {
-      "emphasis": "*",
-      "strong": "*"
-    },
-    "plugins": [
-      "remark-lint-emphasis-marker",
-      "remark-lint-strong-marker"
-    ]
-  }
-  // …
-```
-
-Now, running `remark example.md` yields warnings and a formatted file:
-
-```txt
-*Hello*, **world**!
-example.md
-    1:1-1:8  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
-  1:10-1:19  warning  Strong should use `*` as a marker    strong-marker    remark-lint
-
-⚠ 2 warnings
-```
-
-> Note: running `remark example.md -o` or `remark example.md --output`
-> overwrites `example.md` and formats it.
-> So, if you’d run that twice (the first pass lints and fixes the Markdown, the
-> second pass checks it again), you’d see the output `example.md: written` as
-> all warnings are now fixed.
-
-## Integrations
-
-*   [`linter-remark`](https://github.com/wooorm/linter-remark)
-    ([Atom](https://atom.io))
-    — use all of remark from Atom
-*   [`vscode-remark-lint`](https://github.com/drewbourne/vscode-remark-lint)
-    ([VS Code](https://code.visualstudio.com))
-    — use `remark-lint` from Visual Studio Code
-*   [`SublimeLinter-contrib-remark-lint`](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint)
-    ([Sublime](https://www.sublimetext.com))
-    — use `remark-lint` from Sublime Text
-*   [`ale`](https://github.com/w0rp/ale)
-    ([Vim](https://www.vim.org))
-    — use `remark-lint` from Vim
-*   [`gulp-remark`](https://github.com/remarkjs/gulp-remark)
-    ([Gulp](https://gulpjs.com))
-    — use all of remark with Gulp
-*   [`grunt-remark`](https://github.com/remarkjs/grunt-remark)
-    ([Grunt](https://gruntjs.com/))
-    — use all of remark with Grunt
-*   [`jest-runner-remark`](https://github.com/keplersj/jest-runner-remark)
-    ([Jest](https://jestjs.io))
-    — use all of remark with Jest
-
-We’re interested in more integrations.
-Let us know if we can help.
-
-## Rules
-
-[`doc/rules.md`][rules] lists all available official rules.
-
-## List of presets
-
-Presets can be loaded just like other plugins.
+This GitHub repository is a monorepo that contains ±70 plugins (each a rule that
+checks one specific thing) and 3 presets (combinations of rules configured to
+check for certain styles).
+
+These packages are build on [unified][] ([remark][]).
+**unified** is a project that inspects and transforms content with abstract
+syntax trees (ASTs).
+**remark** adds support for markdown to unified.
+**mdast** is the markdown AST that remark uses.
+These lint rules inspect mdast.
+
+## When should I use this?
+
+This project is useful when developers or technical writers are authoring
+documentation in markdown and you want to ensure that the markdown is
+consistent, free of bugs, and works well across different markdown parsers.
+
+These packages are quite good at checking markdown.
+They especially shine when combined with other [remark plugins][remark-plugin]
+and at letting you make your own rules.
+
+## Presets
+
+Presets are combinations of rules configured to check for certain styles.
+The following presets only contain lint rules but you can make your own that
+include any remark plugins or other presets.
+The presets that are maintained here:
 
 <!--presets start-->
 
@@ -359,74 +93,518 @@ Presets can be loaded just like other plugins.
 
 <!--presets end-->
 
-## List of external rules
+## Rules
 
-External rules can be loaded just like normal rules.
+The rules that are maintained here:
 
 <!--
-This list is ordered based on the name without prefix, so excluding
-`remark-lint-no-` or `remark-lint-`
+  👉 **Note**: the following list is automatically generated.
+-->
+
+<!--rules start-->
+
+*   [`remark-lint-blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation) — warn when block quotes are either indented too much or too little
+*   [`remark-lint-checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
+*   [`remark-lint-checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
+*   [`remark-lint-code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) — warn when code blocks do not adhere to a given style
+*   [`remark-lint-definition-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
+*   [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
+*   [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
+*   [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
+*   [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style
+*   [`remark-lint-file-extension`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension) — warn when the file’s extension violates the given style
+*   [`remark-lint-final-definition`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition) — warn when definitions are not placed at the end of the file
+*   [`remark-lint-final-newline`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline) — warn when a newline at the end of a file is missing
+*   [`remark-lint-first-heading-level`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-first-heading-level) — warn when the first heading has a level other than a specified value
+*   [`remark-lint-hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
+*   [`remark-lint-heading-increment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
+*   [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) — warn when heading style violates the given style
+*   [`remark-lint-linebreak-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style) — warn when linebreaks violate a given or detected style
+*   [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
+*   [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
+*   [`remark-lint-list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation
+*   [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — warn when the spacing between a list item’s bullet and its content violates a given style
+*   [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
+*   [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
+*   [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
+*   [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
+*   [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
+*   [`remark-lint-no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls
+*   [`remark-lint-no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions) — warn on duplicate definitions
+*   [`remark-lint-no-duplicate-headings`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings) — warn on duplicate headings
+*   [`remark-lint-no-duplicate-headings-in-section`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings-in-section) — warn on duplicate headings in a section
+*   [`remark-lint-no-emphasis-as-heading`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading) — warn when emphasis or importance is used instead of a heading
+*   [`remark-lint-no-empty-url`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-empty-url) — warn on empty URLs in links and images
+*   [`remark-lint-no-file-name-articles`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-articles) — warn when file name start with an article
+*   [`remark-lint-no-file-name-consecutive-dashes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-consecutive-dashes) — warn when file names contain consecutive dashes
+*   [`remark-lint-no-file-name-irregular-characters`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-irregular-characters) — warn when file names contain irregular characters
+*   [`remark-lint-no-file-name-mixed-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-mixed-case) — warn when file names use mixed case
+*   [`remark-lint-no-file-name-outer-dashes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-outer-dashes) — warn when file names contain initial or final dashes
+*   [`remark-lint-no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent) — warn when heading content is indented
+*   [`remark-lint-no-heading-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-indent) — warn when headings are indented
+*   [`remark-lint-no-heading-like-paragraph`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-like-paragraph) — for too many hashes (h7+ “headings”)
+*   [`remark-lint-no-heading-punctuation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation) — warn when headings end in illegal characters
+*   [`remark-lint-no-html`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-html) — warn when HTML nodes are used
+*   [`remark-lint-no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-inline-padding) — warn when inline nodes are padded with spaces
+*   [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) — warn when URLs without angle brackets are used
+*   [`remark-lint-no-missing-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-missing-blank-lines) — warn when missing blank lines
+*   [`remark-lint-no-multiple-toplevel-headings`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-multiple-toplevel-headings) — warn when multiple top level headings are used
+*   [`remark-lint-no-paragraph-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent) — warn when the content in paragraphs are indented
+*   [`remark-lint-no-reference-like-url`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url) — warn when URLs are also defined identifiers
+*   [`remark-lint-no-shell-dollars`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shell-dollars) — warn when shell code is prefixed by dollars
+*   [`remark-lint-no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-image) — warn when shortcut reference images are used
+*   [`remark-lint-no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link) — warn when shortcut reference links are used
+*   [`remark-lint-no-table-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation) — warn when tables are indented
+*   [`remark-lint-no-tabs`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-tabs) — warn when hard tabs are used instead of spaces
+*   [`remark-lint-no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) — warn when references to undefined definitions are found
+*   [`remark-lint-no-unneeded-full-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image) — warn when full reference images are used if they can be collapsed
+*   [`remark-lint-no-unneeded-full-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link) — warn when full reference links are used if they can be collapsed
+*   [`remark-lint-no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) — warn when unused definitions are found
+*   [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) — warn when the markers of ordered lists violate a given style
+*   [`remark-lint-ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) — warn when the marker value of ordered lists violates a given style
+*   [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) — warn when horizontal rules violate a given style
+*   [`remark-lint-strikethrough-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker) — warn when strikethrough markers violate the given style
+*   [`remark-lint-strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) — warn when importance (strong) markers violate the given style
+*   [`remark-lint-table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding) — warn when table cells are incorrectly padded
+*   [`remark-lint-table-pipe-alignment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment) — warn when table pipes are not aligned
+*   [`remark-lint-table-pipes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipes) — warn when table rows are not fenced with pipes
+*   [`remark-lint-unordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style) — warn when markers of unordered lists violate a given style
+
+<!--rules end-->
+
+<!--Old ID of this section:-->
+
+<a name="list-of-external-rules"></a>
+
+You can make and share your own rules, which can be used just like the rules
+maintained here.
+The following rules are maintained by the community:
+
+<!--
+  👉 **Note**: this list is ordered based on the name without prefix, so
+  excluding `remark-lint-no-` or `remark-lint-`
 -->
 
 *   [`remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
-    — Ensure list items are in alphabetical order
+    — ensure list items are in alphabetical order
 *   [`remark-lint-appropriate-heading`](https://github.com/RichardLitt/remark-lint-appropriate-heading)
-    — Check that the top level heading matches the directory name
+    — check that the top level heading matches the directory name
 *   [`remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
-    — Ensure a specific number of lines between blocks
+    — ensure a specific number of lines between blocks
 *   [`remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
-    — Ensure links in lists of books follow a standard format
+    — ensure links in lists of books follow a standard format
 *   [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
-    — Lint fenced code blocks by corresponding language tags,
+    — lint fenced code blocks by corresponding language tags,
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
 *   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-match-punctuation)
-    — Ensures punctuations are used in pairs if necessary.
+    — ensures punctuations are used in pairs if necessary.
 *   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
-    — Ensure em-dash (`—`) style follows a standard format
+    — ensure em-dash (`—`) style follows a standard format
 *   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-chinese-punctuation-in-number)
-    — Ensures that Chinese punctuation’s not used in numbers
+    — ensures that Chinese punctuation’s not used in numbers
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
-    — Check that external links are alive
+    — check that external links are alive
 *   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-long-code)
-    — Ensures that each line in code block won't be too long.
+    — ensures that each line in code block won't be too long.
 *   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-repeat-punctuation)
-    — Ensures punctuation is not repeated
+    — ensures punctuation is not repeated
 *   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
-    — Enforce a limit of emoji per paragraph
+    — enforce a limit of emoji per paragraph
 *   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
-    — Ensure every heading is followed by content (forming a section)
+    — ensure every heading is followed by content (forming a section)
 *   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
-    — Ensure headings have the appropriate length
+    — ensure headings have the appropriate length
 *   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
-    — Ensure heading parsing is not broken by weird whitespace
+    — ensure heading parsing is not broken by weird whitespace
 *   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
-    — Check if your links are reachable and/or unique
+    — check if your links are reachable and/or unique
 *   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-number)
-    — Ensures there are spaces around number and Chinese.
+    — ensures there are spaces around number and Chinese.
 *   [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-word)
-    — Ensures there are spaces around English word and Chinese.
+    — ensures there are spaces around English word and Chinese.
 *   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
-    — Ensure that the `href` of links has no trailing slash
+    — ensure that the `href` of links has no trailing slash
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
-    — Wrapper for `write-good`
+    — wrapper for `write-good`
 *   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
-    — Ensure the same URL is not linked multiple times.
+    — ensure the same URL is not linked multiple times.
 
-## Create a custom rule
+For help creating your own rule, it’s suggested to look at existing rules and to
+[follow this tutorial][tutorial].
 
-Follow this comprehensive [tutorial](https://github.com/remarkjs/remark-lint/blob/main/doc/create-a-custom-rule.md) on how to create your own custom rule for `remark`.
+## Configure
+
+<!--Old ID of this section:-->
+
+<a name="configuring-remark-lint"></a>
+
+All rules can be configured in one standard way:
+
+```js
+import {remark} from 'remark'
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+import remarkLintMaximumLineLength from 'remark-lint-maximum-line-length'
+import remarkLintUnorderedListMarkerStyle from 'remark-lint-unordered-list-marker-style'
+
+remark()
+  // Pass `false` to turn a rule off — the code no longer runs:
+  .use(remarkLintFinalNewline, false)
+  // Pass `true` to turn a rule on again:
+  .use(remarkLintFinalNewline, true)
+  // You can also configure whether messages by the rule should be ignored,
+  // are seen as code style warnings (default), or are seen as exceptions.
+  // Ignore messages with `'off'` or `0` as the first value of an array:
+  .use(remarkLintFinalNewline, ['off'])
+  .use(remarkLintFinalNewline, [0])
+  // Use `'warn'`, `'on'`, or `1` to treat messages as code style warnings:
+  .use(remarkLintFinalNewline, ['warn'])
+  .use(remarkLintFinalNewline, ['on'])
+  .use(remarkLintFinalNewline, [1])
+  // Use `'error'` or `2` to treat messages as exceptions:
+  .use(remarkLintFinalNewline, ['error'])
+  .use(remarkLintFinalNewline, [2])
+  // Some rules accept options, and what they exactly accept is different for
+  // each rule (sometimes a string, a number, or an object).
+  // The following rule accepts a string:
+  .use(remarkLintUnorderedListMarkerStyle, '*')
+  .use(remarkLintUnorderedListMarkerStyle, ['on', '*'])
+  .use(remarkLintUnorderedListMarkerStyle, [1, '*'])
+  // The following rule accepts a number, numbers *must* be passed in arrays:
+  .use(remarkLintMaximumLineLength, ['on', 72])
+  .use(remarkLintMaximumLineLength, [1, 72])
+```
+
+See [`use()` in `unified`s readme][unified-use] for more info on how to use
+plugins.
+
+> 🧑‍🏫 **Info**: messages in `remark-lint` are warnings instead of errors.
+> Other linters (such as ESLint) almost always use errors.
+> Why?
+> Those tools *only* check code style.
+> They don’t generate, transform, and format code, which is what remark and
+> unified focus on, too.
+> Errors in unified mean the same as an exception in your JavaScript code: a
+> crash.
+> That’s why we use warnings instead, because we continue checking more markdown
+> and continue running more plugins.
+
+## Ignore warnings
+
+You can use HTML comments to hide or show warnings from within markdown.
+Turn off all remark lint messages with `<!--lint disable-->` and turn them on
+again with `<!--lint enable-->`:
+
+```markdown
+<!--lint disable-->
+
+[Naiad]: https://naiad.neptune
+
+[Thalassa]: https://thalassa.neptune
+
+<!--lint enable-->
+```
+
+You can toggle specific rules by using their names without `remark-lint-`:
+
+```markdown
+<!--lint disable no-unused-definitions definition-case-->
+
+[Naiad]: https://naiad.neptune
+
+[Thalassa]: https://thalassa.neptune
+
+<!--lint enable no-unused-definitions definition-case-->
+```
+
+You can ignore a message in the next block with `<!--lint ignore-->`:
+
+```markdown
+<!--lint ignore-->
+
+[Naiad]: https://naiad.neptune
+```
+
+`ignore` also accepts a list of rules:
+
+```markdown
+<!--lint ignore no-unused-definitions definition-case-->
+
+[Naiad]: https://naiad.neptune
+```
+
+> 👉 **Note**: you’ll typically need blank lines between HTML comments and other
+> constructs.
+> More info is available at the package that handles comments,
+> [`remark-message-control`][remark-message-control].
+
+> 💡 **Tip**: MDX comments are supported when [`remark-mdx`][remark-mdx] is
+> used:
+>
+> ```mdx
+> {/* lint ignore no-unused-definitions definition-case */}
+> ```
+
+## Examples
+
+### Example: check markdown on the API
+
+The following example checks that markdown code style is consistent and follows
+some best practices.
+It also reconfigures a rule.
+First install dependencies:
+
+```sh
+npm install vfile-reporter remark remark-preset-lint-consistent remark-preset-lint-recommended remark-lint-list-item-indent --save-dev
+```
+
+Then create a module `example.js` that contains:
+
+```js
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkPresetLintConsistent from 'remark-preset-lint-consistent'
+import remarkPresetLintRecommended from 'remark-preset-lint-recommended'
+import remarkLintListItemIndent from 'remark-lint-list-item-indent'
+
+main()
+
+async function main() {
+  const file = await remark()
+    // Check that markdown is consistent.
+    .use(remarkPresetLintConsistent)
+    // Few recommended rules.
+    .use(remarkPresetLintRecommended)
+    // `remark-lint-list-item-indent` is configured with `tab-size` in the
+    // recommended preset, but if we’d prefer something else, it can be
+    // reconfigured:
+    .use(remarkLintListItemIndent, 'space')
+    .process('1) Hello, _Jupiter_ and *Neptune*!')
+
+  console.error(reporter(file))
+}
+```
+
+Running that with `node example.js` yields:
+
+```txt
+        1:1  warning  Missing newline character at end of file  final-newline              remark-lint
+   1:1-1:35  warning  Marker style should be `.`                ordered-list-marker-style  remark-lint
+  1:25-1:34  warning  Emphasis should use `_` as a marker       emphasis-marker            remark-lint
+
+⚠ 3 warnings
+```
+
+### Example: check and format markdown on the API
+
+remark lint rules *check* markdown.
+[`remark-stringify`][remark-stringify] (used in remark) *formats* markdown.
+When you configure lint rules and use remark to format markdown, you must
+manually synchronize their configuration:
+
+```js
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
+import remarkLintStrongMarker from 'remark-lint-strong-marker'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLintEmphasisMarker, '*')
+    .use(remarkLintStrongMarker, '*')
+    .use({
+      settings: {emphasis: '*', strong: '*'} // `remark-stringify` settings.
+    })
+    .process('_Hello_, __world__!')
+
+  console.error(reporter(file))
+  console.log(String(file))
+}
+```
+
+Yields:
+
+```txt
+    1:1-1:8  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
+  1:10-1:19  warning  Strong should use `*` as a marker    strong-marker    remark-lint
+
+⚠ 2 warnings
+```
+
+```markdown
+*Hello*, **world**!
+```
+
+Observe that the lint rules check the input and afterwards remark formats using
+asterisks.
+If that output was given the the processor, the lint rules would be satisfied.
+
+### Example: check markdown on the CLI
+
+This example checks markdown with [`remark-cli`][remark-cli].
+It assumes you’re in a Node.js package.
+First install dependencies:
+
+```sh
+npm install remark-cli remark-preset-lint-consistent remark-preset-lint-recommended remark-lint-list-item-indent --save-dev
+```
+
+Then add an npm script to your `package.json`:
+
+```js
+  /* … */
+  "scripts": {
+    /* … */
+    "check": "remark . --quiet --frail",
+    /* … */
+  },
+  /* … */
+```
+
+> 💡 **Tip**: add ESLint and such in the `check` script too.
+
+Observe that the above change adds a `check` script, which can be run with
+`npm run check`.
+It runs remark on all markdown files (`.`), shows only warnings and errors
+(`--quiet`), and exits as failed on warnings (`--frail`).
+Run `./node_modules/.bin/remark --help` for more info on the CLI.
+
+Now add a `remarkConfig` to your `package.json` to configure remark:
+
+```js
+  /* … */
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-lint-consistent", // Check that markdown is consistent.
+      "remark-preset-lint-recommended", // Few recommended rules.
+      // `remark-lint-list-item-indent` is configured with `tab-size` in the
+      // recommended preset, but if we’d prefer something else, it can be
+      // reconfigured:
+      [
+        "remark-lint-list-item-indent",
+        "space"
+      ]
+    ]
+  },
+  /* … */
+```
+
+> 👉 **Note**: you must remove the comments in the above examples when
+> copy/pasting them, as comments are not supported in `package.json` files.
+
+Finally run the npm script to check markdown files in your project:
+
+```sh
+npm run check
+```
+
+### Example: check and format markdown on the CLI
+
+remark lint rules *check* markdown.
+The CLI can *format* markdown.
+You can combine these features but have to manually synchronize their
+configuration.
+Please first follow the previous example (checking markdown on the CLI) and then
+change the npm script:
+
+```js
+  /* … */
+  "scripts": {
+    /* … */
+    "format": "remark . --quiet --frail --output",
+    /* … */
+  },
+  /* … */
+```
+
+The script is now called `format` to reflect what it does.
+It now includes an `--output` flag, which means it will overwrite existing files
+with changes.
+
+Update `remarkConfig`:
+
+```js
+  /* … */
+  "remarkConfig": {
+    "settings": {
+      "emphasis": "*",
+      "strong": "*"
+    },
+    "plugins": [
+      "remark-preset-lint-consistent",
+      "remark-preset-lint-recommended",
+      ["remark-lint-list-item-indent", "space"]
+      ["remark-lint-emphasis-marker", "*"],
+      ["remark-lint-strong-marker", "*"]
+    ]
+  },
+  /* … */
+```
+
+This now includes `settings`, which configures
+[`remark-stringify`][remark-stringify], and explicitly prefers asterisks
+for emphasis and strong.
+Install the new dependencies:
+
+```sh
+npm install remark-lint-emphasis-marker remark-lint-strong-marker --save-dev
+```
+
+Finally run the npm script to format markdown files in your project:
+
+```sh
+npm run format
+```
+
+> 👉 **Note**: running `npm run format` now checks *and* formats your files.
+> The first time you run it, assuming you have underscores for emphasis and
+> strong, it would first warn and then format.
+> The second time you run it, no warnings should appear.
+
+## Integrations
+
+*   [`linter-remark`](https://github.com/wooorm/linter-remark)
+    ([Atom](https://atom.io))
+    — use remark from Atom
+*   [`vscode-remark-lint`](https://github.com/drewbourne/vscode-remark-lint)
+    ([VS Code](https://code.visualstudio.com))
+    — use `remark-lint` from Visual Studio Code
+*   [`SublimeLinter-contrib-remark-lint`](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint)
+    ([Sublime](https://www.sublimetext.com))
+    — use `remark-lint` from Sublime Text
+*   [`ale`](https://github.com/w0rp/ale)
+    ([Vim](https://www.vim.org))
+    — use `remark-lint` from Vim
+*   [`jest-runner-remark`](https://github.com/keplersj/jest-runner-remark)
+    ([Jest](https://jestjs.io))
+    — use remark with Jest
+
+## Syntax
+
+Markdown is parsed by [`remark-parse`][remark-parse] (included in `remark`)
+according to CommonMark.
+You can combine it with other plugins to add syntax extensions.
+Notable examples that deeply integrate with it are
+[`remark-gfm`][remark-gfm],
+[`remark-mdx`][remark-mdx],
+[`remark-frontmatter`][remark-frontmatter],
+[`remark-math`][remark-math], and
+[`remark-directive`][remark-directive].
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
 
-Use of `remark-lint` does not mutate the tree so there are no openings for
+Use of `remark-lint` does not change the tree so there are no openings for
 [cross-site scripting (XSS)][xss] attacks.
 Messages from linting rules may be hidden from user content though, causing
-builds to fail or pass, or changing a report.
-
-## Related
-
-*   [`remark-validate-links`](https://github.com/remarkjs/remark-validate-links)
-    — Validate if links point to existing headings and files in markdown
+builds to fail or pass.
 
 ## Contribute
 
@@ -466,46 +644,46 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[npm]: https://docs.npmjs.com/cli/install
-
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: license
 
 [author]: https://wooorm.com
 
-[cli-settings]: https://github.com/unifiedjs/unified-args#--setting-settings
+[unified]: https://github.com/unifiedjs/unified
 
-[cli-config]: https://github.com/unifiedjs/unified-engine/blob/HEAD/doc/configure.md
+[unified-use]: https://github.com/unifiedjs/unified#processoruseplugin-options
 
 [remark]: https://github.com/remarkjs/remark
 
-[remark-plugins]: https://github.com/remarkjs/remark/blob/HEAD/doc/plugins.md
+[remark-cli]: https://github.com/remarkjs/remark/tree/main/packages/remark-cli
 
-[remark-stringify]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify
+[remark-parse]: https://github.com/remarkjs/remark/tree/main/packages/remark-parse
 
-[remark-stringify-options]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#options
+[remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
 
-[api]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark
+[remark-plugin]: https://github.com/remarkjs/remark#plugins
 
-[cli]: https://github.com/remarkjs/remark/tree/HEAD/packages/remark-cli
+[remark-message-control]: https://github.com/remarkjs/remark-message-control
 
-[message-control]: https://github.com/remarkjs/remark-message-control#markers
+[remark-gfm]: https://github.com/remarkjs/remark-gfm
 
-[preset-recommended]: https://github.com/remarkjs/remark-lint/blob/main/packages/remark-preset-lint-recommended
+[remark-frontmatter]: https://github.com/remarkjs/remark-frontmatter
+
+[remark-math]: https://github.com/remarkjs/remark-math
+
+[remark-directive]: https://github.com/remarkjs/remark-directive
+
+[remark-mdx]: https://github.com/mdx-js/mdx/tree/main/packages/remark-mdx
 
 [logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
 
-[screenshot]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/screenshot.png
-
-[rules]: doc/rules.md
-
-[presets]: #list-of-presets
-
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[tutorial]: doc/create-a-custom-rule.md

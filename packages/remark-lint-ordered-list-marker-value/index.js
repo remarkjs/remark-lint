@@ -1,32 +1,44 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that ordered list values are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'ordered'`) are accepted:
+ *
+ * *   `'ordered'`
+ *     — values should increment by one from the first item
+ * *   `'single'`
+ *     — values should stay the same as the first item
+ * *   `'one'`
+ *     — values should always be exactly `1`
+ *
+ * ## Recommendation
+ *
+ * While `'single'` might be the smartest style, as it makes it easier to move
+ * items around without having to renumber everything and doesn’t have
+ * problems with aligning content of the 9th and the 10th item, it’s not used a
+ * lot and arguably looks unnatural.
+ * `'one'` is like `'single'` but forces every list to start at `1`.
+ * While not often needed, starting lists at other values is sometimes useful.
+ * Due to this, `'ordered'` is recommended, although `'single'` is also a viable
+ * choice.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * retains the value of the first item and increments further items by default.
+ * Pass
+ * [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker)
+ * to not increment further items.
+ *
+ * @module ordered-list-marker-value
+ * @summary
+ *   remark-lint rule to warn when ordered list values are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module ordered-list-marker-value
- * @fileoverview
- *   Warn when the list item marker values of ordered lists violate a given
- *   style.
- *
- *   Options: `'single'`, `'one'`, or `'ordered'`, default: `'ordered'`.
- *
- *   When set to `'ordered'`, list item bullets should increment by one,
- *   relative to the starting point.
- *   When set to `'single'`, bullets should be the same as the relative starting
- *   point.
- *   When set to `'one'`, bullets should always be `1`.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   retains the number of the first list item bullet, and by default
- *   increments the other items.
- *   Pass
- *   [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsincrementlistmarker)
- *   to not increment further list items.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md"}
  *

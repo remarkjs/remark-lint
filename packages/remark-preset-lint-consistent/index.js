@@ -1,7 +1,10 @@
 /**
- * @fileoverview
- *   remark preset to configure `remark-lint` with settings that enforce
- *   consistency.
+ * ## When should I use this?
+ *
+ * You can use this package to check that markdown is consistent.
+ *
+ * @summary
+ *   Preset of remark-lint rules to warn for inconsistencies.
  */
 
 /**

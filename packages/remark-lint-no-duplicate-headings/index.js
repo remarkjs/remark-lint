@@ -1,11 +1,29 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that headings with the same text are
+ * used once.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Headings having unique text helps screen reader users (who typically use
+ * “jump to heading” features to navigate within a page, which reads headings
+ * out loud).
+ * It also helps because often headings receive automatic unique IDs, and when
+ * the same heading text is used, they are suffixed with a number based on where
+ * they are positioned in the document, which makes linking to them prone to
+ * changes.
+ *
+ * @module no-duplicate-headings
+ * @summary
+ *   remark-lint rule to warn when headings with the same text are found.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-duplicate-headings
- * @fileoverview
- *   Warn when duplicate headings are found.
- *
  * @example
  *   {"name": "ok.md"}
  *

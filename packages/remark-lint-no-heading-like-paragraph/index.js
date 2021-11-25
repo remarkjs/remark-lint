@@ -1,11 +1,20 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to ensure that no heading-like constructs are
+ * created, which instead will result in paragraphs with the `#` characters
+ * shown.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * @module no-heading-like-paragraph
+ * @summary
+ *   remark-lint rule to warn when h7+ “headings” are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-heading-like-paragraph
- * @fileoverview
- *   Warn for h7+ “headings”.
- *
  * @example
  *   {"name": "ok.md"}
  *

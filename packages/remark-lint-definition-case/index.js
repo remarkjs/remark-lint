@@ -1,11 +1,26 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that the labels used in definitions
+ * are lowercase.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Definitions and references are matched together regardless of casing.
+ * Using uppercase in labels might incorrectly indicate that casing is of
+ * importance.
+ * Due to this, it’s recommended to use lowercase and turn this rule on.
+ *
+ * @module definition-case
+ * @summary
+ *   remark-lint rule to warn when definition labels are not lowercase.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module definition-case
- * @fileoverview
- *   Warn when definition labels are not lowercase.
- *
  * @example
  *   {"name": "ok.md"}
  *

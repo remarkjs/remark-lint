@@ -1,19 +1,30 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that lines do not exceed a certain size.
+ *
+ * ## API
+ *
+ * The following options (default: `80`) are accepted:
+ *
+ * *   `number` (example: `72`)
+ *     — max number of characters to accept in heading text
+ *
+ * Ignores nodes that cannot be wrapped, such as headings, tables, code,
+ * definitions, HTML, and JSX.
+ * Ignores images, links, and code (inline) if they start before the wrap, end
+ * after the wrap, and there’s no white space after them.
+ *
+ * ## Recommendation
+ *
+ * Whether to wrap prose or not is a stylistic choice.
+ *
+ * @module maximum-line-length
+ * @summary
+ *   remark-lint rule to warn when lines are too long.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module maximum-line-length
- * @fileoverview
- *   Warn when lines are too long.
- *
- *   Options: `number`, default: `80`.
- *
- *   Ignores nodes that cannot be wrapped, such as headings, tables, code,
- *   definitions, HTML, and JSX.
- *
- *   Ignores images, links, and inline code if they start before the wrap, end
- *   after the wrap, and there’s no whitespace after them.
- *
  * @example
  *   {"name": "ok.md", "positionless": true, "gfm": true}
  *
@@ -38,7 +49,7 @@
  *
  *   <a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
  *
- *   The following is also fine, because there is no whitespace.
+ *   The following is also fine (note the `.`), because there is no whitespace.
  *
  *   <http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>.
  *

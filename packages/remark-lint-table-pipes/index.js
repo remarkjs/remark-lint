@@ -1,19 +1,32 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that tables have initial and final
+ * delimiters.
+ * Tables are a GFM feature enabled with
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * While tables don’t require initial or final delimiters (pipes before the
+ * first and after the last cells in a row), it arguably does look weird.
+ *
+ * ## Fix
+ *
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
+ * formats all tables with initial and final delimiters.
+ *
+ * @module table-pipes
+ * @summary
+ *   remark-lint rule to warn when tables are missing initial and final
+ *   delimiters.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module table-pipes
- * @fileoverview
- *   Warn when table rows are not fenced with pipes.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   creates fenced rows with initial and final pipes by default.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "gfm": true}
  *

@@ -1,19 +1,34 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that language flags of fenced code
+ * are used and consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `undefined`) are accepted:
+ *
+ * *   `Array<string>`
+ *     — as if passing `{flags: options}`
+ * *   `Object` with the following fields:
+ *     *   `allowEmpty` (`boolean`, default: `false`)
+ *         — allow language flags to be omitted
+ *     *   `flags` (`Array<string>` default: `[]`)
+ *         — specific flags to allow (other flags will result in a warning)
+ *
+ * ## Recommendation
+ *
+ * While omitting the language flag is perfectly fine to signal that the code is
+ * plain text, it *could* point to a mistake.
+ * It’s recommended to instead use a certain flag for plain text (such as `txt`)
+ * and to turn this rule on.
+ *
+ * @module fenced-code-flag
+ * @summary
+ *   remark-lint rule to check that language flags of fenced code are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module fenced-code-flag
- * @fileoverview
- *   Check fenced code block flags.
- *
- *   Options: `Array<string>` or `Object`, optional.
- *
- *   Providing an array is as passing `{flags: Array}`.
- *
- *   The object can have an array of `'flags'` which are allowed: other flags
- *   will not be allowed.
- *   An `allowEmpty` field (`boolean`, default: `false`) can be set to allow
- *   code blocks without language flags.
  *
  * @example
  *   {"name": "ok.md"}

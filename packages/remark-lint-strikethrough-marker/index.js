@@ -1,21 +1,40 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that the number of strikethrough
+ * markers is consistent.
+ * Strikethrough is a GFM feature enabled with
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'~'`
+ *     — prefer one strikethrough marker
+ * *   `'~~'`
+ *     — prefer two strikethrough markers
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further strikethrough differs
+ *
+ * ## Recommendation
+ *
+ * GitHub flavored markdown (GFM) specifies that two tildes should be used,
+ * but `github.com` allows one tilde everywhere.
+ * It’s recommended to use two tildes.
+ *
+ * ## Fix
+ *
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
+ * formats all strikethrough with two tildes.
+ *
+ * @module strikethrough-marker
+ * @summary
+ *   remark-lint rule to warn when the number of strikethrough markers
+ *   is inconsistent.
  * @author Denis Augsburger
  * @copyright 2021 Denis Augsburger
  * @license MIT
- * @module strikethrough-marker
- * @fileoverview
- *   Warn for violating strikethrough markers.
- *
- *   Options: `'consistent'`, `'~'`, or `'~~'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used strikethrough style and warns when
- *   subsequent strikethrough use different styles.
- *
- *   ## Fix
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"setting": "~", "name": "ok.md", "gfm": true}
  *

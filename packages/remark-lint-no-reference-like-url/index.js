@@ -1,11 +1,27 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check for broken URLs that should likely
+ * have been references.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * While full URLs for definition identifiers are okay
+ * (`[https://example.com]: https://example.com`), and what looks like an
+ * identifier could be an actual URL (`[text](alpha)`), the more common case
+ * is that, assuming a definition `[alpha]: https://example.com`, then a link
+ * of (`[text](alpha)`) should instead’ve been `[text][alpha]`.
+ *
+ * @module no-reference-like-url
+ * @summary
+ *   remark-lint rule to warn when URLs are also defined identifiers.
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
- * @module no-reference-like-url
- * @fileoverview
- *   Warn when URLs are also defined identifiers.
- *
  * @example
  *   {"name": "ok.md"}
  *

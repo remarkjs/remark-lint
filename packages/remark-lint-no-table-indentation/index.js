@@ -1,19 +1,31 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that tables are not indented.
+ * Tables are a GFM feature enabled with
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * There is no specific handling of indented tables (or anything else) in
+ * markdown.
+ * Hence, it’s recommended to not indent tables and to turn this rule on.
+ *
+ * ## Fix
+ *
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
+ * formats all tables without indent.
+ *
+ * @module no-table-indentation
+ * @summary
+ *   remark-lint rule to warn when tables are indented.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-table-indentation
- * @fileoverview
- *   Warn when tables are indented.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   removes all unneeded indentation before tables.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "gfm": true}
  *

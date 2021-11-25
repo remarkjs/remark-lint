@@ -1,14 +1,21 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that inline constructs (links) are
+ * not padded.
+ * Historically, it was possible to pad emphasis, strong, and strikethrough
+ * too, but this was removed in CommonMark, making this rule much less useful.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * @module no-inline-padding
+ * @summary
+ *   remark-lint rule to warn when inline constructs are padded.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-inline-padding
- * @fileoverview
- *   Warn when phrasing content is padded with spaces between their markers and
- *   content.
- *
- *   Warns for emphasis, strong, delete, image, and link.
- *
  * @example
  *   {"name": "ok.md"}
  *

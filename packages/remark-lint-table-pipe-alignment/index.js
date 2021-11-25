@@ -1,30 +1,40 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that table cell dividers are aligned.
+ * Tables are a GFM feature enabled with
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * While aligning table dividers improves their legibility, it is somewhat
+ * hard to maintain manually, especially for tables with many rows.
+ *
+ * ## Fix
+ *
+ * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
+ * aligns table dividers by default.
+ * Pass
+ * [`tablePipeAlign: false`](https://github.com/remarkjs/remark-gfm#optionstablepipealign)
+ * to use a more compact style.
+ *
+ * Aligning characters is impossible because whether they look aligned or not
+ * depends on where the markup is shown: some characters (such as emoji or
+ * Chinese characters) show smaller or bigger in different places.
+ * You can pass your own
+ * [`stringLength`](https://github.com/remarkjs/remark-gfm#optionsstringlength)
+ * to `remark-gfm`, in which case this rule must be turned off.
+ *
+ * @module table-pipe-alignment
+ * @summary
+ *   remark-lint rule to warn when table cells are inconsistently padded.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module table-pipe-alignment
- * @fileoverview
- *   Warn when table pipes are not aligned.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   tries to align tables by default.
- *   Pass
- *   [`paddedTable: false`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionspaddedtable)
- *   to not align cells.
- *
- *   Aligning cells perfectly is impossible as some characters (such as emoji or
- *   Chinese characters) are rendered differently in different browsers,
- *   terminals, and editors.
- *   You can pass your own
- *   [`stringLength`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsstringlength)
- *   function to customize how cells are aligned.
- *   In that case, this rule must be turned off.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "gfm": true}
  *
@@ -48,8 +58,6 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'-'|'*'|'+'} Marker
- * @typedef {'consistent'|Marker} Options
  */
 
 import {lintRule} from 'unified-lint-rule'

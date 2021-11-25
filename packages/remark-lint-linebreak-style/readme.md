@@ -10,31 +10,143 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when linebreaks violate a given or detected style.
+[`remark-lint`][mono] rule to warn when line endings don’t match a given style.
 
-Options: either `'unix'` (for `\n`, denoted as `␊`), `'windows'` (for `\r\n`,
-denoted as `␍␊`), or `'consistent'` (to detect the first used linebreak in
-a file).  Default: `'consistent'`.
+## Contents
 
-## Fix
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintLinebreakStyle[, config])`](#unifieduseremarklintlinebreakstyle-config)
+*   [Recommendation](#recommendation)
+*   [Fix](#fix)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
 
-[`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
-always uses unix linebreaks.
+## What is this?
 
-See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
-on how to automatically fix warnings for this rule.
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that line endings are consistent.
 
 ## Presets
 
-This rule is not included in any default preset
+This rule is not included in a preset maintained here.
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-linebreak-style
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintLinebreakStyle from 'https://cdn.skypack.dev/remark-lint-linebreak-style@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintLinebreakStyle from 'https://cdn.skypack.dev/remark-lint-linebreak-style@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintLinebreakStyle from 'remark-lint-linebreak-style'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintLinebreakStyle)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-linebreak-style example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-linebreak-style",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintLinebreakStyle`.
+
+### `unified().use(remarkLintLinebreakStyle[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+The following options (default: `'consistent'`) are accepted:
+
+*   `'unix'`
+    — prefer Unix line endings (`\n`, `␊`):
+*   `'window'`
+    — prefer Windows line endings (`\r\n`, `␍␊`):
+*   `'consistent'`
+    — detect the first used style and warn when further line endings differ
+
+## Recommendation
+
+In Git projects, you can configure it to automatically switch between line
+endings based on who checks the repo out.
+In other places, you might manually want to force that one or the other is
+used, in which case this rule can be used and configured.
+
+## Fix
+
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+always uses Unix linebreaks.
+
+## Examples
 
 ##### `ok-consistent-as-windows.md`
 
 ###### In
 
-Note: `␍␊` represents a carriage return and a line feed.
+> 👉 **Note**: `␍␊` represents a carriage return and a line feed.
 
 ```markdown
 Alpha␍␊
@@ -49,7 +161,7 @@ No messages.
 
 ###### In
 
-Note: `␊` represents a line feed.
+> 👉 **Note**: `␊` represents a line feed.
 
 ```markdown
 Alpha␊
@@ -66,7 +178,7 @@ When configured with `'unix'`.
 
 ###### In
 
-Note: `␍␊` represents a carriage return and a line feed.
+> 👉 **Note**: `␍␊` represents a carriage return and a line feed.
 
 ```markdown
 Alpha␍␊
@@ -84,7 +196,7 @@ When configured with `'windows'`.
 
 ###### In
 
-Note: `␊` represents a line feed.
+> 👉 **Note**: `␊` represents a line feed.
 
 ```markdown
 Alpha␊
@@ -96,59 +208,12 @@ Alpha␊
 1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-linebreak-style
-```
-
-This package exports no identifiers.
-The default export is `remarkLintLinebreakStyle`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-linebreak-style",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-linebreak-style readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintLinebreakStyle from 'remark-lint-linebreak-style'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintLinebreakStyle)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -190,17 +255,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

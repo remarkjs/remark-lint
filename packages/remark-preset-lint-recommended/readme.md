@@ -10,12 +10,34 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-remark preset to configure `remark-lint` with settings that prevent
-mistakes or stuff that fails across vendors.
+Preset of [`remark-lint`][mono] rules to warn for some likely problems.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Rules](#rules)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkPresetLintRecommended)`](#unifieduseremarkpresetlintrecommended)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) preset, specifically consisting of
+`remark-lint` rules.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that markdown follows some best practices.
 
 ## Rules
 
-This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) with the following rules:
+This preset configures [`remark-lint`][mono] with the following rules:
 
 | Rule | Setting |
 | - | - |
@@ -36,50 +58,86 @@ This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) 
 
 ## Install
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install remark-preset-lint-recommended
 ```
 
-This package exports no identifiers.
-The default export is `remarkPresetLintRecommended`.
+In Deno with [Skypack][]:
+
+```js
+import remarkPresetLintRecommended from 'https://cdn.skypack.dev/remark-preset-lint-recommended@6?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkPresetLintRecommended from 'https://cdn.skypack.dev/remark-preset-lint-recommended@6?min'
+</script>
+```
 
 ## Use
 
-You probably want to use it on the CLI through a config file:
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkPresetLintRecommended from 'remark-preset-lint-recommended'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkPresetLintRecommended)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-preset-lint-recommended example.md
+```
+
+On the CLI in a config file (here a `package.json`):
 
 ```diff
  …
  "remarkConfig": {
-+  "plugins": ["preset-lint-recommended"]
+   "plugins": [
+     …
++    "remark-preset-lint-recommended",
+     …
+   ]
  }
  …
 ```
 
-Or use it on the CLI directly
+## API
 
-```sh
-remark -u preset-lint-recommended readme.md
-```
+This package exports no identifiers.
+The default export is `remarkPresetLintRecommended`.
 
-Or use this on the API:
+### `unified().use(remarkPresetLintRecommended)`
 
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkPresetLintRecommended from 'remark-preset-lint-recommended'
+Use the preset.
+Presets don’t have options.
+You can reconfigure rules in them by using the afterwards with different
+options.
 
- remark()
-+  .use(remarkPresetLintRecommended)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -121,17 +179,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

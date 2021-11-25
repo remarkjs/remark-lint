@@ -1,11 +1,19 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that file names do not start with
+ *  articles (`a`, `the`, etc).
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * @module no-file-name-articles
+ * @summary
+ *   remark-lint rule to warn when file names start with articles.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-file-name-articles
- * @fileoverview
- *   Warn when file names start with an article.
- *
  * @example
  *   {"name": "title.md"}
  *

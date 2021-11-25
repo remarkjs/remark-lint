@@ -1,11 +1,42 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that the “indent” after a GFM tasklist
+ * checkbox is a single space.
+ *
+ * ## API
+ *
+ * There are no accepted options.
+ *
+ * ## Recommendation
+ *
+ * GFM allows zero or more spaces and tabs after checkboxes.
+ * No space at all arguably looks rather ugly:
+ *
+ * ```markdown
+ * * [x]Pluto
+ * ```
+ *
+ * More that one space is superfluous:
+ *
+ * ```markdown
+ * * [x]   Jupiter
+ * ```
+ *
+ * Due to this, it’s recommended to turn this rule on.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats checkboxes and the content after them with a single space between.
+ *
+ * @module checkbox-content-indent
+ * @summary
+ *   remark-lint rule to warn when GFM tasklist checkboxes are followed by
+ *   more than one space.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module checkbox-content-indent
- * @fileoverview
- *   Warn when list item checkboxes are followed by too much whitespace.
- *
  * @example
  *   {"name": "ok.md", "gfm": true}
  *

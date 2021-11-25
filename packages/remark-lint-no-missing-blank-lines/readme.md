@@ -10,28 +10,134 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when missing blank lines before block content (and frontmatter
-content).
+[`remark-lint`][mono] rule to warn when blank lines are missing.
 
-This rule can be configured to allow tight list items without blank lines
-between their contents by passing `{exceptTightLists: true}` (default:
-`false`).
+## Contents
 
-## Fix
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintNoMissingBlankLines[, config])`](#unifieduseremarklintnomissingblanklines-config)
+*   [Recommendation](#recommendation)
+*   [Fix](#fix)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
 
-[`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
-always uses one blank line between blocks if possible, or two lines when
-needed.
-The style of the list items persists.
+## What is this?
 
-See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
-on how to automatically fix warnings for this rule.
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that blank lines are used between blocks.
 
 ## Presets
 
-This rule is not included in any default preset
+This rule is not included in a preset maintained here.
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-no-missing-blank-lines
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintNoMissingBlankLines from 'https://cdn.skypack.dev/remark-lint-no-missing-blank-lines@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintNoMissingBlankLines from 'https://cdn.skypack.dev/remark-lint-no-missing-blank-lines@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintNoMissingBlankLines from 'remark-lint-no-missing-blank-lines'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintNoMissingBlankLines)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-no-missing-blank-lines example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-no-missing-blank-lines",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintNoMissingBlankLines`.
+
+### `unified().use(remarkLintNoMissingBlankLines[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+The following options (default: `undefined`) are accepted:
+
+*   `Object` with the following fields:
+    *   `exceptTightLists` (`boolean`, default: `false`)
+        — allow tight list items
+
+## Recommendation
+
+While not always required, blank lines are required in certain, sometimes
+confusing, cases.
+Due to this, it’s recommended to always use blank lines between blocks.
+
+## Fix
+
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+always uses blank lines between blocks.
+It has a `join` function to customize such behavior.
+
+## Examples
 
 ##### `ok.md`
 
@@ -96,59 +202,12 @@ Paragraph.
 2:1-2:7: Missing blank line before block node
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-no-missing-blank-lines
-```
-
-This package exports no identifiers.
-The default export is `remarkLintNoMissingBlankLines`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-no-missing-blank-lines",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-no-missing-blank-lines readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintNoMissingBlankLines from 'remark-lint-no-missing-blank-lines'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintNoMissingBlankLines)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -190,17 +249,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

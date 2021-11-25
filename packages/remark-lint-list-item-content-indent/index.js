@@ -1,11 +1,28 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that list item content is aligned.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * The position of the first child in a list item matters.
+ * Further children should align with it.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * aligns the content of items.
+ *
+ * @module list-item-content-indent
+ * @summary
+ *   remark-lint rule to warn when list item content is not aligned.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module list-item-content-indent
- * @fileoverview
- *   Warn when the content of a list item has mixed indentation.
- *
  * @example
  *   {"name": "ok.md", "gfm": true}
  *
@@ -59,11 +76,12 @@ const remarkLintListItemContentIndent = lintRule(
           continue
         }
 
-        // Get indentation for the first child.  Only the first item can have a
-        // checkbox, so here we remove that from the column.
+        // Get indentation for the first child.
+        // Only the first item can have a checkbox, so here we remove that from
+        // the column.
         if (index === 0) {
-          // If there’s a checkbox before the content, look backwards to find the
-          // start of that checkbox.
+          // If there’s a checkbox before the content, look backwards to find
+          // the start of that checkbox.
           if (typeof node.checked === 'boolean') {
             let char = begin.offset - 1
 

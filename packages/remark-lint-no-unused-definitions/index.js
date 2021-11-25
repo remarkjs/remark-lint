@@ -1,11 +1,22 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check definitions are referenced.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Unused definitions do not contribute anything, so they can be removed.
+ *
+ * @module no-unused-definitions
+ * @summary
+ *   remark-lint rule to warn when unreferenced definitions are used.
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
- * @module no-unused-definitions
- * @fileoverview
- *   Warn when unused definitions are found.
- *
  * @example
  *   {"name": "ok.md"}
  *

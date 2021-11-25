@@ -10,13 +10,32 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when references to undefined definitions are found.
+[`remark-lint`][mono] rule to warn when undefined definitions are referenced.
 
-Options: `Object`, optional.
+## Contents
 
-The object can have an `allow` field, set to an array of strings that may
-appear between `[` and `]`, but that should not be treated as link
-identifiers.
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintNoUndefinedReferences[, config])`](#unifieduseremarklintnoundefinedreferences-config)
+*   [Recommendation](#recommendation)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that referenced definitions are defined.
 
 ## Presets
 
@@ -26,7 +45,114 @@ This rule is included in the following presets:
 | - | - |
 | [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | |
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-no-undefined-references
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintNoUndefinedReferences from 'https://cdn.skypack.dev/remark-lint-no-undefined-references@4?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintNoUndefinedReferences from 'https://cdn.skypack.dev/remark-lint-no-undefined-references@4?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintNoUndefinedReferences)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-no-undefined-references example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-no-undefined-references",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintNoUndefinedReferences`.
+
+### `unified().use(remarkLintNoUndefinedReferences[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+The following options (default: `undefined`) are accepted:
+
+*   `Object` with the following fields:
+    *   `allow` (`Array<string>`, default: `[]`)
+        — text that you want to allowed between `[` and `]` even though it’s
+        undefined
+
+## Recommendation
+
+Shortcut references use an implicit syntax that could also occur as plain
+text.
+For example, it is reasonable to expect an author adding `[…]` to abbreviate
+some text somewhere in a document:
+
+```markdown
+> Some […] quote.
+```
+
+This isn’t a problem, but it might become one when an author later adds a
+definition:
+
+```markdown
+Some text. […][]
+
+[…] #read-more "Read more"
+```
+
+The second author might expect only their newly added text to form a link,
+but their changes also result in a link for the first author’s text.
+
+## Examples
 
 ##### `ok.md`
 
@@ -101,59 +227,12 @@ When configured with `{ allow: [ '...', '…' ] }`.
 
 No messages.
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-no-undefined-references
-```
-
-This package exports no identifiers.
-The default export is `remarkLintNoUndefinedReferences`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-no-undefined-references",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-no-undefined-references readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintNoUndefinedReferences)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -195,17 +274,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

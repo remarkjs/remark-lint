@@ -1,99 +1,100 @@
 /**
- * @fileoverview
- *   remark preset to configure `remark-lint` with settings that the
- *   [Markdown Style Guide](http://www.cirosantilli.com/markdown-style-guide/)
- *   recommends.
+ * ## When should I use this?
  *
- *   This uses the following Style Guide option system: `wrap:space`,
- *   `header:atx`, `list-marker:hyphen`, `list-space:mixed`, and
- *   `code:fenced`.
+ * You can use this package to check that markdown follows the
+ * [Markdown Style Guide](https://cirosantilli.com/markdown-style-guide/).
  *
- *   ###### `space-sentence`
+ * This uses the following style guide option system: `wrap:space`,
+ * `header:atx`, `list-marker:hyphen`, `list-space:mixed`, and `code:fenced`.
  *
- *   Both `space-sentence:1` and `space-sentence:2` are not supported
- *   by `remark-lint`.
- *   You could set-up
- *   [`remark-retext`](https://github.com/remarkjs/remark-retext)
- *   with
- *   [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
- *   to check this though.
+ * ###### `space-sentence`
  *
- *   ###### `wrap`
+ * Both `space-sentence:1` and `space-sentence:2` are not supported by
+ * `remark-lint` as they relate to prose rather than markdown syntax.
+ * You could set-up
+ * [`remark-retext`](https://github.com/remarkjs/remark-retext)
+ * with
+ * [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
+ * to check this.
  *
- *   `wrap:inner-sentence` and `wrap:sentence` are not supported by
- *   `remark-lint`.
+ * ###### `wrap`
  *
- *   The default is `wrap:space`.
- *   To use `wrap:no`, turn off `remark-lint-maximum-line-length` like so:
+ * `wrap:inner-sentence` and `wrap:sentence` are not supported by `remark-lint`.
  *
- *   ```diff
- *    "plugins": [
- *      …
- *      "preset-lint-markdown-style-guide",
- *   +  ["lint-maximum-line-length", false]
- *      …
- *    ]
- *   ```
+ * The default is `wrap:space`.
+ * To use `wrap:no`, turn off `remark-lint-maximum-line-length` like so:
  *
- *   ###### `header`
+ * ```diff
+ *  "plugins": [
+ *    …
+ *    "remark-preset-lint-markdown-style-guide",
+ * +  ["remark-lint-maximum-line-length", false],
+ *    …
+ *  ]
+ * ```
  *
- *   The default is `header:atx`.
- *   To use `header:setext`, change the setting for `remark-lint-heading-style`
- *   like so:
+ * ###### `header`
  *
- *   ```diff
- *    "plugins": [
- *      …
- *      "preset-lint-markdown-style-guide",
- *   +  ["lint-heading-style", "setext"]
- *      …
- *    ]
- *   ```
+ * The default is `header:atx`.
+ * To use `header:setext`, change the setting for `remark-lint-heading-style`
+ * like so:
  *
- *   ###### `list-marker`
+ * ```diff
+ *  "plugins": [
+ *    …
+ *    "remark-preset-lint-markdown-style-guide",
+ * +  ["remark-lint-heading-style", "setext"],
+ *    …
+ *  ]
+ * ```
  *
- *   The default is `list-marker:hyphen`.
- *   For `list-marker:asterisk` or `list-marker:plus`, change the setting for
- *   `remark-lint-unordered-list-marker-style` like so:
+ * ###### `list-marker`
  *
- *   ```diff
- *    "plugins": [
- *      …
- *      "preset-lint-markdown-style-guide",
- *   +  ["lint-unordered-list-marker-style", "*"]
- *      …
- *    ]
- *   ```
+ * The default is `list-marker:hyphen`.
+ * For `list-marker:asterisk` or `list-marker:plus`, change the setting for
+ * `remark-lint-unordered-list-marker-style` like so:
  *
- *   ###### `list-space`
+ * ```diff
+ *  "plugins": [
+ *    …
+ *    "remark-preset-lint-markdown-style-guide",
+ * +  ["remark-lint-unordered-list-marker-style", "*"],
+ *    …
+ *  ]
+ * ```
  *
- *   The default is `list-space:mixed`.
- *   For `list-space:1`, change the setting for `remark-lint-list-item-indent`
- *   like so:
+ * ###### `list-space`
  *
- *   ```diff
- *    "plugins": [
- *      …
- *      "preset-lint-markdown-style-guide",
- *   +  ["lint-list-item-indent", "space"]
- *      …
- *    ]
- *   ```
+ * The default is `list-space:mixed`.
+ * For `list-space:1`, change the setting for `remark-lint-list-item-indent`
+ * like so:
  *
- *   ###### `code`
+ * ```diff
+ *  "plugins": [
+ *    …
+ *    "remark-preset-lint-markdown-style-guide",
+ * +  ["remark-lint-list-item-indent", "space"],
+ *    …
+ *  ]
+ * ```
  *
- *   The default is `code:fenced`.
- *   For `code:indented`, change the setting for `remark-lint-code-block-style`
- *   like so:
+ * ###### `code`
  *
- *   ```diff
- *    "plugins": [
- *      …
- *      "preset-lint-markdown-style-guide",
- *   +  ["lint-code-block-style", "indented"]
- *      …
- *    ]
- *   ```
+ * The default is `code:fenced`.
+ * For `code:indented`, change the setting for `remark-lint-code-block-style`
+ * like so:
+ *
+ * ```diff
+ *  "plugins": [
+ *    …
+ *    "remark-preset-lint-markdown-style-guide",
+ * +  ["remark-lint-code-block-style", "indented"],
+ *    …
+ *  ]
+ * ```
+ *
+ * @summary
+ *   Preset of remark-lint rules that follow an opinionated style guide.
  */
 
 /**
@@ -150,139 +151,139 @@ const remarkPresetLintMarkdownStyleGuide = {
   plugins: [
     remarkLint,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#file-extension
+    // https://cirosantilli.com/markdown-style-guide/#file-extension
     [remarkLintFileExtension, 'md'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#file-name
+    // https://cirosantilli.com/markdown-style-guide/#file-name
     remarkLintNoFileNameMixedCase,
     remarkLintNoFileNameArticles,
     remarkLintNoFileNameIrregularCharacters,
     remarkLintNoFileNameConsecutiveDashes,
     remarkLintNoFileNameOuterDashes,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#newlines
-    // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-around-lists
-    // http://www.cirosantilli.com/markdown-style-guide/#tables
+    // https://cirosantilli.com/markdown-style-guide/#newlines
+    // https://cirosantilli.com/markdown-style-guide/#empty-lines-around-lists
+    // https://cirosantilli.com/markdown-style-guide/#tables
     remarkLintNoConsecutiveBlankLines,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-sentences.
+    // https://cirosantilli.com/markdown-style-guide/#spaces-after-sentences.
     // Not enforced, cannot be done properly without false positives, if you
     // want this, use remark-retext and retext-sentence-spacing.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#line-wrapping
+    // https://cirosantilli.com/markdown-style-guide/#line-wrapping
     [remarkLintMaximumLineLength, 80],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
+    // https://cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
     remarkLintNoShellDollars,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#what-to-mark-as-code.
+    // https://cirosantilli.com/markdown-style-guide/#what-to-mark-as-code.
     // This is a tip, not a rule.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#spelling-and-grammar.
+    // https://cirosantilli.com/markdown-style-guide/#spelling-and-grammar.
     // Spelling is not in the scope of remark-lint.  If you want this,
     // use remark-retext and retext-spell.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#line-breaks
+    // https://cirosantilli.com/markdown-style-guide/#line-breaks
     remarkLintHardBreakSpaces,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#headers
+    // https://cirosantilli.com/markdown-style-guide/#headers
     [remarkLintHeadingStyle, 'atx'],
     remarkLintHeadingIncrement,
     remarkLintNoDuplicateHeadings,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#top-level-header
+    // https://cirosantilli.com/markdown-style-guide/#top-level-header
     remarkLintNoMultipleToplevelHeadings,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#header-case.
+    // https://cirosantilli.com/markdown-style-guide/#header-case.
     // Heading case isn’t tested yet: new rules to fix this are ok though!
 
-    // http://www.cirosantilli.com/markdown-style-guide/#end-of-a-header.
+    // https://cirosantilli.com/markdown-style-guide/#end-of-a-header.
     // Cannot be checked?
 
-    // http://www.cirosantilli.com/markdown-style-guide/#header-length
+    // https://cirosantilli.com/markdown-style-guide/#header-length
     remarkLintMaximumHeadingLength,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-headers
+    // https://cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-headers
     [remarkLintNoHeadingPunctuation, ':.'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#header-synonyms.
+    // https://cirosantilli.com/markdown-style-guide/#header-synonyms.
     // Cannot be checked?
 
-    // http://www.cirosantilli.com/markdown-style-guide/#blockquotes
+    // https://cirosantilli.com/markdown-style-guide/#blockquotes
     [remarkLintBlockquoteIndentation, 2],
     remarkLintNoBlockquoteWithoutMarker,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#unordered
+    // https://cirosantilli.com/markdown-style-guide/#unordered
     [remarkLintUnorderedListMarkerStyle, '-'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#ordered
+    // https://cirosantilli.com/markdown-style-guide/#ordered
     [remarkLintOrderedListMarkerStyle, '.'],
     [remarkLintOrderedListMarkerValue, 'one'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
+    // https://cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
     [remarkLintListItemIndent, 'mixed'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
+    // https://cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
     remarkLintListItemContentIndent,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-inside-lists
+    // https://cirosantilli.com/markdown-style-guide/#empty-lines-inside-lists
     remarkLintListItemSpacing,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#case-of-first-letter-of-list-item
+    // https://cirosantilli.com/markdown-style-guide/#case-of-first-letter-of-list-item
     // Not checked.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-list-items.
+    // https://cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-list-items.
     // Not checked.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#definition-lists.
+    // https://cirosantilli.com/markdown-style-guide/#definition-lists.
     // Not checked.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#code-blocks
+    // https://cirosantilli.com/markdown-style-guide/#code-blocks
     [remarkLintCodeBlockStyle, 'fenced'],
     [remarkLintFencedCodeFlag, {allowEmpty: false}],
     [remarkLintFencedCodeMarker, '`'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#horizontal-rules
+    // https://cirosantilli.com/markdown-style-guide/#horizontal-rules
     [remarkLintRuleStyle, '---'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#tables
+    // https://cirosantilli.com/markdown-style-guide/#tables
     remarkLintNoTableIndentation,
     remarkLintTablePipes,
     remarkLintTablePipeAlignment,
     [remarkLintTableCellPadding, 'padded'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
+    // https://cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
     // Not checked.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#span-elements
+    // https://cirosantilli.com/markdown-style-guide/#span-elements
     remarkLintNoInlinePadding,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#reference-style-links
+    // https://cirosantilli.com/markdown-style-guide/#reference-style-links
     remarkLintNoShortcutReferenceImage,
     remarkLintNoShortcutReferenceLink,
     remarkLintFinalDefinition,
     remarkLintDefinitionCase,
     remarkLintDefinitionSpacing,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
+    // https://cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
     [remarkLintLinkTitleStyle, '"'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#bold
+    // https://cirosantilli.com/markdown-style-guide/#bold
     [remarkLintStrongMarker, '*'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#italic
+    // https://cirosantilli.com/markdown-style-guide/#italic
     [remarkLintEmphasisMarker, '*'],
 
-    // http://www.cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
+    // https://cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
     // Not checked.
 
-    // http://www.cirosantilli.com/markdown-style-guide/#emphasis-vs-headers
+    // https://cirosantilli.com/markdown-style-guide/#emphasis-vs-headers
     remarkLintNoEmphasisAsHeading,
 
-    // http://www.cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
+    // https://cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
     remarkLintNoLiteralUrls
 
-    // http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
+    // https://cirosantilli.com/markdown-style-guide/#email-automatic-links.
     // Not checked.
   ]
 }

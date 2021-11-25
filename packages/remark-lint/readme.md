@@ -8,63 +8,116 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**remark**][remark] plugin to lint Markdown code style.
+**[remark][]** plugin to support configuration comments for remark lint rules.
 
-Read more about `remark-lint` on [the monorepo readme][readme].
+See the [monorepo readme][mono] for more info on remark lint.
 
-This package doesn’t do much other than [suppressing messages][suppres] through
-comments.
+## Contents
 
-If you’re using [presets][], they already include `remark-lint` itself.
-If you’re using just plugins, you have to include `remark-lint` explicitly.
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLint)`](#unifieduseremarklint)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin to add support for
+configuration comments to control remark lint rule messages.
+
+## When should I use this?
+
+This project is useful when you’re using remark lint rules and want to let
+authors ignore messages in certain cases.
+This package is already included in all our presets.
+If you’re building a preset yourself, you should include this package.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install remark-lint
 ```
 
+In Deno with [Skypack][]:
+
+```js
+import remarkLint from 'https://cdn.skypack.dev/remark-lint@9?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLint from 'https://cdn.skypack.dev/remark-lint@9?min'
+</script>
+```
+
 ## Use
 
-You probably want to use it on the CLI through a config file:
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint example.md
+```
+
+On the CLI in a config file (here a `package.json`):
 
 ```diff
  …
  "remarkConfig": {
    "plugins": [
      …
-+    "lint",
++    "remark-lint",
      …
    ]
  }
  …
 ```
 
-Or use it on the CLI directly
+## API
 
-```sh
-remark -u lint readme.md
-```
+This package exports no identifiers.
+The default export is `remarkLint`.
 
-Or use this on the API:
+### `unified().use(remarkLint)`
 
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remarkLint'
+Add support for configuration comments.
+There are no options.
 
- remark()
-+  .use(remarkLint)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+See [Ignore warnings][ignore] in the monorepo readme for how to use it.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -108,24 +161,28 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
+
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
 
+[unified]: https://github.com/unifiedjs/unified
+
 [remark]: https://github.com/remarkjs/remark
 
-[readme]: https://github.com/remarkjs/remark-lint#readme
+[mono]: https://github.com/remarkjs/remark-lint
 
-[suppres]: https://github.com/remarkjs/remark-lint#configuring-remark-lint
-
-[presets]: https://github.com/remarkjs/remark-lint#list-of-presets
+[ignore]: https://github.com/remarkjs/remark-lint#ignore-warnings

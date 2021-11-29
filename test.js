@@ -36,16 +36,14 @@ test('core', async (t) => {
     '# Another main heading.'
   ].join('\n')
 
+  let file = await remark()
+    .use(noHeadingPunctuation)
+    .use(noMultipleToplevelHeadings)
+    .use(lint)
+    .process(toVFile({path: 'virtual.md', value: doc}))
+
   t.deepEqual(
-    asStrings(
-      (
-        await remark()
-          .use(noHeadingPunctuation)
-          .use(noMultipleToplevelHeadings)
-          .use(lint)
-          .process(toVFile({path: 'virtual.md', value: doc}))
-      ).messages
-    ),
+    asStrings(file.messages),
     [
       'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
       'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
@@ -53,16 +51,14 @@ test('core', async (t) => {
     'should support `remark-lint` last'
   )
 
+  file = await remark()
+    .use(lint)
+    .use(noHeadingPunctuation)
+    .use(noMultipleToplevelHeadings)
+    .process(toVFile({path: 'virtual.md', value: doc}))
+
   t.deepEqual(
-    asStrings(
-      (
-        await remark()
-          .use(lint)
-          .use(noHeadingPunctuation)
-          .use(noMultipleToplevelHeadings)
-          .process(toVFile({path: 'virtual.md', value: doc}))
-      ).messages
-    ),
+    asStrings(file.messages),
     [
       'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
       'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
@@ -70,22 +66,18 @@ test('core', async (t) => {
     'should support `remark-lint` first'
   )
 
-  t.deepEqual(
-    asStrings((await remark().use(lint).process('.')).messages),
-    [],
-    'should support no rules'
-  )
+  file = await remark().use(lint).process('.')
+
+  t.deepEqual(asStrings(file.messages), [], 'should support no rules')
+
+  file = await remark().use(finalNewline).process('')
+
+  t.deepEqual(asStrings(file.messages), [], 'should support successful rules')
+
+  file = await remark().use(finalNewline, [2]).process('.')
 
   t.deepEqual(
-    asStrings((await remark().use(finalNewline).process('')).messages),
-    [],
-    'should support successful rules'
-  )
-
-  t.deepEqual(
-    (await remark().use(finalNewline, [2]).process('.')).messages.map((d) =>
-      JSON.parse(JSON.stringify(d))
-    ),
+    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
         name: '1:1',
@@ -106,36 +98,42 @@ test('core', async (t) => {
     'should support a list with a severity'
   )
 
+  file = await remark().use(finalNewline, true).process('.')
+
   t.deepEqual(
-    asStrings((await remark().use(finalNewline, true).process('.')).messages),
+    asStrings(file.messages),
     ['1:1: Missing newline character at end of file'],
     'should support a boolean (`true`)'
   )
 
+  file = await remark().use(finalNewline, false).process('.')
+
   t.deepEqual(
-    asStrings((await remark().use(finalNewline, false).process('.')).messages),
+    asStrings(file.messages),
     [],
     'should support a boolean (`false`)'
   )
 
+  file = await remark().use(finalNewline, [true]).process('.')
+
   t.deepEqual(
-    asStrings((await remark().use(finalNewline, [true]).process('.')).messages),
+    asStrings(file.messages),
     ['1:1: Missing newline character at end of file'],
     'should support a list with a boolean severity (true, for on)'
   )
 
+  file = await remark().use(finalNewline, [false]).process('.')
+
   t.deepEqual(
-    asStrings(
-      (await remark().use(finalNewline, [false]).process('.')).messages
-    ),
+    asStrings(file.messages),
     [],
     'should support a list with boolean severity (false, for off)'
   )
 
+  file = await remark().use(finalNewline, ['error']).process('.')
+
   t.deepEqual(
-    (await remark().use(finalNewline, ['error']).process('.')).messages.map(
-      (d) => JSON.parse(JSON.stringify(d))
-    ),
+    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
         name: '1:1',
@@ -156,10 +154,10 @@ test('core', async (t) => {
     'should support a list with string severity (`error`)'
   )
 
+  file = await remark().use(finalNewline, ['on']).process('.')
+
   t.deepEqual(
-    (await remark().use(finalNewline, ['on']).process('.')).messages.map((d) =>
-      JSON.parse(JSON.stringify(d))
-    ),
+    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
         name: '1:1',
@@ -180,10 +178,10 @@ test('core', async (t) => {
     'should support a list with string severity (`on`)'
   )
 
+  file = await remark().use(finalNewline, ['warn']).process('.')
+
   t.deepEqual(
-    (await remark().use(finalNewline, ['warn']).process('.')).messages.map(
-      (d) => JSON.parse(JSON.stringify(d))
-    ),
+    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
         name: '1:1',
@@ -204,10 +202,10 @@ test('core', async (t) => {
     'should support a list with string severity (`warn`)'
   )
 
+  file = await remark().use(finalNewline, ['off']).process('.')
+
   t.deepEqual(
-    asStrings(
-      (await remark().use(finalNewline, ['off']).process('.')).messages
-    ),
+    asStrings(file.messages),
     [],
     'should support a list with string severity (`off`)'
   )
@@ -228,17 +226,17 @@ test('core', async (t) => {
     'should fail on incorrect severities (too low)'
   )
 
+  file = await remark()
+    .use(
+      lintRule('test:rule', (tree, file) => {
+        file.message('Test message')
+      }),
+      ['warn']
+    )
+    .process('.')
+
   t.deepEqual(
-    (
-      await remark()
-        .use(
-          lintRule('test:rule', (tree, file) => {
-            file.message('Test message')
-          }),
-          ['warn']
-        )
-        .process('.')
-    ).messages.map((d) => JSON.parse(JSON.stringify(d))),
+    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
         name: '1:1',
@@ -270,9 +268,11 @@ test('rules', async (t) => {
     const info = rule(base)
     const href = url.pathToFileURL(base).href + '/index.js'
 
+    // type-coverage:ignore-next-line
+    const pluginMod = await import(href)
     /** @type {Plugin} */
     // type-coverage:ignore-next-line
-    const fn = (await import(href)).default
+    const fn = pluginMod.default
 
     if (Object.keys(info.tests).length === 0) {
       t.pass(info.ruleId + ': no tests')

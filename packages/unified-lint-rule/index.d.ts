@@ -31,4 +31,4 @@ export type Rule<Tree extends Node = Node, Settings = unknown> = (
   settings: Settings
 ) => Promise<Tree | undefined | void> | Tree | undefined | void
 
-export type {Severity, Label}
+export {Severity, Label} from './lib/index.js'

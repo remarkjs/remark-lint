@@ -12,16 +12,19 @@ import url from 'node:url'
  * @returns {Promise<Array<{name: string, packages: Record<string, unknown>}>>}
  */
 export async function presets(base) {
-  const files = (await fs.readdir(base)).filter((basename) =>
+  const allFiles = await fs.readdir(base)
+  const files = allFiles.filter((basename) =>
     /remark-preset-lint/.test(basename)
   )
 
   return Promise.all(
     files.map(async (name) => {
       const href = url.pathToFileURL(path.join(base, name, 'index.js')).href
+      // type-coverage:ignore-next-line
+      const presetMod = await import(href)
       /** @type {Preset} */
       // type-coverage:ignore-next-line
-      const preset = (await import(href)).default
+      const preset = presetMod.default
       const plugins = preset.plugins || []
       /** @type {Record<string, unknown>} */
       const packages = {}

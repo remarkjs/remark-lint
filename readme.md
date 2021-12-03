@@ -682,7 +682,7 @@ abide by its terms.
 
 [remark-mdx]: https://github.com/mdx-js/mdx/tree/main/packages/remark-mdx
 
-[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
+[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/014fca7/logo.svg?sanitize=true
 
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 

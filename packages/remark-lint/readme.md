@@ -133,7 +133,7 @@ abide by its terms.
 
 [MIT][license] © [Titus Wormer][author]
 
-[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/02295bc/logo.svg?sanitize=true
+[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/014fca7/logo.svg?sanitize=true
 
 [build-badge]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
 

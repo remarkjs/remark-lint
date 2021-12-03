@@ -1,11 +1,19 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that no initial or final dashes appear in
+ * file names.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * @module no-file-name-outer-dashes
+ * @summary
+ *   remark-lint rule to warn when initial or final dashes appear in file names.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-file-name-outer-dashes
- * @fileoverview
- *   Warn when file names contain initial or final dashes (hyphen-minus, `-`).
- *
  * @example
  *   {"name": "readme.md"}
  *

@@ -10,7 +10,34 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when headings increment with more than 1 level at a time.
+[`remark-lint`][mono] rule to warn when heading ranks increment with more than
+1 at a time.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintHeadingIncrement[, config])`](#unifieduseremarklintheadingincrement-config)
+*   [Recommendation](#recommendation)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that heading ranks increment with one
+at a time.
 
 ## Presets
 
@@ -20,7 +47,96 @@ This rule is included in the following presets:
 | - | - |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | |
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-heading-increment
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintHeadingIncrement from 'https://cdn.skypack.dev/remark-lint-heading-increment@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintHeadingIncrement from 'https://cdn.skypack.dev/remark-lint-heading-increment@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintHeadingIncrement from 'remark-lint-heading-increment'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintHeadingIncrement)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-heading-increment example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-heading-increment",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintHeadingIncrement`.
+
+### `unified().use(remarkLintHeadingIncrement[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+There are no options.
+
+## Recommendation
+
+While markdown is not only used for HTML, HTML accessibility guidelines
+state that headings should increment by one at a time.
+As in, say the previous heading had a rank of 2 (so `<h2>`), then the
+following heading that is to be considered “inside” it should have a rank of
+3 (`<h3>`).
+Due to this, it’s recommended that when HTML output is a goal of the
+document, that this rule is turned on.
+
+## Examples
 
 ##### `ok.md`
 
@@ -52,59 +168,12 @@ No messages.
 3:1-3:10: Heading levels should increment by one level at a time
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-heading-increment
-```
-
-This package exports no identifiers.
-The default export is `remarkLintHeadingIncrement`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-heading-increment",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-heading-increment readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintHeadingIncrement from 'remark-lint-heading-increment'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintHeadingIncrement)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -146,17 +215,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

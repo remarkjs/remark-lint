@@ -1,11 +1,24 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that content in paragraphs is not
+ * indented.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Indenting further lines in a paragraph has no effect.
+ * Due to this, it’s recommended to turn this rule on.
+ *
+ * @module no-paragraph-content-indent
+ * @summary
+ *   remark-lint rule to warn when content in paragraphs is indented.
  * @author Titus Wormer
  * @copyright 2017 Titus Wormer
  * @license MIT
- * @module no-paragraph-content-indent
- * @fileoverview
- *   Warn when the content in paragraphs is indented.
- *
  * @example
  *   {"name": "ok.md"}
  *

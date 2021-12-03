@@ -11,7 +11,7 @@ import listOfRules from './script/plugin/list-of-rules.js'
 const plugins = [
   remarkPresetLintRecommended,
   remarkPresetLintConsistent,
-  [remarkToc, {tight: true, maxDepth: 2, heading: 'contents'}],
+  [remarkToc, {tight: true, maxDepth: 3, heading: 'contents'}],
   remarkCommentConfig,
   [remarkGfm, {tablePipeAlign: false}],
   remarkGithub,

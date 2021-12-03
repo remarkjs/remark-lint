@@ -1,11 +1,23 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that URLs are defined once.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * It’s likely a mistake when the same URL is defined with different
+ * identifiers.
+ *
+ * @module no-duplicate-defined-urls
+ * @summary
+ *   remark-lint rule to warn when URLs are defined multiple times.
  * @author Titus Wormer
  * @copyright 2020 Titus Wormer
  * @license MIT
- * @module no-duplicate-defined-urls
- * @fileoverview
- *   Warn when definitions define the same URL.
- *
  * @example
  *   {"name": "ok.md"}
  *

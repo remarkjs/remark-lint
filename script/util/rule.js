@@ -2,6 +2,7 @@
  * @typedef Rule
  * @property {string} ruleId
  * @property {string} description
+ * @property {string|undefined} summary
  * @property {boolean} deprecated
  * @property {Record<string, Checks>} tests
  * @property {string} filePath
@@ -27,15 +28,15 @@ import strip from 'strip-indent'
  * @param {string} filePath
  * @returns {Rule}
  */
-/* eslint-disable-next-line complexity */
 export function rule(filePath) {
   const ruleId = path.basename(filePath).slice('remark-lint-'.length)
   /** @type {Record<string, Checks>} */
   const tests = {}
   const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8')
-  const tags = parse(code, {spacing: 'preserve'})[0].tags
+  const fileInfo = parse(code, {spacing: 'preserve'})[0]
+  const tags = fileInfo.tags
   const moduleTag = tags.find((d) => d.tag === 'module')
-  const fileoverviewTag = tags.find((d) => d.tag === 'fileoverview')
+  const summaryTag = tags.find((d) => d.tag === 'summary')
   const deprecatedTag = tags.find((d) => d.tag === 'deprecated')
 
   /* c8 ignore next 3 */
@@ -43,15 +44,9 @@ export function rule(filePath) {
     throw new Error('Expected `@module` in JSDoc')
   }
 
-  /* c8 ignore next 3 */
-  if (!fileoverviewTag && !deprecatedTag) {
-    throw new Error('Expected `@fileoverview` (or `@deprecated`) in JSDoc')
-  }
-
   const name = moduleTag.name
   let description =
-    (fileoverviewTag && fileoverviewTag.description) ||
-    (deprecatedTag && deprecatedTag.description)
+    (deprecatedTag && deprecatedTag.description) || fileInfo.description
 
   /* c8 ignore next 3 */
   if (name !== ruleId) {
@@ -60,7 +55,7 @@ export function rule(filePath) {
 
   /* c8 ignore next 3 */
   if (!description) {
-    throw new Error(ruleId + ' is missing a `@fileoverview` or `@deprecated`')
+    throw new Error(ruleId + ' is missing a description or `@deprecated`')
   }
 
   description = strip(description)
@@ -69,6 +64,7 @@ export function rule(filePath) {
   const result = {
     ruleId,
     description: description.trim(),
+    summary: summaryTag ? strip(summaryTag.description).trim() : undefined,
     deprecated: Boolean(deprecatedTag),
     tests,
     filePath

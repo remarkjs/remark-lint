@@ -1,11 +1,28 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that the labels used in definitions
+ * do not use meaningless white space.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Definitions and references are matched together by collapsing white space.
+ * Using more white space in labels might incorrectly indicate that they are of
+ * importance.
+ * Due to this, it’s recommended to use one space (or a line ending if needed)
+ * and turn this rule on.
+ *
+ * @module definition-spacing
+ * @summary
+ *   remark-lint rule to warn when consecutive whitespace is used in
+ *   a definition label.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module definition-spacing
- * @fileoverview
- *   Warn when consecutive whitespace is used in a definition.
- *
  * @example
  *   {"name": "ok.md"}
  *

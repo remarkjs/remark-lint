@@ -9,8 +9,11 @@ import path from 'node:path'
 import process from 'node:process'
 import {inspect} from 'node:util'
 import {parse} from 'comment-parser'
+import {unified} from 'unified'
 import {remark} from 'remark'
+import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
+import {findAndReplace} from 'mdast-util-find-and-replace'
 import strip from 'strip-indent'
 import parseAuthor from 'parse-author'
 import {presets} from './util/presets.js'
@@ -32,25 +35,44 @@ presets(root).then((presetObjects) => {
     const pack = JSON.parse(
       String(fs.readFileSync(path.join(base, 'package.json')))
     )
+    const version = (pack.version || '0').split('.')[0]
     const doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
-    const tags = parse(doc, {spacing: 'preserve'})[0].tags
+    const fileInfo = parse(doc, {spacing: 'preserve'})[0]
+    const tags = fileInfo.tags
+    const summaryTag = tags.find((d) => d.tag === 'summary')
     const author =
       typeof pack.author === 'string' ? parseAuthor(pack.author) : pack.author
-    const fileoverviewTag = tags.find((d) => d.tag === 'fileoverview')
+    const descriptionTree = unified()
+      .use(remarkParse)
+      .parse(strip(fileInfo.description).trim())
+    const summaryTree = unified()
+      .use(remarkParse)
+      .parse(strip(summaryTag ? summaryTag.description : '').trim())
 
-    if (!fileoverviewTag) {
-      throw new Error('Expected `@fileoverview` in jsdoc')
-    }
+    // Autolink `remark-lint`
+    unified()
+      .use(
+        /** @type {import('unified').Plugin<Array<void>, import('mdast').Root>} */
+        () => (tree) => {
+          findAndReplace(tree, /remark-lint/g, () => {
+            return {
+              type: 'linkReference',
+              identifier: 'mono',
+              referenceType: 'full',
+              children: [{type: 'inlineCode', value: 'remark-lint'}]
+            }
+          })
+        }
+      )
+      .runSync(summaryTree)
 
-    const description = strip(fileoverviewTag.description).trim()
-    const short = name.replace(/^remark-/, '')
     const camelcased = name.replace(/-(\w)/g, (_, /** @type {string} */ $1) =>
       $1.toUpperCase()
     )
     const org = remote.split('/').slice(0, -1).join('/')
     const main = remote + '/blob/main'
     const health = org + '/.github'
-    const hMain = health + '/blob/HEAD'
+    const hMain = health + '/blob/main'
     const slug = remote.split('/').slice(-2).join('/')
 
     if (name !== pack.name) {
@@ -63,6 +85,13 @@ presets(root).then((presetObjects) => {
           '`)'
       )
     }
+
+    const descriptionContent = /** @type {Array<BlockContent>} */ (
+      descriptionTree.children
+    )
+    const summaryContent = /** @type {Array<BlockContent>} */ (
+      summaryTree.children
+    )
 
     /** @type {Array<TableContent>} */
     const rows = []
@@ -109,10 +138,6 @@ presets(root).then((presetObjects) => {
         })
       }
     }
-
-    /** @type {Array<BlockContent>} */
-    // @ts-expect-error: fine.
-    const descriptionContent = remark().parse(description).children
 
     /** @type {Array<BlockContent>} */
     const children = [
@@ -224,6 +249,48 @@ presets(root).then((presetObjects) => {
           }
         ]
       },
+      ...summaryContent,
+      {
+        type: 'heading',
+        depth: 2,
+        children: [{type: 'text', value: 'Contents'}]
+      },
+      {
+        type: 'heading',
+        depth: 2,
+        children: [{type: 'text', value: 'What is this?'}]
+      },
+      {
+        type: 'paragraph',
+        children: [
+          {type: 'text', value: 'This package is a '},
+          {
+            type: 'linkReference',
+            identifier: 'unified',
+            referenceType: 'collapsed',
+            children: [{type: 'text', value: 'unified'}]
+          },
+          {type: 'text', value: ' ('},
+          {
+            type: 'linkReference',
+            identifier: 'remark',
+            referenceType: 'collapsed',
+            children: [{type: 'text', value: 'remark'}]
+          },
+          {
+            type: 'text',
+            value: ') preset, specifically consisting of\n'
+          },
+          {
+            type: 'inlineCode',
+            value: 'remark-lint'
+          },
+          {
+            type: 'text',
+            value: ' rules.\nLint rules check markdown code style.'
+          }
+        ]
+      },
       ...descriptionContent,
       {
         type: 'heading',
@@ -235,8 +302,9 @@ presets(root).then((presetObjects) => {
         children: [
           {type: 'text', value: 'This preset configures '},
           {
-            type: 'link',
-            url: remote,
+            type: 'linkReference',
+            identifier: 'mono',
+            referenceType: 'full',
             children: [{type: 'inlineCode', value: 'remark-lint'}]
           },
           {type: 'text', value: ' with the following rules:'}
@@ -260,17 +328,10 @@ presets(root).then((presetObjects) => {
           },
           {
             type: 'text',
-            value: ':\nNode 12+ is needed to use it and it must be '
+            value:
+              '.\nIn Node.js (version 12.20+, 14.14+, or 16.0+), ' +
+              'install with '
           },
-          {type: 'inlineCode', value: 'imported'},
-          {type: 'text', value: 'ed instead of '},
-          {type: 'inlineCode', value: 'required'},
-          {type: 'text', value: 'd.'}
-        ]
-      },
-      {
-        type: 'paragraph',
-        children: [
           {
             type: 'linkReference',
             identifier: 'npm',
@@ -284,28 +345,107 @@ presets(root).then((presetObjects) => {
       {
         type: 'paragraph',
         children: [
+          {type: 'text', value: 'In Deno with '},
           {
-            type: 'text',
-            value:
-              'This package exports no identifiers.\nThe default export is '
+            type: 'linkReference',
+            identifier: 'skypack',
+            label: 'Skypack',
+            referenceType: 'collapsed',
+            children: [{type: 'text', value: 'Skypack'}]
           },
-          {
-            type: 'inlineCode',
-            value: name.replace(/-(\w)/g, (_, /** @type {string} */ $1) =>
-              $1.toUpperCase()
-            )
-          },
-          {type: 'text', value: '.'}
+          {type: 'text', value: ':'}
         ]
       },
-      {type: 'heading', depth: 2, children: [{type: 'text', value: 'Use'}]},
+      {
+        type: 'code',
+        lang: 'js',
+        value:
+          'import ' +
+          camelcased +
+          " from 'https://cdn.skypack.dev/" +
+          name +
+          '@' +
+          version +
+          "?dts'"
+      },
+      {
+        type: 'paragraph',
+        children: [
+          {type: 'text', value: 'In browsers with '},
+          {
+            type: 'linkReference',
+            identifier: 'skypack',
+            label: 'Skypack',
+            referenceType: 'collapsed',
+            children: [{type: 'text', value: 'Skypack'}]
+          },
+          {type: 'text', value: ':'}
+        ]
+      },
+      {
+        type: 'code',
+        lang: 'html',
+        value:
+          '<script type="module">\n  import ' +
+          camelcased +
+          " from 'https://cdn.skypack.dev/" +
+          name +
+          '@' +
+          version +
+          "?min'\n</script>"
+      },
+      {
+        type: 'heading',
+        depth: 2,
+        children: [{type: 'text', value: 'Use'}]
+      },
+      {
+        type: 'paragraph',
+        children: [{type: 'text', value: 'On the API:'}]
+      },
+      {
+        type: 'code',
+        lang: 'js',
+        value: [
+          "import {read} from 'to-vfile'",
+          "import {reporter} from 'vfile-reporter'",
+          "import {remark} from 'remark'",
+          'import ' + camelcased + " from '" + name + "'",
+          '',
+          'main()',
+          '',
+          'async function main() {',
+          '  const file = await remark()',
+          '    .use(' + camelcased + ')',
+          "    .process(await read('example.md'))",
+          '',
+          '  console.error(reporter(file))',
+          '}'
+        ].join('\n')
+      },
+      {
+        type: 'paragraph',
+        children: [{type: 'text', value: 'On the CLI:'}]
+      },
+      {
+        type: 'code',
+        lang: 'sh',
+        value: 'remark --use ' + name + ' example.md'
+      },
       {
         type: 'paragraph',
         children: [
           {
             type: 'text',
-            value:
-              'You probably want to use it on the CLI through a config file:'
+            value: 'On the CLI in a config file (here a '
+          },
+          {
+            type: 'inlineCode',
+            value: 'package.json'
+          },
+          {
+            type: 'text',
+            value: '):'
           }
         ]
       },
@@ -315,35 +455,59 @@ presets(root).then((presetObjects) => {
         value: [
           ' …',
           ' "remarkConfig": {',
-          '+  "plugins": ["' + short + '"]',
+          '   "plugins": [',
+          '     …',
+          '+    "' + name + '",',
+          '     …',
+          '   ]',
           ' }',
           ' …'
         ].join('\n')
       },
+      {type: 'heading', depth: 2, children: [{type: 'text', value: 'API'}]},
       {
         type: 'paragraph',
-        children: [{type: 'text', value: 'Or use it on the CLI directly'}]
+        children: [
+          {
+            type: 'text',
+            value:
+              'This package exports no identifiers.\nThe default export is '
+          },
+          {type: 'inlineCode', value: camelcased},
+          {type: 'text', value: '.'}
+        ]
       },
-      {type: 'code', lang: 'sh', value: 'remark -u ' + short + ' readme.md'},
+      {
+        type: 'heading',
+        depth: 3,
+        children: [
+          {type: 'inlineCode', value: 'unified().use(' + camelcased + ')'}
+        ]
+      },
       {
         type: 'paragraph',
-        children: [{type: 'text', value: 'Or use this on the API:'}]
+        children: [
+          {
+            type: 'text',
+            value:
+              'Use the preset.\nPresets don’t have options.\nYou can reconfigure rules in them by using the afterwards with different\noptions.'
+          }
+        ]
       },
       {
-        type: 'code',
-        lang: 'diff',
-        value: [
-          " import {remark} from 'remark'",
-          " import {reporter} from 'vfile-reporter'",
-          ' import ' + camelcased + " from '" + name + "'",
-          '',
-          ' remark()',
-          '+  .use(' + camelcased + ')',
-          "   .process('_Emphasis_ and **importance**')",
-          '   .then((file) => {',
-          '     console.error(reporter(file))',
-          '   })'
-        ].join('\n')
+        type: 'heading',
+        depth: 2,
+        children: [{type: 'text', value: 'Compatibility'}]
+      },
+      {
+        type: 'paragraph',
+        children: [
+          {
+            type: 'text',
+            value:
+              'Projects maintained by the unified collective are compatible with all maintained\nversions of Node.js.\nAs of now, that is Node.js 12.20+, 14.14+, and 16.0+.\nOur projects sometimes work with older versions, but this is not guaranteed.'
+          }
+        ]
       },
       {
         type: 'heading',
@@ -366,7 +530,10 @@ presets(root).then((presetObjects) => {
             referenceType: 'collapsed',
             identifier: 'health',
             children: [
-              {type: 'inlineCode', value: health.split('/').slice(-2).join('/')}
+              {
+                type: 'inlineCode',
+                value: health.split('/').slice(-2).join('/')
+              }
             ]
           },
           {type: 'text', value: ' for ways\nto get started.\nSee '},
@@ -484,8 +651,28 @@ presets(root).then((presetObjects) => {
       },
       {
         type: 'definition',
+        identifier: 'unified',
+        url: 'https://github.com/unifiedjs/unified'
+      },
+      {
+        type: 'definition',
+        identifier: 'remark',
+        url: 'https://github.com/remarkjs/remark'
+      },
+      {
+        type: 'definition',
+        identifier: 'mono',
+        url: 'https://github.com/' + slug
+      },
+      {
+        type: 'definition',
         identifier: 'esm',
         url: 'https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c'
+      },
+      {
+        type: 'definition',
+        identifier: 'skypack',
+        url: 'https://www.skypack.dev'
       },
       {
         type: 'definition',

@@ -10,14 +10,124 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when duplicate headings are found, but only when on the same level,
-“in” the same section.
+[`remark-lint`][mono] rule to warn when headings with the same text are used
+multiple times per section.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintNoDuplicateHeadingsInSection[, config])`](#unifieduseremarklintnoduplicateheadingsinsection-config)
+*   [Recommendation](#recommendation)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that headings with the same text are
+used once per section.
 
 ## Presets
 
-This rule is not included in any default preset
+This rule is not included in a preset maintained here.
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-no-duplicate-headings-in-section
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintNoDuplicateHeadingsInSection from 'https://cdn.skypack.dev/remark-lint-no-duplicate-headings-in-section@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintNoDuplicateHeadingsInSection from 'https://cdn.skypack.dev/remark-lint-no-duplicate-headings-in-section@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintNoDuplicateHeadingsInSection from 'remark-lint-no-duplicate-headings-in-section'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintNoDuplicateHeadingsInSection)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-no-duplicate-headings-in-section example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-no-duplicate-headings-in-section",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintNoDuplicateHeadingsInSection`.
+
+### `unified().use(remarkLintNoDuplicateHeadingsInSection[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+There are no options.
+
+## Recommendation
+
+It’s likely a mistake that the same heading text is used in the same
+section.
+
+## Examples
 
 ##### `ok.md`
 
@@ -85,59 +195,12 @@ No messages.
 7:1-7:11: Do not use headings with similar content per section (3:1)
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-no-duplicate-headings-in-section
-```
-
-This package exports no identifiers.
-The default export is `remarkLintNoDuplicateHeadingsInSection`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-no-duplicate-headings-in-section",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-no-duplicate-headings-in-section readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintNoDuplicateHeadingsInSection from 'remark-lint-no-duplicate-headings-in-section'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintNoDuplicateHeadingsInSection)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -179,17 +242,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

@@ -1,11 +1,24 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that links and images have URLs.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * While it is possible to omit URLs in links and images, that typically
+ * indicates a “placeholder” or todo that has to be filled out later.
+ * It’s recommended to fill them out.
+ *
+ * @module no-empty-url
+ * @summary
+ *   remark-lint rule to warn for empty URLs in links and images.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-empty-url
- * @fileoverview
- *   Warn for empty URLs in links and images.
- *
  * @example
  *   {"name": "ok.md"}
  *

@@ -1,30 +1,66 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that headings are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'atx'`
+ *     — prefer ATX headings:
+ *     ```markdown
+ *     ## Hello
+ *     ```
+ * *   `'atx-closed'`
+ *     — prefer ATX headings with a closing sequence:
+ *     ```markdown
+ *     ## Hello ##
+ *     ```
+ * *   `'setext'`
+ *     — prefer setext headings:
+ *     ```markdown
+ *     Hello
+ *     -----
+ *     ```
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further headings differ
+ *
+ * ## Recommendation
+ *
+ * Setext headings are limited in that they can only construct headings with a
+ * rank of one and two.
+ * On the other hand, they do allow multiple lines of content whereas ATX only
+ * allows one line.
+ * The number of used markers in their underline does not matter, leading to
+ * either:
+ *
+ * *   1 marker (`Hello\n-`), which is the bare minimum, and for rank 2 headings
+ *     looks suspiciously like an empty list item
+ * *   using as many markers as the content (`Hello\n-----`), which is hard to
+ *     maintain
+ * *   an arbitrary number (`Hello\n---`), which for rank 2 headings looks
+ *     suspiciously like a thematic break
+ *
+ * Setext headings are also rather uncommon.
+ * Using a sequence of hashes at the end of ATX headings is even more uncommon.
+ * Due to this, it’s recommended to prefer ATX headings.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats headings as ATX by default.
+ * The other styles can be configured with
+ * [`setext: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext)
+ * or
+ * [`closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
+ *
+ * @module heading-style
+ * @summary
+ *   remark-lint rule to warn when headings violate a given style.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module heading-style
- * @fileoverview
- *   Warn when a heading does not conform to a given style.
- *
- *   Options: `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`,
- *   default: `'consistent'`.
- *
- *   `'consistent'` detects the first used heading style and warns when
- *   subsequent headings use different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   formats headings as ATX by default.
- *   This can be configured with the
- *   [`setext`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionssetext)
- *   and
- *   [`closeAtx`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionscloseatx)
- *   options.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "setting": "atx"}
  *

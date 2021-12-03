@@ -1,17 +1,27 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that collapsed or full reference links
+ * are used.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Shortcut references use an implicit style that looks a lot like something
+ * that could occur as plain text instead of syntax.
+ * In some cases, plain text is intended instead of a link.
+ * Due to this, it’s recommended to use collapsed (or full) references
+ * instead.
+ *
+ * @module no-shortcut-reference-link
+ * @summary
+ *   remark-lint rule to warn when shortcut reference links are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-shortcut-reference-link
- * @fileoverview
- *   Warn when shortcut reference links are used.
- *
- *   Shortcut references render as links when a definition is found, and as
- *   plain text without definition.
- *   Sometimes, you don’t intend to create a link from the reference, but this
- *   rule still warns anyway.
- *   In that case, you can escape the reference like so: `\[foo]`.
- *
  * @example
  *   {"name": "ok.md"}
  *

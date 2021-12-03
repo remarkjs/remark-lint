@@ -1,33 +1,47 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that rules (thematic breaks, horizontal
+ * rules) are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `string` (example: `'** * **'`, `'___'`)
+ *     — thematic break to prefer
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further rules differ
+ *
+ * ## Recommendation
+ *
+ * Rules consist of a `*`, `-`, or `_` character, which occurs at least three
+ * times with nothing else except for arbitrary spaces or tabs on a single line.
+ * Using spaces, tabs, and more than three markers seems unnecessary work to
+ * type out.
+ * Because asterisks can be used as a marker for more markdown constructs,
+ * it’s recommended to use that for rules (and lists, emphasis, strong) too.
+ * Due to this, it’s recommended to pass `'***'`.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats rules with `***` by default.
+ * There are three settings to control rules:
+ *
+ * *   [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
+ *     (default: `'*'`) — marker
+ * *   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
+ *     (default: `3`) — repetitions
+ * *   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
+ *     (default: `false`) — use spaces between markers
+ *
+ * @module rule-style
+ * @summary
+ *   remark-lint rule to warn when rule markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module rule-style
- * @fileoverview
- *   Warn when the thematic breaks (horizontal rules) violate a given or
- *   detected style.
- *
- *   Options: `string`, either a corect thematic breaks such as `***`, or
- *   `'consistent'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used thematic break style and warns when
- *   subsequent rules use different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   has three settings that define how rules are created:
- *
- *   *   [`rule`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsrule)
- *       (default: `*`) — Marker to use
- *   *   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsrulerepetition)
- *       (default: `3`) — Number of markers to use
- *   *   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsrulespaces)
- *       (default: `true`) — Whether to pad markers with spaces
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "setting": "* * *"}
  *

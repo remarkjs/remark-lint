@@ -10,8 +10,34 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when emphasis (including strong), instead of a heading, introduces
+[`remark-lint`][mono] rule to warn when emphasis or strong are used to introduce
 a paragraph.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintNoEmphasisAsHeading[, config])`](#unifieduseremarklintnoemphasisasheading-config)
+*   [Recommendation](#recommendation)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that headings are used to introduce
+paragraphs instead of “fake” headings made with emphasis or strong.
 
 ## Presets
 
@@ -21,7 +47,92 @@ This rule is included in the following presets:
 | - | - |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | |
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-no-emphasis-as-heading
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintNoEmphasisAsHeading from 'https://cdn.skypack.dev/remark-lint-no-emphasis-as-heading@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintNoEmphasisAsHeading from 'https://cdn.skypack.dev/remark-lint-no-emphasis-as-heading@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintNoEmphasisAsHeading from 'remark-lint-no-emphasis-as-heading'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintNoEmphasisAsHeading)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-no-emphasis-as-heading example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-no-emphasis-as-heading",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintNoEmphasisAsHeading`.
+
+### `unified().use(remarkLintNoEmphasisAsHeading[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+There are no options.
+
+## Recommendation
+
+While not always the case, typically emphasis or strong around the text
+in a paragraph is used as a “faux” heading.
+It’s recommended to use actual headings instead.
+
+## Examples
 
 ##### `ok.md`
 
@@ -58,59 +169,12 @@ Quux.
 5:1-5:8: Don’t use emphasis to introduce a section, use a heading
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-no-emphasis-as-heading
-```
-
-This package exports no identifiers.
-The default export is `remarkLintNoEmphasisAsHeading`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-no-emphasis-as-heading",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-no-emphasis-as-heading readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintNoEmphasisAsHeading from 'remark-lint-no-emphasis-as-heading'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintNoEmphasisAsHeading)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -152,17 +216,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

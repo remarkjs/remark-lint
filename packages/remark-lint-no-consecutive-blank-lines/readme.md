@@ -10,18 +10,35 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn for too many consecutive blank lines.
-Knows about the extra line needed between a list and indented code, and two
-lists.
+[`remark-lint`][mono] rule to warn when more blank lines that needed are used
+between blocks.
 
-## Fix
+## Contents
 
-[`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
-always uses one blank line between blocks if possible, or two lines when
-needed.
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintNoConsecutiveBlankLines[, config])`](#unifieduseremarklintnoconsecutiveblanklines-config)
+*   [Recommendation](#recommendation)
+*   [Fix](#fix)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
 
-See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
-on how to automatically fix warnings for this rule.
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that no more blank lines than needed
+are used between blocks.
 
 ## Presets
 
@@ -31,13 +48,101 @@ This rule is included in the following presets:
 | - | - |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | |
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-no-consecutive-blank-lines
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintNoConsecutiveBlankLines from 'https://cdn.skypack.dev/remark-lint-no-consecutive-blank-lines@4?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintNoConsecutiveBlankLines from 'https://cdn.skypack.dev/remark-lint-no-consecutive-blank-lines@4?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintNoConsecutiveBlankLines from 'remark-lint-no-consecutive-blank-lines'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintNoConsecutiveBlankLines)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-no-consecutive-blank-lines example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-no-consecutive-blank-lines",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintNoConsecutiveBlankLines`.
+
+### `unified().use(remarkLintNoConsecutiveBlankLines[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+There are no options.
+
+## Recommendation
+
+More than one blank line has no effect between blocks.
+
+## Fix
+
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+adds exactly one blank line between any block.
+
+## Examples
 
 ##### `ok.md`
 
 ###### In
 
-Note: `␊` represents a line feed.
+> 👉 **Note**: `␊` represents a line feed.
 
 ```markdown
 Foo…
@@ -59,7 +164,7 @@ No messages.
 
 ###### In
 
-Note: `␊` represents a line feed.
+> 👉 **Note**: `␊` represents a line feed.
 
 ```markdown
 Foo…
@@ -77,59 +182,12 @@ Foo…
 4:5: Remove 2 lines after node
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-no-consecutive-blank-lines
-```
-
-This package exports no identifiers.
-The default export is `remarkLintNoConsecutiveBlankLines`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-no-consecutive-blank-lines",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-no-consecutive-blank-lines readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintNoConsecutiveBlankLines from 'remark-lint-no-consecutive-blank-lines'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintNoConsecutiveBlankLines)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -171,17 +229,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

@@ -1,20 +1,58 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that tabs are not used.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Regardless of the debate in other languages of whether to use tabs vs.
+ * spaces, when it comes to markdown, tabs do not work as expected.
+ * Largely around contains such as block quotes and lists.
+ * Take for example block quotes: `>\ta` gives a paragraph with the text `a`
+ * in a blockquote, so one might expect that `>\t\ta` results in indented code
+ * with the text `a` in a block quote.
+ *
+ * ```markdown
+ * >\ta
+ *
+ * >\t\ta
+ * ```
+ *
+ * Yields:
+ *
+ * ```html
+ * <blockquote>
+ * <p>a</p>
+ * </blockquote>
+ * <blockquote>
+ * <pre><code>  a
+ * </code></pre>
+ * </blockquote>
+ * ```
+ *
+ * Because markdown uses a hardcoded tab size of 4, the first tab could be
+ * represented as 3 spaces (because there’s a `>` before).
+ * One of those “spaces” is taken because block quotes allow the `>` to be
+ * followed by one space, leaving 2 spaces.
+ * The next tab can be represented as 4 spaces, so together we have 6 spaces.
+ * The indented code uses 4 spaces, so there are two spaces left, which are
+ * shown in the indented code.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * uses spaces exclusively for indentation.
+ *
+ * @module no-tabs
+ * @summary
+ *   remark-lint rule to warn when tabs are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-tabs
- * @fileoverview
- *   Warn when hard tabs (`\t`) are used instead of spaces.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   uses spaces where tabs are used for indentation, but retains tabs used in
- *   content.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md"}
  *

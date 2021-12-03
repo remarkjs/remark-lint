@@ -10,12 +10,35 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when block quotes are indented too much or too little.
+[`remark-lint`][mono] rule to warn when block quotes are indented too much or
+too little.
 
-Options: `number` or `'consistent'`, default: `'consistent'`.
+## Contents
 
-`'consistent'` detects the first used indentation and will warn when
-other block quotes use a different indentation.
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintBlockquoteIndentation[, config])`](#unifieduseremarklintblockquoteindentation-config)
+*   [Recommendation](#recommendation)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that the “indent” of block quotes is
+consistent.
+Indent here is the `>` (greater than) marker and the spaces before content.
 
 ## Presets
 
@@ -26,7 +49,111 @@ This rule is included in the following presets:
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `2` |
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-blockquote-indentation
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintBlockquoteIndentation from 'https://cdn.skypack.dev/remark-lint-blockquote-indentation@3?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintBlockquoteIndentation from 'https://cdn.skypack.dev/remark-lint-blockquote-indentation@3?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintBlockquoteIndentation from 'remark-lint-blockquote-indentation'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintBlockquoteIndentation)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-blockquote-indentation example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-blockquote-indentation",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintBlockquoteIndentation`.
+
+### `unified().use(remarkLintBlockquoteIndentation[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+The following options (default: `'consistent'`) are accepted:
+
+*   `number` (example: `2`)
+    — preferred indent of `>` and spaces before content
+*   `'consistent'`
+    — detect the first used style and warn when further block quotes differ
+
+## Recommendation
+
+CommonMark specifies that when block quotes are used the `>` markers can be
+followed by an optional space.
+No space at all arguably looks rather ugly:
+
+```markdown
+>Mars and
+>Venus.
+```
+
+There is no specific handling of more that one space, so if 5 spaces were
+used after `>`, then indented code kicks in:
+
+```markdown
+>     neptune()
+```
+
+Due to this, it’s recommended to configure this rule with `2`.
+
+## Examples
 
 ##### `ok.md`
 
@@ -87,59 +214,12 @@ Paragraph.
 9:3: Add 1 space between block quote and content
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-blockquote-indentation
-```
-
-This package exports no identifiers.
-The default export is `remarkLintBlockquoteIndentation`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-blockquote-indentation",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-blockquote-indentation readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintBlockquoteIndentation from 'remark-lint-blockquote-indentation'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintBlockquoteIndentation)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -181,17 +261,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

@@ -1,13 +1,18 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that no HTML (other than comments) is used.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * @module no-html
+ * @summary
+ *   remark-lint rule to warn when HTML is used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-html
- * @fileoverview
- *   Warn when HTML nodes are used.
- *
- *   Ignores comments, because they are used by `remark`, `remark-lint`, other
- *   Markdown tools, and because Markdown doesn’t have native comments.
  *
  * @example
  *   {"name": "ok.md"}

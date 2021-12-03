@@ -8,8 +8,13 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import {inspect} from 'node:util'
+import {unified} from 'unified'
 import {remark} from 'remark'
+import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
+import {findAndReplace} from 'mdast-util-find-and-replace'
+import {toString} from 'mdast-util-to-string'
+import GitHubSlugger from 'github-slugger'
 import parseAuthor from 'parse-author'
 import {rules} from './util/rules.js'
 import {rule} from './util/rule.js'
@@ -35,11 +40,11 @@ presets(root).then((presetObjects) => {
     const pack = JSON.parse(
       String(fs.readFileSync(path.join(base, 'package.json')))
     )
+    const version = (pack.version || '0').split('.')[0]
     const info = rule(base)
     const tests = info.tests
     const author =
       typeof pack.author === 'string' ? parseAuthor(pack.author) : pack.author
-    const short = basename.replace(/^remark-/, '')
     const camelcased = basename.replace(
       /-(\w)/g,
       (_, /** @type {string} */ $1) => $1.toUpperCase()
@@ -47,13 +52,38 @@ presets(root).then((presetObjects) => {
     const org = remote.split('/').slice(0, -1).join('/')
     const main = remote + '/blob/main'
     const health = org + '/.github'
-    const hMain = health + '/blob/HEAD'
+    const hMain = health + '/blob/main'
     const slug = remote.split('/').slice(-2).join('/')
     let hasGfm = false
 
-    /** @type {Array<BlockContent>} */
-    // @ts-expect-error: fine.
-    const descriptionContent = remark().parse(info.description).children
+    const descriptionTree = unified().use(remarkParse).parse(info.description)
+    const summaryTree = unified()
+      .use(remarkParse)
+      .parse(info.summary || '')
+
+    // Autolink `remark-lint`
+    unified()
+      .use(
+        /** @type {import('unified').Plugin<Array<void>, import('mdast').Root>} */
+        () => (tree) => {
+          findAndReplace(tree, /remark-lint/g, () => {
+            return {
+              type: 'linkReference',
+              identifier: 'mono',
+              referenceType: 'full',
+              children: [{type: 'inlineCode', value: 'remark-lint'}]
+            }
+          })
+        }
+      )
+      .runSync(summaryTree)
+
+    const descriptionContent = /** @type {Array<BlockContent>} */ (
+      descriptionTree.children
+    )
+    const summaryContent = /** @type {Array<BlockContent>} */ (
+      summaryTree.children
+    )
 
     if (basename !== pack.name) {
       throw new Error(
@@ -63,6 +93,24 @@ presets(root).then((presetObjects) => {
           basename +
           '`)'
       )
+    }
+
+    /** @type {Record<string, Array<BlockContent>>} */
+    const categories = {}
+    let category = 'Intro'
+    let contentIndex = -1
+
+    while (++contentIndex < descriptionContent.length) {
+      const node = descriptionContent[contentIndex]
+      if (node.type === 'heading' && node.depth === 2) {
+        category = GitHubSlugger.slug(toString(node))
+      }
+
+      if (!(category in categories)) {
+        categories[category] = []
+      }
+
+      categories[category].push(node)
     }
 
     const includes = presetObjects.filter(
@@ -76,118 +124,164 @@ presets(root).then((presetObjects) => {
         type: 'heading',
         depth: 1,
         children: [{type: 'text', value: basename}]
-      },
-      {
-        type: 'paragraph',
-        children: [
-          {
-            type: 'linkReference',
-            identifier: 'build',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'build-badge',
-                referenceType: 'full',
-                alt: 'Build'
-              }
-            ]
-          },
-          {type: 'text', value: '\n'},
-          {
-            type: 'linkReference',
-            identifier: 'coverage',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'coverage-badge',
-                referenceType: 'full',
-                alt: 'Coverage'
-              }
-            ]
-          },
-          {type: 'text', value: '\n'},
-          {
-            type: 'linkReference',
-            identifier: 'downloads',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'downloads-badge',
-                referenceType: 'full',
-                alt: 'Downloads'
-              }
-            ]
-          },
-          {type: 'text', value: '\n'},
-          {
-            type: 'linkReference',
-            identifier: 'size',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'size-badge',
-                referenceType: 'full',
-                alt: 'Size'
-              }
-            ]
-          },
-          {type: 'text', value: '\n'},
-          {
-            type: 'linkReference',
-            identifier: 'collective',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'sponsors-badge',
-                referenceType: 'full',
-                alt: 'Sponsors'
-              }
-            ]
-          },
-          {type: 'text', value: '\n'},
-          {
-            type: 'linkReference',
-            identifier: 'collective',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'backers-badge',
-                referenceType: 'full',
-                alt: 'Backers'
-              }
-            ]
-          },
-          {type: 'text', value: '\n'},
-          {
-            type: 'linkReference',
-            identifier: 'chat',
-            referenceType: 'full',
-            children: [
-              {
-                type: 'imageReference',
-                identifier: 'chat-badge',
-                referenceType: 'full',
-                alt: 'Chat'
-              }
-            ]
-          }
-        ]
-      },
-      ...descriptionContent
+      }
     ]
 
-    if (!info.deprecated) {
-      children.push({
-        type: 'heading',
-        depth: 2,
-        children: [{type: 'text', value: 'Presets'}]
-      })
+    if (info.deprecated) {
+      children.push(...descriptionContent)
+    } else {
+      children.push(
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'linkReference',
+              identifier: 'build',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'build-badge',
+                  referenceType: 'full',
+                  alt: 'Build'
+                }
+              ]
+            },
+            {type: 'text', value: '\n'},
+            {
+              type: 'linkReference',
+              identifier: 'coverage',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'coverage-badge',
+                  referenceType: 'full',
+                  alt: 'Coverage'
+                }
+              ]
+            },
+            {type: 'text', value: '\n'},
+            {
+              type: 'linkReference',
+              identifier: 'downloads',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'downloads-badge',
+                  referenceType: 'full',
+                  alt: 'Downloads'
+                }
+              ]
+            },
+            {type: 'text', value: '\n'},
+            {
+              type: 'linkReference',
+              identifier: 'size',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'size-badge',
+                  referenceType: 'full',
+                  alt: 'Size'
+                }
+              ]
+            },
+            {type: 'text', value: '\n'},
+            {
+              type: 'linkReference',
+              identifier: 'collective',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'sponsors-badge',
+                  referenceType: 'full',
+                  alt: 'Sponsors'
+                }
+              ]
+            },
+            {type: 'text', value: '\n'},
+            {
+              type: 'linkReference',
+              identifier: 'collective',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'backers-badge',
+                  referenceType: 'full',
+                  alt: 'Backers'
+                }
+              ]
+            },
+            {type: 'text', value: '\n'},
+            {
+              type: 'linkReference',
+              identifier: 'chat',
+              referenceType: 'full',
+              children: [
+                {
+                  type: 'imageReference',
+                  identifier: 'chat-badge',
+                  referenceType: 'full',
+                  alt: 'Chat'
+                }
+              ]
+            }
+          ]
+        },
+        ...summaryContent,
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'Contents'}]
+        },
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'What is this?'}]
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {type: 'text', value: 'This package is a '},
+            {
+              type: 'linkReference',
+              identifier: 'unified',
+              referenceType: 'collapsed',
+              children: [{type: 'text', value: 'unified'}]
+            },
+            {type: 'text', value: ' ('},
+            {
+              type: 'linkReference',
+              identifier: 'remark',
+              referenceType: 'collapsed',
+              children: [{type: 'text', value: 'remark'}]
+            },
+            {
+              type: 'text',
+              value: ') plugin, specifically a '
+            },
+            {
+              type: 'inlineCode',
+              value: 'remark-lint'
+            },
+            {
+              type: 'text',
+              value: '\nrule.\nLint rules check markdown code style.'
+            }
+          ]
+        },
+        ...(categories['when-should-i-use-this'] || []),
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'Presets'}]
+        }
+      )
 
       if (includes.length === 0) {
         children.push({
@@ -195,7 +289,7 @@ presets(root).then((presetObjects) => {
           children: [
             {
               type: 'text',
-              value: 'This rule is not included in any default preset'
+              value: 'This rule is not included in a preset maintained here.'
             }
           ]
         })
@@ -261,6 +355,216 @@ presets(root).then((presetObjects) => {
         )
       }
 
+      children.push(
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'Install'}]
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {type: 'text', value: 'This package is '},
+            {
+              type: 'linkReference',
+              identifier: 'esm',
+              referenceType: 'full',
+              children: [{type: 'text', value: 'ESM only'}]
+            },
+            {
+              type: 'text',
+              value:
+                '.\nIn Node.js (version 12.20+, 14.14+, or 16.0+), ' +
+                'install with '
+            },
+            {
+              type: 'linkReference',
+              identifier: 'npm',
+              referenceType: 'collapsed',
+              children: [{type: 'text', value: 'npm'}]
+            },
+            {type: 'text', value: ':'}
+          ]
+        },
+        {type: 'code', lang: 'sh', value: 'npm install ' + basename},
+        {
+          type: 'paragraph',
+          children: [
+            {type: 'text', value: 'In Deno with '},
+            {
+              type: 'linkReference',
+              identifier: 'skypack',
+              label: 'Skypack',
+              referenceType: 'collapsed',
+              children: [{type: 'text', value: 'Skypack'}]
+            },
+            {type: 'text', value: ':'}
+          ]
+        },
+        {
+          type: 'code',
+          lang: 'js',
+          value:
+            'import ' +
+            camelcased +
+            " from 'https://cdn.skypack.dev/" +
+            basename +
+            '@' +
+            version +
+            "?dts'"
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {type: 'text', value: 'In browsers with '},
+            {
+              type: 'linkReference',
+              identifier: 'skypack',
+              label: 'Skypack',
+              referenceType: 'collapsed',
+              children: [{type: 'text', value: 'Skypack'}]
+            },
+            {type: 'text', value: ':'}
+          ]
+        },
+        {
+          type: 'code',
+          lang: 'html',
+          value:
+            '<script type="module">\n  import ' +
+            camelcased +
+            " from 'https://cdn.skypack.dev/" +
+            basename +
+            '@' +
+            version +
+            "?min'\n</script>"
+        },
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'Use'}]
+        },
+        {
+          type: 'paragraph',
+          children: [{type: 'text', value: 'On the API:'}]
+        },
+        {
+          type: 'code',
+          lang: 'js',
+          value: [
+            "import {read} from 'to-vfile'",
+            "import {reporter} from 'vfile-reporter'",
+            "import {remark} from 'remark'",
+            "import remarkLint from 'remark-lint'",
+            'import ' + camelcased + " from '" + basename + "'",
+            '',
+            'main()',
+            '',
+            'async function main() {',
+            '  const file = await remark()',
+            '    .use(remarkLint)',
+            '    .use(' + camelcased + ')',
+            "    .process(await read('example.md'))",
+            '',
+            '  console.error(reporter(file))',
+            '}'
+          ].join('\n')
+        },
+        {
+          type: 'paragraph',
+          children: [{type: 'text', value: 'On the CLI:'}]
+        },
+        {
+          type: 'code',
+          lang: 'sh',
+          value: 'remark --use remark-lint --use ' + basename + ' example.md'
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'text',
+              value: 'On the CLI in a config file (here a '
+            },
+            {
+              type: 'inlineCode',
+              value: 'package.json'
+            },
+            {
+              type: 'text',
+              value: '):'
+            }
+          ]
+        },
+        {
+          type: 'code',
+          lang: 'diff',
+          value: [
+            ' …',
+            ' "remarkConfig": {',
+            '   "plugins": [',
+            '     …',
+            '     "remark-lint",',
+            '+    "' + basename + '",',
+            '     …',
+            '   ]',
+            ' }',
+            ' …'
+          ].join('\n')
+        }
+      )
+
+      if ('api' in categories) {
+        const [apiHeading, ...apiBody] = categories.api
+
+        children.push(
+          apiHeading,
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                value:
+                  'This package exports no identifiers.\nThe default export is '
+              },
+              {type: 'inlineCode', value: camelcased},
+              {type: 'text', value: '.'}
+            ]
+          },
+          {
+            type: 'heading',
+            depth: 3,
+            children: [
+              {
+                type: 'inlineCode',
+                value: 'unified().use(' + camelcased + '[, config])'
+              }
+            ]
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                value:
+                  'This rule supports standard configuration that all remark lint rules accept\n(such as '
+              },
+              {type: 'inlineCode', value: 'false'},
+              {type: 'text', value: ' to turn it off or '},
+              {type: 'inlineCode', value: '[1, options]'},
+              {type: 'text', value: ' to configure it).'}
+            ]
+          },
+          ...apiBody
+        )
+      }
+
+      children.push(
+        ...(categories.recommendation || []),
+        ...(categories.fix || []),
+        ...(categories.example || [])
+      )
+
       let first = true
       /** @type {string} */
       let setting
@@ -273,7 +577,7 @@ presets(root).then((presetObjects) => {
             children.push({
               type: 'heading',
               depth: 2,
-              children: [{type: 'text', value: 'Example'}]
+              children: [{type: 'text', value: 'Examples'}]
             })
             first = false
           }
@@ -318,17 +622,28 @@ presets(root).then((presetObjects) => {
                 if (fixture.gfm) {
                   hasGfm = true
                   children.push({
-                    type: 'paragraph',
+                    type: 'blockquote',
                     children: [
-                      {type: 'text', value: 'Note: this example uses '},
                       {
-                        type: 'linkReference',
-                        label: 'GFM',
-                        identifier: 'gfm',
-                        referenceType: 'collapsed',
-                        children: [{type: 'text', value: 'GFM'}]
-                      },
-                      {type: 'text', value: '.'}
+                        type: 'paragraph',
+                        children: [
+                          {type: 'text', value: '👉 '},
+                          {
+                            type: 'strong',
+                            children: [{type: 'text', value: 'Note'}]
+                          },
+                          {type: 'text', value: ': this example uses GFM ('},
+                          {
+                            type: 'linkReference',
+                            identifier: 'gfm',
+                            referenceType: 'full',
+                            children: [
+                              {type: 'inlineCode', value: 'remark-gfm'}
+                            ]
+                          },
+                          {type: 'text', value: ').'}
+                        ]
+                      }
                     ]
                   })
                 }
@@ -340,11 +655,24 @@ presets(root).then((presetObjects) => {
 
                   if (clean !== next) {
                     children.push({
-                      type: 'paragraph',
+                      type: 'blockquote',
                       children: [
-                        {type: 'text', value: 'Note: '},
-                        {type: 'inlineCode', value: char.char},
-                        {type: 'text', value: ' represents ' + char.name + '.'}
+                        {
+                          type: 'paragraph',
+                          children: [
+                            {type: 'text', value: '👉 '},
+                            {
+                              type: 'strong',
+                              children: [{type: 'text', value: 'Note'}]
+                            },
+                            {type: 'text', value: ': '},
+                            {type: 'inlineCode', value: char.char},
+                            {
+                              type: 'text',
+                              value: ' represents ' + char.name + '.'
+                            }
+                          ]
+                        }
                       ]
                     })
 
@@ -386,171 +714,76 @@ presets(root).then((presetObjects) => {
         {
           type: 'heading',
           depth: 2,
-          children: [{type: 'text', value: 'Install'}]
+          children: [{type: 'text', value: 'Compatibility'}]
         },
-        {
-          type: 'paragraph',
-          children: [
-            {type: 'text', value: 'This package is '},
-            {
-              type: 'linkReference',
-              identifier: 'esm',
-              referenceType: 'full',
-              children: [{type: 'text', value: 'ESM only'}]
-            },
-            {
-              type: 'text',
-              value: ':\nNode 12+ is needed to use it and it must be '
-            },
-            {type: 'inlineCode', value: 'imported'},
-            {type: 'text', value: 'ed instead of '},
-            {type: 'inlineCode', value: 'required'},
-            {type: 'text', value: 'd.'}
-          ]
-        },
-        {
-          type: 'paragraph',
-          children: [
-            {
-              type: 'linkReference',
-              identifier: 'npm',
-              referenceType: 'collapsed',
-              children: [{type: 'text', value: 'npm'}]
-            },
-            {type: 'text', value: ':'}
-          ]
-        },
-        {type: 'code', lang: 'sh', value: 'npm install ' + basename},
         {
           type: 'paragraph',
           children: [
             {
               type: 'text',
               value:
-                'This package exports no identifiers.\nThe default export is '
-            },
-            {
-              type: 'inlineCode',
-              value: basename.replace(/-(\w)/g, (_, /** @type {string} */ $1) =>
-                $1.toUpperCase()
-              )
-            },
-            {type: 'text', value: '.'}
-          ]
-        },
-        {type: 'heading', depth: 2, children: [{type: 'text', value: 'Use'}]},
-        {
-          type: 'paragraph',
-          children: [
-            {
-              type: 'text',
-              value:
-                'You probably want to use it on the CLI through a config file:'
+                'Projects maintained by the unified collective are compatible with all maintained\nversions of Node.js.\nAs of now, that is Node.js 12.20+, 14.14+, and 16.0+.\nOur projects sometimes work with older versions, but this is not guaranteed.'
             }
           ]
         },
         {
-          type: 'code',
-          lang: 'diff',
-          value: [
-            ' …',
-            ' "remarkConfig": {',
-            '   "plugins": [',
-            '     …',
-            '     "lint",',
-            '+    "' + short + '",',
-            '     …',
-            '   ]',
-            ' }',
-            ' …'
-          ].join('\n')
+          type: 'heading',
+          depth: 2,
+          children: [{type: 'text', value: 'Contribute'}]
         },
         {
           type: 'paragraph',
-          children: [{type: 'text', value: 'Or use it on the CLI directly'}]
-        },
-        {
-          type: 'code',
-          lang: 'sh',
-          value: 'remark -u lint -u ' + short + ' readme.md'
+          children: [
+            {type: 'text', value: 'See '},
+            {
+              type: 'linkReference',
+              referenceType: 'collapsed',
+              identifier: 'contributing',
+              children: [{type: 'inlineCode', value: 'contributing.md'}]
+            },
+            {type: 'text', value: ' in '},
+            {
+              type: 'linkReference',
+              referenceType: 'collapsed',
+              identifier: 'health',
+              children: [
+                {
+                  type: 'inlineCode',
+                  value: health.split('/').slice(-2).join('/')
+                }
+              ]
+            },
+            {type: 'text', value: ' for ways\nto get started.\nSee '},
+            {
+              type: 'linkReference',
+              referenceType: 'collapsed',
+              identifier: 'support',
+              children: [{type: 'inlineCode', value: 'support.md'}]
+            },
+            {type: 'text', value: ' for ways to get help.'}
+          ]
         },
         {
           type: 'paragraph',
-          children: [{type: 'text', value: 'Or use this on the API:'}]
-        },
-        {
-          type: 'code',
-          lang: 'diff',
-          value: [
-            " import {remark} from 'remark'",
-            " import {reporter} from 'vfile-reporter'",
-            " import remarkLint from 'remark-lint'",
-            ' import ' + camelcased + " from '" + basename + "'",
-            '',
-            ' remark()',
-            '   .use(remarkLint)',
-            '+  .use(' + camelcased + ')',
-            "   .process('_Emphasis_ and **importance**')",
-            '   .then((file) => {',
-            '     console.error(reporter(file))',
-            '   })'
-          ].join('\n')
+          children: [
+            {type: 'text', value: 'This project has a '},
+            {
+              type: 'linkReference',
+              referenceType: 'collapsed',
+              identifier: 'coc',
+              children: [{type: 'text', value: 'code of conduct'}]
+            },
+            {
+              type: 'text',
+              value:
+                '.\nBy interacting with this repository, organization, or community you agree to\nabide by its terms.'
+            }
+          ]
         }
       )
     }
 
     children.push(
-      {
-        type: 'heading',
-        depth: 2,
-        children: [{type: 'text', value: 'Contribute'}]
-      },
-      {
-        type: 'paragraph',
-        children: [
-          {type: 'text', value: 'See '},
-          {
-            type: 'linkReference',
-            referenceType: 'collapsed',
-            identifier: 'contributing',
-            children: [{type: 'inlineCode', value: 'contributing.md'}]
-          },
-          {type: 'text', value: ' in '},
-          {
-            type: 'linkReference',
-            referenceType: 'collapsed',
-            identifier: 'health',
-            children: [
-              {type: 'inlineCode', value: health.split('/').slice(-2).join('/')}
-            ]
-          },
-          {type: 'text', value: ' for ways\nto get started.\nSee '},
-          {
-            type: 'linkReference',
-            referenceType: 'collapsed',
-            identifier: 'support',
-            children: [{type: 'inlineCode', value: 'support.md'}]
-          },
-          {type: 'text', value: ' for ways to get help.'}
-        ]
-      },
-      {
-        type: 'paragraph',
-        children: [
-          {type: 'text', value: 'This project has a '},
-          {
-            type: 'linkReference',
-            referenceType: 'collapsed',
-            identifier: 'coc',
-            children: [{type: 'text', value: 'code of conduct'}]
-          },
-          {
-            type: 'text',
-            value:
-              '.\nBy interacting with this repository, organization, or community you agree to\nabide by its terms.'
-          }
-        ]
-      },
       {type: 'heading', depth: 2, children: [{type: 'text', value: 'License'}]},
       {
         type: 'paragraph',
@@ -571,71 +804,6 @@ presets(root).then((presetObjects) => {
             ]
           }
         ]
-      },
-      {
-        type: 'definition',
-        identifier: 'build-badge',
-        url: 'https://github.com/' + slug + '/workflows/main/badge.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'build',
-        url: 'https://github.com/' + slug + '/actions'
-      },
-      {
-        type: 'definition',
-        identifier: 'coverage-badge',
-        url: 'https://img.shields.io/codecov/c/github/' + slug + '.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'coverage',
-        url: 'https://codecov.io/github/' + slug
-      },
-      {
-        type: 'definition',
-        identifier: 'downloads-badge',
-        url: 'https://img.shields.io/npm/dm/' + basename + '.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'downloads',
-        url: 'https://www.npmjs.com/package/' + basename
-      },
-      {
-        type: 'definition',
-        identifier: 'size-badge',
-        url: 'https://img.shields.io/bundlephobia/minzip/' + basename + '.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'size',
-        url: 'https://bundlephobia.com/result?p=' + basename
-      },
-      {
-        type: 'definition',
-        identifier: 'sponsors-badge',
-        url: 'https://opencollective.com/unified/sponsors/badge.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'backers-badge',
-        url: 'https://opencollective.com/unified/backers/badge.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'collective',
-        url: 'https://opencollective.com/unified'
-      },
-      {
-        type: 'definition',
-        identifier: 'chat-badge',
-        url: 'https://img.shields.io/badge/chat-discussions-success.svg'
-      },
-      {
-        type: 'definition',
-        identifier: 'chat',
-        url: 'https://github.com/remarkjs/remark/discussions'
       }
     )
 
@@ -643,38 +811,123 @@ presets(root).then((presetObjects) => {
       children.push(
         {
           type: 'definition',
+          identifier: 'build-badge',
+          url: 'https://github.com/' + slug + '/workflows/main/badge.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'build',
+          url: 'https://github.com/' + slug + '/actions'
+        },
+        {
+          type: 'definition',
+          identifier: 'coverage-badge',
+          url: 'https://img.shields.io/codecov/c/github/' + slug + '.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'coverage',
+          url: 'https://codecov.io/github/' + slug
+        },
+        {
+          type: 'definition',
+          identifier: 'downloads-badge',
+          url: 'https://img.shields.io/npm/dm/' + basename + '.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'downloads',
+          url: 'https://www.npmjs.com/package/' + basename
+        },
+        {
+          type: 'definition',
+          identifier: 'size-badge',
+          url: 'https://img.shields.io/bundlephobia/minzip/' + basename + '.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'size',
+          url: 'https://bundlephobia.com/result?p=' + basename
+        },
+        {
+          type: 'definition',
+          identifier: 'sponsors-badge',
+          url: 'https://opencollective.com/unified/sponsors/badge.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'backers-badge',
+          url: 'https://opencollective.com/unified/backers/badge.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'collective',
+          url: 'https://opencollective.com/unified'
+        },
+        {
+          type: 'definition',
+          identifier: 'chat-badge',
+          url: 'https://img.shields.io/badge/chat-discussions-success.svg'
+        },
+        {
+          type: 'definition',
+          identifier: 'chat',
+          url: 'https://github.com/remarkjs/remark/discussions'
+        },
+        {
+          type: 'definition',
+          identifier: 'unified',
+          url: 'https://github.com/unifiedjs/unified'
+        },
+        {
+          type: 'definition',
+          identifier: 'remark',
+          url: 'https://github.com/remarkjs/remark'
+        },
+        {
+          type: 'definition',
+          identifier: 'mono',
+          url: 'https://github.com/' + slug
+        },
+        {
+          type: 'definition',
           identifier: 'esm',
           url: 'https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c'
         },
         {
           type: 'definition',
+          identifier: 'skypack',
+          url: 'https://www.skypack.dev'
+        },
+        {
+          type: 'definition',
           identifier: 'npm',
           url: 'https://docs.npmjs.com/cli/install'
+        },
+        {
+          type: 'definition',
+          identifier: 'health',
+          url: health
+        },
+        {
+          type: 'definition',
+          identifier: 'contributing',
+          url: hMain + '/contributing.md'
+        },
+        {
+          type: 'definition',
+          identifier: 'support',
+          url: hMain + '/support.md'
+        },
+        {
+          type: 'definition',
+          identifier: 'coc',
+          url: hMain + '/code-of-conduct.md'
         }
       )
     }
 
     children.push(
-      {
-        type: 'definition',
-        identifier: 'health',
-        url: health
-      },
-      {
-        type: 'definition',
-        identifier: 'contributing',
-        url: hMain + '/contributing.md'
-      },
-      {
-        type: 'definition',
-        identifier: 'support',
-        url: hMain + '/support.md'
-      },
-      {
-        type: 'definition',
-        identifier: 'coc',
-        url: hMain + '/code-of-conduct.md'
-      },
       {
         type: 'definition',
         identifier: 'license',

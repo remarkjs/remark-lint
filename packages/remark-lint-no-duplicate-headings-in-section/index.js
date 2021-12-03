@@ -1,12 +1,25 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that headings with the same text are
+ * used once per section.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * It’s likely a mistake that the same heading text is used in the same
+ * section.
+ *
+ * @module no-duplicate-headings-in-section
+ * @summary
+ *   remark-lint rule to warn when headings with the same text are used
+ *   multiple times per section.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-duplicate-headings-in-section
- * @fileoverview
- *   Warn when duplicate headings are found, but only when on the same level,
- *   “in” the same section.
- *
  * @example
  *   {"name": "ok.md"}
  *

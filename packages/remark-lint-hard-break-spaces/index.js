@@ -1,11 +1,26 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that hard breaks use two spaces and
+ * not more.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Less than two spaces do not create a hard breaks and more than two spaces
+ * have no effect.
+ * Due to this, it’s recommended to turn this rule on.
+ *
+ * @module hard-break-spaces
+ * @summary
+ *   remark-lint rule to warn when more spaces are used than needed
+ *   for hard breaks.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module hard-break-spaces
- * @fileoverview
- *   Warn when too many spaces are used to create a hard break.
- *
  * @example
  *   {"name": "ok.md"}
  *

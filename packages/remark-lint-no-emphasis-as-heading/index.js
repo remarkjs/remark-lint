@@ -1,12 +1,26 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that headings are used to introduce
+ * paragraphs instead of “fake” headings made with emphasis or strong.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * While not always the case, typically emphasis or strong around the text
+ * in a paragraph is used as a “faux” heading.
+ * It’s recommended to use actual headings instead.
+ *
+ * @module no-emphasis-as-heading
+ * @summary
+ *   remark-lint rule to warn when emphasis or strong are used to introduce
+ *   a paragraph.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-emphasis-as-heading
- * @fileoverview
- *   Warn when emphasis (including strong), instead of a heading, introduces
- *   a paragraph.
- *
  * @example
  *   {"name": "ok.md"}
  *

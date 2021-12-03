@@ -1,17 +1,46 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that referenced definitions are defined.
+ *
+ * ## API
+ *
+ * The following options (default: `undefined`) are accepted:
+ *
+ * *   `Object` with the following fields:
+ *     *   `allow` (`Array<string>`, default: `[]`)
+ *         — text that you want to allowed between `[` and `]` even though it’s
+ *         undefined
+ *
+ * ## Recommendation
+ *
+ * Shortcut references use an implicit syntax that could also occur as plain
+ * text.
+ * For example, it is reasonable to expect an author adding `[…]` to abbreviate
+ * some text somewhere in a document:
+ *
+ * ```markdown
+ * > Some […] quote.
+ * ```
+ *
+ * This isn’t a problem, but it might become one when an author later adds a
+ * definition:
+ *
+ * ```markdown
+ * Some text. […][]
+ *
+ * […] #read-more "Read more"
+ * ```
+ *
+ * The second author might expect only their newly added text to form a link,
+ * but their changes also result in a link for the first author’s text.
+ *
+ * @module no-undefined-references
+ * @summary
+ *   remark-lint rule to warn when undefined definitions are referenced.
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
- * @module no-undefined-references
- * @fileoverview
- *   Warn when references to undefined definitions are found.
- *
- *   Options: `Object`, optional.
- *
- *   The object can have an `allow` field, set to an array of strings that may
- *   appear between `[` and `]`, but that should not be treated as link
- *   identifiers.
- *
  * @example
  *   {"name": "ok.md"}
  *

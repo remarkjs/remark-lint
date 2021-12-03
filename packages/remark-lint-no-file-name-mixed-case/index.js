@@ -1,11 +1,19 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that file name casing is consistent
+ * (either lowercase or uppercase).
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * @module no-file-name-mixed-case
+ * @summary
+ *   remark-lint rule to warn when file name casing is inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-file-name-mixed-case
- * @fileoverview
- *   Warn when file names use mixed case: both upper- and lowercase characters.
- *
  * @example
  *   {"name": "README.md"}
  *

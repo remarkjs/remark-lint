@@ -1,25 +1,48 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that title markers are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'"'`
+ *     — prefer double quotes
+ * *   `"'"`
+ *     — prefer single quotes
+ * *   `'()'`
+ *     — prefer parens
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further titles differ
+ *
+ * ## Recommendation
+ *
+ * Parens in titles were not supported in markdown before CommonMark.
+ * While they should work in most places now, not all markdown parsers follow
+ * CommonMark.
+ * Parens for titles also arguably look a bit weird because they’re inside more
+ * parens: `[text](url (title))`.
+ *
+ * In HTML, attributes are commonly written with double quotes.
+ * Due to this, titles are almost exclusively wrapped in double quotes in
+ * markdown, so it’s recommended to configure this rule with `'"'`.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats titles with double quotes by default.
+ * Pass
+ * [`quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote)
+ * to use single quotes.
+ * There is no option to use parens.
+ *
+ * @module link-title-style
+ * @summary
+ *   remark-lint rule to warn when title markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module link-title-style
- * @fileoverview
- *   Warn when link and definition titles occur with incorrect quotes.
- *
- *   Options: `'consistent'`, `'"'`, `'\''`, or `'()'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used quote style and warns when subsequent
- *   titles use different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   uses `'` (single quote) for titles if they contain a double quote, and `"`
- *   (double quotes) otherwise.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md", "setting": "\""}
  *

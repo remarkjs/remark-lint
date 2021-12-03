@@ -1,23 +1,37 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that line endings are consistent.
+ *
+ * ## API
+ *
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'unix'`
+ *     — prefer Unix line endings (`\n`, `␊`):
+ * *   `'window'`
+ *     — prefer Windows line endings (`\r\n`, `␍␊`):
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further line endings differ
+ *
+ * ## Recommendation
+ *
+ * In Git projects, you can configure it to automatically switch between line
+ * endings based on who checks the repo out.
+ * In other places, you might manually want to force that one or the other is
+ * used, in which case this rule can be used and configured.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * always uses Unix linebreaks.
+ * @module linebreak-style
+ * @summary
+ *   remark-lint rule to warn when line endings don’t match a given style.
  * @author Titus Wormer
  * @copyright 2017 Titus Wormer
  * @license MIT
- * @module linebreak-style
- * @fileoverview
- *   Warn when linebreaks violate a given or detected style.
- *
- *   Options: either `'unix'` (for `\n`, denoted as `␊`), `'windows'` (for `\r\n`,
- *   denoted as `␍␊`), or `'consistent'` (to detect the first used linebreak in
- *   a file).  Default: `'consistent'`.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   always uses unix linebreaks.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok-consistent-as-windows.md"}
  *

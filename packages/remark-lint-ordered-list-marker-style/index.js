@@ -1,16 +1,40 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that ordered list markers are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'.'`
+ *     — prefer dots
+ * *   `')'`
+ *     — prefer parens
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further markers differ
+ *
+ * ## Recommendation
+ *
+ * Parens for list markers were not supported in markdown before CommonMark.
+ * While they should work in most places now, not all markdown parsers follow
+ * CommonMark.
+ * Due to this, it’s recommended to prefer dots.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats ordered lists with dots by default.
+ * Pass
+ * [`bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered)
+ * to always use parens.
+ *
+ * @module ordered-list-marker-style
+ * @summary
+ *   remark-lint rule to warn when ordered list markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module ordered-list-marker-style
- * @fileoverview
- *   Warn when the list item marker style of ordered lists violate a given style.
- *
- *   Options: `'consistent'`, `'.'`, or `')'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used list style and warns when subsequent
- *   lists use different styles.
- *
  * @example
  *   {"name": "ok.md"}
  *

@@ -1,28 +1,42 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that unordered list markers (bullets)
+ * are consistent.
+ *
+ * ## API
+ *
+ * The following options (default: `'consistent'`) are accepted:
+ *
+ * *   `'*'`
+ *     — prefer asterisks
+ * *   `'+'`
+ *     — prefer plusses
+ * *   `'-'`
+ *     — prefer dashes
+ * *   `'consistent'`
+ *     — detect the first used style and warn when further markers differ
+ *
+ * ## Recommendation
+ *
+ * Because asterisks can be used as a marker for more markdown constructs,
+ * it’s recommended to use that for lists (and thematic breaks, emphasis,
+ * strong) too.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * formats ordered lists with asterisks by default.
+ * Pass
+ * [`bullet: '+'` or `bullet: '-'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet)
+ * to always use plusses or dashes.
+ *
+ * @module unordered-list-marker-style
+ * @summary
+ *   remark-lint rule to warn when unordered list markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module unordered-list-marker-style
- * @fileoverview
- *   Warn when the list item marker style of unordered lists violate a given
- *   style.
- *
- *   Options: `'consistent'`, `'-'`, `'*'`, or `'+'`, default: `'consistent'`.
- *
- *   `'consistent'` detects the first used list style and warns when subsequent
- *   lists use different styles.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   formats unordered lists using `-` (hyphen-minus) by default.
- *   Pass
- *   [`bullet: '*'` or `bullet: '+'`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify#optionsbullet)
- *   to use `*` (asterisk) or `+` (plus sign) instead.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md"}
  *

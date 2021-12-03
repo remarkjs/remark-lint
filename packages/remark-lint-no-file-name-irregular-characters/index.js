@@ -1,20 +1,24 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that file names contain regular characters.
+ *
+ * ## API
+ *
+ * The following options (default: `'\\.a-zA-Z0-9-'`) are accepted:
+ *
+ * *   `string` (example `'\w\\.'`)
+ *     — allowed characters, wrapped in `new RegExp('[^' + x + ']')`, make sure
+ *     to double escape regexp characters
+ * *   `RegExp` (example `/[^\.a-zA-Z0-9-]/`)
+ *     — disallowed pattern
+ *
+ * @module no-file-name-irregular-characters
+ * @summary
+ *   remark-lint rule to warn when file names contain irregular characters.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-file-name-irregular-characters
- * @fileoverview
- *   Warn when file names contain irregular characters: characters other than
- *   alphanumericals (`a-zA-Z0-9`), hyphen-minus (`-`), and dots (`.`, full
- *   stops).
- *
- *   Options: `RegExp` or `string`, default: `'\\.a-zA-Z0-9-'`.
- *
- *   If a string is given, it will be wrapped in
- *   `new RegExp('[^' + preferred + ']')`.
- *
- *   Any match by the wrapped or given expressions creates a message.
- *
  * @example
  *   {"name": "plug-ins.md"}
  *

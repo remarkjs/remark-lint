@@ -1,13 +1,27 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that no more than one top level heading
+ * is used.
+ *
+ * ## API
+ *
+ * The following options (default: `1`) are accepted:
+ *
+ * *   `number` (example: `1`)
+ *     — assumed top level heading rank
+ *
+ * ## Recommendation
+ *
+ * Documents should almost always have one main heading, which is typically a
+ * heading with a rank of `1`.
+ *
+ * @module no-multiple-toplevel-headings
+ * @summary
+ *   remark-lint rule to warn when more than one top level heading is used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-multiple-toplevel-headings
- * @fileoverview
- *   Warn when multiple top level headings are used.
- *
- *   Options: `number`, default: `1`.
- *
  * @example
  *   {"name": "ok.md", "setting": 1}
  *

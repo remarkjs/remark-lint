@@ -25,7 +25,6 @@ export default function listOfRules() {
         spread: false,
         children: rules(root)
           .map((basename) => {
-            const name = basename.slice('remark-lint-'.length)
             /** @type {PackageJson} */
             const pack = JSON.parse(
               String(fs.readFileSync(path.join(root, basename, 'package.json')))
@@ -49,7 +48,7 @@ export default function listOfRules() {
                         {
                           type: 'link',
                           url: repoUrl(pack),
-                          children: [{type: 'inlineCode', value: name}]
+                          children: [{type: 'inlineCode', value: basename}]
                         },
                         {type: 'text', value: ' — ' + description}
                       ]

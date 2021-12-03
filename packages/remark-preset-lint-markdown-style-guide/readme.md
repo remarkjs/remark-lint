@@ -10,28 +10,48 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-remark preset to configure `remark-lint` with settings that the
-[Markdown Style Guide](http://www.cirosantilli.com/markdown-style-guide/)
-recommends.
+Preset of [`remark-lint`][mono] rules that follow an opinionated style guide.
 
-This uses the following Style Guide option system: `wrap:space`,
-`header:atx`, `list-marker:hyphen`, `list-space:mixed`, and
-`code:fenced`.
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Rules](#rules)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkPresetLintMarkdownStyleGuide)`](#unifieduseremarkpresetlintmarkdownstyleguide)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) preset, specifically consisting of
+`remark-lint` rules.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that markdown follows the
+[Markdown Style Guide](https://cirosantilli.com/markdown-style-guide/).
+
+This uses the following style guide option system: `wrap:space`,
+`header:atx`, `list-marker:hyphen`, `list-space:mixed`, and `code:fenced`.
 
 ###### `space-sentence`
 
-Both `space-sentence:1` and `space-sentence:2` are not supported
-by `remark-lint`.
+Both `space-sentence:1` and `space-sentence:2` are not supported by
+`remark-lint` as they relate to prose rather than markdown syntax.
 You could set-up
 [`remark-retext`](https://github.com/remarkjs/remark-retext)
 with
 [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
-to check this though.
+to check this.
 
 ###### `wrap`
 
-`wrap:inner-sentence` and `wrap:sentence` are not supported by
-`remark-lint`.
+`wrap:inner-sentence` and `wrap:sentence` are not supported by `remark-lint`.
 
 The default is `wrap:space`.
 To use `wrap:no`, turn off `remark-lint-maximum-line-length` like so:
@@ -39,8 +59,8 @@ To use `wrap:no`, turn off `remark-lint-maximum-line-length` like so:
 ```diff
  "plugins": [
    …
-   "preset-lint-markdown-style-guide",
-+  ["lint-maximum-line-length", false]
+   "remark-preset-lint-markdown-style-guide",
++  ["remark-lint-maximum-line-length", false],
    …
  ]
 ```
@@ -54,8 +74,8 @@ like so:
 ```diff
  "plugins": [
    …
-   "preset-lint-markdown-style-guide",
-+  ["lint-heading-style", "setext"]
+   "remark-preset-lint-markdown-style-guide",
++  ["remark-lint-heading-style", "setext"],
    …
  ]
 ```
@@ -69,8 +89,8 @@ For `list-marker:asterisk` or `list-marker:plus`, change the setting for
 ```diff
  "plugins": [
    …
-   "preset-lint-markdown-style-guide",
-+  ["lint-unordered-list-marker-style", "*"]
+   "remark-preset-lint-markdown-style-guide",
++  ["remark-lint-unordered-list-marker-style", "*"],
    …
  ]
 ```
@@ -84,8 +104,8 @@ like so:
 ```diff
  "plugins": [
    …
-   "preset-lint-markdown-style-guide",
-+  ["lint-list-item-indent", "space"]
+   "remark-preset-lint-markdown-style-guide",
++  ["remark-lint-list-item-indent", "space"],
    …
  ]
 ```
@@ -99,15 +119,15 @@ like so:
 ```diff
  "plugins": [
    …
-   "preset-lint-markdown-style-guide",
-+  ["lint-code-block-style", "indented"]
+   "remark-preset-lint-markdown-style-guide",
++  ["remark-lint-code-block-style", "indented"],
    …
  ]
 ```
 
 ## Rules
 
-This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) with the following rules:
+This preset configures [`remark-lint`][mono] with the following rules:
 
 | Rule | Setting |
 | - | - |
@@ -157,50 +177,86 @@ This preset configures [`remark-lint`](https://github.com/remarkjs/remark-lint) 
 
 ## Install
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install remark-preset-lint-markdown-style-guide
 ```
 
-This package exports no identifiers.
-The default export is `remarkPresetLintMarkdownStyleGuide`.
+In Deno with [Skypack][]:
+
+```js
+import remarkPresetLintMarkdownStyleGuide from 'https://cdn.skypack.dev/remark-preset-lint-markdown-style-guide@5?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkPresetLintMarkdownStyleGuide from 'https://cdn.skypack.dev/remark-preset-lint-markdown-style-guide@5?min'
+</script>
+```
 
 ## Use
 
-You probably want to use it on the CLI through a config file:
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkPresetLintMarkdownStyleGuide)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-preset-lint-markdown-style-guide example.md
+```
+
+On the CLI in a config file (here a `package.json`):
 
 ```diff
  …
  "remarkConfig": {
-+  "plugins": ["preset-lint-markdown-style-guide"]
+   "plugins": [
+     …
++    "remark-preset-lint-markdown-style-guide",
+     …
+   ]
  }
  …
 ```
 
-Or use it on the CLI directly
+## API
 
-```sh
-remark -u preset-lint-markdown-style-guide readme.md
-```
+This package exports no identifiers.
+The default export is `remarkPresetLintMarkdownStyleGuide`.
 
-Or use this on the API:
+### `unified().use(remarkPresetLintMarkdownStyleGuide)`
 
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide'
+Use the preset.
+Presets don’t have options.
+You can reconfigure rules in them by using the afterwards with different
+options.
 
- remark()
-+  .use(remarkPresetLintMarkdownStyleGuide)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -242,17 +298,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

@@ -1,13 +1,29 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check the heading rank of the first heading.
+ *
+ * ## API
+ *
+ * The following options (default: `1`) are accepted:
+ *
+ * *   `number` (example `1`)
+ *     — expected rank of first heading
+ *
+ * ## Recommendation
+ *
+ * In most cases you’d want to first heading in a markdown document to start at
+ * rank 1.
+ * In some cases a different rank makes more sense, such as when building a blog
+ * and generating the primary heading from frontmatter metadata, in which case
+ * a value of `2` can be defined here.
+ *
+ * @module first-heading-level
+ * @summary
+ *   remark-lint rule to warn when the first heading has an unexpected rank.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module first-heading-level
- * @fileoverview
- *   Warn when the first heading has a level other than a specified value.
- *
- *   Options: `number`, default: `1`.
- *
  * @example
  *   {"name": "ok.md"}
  *

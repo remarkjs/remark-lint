@@ -4,6 +4,7 @@
  * @license MIT
  * @module no-auto-link-without-protocol
  * @deprecated
+ *   **Stability: Legacy**.
  *   This rule is no longer recommended for use.
  *   With CommonMark, all autolinks (except for emails) are required to have a
  *   protocol.

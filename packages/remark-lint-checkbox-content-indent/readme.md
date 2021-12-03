@@ -10,19 +10,148 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Warn when list item checkboxes are followed by too much whitespace.
+[`remark-lint`][mono] rule to warn when GFM tasklist checkboxes are followed by
+more than one space.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Presets](#presets)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkLintCheckboxContentIndent[, config])`](#unifieduseremarklintcheckboxcontentindent-config)
+*   [Recommendation](#recommendation)
+*   [Fix](#fix)
+*   [Examples](#examples)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
+rule.
+Lint rules check markdown code style.
+
+## When should I use this?
+
+You can use this package to check that the “indent” after a GFM tasklist
+checkbox is a single space.
 
 ## Presets
 
-This rule is not included in any default preset
+This rule is not included in a preset maintained here.
 
-## Example
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+
+```sh
+npm install remark-lint-checkbox-content-indent
+```
+
+In Deno with [Skypack][]:
+
+```js
+import remarkLintCheckboxContentIndent from 'https://cdn.skypack.dev/remark-lint-checkbox-content-indent@4?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import remarkLintCheckboxContentIndent from 'https://cdn.skypack.dev/remark-lint-checkbox-content-indent@4?min'
+</script>
+```
+
+## Use
+
+On the API:
+
+```js
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
+import {remark} from 'remark'
+import remarkLint from 'remark-lint'
+import remarkLintCheckboxContentIndent from 'remark-lint-checkbox-content-indent'
+
+main()
+
+async function main() {
+  const file = await remark()
+    .use(remarkLint)
+    .use(remarkLintCheckboxContentIndent)
+    .process(await read('example.md'))
+
+  console.error(reporter(file))
+}
+```
+
+On the CLI:
+
+```sh
+remark --use remark-lint --use remark-lint-checkbox-content-indent example.md
+```
+
+On the CLI in a config file (here a `package.json`):
+
+```diff
+ …
+ "remarkConfig": {
+   "plugins": [
+     …
+     "remark-lint",
++    "remark-lint-checkbox-content-indent",
+     …
+   ]
+ }
+ …
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `remarkLintCheckboxContentIndent`.
+
+### `unified().use(remarkLintCheckboxContentIndent[, config])`
+
+This rule supports standard configuration that all remark lint rules accept
+(such as `false` to turn it off or `[1, options]` to configure it).
+
+There are no accepted options.
+
+## Recommendation
+
+GFM allows zero or more spaces and tabs after checkboxes.
+No space at all arguably looks rather ugly:
+
+```markdown
+* [x]Pluto
+```
+
+More that one space is superfluous:
+
+```markdown
+* [x]   Jupiter
+```
+
+Due to this, it’s recommended to turn this rule on.
+
+## Fix
+
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+formats checkboxes and the content after them with a single space between.
+
+## Examples
 
 ##### `ok.md`
 
 ###### In
 
-Note: this example uses [GFM][].
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
 
 ```markdown
 - [ ] List item
@@ -39,7 +168,7 @@ No messages.
 
 ###### In
 
-Note: this example uses [GFM][].
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
 
 ```markdown
 - [ ] List item
@@ -56,59 +185,12 @@ Note: this example uses [GFM][].
 4:7-4:10: Checkboxes should be followed by a single character
 ```
 
-## Install
+## Compatibility
 
-This package is [ESM only][esm]:
-Node 12+ is needed to use it and it must be `imported`ed instead of `required`d.
-
-[npm][]:
-
-```sh
-npm install remark-lint-checkbox-content-indent
-```
-
-This package exports no identifiers.
-The default export is `remarkLintCheckboxContentIndent`.
-
-## Use
-
-You probably want to use it on the CLI through a config file:
-
-```diff
- …
- "remarkConfig": {
-   "plugins": [
-     …
-     "lint",
-+    "lint-checkbox-content-indent",
-     …
-   ]
- }
- …
-```
-
-Or use it on the CLI directly
-
-```sh
-remark -u lint -u lint-checkbox-content-indent readme.md
-```
-
-Or use this on the API:
-
-```diff
- import {remark} from 'remark'
- import {reporter} from 'vfile-reporter'
- import remarkLint from 'remark-lint'
- import remarkLintCheckboxContentIndent from 'remark-lint-checkbox-content-indent'
-
- remark()
-   .use(remarkLint)
-+  .use(remarkLintCheckboxContentIndent)
-   .process('_Emphasis_ and **importance**')
-   .then((file) => {
-     console.error(reporter(file))
-   })
-```
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
 
@@ -150,17 +232,25 @@ abide by its terms.
 
 [chat]: https://github.com/remarkjs/remark/discussions
 
+[unified]: https://github.com/unifiedjs/unified
+
+[remark]: https://github.com/remarkjs/remark
+
+[mono]: https://github.com/remarkjs/remark-lint
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[skypack]: https://www.skypack.dev
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 

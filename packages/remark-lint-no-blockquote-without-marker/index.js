@@ -1,20 +1,28 @@
 /**
+ * ## When should I use this?
+ *
+ * You can use this package to check that lines in block quotes start with `>`.
+ *
+ * ## API
+ *
+ * There are no options.
+ *
+ * ## Recommendation
+ *
+ * Rules around “lazy” lines are not straightforward and visually confusing,
+ * so it’s recommended to start each line with a `>`.
+ *
+ * ## Fix
+ *
+ * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
+ * adds `>` markers to every line in a block quote.
+ *
+ * @module no-blockquote-without-marker
+ * @summary
+ *   remark-lint rule to warn when lines in block quotes start without `>`.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-blockquote-without-marker
- * @fileoverview
- *   Warn when blank lines without `>` (greater than) markers are found in a
- *   block quote.
- *
- *   ## Fix
- *
- *   [`remark-stringify`](https://github.com/remarkjs/remark/tree/HEAD/packages/remark-stringify)
- *   adds markers to every line in a block quote.
- *
- *   See [Using remark to fix your Markdown](https://github.com/remarkjs/remark-lint#using-remark-to-fix-your-markdown)
- *   on how to automatically fix warnings for this rule.
- *
  * @example
  *   {"name": "ok.md"}
  *

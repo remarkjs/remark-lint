@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-strikethrough-marker",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "remark-lint rule to warn when strikethrough markers violate the given style",
   "license": "MIT",
   "keywords": [

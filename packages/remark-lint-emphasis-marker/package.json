@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-emphasis-marker",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "remark-lint rule to warn when emphasis markers violate the given style",
   "license": "MIT",
   "keywords": [

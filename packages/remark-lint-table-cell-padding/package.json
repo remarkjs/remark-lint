@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-table-cell-padding",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "remark-lint rule to warn when table cells are incorrectly padded",
   "license": "MIT",
   "keywords": [

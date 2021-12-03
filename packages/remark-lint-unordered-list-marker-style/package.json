@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-unordered-list-marker-style",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "remark-lint rule to warn when markers of unordered lists violate a given style",
   "license": "MIT",
   "keywords": [

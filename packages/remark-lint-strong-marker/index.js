@@ -91,8 +91,13 @@ const remarkLintStrongMarker = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option = (settings && settings.strong) || 'consistent'
+    }
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {
       file.fail(

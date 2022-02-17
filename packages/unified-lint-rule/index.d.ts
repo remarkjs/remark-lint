@@ -24,6 +24,7 @@ export function lintRule<Tree extends Node = Node, Options = unknown>(
 >
 
 export type Rule<Tree extends Node = Node, Options = unknown> = (
+  this: Processor,
   node: Tree,
   file: VFile,
   options: Options

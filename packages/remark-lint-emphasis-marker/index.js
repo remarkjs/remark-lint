@@ -102,8 +102,13 @@ const remarkLintEmphasisMarker = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option = (settings && settings.emphasis) || 'consistent'
+    }
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {
       file.fail(

@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks

@@ -124,7 +124,7 @@ The default export is `remarkLintStrongMarker`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) or `'consistent'`) are accepted:
 
 *   `'*'`
     — prefer asterisks

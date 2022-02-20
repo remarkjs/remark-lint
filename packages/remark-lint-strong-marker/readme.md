@@ -194,7 +194,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'*'`.
+When configured with [`settings.strong: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
 
 ###### In
 
@@ -208,7 +208,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'_'`.
+When configured with [`settings.strong: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
 
 ###### In
 
@@ -222,7 +222,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with [`settings.strong: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
 
 ###### Out
 

@@ -156,7 +156,7 @@ to always use underscores.
 
 ##### `ok.md`
 
-When configured with `'*'`.
+When configured with [`settings.emphasis: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
 
 ###### In
 
@@ -170,7 +170,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'*'`.
+When configured with [`settings.emphasis: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
 
 ###### In
 
@@ -186,7 +186,7 @@ _foo_
 
 ##### `ok.md`
 
-When configured with `'_'`.
+When configured with [`settings.emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
 
 ###### In
 
@@ -200,7 +200,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'_'`.
+When configured with [`settings.emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
 
 ###### In
 
@@ -231,7 +231,7 @@ _bar_
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with [`settings.emphasis: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
 
 ###### Out
 

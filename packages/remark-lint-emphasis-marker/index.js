@@ -40,32 +40,32 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"config": "*", "name": "ok.md"}
+ *   {"settings": {"emphasis": "*"}, "name": "ok.md"}
  *
  *   *foo*
  *
  * @example
- *   {"config": "*", "name": "not-ok.md", "label": "input"}
+ *   {"settings": {"emphasis": "*"}, "name": "not-ok.md", "label": "input"}
  *
  *   _foo_
  *
  * @example
- *   {"config": "*", "name": "not-ok.md", "label": "output"}
+ *   {"settings": {"emphasis": "*"}, "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `*` as a marker
  *
  * @example
- *   {"config": "_", "name": "ok.md"}
+ *   {"settings": {"emphasis": "_"}, "name": "ok.md"}
  *
  *   _foo_
  *
  * @example
- *   {"config": "_", "name": "not-ok.md", "label": "input"}
+ *   {"settings": {"emphasis": "_"}, "name": "not-ok.md", "label": "input"}
  *
  *   *foo*
  *
  * @example
- *   {"config": "_", "name": "not-ok.md", "label": "output"}
+ *   {"settings": {"emphasis": "_"}, "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `_` as a marker
  *
@@ -81,7 +81,7 @@
  *   2:1-2:6: Emphasis should use `*` as a marker
  *
  * @example
- *   {"config": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
+ *   {"settings": {"emphasis": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */

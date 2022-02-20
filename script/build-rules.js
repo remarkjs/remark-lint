@@ -2,6 +2,7 @@
  * @typedef {import('type-fest').PackageJson} PackageJson
  * @typedef {import('mdast').BlockContent|import('mdast').DefinitionContent} BlockContent
  * @typedef {import('mdast').TableContent} TableContent
+ * @typedef {import('mdast').PhrasingContent} PhrasingContent
  */
 
 import fs from 'node:fs'
@@ -588,8 +589,34 @@ presets(root).then((presetObjects) => {
           for (fileName in fixtures) {
             if (own.call(fixtures, fileName)) {
               const fixture = fixtures[fileName]
-              /** @type {{config: unknown}} */
-              const {config} = JSON.parse(configuration)
+              /** @type {{settings: Record<string, unknown>, config: unknown}} */
+              const {settings, config} = JSON.parse(configuration)
+              const whenConfiguredWith = settings
+                ? Object.entries(settings)
+                    .flatMap(
+                      ([name, value]) =>
+                        /** @type {Array<PhrasingContent>} */ ([
+                          {
+                            type: 'link',
+                            url: `https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options${name.toLowerCase()}`,
+                            title: null,
+                            children: [
+                              {
+                                type: 'inlineCode',
+                                value: `settings.${inspect({
+                                  [name]: value
+                                }).slice(2, -2)}`
+                              }
+                            ]
+                          },
+                          {type: 'text', value: ', '}
+                        ])
+                    )
+                    .slice(0, -1)
+                : config !== true &&
+                  /** @type {Array<PhrasingContent>} */ ([
+                    {type: 'inlineCode', value: inspect(config)}
+                  ])
               let clean = fixture.input
 
               children.push({
@@ -598,12 +625,12 @@ presets(root).then((presetObjects) => {
                 children: [{type: 'inlineCode', value: fileName}]
               })
 
-              if (config !== true) {
+              if (whenConfiguredWith) {
                 children.push({
                   type: 'paragraph',
                   children: [
                     {type: 'text', value: 'When configured with '},
-                    {type: 'inlineCode', value: inspect(config)},
+                    ...whenConfiguredWith,
                     {type: 'text', value: '.'}
                   ]
                 })

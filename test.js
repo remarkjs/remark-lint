@@ -301,8 +301,8 @@ function assertRule(t, rule, info) {
   for (configuration in tests) {
     if (own.call(tests, configuration)) {
       const checks = tests[configuration]
-      /** @type {{config: unknown}} */
-      const {config} = JSON.parse(configuration)
+      /** @type {{settings: Record<string, unknown>, config: unknown}} */
+      const {settings, config} = JSON.parse(configuration)
 
       t.test(configuration, (t) => {
         /** @type {string} */
@@ -314,7 +314,7 @@ function assertRule(t, rule, info) {
             const check = checks[name]
 
             t.test(name, (t) => {
-              assertFixture(t, rule, info, check, basename, config)
+              assertFixture(t, rule, info, check, basename, settings, config)
             })
           }
         }
@@ -331,15 +331,16 @@ function assertRule(t, rule, info) {
  * @param {Rule} info
  * @param {Check} fixture
  * @param {string} basename
+ * @param {Record<string, unknown>} settings
  * @param {unknown} config
  */
 /* eslint-disable-next-line max-params */
-function assertFixture(t, rule, info, fixture, basename, config) {
+function assertFixture(t, rule, info, fixture, basename, settings, config) {
   const ruleId = info.ruleId
   const file = toVFile(basename)
   const expected = fixture.output
   const positionless = fixture.positionless
-  let proc = remark().use(rule, config)
+  let proc = remark().use(rule, config).use({settings})
 
   if (fixture.gfm) proc.use(remarkGfm)
 
@@ -393,6 +394,7 @@ function assertFixture(t, rule, info, fixture, basename, config) {
     proc = remark()
       .use(() => (tree) => removePosition(tree))
       .use(rule, config)
+      .use({settings})
     if (fixture.gfm) proc.use(remarkGfm)
     proc.processSync(file)
 

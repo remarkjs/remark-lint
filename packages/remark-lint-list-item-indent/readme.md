@@ -126,7 +126,7 @@ The default export is `remarkLintListItemIndent`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'tab'`) are accepted:
+The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) or `'tab'`) are accepted:
 
 *   `'one'`
     — prefer a single space
@@ -204,7 +204,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'mixed'`.
+When configured with [`settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
 
@@ -232,7 +232,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'mixed'`.
+When configured with [`settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
 
@@ -250,7 +250,7 @@ When configured with `'mixed'`.
 
 ##### `ok.md`
 
-When configured with `'one'`.
+When configured with [`settings.listItemIndent: 'one'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
 
@@ -278,7 +278,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'one'`.
+When configured with [`settings.listItemIndent: 'one'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
 
@@ -297,7 +297,7 @@ When configured with `'one'`.
 
 ##### `not-ok.md`
 
-When configured with `'tab'`.
+When configured with [`settings.listItemIndent: 'tab'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
 
@@ -316,7 +316,7 @@ When configured with `'tab'`.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with [`settings.listItemIndent: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### Out
 

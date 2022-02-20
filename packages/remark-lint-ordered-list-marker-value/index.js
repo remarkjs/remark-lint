@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'ordered'`) are accepted:
+ * The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) or `'ordered'`) are accepted:
  *
  * *   `'ordered'`
  *     — values should increment by one from the first item
@@ -73,7 +73,7 @@
  *   1.  Charlie
  *
  * @example
- *   {"name": "ok.md", "config": "single"}
+ *   {"name": "ok.md", "settings": {"incrementListMarker": false}}
  *
  *   1.  Foo
  *   1.  Bar
@@ -92,7 +92,7 @@
  *   0.  Foxtrot
  *
  * @example
- *   {"name": "ok.md", "config": "ordered"}
+ *   {"name": "ok.md", "settings": {"incrementListMarker": true}}
  *
  *   1.  Foo
  *   2.  Bar
@@ -133,13 +133,13 @@
  *   1:1-1:8: Marker should be `1`, was `2`
  *
  * @example
- *   {"name": "not-ok.md", "config": "ordered", "label": "input"}
+ *   {"name": "not-ok.md", "settings": {"incrementListMarker": true}, "label": "input"}
  *
  *   1.  Foo
  *   1.  Bar
  *
  * @example
- *   {"name": "not-ok.md", "config": "ordered", "label": "output"}
+ *   {"name": "not-ok.md", "settings": {"incrementListMarker": true}, "label": "output"}
  *
  *   2:1-2:8: Marker should be `2`, was `1`
  *
@@ -165,8 +165,18 @@ const remarkLintOrderedListMarkerValue = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'ordered') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option =
+        !settings ||
+        settings.incrementListMarker === undefined ||
+        settings.incrementListMarker
+          ? 'ordered'
+          : 'single'
+    }
 
     if (option !== 'ordered' && option !== 'one' && option !== 'single') {
       file.fail(

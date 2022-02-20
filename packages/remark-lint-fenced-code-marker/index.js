@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) or `'consistent'`) are accepted:
  *
  * *   ``'`'``
  *     — prefer grave accents
@@ -41,7 +41,7 @@
  *       bravo()
  *
  * @example
- *   {"name": "ok.md", "config": "`"}
+ *   {"name": "ok.md", "settings": {"fence": "`"}}
  *
  *   ```alpha
  *   bravo()
@@ -52,7 +52,7 @@
  *   ```
  *
  * @example
- *   {"name": "ok.md", "config": "~"}
+ *   {"name": "ok.md", "settings": {"fence": "~"}}
  *
  *   ~~~alpha
  *   bravo()
@@ -95,7 +95,7 @@
  *   5:1-7:4: Fenced code should use `~` as a marker
  *
  * @example
- *   {"name": "not-ok-incorrect.md", "config": "💩", "label": "output", "positionless": true}
+ *   {"name": "not-ok-incorrect.md", "settings": {"fence": "💩"}, "label": "output", "positionless": true}
  *
  *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */
@@ -116,8 +116,13 @@ const remarkLintFencedCodeMarker = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const contents = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option = (settings && settings.fence) || 'consistent'
+    }
 
     if (option !== 'consistent' && option !== '~' && option !== '`') {
       file.fail(

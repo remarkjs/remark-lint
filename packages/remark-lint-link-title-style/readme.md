@@ -124,7 +124,7 @@ The default export is `remarkLintLinkTitleStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) or `'consistent'`) are accepted:
 
 *   `'"'`
     — prefer double quotes
@@ -160,7 +160,7 @@ There is no option to use parens.
 
 ##### `ok.md`
 
-When configured with `'"'`.
+When configured with [`settings.quote: '"'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
 
 ###### In
 
@@ -182,7 +182,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'"'`.
+When configured with [`settings.quote: '"'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
 
 ###### In
 
@@ -198,7 +198,7 @@ When configured with `'"'`.
 
 ##### `ok.md`
 
-When configured with `"'"`.
+When configured with [`settings.quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
 
 ###### In
 
@@ -216,7 +216,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `"'"`.
+When configured with [`settings.quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
 
 ###### In
 
@@ -281,7 +281,7 @@ When configured with `'()'`.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with [`settings.quote: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
 
 ###### Out
 

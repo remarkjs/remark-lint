@@ -124,7 +124,7 @@ The default export is `remarkLintHeadingStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext), [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx), or `'consistent'`) are accepted:
 
 *   `'atx'`
     — prefer ATX headings:
@@ -178,7 +178,7 @@ or
 
 ##### `ok.md`
 
-When configured with `'atx'`.
+When configured with [`settings.setext: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext).
 
 ###### In
 
@@ -196,7 +196,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'atx-closed'`.
+When configured with [`settings.closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
 
 ###### In
 
@@ -214,7 +214,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'setext'`.
+When configured with [`settings.setext: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext).
 
 ###### In
 

@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: `'tab'`) are accepted:
+ * The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) or `'tab'`) are accepted:
  *
  * *   `'one'`
  *     — prefer a single space
@@ -79,7 +79,7 @@
  *   ····item.
  *
  * @example
- *   {"name": "ok.md", "config": "mixed"}
+ *   {"name": "ok.md", "settings": {"listItemIndent": "mixed"}}
  *
  *   *·List item.
  *
@@ -96,7 +96,7 @@
  *   ····item.
  *
  * @example
- *   {"name": "ok.md", "config": "one"}
+ *   {"name": "ok.md", "settings": {"listItemIndent": "one"}}
  *
  *   *·List item.
  *
@@ -113,39 +113,39 @@
  *   ··item.
  *
  * @example
- *   {"name": "not-ok.md", "config": "one", "label": "input"}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "one"}, "label": "input"}
  *
  *   *···List
  *   ····item.
  *
  * @example
- *   {"name": "not-ok.md", "config": "one", "label": "output"}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "one"}, "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
  * @example
- *   {"name": "not-ok.md", "config": "tab", "label": "input"}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "tab"}, "label": "input"}
  *
  *   *·List
  *   ··item.
  *
  * @example
- *   {"name": "not-ok.md", "config": "tab", "label": "output"}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "tab"}, "label": "output"}
  *
  *    1:3: Incorrect list-item indent: add 2 spaces
  *
  * @example
- *   {"name": "not-ok.md", "config": "mixed", "label": "input"}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "mixed"}, "label": "input"}
  *
  *   *···List item.
  *
  * @example
- *   {"name": "not-ok.md", "config": "mixed", "label": "output"}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "mixed"}, "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
  * @example
- *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *   {"name": "not-ok.md", "settings": {"listItemIndent": "💩"}, "label": "output", "positionless": true}
  *
  *    1:1: Incorrect list-item indent style `💩`: use either `'tab'`, `'one'`, or `'mixed'`
  */
@@ -167,7 +167,7 @@ const remarkLintListItemIndent = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'tab') => {
+  function (tree, file, option) {
     const value = String(file)
     // TODO(next major): Remove legacy fallbacks.
     option =
@@ -176,6 +176,11 @@ const remarkLintListItemIndent = lintRule(
         : /** @type {unknown} */ (option) === 'space'
         ? /* c8 ignore next */ 'one'
         : option
+
+    if (!option) {
+      const {settings} = this.data()
+      option = (settings && settings.listItemIndent) || 'tab'
+    }
 
     if (option !== 'tab' && option !== 'one' && option !== 'mixed') {
       file.fail(

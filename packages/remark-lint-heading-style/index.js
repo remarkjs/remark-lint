@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext), [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx), or `'consistent'`) are accepted:
  *
  * *   `'atx'`
  *     — prefer ATX headings:
@@ -62,7 +62,7 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "config": "atx"}
+ *   {"name": "ok.md", "settings": {"setext": false}}
  *
  *   # Alpha
  *
@@ -71,7 +71,7 @@
  *   ### Charlie
  *
  * @example
- *   {"name": "ok.md", "config": "atx-closed"}
+ *   {"name": "ok.md", "settings": {"closeAtx": true}}
  *
  *   # Delta ##
  *
@@ -80,7 +80,7 @@
  *   ### Foxtrot ###
  *
  * @example
- *   {"name": "ok.md", "config": "setext"}
+ *   {"name": "ok.md", "settings": {"setext": true}}
  *
  *   Golf
  *   ====
@@ -129,7 +129,20 @@ const remarkLintHeadingStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
+    if (!option) {
+      const {settings} = this.data()
+      option =
+        !settings ||
+        (settings.setext === undefined && settings.closeAtx === undefined)
+          ? 'consistent'
+          : settings.setext
+          ? 'setext'
+          : settings.closeAtx
+          ? 'atx-closed'
+          : 'atx'
+    }
+
     if (
       option !== 'consistent' &&
       option !== 'atx' &&

@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) or `'consistent'`) are accepted:
  *
  * *   `'fenced'`
  *     — prefer fenced code blocks:
@@ -49,7 +49,7 @@
  * @license MIT
  *
  * @example
- *   {"config": "indented", "name": "ok.md"}
+ *   {"settings": {"fences": false}, "name": "ok.md"}
  *
  *       alpha()
  *
@@ -58,7 +58,7 @@
  *       bravo()
  *
  * @example
- *   {"config": "indented", "name": "not-ok.md", "label": "input"}
+ *   {"settings": {"fences": false}, "name": "not-ok.md", "label": "input"}
  *
  *   ```
  *   alpha()
@@ -71,13 +71,13 @@
  *   ```
  *
  * @example
- *   {"config": "indented", "name": "not-ok.md", "label": "output"}
+ *   {"settings": {"fences": false}, "name": "not-ok.md", "label": "output"}
  *
  *   1:1-3:4: Code blocks should be indented
  *   7:1-9:4: Code blocks should be indented
  *
  * @example
- *   {"config": "fenced", "name": "ok.md"}
+ *   {"settings": {"fences": true}, "name": "ok.md"}
  *
  *   ```
  *   alpha()
@@ -90,7 +90,7 @@
  *   ```
  *
  * @example
- *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "input"}
+ *   {"settings": {"fences": true}, "name": "not-ok-fenced.md", "label": "input"}
  *
  *       alpha()
  *
@@ -99,7 +99,7 @@
  *       bravo()
  *
  * @example
- *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "output"}
+ *   {"settings": {"fences": true}, "name": "not-ok-fenced.md", "label": "output"}
  *
  *   1:1-1:12: Code blocks should be fenced
  *   5:1-5:12: Code blocks should be fenced
@@ -143,8 +143,18 @@ const remarkLintCodeBlockStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option =
+        !settings || settings.fences === undefined
+          ? 'consistent'
+          : settings.fences
+          ? 'fenced'
+          : 'indented'
+    }
 
     if (
       option !== 'consistent' &&

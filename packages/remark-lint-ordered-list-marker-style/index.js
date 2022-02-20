@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) or `'consistent'`) are accepted:
  *
  * *   `'.'`
  *     — prefer dots
@@ -48,14 +48,14 @@
  *   * Foo
  *
  * @example
- *   {"name": "ok.md", "config": "."}
+ *   {"name": "ok.md", "settings": {"bulletOrdered": "."}}
  *
  *   1.  Foo
  *
  *   2.  Bar
  *
  * @example
- *   {"name": "ok.md", "config": ")"}
+ *   {"name": "ok.md", "settings": {"bulletOrdered": ")"}}
  *
  *   1)  Foo
  *
@@ -74,7 +74,7 @@
  *   3:1-3:8: Marker style should be `.`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *   {"name": "not-ok.md", "label": "output", "settings": {"bulletOrdered": "💩"}, "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */
@@ -96,8 +96,13 @@ const remarkLintOrderedListMarkerStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option = (settings && settings.bulletOrdered) || 'consistent'
+    }
 
     if (option !== 'consistent' && option !== '.' && option !== ')') {
       file.fail(

@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.bullet`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -54,17 +54,17 @@
  *   3. Baz
  *
  * @example
- *   {"name": "ok.md", "config": "*"}
+ *   {"name": "ok.md", "settings": {"bullet": "*"}}
  *
  *   * Foo
  *
  * @example
- *   {"name": "ok.md", "config": "-"}
+ *   {"name": "ok.md", "settings": {"bullet": "-"}}
  *
  *   - Foo
  *
  * @example
- *   {"name": "ok.md", "config": "+"}
+ *   {"name": "ok.md", "settings": {"bullet": "+"}}
  *
  *   + Foo
  *
@@ -82,7 +82,7 @@
  *   3:1-3:6: Marker style should be `*`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *   {"name": "not-ok.md", "label": "output", "settings": {"bullet": "💩"}, "positionless": true}
  *
  *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
  */
@@ -106,8 +106,13 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      const {settings} = this.data()
+      option = (settings && settings.bullet) || 'consistent'
+    }
 
     if (option !== 'consistent' && !markers.has(option)) {
       file.fail(

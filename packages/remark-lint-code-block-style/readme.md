@@ -124,7 +124,7 @@ The default export is `remarkLintCodeBlockStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) or `'consistent'`) are accepted:
 
 *   `'fenced'`
     — prefer fenced code blocks:
@@ -164,7 +164,7 @@ to always use fenced code.
 
 ##### `ok.md`
 
-When configured with `'indented'`.
+When configured with [`settings.fences: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
 
 ###### In
 
@@ -182,7 +182,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'indented'`.
+When configured with [`settings.fences: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
 
 ###### In
 
@@ -207,7 +207,7 @@ bravo()
 
 ##### `ok.md`
 
-When configured with `'fenced'`.
+When configured with [`settings.fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
 
 ###### In
 
@@ -229,7 +229,7 @@ No messages.
 
 ##### `not-ok-fenced.md`
 
-When configured with `'fenced'`.
+When configured with [`settings.fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
 
 ###### In
 

@@ -123,7 +123,7 @@ The default export is `remarkLintOrderedListMarkerValue`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'ordered'`) are accepted:
+The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) or `'ordered'`) are accepted:
 
 *   `'ordered'`
     — values should increment by one from the first item
@@ -238,7 +238,7 @@ When configured with `'one'`.
 
 ##### `ok.md`
 
-When configured with `'single'`.
+When configured with [`settings.incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
 
 ###### In
 
@@ -266,7 +266,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'ordered'`.
+When configured with [`settings.incrementListMarker: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
 
 ###### In
 
@@ -294,7 +294,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'ordered'`.
+When configured with [`settings.incrementListMarker: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
 
 ###### In
 

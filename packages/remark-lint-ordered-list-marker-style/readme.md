@@ -125,7 +125,7 @@ The default export is `remarkLintOrderedListMarkerStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) or `'consistent'`) are accepted:
 
 *   `'.'`
     — prefer dots
@@ -188,7 +188,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'.'`.
+When configured with [`settings.bulletOrdered: '.'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
 
 ###### In
 
@@ -204,7 +204,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `')'`.
+When configured with [`settings.bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
 
 ###### In
 
@@ -220,7 +220,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with [`settings.bulletOrdered: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
 
 ###### Out
 

@@ -125,7 +125,7 @@ The default export is `remarkLintRuleStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule), [`settings.ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition), [`settings.ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces), or `'consistent'`) are accepted:
 
 *   `string` (example: `'** * **'`, `'___'`)
     — thematic break to prefer
@@ -159,7 +159,7 @@ There are three settings to control rules:
 
 ##### `ok.md`
 
-When configured with `'* * *'`.
+When configured with [`settings.ruleSpaces: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces).
 
 ###### In
 
@@ -175,7 +175,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'_______'`.
+When configured with [`settings.rule: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule), [`settings.ruleRepetition: 7`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition).
 
 ###### In
 

@@ -124,7 +124,7 @@ The default export is `remarkLintFencedCodeMarker`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'consistent'`) are accepted:
+The following options (default: [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) or `'consistent'`) are accepted:
 
 *   ``'`'``
     — prefer grave accents
@@ -204,7 +204,7 @@ charlie()
 
 ##### `ok.md`
 
-When configured with ``'`'``.
+When configured with [``settings.fence: '`'``](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
 
 ###### In
 
@@ -224,7 +224,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'~'`.
+When configured with [`settings.fence: '~'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
 
 ###### In
 
@@ -244,7 +244,7 @@ No messages.
 
 ##### `not-ok-incorrect.md`
 
-When configured with `'💩'`.
+When configured with [`settings.fence: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
 
 ###### Out
 

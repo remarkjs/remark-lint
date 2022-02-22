@@ -6,14 +6,14 @@
  *
  * ## API
  *
- * The following options (default: `'tab-size'`) are accepted:
+ * The following options (default: `'tab'`) are accepted:
  *
- * *   `'space'`
+ * *   `'one'`
  *     — prefer a single space
- * *   `'tab-size'`
+ * *   `'tab'`
  *     — prefer spaces the size of the next tab stop
  * *   `'mixed'`
- *     — prefer `'space'` for tight lists and `'tab-size'` for loose lists
+ *     — prefer `'one'` for tight lists and `'tab'` for loose lists
  *
  * ## Recommendation
  *
@@ -39,17 +39,17 @@
  * especially with how they interact with indented code.
  * CommonMark made that a *lot* better, but there remain (documented but
  * complex) edge cases and some behavior intuitive.
- * Due to this, the default of this list is `'tab-size'`, which worked the best
+ * Due to this, the default of this list is `'tab'`, which worked the best
  * in most markdown parsers.
  * Currently, the situation between markdown parsers is better, so choosing
- * `'space'` (which seems to be the most common style used by authors) should
+ * `'one'` (which seems to be the most common style used by authors) should
  * be okay.
  *
  * ## Fix
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * uses `'tab-size'` (named `'tab'` there) by default.
- * [`listItemIndent: '1'` (for `'space'`) or `listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent)
+ * uses `'tab'` by default.
+ * [`listItemIndent: 'one'` or `listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent)
  * is supported.
  *
  * @module list-item-indent
@@ -96,7 +96,7 @@
  *   ····item.
  *
  * @example
- *   {"name": "ok.md", "setting": "space"}
+ *   {"name": "ok.md", "setting": "one"}
  *
  *   *·List item.
  *
@@ -113,24 +113,24 @@
  *   ··item.
  *
  * @example
- *   {"name": "not-ok.md", "setting": "space", "label": "input"}
+ *   {"name": "not-ok.md", "setting": "one", "label": "input"}
  *
  *   *···List
  *   ····item.
  *
  * @example
- *   {"name": "not-ok.md", "setting": "space", "label": "output"}
+ *   {"name": "not-ok.md", "setting": "one", "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
  *
  * @example
- *   {"name": "not-ok.md", "setting": "tab-size", "label": "input"}
+ *   {"name": "not-ok.md", "setting": "tab", "label": "input"}
  *
  *   *·List
  *   ··item.
  *
  * @example
- *   {"name": "not-ok.md", "setting": "tab-size", "label": "output"}
+ *   {"name": "not-ok.md", "setting": "tab", "label": "output"}
  *
  *    1:3: Incorrect list-item indent: add 2 spaces
  *
@@ -147,12 +147,12 @@
  * @example
  *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
  *
- *    1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
+ *    1:1: Incorrect list-item indent style `💩`: use either `'tab'`, `'one'`, or `'mixed'`
  */
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'tab-size'|'space'|'mixed'} Options
+ * @typedef {'tab'|'one'|'mixed'} Options
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -167,14 +167,21 @@ const remarkLintListItemIndent = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'tab-size') => {
+  (tree, file, option = 'tab') => {
     const value = String(file)
+    // TODO(next major): Remove legacy fallbacks.
+    option =
+      /** @type {unknown} */ (option) === 'tab-size'
+        ? /* c8 ignore next */ 'tab'
+        : /** @type {unknown} */ (option) === 'space'
+        ? /* c8 ignore next */ 'one'
+        : option
 
-    if (option !== 'tab-size' && option !== 'space' && option !== 'mixed') {
+    if (option !== 'tab' && option !== 'one' && option !== 'mixed') {
       file.fail(
         'Incorrect list-item indent style `' +
           option +
-          "`: use either `'tab-size'`, `'space'`, or `'mixed'`"
+          "`: use either `'tab'`, `'one'`, or `'mixed'`"
       )
     }
 
@@ -196,7 +203,7 @@ const remarkLintListItemIndent = lintRule(
         const bulletSize = marker.replace(/\s+$/, '').length
 
         const style =
-          option === 'tab-size' || (option === 'mixed' && spread)
+          option === 'tab' || (option === 'mixed' && spread)
             ? Math.ceil(bulletSize / 4) * 4
             : bulletSize + 1
 

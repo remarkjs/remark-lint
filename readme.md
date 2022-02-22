@@ -374,10 +374,10 @@ async function main() {
     .use(remarkPresetLintConsistent)
     // Few recommended rules.
     .use(remarkPresetLintRecommended)
-    // `remark-lint-list-item-indent` is configured with `tab-size` in the
+    // `remark-lint-list-item-indent` is configured with `tab` in the
     // recommended preset, but if we’d prefer something else, it can be
     // reconfigured:
-    .use(remarkLintListItemIndent, 'space')
+    .use(remarkLintListItemIndent, 'one')
     .process('1) Hello, _Jupiter_ and *Neptune*!')
 
   console.error(reporter(file))
@@ -478,12 +478,12 @@ Now add a `remarkConfig` to your `package.json` to configure remark:
     "plugins": [
       "remark-preset-lint-consistent", // Check that markdown is consistent.
       "remark-preset-lint-recommended", // Few recommended rules.
-      // `remark-lint-list-item-indent` is configured with `tab-size` in the
+      // `remark-lint-list-item-indent` is configured with `tab` in the
       // recommended preset, but if we’d prefer something else, it can be
       // reconfigured:
       [
         "remark-lint-list-item-indent",
-        "space"
+        "one"
       ]
     ]
   },
@@ -534,7 +534,7 @@ Update `remarkConfig`:
     "plugins": [
       "remark-preset-lint-consistent",
       "remark-preset-lint-recommended",
-      ["remark-lint-list-item-indent", "space"]
+      ["remark-lint-list-item-indent", "one"]
       ["remark-lint-emphasis-marker", "*"],
       ["remark-lint-strong-marker", "*"]
     ]

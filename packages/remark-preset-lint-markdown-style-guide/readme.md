@@ -105,7 +105,7 @@ like so:
  "plugins": [
    …
    "remark-preset-lint-markdown-style-guide",
-+  ["remark-lint-list-item-indent", "space"],
++  ["remark-lint-list-item-indent", "one"],
    …
  ]
 ```

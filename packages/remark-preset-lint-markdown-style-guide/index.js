@@ -40,10 +40,9 @@
  * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-heading-style", "setext"],
+ * +  "setext": true,
  *    …
  *  ]
  * ```
@@ -55,10 +54,9 @@
  * `remark-lint-unordered-list-marker-style` like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-unordered-list-marker-style", "*"],
+ * +  "bullet": "*",
  *    …
  *  ]
  * ```
@@ -70,10 +68,9 @@
  * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-list-item-indent", "one"],
+ * +  "listItemIndent": "one",
  *    …
  *  ]
  * ```
@@ -85,10 +82,9 @@
  * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-code-block-style", "indented"],
+ * +  "fences": false,
  *    …
  *  ]
  * ```
@@ -187,7 +183,7 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintHardBreakSpaces,
 
     // https://cirosantilli.com/markdown-style-guide/#headers
-    [remarkLintHeadingStyle, 'atx'],
+    remarkLintHeadingStyle,
     remarkLintHeadingIncrement,
     remarkLintNoDuplicateHeadings,
 
@@ -214,14 +210,14 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintNoBlockquoteWithoutMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#unordered
-    [remarkLintUnorderedListMarkerStyle, '-'],
+    remarkLintUnorderedListMarkerStyle,
 
     // https://cirosantilli.com/markdown-style-guide/#ordered
-    [remarkLintOrderedListMarkerStyle, '.'],
+    remarkLintOrderedListMarkerStyle,
     [remarkLintOrderedListMarkerValue, 'one'],
 
     // https://cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
-    [remarkLintListItemIndent, 'mixed'],
+    remarkLintListItemIndent,
 
     // https://cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
     remarkLintListItemContentIndent,
@@ -239,12 +235,12 @@ const remarkPresetLintMarkdownStyleGuide = {
     // Not checked.
 
     // https://cirosantilli.com/markdown-style-guide/#code-blocks
-    [remarkLintCodeBlockStyle, 'fenced'],
+    remarkLintCodeBlockStyle,
     [remarkLintFencedCodeFlag, {allowEmpty: false}],
-    [remarkLintFencedCodeMarker, '`'],
+    remarkLintFencedCodeMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#horizontal-rules
-    [remarkLintRuleStyle, '---'],
+    remarkLintRuleStyle,
 
     // https://cirosantilli.com/markdown-style-guide/#tables
     remarkLintNoTableIndentation,
@@ -266,13 +262,13 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintDefinitionSpacing,
 
     // https://cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
-    [remarkLintLinkTitleStyle, '"'],
+    remarkLintLinkTitleStyle,
 
     // https://cirosantilli.com/markdown-style-guide/#bold
-    [remarkLintStrongMarker, '*'],
+    remarkLintStrongMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#italic
-    [remarkLintEmphasisMarker, '*'],
+    remarkLintEmphasisMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
     // Not checked.

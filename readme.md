@@ -263,7 +263,9 @@ remark()
   // Use `'error'` or `2` to treat messages as exceptions:
   .use(remarkLintFinalNewline, ['error'])
   .use(remarkLintFinalNewline, [2])
-  // Some rules accept options, and what they exactly accept is different for
+  // Some rules correspond to `remark-stringify` settings which they obey by default:
+  .use(remarkLintUnorderedListMarkerStyle).use({settings: {bullet: '*'}})
+  // Some accept options, and what they exactly accept is different for
   // each rule (sometimes a string, a number, or an object).
   // The following rule accepts a string:
   .use(remarkLintUnorderedListMarkerStyle, '*')
@@ -364,7 +366,6 @@ import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent'
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended'
-import remarkLintListItemIndent from 'remark-lint-list-item-indent'
 
 main()
 
@@ -374,10 +375,12 @@ async function main() {
     .use(remarkPresetLintConsistent)
     // Few recommended rules.
     .use(remarkPresetLintRecommended)
-    // `remark-lint-list-item-indent` is configured with `tab` in the
-    // recommended preset, but if we’d prefer something else, it can be
-    // reconfigured:
-    .use(remarkLintListItemIndent, 'one')
+    .use({
+      // `remark-lint-list-item-indent` is configured with `tab` in the
+      // recommended preset, but if we’d prefer something else, it can be
+      // reconfigured:
+      settings: {listItemIndent: 'one'}
+    })
     .process('1) Hello, _Jupiter_ and *Neptune*!')
 
   console.error(reporter(file))
@@ -398,8 +401,6 @@ Running that with `node example.js` yields:
 
 remark lint rules *check* markdown.
 [`remark-stringify`][remark-stringify] (used in remark) *formats* markdown.
-When you configure lint rules and use remark to format markdown, you must
-manually synchronize their configuration:
 
 ```js
 import {reporter} from 'vfile-reporter'
@@ -411,10 +412,12 @@ main()
 
 async function main() {
   const file = await remark()
-    .use(remarkLintEmphasisMarker, '*')
-    .use(remarkLintStrongMarker, '*')
+    .use(remarkLintEmphasisMarker)
+    .use(remarkLintStrongMarker)
     .use({
-      settings: {emphasis: '*', strong: '*'} // `remark-stringify` settings.
+      // `remark-stringify` settings.
+      // The corresponding rules obey these by default.
+      settings: {emphasis: '*', strong: '*'}
     })
     .process('_Hello_, __world__!')
 
@@ -475,16 +478,15 @@ Now add a `remarkConfig` to your `package.json` to configure remark:
 ```js
   /* … */
   "remarkConfig": {
-    "plugins": [
-      "remark-preset-lint-consistent", // Check that markdown is consistent.
-      "remark-preset-lint-recommended", // Few recommended rules.
+    "settings": {
       // `remark-lint-list-item-indent` is configured with `tab` in the
       // recommended preset, but if we’d prefer something else, it can be
       // reconfigured:
-      [
-        "remark-lint-list-item-indent",
-        "one"
-      ]
+      "listItemIndent": "one"
+    },
+    "plugins": [
+      "remark-preset-lint-consistent", // Check that markdown is consistent.
+      "remark-preset-lint-recommended" // Few recommended rules.
     ]
   },
   /* … */
@@ -503,8 +505,6 @@ npm run check
 
 remark lint rules *check* markdown.
 The CLI can *format* markdown.
-You can combine these features but have to manually synchronize their
-configuration.
 Please first follow the previous example (checking markdown on the CLI) and then
 change the npm script:
 
@@ -529,21 +529,19 @@ Update `remarkConfig`:
   "remarkConfig": {
     "settings": {
       "emphasis": "*",
+      "listItemIndent": "one",
       "strong": "*"
     },
     "plugins": [
       "remark-preset-lint-consistent",
-      "remark-preset-lint-recommended",
-      ["remark-lint-list-item-indent", "one"]
-      ["remark-lint-emphasis-marker", "*"],
-      ["remark-lint-strong-marker", "*"]
+      "remark-preset-lint-recommended"
     ]
   },
   /* … */
 ```
 
-This now includes `settings`, which configures
-[`remark-stringify`][remark-stringify], and explicitly prefers asterisks
+`settings` configures both
+[`remark-stringify`][remark-stringify] and the corresponding rules, and explicitly prefers asterisks
 for emphasis and strong.
 Install the new dependencies:
 

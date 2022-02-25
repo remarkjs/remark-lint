@@ -156,6 +156,36 @@ to always use underscores.
 
 ##### `ok.md`
 
+When configured with `'*'`.
+
+###### In
+
+```markdown
+*foo*
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'*'`.
+
+###### In
+
+```markdown
+_foo_
+```
+
+###### Out
+
+```text
+1:1-1:6: Emphasis should use `*` as a marker
+```
+
+##### `ok.md`
+
 When configured with [`settings.emphasis: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
 
 ###### In
@@ -182,6 +212,36 @@ _foo_
 
 ```text
 1:1-1:6: Emphasis should use `*` as a marker
+```
+
+##### `ok.md`
+
+When configured with `'_'`.
+
+###### In
+
+```markdown
+_foo_
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'_'`.
+
+###### In
+
+```markdown
+*foo*
+```
+
+###### Out
+
+```text
+1:1-1:6: Emphasis should use `_` as a marker
 ```
 
 ##### `ok.md`
@@ -227,6 +287,16 @@ _bar_
 
 ```text
 2:1-2:6: Emphasis should use `*` as a marker
+```
+
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
 ```
 
 ##### `not-ok.md`

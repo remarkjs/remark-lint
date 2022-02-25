@@ -50,9 +50,19 @@
  *   __foo__ and __bar__.
  *
  * @example
+ *   {"name": "ok.md", "config": "*"}
+ *
+ *   **foo**.
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"strong": "*"}}
  *
  *   **foo**.
+ *
+ * @example
+ *   {"name": "ok.md", "config": "_"}
+ *
+ *   __foo__.
  *
  * @example
  *   {"name": "ok.md", "settings": {"strong": "_"}}
@@ -68,6 +78,11 @@
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:13-1:20: Strong should use `*` as a marker
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *
+ *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "settings": {"strong": "💩"}, "positionless": true}

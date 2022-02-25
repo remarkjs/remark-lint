@@ -62,6 +62,15 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
+ *   {"name": "ok.md", "config": "atx"}
+ *
+ *   # Alpha
+ *
+ *   ## Bravo
+ *
+ *   ### Charlie
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"setext": false}}
  *
  *   # Alpha
@@ -71,6 +80,15 @@
  *   ### Charlie
  *
  * @example
+ *   {"name": "ok.md", "config": "atx-closed"}
+ *
+ *   # Delta ##
+ *
+ *   ## Echo ##
+ *
+ *   ### Foxtrot ###
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"closeAtx": true}}
  *
  *   # Delta ##
@@ -78,6 +96,17 @@
  *   ## Echo ##
  *
  *   ### Foxtrot ###
+ *
+ * @example
+ *   {"name": "ok.md", "config": "setext"}
+ *
+ *   Golf
+ *   ====
+ *
+ *   Hotel
+ *   -----
+ *
+ *   ### India
  *
  * @example
  *   {"name": "ok.md", "settings": {"setext": true}}

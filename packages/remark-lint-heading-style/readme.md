@@ -178,6 +178,24 @@ or
 
 ##### `ok.md`
 
+When configured with `'atx'`.
+
+###### In
+
+```markdown
+# Alpha
+
+## Bravo
+
+### Charlie
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.setext: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext).
 
 ###### In
@@ -196,6 +214,24 @@ No messages.
 
 ##### `ok.md`
 
+When configured with `'atx-closed'`.
+
+###### In
+
+```markdown
+# Delta ##
+
+## Echo ##
+
+### Foxtrot ###
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
 
 ###### In
@@ -206,6 +242,26 @@ When configured with [`settings.closeAtx: true`](https://github.com/remarkjs/rem
 ## Echo ##
 
 ### Foxtrot ###
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `'setext'`.
+
+###### In
+
+```markdown
+Golf
+====
+
+Hotel
+-----
+
+### India
 ```
 
 ###### Out

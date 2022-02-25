@@ -193,12 +193,40 @@ No messages.
 
 ##### `ok.md`
 
+When configured with `'*'`.
+
+###### In
+
+```markdown
+* Foo
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.bullet: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet).
 
 ###### In
 
 ```markdown
 * Foo
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `'-'`.
+
+###### In
+
+```markdown
+- Foo
 ```
 
 ###### Out
@@ -221,6 +249,20 @@ No messages.
 
 ##### `ok.md`
 
+When configured with `'+'`.
+
+###### In
+
+```markdown
++ Foo
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.bullet: '+'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet).
 
 ###### In
@@ -232,6 +274,16 @@ When configured with [`settings.bullet: '+'`](https://github.com/remarkjs/remark
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
+```
 
 ##### `not-ok.md`
 

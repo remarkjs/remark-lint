@@ -49,6 +49,15 @@
  * @license MIT
  *
  * @example
+ *   {"config": "indented", "name": "ok.md"}
+ *
+ *       alpha()
+ *
+ *   Paragraph.
+ *
+ *       bravo()
+ *
+ * @example
  *   {"settings": {"fences": false}, "name": "ok.md"}
  *
  *       alpha()
@@ -56,6 +65,25 @@
  *   Paragraph.
  *
  *       bravo()
+ *
+ * @example
+ *   {"config": "indented", "name": "not-ok.md", "label": "input"}
+ *
+ *   ```
+ *   alpha()
+ *   ```
+ *
+ *   Paragraph.
+ *
+ *   ```
+ *   bravo()
+ *   ```
+ *
+ * @example
+ *   {"config": "indented", "name": "not-ok.md", "label": "output"}
+ *
+ *   1:1-3:4: Code blocks should be indented
+ *   7:1-9:4: Code blocks should be indented
  *
  * @example
  *   {"settings": {"fences": false}, "name": "not-ok.md", "label": "input"}
@@ -77,6 +105,19 @@
  *   7:1-9:4: Code blocks should be indented
  *
  * @example
+ *   {"config": "fenced", "name": "ok.md"}
+ *
+ *   ```
+ *   alpha()
+ *   ```
+ *
+ *   Paragraph.
+ *
+ *   ```
+ *   bravo()
+ *   ```
+ *
+ * @example
  *   {"settings": {"fences": true}, "name": "ok.md"}
  *
  *   ```
@@ -88,6 +129,21 @@
  *   ```
  *   bravo()
  *   ```
+ *
+ * @example
+ *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "input"}
+ *
+ *       alpha()
+ *
+ *   Paragraph.
+ *
+ *       bravo()
+ *
+ * @example
+ *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "output"}
+ *
+ *   1:1-1:12: Code blocks should be fenced
+ *   5:1-5:12: Code blocks should be fenced
  *
  * @example
  *   {"settings": {"fences": true}, "name": "not-ok-fenced.md", "label": "input"}

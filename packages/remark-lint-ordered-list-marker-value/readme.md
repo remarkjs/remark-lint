@@ -238,6 +238,34 @@ When configured with `'one'`.
 
 ##### `ok.md`
 
+When configured with `'single'`.
+
+###### In
+
+```markdown
+1.  Foo
+1.  Bar
+1.  Baz
+
+Paragraph.
+
+3.  Alpha
+3.  Bravo
+3.  Charlie
+
+Paragraph.
+
+0.  Delta
+0.  Echo
+0.  Foxtrot
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
 
 ###### In
@@ -263,6 +291,51 @@ Paragraph.
 ###### Out
 
 No messages.
+
+##### `ok.md`
+
+When configured with `'ordered'`.
+
+###### In
+
+```markdown
+1.  Foo
+2.  Bar
+3.  Baz
+
+Paragraph.
+
+3.  Alpha
+4.  Bravo
+5.  Charlie
+
+Paragraph.
+
+0.  Delta
+1.  Echo
+2.  Foxtrot
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'ordered'`.
+
+###### In
+
+```markdown
+1.  Foo
+1.  Bar
+```
+
+###### Out
+
+```text
+2:1-2:8: Marker should be `2`, was `1`
+```
 
 ##### `ok.md`
 

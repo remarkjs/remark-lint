@@ -164,6 +164,49 @@ to always use fenced code.
 
 ##### `ok.md`
 
+When configured with `'indented'`.
+
+###### In
+
+```markdown
+    alpha()
+
+Paragraph.
+
+    bravo()
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'indented'`.
+
+###### In
+
+````markdown
+```
+alpha()
+```
+
+Paragraph.
+
+```
+bravo()
+```
+````
+
+###### Out
+
+```text
+1:1-3:4: Code blocks should be indented
+7:1-9:4: Code blocks should be indented
+```
+
+##### `ok.md`
+
 When configured with [`settings.fences: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
 
 ###### In
@@ -203,6 +246,49 @@ bravo()
 ```text
 1:1-3:4: Code blocks should be indented
 7:1-9:4: Code blocks should be indented
+```
+
+##### `ok.md`
+
+When configured with `'fenced'`.
+
+###### In
+
+````markdown
+```
+alpha()
+```
+
+Paragraph.
+
+```
+bravo()
+```
+````
+
+###### Out
+
+No messages.
+
+##### `not-ok-fenced.md`
+
+When configured with `'fenced'`.
+
+###### In
+
+```markdown
+    alpha()
+
+Paragraph.
+
+    bravo()
+```
+
+###### Out
+
+```text
+1:1-1:12: Code blocks should be fenced
+5:1-5:12: Code blocks should be fenced
 ```
 
 ##### `ok.md`

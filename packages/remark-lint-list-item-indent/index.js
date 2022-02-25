@@ -79,6 +79,23 @@
  *   ····item.
  *
  * @example
+ *   {"name": "ok.md", "config": "mixed"}
+ *
+ *   *·List item.
+ *
+ *   Paragraph.
+ *
+ *   11.·List item
+ *
+ *   Paragraph.
+ *
+ *   *···List
+ *   ····item.
+ *
+ *   *···List
+ *   ····item.
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"listItemIndent": "mixed"}}
  *
  *   *·List item.
@@ -94,6 +111,23 @@
  *
  *   *···List
  *   ····item.
+ *
+ * @example
+ *   {"name": "ok.md", "config": "one"}
+ *
+ *   *·List item.
+ *
+ *   Paragraph.
+ *
+ *   11.·List item
+ *
+ *   Paragraph.
+ *
+ *   *·List
+ *   ··item.
+ *
+ *   *·List
+ *   ··item.
  *
  * @example
  *   {"name": "ok.md", "settings": {"listItemIndent": "one"}}
@@ -113,6 +147,17 @@
  *   ··item.
  *
  * @example
+ *   {"name": "not-ok.md", "config": "one", "label": "input"}
+ *
+ *   *···List
+ *   ····item.
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "one", "label": "output"}
+ *
+ *    1:5: Incorrect list-item indent: remove 2 spaces
+ *
+ * @example
  *   {"name": "not-ok.md", "settings": {"listItemIndent": "one"}, "label": "input"}
  *
  *   *···List
@@ -122,6 +167,17 @@
  *   {"name": "not-ok.md", "settings": {"listItemIndent": "one"}, "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "tab", "label": "input"}
+ *
+ *   *·List
+ *   ··item.
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "tab", "label": "output"}
+ *
+ *    1:3: Incorrect list-item indent: add 2 spaces
  *
  * @example
  *   {"name": "not-ok.md", "settings": {"listItemIndent": "tab"}, "label": "input"}
@@ -135,6 +191,16 @@
  *    1:3: Incorrect list-item indent: add 2 spaces
  *
  * @example
+ *   {"name": "not-ok.md", "config": "mixed", "label": "input"}
+ *
+ *   *···List item.
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "mixed", "label": "output"}
+ *
+ *    1:5: Incorrect list-item indent: remove 2 spaces
+ *
+ * @example
  *   {"name": "not-ok.md", "settings": {"listItemIndent": "mixed"}, "label": "input"}
  *
  *   *···List item.
@@ -143,6 +209,11 @@
  *   {"name": "not-ok.md", "settings": {"listItemIndent": "mixed"}, "label": "output"}
  *
  *    1:5: Incorrect list-item indent: remove 2 spaces
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *
+ *    1:1: Incorrect list-item indent style `💩`: use either `'tab'`, `'one'`, or `'mixed'`
  *
  * @example
  *   {"name": "not-ok.md", "settings": {"listItemIndent": "💩"}, "label": "output", "positionless": true}

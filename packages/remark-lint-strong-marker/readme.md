@@ -194,12 +194,40 @@ No messages.
 
 ##### `ok.md`
 
+When configured with `'*'`.
+
+###### In
+
+```markdown
+**foo**.
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.strong: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
 
 ###### In
 
 ```markdown
 **foo**.
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `'_'`.
+
+###### In
+
+```markdown
+__foo__.
 ```
 
 ###### Out
@@ -219,6 +247,16 @@ __foo__.
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+```
 
 ##### `not-ok.md`
 

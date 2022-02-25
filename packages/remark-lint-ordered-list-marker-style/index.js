@@ -48,11 +48,25 @@
  *   * Foo
  *
  * @example
+ *   {"name": "ok.md", "config": "."}
+ *
+ *   1.  Foo
+ *
+ *   2.  Bar
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"bulletOrdered": "."}}
  *
  *   1.  Foo
  *
  *   2.  Bar
+ *
+ * @example
+ *   {"name": "ok.md", "config": ")"}
+ *
+ *   1)  Foo
+ *
+ *   2)  Bar
  *
  * @example
  *   {"name": "ok.md", "settings": {"bulletOrdered": ")"}}
@@ -72,6 +86,11 @@
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:8: Marker style should be `.`
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *
+ *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "settings": {"bulletOrdered": "💩"}, "positionless": true}

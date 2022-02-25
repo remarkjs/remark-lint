@@ -160,6 +160,44 @@ There is no option to use parens.
 
 ##### `ok.md`
 
+When configured with `'"'`.
+
+###### In
+
+```markdown
+[Example](http://example.com#without-title)
+[Example](http://example.com "Example Domain")
+![Example](http://example.com "Example Domain")
+
+[Example]: http://example.com "Example Domain"
+
+You can use parens in URLs if they’re not a title (see GH-166):
+
+[Example](#Heading-(optional))
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'"'`.
+
+###### In
+
+```markdown
+[Example]: http://example.com 'Example Domain'
+```
+
+###### Out
+
+```text
+1:31-1:47: Titles should use `"` as a quote
+```
+
+##### `ok.md`
+
 When configured with [`settings.quote: '"'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
 
 ###### In
@@ -194,6 +232,40 @@ When configured with [`settings.quote: '"'`](https://github.com/remarkjs/remark/
 
 ```text
 1:31-1:47: Titles should use `"` as a quote
+```
+
+##### `ok.md`
+
+When configured with `"'"`.
+
+###### In
+
+```markdown
+[Example](http://example.com#without-title)
+[Example](http://example.com 'Example Domain')
+![Example](http://example.com 'Example Domain')
+
+[Example]: http://example.com 'Example Domain'
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `"'"`.
+
+###### In
+
+```markdown
+[Example]: http://example.com "Example Domain"
+```
+
+###### Out
+
+```text
+1:31-1:47: Titles should use `'` as a quote
 ```
 
 ##### `ok.md`
@@ -277,6 +349,16 @@ When configured with `'()'`.
 
 ```text
 2:30-2:46: Titles should use `"` as a quote
+```
+
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
 ```
 
 ##### `not-ok.md`

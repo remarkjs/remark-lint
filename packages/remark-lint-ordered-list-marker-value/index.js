@@ -73,6 +73,25 @@
  *   1.  Charlie
  *
  * @example
+ *   {"name": "ok.md", "config": "single"}
+ *
+ *   1.  Foo
+ *   1.  Bar
+ *   1.  Baz
+ *
+ *   Paragraph.
+ *
+ *   3.  Alpha
+ *   3.  Bravo
+ *   3.  Charlie
+ *
+ *   Paragraph.
+ *
+ *   0.  Delta
+ *   0.  Echo
+ *   0.  Foxtrot
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"incrementListMarker": false}}
  *
  *   1.  Foo
@@ -90,6 +109,25 @@
  *   0.  Delta
  *   0.  Echo
  *   0.  Foxtrot
+ *
+ * @example
+ *   {"name": "ok.md", "config": "ordered"}
+ *
+ *   1.  Foo
+ *   2.  Bar
+ *   3.  Baz
+ *
+ *   Paragraph.
+ *
+ *   3.  Alpha
+ *   4.  Bravo
+ *   5.  Charlie
+ *
+ *   Paragraph.
+ *
+ *   0.  Delta
+ *   1.  Echo
+ *   2.  Foxtrot
  *
  * @example
  *   {"name": "ok.md", "settings": {"incrementListMarker": true}}
@@ -131,6 +169,17 @@
  *   {"name": "also-not-ok.md", "config": "one", "label": "output"}
  *
  *   1:1-1:8: Marker should be `1`, was `2`
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "ordered", "label": "input"}
+ *
+ *   1.  Foo
+ *   1.  Bar
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "ordered", "label": "output"}
+ *
+ *   2:1-2:8: Marker should be `2`, was `1`
  *
  * @example
  *   {"name": "not-ok.md", "settings": {"incrementListMarker": true}, "label": "input"}

@@ -44,6 +44,19 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
+ *   {"name": "ok.md", "config": "\""}
+ *
+ *   [Example](http://example.com#without-title)
+ *   [Example](http://example.com "Example Domain")
+ *   ![Example](http://example.com "Example Domain")
+ *
+ *   [Example]: http://example.com "Example Domain"
+ *
+ *   You can use parens in URLs if they’re not a title (see GH-166):
+ *
+ *   [Example](#Heading-(optional))
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"quote": "\""}}
  *
  *   [Example](http://example.com#without-title)
@@ -57,6 +70,16 @@
  *   [Example](#Heading-(optional))
  *
  * @example
+ *   {"name": "not-ok.md", "label": "input", "config": "\""}
+ *
+ *   [Example]: http://example.com 'Example Domain'
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": "\""}
+ *
+ *   1:31-1:47: Titles should use `"` as a quote
+ *
+ * @example
  *   {"name": "not-ok.md", "label": "input", "settings": {"quote": "\""}}
  *
  *   [Example]: http://example.com 'Example Domain'
@@ -67,6 +90,15 @@
  *   1:31-1:47: Titles should use `"` as a quote
  *
  * @example
+ *   {"name": "ok.md", "config": "'"}
+ *
+ *   [Example](http://example.com#without-title)
+ *   [Example](http://example.com 'Example Domain')
+ *   ![Example](http://example.com 'Example Domain')
+ *
+ *   [Example]: http://example.com 'Example Domain'
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"quote": "'"}}
  *
  *   [Example](http://example.com#without-title)
@@ -74,6 +106,16 @@
  *   ![Example](http://example.com 'Example Domain')
  *
  *   [Example]: http://example.com 'Example Domain'
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "config": "'"}
+ *
+ *   [Example]: http://example.com "Example Domain"
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": "'"}
+ *
+ *   1:31-1:47: Titles should use `'` as a quote
  *
  * @example
  *   {"name": "not-ok.md", "label": "input", "settings": {"quote": "'"}}
@@ -114,6 +156,11 @@
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:30-2:46: Titles should use `"` as a quote
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *
+ *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  *
  * @example
  *   {"name": "not-ok.md", "settings": {"quote": "💩"}, "label": "output", "positionless": true}

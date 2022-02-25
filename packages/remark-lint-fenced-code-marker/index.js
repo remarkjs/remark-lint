@@ -41,6 +41,17 @@
  *       bravo()
  *
  * @example
+ *   {"name": "ok.md", "config": "`"}
+ *
+ *   ```alpha
+ *   bravo()
+ *   ```
+ *
+ *   ```
+ *   charlie()
+ *   ```
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"fence": "`"}}
  *
  *   ```alpha
@@ -50,6 +61,17 @@
  *   ```
  *   charlie()
  *   ```
+ *
+ * @example
+ *   {"name": "ok.md", "config": "~"}
+ *
+ *   ~~~alpha
+ *   bravo()
+ *   ~~~
+ *
+ *   ~~~
+ *   charlie()
+ *   ~~~
  *
  * @example
  *   {"name": "ok.md", "settings": {"fence": "~"}}
@@ -93,6 +115,11 @@
  *   {"name": "not-ok-consistent-tilde.md", "label": "output"}
  *
  *   5:1-7:4: Fenced code should use `~` as a marker
+ *
+ * @example
+ *   {"name": "not-ok-incorrect.md", "config": "💩", "label": "output", "positionless": true}
+ *
+ *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  *
  * @example
  *   {"name": "not-ok-incorrect.md", "settings": {"fence": "💩"}, "label": "output", "positionless": true}

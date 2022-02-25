@@ -54,14 +54,29 @@
  *   3. Baz
  *
  * @example
+ *   {"name": "ok.md", "config": "*"}
+ *
+ *   * Foo
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"bullet": "*"}}
  *
  *   * Foo
  *
  * @example
+ *   {"name": "ok.md", "config": "-"}
+ *
+ *   - Foo
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"bullet": "-"}}
  *
  *   - Foo
+ *
+ * @example
+ *   {"name": "ok.md", "config": "+"}
+ *
+ *   + Foo
  *
  * @example
  *   {"name": "ok.md", "settings": {"bullet": "+"}}
@@ -80,6 +95,11 @@
  *
  *   2:1-2:6: Marker style should be `*`
  *   3:1-3:6: Marker style should be `*`
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *
+ *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "settings": {"bullet": "💩"}, "positionless": true}

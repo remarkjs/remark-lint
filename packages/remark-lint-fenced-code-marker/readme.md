@@ -204,6 +204,26 @@ charlie()
 
 ##### `ok.md`
 
+When configured with ``'`'``.
+
+###### In
+
+````markdown
+```alpha
+bravo()
+```
+
+```
+charlie()
+```
+````
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [``settings.fence: '`'``](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
 
 ###### In
@@ -217,6 +237,26 @@ bravo()
 charlie()
 ```
 ````
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `'~'`.
+
+###### In
+
+```markdown
+~~~alpha
+bravo()
+~~~
+
+~~~
+charlie()
+~~~
+```
 
 ###### Out
 
@@ -241,6 +281,16 @@ charlie()
 ###### Out
 
 No messages.
+
+##### `not-ok-incorrect.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
+```
 
 ##### `not-ok-incorrect.md`
 

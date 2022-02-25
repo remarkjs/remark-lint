@@ -43,11 +43,25 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
+ *   {"name": "ok.md", "config": "* * *"}
+ *
+ *   * * *
+ *
+ *   * * *
+ *
+ * @example
  *   {"name": "ok.md", "settings": {"ruleSpaces": true}}
  *
  *   * * *
  *
  *   * * *
+ *
+ * @example
+ *   {"name": "ok.md", "config": "_______"}
+ *
+ *   _______
+ *
+ *   _______
  *
  * @example
  *   {"name": "ok.md", "settings": {"rule": "_", "ruleRepetition": 7}}

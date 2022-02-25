@@ -159,6 +159,22 @@ There are three settings to control rules:
 
 ##### `ok.md`
 
+When configured with `'* * *'`.
+
+###### In
+
+```markdown
+* * *
+
+* * *
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.ruleSpaces: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces).
 
 ###### In
@@ -167,6 +183,22 @@ When configured with [`settings.ruleSpaces: true`](https://github.com/remarkjs/r
 * * *
 
 * * *
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `'_______'`.
+
+###### In
+
+```markdown
+_______
+
+_______
 ```
 
 ###### Out

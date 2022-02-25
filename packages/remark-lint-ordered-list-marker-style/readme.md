@@ -188,6 +188,22 @@ No messages.
 
 ##### `ok.md`
 
+When configured with `'.'`.
+
+###### In
+
+```markdown
+1.  Foo
+
+2.  Bar
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
 When configured with [`settings.bulletOrdered: '.'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
 
 ###### In
@@ -196,6 +212,22 @@ When configured with [`settings.bulletOrdered: '.'`](https://github.com/remarkjs
 1.  Foo
 
 2.  Bar
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `')'`.
+
+###### In
+
+```markdown
+1)  Foo
+
+2)  Bar
 ```
 
 ###### Out
@@ -217,6 +249,16 @@ When configured with [`settings.bulletOrdered: ')'`](https://github.com/remarkjs
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
+```
 
 ##### `not-ok.md`
 

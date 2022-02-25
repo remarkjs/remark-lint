@@ -204,6 +204,52 @@ No messages.
 
 ##### `ok.md`
 
+When configured with `'mixed'`.
+
+###### In
+
+> 👉 **Note**: `·` represents a space.
+
+```markdown
+*·List item.
+
+Paragraph.
+
+11.·List item
+
+Paragraph.
+
+*···List
+····item.
+
+*···List
+····item.
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'mixed'`.
+
+###### In
+
+> 👉 **Note**: `·` represents a space.
+
+```markdown
+*···List item.
+```
+
+###### Out
+
+```text
+1:5: Incorrect list-item indent: remove 2 spaces
+```
+
+##### `ok.md`
+
 When configured with [`settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
@@ -240,6 +286,53 @@ When configured with [`settings.listItemIndent: 'mixed'`](https://github.com/rem
 
 ```markdown
 *···List item.
+```
+
+###### Out
+
+```text
+1:5: Incorrect list-item indent: remove 2 spaces
+```
+
+##### `ok.md`
+
+When configured with `'one'`.
+
+###### In
+
+> 👉 **Note**: `·` represents a space.
+
+```markdown
+*·List item.
+
+Paragraph.
+
+11.·List item
+
+Paragraph.
+
+*·List
+··item.
+
+*·List
+··item.
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'one'`.
+
+###### In
+
+> 👉 **Note**: `·` represents a space.
+
+```markdown
+*···List
+····item.
 ```
 
 ###### Out
@@ -297,6 +390,25 @@ When configured with [`settings.listItemIndent: 'one'`](https://github.com/remar
 
 ##### `not-ok.md`
 
+When configured with `'tab'`.
+
+###### In
+
+> 👉 **Note**: `·` represents a space.
+
+```markdown
+*·List
+··item.
+```
+
+###### Out
+
+```text
+1:3: Incorrect list-item indent: add 2 spaces
+```
+
+##### `not-ok.md`
+
 When configured with [`settings.listItemIndent: 'tab'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
 
 ###### In
@@ -312,6 +424,16 @@ When configured with [`settings.listItemIndent: 'tab'`](https://github.com/remar
 
 ```text
 1:3: Incorrect list-item indent: add 2 spaces
+```
+
+##### `not-ok.md`
+
+When configured with `'💩'`.
+
+###### Out
+
+```text
+1:1: Incorrect list-item indent style `💩`: use either `'tab'`, `'one'`, or `'mixed'`
 ```
 
 ##### `not-ok.md`

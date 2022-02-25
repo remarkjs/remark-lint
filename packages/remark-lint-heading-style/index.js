@@ -160,16 +160,16 @@ const remarkLintHeadingStyle = lintRule(
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   function (tree, file, option) {
     if (!option) {
-      const {settings} = this.data()
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
       option =
-        !settings ||
-        (settings.setext === undefined && settings.closeAtx === undefined)
-          ? 'consistent'
-          : settings.setext
+        settings.setext === true
           ? 'setext'
-          : settings.closeAtx
+          : settings.closeAtx === true
           ? 'atx-closed'
-          : 'atx'
+          : settings.setext === false || settings.closeAtx === false
+          ? 'atx'
+          : 'consistent'
     }
 
     if (

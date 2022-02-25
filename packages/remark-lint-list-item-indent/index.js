@@ -249,8 +249,9 @@ const remarkLintListItemIndent = lintRule(
         : option
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.listItemIndent) || 'tab'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.listItemIndent || 'tab'
     }
 
     if (option !== 'tab' && option !== 'one' && option !== 'mixed') {

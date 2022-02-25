@@ -141,8 +141,9 @@ const remarkLintEmphasisMarker = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.emphasis) || 'consistent'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.emphasis || 'consistent'
     }
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {

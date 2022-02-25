@@ -218,13 +218,9 @@ const remarkLintOrderedListMarkerValue = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option =
-        !settings ||
-        settings.incrementListMarker === undefined ||
-        settings.incrementListMarker
-          ? 'ordered'
-          : 'single'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.incrementListMarker === false ? 'single' : 'ordered'
     }
 
     if (option !== 'ordered' && option !== 'one' && option !== 'single') {

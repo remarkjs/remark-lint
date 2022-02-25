@@ -108,14 +108,14 @@ const remarkLintRuleStyle = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
       option =
-        !settings ||
-        (settings.rule === undefined &&
-          settings.ruleRepetition === undefined &&
-          settings.ruleSpaces === undefined)
-          ? 'consistent'
-          : toMarkdown({type: 'thematicBreak'}, settings).slice(0, -1)
+        settings.rule !== undefined ||
+        settings.ruleRepetition !== undefined ||
+        typeof settings.ruleSpaces === 'boolean'
+          ? toMarkdown({type: 'thematicBreak'}, settings).slice(0, -1)
+          : 'consistent'
     }
 
     if (option !== 'consistent' && /[^-_* ]/.test(option)) {

@@ -147,8 +147,9 @@ const remarkLintFencedCodeMarker = lintRule(
     const contents = String(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.fence) || 'consistent'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.fence || 'consistent'
     }
 
     if (option !== 'consistent' && option !== '~' && option !== '`') {

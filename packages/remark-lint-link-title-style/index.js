@@ -198,8 +198,9 @@ const remarkLintLinkTitleStyle = lintRule(
     const loc = location(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.quote) || 'consistent'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.quote || 'consistent'
     }
 
     // @ts-expect-error: allow other paren combos.

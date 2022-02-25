@@ -110,8 +110,9 @@ const remarkLintStrongMarker = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.strong) || 'consistent'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.strong || 'consistent'
     }
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {

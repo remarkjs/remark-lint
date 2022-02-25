@@ -130,8 +130,9 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.bullet) || 'consistent'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.bullet || 'consistent'
     }
 
     if (option !== 'consistent' && !markers.has(option)) {

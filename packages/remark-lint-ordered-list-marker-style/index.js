@@ -119,8 +119,9 @@ const remarkLintOrderedListMarkerStyle = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
-      option = (settings && settings.bulletOrdered) || 'consistent'
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.bulletOrdered || 'consistent'
     }
 
     if (option !== 'consistent' && option !== '.' && option !== ')') {

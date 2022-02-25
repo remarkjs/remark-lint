@@ -203,13 +203,14 @@ const remarkLintCodeBlockStyle = lintRule(
     const value = String(file)
 
     if (!option) {
-      const {settings} = this.data()
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
       option =
-        !settings || settings.fences === undefined
-          ? 'consistent'
-          : settings.fences
+        settings.fences === true
           ? 'fenced'
-          : 'indented'
+          : settings.fences === false
+          ? 'indented'
+          : 'consistent'
     }
 
     if (

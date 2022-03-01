@@ -266,7 +266,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
+When [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) is `false` and the rule is not configured.
 
 ###### In
 
@@ -339,7 +339,7 @@ When configured with `'ordered'`.
 
 ##### `ok.md`
 
-When configured with [`settings.incrementListMarker: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
+When [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) is `true` and the rule is not configured.
 
 ###### In
 
@@ -367,7 +367,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.incrementListMarker: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker).
+When [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) is `true` and the rule is not configured.
 
 ###### In
 

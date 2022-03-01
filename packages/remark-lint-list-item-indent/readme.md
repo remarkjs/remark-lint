@@ -250,7 +250,7 @@ When configured with `'mixed'`.
 
 ##### `ok.md`
 
-When configured with [`settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'mixed'` and the rule is not configured.
 
 ###### In
 
@@ -278,7 +278,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'mixed'` and the rule is not configured.
 
 ###### In
 
@@ -343,7 +343,7 @@ When configured with `'one'`.
 
 ##### `ok.md`
 
-When configured with [`settings.listItemIndent: 'one'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'one'` and the rule is not configured.
 
 ###### In
 
@@ -371,7 +371,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.listItemIndent: 'one'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'one'` and the rule is not configured.
 
 ###### In
 
@@ -409,7 +409,7 @@ When configured with `'tab'`.
 
 ##### `not-ok.md`
 
-When configured with [`settings.listItemIndent: 'tab'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'tab'` and the rule is not configured.
 
 ###### In
 
@@ -438,7 +438,7 @@ When configured with `'💩'`.
 
 ##### `not-ok.md`
 
-When configured with [`settings.listItemIndent: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent).
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'💩'` and the rule is not configured.
 
 ###### Out
 

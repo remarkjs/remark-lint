@@ -224,7 +224,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [``settings.fence: '`'``](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
+When [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) is ``'`'`` and the rule is not configured.
 
 ###### In
 
@@ -264,7 +264,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.fence: '~'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
+When [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) is `'~'` and the rule is not configured.
 
 ###### In
 
@@ -294,7 +294,7 @@ When configured with `'💩'`.
 
 ##### `not-ok-incorrect.md`
 
-When configured with [`settings.fence: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence).
+When [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) is `'💩'` and the rule is not configured.
 
 ###### Out
 

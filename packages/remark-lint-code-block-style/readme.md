@@ -207,7 +207,7 @@ bravo()
 
 ##### `ok.md`
 
-When configured with [`settings.fences: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
+When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `false` and the rule is not configured.
 
 ###### In
 
@@ -225,7 +225,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.fences: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
+When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `false` and the rule is not configured.
 
 ###### In
 
@@ -293,7 +293,7 @@ Paragraph.
 
 ##### `ok.md`
 
-When configured with [`settings.fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
+When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `true` and the rule is not configured.
 
 ###### In
 
@@ -315,7 +315,7 @@ No messages.
 
 ##### `not-ok-fenced.md`
 
-When configured with [`settings.fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences).
+When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `true` and the rule is not configured.
 
 ###### In
 

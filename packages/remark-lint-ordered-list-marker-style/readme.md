@@ -204,7 +204,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.bulletOrdered: '.'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
+When [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) is `'.'` and the rule is not configured.
 
 ###### In
 
@@ -236,7 +236,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
+When [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) is `')'` and the rule is not configured.
 
 ###### In
 
@@ -262,7 +262,7 @@ When configured with `'💩'`.
 
 ##### `not-ok.md`
 
-When configured with [`settings.bulletOrdered: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered).
+When [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) is `'💩'` and the rule is not configured.
 
 ###### Out
 

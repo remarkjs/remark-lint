@@ -208,7 +208,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.strong: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
+When [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) is `'*'` and the rule is not configured.
 
 ###### In
 
@@ -236,7 +236,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.strong: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
+When [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) is `'_'` and the rule is not configured.
 
 ###### In
 
@@ -260,7 +260,7 @@ When configured with `'💩'`.
 
 ##### `not-ok.md`
 
-When configured with [`settings.strong: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong).
+When [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) is `'💩'` and the rule is not configured.
 
 ###### Out
 

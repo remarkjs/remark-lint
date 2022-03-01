@@ -3,6 +3,7 @@
  * @typedef {import('mdast').BlockContent|import('mdast').DefinitionContent} BlockContent
  * @typedef {import('mdast').TableContent} TableContent
  * @typedef {import('mdast').PhrasingContent} PhrasingContent
+ * @typedef {import('mdast').Text} Text
  */
 
 import fs from 'node:fs'
@@ -591,32 +592,6 @@ presets(root).then((presetObjects) => {
               const fixture = fixtures[fileName]
               /** @type {{settings: Record<string, unknown>, config: unknown}} */
               const {settings, config} = JSON.parse(configuration)
-              const whenConfiguredWith = settings
-                ? Object.entries(settings)
-                    .flatMap(
-                      ([name, value]) =>
-                        /** @type {Array<PhrasingContent>} */ ([
-                          {
-                            type: 'link',
-                            url: `https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options${name.toLowerCase()}`,
-                            title: null,
-                            children: [
-                              {
-                                type: 'inlineCode',
-                                value: `settings.${inspect({
-                                  [name]: value
-                                }).slice(2, -2)}`
-                              }
-                            ]
-                          },
-                          {type: 'text', value: ', '}
-                        ])
-                    )
-                    .slice(0, -1)
-                : config !== true &&
-                  /** @type {Array<PhrasingContent>} */ ([
-                    {type: 'inlineCode', value: inspect(config)}
-                  ])
               let clean = fixture.input
 
               children.push({
@@ -625,12 +600,20 @@ presets(root).then((presetObjects) => {
                 children: [{type: 'inlineCode', value: fileName}]
               })
 
-              if (whenConfiguredWith) {
+              if (settings || config !== true) {
                 children.push({
                   type: 'paragraph',
                   children: [
-                    {type: 'text', value: 'When configured with '},
-                    ...whenConfiguredWith,
+                    {type: 'text', value: 'When '},
+                    ...formatSettings(settings),
+                    .../** @type {Array<PhrasingContent>} */ (
+                      config === true
+                        ? [{type: 'text', value: 'the rule is not configured'}]
+                        : [
+                            {type: 'text', value: 'configured with '},
+                            {type: 'inlineCode', value: inspect(config)}
+                          ]
+                    ),
                     {type: 'text', value: '.'}
                   ]
                 })
@@ -984,3 +967,40 @@ presets(root).then((presetObjects) => {
     console.log('✓ wrote `readme.md` in `' + basename + '`')
   }
 })
+
+/**
+ * @param {Record<string, unknown>} settings
+ */
+function formatSettings(settings) {
+  if (!settings) {
+    return []
+  }
+
+  const entries = Object.entries(settings)
+  /** @type {Array<PhrasingContent>} */
+  // prettier-ignore
+  const nodes = entries.flatMap(([name, value]) => [
+    {
+      type: 'link',
+      url: `https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options${name.toLowerCase()}`,
+      title: null,
+      children: [
+        {
+          type: 'inlineCode',
+          value: `settings.${name}`
+        }
+      ]
+    },
+    {type: 'text', value: ' is '},
+    {
+      type: 'inlineCode',
+      value: inspect(value)
+    },
+    {type: 'text', value: ', '}
+  ]);
+  // prettier-ignore
+  /** @type {Text} */ (nodes[nodes.length - 1]).value =
+    entries.length > 1 ? ', and ' : ' and '
+
+  return nodes
+}

@@ -175,7 +175,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.ruleSpaces: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces).
+When [`settings.ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces) is `true` and the rule is not configured.
 
 ###### In
 
@@ -207,7 +207,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.rule: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule), [`settings.ruleRepetition: 7`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition).
+When [`settings.rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule) is `'_'`, [`settings.ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition) is `7`, and the rule is not configured.
 
 ###### In
 

@@ -198,7 +198,7 @@ When configured with `'"'`.
 
 ##### `ok.md`
 
-When configured with [`settings.quote: '"'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
+When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `'"'` and the rule is not configured.
 
 ###### In
 
@@ -220,7 +220,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.quote: '"'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
+When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `'"'` and the rule is not configured.
 
 ###### In
 
@@ -270,7 +270,7 @@ When configured with `"'"`.
 
 ##### `ok.md`
 
-When configured with [`settings.quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
+When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `"'"` and the rule is not configured.
 
 ###### In
 
@@ -288,7 +288,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
+When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `"'"` and the rule is not configured.
 
 ###### In
 
@@ -363,7 +363,7 @@ When configured with `'💩'`.
 
 ##### `not-ok.md`
 
-When configured with [`settings.quote: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote).
+When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `'💩'` and the rule is not configured.
 
 ###### Out
 

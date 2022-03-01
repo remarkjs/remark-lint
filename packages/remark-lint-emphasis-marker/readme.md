@@ -186,7 +186,7 @@ _foo_
 
 ##### `ok.md`
 
-When configured with [`settings.emphasis: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
+When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'*'` and the rule is not configured.
 
 ###### In
 
@@ -200,7 +200,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.emphasis: '*'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
+When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'*'` and the rule is not configured.
 
 ###### In
 
@@ -246,7 +246,7 @@ When configured with `'_'`.
 
 ##### `ok.md`
 
-When configured with [`settings.emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
+When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'_'` and the rule is not configured.
 
 ###### In
 
@@ -260,7 +260,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with [`settings.emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
+When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'_'` and the rule is not configured.
 
 ###### In
 
@@ -301,7 +301,7 @@ When configured with `'💩'`.
 
 ##### `not-ok.md`
 
-When configured with [`settings.emphasis: '💩'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis).
+When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'💩'` and the rule is not configured.
 
 ###### Out
 

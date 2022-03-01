@@ -196,7 +196,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.setext: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext).
+When [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext) is `false` and the rule is not configured.
 
 ###### In
 
@@ -232,7 +232,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
+When [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx) is `true` and the rule is not configured.
 
 ###### In
 
@@ -270,7 +270,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with [`settings.setext: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext).
+When [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext) is `true` and the rule is not configured.
 
 ###### In
 

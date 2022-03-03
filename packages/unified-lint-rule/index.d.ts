@@ -19,14 +19,15 @@ export function lintRule<Tree extends Node = Node, Options = unknown>(
   name: string | RuleMeta,
   rule: Rule<Tree, Options>
 ): Plugin<
-  void[] | [Options | [boolean | Label | Severity, (Options | undefined)?]],
+  [(Options | [Label | Severity, (Options | undefined)?] | undefined | void)?],
   Tree
 >
 
 export type Rule<Tree extends Node = Node, Options = unknown> = (
   node: Tree,
   file: VFile,
-  options: Options
+  options: Options,
+  next: Callback
 ) => Promise<Tree | undefined | void> | Tree | undefined | void
 
 export {Severity, Label} from './lib/index.js'

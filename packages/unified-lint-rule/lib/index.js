@@ -83,9 +83,7 @@ function coerce(name, value) {
   /** @type {Array<unknown>} */
   let result
 
-  if (typeof value === 'boolean') {
-    result = [value]
-  } else if (value === null || value === undefined) {
+  if (value === null || value === undefined) {
     result = [1]
   } else if (
     Array.isArray(value) &&

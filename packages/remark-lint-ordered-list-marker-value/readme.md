@@ -123,7 +123,7 @@ The default export is `remarkLintOrderedListMarkerValue`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) or `'ordered'`) are accepted:
+The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) or `'ordered'`) are accepted:
 
 *   `'ordered'`
     — values should increment by one from the first item
@@ -147,8 +147,8 @@ choice.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 retains the value of the first item and increments further items by default.
-Pass
-[`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker)
+Change
+[`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) to `false`
 to not increment further items.
 
 ## Examples
@@ -238,7 +238,7 @@ When configured with `'one'`.
 
 ##### `ok.md`
 
-When configured with `'single'`.
+When [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) is `false` and the rule is not configured.
 
 ###### In
 
@@ -266,35 +266,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) is `false` and the rule is not configured.
-
-###### In
-
-```markdown
-1.  Foo
-1.  Bar
-1.  Baz
-
-Paragraph.
-
-3.  Alpha
-3.  Bravo
-3.  Charlie
-
-Paragraph.
-
-0.  Delta
-0.  Echo
-0.  Foxtrot
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'ordered'`.
+When [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 
@@ -322,52 +294,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'ordered'`.
-
-###### In
-
-```markdown
-1.  Foo
-1.  Bar
-```
-
-###### Out
-
-```text
-2:1-2:8: Marker should be `2`, was `1`
-```
-
-##### `ok.md`
-
-When [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) is `true` and the rule is not configured.
-
-###### In
-
-```markdown
-1.  Foo
-2.  Bar
-3.  Baz
-
-Paragraph.
-
-3.  Alpha
-4.  Bravo
-5.  Charlie
-
-Paragraph.
-
-0.  Delta
-1.  Echo
-2.  Foxtrot
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) is `true` and the rule is not configured.
+When [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 

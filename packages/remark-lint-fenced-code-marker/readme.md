@@ -45,7 +45,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | ``'`'`` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) is ``'`'`` |
 
 ## Install
 
@@ -124,7 +124,7 @@ The default export is `remarkLintFencedCodeMarker`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) or `'consistent'`) are accepted:
+The following options (default: [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
 
 *   ``'`'``
     — prefer grave accents
@@ -142,8 +142,8 @@ Due to this, it’s recommended to configure this rule with ``'`'``.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats fenced code with grave accents by default.
-Pass
-[`fence: '~'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence)
+Change
+[`settings.fence`](https://github.com/remarkjs/remark-lint#configure) to `'~'`
 to always use tildes.
 
 ## Examples
@@ -204,7 +204,7 @@ charlie()
 
 ##### `ok.md`
 
-When configured with ``'`'``.
+When [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) is ``'`'`` and the rule is not configured.
 
 ###### In
 
@@ -224,47 +224,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) is ``'`'`` and the rule is not configured.
-
-###### In
-
-````markdown
-```alpha
-bravo()
-```
-
-```
-charlie()
-```
-````
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'~'`.
-
-###### In
-
-```markdown
-~~~alpha
-bravo()
-~~~
-
-~~~
-charlie()
-~~~
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) is `'~'` and the rule is not configured.
+When [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) is `'~'` and the rule is not configured.
 
 ###### In
 
@@ -284,17 +244,7 @@ No messages.
 
 ##### `not-ok-incorrect.md`
 
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
-```
-
-##### `not-ok-incorrect.md`
-
-When [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) is `'💩'` and the rule is not configured.
+When [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) is `'💩'` and the rule is not configured.
 
 ###### Out
 

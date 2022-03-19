@@ -45,8 +45,8 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'.'` |
-| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | `'.'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) is `'.'` |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) is `'.'` |
 
 ## Install
 
@@ -125,7 +125,7 @@ The default export is `remarkLintOrderedListMarkerStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) or `'consistent'`) are accepted:
+The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
 
 *   `'.'`
     — prefer dots
@@ -145,8 +145,8 @@ Due to this, it’s recommended to prefer dots.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats ordered lists with dots by default.
-Pass
-[`bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered)
+Change
+[`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) to `')'`
 to always use parens.
 
 ## Examples
@@ -188,7 +188,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'.'`.
+When [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) is `'.'` and the rule is not configured.
 
 ###### In
 
@@ -204,39 +204,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) is `'.'` and the rule is not configured.
-
-###### In
-
-```markdown
-1.  Foo
-
-2.  Bar
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `')'`.
-
-###### In
-
-```markdown
-1)  Foo
-
-2)  Bar
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) is `')'` and the rule is not configured.
+When [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) is `')'` and the rule is not configured.
 
 ###### In
 
@@ -252,17 +220,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
-```
-
-##### `not-ok.md`
-
-When [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) is `'💩'` and the rule is not configured.
+When [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) is `'💩'` and the rule is not configured.
 
 ###### Out
 

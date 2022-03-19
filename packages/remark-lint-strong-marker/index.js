@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -29,8 +29,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats strong with asterisks by default.
- * Pass
- * [`strong: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong)
+ * Change
+ * [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) to `'_'`
  * to always use underscores.
  *
  * @module strong-marker

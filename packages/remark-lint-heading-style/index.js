@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext), [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx), or `'consistent'`) are accepted:
+ * The following options (default: [`settings.setext`](https://github.com/remarkjs/remark-lint#configure), [`settings.closeAtx`](https://github.com/remarkjs/remark-lint#configure), or `'consistent'`) are accepted:
  *
  * *   `'atx'`
  *     — prefer ATX headings:
@@ -51,9 +51,9 @@
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats headings as ATX by default.
  * The other styles can be configured with
- * [`setext: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext)
+ * [`settings.setext: true`](https://github.com/remarkjs/remark-lint#configure)
  * or
- * [`closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
+ * [`settings.closeAtx: true`](https://github.com/remarkjs/remark-lint#configure).
  *
  * @module heading-style
  * @summary

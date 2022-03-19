@@ -45,7 +45,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'"'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) is `'"'` |
 
 ## Install
 
@@ -124,7 +124,7 @@ The default export is `remarkLintLinkTitleStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) or `'consistent'`) are accepted:
+The following options (default: [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
 
 *   `'"'`
     — prefer double quotes
@@ -151,8 +151,8 @@ markdown, so it’s recommended to configure this rule with `'"'`.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats titles with double quotes by default.
-Pass
-[`quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote)
+Change
+[`settings.quote`](https://github.com/remarkjs/remark-lint#configure) to `"'"`
 to use single quotes.
 There is no option to use parens.
 
@@ -160,7 +160,7 @@ There is no option to use parens.
 
 ##### `ok.md`
 
-When configured with `'"'`.
+When [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) is `'"'` and the rule is not configured.
 
 ###### In
 
@@ -182,7 +182,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'"'`.
+When [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) is `'"'` and the rule is not configured.
 
 ###### In
 
@@ -198,45 +198,7 @@ When configured with `'"'`.
 
 ##### `ok.md`
 
-When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `'"'` and the rule is not configured.
-
-###### In
-
-```markdown
-[Example](http://example.com#without-title)
-[Example](http://example.com "Example Domain")
-![Example](http://example.com "Example Domain")
-
-[Example]: http://example.com "Example Domain"
-
-You can use parens in URLs if they’re not a title (see GH-166):
-
-[Example](#Heading-(optional))
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `'"'` and the rule is not configured.
-
-###### In
-
-```markdown
-[Example]: http://example.com 'Example Domain'
-```
-
-###### Out
-
-```text
-1:31-1:47: Titles should use `"` as a quote
-```
-
-##### `ok.md`
-
-When configured with `"'"`.
+When [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) is `"'"` and the rule is not configured.
 
 ###### In
 
@@ -254,41 +216,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `"'"`.
-
-###### In
-
-```markdown
-[Example]: http://example.com "Example Domain"
-```
-
-###### Out
-
-```text
-1:31-1:47: Titles should use `'` as a quote
-```
-
-##### `ok.md`
-
-When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `"'"` and the rule is not configured.
-
-###### In
-
-```markdown
-[Example](http://example.com#without-title)
-[Example](http://example.com 'Example Domain')
-![Example](http://example.com 'Example Domain')
-
-[Example]: http://example.com 'Example Domain'
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `"'"` and the rule is not configured.
+When [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) is `"'"` and the rule is not configured.
 
 ###### In
 
@@ -353,17 +281,7 @@ When configured with `'()'`.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
-```
-
-##### `not-ok.md`
-
-When [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) is `'💩'` and the rule is not configured.
+When [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) is `'💩'` and the rule is not configured.
 
 ###### Out
 

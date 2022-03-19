@@ -45,7 +45,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'*'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) is `'*'` |
 
 ## Install
 
@@ -124,7 +124,7 @@ The default export is `remarkLintStrongMarker`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) or `'consistent'`) are accepted:
+The following options (default: [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
 
 *   `'*'`
     — prefer asterisks
@@ -148,8 +148,8 @@ can be used for more constructs, it’s recommended to prefer asterisks.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats strong with asterisks by default.
-Pass
-[`strong: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong)
+Change
+[`settings.strong`](https://github.com/remarkjs/remark-lint#configure) to `'_'`
 to always use underscores.
 
 ## Examples
@@ -194,7 +194,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'*'`.
+When [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) is `'*'` and the rule is not configured.
 
 ###### In
 
@@ -208,35 +208,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) is `'*'` and the rule is not configured.
-
-###### In
-
-```markdown
-**foo**.
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'_'`.
-
-###### In
-
-```markdown
-__foo__.
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) is `'_'` and the rule is not configured.
+When [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) is `'_'` and the rule is not configured.
 
 ###### In
 
@@ -250,17 +222,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
-```
-
-##### `not-ok.md`
-
-When [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) is `'💩'` and the rule is not configured.
+When [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) is `'💩'` and the rule is not configured.
 
 ###### Out
 

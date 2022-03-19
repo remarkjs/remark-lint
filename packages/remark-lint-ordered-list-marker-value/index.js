@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) or `'ordered'`) are accepted:
+ * The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) or `'ordered'`) are accepted:
  *
  * *   `'ordered'`
  *     — values should increment by one from the first item
@@ -29,8 +29,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * retains the value of the first item and increments further items by default.
- * Pass
- * [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker)
+ * Change
+ * [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) to `false`
  * to not increment further items.
  *
  * @module ordered-list-marker-value

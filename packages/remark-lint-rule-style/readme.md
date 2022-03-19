@@ -46,7 +46,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'---'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.rule`](https://github.com/remarkjs/remark-lint#configure) is `'-'` |
 
 ## Install
 
@@ -125,7 +125,7 @@ The default export is `remarkLintRuleStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule), [`settings.ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition), [`settings.ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces), or `'consistent'`) are accepted:
+The following options (default: [`settings.rule`](https://github.com/remarkjs/remark-lint#configure), [`settings.ruleRepetition`](https://github.com/remarkjs/remark-lint#configure), [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure), or `'consistent'`) are accepted:
 
 *   `string` (example: `'** * **'`, `'___'`)
     — thematic break to prefer
@@ -148,18 +148,18 @@ Due to this, it’s recommended to pass `'***'`.
 formats rules with `***` by default.
 There are three settings to control rules:
 
-*   [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
+*   [`settings.rule`](https://github.com/remarkjs/remark-lint#configure)
     (default: `'*'`) — marker
-*   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
+*   [`settings.ruleRepetition`](https://github.com/remarkjs/remark-lint#configure)
     (default: `3`) — repetitions
-*   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
+*   [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure)
     (default: `false`) — use spaces between markers
 
 ## Examples
 
 ##### `ok.md`
 
-When configured with `'* * *'`.
+When [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 
@@ -175,39 +175,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces) is `true` and the rule is not configured.
-
-###### In
-
-```markdown
-* * *
-
-* * *
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'_______'`.
-
-###### In
-
-```markdown
-_______
-
-_______
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When [`settings.rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule) is `'_'`, [`settings.ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition) is `7`, and the rule is not configured.
+When [`settings`](https://github.com/remarkjs/remark-lint#configure) includes `{ rule: '_', ruleRepetition: 7 }` and the rule is not configured.
 
 ###### In
 

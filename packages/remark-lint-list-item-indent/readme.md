@@ -46,8 +46,8 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | - | - |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'mixed'` |
-| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | `'tab'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'mixed'` |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'tab'` |
 
 ## Install
 
@@ -126,7 +126,7 @@ The default export is `remarkLintListItemIndent`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) or `'tab'`) are accepted:
+The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) or `'tab'`) are accepted:
 
 *   `'one'`
     — prefer a single space
@@ -169,7 +169,7 @@ be okay.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 uses `'tab'` by default.
-[`listItemIndent: 'one'` or `listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent)
+[`settings.listItemIndent: 'one'` or `settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark-lint#configure)
 is supported.
 
 ## Examples
@@ -204,7 +204,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'mixed'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'mixed'` and the rule is not configured.
 
 ###### In
 
@@ -232,7 +232,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'mixed'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'mixed'` and the rule is not configured.
 
 ###### In
 
@@ -250,53 +250,7 @@ When configured with `'mixed'`.
 
 ##### `ok.md`
 
-When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'mixed'` and the rule is not configured.
-
-###### In
-
-> 👉 **Note**: `·` represents a space.
-
-```markdown
-*·List item.
-
-Paragraph.
-
-11.·List item
-
-Paragraph.
-
-*···List
-····item.
-
-*···List
-····item.
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'mixed'` and the rule is not configured.
-
-###### In
-
-> 👉 **Note**: `·` represents a space.
-
-```markdown
-*···List item.
-```
-
-###### Out
-
-```text
-1:5: Incorrect list-item indent: remove 2 spaces
-```
-
-##### `ok.md`
-
-When configured with `'one'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'one'` and the rule is not configured.
 
 ###### In
 
@@ -324,54 +278,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'one'`.
-
-###### In
-
-> 👉 **Note**: `·` represents a space.
-
-```markdown
-*···List
-····item.
-```
-
-###### Out
-
-```text
-1:5: Incorrect list-item indent: remove 2 spaces
-```
-
-##### `ok.md`
-
-When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'one'` and the rule is not configured.
-
-###### In
-
-> 👉 **Note**: `·` represents a space.
-
-```markdown
-*·List item.
-
-Paragraph.
-
-11.·List item
-
-Paragraph.
-
-*·List
-··item.
-
-*·List
-··item.
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'one'` and the rule is not configured.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'one'` and the rule is not configured.
 
 ###### In
 
@@ -390,7 +297,7 @@ When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/pa
 
 ##### `not-ok.md`
 
-When configured with `'tab'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'tab'` and the rule is not configured.
 
 ###### In
 
@@ -409,36 +316,7 @@ When configured with `'tab'`.
 
 ##### `not-ok.md`
 
-When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'tab'` and the rule is not configured.
-
-###### In
-
-> 👉 **Note**: `·` represents a space.
-
-```markdown
-*·List
-··item.
-```
-
-###### Out
-
-```text
-1:3: Incorrect list-item indent: add 2 spaces
-```
-
-##### `not-ok.md`
-
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect list-item indent style `💩`: use either `'tab'`, `'one'`, or `'mixed'`
-```
-
-##### `not-ok.md`
-
-When [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) is `'💩'` and the rule is not configured.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'💩'` and the rule is not configured.
 
 ###### Out
 

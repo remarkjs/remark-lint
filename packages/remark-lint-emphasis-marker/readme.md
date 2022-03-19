@@ -45,7 +45,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'*'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) is `'*'` |
 
 ## Install
 
@@ -124,7 +124,7 @@ The default export is `remarkLintEmphasisMarker`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) or `'consistent'`) are accepted:
+The following options (default: [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
 
 *   `'*'`
     — prefer asterisks
@@ -148,15 +148,15 @@ can be used for more constructs, it’s recommended to prefer asterisks.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats emphasis with asterisks by default.
-Pass
-[`emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis)
+Change
+[`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) to `'_'`
 to always use underscores.
 
 ## Examples
 
 ##### `ok.md`
 
-When configured with `'*'`.
+When [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) is `'*'` and the rule is not configured.
 
 ###### In
 
@@ -170,7 +170,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'*'`.
+When [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) is `'*'` and the rule is not configured.
 
 ###### In
 
@@ -186,37 +186,7 @@ _foo_
 
 ##### `ok.md`
 
-When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'*'` and the rule is not configured.
-
-###### In
-
-```markdown
-*foo*
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'*'` and the rule is not configured.
-
-###### In
-
-```markdown
-_foo_
-```
-
-###### Out
-
-```text
-1:1-1:6: Emphasis should use `*` as a marker
-```
-
-##### `ok.md`
-
-When configured with `'_'`.
+When [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) is `'_'` and the rule is not configured.
 
 ###### In
 
@@ -230,37 +200,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'_'`.
-
-###### In
-
-```markdown
-*foo*
-```
-
-###### Out
-
-```text
-1:1-1:6: Emphasis should use `_` as a marker
-```
-
-##### `ok.md`
-
-When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'_'` and the rule is not configured.
-
-###### In
-
-```markdown
-_foo_
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'_'` and the rule is not configured.
+When [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) is `'_'` and the rule is not configured.
 
 ###### In
 
@@ -291,17 +231,7 @@ _bar_
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
-```
-
-##### `not-ok.md`
-
-When [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) is `'💩'` and the rule is not configured.
+When [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) is `'💩'` and the rule is not configured.
 
 ###### Out
 

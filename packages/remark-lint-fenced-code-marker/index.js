@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   ``'`'``
  *     — prefer grave accents
@@ -23,8 +23,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats fenced code with grave accents by default.
- * Pass
- * [`fence: '~'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence)
+ * Change
+ * [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) to `'~'`
  * to always use tildes.
  *
  * @module fenced-code-marker

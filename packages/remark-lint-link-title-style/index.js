@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'"'`
  *     — prefer double quotes
@@ -32,8 +32,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats titles with double quotes by default.
- * Pass
- * [`quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote)
+ * Change
+ * [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) to `"'"`
  * to use single quotes.
  * There is no option to use parens.
  *

@@ -112,8 +112,6 @@ presets(root).then((presetObjects) => {
         const url = remote + '/tree/main/packages/' + rule
         const option = packages[rule]
 
-        if (rule === 'remark-lint') continue
-
         rows.push({
           type: 'tableRow',
           children: [
@@ -130,9 +128,7 @@ presets(root).then((presetObjects) => {
             },
             {
               type: 'tableCell',
-              children: option
-                ? [{type: 'inlineCode', value: inspect(option)}]
-                : []
+              children: option || []
             }
           ]
         })

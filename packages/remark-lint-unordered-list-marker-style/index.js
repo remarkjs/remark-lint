@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.bullet`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.bullet`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -27,8 +27,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats ordered lists with asterisks by default.
- * Pass
- * [`bullet: '+'` or `bullet: '-'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet)
+ * Change
+ * [`settings.bullet`](https://github.com/remarkjs/remark-lint#configure) to `'+'` or `'-'`
  * to always use plusses or dashes.
  *
  * @module unordered-list-marker-style

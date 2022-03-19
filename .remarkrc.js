@@ -7,6 +7,7 @@ import remarkGithub from 'remark-github'
 import remarkValidateLinks from 'remark-validate-links'
 import listOfPresets from './script/plugin/list-of-presets.js'
 import listOfRules from './script/plugin/list-of-rules.js'
+import listOfSettings from './script/plugin/list-of-settings.js'
 
 const plugins = [
   remarkPresetLintRecommended,
@@ -17,7 +18,8 @@ const plugins = [
   remarkGithub,
   remarkValidateLinks,
   listOfPresets,
-  listOfRules
+  listOfRules,
+  listOfSettings
 ]
 
 const preset = {plugins}

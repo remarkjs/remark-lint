@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -29,8 +29,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats emphasis with asterisks by default.
- * Pass
- * [`emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis)
+ * Change
+ * [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) to `'_'`
  * to always use underscores.
  *
  * @module emphasis-marker

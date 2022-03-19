@@ -45,7 +45,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'atx'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.setext`](https://github.com/remarkjs/remark-lint#configure) is `false` |
 
 ## Install
 
@@ -124,7 +124,7 @@ The default export is `remarkLintHeadingStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext), [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx), or `'consistent'`) are accepted:
+The following options (default: [`settings.setext`](https://github.com/remarkjs/remark-lint#configure), [`settings.closeAtx`](https://github.com/remarkjs/remark-lint#configure), or `'consistent'`) are accepted:
 
 *   `'atx'`
     — prefer ATX headings:
@@ -170,15 +170,15 @@ Due to this, it’s recommended to prefer ATX headings.
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats headings as ATX by default.
 The other styles can be configured with
-[`setext: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext)
+[`settings.setext: true`](https://github.com/remarkjs/remark-lint#configure)
 or
-[`closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
+[`settings.closeAtx: true`](https://github.com/remarkjs/remark-lint#configure).
 
 ## Examples
 
 ##### `ok.md`
 
-When configured with `'atx'`.
+When [`settings.setext`](https://github.com/remarkjs/remark-lint#configure) is `false` and the rule is not configured.
 
 ###### In
 
@@ -196,25 +196,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext) is `false` and the rule is not configured.
-
-###### In
-
-```markdown
-# Alpha
-
-## Bravo
-
-### Charlie
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'atx-closed'`.
+When [`settings.closeAtx`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 
@@ -232,45 +214,7 @@ No messages.
 
 ##### `ok.md`
 
-When [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx) is `true` and the rule is not configured.
-
-###### In
-
-```markdown
-# Delta ##
-
-## Echo ##
-
-### Foxtrot ###
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'setext'`.
-
-###### In
-
-```markdown
-Golf
-====
-
-Hotel
------
-
-### India
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext) is `true` and the rule is not configured.
+When [`settings.setext`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 

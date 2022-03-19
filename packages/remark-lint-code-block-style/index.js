@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'fenced'`
  *     — prefer fenced code blocks:
@@ -37,8 +37,8 @@
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats code blocks as fenced code when they have a language flag and as
  * indented code otherwise.
- * Pass
- * [`fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences)
+ * Change
+ * [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) to `true`
  * to always use fenced code.
  *
  * @module code-block-style

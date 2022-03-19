@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) or `'tab'`) are accepted:
+ * The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) or `'tab'`) are accepted:
  *
  * *   `'one'`
  *     — prefer a single space
@@ -49,7 +49,7 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * uses `'tab'` by default.
- * [`listItemIndent: 'one'` or `listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent)
+ * [`settings.listItemIndent: 'one'` or `settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark-lint#configure)
  * is supported.
  *
  * @module list-item-indent

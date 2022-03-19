@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) or `'consistent'`) are accepted:
+ * The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'.'`
  *     — prefer dots
@@ -25,8 +25,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats ordered lists with dots by default.
- * Pass
- * [`bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered)
+ * Change
+ * [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) to `')'`
  * to always use parens.
  *
  * @module ordered-list-marker-style

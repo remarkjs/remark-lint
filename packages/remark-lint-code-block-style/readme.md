@@ -45,7 +45,7 @@ This rule is included in the following presets:
 | Preset | Setting |
 | - | - |
 | [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'fenced'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) is `true` |
 
 ## Install
 
@@ -124,7 +124,7 @@ The default export is `remarkLintCodeBlockStyle`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) or `'consistent'`) are accepted:
+The following options (default: [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
 
 *   `'fenced'`
     — prefer fenced code blocks:
@@ -156,15 +156,15 @@ Due to this, it’s recommended to configure this rule with `'fenced'`.
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 formats code blocks as fenced code when they have a language flag and as
 indented code otherwise.
-Pass
-[`fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences)
+Change
+[`settings.fences`](https://github.com/remarkjs/remark-lint#configure) to `true`
 to always use fenced code.
 
 ## Examples
 
 ##### `ok.md`
 
-When configured with `'indented'`.
+When [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) is `false` and the rule is not configured.
 
 ###### In
 
@@ -182,7 +182,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'indented'`.
+When [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) is `false` and the rule is not configured.
 
 ###### In
 
@@ -207,50 +207,7 @@ bravo()
 
 ##### `ok.md`
 
-When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `false` and the rule is not configured.
-
-###### In
-
-```markdown
-    alpha()
-
-Paragraph.
-
-    bravo()
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `false` and the rule is not configured.
-
-###### In
-
-````markdown
-```
-alpha()
-```
-
-Paragraph.
-
-```
-bravo()
-```
-````
-
-###### Out
-
-```text
-1:1-3:4: Code blocks should be indented
-7:1-9:4: Code blocks should be indented
-```
-
-##### `ok.md`
-
-When configured with `'fenced'`.
+When [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 
@@ -272,50 +229,7 @@ No messages.
 
 ##### `not-ok-fenced.md`
 
-When configured with `'fenced'`.
-
-###### In
-
-```markdown
-    alpha()
-
-Paragraph.
-
-    bravo()
-```
-
-###### Out
-
-```text
-1:1-1:12: Code blocks should be fenced
-5:1-5:12: Code blocks should be fenced
-```
-
-##### `ok.md`
-
-When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `true` and the rule is not configured.
-
-###### In
-
-````markdown
-```
-alpha()
-```
-
-Paragraph.
-
-```
-bravo()
-```
-````
-
-###### Out
-
-No messages.
-
-##### `not-ok-fenced.md`
-
-When [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) is `true` and the rule is not configured.
+When [`settings.fences`](https://github.com/remarkjs/remark-lint#configure) is `true` and the rule is not configured.
 
 ###### In
 

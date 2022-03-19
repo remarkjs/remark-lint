@@ -1,16 +1,19 @@
 /**
+ * @typedef {import('mdast').PhrasingContent} PhrasingContent
  * @typedef {import('unified').Preset} Preset
  * @typedef {import('unified').Plugin} Plugin
  */
 
-import {toMarkdown} from 'mdast-util-to-markdown'
 import {promises as fs} from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
+import {inspect} from 'node:util'
+import remarkLint from 'remark-lint'
+import {rule} from './rule.js'
 
 /**
  * @param {string} base
- * @returns {Promise<Array<{name: string, packages: Record<string, unknown>, settings: Record<string, unknown>|undefined}>>}
+ * @returns {Promise<Array<{name: string, packages: Record<string, Array<PhrasingContent>|undefined>, settings: Record<string, unknown>|undefined}>>}
  */
 export async function presets(base) {
   const allFiles = await fs.readdir(base)
@@ -28,7 +31,7 @@ export async function presets(base) {
       const preset = presetMod.default
       const plugins = preset.plugins || []
       const settings = preset.settings || {}
-      /** @type {Record<string, unknown>} */
+      /** @type {Record<string, Array<PhrasingContent>|undefined>} */
       const packages = {}
 
       let index = -1
@@ -36,7 +39,7 @@ export async function presets(base) {
         const plugin = plugins[index]
         /** @type {Plugin} */
         let fn
-        /** @type {unknown} */
+        /** @type {Array<PhrasingContent>|undefined} */
         let option
 
         if (typeof plugin === 'function') {
@@ -47,103 +50,100 @@ export async function presets(base) {
           fn = plugin[0]
           // Fine:
           // type-coverage:ignore-next-line
-          option = plugin[1]
+          option = [{type: 'inlineCode', value: inspect(plugin[1])}]
         } else {
           throw new TypeError(
             'Expected plugin, plugin tuple, not `' + plugin + '`'
           )
         }
 
-        /** @type {string} */
-        // @ts-expect-error: `displayName`s are fine.
-        const name = fn.displayName || fn.name
+        if (fn === remarkLint) continue
 
-        packages[
-          name
-            .replace(
-              /[:-](\w)/g,
-              (/** @type {string} */ _, /** @type {string} */ $1) =>
-                $1.toUpperCase()
-            )
-            .replace(
-              /[A-Z]/g,
-              (/** @type {string} */ $0) => '-' + $0.toLowerCase()
-            )
-        ] = option
-      }
+        const name = (fn.displayName || fn.name)
+          .replace(
+            /[:-](\w)/g,
+            (/** @type {string} */ _, /** @type {string} */ $1) =>
+              $1.toUpperCase()
+          )
+          .replace(
+            /[A-Z]/g,
+            (/** @type {string} */ $0) => '-' + $0.toLowerCase()
+          )
 
-      if (typeof settings.fences === 'boolean') {
-        packages['remark-lint-code-block-style'] =
-          packages['remark-lint-code-block-style'] ||
-          (settings.fences ? 'fenced' : 'indented')
-      }
+        /** @type {Record<string, unknown>} */
+        const filtered = Object.assign(
+          {},
+          ...Array.from(
+            new Set(
+              Object.keys(rule(path.join(base, name)).tests).flatMap(
+                (configuration) => {
+                  /** @type {{settings: Record<string, unknown>}} */
+                  const {settings} = JSON.parse(configuration)
+                  return Object.keys(settings || {})
+                }
+              )
+            ),
+            (name) =>
+              settings[name] === undefined ? {} : {[name]: settings[name]}
+          )
+        )
 
-      if (settings.emphasis) {
-        packages['remark-lint-emphasis-marker'] =
-          packages['remark-lint-emphasis-marker'] || settings.emphasis
-      }
-
-      if (settings.fence) {
-        packages['remark-lint-fenced-code-marker'] =
-          packages['remark-lint-fenced-code-marker'] || settings.fence
-      }
-
-      if (
-        typeof settings.setext === 'boolean' ||
-        typeof settings.closeAtx === 'boolean'
-      ) {
-        packages['remark-lint-heading-style'] =
-          packages['remark-lint-heading-style'] ||
-          (settings.setext
-            ? 'setext'
-            : settings.closeAtx
-            ? 'atx-closed'
-            : 'atx')
-      }
-
-      if (settings.quote) {
-        packages['remark-lint-link-title-style'] =
-          packages['remark-lint-link-title-style'] || settings.quote
-      }
-
-      if (settings.listItemIndent) {
-        packages['remark-lint-list-item-indent'] =
-          packages['remark-lint-list-item-indent'] || settings.listItemIndent
-      }
-
-      if (settings.bulletOrdered) {
-        packages['remark-lint-ordered-list-marker-style'] =
-          packages['remark-lint-ordered-list-marker-style'] ||
-          settings.bulletOrdered
-      }
-
-      if (typeof settings.incrementListMarker === 'boolean') {
-        packages['remark-lint-ordered-list-marker-value'] =
-          packages['remark-lint-ordered-list-marker-value'] ||
-          (settings.incrementListMarker ? 'ordered' : 'single')
-      }
-
-      if (
-        settings.rule !== undefined ||
-        settings.ruleRepetition !== undefined ||
-        typeof settings.ruleSpaces === 'boolean'
-      ) {
-        packages['remark-lint-rule-style'] =
-          packages['remark-lint-rule-style'] ||
-          toMarkdown({type: 'thematicBreak'}, settings).slice(0, -1)
-      }
-
-      if (settings.strong) {
-        packages['remark-lint-strong-marker'] =
-          packages['remark-lint-strong-marker'] || settings.strong
-      }
-
-      if (settings.bullet) {
-        packages['remark-lint-unordered-list-marker-style'] =
-          packages['remark-lint-unordered-list-marker-style'] || settings.bullet
+        packages[name] =
+          option ||
+          (Object.entries(filtered).length > 0
+            ? formatSettings(filtered)
+            : undefined)
       }
 
       return {name, packages, settings: preset.settings}
     })
   )
+}
+
+/**
+ * @param {Record<string, unknown>} settings
+ * @returns {Array<PhrasingContent>}
+ */
+export function formatSettings(settings) {
+  const entries = Object.entries(settings)
+  if (entries.length === 1) {
+    const [[name, value]] = entries
+    return [
+      {
+        type: 'link',
+        url: 'https://github.com/remarkjs/remark-lint#configure',
+        title: null,
+        children: [
+          {
+            type: 'inlineCode',
+            value: `settings.${name}`
+          }
+        ]
+      },
+      {type: 'text', value: ' is '},
+      {
+        type: 'inlineCode',
+        value: inspect(value)
+      }
+    ]
+  }
+
+  return [
+    {
+      type: 'link',
+      url: 'https://github.com/remarkjs/remark-lint#configure',
+      title: null,
+      children: [
+        {
+          type: 'inlineCode',
+          value: 'settings'
+        }
+      ]
+    },
+    {type: 'text', value: ' includes '},
+    {
+      type: 'inlineCode',
+      value: inspect(settings)
+    }
+  ]
 }

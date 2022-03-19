@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: [`settings.rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule), [`settings.ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition), [`settings.ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces), or `'consistent'`) are accepted:
+ * The following options (default: [`settings.rule`](https://github.com/remarkjs/remark-lint#configure), [`settings.ruleRepetition`](https://github.com/remarkjs/remark-lint#configure), [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure), or `'consistent'`) are accepted:
  *
  * *   `string` (example: `'** * **'`, `'___'`)
  *     — thematic break to prefer
@@ -29,11 +29,11 @@
  * formats rules with `***` by default.
  * There are three settings to control rules:
  *
- * *   [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
+ * *   [`settings.rule`](https://github.com/remarkjs/remark-lint#configure)
  *     (default: `'*'`) — marker
- * *   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
+ * *   [`settings.ruleRepetition`](https://github.com/remarkjs/remark-lint#configure)
  *     (default: `3`) — repetitions
- * *   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
+ * *   [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure)
  *     (default: `false`) — use spaces between markers
  *
  * @module rule-style

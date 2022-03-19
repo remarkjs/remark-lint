@@ -36,7 +36,7 @@
  * ###### `header`
  *
  * The default is `header:atx`.
- * To use `header:setext`, change the setting for `remark-lint-heading-style`
+ * To use `header:setext`, change [`settings.setext`](https://github.com/remarkjs/remark-lint#configure)
  * like so:
  *
  * ```diff
@@ -50,8 +50,8 @@
  * ###### `list-marker`
  *
  * The default is `list-marker:hyphen`.
- * For `list-marker:asterisk` or `list-marker:plus`, change the setting for
- * `remark-lint-unordered-list-marker-style` like so:
+ * For `list-marker:asterisk` or `list-marker:plus`, change [`settings.bullet`](https://github.com/remarkjs/remark-lint#configure)
+ * like so:
  *
  * ```diff
  *  "settings": [
@@ -64,7 +64,7 @@
  * ###### `list-space`
  *
  * The default is `list-space:mixed`.
- * For `list-space:1`, change the setting for `remark-lint-list-item-indent`
+ * For `list-space:1`, change [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure)
  * like so:
  *
  * ```diff
@@ -78,7 +78,7 @@
  * ###### `code`
  *
  * The default is `code:fenced`.
- * For `code:indented`, change the setting for `remark-lint-code-block-style`
+ * For `code:indented`, change [`settings.fences`](https://github.com/remarkjs/remark-lint#configure)
  * like so:
  *
  * ```diff

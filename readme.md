@@ -263,9 +263,10 @@ remark()
   // Use `'error'` or `2` to treat messages as exceptions:
   .use(remarkLintFinalNewline, ['error'])
   .use(remarkLintFinalNewline, [2])
-  // Some rules correspond to `remark-stringify` settings which they obey by default:
-  .use(remarkLintUnorderedListMarkerStyle).use({settings: {bullet: '*'}})
-  // Some accept options, and what they exactly accept is different for
+  // Some rules respond to shared settings that `remark-stringify` also understands:
+  .use({settings: {bullet: '*'}})
+  .use(remarkLintUnorderedListMarkerStyle)
+  // Some rules accept options, and what they exactly accept is different for
   // each rule (sometimes a string, a number, or an object).
   // The following rule accepts a string:
   .use(remarkLintUnorderedListMarkerStyle, '*')

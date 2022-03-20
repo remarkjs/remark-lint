@@ -29,7 +29,7 @@ presets(root).then((presetObjects) => {
   let index = -1
 
   while (++index < presetObjects.length) {
-    const {name, packages} = presetObjects[index]
+    const {name, packages, settings} = presetObjects[index]
     const base = path.resolve(root, name)
     /** @type {PackageJson} */
     const pack = JSON.parse(
@@ -311,6 +311,89 @@ presets(root).then((presetObjects) => {
         ]
       },
       {type: 'table', align: [], children: rows},
+      {
+        type: 'heading',
+        depth: 2,
+        children: [{type: 'text', value: 'Settings'}]
+      },
+      .../** @type {Array<BlockContent>} */ (
+        settings
+          ? [
+              {
+                type: 'paragraph',
+                children: [
+                  {type: 'text', value: 'It sets the following remark '},
+                  {
+                    type: 'linkReference',
+                    identifier: 'configure',
+                    referenceType: 'full',
+                    children: [{type: 'text', value: 'settings'}]
+                  },
+                  {
+                    type: 'text',
+                    value:
+                      '.\nSettings are shared among all plugins --- particularly the corresponding rules and '
+                  },
+                  {
+                    type: 'link',
+                    url: 'https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options',
+                    title: null,
+                    children: [{type: 'inlineCode', value: 'remark-stringify'}]
+                  },
+                  {type: 'text', value: ':'}
+                ]
+              },
+              {
+                type: 'table',
+                align: [],
+                children: [
+                  {
+                    type: 'tableRow',
+                    children: [
+                      {
+                        type: 'tableCell',
+                        children: [{type: 'text', value: 'Name'}]
+                      },
+                      {
+                        type: 'tableCell',
+                        children: [{type: 'text', value: 'Value'}]
+                      }
+                    ]
+                  },
+                  ...Object.entries(settings).map(([name, value]) => ({
+                    type: 'tableRow',
+                    children: [
+                      {
+                        type: 'tableCell',
+                        children: [
+                          {type: 'inlineCode', value: `settings.${name}`}
+                        ]
+                      },
+                      {
+                        type: 'tableCell',
+                        children: [{type: 'inlineCode', value: inspect(value)}]
+                      }
+                    ]
+                  }))
+                ]
+              }
+            ]
+          : [
+              {
+                type: 'paragraph',
+                children: [
+                  {type: 'text', value: "It doesn't set any remark "},
+                  {
+                    type: 'linkReference',
+                    identifier: 'configure',
+                    referenceType: 'full',
+                    children: [{type: 'text', value: 'settings'}]
+                  },
+                  {type: 'text', value: '.'}
+                ]
+              }
+            ]
+      ),
       {
         type: 'heading',
         depth: 2,
@@ -663,6 +746,11 @@ presets(root).then((presetObjects) => {
         type: 'definition',
         identifier: 'mono',
         url: 'https://github.com/' + slug
+      },
+      {
+        type: 'definition',
+        identifier: 'configure',
+        url: `https://github.com/${slug}#configure`
       },
       {
         type: 'definition',

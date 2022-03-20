@@ -17,6 +17,7 @@ Preset of [`remark-lint`][mono] rules to warn for some likely problems.
 *   [What is this?](#what-is-this)
 *   [When should I use this?](#when-should-i-use-this)
 *   [Rules](#rules)
+*   [Settings](#settings)
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
@@ -55,6 +56,16 @@ This preset configures [`remark-lint`][mono] with the following rules:
 | [`remark-lint-no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link) | |
 | [`remark-lint-no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) | |
 | [`remark-lint-no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) | |
+
+## Settings
+
+It sets the following remark [settings][configure].
+Settings are shared among all plugins --- particularly the corresponding rules and [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options):
+
+| Name | Value |
+| - | - |
+| `settings.bulletOrdered` | `'.'` |
+| `settings.listItemIndent` | `'tab'` |
 
 ## Install
 
@@ -184,6 +195,8 @@ abide by its terms.
 [remark]: https://github.com/remarkjs/remark
 
 [mono]: https://github.com/remarkjs/remark-lint
+
+[configure]: https://github.com/remarkjs/remark-lint#configure
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 

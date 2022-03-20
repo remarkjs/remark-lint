@@ -17,6 +17,7 @@ Preset of [`remark-lint`][mono] rules that follow an opinionated style guide.
 *   [What is this?](#what-is-this)
 *   [When should I use this?](#when-should-i-use-this)
 *   [Rules](#rules)
+*   [Settings](#settings)
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
@@ -175,6 +176,25 @@ This preset configures [`remark-lint`][mono] with the following rules:
 | [`remark-lint-no-emphasis-as-heading`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading) | |
 | [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) | |
 
+## Settings
+
+It sets the following remark [settings][configure].
+Settings are shared among all plugins --- particularly the corresponding rules and [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options):
+
+| Name | Value |
+| - | - |
+| `settings.bullet` | `'-'` |
+| `settings.bulletOrdered` | `'.'` |
+| `settings.emphasis` | `'*'` |
+| `settings.fence` | ``'`'`` |
+| `settings.fences` | `true` |
+| `settings.incrementListMarker` | `false` |
+| `settings.listItemIndent` | `'mixed'` |
+| `settings.quote` | `'"'` |
+| `settings.rule` | `'-'` |
+| `settings.setext` | `false` |
+| `settings.strong` | `'*'` |
+
 ## Install
 
 This package is [ESM only][esm].
@@ -303,6 +323,8 @@ abide by its terms.
 [remark]: https://github.com/remarkjs/remark
 
 [mono]: https://github.com/remarkjs/remark-lint
+
+[configure]: https://github.com/remarkjs/remark-lint#configure
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 

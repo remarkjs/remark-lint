@@ -9,7 +9,7 @@ import url from 'node:url'
 
 /**
  * @param {string} base
- * @returns {Promise<Array<{name: string, packages: Record<string, unknown>}>>}
+ * @returns {Promise<Array<{name: string, packages: Record<string, unknown>, settings: Record<string, unknown>|undefined}>>}
  */
 export async function presets(base) {
   const allFiles = await fs.readdir(base)
@@ -70,7 +70,7 @@ export async function presets(base) {
         ] = option
       }
 
-      return {name, packages}
+      return {name, packages, settings: preset.settings}
     })
   )
 }

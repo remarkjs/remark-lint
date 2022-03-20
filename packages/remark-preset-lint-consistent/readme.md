@@ -17,6 +17,7 @@ Preset of [`remark-lint`][mono] rules to warn for inconsistencies.
 *   [What is this?](#what-is-this)
 *   [When should I use this?](#when-should-i-use-this)
 *   [Rules](#rules)
+*   [Settings](#settings)
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
@@ -53,6 +54,10 @@ This preset configures [`remark-lint`][mono] with the following rules:
 | [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) | `'consistent'` |
 | [`remark-lint-strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) | `'consistent'` |
 | [`remark-lint-table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding) | `'consistent'` |
+
+## Settings
+
+It doesn't set any remark [settings][configure].
 
 ## Install
 
@@ -182,6 +187,8 @@ abide by its terms.
 [remark]: https://github.com/remarkjs/remark
 
 [mono]: https://github.com/remarkjs/remark-lint
+
+[configure]: https://github.com/remarkjs/remark-lint#configure
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 

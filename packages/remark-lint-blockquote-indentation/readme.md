@@ -157,24 +157,6 @@ Due to this, it’s recommended to configure this rule with `2`.
 
 ##### `ok.md`
 
-When configured with `2`.
-
-###### In
-
-```markdown
-> Hello
-
-Paragraph.
-
-> World
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
 When configured with `4`.
 
 ###### In
@@ -185,6 +167,24 @@ When configured with `4`.
 Paragraph.
 
 >   World
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `2`.
+
+###### In
+
+```markdown
+> Hello
+
+Paragraph.
+
+> World
 ```
 
 ###### Out

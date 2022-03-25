@@ -23,21 +23,21 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "setting": 1}
+ *   {"name": "ok.md", "config": 1}
  *
  *   # Foo
  *
  *   ## Bar
  *
  * @example
- *   {"name": "not-ok.md", "setting": 1, "label": "input"}
+ *   {"name": "not-ok.md", "config": 1, "label": "input"}
  *
  *   # Foo
  *
  *   # Bar
  *
  * @example
- *   {"name": "not-ok.md", "setting": 1, "label": "output"}
+ *   {"name": "not-ok.md", "config": 1, "label": "output"}
  *
  *   3:1-3:6: Don’t use multiple top level headings (1:1)
  */

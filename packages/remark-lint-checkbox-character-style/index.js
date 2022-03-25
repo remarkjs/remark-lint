@@ -37,19 +37,19 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "setting": {"checked": "x"}, "gfm": true}
+ *   {"name": "ok.md", "config": {"checked": "x"}, "gfm": true}
  *
  *   - [x] List item
  *   - [x] List item
  *
  * @example
- *   {"name": "ok.md", "setting": {"checked": "X"}, "gfm": true}
+ *   {"name": "ok.md", "config": {"checked": "X"}, "gfm": true}
  *
  *   - [X] List item
  *   - [X] List item
  *
  * @example
- *   {"name": "ok.md", "setting": {"unchecked": " "}, "gfm": true}
+ *   {"name": "ok.md", "config": {"unchecked": " "}, "gfm": true}
  *
  *   - [ ] List item
  *   - [ ] List item
@@ -57,7 +57,7 @@
  *   - [ ]
  *
  * @example
- *   {"name": "ok.md", "setting": {"unchecked": "\t"}, "gfm": true}
+ *   {"name": "ok.md", "config": {"unchecked": "\t"}, "gfm": true}
  *
  *   - [»] List item
  *   - [»] List item
@@ -77,12 +77,12 @@
  *   4:5: Unchecked checkboxes should use ` ` as a marker
  *
  * @example
- *   {"setting": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ *   {"config": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect unchecked checkbox marker `💩`: use either `'\t'`, or `' '`
  *
  * @example
- *   {"setting": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ *   {"config": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
  */

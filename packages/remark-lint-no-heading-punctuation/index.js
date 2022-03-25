@@ -25,7 +25,7 @@
  *   # Hello
  *
  * @example
- *   {"name": "ok.md", "setting": ",;:!?"}
+ *   {"name": "ok.md", "config": ",;:!?"}
  *
  *   # Hello…
  *

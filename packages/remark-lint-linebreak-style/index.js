@@ -45,22 +45,22 @@
  *   Bravo␊
  *
  * @example
- *   {"name": "not-ok-unix.md", "label": "input", "setting": "unix", "positionless": true}
+ *   {"name": "not-ok-unix.md", "label": "input", "config": "unix", "positionless": true}
  *
  *   Alpha␍␊
  *
  * @example
- *   {"name": "not-ok-unix.md", "label": "output", "setting": "unix"}
+ *   {"name": "not-ok-unix.md", "label": "output", "config": "unix"}
  *
  *   1:7: Expected linebreaks to be unix (`\n`), not windows (`\r\n`)
  *
  * @example
- *   {"name": "not-ok-windows.md", "label": "input", "setting": "windows", "positionless": true}
+ *   {"name": "not-ok-windows.md", "label": "input", "config": "windows", "positionless": true}
  *
  *   Alpha␊
  *
  * @example
- *   {"name": "not-ok-windows.md", "label": "output", "setting": "windows"}
+ *   {"name": "not-ok-windows.md", "label": "output", "config": "windows"}
  *
  *   1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
  */

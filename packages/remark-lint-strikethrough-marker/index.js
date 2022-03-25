@@ -36,32 +36,32 @@
  * @copyright 2021 Denis Augsburger
  * @license MIT
  * @example
- *   {"setting": "~", "name": "ok.md", "gfm": true}
+ *   {"config": "~", "name": "ok.md", "gfm": true}
  *
  *   ~foo~
  *
  * @example
- *   {"setting": "~", "name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"config": "~", "name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~~foo~~
  *
  * @example
- *   {"setting": "~", "name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"config": "~", "name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:8: Strikethrough should use `~` as a marker
  *
  * @example
- *   {"setting": "~~", "name": "ok.md", "gfm": true}
+ *   {"config": "~~", "name": "ok.md", "gfm": true}
  *
  *   ~~foo~~
  *
  * @example
- *   {"setting": "~~", "name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"config": "~~", "name": "not-ok.md", "label": "input", "gfm": true}
  *
  *   ~foo~
  *
  * @example
- *   {"setting": "~~", "name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"config": "~~", "name": "not-ok.md", "label": "output", "gfm": true}
  *
  *   1:1-1:6: Strikethrough should use `~~` as a marker
  *
@@ -77,7 +77,7 @@
  *   2:1-2:6: Strikethrough should use `~~` as a marker
  *
  * @example
- *   {"setting": "💩", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ *   {"config": "💩", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
  *   1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
  */

@@ -135,74 +135,6 @@ a value of `2` can be defined here.
 
 ##### `ok.md`
 
-When configured with `2`.
-
-###### In
-
-```markdown
-## Delta
-
-Paragraph.
-```
-
-###### Out
-
-No messages.
-
-##### `ok-html.md`
-
-When configured with `2`.
-
-###### In
-
-```markdown
-<h2>Echo</h2>
-
-Paragraph.
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When configured with `2`.
-
-###### In
-
-```markdown
-# Foxtrot
-
-Paragraph.
-```
-
-###### Out
-
-```text
-1:1-1:10: First heading level should be `2`
-```
-
-##### `not-ok-html.md`
-
-When configured with `2`.
-
-###### In
-
-```markdown
-<h1>Golf</h1>
-
-Paragraph.
-```
-
-###### Out
-
-```text
-1:1-1:14: First heading level should be `2`
-```
-
-##### `ok.md`
-
 ###### In
 
 ```markdown
@@ -271,6 +203,74 @@ Paragraph.
 
 ```text
 1:1-1:17: First heading level should be `1`
+```
+
+##### `ok.md`
+
+When configured with `2`.
+
+###### In
+
+```markdown
+## Delta
+
+Paragraph.
+```
+
+###### Out
+
+No messages.
+
+##### `ok-html.md`
+
+When configured with `2`.
+
+###### In
+
+```markdown
+<h2>Echo</h2>
+
+Paragraph.
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `2`.
+
+###### In
+
+```markdown
+# Foxtrot
+
+Paragraph.
+```
+
+###### Out
+
+```text
+1:1-1:10: First heading level should be `2`
+```
+
+##### `not-ok-html.md`
+
+When configured with `2`.
+
+###### In
+
+```markdown
+<h1>Golf</h1>
+
+Paragraph.
+```
+
+###### Out
+
+```text
+1:1-1:14: First heading level should be `2`
 ```
 
 ## Compatibility

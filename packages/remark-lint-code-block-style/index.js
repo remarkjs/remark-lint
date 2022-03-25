@@ -49,7 +49,7 @@
  * @license MIT
  *
  * @example
- *   {"setting": "indented", "name": "ok.md"}
+ *   {"config": "indented", "name": "ok.md"}
  *
  *       alpha()
  *
@@ -58,7 +58,7 @@
  *       bravo()
  *
  * @example
- *   {"setting": "indented", "name": "not-ok.md", "label": "input"}
+ *   {"config": "indented", "name": "not-ok.md", "label": "input"}
  *
  *   ```
  *   alpha()
@@ -71,13 +71,13 @@
  *   ```
  *
  * @example
- *   {"setting": "indented", "name": "not-ok.md", "label": "output"}
+ *   {"config": "indented", "name": "not-ok.md", "label": "output"}
  *
  *   1:1-3:4: Code blocks should be indented
  *   7:1-9:4: Code blocks should be indented
  *
  * @example
- *   {"setting": "fenced", "name": "ok.md"}
+ *   {"config": "fenced", "name": "ok.md"}
  *
  *   ```
  *   alpha()
@@ -90,7 +90,7 @@
  *   ```
  *
  * @example
- *   {"setting": "fenced", "name": "not-ok-fenced.md", "label": "input"}
+ *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "input"}
  *
  *       alpha()
  *
@@ -99,7 +99,7 @@
  *       bravo()
  *
  * @example
- *   {"setting": "fenced", "name": "not-ok-fenced.md", "label": "output"}
+ *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "output"}
  *
  *   1:1-1:12: Code blocks should be fenced
  *   5:1-5:12: Code blocks should be fenced
@@ -121,7 +121,7 @@
  *   5:1-7:4: Code blocks should be indented
  *
  * @example
- *   {"setting": "💩", "name": "not-ok-incorrect.md", "label": "output", "positionless": true}
+ *   {"config": "💩", "name": "not-ok-incorrect.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
  */

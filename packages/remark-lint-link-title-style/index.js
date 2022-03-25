@@ -44,7 +44,7 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "setting": "\""}
+ *   {"name": "ok.md", "config": "\""}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com "Example Domain")
@@ -57,17 +57,17 @@
  *   [Example](#Heading-(optional))
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "setting": "\""}
+ *   {"name": "not-ok.md", "label": "input", "config": "\""}
  *
  *   [Example]: http://example.com 'Example Domain'
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "setting": "\""}
+ *   {"name": "not-ok.md", "label": "output", "config": "\""}
  *
  *   1:31-1:47: Titles should use `"` as a quote
  *
  * @example
- *   {"name": "ok.md", "setting": "'"}
+ *   {"name": "ok.md", "config": "'"}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com 'Example Domain')
@@ -76,17 +76,17 @@
  *   [Example]: http://example.com 'Example Domain'
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "setting": "'"}
+ *   {"name": "not-ok.md", "label": "input", "config": "'"}
  *
  *   [Example]: http://example.com "Example Domain"
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "setting": "'"}
+ *   {"name": "not-ok.md", "label": "output", "config": "'"}
  *
  *   1:31-1:47: Titles should use `'` as a quote
  *
  * @example
- *   {"name": "ok.md", "setting": "()"}
+ *   {"name": "ok.md", "config": "()"}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com (Example Domain))
@@ -95,12 +95,12 @@
  *   [Example]: http://example.com (Example Domain)
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "setting": "()"}
+ *   {"name": "not-ok.md", "label": "input", "config": "()"}
  *
  *   [Example](http://example.com 'Example Domain')
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "setting": "()"}
+ *   {"name": "not-ok.md", "label": "output", "config": "()"}
  *
  *   1:30-1:46: Titles should use `()` as a quote
  *
@@ -116,7 +116,7 @@
  *   2:30-2:46: Titles should use `"` as a quote
  *
  * @example
- *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */

@@ -38,7 +38,7 @@
  *   1:1: Incorrect extension: use `md`
  *
  * @example
- *   {"name": "readme.mkd", "setting": "mkd"}
+ *   {"name": "readme.mkd", "config": "mkd"}
  */
 
 /**

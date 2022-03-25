@@ -567,11 +567,11 @@ presets(root).then((presetObjects) => {
 
       let first = true
       /** @type {string} */
-      let setting
+      let configuration
 
-      for (setting in tests) {
-        if (own.call(tests, setting)) {
-          const fixtures = tests[setting]
+      for (configuration in tests) {
+        if (own.call(tests, configuration)) {
+          const fixtures = tests[configuration]
 
           if (first) {
             children.push({
@@ -588,7 +588,8 @@ presets(root).then((presetObjects) => {
           for (fileName in fixtures) {
             if (own.call(fixtures, fileName)) {
               const fixture = fixtures[fileName]
-              const label = inspect(JSON.parse(setting))
+              /** @type {{config: unknown}} */
+              const {config} = JSON.parse(configuration)
               let clean = fixture.input
 
               children.push({
@@ -597,12 +598,12 @@ presets(root).then((presetObjects) => {
                 children: [{type: 'inlineCode', value: fileName}]
               })
 
-              if (label !== 'true') {
+              if (config !== true) {
                 children.push({
                   type: 'paragraph',
                   children: [
                     {type: 'text', value: 'When configured with '},
-                    {type: 'inlineCode', value: label},
+                    {type: 'inlineCode', value: inspect(config)},
                     {type: 'text', value: '.'}
                   ]
                 })

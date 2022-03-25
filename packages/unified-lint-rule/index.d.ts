@@ -15,20 +15,18 @@ export interface RuleMeta {
   url?: string | undefined
 }
 
-export function lintRule<Tree extends Node = Node, Settings = unknown>(
+export function lintRule<Tree extends Node = Node, Options = unknown>(
   name: string | RuleMeta,
-  rule: Rule<Tree, Settings>
+  rule: Rule<Tree, Options>
 ): Plugin<
-  | void[]
-  | [Settings | Label | Severity]
-  | [boolean | Label | Severity, Settings],
+  void[] | [Options | Label | Severity] | [boolean | Label | Severity, Options],
   Tree
 >
 
-export type Rule<Tree extends Node = Node, Settings = unknown> = (
+export type Rule<Tree extends Node = Node, Options = unknown> = (
   node: Tree,
   file: VFile,
-  settings: Settings
+  options: Options
 ) => Promise<Tree | undefined | void> | Tree | undefined | void
 
 export {Severity, Label} from './lib/index.js'

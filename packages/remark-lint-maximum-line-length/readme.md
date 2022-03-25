@@ -138,6 +138,78 @@ Whether to wrap prose or not is a stylistic choice.
 
 ## Examples
 
+##### `ok.md`
+
+###### In
+
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+
+```markdown
+This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
+long.
+
+This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?query=variables>
+
+<http://this-link-is-fine.com>
+
+`alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscarPapaQuebec.romeo()`
+
+[foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
+
+<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
+
+![foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
+
+| An | exception | is | line | length | in | long | tables | because | those | can’t | just |
+| -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |
+| be | helped    |    |      |        |    |      |        |         |       |       | .    |
+
+<a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
+
+The following is also fine (note the `.`), because there is no whitespace.
+
+<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>.
+
+In addition, definitions are also fine:
+
+[foo]: <http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `80`.
+
+###### In
+
+```markdown
+This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+long.
+
+Just like thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiis one.
+
+And this one is also very wrong: because the link starts aaaaaaafter the column: <http://line.com>
+
+<http://this-long-url-with-a-long-domain-is-not-ok.co.uk/a-long-path?query=variables> and such.
+
+And this one is also very wrong: because the code starts aaaaaaafter the column: `alpha.bravo()`
+
+`alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscar.papa()` and such.
+```
+
+###### Out
+
+```text
+4:86: Line must be at most 80 characters
+6:99: Line must be at most 80 characters
+8:96: Line must be at most 80 characters
+10:97: Line must be at most 80 characters
+12:99: Line must be at most 80 characters
+```
+
 ##### `ok-mixed-line-endings.md`
 
 When configured with `10`.
@@ -184,78 +256,6 @@ When configured with `10`.
 3:12: Line must be at most 10 characters
 4:12: Line must be at most 10 characters
 ```
-
-##### `not-ok.md`
-
-When configured with `80`.
-
-###### In
-
-```markdown
-This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-long.
-
-Just like thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiis one.
-
-And this one is also very wrong: because the link starts aaaaaaafter the column: <http://line.com>
-
-<http://this-long-url-with-a-long-domain-is-not-ok.co.uk/a-long-path?query=variables> and such.
-
-And this one is also very wrong: because the code starts aaaaaaafter the column: `alpha.bravo()`
-
-`alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscar.papa()` and such.
-```
-
-###### Out
-
-```text
-4:86: Line must be at most 80 characters
-6:99: Line must be at most 80 characters
-8:96: Line must be at most 80 characters
-10:97: Line must be at most 80 characters
-12:99: Line must be at most 80 characters
-```
-
-##### `ok.md`
-
-###### In
-
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
-
-```markdown
-This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
-long.
-
-This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?query=variables>
-
-<http://this-link-is-fine.com>
-
-`alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscarPapaQuebec.romeo()`
-
-[foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
-
-<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
-
-![foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
-
-| An | exception | is | line | length | in | long | tables | because | those | can’t | just |
-| -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |
-| be | helped    |    |      |        |    |      |        |         |       |       | .    |
-
-<a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
-
-The following is also fine (note the `.`), because there is no whitespace.
-
-<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>.
-
-In addition, definitions are also fine:
-
-[foo]: <http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
-```
-
-###### Out
-
-No messages.
 
 ## Compatibility
 

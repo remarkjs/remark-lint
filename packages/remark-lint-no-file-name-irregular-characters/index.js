@@ -31,7 +31,7 @@
  *   1:1: Do not use `_` in a file name
  *
  * @example
- *   {"name": "README.md", "label": "output", "setting": "\\.a-z0-9", "positionless": true}
+ *   {"name": "README.md", "label": "output", "config": "\\.a-z0-9", "positionless": true}
  *
  *   1:1: Do not use `R` in a file name
  *

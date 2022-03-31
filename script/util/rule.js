@@ -12,7 +12,6 @@
  * @typedef Check
  * @property {string} input
  * @property {Array<string>} output
- * @property {string} setting
  * @property {boolean} gfm
  * @property {boolean} positionless
  */
@@ -77,7 +76,7 @@ export function rule(filePath) {
 
   while (++index < examples.length) {
     const lines = examples[index].split('\n')
-    /** @type {{name: string, label?: 'input'|'output', setting?: unknown, positionless?: boolean, gfm?: boolean}} */
+    /** @type {{name: string, label?: 'input'|'output', config?: unknown, positionless?: boolean, gfm?: boolean}} */
     let info
 
     try {
@@ -92,15 +91,17 @@ export function rule(filePath) {
     }
 
     const exampleValue = strip(lines.join('\n').replace(/^\r?\n/g, ''))
-    const setting = JSON.stringify(info.setting || true)
+    const configuration = JSON.stringify({config: info.config || true})
     const name = info.name
-    const context = setting in tests ? tests[setting] : (tests[setting] = {})
+    const context =
+      configuration in tests
+        ? tests[configuration]
+        : (tests[configuration] = {})
 
     if (!info.label) {
       context[name] = {
         positionless: info.positionless || false,
         gfm: info.gfm || false,
-        setting,
         input: exampleValue,
         output: []
       }
@@ -123,13 +124,10 @@ export function rule(filePath) {
       context[name] = {
         positionless: info.positionless || false,
         gfm: info.gfm || false,
-        setting: '',
         input: '',
         output: []
       }
     }
-
-    context[name].setting = setting
 
     if (info.label === 'output') {
       context[name][info.label] = exampleValue.split('\n')

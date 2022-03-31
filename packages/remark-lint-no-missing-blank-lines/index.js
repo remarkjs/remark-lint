@@ -60,7 +60,7 @@
  *   5:3-5:10: Missing blank line before block node
  *
  * @example
- *   {"name": "tight.md", "setting": {"exceptTightLists": true}, "label": "input"}
+ *   {"name": "tight.md", "config": {"exceptTightLists": true}, "label": "input"}
  *
  *   # Foo
  *   ## Bar
@@ -71,7 +71,7 @@
  *   Paragraph.
  *
  * @example
- *   {"name": "tight.md", "setting": {"exceptTightLists": true}, "label": "output"}
+ *   {"name": "tight.md", "config": {"exceptTightLists": true}, "label": "output"}
  *
  *   2:1-2:7: Missing blank line before block node
  */

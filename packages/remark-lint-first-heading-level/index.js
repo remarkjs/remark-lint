@@ -68,40 +68,40 @@
  *   1:1-1:17: First heading level should be `1`
  *
  * @example
- *   {"name": "ok.md", "setting": 2}
+ *   {"name": "ok.md", "config": 2}
  *
  *   ## Delta
  *
  *   Paragraph.
  *
  * @example
- *   {"name": "ok-html.md", "setting": 2}
+ *   {"name": "ok-html.md", "config": 2}
  *
  *   <h2>Echo</h2>
  *
  *   Paragraph.
  *
  * @example
- *   {"name": "not-ok.md", "setting": 2, "label": "input"}
+ *   {"name": "not-ok.md", "config": 2, "label": "input"}
  *
  *   # Foxtrot
  *
  *   Paragraph.
  *
  * @example
- *   {"name": "not-ok.md", "setting": 2, "label": "output"}
+ *   {"name": "not-ok.md", "config": 2, "label": "output"}
  *
  *   1:1-1:10: First heading level should be `2`
  *
  * @example
- *   {"name": "not-ok-html.md", "setting": 2, "label": "input"}
+ *   {"name": "not-ok-html.md", "config": 2, "label": "input"}
  *
  *   <h1>Golf</h1>
  *
  *   Paragraph.
  *
  * @example
- *   {"name": "not-ok-html.md", "setting": 2, "label": "output"}
+ *   {"name": "not-ok-html.md", "config": 2, "label": "output"}
  *
  *   1:1-1:14: First heading level should be `2`
  */

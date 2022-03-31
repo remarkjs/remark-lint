@@ -50,47 +50,47 @@
  *   1:1-3:4: Missing code language flag
  *
  * @example
- *   {"name": "ok.md", "setting": {"allowEmpty": true}}
+ *   {"name": "ok.md", "config": {"allowEmpty": true}}
  *
  *   ```
  *   alpha()
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "input"}
+ *   {"name": "not-ok.md", "config": {"allowEmpty": false}, "label": "input"}
  *
  *   ```
  *   alpha()
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "setting": {"allowEmpty": false}, "label": "output"}
+ *   {"name": "not-ok.md", "config": {"allowEmpty": false}, "label": "output"}
  *
  *   1:1-3:4: Missing code language flag
  *
  * @example
- *   {"name": "ok.md", "setting": ["alpha"]}
+ *   {"name": "ok.md", "config": ["alpha"]}
  *
  *   ```alpha
  *   bravo()
  *   ```
  *
  * @example
- *   {"name": "ok.md", "setting": {"flags":["alpha"]}}
+ *   {"name": "ok.md", "config": {"flags":["alpha"]}}
  *
  *   ```alpha
  *   bravo()
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "setting": ["charlie"], "label": "input"}
+ *   {"name": "not-ok.md", "config": ["charlie"], "label": "input"}
  *
  *   ```alpha
  *   bravo()
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "setting": ["charlie"], "label": "output"}
+ *   {"name": "not-ok.md", "config": ["charlie"], "label": "output"}
  *
  *   1:1-3:4: Incorrect code language flag
  */

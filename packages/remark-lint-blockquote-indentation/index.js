@@ -42,7 +42,7 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "setting": 4}
+ *   {"name": "ok.md", "config": 4}
  *
  *   >   Hello
  *
@@ -50,7 +50,7 @@
  *
  *   >   World
  * @example
- *   {"name": "ok.md", "setting": 2}
+ *   {"name": "ok.md", "config": 2}
  *
  *   > Hello
  *

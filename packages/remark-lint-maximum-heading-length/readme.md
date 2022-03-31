@@ -139,6 +139,20 @@ which reads every heading out loud).
 
 ## Examples
 
+##### `ok.md`
+
+###### In
+
+```markdown
+# Alpha bravo charlie delta echo foxtrot golf hotel
+
+# ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
+```
+
+###### Out
+
+No messages.
+
 ##### `not-ok.md`
 
 When configured with `40`.
@@ -154,20 +168,6 @@ When configured with `40`.
 ```text
 1:1-1:52: Use headings shorter than `40`
 ```
-
-##### `ok.md`
-
-###### In
-
-```markdown
-# Alpha bravo charlie delta echo foxtrot golf hotel
-
-# ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
-```
-
-###### Out
-
-No messages.
 
 ## Compatibility
 

@@ -43,14 +43,14 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "setting": "* * *"}
+ *   {"name": "ok.md", "config": "* * *"}
  *
  *   * * *
  *
  *   * * *
  *
  * @example
- *   {"name": "ok.md", "setting": "_______"}
+ *   {"name": "ok.md", "config": "_______"}
  *
  *   _______
  *
@@ -69,7 +69,7 @@
  *   3:1-3:6: Rules should use `***`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
+ *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
  *
  *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
  */

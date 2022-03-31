@@ -48,14 +48,14 @@
  *   * Foo
  *
  * @example
- *   {"name": "ok.md", "setting": "."}
+ *   {"name": "ok.md", "config": "."}
  *
  *   1.  Foo
  *
  *   2.  Bar
  *
  * @example
- *   {"name": "ok.md", "setting": ")"}
+ *   {"name": "ok.md", "config": ")"}
  *
  *   1)  Foo
  *
@@ -74,7 +74,7 @@
  *   3:1-3:8: Marker style should be `.`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "setting": "💩", "positionless": true}
+ *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */

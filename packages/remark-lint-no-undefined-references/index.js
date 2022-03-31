@@ -56,7 +56,7 @@
  *   [foo]: https://example.com
  *
  * @example
- *   {"name": "ok-allow.md", "setting": {"allow": ["...", "…"]}}
+ *   {"name": "ok-allow.md", "config": {"allow": ["...", "…"]}}
  *
  *   > Eliding a portion of a quoted passage […] is acceptable.
  *

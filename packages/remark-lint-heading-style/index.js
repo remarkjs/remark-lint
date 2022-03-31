@@ -62,7 +62,7 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
- *   {"name": "ok.md", "setting": "atx"}
+ *   {"name": "ok.md", "config": "atx"}
  *
  *   # Alpha
  *
@@ -71,7 +71,7 @@
  *   ### Charlie
  *
  * @example
- *   {"name": "ok.md", "setting": "atx-closed"}
+ *   {"name": "ok.md", "config": "atx-closed"}
  *
  *   # Delta ##
  *
@@ -80,7 +80,7 @@
  *   ### Foxtrot ###
  *
  * @example
- *   {"name": "ok.md", "setting": "setext"}
+ *   {"name": "ok.md", "config": "setext"}
  *
  *   Golf
  *   ====
@@ -107,7 +107,7 @@
  *   6:1-6:13: Headings should use setext
  *
  * @example
- *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect heading style type `💩`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`
  */

@@ -60,7 +60,7 @@
  *   *   Anton
  *
  * @example
- *   {"name": "ok.md", "setting": "one"}
+ *   {"name": "ok.md", "config": "one"}
  *
  *   1.  Foo
  *   1.  Bar
@@ -73,7 +73,7 @@
  *   1.  Charlie
  *
  * @example
- *   {"name": "ok.md", "setting": "single"}
+ *   {"name": "ok.md", "config": "single"}
  *
  *   1.  Foo
  *   1.  Bar
@@ -92,7 +92,7 @@
  *   0.  Foxtrot
  *
  * @example
- *   {"name": "ok.md", "setting": "ordered"}
+ *   {"name": "ok.md", "config": "ordered"}
  *
  *   1.  Foo
  *   2.  Bar
@@ -111,40 +111,40 @@
  *   2.  Foxtrot
  *
  * @example
- *   {"name": "not-ok.md", "setting": "one", "label": "input"}
+ *   {"name": "not-ok.md", "config": "one", "label": "input"}
  *
  *   1.  Foo
  *   2.  Bar
  *
  * @example
- *   {"name": "not-ok.md", "setting": "one", "label": "output"}
+ *   {"name": "not-ok.md", "config": "one", "label": "output"}
  *
  *   2:1-2:8: Marker should be `1`, was `2`
  *
  * @example
- *   {"name": "also-not-ok.md", "setting": "one", "label": "input"}
+ *   {"name": "also-not-ok.md", "config": "one", "label": "input"}
  *
  *   2.  Foo
  *   1.  Bar
  *
  * @example
- *   {"name": "also-not-ok.md", "setting": "one", "label": "output"}
+ *   {"name": "also-not-ok.md", "config": "one", "label": "output"}
  *
  *   1:1-1:8: Marker should be `1`, was `2`
  *
  * @example
- *   {"name": "not-ok.md", "setting": "ordered", "label": "input"}
+ *   {"name": "not-ok.md", "config": "ordered", "label": "input"}
  *
  *   1.  Foo
  *   1.  Bar
  *
  * @example
- *   {"name": "not-ok.md", "setting": "ordered", "label": "output"}
+ *   {"name": "not-ok.md", "config": "ordered", "label": "output"}
  *
  *   2:1-2:8: Marker should be `2`, was `1`
  *
  * @example
- *   {"name": "not-ok.md", "setting": "💩", "label": "output", "positionless": true}
+ *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'`, `'one'`, or `'single'`
  */

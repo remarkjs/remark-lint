@@ -83,7 +83,7 @@
  *   12:11-14:1: Extraneous new line after list item
  *
  * @example
- *   {"name": "ok.md", "setting": {"checkBlanks": true}}
+ *   {"name": "ok.md", "config": {"checkBlanks": true}}
  *
  *   A tight list:
  *
@@ -103,7 +103,7 @@
  *       > Block quote
  *
  * @example
- *   {"name": "not-ok.md", "setting": {"checkBlanks": true}, "label": "input"}
+ *   {"name": "not-ok.md", "config": {"checkBlanks": true}, "label": "input"}
  *
  *   A tight list:
  *
@@ -124,7 +124,7 @@
  *       > Block quote
  *
  * @example
- *   {"name": "not-ok.md", "setting": {"checkBlanks": true}, "label": "output"}
+ *   {"name": "not-ok.md", "config": {"checkBlanks": true}, "label": "output"}
  *
  *   5:15-6:1: Missing new line after list item
  *   8:18-9:1: Missing new line after list item

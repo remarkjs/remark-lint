@@ -39,8 +39,8 @@ export function lintRule(meta, rule) {
   return plugin
 
   /** @type {import('unified').Plugin<[unknown]|Array<void>>} */
-  function plugin(raw) {
-    const [severity, options] = coerce(ruleId, raw)
+  function plugin(config) {
+    const [severity, options] = coerce(ruleId, config)
 
     if (!severity) return
 
@@ -76,26 +76,26 @@ export function lintRule(meta, rule) {
  * Coerce a value to a severity--options tuple.
  *
  * @param {string} name
- * @param {unknown} value
+ * @param {unknown} config
  * @returns {SeverityTuple}
  */
-function coerce(name, value) {
+function coerce(name, config) {
   /** @type {Array<unknown>} */
   let result
 
-  if (value === null || value === undefined) {
+  if (config === null || config === undefined) {
     result = [1]
   } else if (
-    Array.isArray(value) &&
+    Array.isArray(config) &&
     // `isArray(unknown)` is turned into `Array<any>`:
     // type-coverage:ignore-next-line
-    primitives.has(typeof value[0])
+    primitives.has(typeof config[0])
   ) {
     // `isArray(unknown)` is turned into `Array<any>`:
     // type-coverage:ignore-next-line
-    result = [...value]
+    result = [...config]
   } else {
-    result = [1, value]
+    result = [1, config]
   }
 
   let level = result[0]

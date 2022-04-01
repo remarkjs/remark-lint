@@ -19,7 +19,7 @@ export function lintRule<Tree extends Node = Node, Options = unknown>(
   name: string | RuleMeta,
   rule: Rule<Tree, Options>
 ): Plugin<
-  void[] | [Options | Label | Severity] | [boolean | Label | Severity, Options],
+  void[] | [Options | [boolean | Label | Severity, (Options | undefined)?]],
   Tree
 >
 

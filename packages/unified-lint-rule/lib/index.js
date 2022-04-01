@@ -19,8 +19,6 @@
 
 import {wrap} from 'trough'
 
-const primitives = new Set(['string', 'number', 'boolean'])
-
 /**
  * @param {string|RuleMeta} meta
  * @param {Rule} rule
@@ -80,54 +78,31 @@ export function lintRule(meta, rule) {
  * @returns {SeverityTuple}
  */
 function coerce(name, config) {
+  if (!Array.isArray(config)) return [1, config]
   /** @type {Array<unknown>} */
-  let result
-
-  if (config === null || config === undefined) {
-    result = [1]
-  } else if (
-    Array.isArray(config) &&
-    // `isArray(unknown)` is turned into `Array<any>`:
-    // type-coverage:ignore-next-line
-    primitives.has(typeof config[0])
-  ) {
-    // `isArray(unknown)` is turned into `Array<any>`:
-    // type-coverage:ignore-next-line
-    result = [...config]
-  } else {
-    result = [1, config]
+  const [severity, ...options] = config
+  switch (severity) {
+    case false:
+    case 'off':
+    case 0:
+      return [0, ...options]
+    case true:
+    case 'on':
+    case 'warn':
+    case 1:
+      return [1, ...options]
+    case 'error':
+    case 2:
+      return [2, ...options]
+    default:
+      if (typeof severity !== 'number') return [1, config]
+      throw new Error(
+        'Incorrect severity `' +
+          severity +
+          '` for `' +
+          name +
+          '`, ' +
+          'expected 0, 1, or 2'
+      )
   }
-
-  let level = result[0]
-
-  if (typeof level === 'boolean') {
-    level = level ? 1 : 0
-  } else if (typeof level === 'string') {
-    if (level === 'off') {
-      level = 0
-    } else if (level === 'on' || level === 'warn') {
-      level = 1
-    } else if (level === 'error') {
-      level = 2
-    } else {
-      level = 1
-      result = [level, result]
-    }
-  }
-
-  if (typeof level !== 'number' || level < 0 || level > 2) {
-    throw new Error(
-      'Incorrect severity `' +
-        level +
-        '` for `' +
-        name +
-        '`, ' +
-        'expected 0, 1, or 2'
-    )
-  }
-
-  result[0] = level
-
-  // @ts-expect-error: it’s now a valid tuple.
-  return result
 }

@@ -51,17 +51,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install remark-lint-linebreak-style
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import remarkLintLinebreakStyle from 'https://cdn.skypack.dev/remark-lint-linebreak-style@3?dts'
+import remarkLintLinebreakStyle from 'https://esm.sh/remark-lint-linebreak-style@3'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import remarkLintLinebreakStyle from 'https://cdn.skypack.dev/remark-lint-linebreak-style@3?min'
+  import remarkLintLinebreakStyle from 'https://esm.sh/remark-lint-linebreak-style@3?bundle'
 </script>
 ```
 
@@ -263,7 +263,7 @@ abide by its terms.
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [npm]: https://docs.npmjs.com/cli/install
 

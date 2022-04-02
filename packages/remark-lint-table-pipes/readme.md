@@ -59,17 +59,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install remark-lint-table-pipes
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import remarkLintTablePipes from 'https://cdn.skypack.dev/remark-lint-table-pipes@4?dts'
+import remarkLintTablePipes from 'https://esm.sh/remark-lint-table-pipes@4'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import remarkLintTablePipes from 'https://cdn.skypack.dev/remark-lint-table-pipes@4?min'
+  import remarkLintTablePipes from 'https://esm.sh/remark-lint-table-pipes@4?bundle'
 </script>
 ```
 
@@ -233,7 +233,7 @@ abide by its terms.
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [npm]: https://docs.npmjs.com/cli/install
 

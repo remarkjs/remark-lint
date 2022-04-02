@@ -348,10 +348,10 @@ presets(root).then((presetObjects) => {
           {type: 'text', value: 'In Deno with '},
           {
             type: 'linkReference',
-            identifier: 'skypack',
-            label: 'Skypack',
-            referenceType: 'collapsed',
-            children: [{type: 'text', value: 'Skypack'}]
+            identifier: 'esmsh',
+            label: 'esmsh',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'esm.sh'}]
           },
           {type: 'text', value: ':'}
         ]
@@ -362,11 +362,11 @@ presets(root).then((presetObjects) => {
         value:
           'import ' +
           camelcased +
-          " from 'https://cdn.skypack.dev/" +
+          " from 'https://esm.sh/" +
           name +
           '@' +
           version +
-          "?dts'"
+          "'"
       },
       {
         type: 'paragraph',
@@ -374,10 +374,10 @@ presets(root).then((presetObjects) => {
           {type: 'text', value: 'In browsers with '},
           {
             type: 'linkReference',
-            identifier: 'skypack',
-            label: 'Skypack',
-            referenceType: 'collapsed',
-            children: [{type: 'text', value: 'Skypack'}]
+            identifier: 'esmsh',
+            label: 'esmsh',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'esm.sh'}]
           },
           {type: 'text', value: ':'}
         ]
@@ -388,11 +388,11 @@ presets(root).then((presetObjects) => {
         value:
           '<script type="module">\n  import ' +
           camelcased +
-          " from 'https://cdn.skypack.dev/" +
+          " from 'https://esm.sh/" +
           name +
           '@' +
           version +
-          "?min'\n</script>"
+          "?bundle'\n</script>"
       },
       {
         type: 'heading',
@@ -671,8 +671,8 @@ presets(root).then((presetObjects) => {
       },
       {
         type: 'definition',
-        identifier: 'skypack',
-        url: 'https://www.skypack.dev'
+        identifier: 'esmsh',
+        url: 'https://esm.sh'
       },
       {
         type: 'definition',

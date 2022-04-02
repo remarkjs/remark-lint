@@ -50,17 +50,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install remark-lint-first-heading-level
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import remarkLintFirstHeadingLevel from 'https://cdn.skypack.dev/remark-lint-first-heading-level@3?dts'
+import remarkLintFirstHeadingLevel from 'https://esm.sh/remark-lint-first-heading-level@3'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import remarkLintFirstHeadingLevel from 'https://cdn.skypack.dev/remark-lint-first-heading-level@3?min'
+  import remarkLintFirstHeadingLevel from 'https://esm.sh/remark-lint-first-heading-level@3?bundle'
 </script>
 ```
 
@@ -328,7 +328,7 @@ abide by its terms.
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [npm]: https://docs.npmjs.com/cli/install
 

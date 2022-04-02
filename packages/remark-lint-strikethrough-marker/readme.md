@@ -55,17 +55,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install remark-lint-strikethrough-marker
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import remarkLintStrikethroughMarker from 'https://cdn.skypack.dev/remark-lint-strikethrough-marker@2?dts'
+import remarkLintStrikethroughMarker from 'https://esm.sh/remark-lint-strikethrough-marker@2'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import remarkLintStrikethroughMarker from 'https://cdn.skypack.dev/remark-lint-strikethrough-marker@2?min'
+  import remarkLintStrikethroughMarker from 'https://esm.sh/remark-lint-strikethrough-marker@2?bundle'
 </script>
 ```
 
@@ -295,7 +295,7 @@ abide by its terms.
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [npm]: https://docs.npmjs.com/cli/install
 

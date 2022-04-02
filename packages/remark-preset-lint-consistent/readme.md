@@ -63,17 +63,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install remark-preset-lint-consistent
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import remarkPresetLintConsistent from 'https://cdn.skypack.dev/remark-preset-lint-consistent@5?dts'
+import remarkPresetLintConsistent from 'https://esm.sh/remark-preset-lint-consistent@5'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import remarkPresetLintConsistent from 'https://cdn.skypack.dev/remark-preset-lint-consistent@5?min'
+  import remarkPresetLintConsistent from 'https://esm.sh/remark-preset-lint-consistent@5?bundle'
 </script>
 ```
 
@@ -185,7 +185,7 @@ abide by its terms.
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [npm]: https://docs.npmjs.com/cli/install
 

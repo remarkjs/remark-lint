@@ -269,7 +269,8 @@ remark()
   .use(remarkLintUnorderedListMarkerStyle, '*')
   .use(remarkLintUnorderedListMarkerStyle, ['on', '*'])
   .use(remarkLintUnorderedListMarkerStyle, [1, '*'])
-  // The following rule accepts a number, numbers *must* be passed in arrays:
+  // The following rule accepts a number:
+  .use(remarkLintMaximumLineLength, 72)
   .use(remarkLintMaximumLineLength, ['on', 72])
   .use(remarkLintMaximumLineLength, [1, 72])
 ```

@@ -565,9 +565,6 @@ npm run format
 
 ## Integrations
 
-*   [`linter-remark`](https://github.com/wooorm/linter-remark)
-    ([Atom](https://atom.io))
-    — use remark from Atom
 *   [`vscode-remark-lint`](https://github.com/drewbourne/vscode-remark-lint)
     ([VS Code](https://code.visualstudio.com))
     — use `remark-lint` from Visual Studio Code

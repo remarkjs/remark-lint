@@ -1,7 +1,7 @@
 import type {Node} from 'unist'
 import type {VFile} from 'vfile'
 import type {Plugin} from 'unified'
-import type {Label, Severity} from './lib/index.js'
+import type {Severity} from './lib/index.js'
 
 export interface RuleMeta {
   /**
@@ -18,10 +18,7 @@ export interface RuleMeta {
 export function lintRule<Tree extends Node = Node, Options = unknown>(
   name: string | RuleMeta,
   rule: Rule<Tree, Options>
-): Plugin<
-  void[] | [Options | [boolean | Label | Severity, (Options | undefined)?]],
-  Tree
->
+): Plugin<void[] | [Options | [Severity, (Options | undefined)?]], Tree>
 
 export type Rule<Tree extends Node = Node, Options = unknown> = (
   node: Tree,
@@ -29,4 +26,4 @@ export type Rule<Tree extends Node = Node, Options = unknown> = (
   options: Options
 ) => Promise<Tree | undefined | void> | Tree | undefined | void
 
-export {Severity, Label} from './lib/index.js'
+export {Severity} from './lib/index.js'

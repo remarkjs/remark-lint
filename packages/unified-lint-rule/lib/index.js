@@ -2,9 +2,7 @@
  * @typedef {import('unist').Node} Node
  * @typedef {import('vfile').VFile} VFile
  *
- * @typedef {0|1|2} Severity
- * @typedef {'warn'|'on'|'off'|'error'} Label
- * @typedef {[Severity, ...Array<unknown>]} SeverityTuple
+ * @typedef {boolean|'off'|'on'|'warn'|'error'|0|1|2} Severity
  *
  * @typedef RuleMeta
  * @property {string} origin name of the lint rule
@@ -38,11 +36,11 @@ export function lintRule(meta, rule) {
 
   /** @type {import('unified').Plugin<[unknown]|Array<void>>} */
   function plugin(config) {
-    const [severity, options] = coerce(ruleId, config)
+    const [number, options] = coerce(ruleId, config)
 
-    if (!severity) return
+    if (!number) return
 
-    const fatal = severity === 2
+    const fatal = number === 2
 
     return (tree, file, next) => {
       let index = file.messages.length - 1
@@ -75,7 +73,7 @@ export function lintRule(meta, rule) {
  *
  * @param {string} name
  * @param {unknown} config
- * @returns {SeverityTuple}
+ * @returns {[Severity&number, ...Array<unknown>]}
  */
 function coerce(name, config) {
   if (!Array.isArray(config)) return [1, config]

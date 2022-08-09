@@ -212,6 +212,8 @@ The following rules are maintained by the community:
     — enforce a limit of emoji per paragraph
 *   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
     — ensure every heading is followed by content (forming a section)
+*   [`remark-lint-frontmatter-schema`](https://github.com/JulianCataldo/remark-lint-frontmatter-schema)
+    — validate YAML frontmatter against a JSON schema
 *   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
     — ensure headings have the appropriate length
 *   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)

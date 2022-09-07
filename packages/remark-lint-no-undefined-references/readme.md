@@ -125,9 +125,10 @@ This rule supports standard configuration that all remark lint rules accept
 The following options (default: `undefined`) are accepted:
 
 *   `Object` with the following fields:
-    *   `allow` (`Array<string>`, default: `[]`)
-        — text that you want to allowed between `[` and `]` even though it’s
-        undefined
+    *   `allow` (`Array<string | RegExp | { source: string }>`,
+        default: `[]`)
+        — text or a regex that you want to be allowed between `[` and `]`
+        even though it’s undefined
 
 ## Recommendation
 
@@ -221,6 +222,26 @@ When configured with `{ allow: [ '...', '…' ] }`.
 
 ```markdown
 > Eliding a portion of a quoted passage […] is acceptable.
+```
+
+###### Out
+
+No messages.
+
+##### `ok-allow.md`
+
+When configured with `{ allow: [ 'a', { source: '^pkg\\.' }, 'b' ] }`.
+
+###### In
+
+```markdown
+[foo][pkg.subpkg]
+
+[bar][a]
+
+[baz][b]
+
+Matching is case-insensitive: [bar][PKG.SUBPKG]
 ```
 
 ###### Out

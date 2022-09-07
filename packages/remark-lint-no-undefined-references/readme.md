@@ -246,6 +246,25 @@ Matching is case-insensitive: [bar][B.C]
 
 No messages.
 
+##### `not-ok.md`
+
+When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
+
+###### In
+
+```markdown
+[foo][a.c]
+
+[bar][b]
+```
+
+###### Out
+
+```text
+1:1-1:11: Found reference to undefined definition
+3:1-3:9: Found reference to undefined definition
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained

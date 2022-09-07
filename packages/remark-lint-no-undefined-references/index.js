@@ -103,6 +103,19 @@
  *   15:13-15:25: Found reference to undefined definition
  *   17:17-17:23: Found reference to undefined definition
  *   17:23-17:26: Found reference to undefined definition
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *
+ *   [foo][a.c]
+ *
+ *   [bar][b]
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *
+ *   1:1-1:11: Found reference to undefined definition
+ *   3:1-3:9: Found reference to undefined definition
  */
 
 /**

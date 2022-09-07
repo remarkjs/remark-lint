@@ -62,15 +62,13 @@
  *   > Eliding a portion of a quoted passage […] is acceptable.
  *
  * @example
- *   {"name": "ok-allow.md", "config": {"allow": ["a", {"source": "^pkg\\."}, "b"]}}
+ *   {"name": "ok-allow.md", "config": {"allow": ["a", {"source": "^b\\."}]}}
  *
- *   [foo][pkg.subpkg]
+ *   [foo][b.c]
  *
  *   [bar][a]
  *
- *   [baz][b]
- *
- *   Matching is case-insensitive: [bar][PKG.SUBPKG]
+ *   Matching is case-insensitive: [bar][B.C]
  *
  * @example
  *   {"name": "not-ok.md", "label": "input"}

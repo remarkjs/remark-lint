@@ -230,18 +230,16 @@ No messages.
 
 ##### `ok-allow.md`
 
-When configured with `{ allow: [ 'a', { source: '^pkg\\.' }, 'b' ] }`.
+When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
 
 ###### In
 
 ```markdown
-[foo][pkg.subpkg]
+[foo][b.c]
 
 [bar][a]
 
-[baz][b]
-
-Matching is case-insensitive: [bar][PKG.SUBPKG]
+Matching is case-insensitive: [bar][B.C]
 ```
 
 ###### Out

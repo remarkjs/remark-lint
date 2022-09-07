@@ -125,10 +125,8 @@
  * @typedef {import('mdast').Heading} Heading
  * @typedef {import('mdast').Paragraph} Paragraph
  *
- * @typedef {Array<string | RegExp | { source: string }>} Allow
- *
  * @typedef Options
- * @property {Allow} [allow]
+ * @property {Array<string | RegExp | { source: string }>} [allow]
  *
  * @typedef {Array<number>} Range
  */

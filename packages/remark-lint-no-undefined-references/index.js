@@ -13,7 +13,7 @@
  *         — text or regex that you want to be allowed between `[` and `]`
  *         even though it’s undefined; regex is provided via a `RegExp` object
  *         or via a `{ source: string }` object where `source` is the source
- *         text of a case-insensitive regex object
+ *         text of a case-insensitive regex
  *
  * ## Recommendation
  *

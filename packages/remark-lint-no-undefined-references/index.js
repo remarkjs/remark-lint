@@ -137,9 +137,27 @@ const remarkLintNoUndefinedReferences = lintRule(
     const contents = String(file)
     const loc = location(file)
     const lineEnding = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
-    const allow = new AllowSet(option.allow || [])
     /** @type {Record<string, boolean>} */
     const map = Object.create(null)
+
+    const allow = option.allow || []
+    /** @type {Array<RegExp>} */
+    const regexes = [];
+    /** @type {Set<string>} */
+    const strings = new Set()
+
+    let index = -1;
+
+    while (++index < allow.length) {
+      const value = allow[index];
+      if (typeof value === 'string') {
+        strings.add(normalizeIdentifier(value))
+      } else if (value instanceof RegExp) {
+        regexes.push(value)
+      } else {
+        regexes.push(new RegExp(value.source, 'i'))
+      }
+    }
 
     visit(tree, (node) => {
       if (
@@ -160,7 +178,7 @@ const remarkLintNoUndefinedReferences = lintRule(
           node.type === 'footnoteReference') &&
         !generated(node) &&
         !(normalizeIdentifier(node.identifier) in map) &&
-        !allow.has(node.identifier)
+        !isAllowed(node.identifier)
       ) {
         file.message('Found reference to undefined definition', node)
       }
@@ -317,70 +335,27 @@ const remarkLintNoUndefinedReferences = lintRule(
         if (
           !generated({position: pos}) &&
           !(normalizeIdentifier(id) in map) &&
-          !allow.has(id)
+          !isAllowed(id)
         ) {
           file.message('Found reference to undefined definition', pos)
         }
       }
     }
+
+    /**
+     * @param {string} id
+     * @returns {boolean}
+     */
+    function isAllowed(id) {
+      if (strings.size > 0 && strings.has(normalizeIdentifier(id))) {
+        return true
+      }
+      if (regexes.some((regex) => regex.test(id))) {
+        return true
+      }
+      return false
+    }
   }
 )
 
 export default remarkLintNoUndefinedReferences
-
-class AllowSet {
-  /**
-   * @param {Allow} allow
-   */
-  constructor(allow) {
-    const canonicalAllow = allow.map((item) =>
-      typeof item === 'string'
-        ? normalizeIdentifier(item)
-        : item instanceof RegExp
-        ? item
-        : new RegExp(item.source, 'i')
-    )
-    /**
-     * @private
-     * @type {ReadonlySet<string>}
-     */
-    this.allowStrings = new Set(canonicalAllow.filter(isString))
-    /**
-     * @private
-     * @type {ReadonlyArray<RegExp>}
-     */
-    this.allowRegExps = canonicalAllow.filter(isRegExp)
-  }
-
-  /**
-   * @param {string} id
-   * @returns {boolean}
-   */
-  has(id) {
-    if (this.allowStrings.size > 0 && this.allowStrings.has(normalizeIdentifier(id))) {
-      return true
-    }
-    if (this.allowRegExps.some((r) => r.test(id))) {
-      return true
-    }
-    return false
-  }
-}
-
-/**
- *
- * @param {unknown} value
- * @returns {value is string}
- */
-function isString(value) {
-  return typeof value === 'string'
-}
-
-/**
- *
- * @param {unknown} value
- * @returns {value is RegExp}
- */
-function isRegExp(value) {
-  return value instanceof RegExp
-}

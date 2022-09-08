@@ -153,14 +153,14 @@ const remarkLintNoUndefinedReferences = lintRule(
 
     const allow = option.allow || []
     /** @type {Array<RegExp>} */
-    const regexes = [];
+    const regexes = []
     /** @type {Set<string>} */
     const strings = new Set()
 
-    let index = -1;
+    let index = -1
 
     while (++index < allow.length) {
-      const value = allow[index];
+      const value = allow[index]
       if (typeof value === 'string') {
         strings.add(normalizeIdentifier(value))
       } else if (value instanceof RegExp) {

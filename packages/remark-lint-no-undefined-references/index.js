@@ -358,13 +358,11 @@ const remarkLintNoUndefinedReferences = lintRule(
      * @returns {boolean}
      */
     function isAllowed(id) {
-      if (strings.size > 0 && strings.has(normalizeIdentifier(id))) {
-        return true
-      }
-      if (regexes.some((regex) => regex.test(id))) {
-        return true
-      }
-      return false
+      const normalized = normalizeIdentifier(id)
+      return (
+        strings.has(normalized) ||
+        regexes.some((regex) => regex.test(normalized))
+      )
     }
   }
 )

@@ -31,7 +31,7 @@ export function rule(filePath) {
   const ruleId = path.basename(filePath).slice('remark-lint-'.length)
   /** @type {Record<string, Checks>} */
   const tests = {}
-  const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf-8')
+  const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf8')
   const fileInfo = parse(code, {spacing: 'preserve'})[0]
   const tags = fileInfo.tags
   const moduleTag = tags.find((d) => d.tag === 'module')

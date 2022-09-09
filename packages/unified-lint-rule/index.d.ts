@@ -3,7 +3,7 @@ import type {VFile} from 'vfile'
 import type {Plugin} from 'unified'
 import type {Label, Severity} from './lib/index.js'
 
-export interface RuleMeta {
+export type RuleMeta = {
   /**
    * Name of the lint rule
    */
@@ -29,4 +29,4 @@ export type Rule<Tree extends Node = Node, Options = unknown> = (
   options: Options
 ) => Promise<Tree | undefined | void> | Tree | undefined | void
 
-export {Severity, Label} from './lib/index.js'
+export type {Severity, Label} from './lib/index.js'

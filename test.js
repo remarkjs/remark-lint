@@ -429,7 +429,7 @@ function normalize(messages) {
  * @returns {Array<string>}
  */
 function asStrings(messages) {
-  return messages.map((message) => String(message))
+  return messages.map(String)
 }
 
 /**

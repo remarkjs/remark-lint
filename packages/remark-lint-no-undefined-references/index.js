@@ -8,9 +8,12 @@
  * The following options (default: `undefined`) are accepted:
  *
  * *   `Object` with the following fields:
- *     *   `allow` (`Array<string>`, default: `[]`)
- *         — text that you want to allowed between `[` and `]` even though it’s
- *         undefined
+ *     *   `allow` (`Array<string | RegExp | { source: string }>`,
+ *         default: `[]`)
+ *         — text or regex that you want to be allowed between `[` and `]`
+ *         even though it’s undefined; regex is provided via a `RegExp` object
+ *         or via a `{ source: string }` object where `source` is the source
+ *         text of a case-insensitive regex
  *
  * ## Recommendation
  *
@@ -61,6 +64,15 @@
  *   > Eliding a portion of a quoted passage […] is acceptable.
  *
  * @example
+ *   {"name": "ok-allow.md", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *
+ *   [foo][b.c]
+ *
+ *   [bar][a]
+ *
+ *   Matching is case-insensitive: [bar][B.C]
+ *
+ * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
  *   [bar]
@@ -93,6 +105,19 @@
  *   15:13-15:25: Found reference to undefined definition
  *   17:17-17:23: Found reference to undefined definition
  *   17:23-17:26: Found reference to undefined definition
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *
+ *   [foo][a.c]
+ *
+ *   [bar][b]
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *
+ *   1:1-1:11: Found reference to undefined definition
+ *   3:1-3:9: Found reference to undefined definition
  */
 
 /**
@@ -101,7 +126,7 @@
  * @typedef {import('mdast').Paragraph} Paragraph
  *
  * @typedef Options
- * @property {Array<string>} [allow]
+ * @property {Array<string | RegExp | { source: string }>} [allow]
  *
  * @typedef {Array<number>} Range
  */
@@ -123,11 +148,27 @@ const remarkLintNoUndefinedReferences = lintRule(
     const contents = String(file)
     const loc = location(file)
     const lineEnding = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
-    const allow = new Set(
-      (option.allow || []).map((d) => normalizeIdentifier(d))
-    )
     /** @type {Record<string, boolean>} */
     const map = Object.create(null)
+
+    const allow = option.allow || []
+    /** @type {Array<RegExp>} */
+    const regexes = []
+    /** @type {Set<string>} */
+    const strings = new Set()
+
+    let index = -1
+
+    while (++index < allow.length) {
+      const value = allow[index]
+      if (typeof value === 'string') {
+        strings.add(normalizeIdentifier(value))
+      } else if (value instanceof RegExp) {
+        regexes.push(value)
+      } else {
+        regexes.push(new RegExp(value.source, 'i'))
+      }
+    }
 
     visit(tree, (node) => {
       if (
@@ -148,7 +189,7 @@ const remarkLintNoUndefinedReferences = lintRule(
           node.type === 'footnoteReference') &&
         !generated(node) &&
         !(normalizeIdentifier(node.identifier) in map) &&
-        !allow.has(normalizeIdentifier(node.identifier))
+        !isAllowed(node.identifier)
       ) {
         file.message('Found reference to undefined definition', node)
       }
@@ -305,11 +346,23 @@ const remarkLintNoUndefinedReferences = lintRule(
         if (
           !generated({position: pos}) &&
           !(normalizeIdentifier(id) in map) &&
-          !allow.has(normalizeIdentifier(id))
+          !isAllowed(id)
         ) {
           file.message('Found reference to undefined definition', pos)
         }
       }
+    }
+
+    /**
+     * @param {string} id
+     * @returns {boolean}
+     */
+    function isAllowed(id) {
+      const normalized = normalizeIdentifier(id)
+      return (
+        strings.has(normalized) ||
+        regexes.some((regex) => regex.test(normalized))
+      )
     }
   }
 )

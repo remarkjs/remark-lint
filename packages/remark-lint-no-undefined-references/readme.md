@@ -125,9 +125,12 @@ This rule supports standard configuration that all remark lint rules accept
 The following options (default: `undefined`) are accepted:
 
 *   `Object` with the following fields:
-    *   `allow` (`Array<string>`, default: `[]`)
-        — text that you want to allowed between `[` and `]` even though it’s
-        undefined
+    *   `allow` (`Array<string | RegExp | { source: string }>`,
+        default: `[]`)
+        — text or regex that you want to be allowed between `[` and `]`
+        even though it’s undefined; regex is provided via a `RegExp` object
+        or via a `{ source: string }` object where `source` is the source
+        text of a case-insensitive regex
 
 ## Recommendation
 
@@ -226,6 +229,43 @@ When configured with `{ allow: [ '...', '…' ] }`.
 ###### Out
 
 No messages.
+
+##### `ok-allow.md`
+
+When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
+
+###### In
+
+```markdown
+[foo][b.c]
+
+[bar][a]
+
+Matching is case-insensitive: [bar][B.C]
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
+
+###### In
+
+```markdown
+[foo][a.c]
+
+[bar][b]
+```
+
+###### Out
+
+```text
+1:1-1:11: Found reference to undefined definition
+3:1-3:9: Found reference to undefined definition
+```
 
 ## Compatibility
 

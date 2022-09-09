@@ -21,6 +21,7 @@ import {characters} from './script/characters.js'
 import lint from './packages/remark-lint/index.js'
 import noHeadingPunctuation from './packages/remark-lint-no-heading-punctuation/index.js'
 import noMultipleToplevelHeadings from './packages/remark-lint-no-multiple-toplevel-headings/index.js'
+import noUndefinedReferences from './packages/remark-lint-no-undefined-references/index.js'
 import finalNewline from './packages/remark-lint-final-newline/index.js'
 
 const own = {}.hasOwnProperty
@@ -224,6 +225,21 @@ test('core', async (t) => {
     },
     /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/,
     'should fail on incorrect severities (too low)'
+  )
+
+  file = await remark()
+    .use(noUndefinedReferences, {allow: [/^b\./i]})
+    .process(
+      toVFile({
+        path: 'virtual.md',
+        value: ['[foo][b.c]', '', '[bar][b]'].join('\n')
+      })
+    )
+
+  t.deepEqual(
+    asStrings(file.messages),
+    ['virtual.md:3:1-3:9: Found reference to undefined definition'],
+    'no-undefined-references allow option should work with native regex'
   )
 
   file = await remark()

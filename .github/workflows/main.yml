@@ -22,5 +22,5 @@ jobs:
           - ubuntu-latest
           - windows-latest
         node:
-          - lts/ferium
+          - lts/fermium
           - lts/*

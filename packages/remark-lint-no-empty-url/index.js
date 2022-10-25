@@ -26,6 +26,10 @@
  *
  *   ![charlie](http://delta.com/echo.png "foxtrot").
  *
+ *   [zulu][yankee].
+ *
+ *   [yankee]: http://xray.com
+ *
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
@@ -33,11 +37,16 @@
  *
  *   ![hotel]().
  *
+ *   [zulu][yankee].
+ *
+ *   [yankee]: <>
+ *
  * @example
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:9: Don’t use links without URL
  *   3:1-3:11: Don’t use images without URL
+ *   7:1-7:13: Don’t use definitions without URL
  */
 
 /**
@@ -57,7 +66,9 @@ const remarkLintNoEmptyUrl = lintRule(
   (tree, file) => {
     visit(tree, (node) => {
       if (
-        (node.type === 'link' || node.type === 'image') &&
+        (node.type === 'link' ||
+          node.type === 'image' ||
+          node.type === 'definition') &&
         !generated(node) &&
         !node.url
       ) {

@@ -136,6 +136,10 @@ It’s recommended to fill them out.
 [alpha](http://bravo.com).
 
 ![charlie](http://delta.com/echo.png "foxtrot").
+
+[zulu][yankee].
+
+[yankee]: http://xray.com
 ```
 
 ###### Out
@@ -150,6 +154,10 @@ No messages.
 [golf]().
 
 ![hotel]().
+
+[zulu][yankee].
+
+[yankee]: <>
 ```
 
 ###### Out
@@ -157,6 +165,7 @@ No messages.
 ```text
 1:1-1:9: Don’t use links without URL
 3:1-3:11: Don’t use images without URL
+7:1-7:13: Don’t use definitions without URL
 ```
 
 ## Compatibility

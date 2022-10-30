@@ -111,6 +111,7 @@ The rules that are maintained here:
 *   [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 *   [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
 *   [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
+*   [`remark-lint-fenced-code-flag-case`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-fenced-code-flag-case) — warn when fenced code blocks have improperly cased language flags
 *   [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style
 *   [`remark-lint-file-extension`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension) — warn when the file’s extension violates the given style
 *   [`remark-lint-final-definition`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition) — warn when definitions are not placed at the end of the file
@@ -119,12 +120,14 @@ The rules that are maintained here:
 *   [`remark-lint-hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
 *   [`remark-lint-heading-increment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
 *   [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) — warn when heading style violates the given style
+*   [`remark-lint-heading-word-length`](https://github.com/Xunnamius/unified-utils/tree/main/packages/remark-lint-heading-word-length) — warn when headings have too many or too few words with unicode support
 *   [`remark-lint-linebreak-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style) — warn when linebreaks violate a given or detected style
 *   [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
 *   [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
 *   [`remark-lint-list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation
 *   [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — warn when the spacing between a list item’s bullet and its content violates a given style
 *   [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
+*   [`remark-lint-list-item-style`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-list-item-style) — warn when list items violate a given capitalization or punctuation style
 *   [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 *   [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
 *   [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote

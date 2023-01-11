@@ -9,6 +9,7 @@ import remarkMessageControl from 'remark-message-control'
  * This adds support for ignoring stuff from messages (`<!--lint ignore-->`).
  * All rules are in their own packages and presets.
  *
+ * @this {import('unified').Processor}
  * @type {import('unified').Plugin<Array<void>, Root>}
  */
 export default function remarkLint() {

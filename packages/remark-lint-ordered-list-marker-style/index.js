@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'.'`
  *     — prefer dots
@@ -25,8 +25,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats ordered lists with dots by default.
- * Pass
- * [`bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered)
+ * Change
+ * [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) to `')'`
  * to always use parens.
  *
  * @module ordered-list-marker-style
@@ -55,7 +55,21 @@
  *   2.  Bar
  *
  * @example
+ *   {"name": "ok.md", "settings": {"bulletOrdered": "."}}
+ *
+ *   1.  Foo
+ *
+ *   2.  Bar
+ *
+ * @example
  *   {"name": "ok.md", "config": ")"}
+ *
+ *   1)  Foo
+ *
+ *   2)  Bar
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"bulletOrdered": ")"}}
  *
  *   1)  Foo
  *
@@ -77,6 +91,11 @@
  *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "settings": {"bulletOrdered": "💩"}, "positionless": true}
+ *
+ *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
  */
 
 /**
@@ -96,8 +115,14 @@ const remarkLintOrderedListMarkerStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.bulletOrdered || 'consistent'
+    }
 
     if (option !== 'consistent' && option !== '.' && option !== ')') {
       file.fail(

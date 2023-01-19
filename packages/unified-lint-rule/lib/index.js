@@ -65,7 +65,7 @@ export function lintRule(meta, rule) {
         }
 
         next()
-      })(tree, file, options)
+      }).call(this, tree, file, options)
     }
   }
 }

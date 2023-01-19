@@ -76,7 +76,7 @@ export function rule(filePath) {
 
   while (++index < examples.length) {
     const lines = examples[index].split('\n')
-    /** @type {{name: string, label?: 'input'|'output', config?: unknown, positionless?: boolean, gfm?: boolean}} */
+    /** @type {{name: string, label?: 'input'|'output', settings?: Record<string, unknown>, config?: unknown, positionless?: boolean, gfm?: boolean}} */
     let info
 
     try {
@@ -91,7 +91,10 @@ export function rule(filePath) {
     }
 
     const exampleValue = strip(lines.join('\n').replace(/^\r?\n/g, ''))
-    const configuration = JSON.stringify({config: info.config || true})
+    const configuration = JSON.stringify({
+      settings: info.settings,
+      config: info.config || true
+    })
     const name = info.name
     const context =
       configuration in tests

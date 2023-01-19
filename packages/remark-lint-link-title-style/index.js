@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'"'`
  *     — prefer double quotes
@@ -32,8 +32,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats titles with double quotes by default.
- * Pass
- * [`quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote)
+ * Change
+ * [`settings.quote`](https://github.com/remarkjs/remark-lint#configure) to `"'"`
  * to use single quotes.
  * There is no option to use parens.
  *
@@ -57,6 +57,19 @@
  *   [Example](#Heading-(optional))
  *
  * @example
+ *   {"name": "ok.md", "settings": {"quote": "\""}}
+ *
+ *   [Example](http://example.com#without-title)
+ *   [Example](http://example.com "Example Domain")
+ *   ![Example](http://example.com "Example Domain")
+ *
+ *   [Example]: http://example.com "Example Domain"
+ *
+ *   You can use parens in URLs if they’re not a title (see GH-166):
+ *
+ *   [Example](#Heading-(optional))
+ *
+ * @example
  *   {"name": "not-ok.md", "label": "input", "config": "\""}
  *
  *   [Example]: http://example.com 'Example Domain'
@@ -67,7 +80,26 @@
  *   1:31-1:47: Titles should use `"` as a quote
  *
  * @example
+ *   {"name": "not-ok.md", "label": "input", "settings": {"quote": "\""}}
+ *
+ *   [Example]: http://example.com 'Example Domain'
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "settings": {"quote": "\""}}
+ *
+ *   1:31-1:47: Titles should use `"` as a quote
+ *
+ * @example
  *   {"name": "ok.md", "config": "'"}
+ *
+ *   [Example](http://example.com#without-title)
+ *   [Example](http://example.com 'Example Domain')
+ *   ![Example](http://example.com 'Example Domain')
+ *
+ *   [Example]: http://example.com 'Example Domain'
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"quote": "'"}}
  *
  *   [Example](http://example.com#without-title)
  *   [Example](http://example.com 'Example Domain')
@@ -82,6 +114,16 @@
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "config": "'"}
+ *
+ *   1:31-1:47: Titles should use `'` as a quote
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "input", "settings": {"quote": "'"}}
+ *
+ *   [Example]: http://example.com "Example Domain"
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "settings": {"quote": "'"}}
  *
  *   1:31-1:47: Titles should use `'` as a quote
  *
@@ -119,6 +161,11 @@
  *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
+ *
+ * @example
+ *   {"name": "not-ok.md", "settings": {"quote": "💩"}, "label": "output", "positionless": true}
+ *
+ *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
  */
 
 /**
@@ -146,9 +193,16 @@ const remarkLintLinkTitleStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
     const loc = location(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.quote || 'consistent'
+    }
+
     // @ts-expect-error: allow other paren combos.
     let look = option === '()' || option === '(' ? ')' : option
 

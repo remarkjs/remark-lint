@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -29,8 +29,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats emphasis with asterisks by default.
- * Pass
- * [`emphasis: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis)
+ * Change
+ * [`settings.emphasis`](https://github.com/remarkjs/remark-lint#configure) to `'_'`
  * to always use underscores.
  *
  * @module emphasis-marker
@@ -45,6 +45,11 @@
  *   *foo*
  *
  * @example
+ *   {"settings": {"emphasis": "*"}, "name": "ok.md"}
+ *
+ *   *foo*
+ *
+ * @example
  *   {"config": "*", "name": "not-ok.md", "label": "input"}
  *
  *   _foo_
@@ -55,7 +60,22 @@
  *   1:1-1:6: Emphasis should use `*` as a marker
  *
  * @example
+ *   {"settings": {"emphasis": "*"}, "name": "not-ok.md", "label": "input"}
+ *
+ *   _foo_
+ *
+ * @example
+ *   {"settings": {"emphasis": "*"}, "name": "not-ok.md", "label": "output"}
+ *
+ *   1:1-1:6: Emphasis should use `*` as a marker
+ *
+ * @example
  *   {"config": "_", "name": "ok.md"}
+ *
+ *   _foo_
+ *
+ * @example
+ *   {"settings": {"emphasis": "_"}, "name": "ok.md"}
  *
  *   _foo_
  *
@@ -66,6 +86,16 @@
  *
  * @example
  *   {"config": "_", "name": "not-ok.md", "label": "output"}
+ *
+ *   1:1-1:6: Emphasis should use `_` as a marker
+ *
+ * @example
+ *   {"settings": {"emphasis": "_"}, "name": "not-ok.md", "label": "input"}
+ *
+ *   *foo*
+ *
+ * @example
+ *   {"settings": {"emphasis": "_"}, "name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:6: Emphasis should use `_` as a marker
  *
@@ -82,6 +112,11 @@
  *
  * @example
  *   {"config": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
+ *
+ *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+ *
+ * @example
+ *   {"settings": {"emphasis": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */
@@ -102,8 +137,14 @@ const remarkLintEmphasisMarker = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.emphasis || 'consistent'
+    }
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {
       file.fail(

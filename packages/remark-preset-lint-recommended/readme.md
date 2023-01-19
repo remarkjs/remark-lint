@@ -17,6 +17,7 @@ Preset of [`remark-lint`][mono] rules to warn for some likely problems.
 *   [What is this?](#what-is-this)
 *   [When should I use this?](#when-should-i-use-this)
 *   [Rules](#rules)
+*   [Settings](#settings)
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
@@ -43,10 +44,10 @@ This preset configures [`remark-lint`][mono] with the following rules:
 | - | - |
 | [`remark-lint-final-newline`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline) | |
 | [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) | |
-| [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) | `'tab-size'` |
+| [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) | [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'tab'` |
 | [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) | |
 | [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) | |
-| [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) | `'.'` |
+| [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) | [`settings.bulletOrdered`](https://github.com/remarkjs/remark-lint#configure) is `'.'` |
 | [`remark-lint-hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) | |
 | [`remark-lint-no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions) | |
 | [`remark-lint-no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent) | |
@@ -55,6 +56,16 @@ This preset configures [`remark-lint`][mono] with the following rules:
 | [`remark-lint-no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link) | |
 | [`remark-lint-no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) | |
 | [`remark-lint-no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) | |
+
+## Settings
+
+It sets the following remark [settings][configure].
+Settings are shared among all plugins --- particularly the corresponding rules and [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options):
+
+| Name | Value |
+| - | - |
+| `settings.bulletOrdered` | `'.'` |
+| `settings.listItemIndent` | `'tab'` |
 
 ## Install
 
@@ -184,6 +195,8 @@ abide by its terms.
 [remark]: https://github.com/remarkjs/remark
 
 [mono]: https://github.com/remarkjs/remark-lint
+
+[configure]: https://github.com/remarkjs/remark-lint#configure
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 

@@ -35,10 +35,10 @@ const remarkPresetLintRecommended = {
     remarkLintFinalNewline,
     // Rendering across vendors differs greatly if using other styles.
     remarkLintListItemBulletIndent,
-    [remarkLintListItemIndent, 'tab-size'],
+    remarkLintListItemIndent,
     remarkLintNoBlockquoteWithoutMarker,
     remarkLintNoLiteralUrls,
-    [remarkLintOrderedListMarkerStyle, '.'],
+    remarkLintOrderedListMarkerStyle,
     // Mistakes.
     remarkLintHardBreakSpaces,
     remarkLintNoDuplicateDefinitions,
@@ -48,7 +48,11 @@ const remarkPresetLintRecommended = {
     remarkLintNoShortcutReferenceLink,
     remarkLintNoUndefinedReferences,
     remarkLintNoUnusedDefinitions
-  ]
+  ],
+  settings: {
+    bulletOrdered: '.',
+    listItemIndent: 'tab'
+  }
 }
 
 export default remarkPresetLintRecommended

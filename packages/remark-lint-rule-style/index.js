@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.rule`](https://github.com/remarkjs/remark-lint#configure), [`settings.ruleRepetition`](https://github.com/remarkjs/remark-lint#configure), [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure), or `'consistent'`) are accepted:
  *
  * *   `string` (example: `'** * **'`, `'___'`)
  *     — thematic break to prefer
@@ -29,11 +29,11 @@
  * formats rules with `***` by default.
  * There are three settings to control rules:
  *
- * *   [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
+ * *   [`settings.rule`](https://github.com/remarkjs/remark-lint#configure)
  *     (default: `'*'`) — marker
- * *   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
+ * *   [`settings.ruleRepetition`](https://github.com/remarkjs/remark-lint#configure)
  *     (default: `3`) — repetitions
- * *   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
+ * *   [`settings.ruleSpaces`](https://github.com/remarkjs/remark-lint#configure)
  *     (default: `false`) — use spaces between markers
  *
  * @module rule-style
@@ -50,7 +50,21 @@
  *   * * *
  *
  * @example
+ *   {"name": "ok.md", "settings": {"ruleSpaces": true}}
+ *
+ *   * * *
+ *
+ *   * * *
+ *
+ * @example
  *   {"name": "ok.md", "config": "_______"}
+ *
+ *   _______
+ *
+ *   _______
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"rule": "_", "ruleRepetition": 7}}
  *
  *   _______
  *
@@ -79,6 +93,7 @@
  * @typedef {string} Options
  */
 
+import {toMarkdown} from 'mdast-util-to-markdown'
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
@@ -89,8 +104,19 @@ const remarkLintRuleStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option =
+        settings.rule !== undefined ||
+        settings.ruleRepetition !== undefined ||
+        typeof settings.ruleSpaces === 'boolean'
+          ? toMarkdown({type: 'thematicBreak'}, settings).slice(0, -1)
+          : 'consistent'
+    }
 
     if (option !== 'consistent' && /[^-_* ]/.test(option)) {
       file.fail(

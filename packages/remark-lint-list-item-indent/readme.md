@@ -46,8 +46,8 @@ This rule is included in the following presets:
 
 | Preset | Setting |
 | - | - |
-| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'mixed'` |
-| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | `'tab-size'` |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'mixed'` |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'tab'` |
 
 ## Install
 
@@ -126,7 +126,7 @@ The default export is `remarkLintListItemIndent`.
 This rule supports standard configuration that all remark lint rules accept
 (such as `false` to turn it off or `[1, options]` to configure it).
 
-The following options (default: `'tab-size'`) are accepted:
+The following options (default: [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) or `'tab-size'`) are accepted:
 
 *   `'space'`
     — prefer a single space
@@ -169,7 +169,7 @@ be okay.
 
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 uses `'tab-size'` (named `'tab'` there) by default.
-[`listItemIndent: '1'` (for `'space'`) or `listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent)
+[`settings.listItemIndent: '1'` (for `'space'`) or `settings.listItemIndent: 'mixed'`](https://github.com/remarkjs/remark-lint#configure)
 is supported.
 
 ## Examples
@@ -204,7 +204,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'mixed'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'mixed'` and the rule is not configured.
 
 ###### In
 
@@ -232,7 +232,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'mixed'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'mixed'` and the rule is not configured.
 
 ###### In
 
@@ -250,7 +250,7 @@ When configured with `'mixed'`.
 
 ##### `ok.md`
 
-When configured with `'space'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'one'` and the rule is not configured.
 
 ###### In
 
@@ -278,7 +278,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'space'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'one'` and the rule is not configured.
 
 ###### In
 
@@ -297,7 +297,7 @@ When configured with `'space'`.
 
 ##### `not-ok.md`
 
-When configured with `'tab-size'`.
+When [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure) is `'tab'` and the rule is not configured.
 
 ###### In
 

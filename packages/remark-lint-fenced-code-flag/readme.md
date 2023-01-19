@@ -208,22 +208,6 @@ alpha()
 
 ##### `ok.md`
 
-When configured with `[ 'alpha' ]`.
-
-###### In
-
-````markdown
-```alpha
-bravo()
-```
-````
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
 When configured with `{ flags: [ 'alpha' ] }`.
 
 ###### In

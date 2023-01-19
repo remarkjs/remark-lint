@@ -243,7 +243,13 @@ For help creating your own rule, it’s suggested to look at existing rules and 
 
 <a name="configuring-remark-lint"></a>
 
-All rules can be configured in one standard way:
+Just like other remark plugins, there are a couple ways to configure rules.
+They all follow a standard approach:
+
+*   Pass a severity, options, or both to the rules themselves.
+    This affects each rule individually and takes highest precedence.
+*   Some rules correspond to settings that are shared among all remark plugins --- particularly [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options).
+*   Using presets, you can change any combination of rules' severity, rules' options, or shared settings.
 
 ```js
 import {remark} from 'remark'
@@ -280,8 +286,47 @@ remark()
   .use(remarkLintMaximumLineLength, [1, 72])
 ```
 
-See [`use()` in `unified`s readme][unified-use] for more info on how to use
+See [`use()` in `unified`'s readme][unified-use] for more info on how to use
 plugins.
+
+Use the following remark settings to configure both the corresponding rules and [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options):
+
+<!--settings start-->
+
+| Setting | Rule |
+| - | - |
+| [`settings.bullet`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet) | [`remark-lint-unordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style) |
+| [`settings.bulletOrdered`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered) | [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) |
+| [`settings.closeAtx`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx) | [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) |
+| [`settings.emphasis`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsemphasis) | [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) |
+| [`settings.fence`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence) | [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) |
+| [`settings.fences`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences) | [`remark-lint-code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) |
+| [`settings.incrementListMarker`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker) | [`remark-lint-ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) |
+| [`settings.listItemIndent`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent) | [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) |
+| [`settings.quote`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote) | [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) |
+| [`settings.rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule) | [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) |
+| [`settings.ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition) | [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) |
+| [`settings.ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces) | [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) |
+| [`settings.setext`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext) | [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) |
+| [`settings.strong`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong) | [`remark-lint-strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) |
+
+<!--settings end-->
+
+```js
+import {remark} from 'remark'
+import remarkLintUnorderedListMarkerStyle from 'remark-lint-unordered-list-marker-style'
+
+remark()
+  .use(remarkLintUnorderedListMarkerStyle)
+  .use({settings: {bullet: '*'}})
+```
+
+See [remark][] for how to configure plugins and settings on the API, and [`remark-cli`][remark-cli] for the places the CLI looks for configuration.
+
+> 🧑‍🏫 **Info**: remark lint rules *check* markdown.
+> [`remark-stringify`][remark-stringify] *formats* markdown.
+> They behave consistently when you change shared settings that they both understand, but not if you pass options to rules individually.
+> Passing options to rules individually doesn't affect [`remark-stringify`][remark-stringify] or vice versa.
 
 > 🧑‍🏫 **Info**: messages in `remark-lint` are warnings instead of errors.
 > Other linters (such as ESLint) almost always use errors.
@@ -370,7 +415,6 @@ import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent'
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended'
-import remarkLintListItemIndent from 'remark-lint-list-item-indent'
 
 main()
 
@@ -380,10 +424,12 @@ async function main() {
     .use(remarkPresetLintConsistent)
     // Few recommended rules.
     .use(remarkPresetLintRecommended)
-    // `remark-lint-list-item-indent` is configured with `tab-size` in the
-    // recommended preset, but if we’d prefer something else, it can be
-    // reconfigured:
-    .use(remarkLintListItemIndent, 'space')
+    .use({
+      // `settings.listItemIndent` is set to `tab` in the
+      // recommended preset, but you can
+      // change it if you’d prefer something else:
+      settings: {listItemIndent: 'one'}
+    })
     .process('1) Hello, _Jupiter_ and *Neptune*!')
 
   console.error(reporter(file))
@@ -404,8 +450,6 @@ Running that with `node example.js` yields:
 
 remark lint rules *check* markdown.
 [`remark-stringify`][remark-stringify] (used in remark) *formats* markdown.
-When you configure lint rules and use remark to format markdown, you must
-manually synchronize their configuration:
 
 ```js
 import {reporter} from 'vfile-reporter'
@@ -417,10 +461,11 @@ main()
 
 async function main() {
   const file = await remark()
-    .use(remarkLintEmphasisMarker, '*')
-    .use(remarkLintStrongMarker, '*')
+    .use(remarkLintEmphasisMarker)
+    .use(remarkLintStrongMarker)
     .use({
-      settings: {emphasis: '*', strong: '*'} // `remark-stringify` settings.
+      // Configure both the rules and `remark-stringify`.
+      settings: {emphasis: '*', strong: '*'}
     })
     .process('_Hello_, __world__!')
 
@@ -481,16 +526,15 @@ Now add a `remarkConfig` to your `package.json` to configure remark:
 ```js
   /* … */
   "remarkConfig": {
+    "settings": {
+      // `settings.listItemIndent` is set to `tab` in the
+      // recommended preset, but you can
+      // change it if you’d prefer something else:
+      "listItemIndent": "one"
+    },
     "plugins": [
       "remark-preset-lint-consistent", // Check that markdown is consistent.
-      "remark-preset-lint-recommended", // Few recommended rules.
-      // `remark-lint-list-item-indent` is configured with `tab-size` in the
-      // recommended preset, but if we’d prefer something else, it can be
-      // reconfigured:
-      [
-        "remark-lint-list-item-indent",
-        "space"
-      ]
+      "remark-preset-lint-recommended" // Few recommended rules.
     ]
   },
   /* … */
@@ -509,8 +553,6 @@ npm run check
 
 remark lint rules *check* markdown.
 The CLI can *format* markdown.
-You can combine these features but have to manually synchronize their
-configuration.
 Please first follow the previous example (checking markdown on the CLI) and then
 change the npm script:
 
@@ -539,17 +581,14 @@ Update `remarkConfig`:
     },
     "plugins": [
       "remark-preset-lint-consistent",
-      "remark-preset-lint-recommended",
-      ["remark-lint-list-item-indent", "space"]
-      ["remark-lint-emphasis-marker", "*"],
-      ["remark-lint-strong-marker", "*"]
+      "remark-preset-lint-recommended"
     ]
   },
   /* … */
 ```
 
-This now includes `settings`, which configures
-[`remark-stringify`][remark-stringify], and explicitly prefers asterisks
+`settings` configures both the rules and
+[`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options), and explicitly prefers asterisks
 for emphasis and strong.
 Install the new dependencies:
 

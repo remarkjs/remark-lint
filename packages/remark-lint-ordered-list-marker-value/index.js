@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'ordered'`) are accepted:
+ * The following options (default: [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) or `'ordered'`) are accepted:
  *
  * *   `'ordered'`
  *     — values should increment by one from the first item
@@ -29,8 +29,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * retains the value of the first item and increments further items by default.
- * Pass
- * [`incrementListMarker: false`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsincrementlistmarker)
+ * Change
+ * [`settings.incrementListMarker`](https://github.com/remarkjs/remark-lint#configure) to `false`
  * to not increment further items.
  *
  * @module ordered-list-marker-value
@@ -92,7 +92,45 @@
  *   0.  Foxtrot
  *
  * @example
+ *   {"name": "ok.md", "settings": {"incrementListMarker": false}}
+ *
+ *   1.  Foo
+ *   1.  Bar
+ *   1.  Baz
+ *
+ *   Paragraph.
+ *
+ *   3.  Alpha
+ *   3.  Bravo
+ *   3.  Charlie
+ *
+ *   Paragraph.
+ *
+ *   0.  Delta
+ *   0.  Echo
+ *   0.  Foxtrot
+ *
+ * @example
  *   {"name": "ok.md", "config": "ordered"}
+ *
+ *   1.  Foo
+ *   2.  Bar
+ *   3.  Baz
+ *
+ *   Paragraph.
+ *
+ *   3.  Alpha
+ *   4.  Bravo
+ *   5.  Charlie
+ *
+ *   Paragraph.
+ *
+ *   0.  Delta
+ *   1.  Echo
+ *   2.  Foxtrot
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"incrementListMarker": true}}
  *
  *   1.  Foo
  *   2.  Bar
@@ -144,6 +182,17 @@
  *   2:1-2:8: Marker should be `2`, was `1`
  *
  * @example
+ *   {"name": "not-ok.md", "settings": {"incrementListMarker": true}, "label": "input"}
+ *
+ *   1.  Foo
+ *   1.  Bar
+ *
+ * @example
+ *   {"name": "not-ok.md", "settings": {"incrementListMarker": true}, "label": "output"}
+ *
+ *   2:1-2:8: Marker should be `2`, was `1`
+ *
+ * @example
  *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'`, `'one'`, or `'single'`
@@ -165,8 +214,14 @@ const remarkLintOrderedListMarkerValue = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'ordered') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.incrementListMarker === false ? 'single' : 'ordered'
+    }
 
     if (option !== 'ordered' && option !== 'one' && option !== 'single') {
       file.fail(

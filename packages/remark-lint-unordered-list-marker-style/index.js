@@ -6,7 +6,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.bullet`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -27,8 +27,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats ordered lists with asterisks by default.
- * Pass
- * [`bullet: '+'` or `bullet: '-'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet)
+ * Change
+ * [`settings.bullet`](https://github.com/remarkjs/remark-lint#configure) to `'+'` or `'-'`
  * to always use plusses or dashes.
  *
  * @module unordered-list-marker-style
@@ -59,12 +59,27 @@
  *   * Foo
  *
  * @example
+ *   {"name": "ok.md", "settings": {"bullet": "*"}}
+ *
+ *   * Foo
+ *
+ * @example
  *   {"name": "ok.md", "config": "-"}
  *
  *   - Foo
  *
  * @example
+ *   {"name": "ok.md", "settings": {"bullet": "-"}}
+ *
+ *   - Foo
+ *
+ * @example
  *   {"name": "ok.md", "config": "+"}
+ *
+ *   + Foo
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"bullet": "+"}}
  *
  *   + Foo
  *
@@ -83,6 +98,11 @@
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *
+ *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "settings": {"bullet": "💩"}, "positionless": true}
  *
  *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
  */
@@ -106,8 +126,14 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.bullet || 'consistent'
+    }
 
     if (option !== 'consistent' && !markers.has(option)) {
       file.fail(

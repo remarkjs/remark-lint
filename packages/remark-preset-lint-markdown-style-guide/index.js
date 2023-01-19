@@ -36,14 +36,13 @@
  * ###### `header`
  *
  * The default is `header:atx`.
- * To use `header:setext`, change the setting for `remark-lint-heading-style`
+ * To use `header:setext`, change [`settings.setext`](https://github.com/remarkjs/remark-lint#configure)
  * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-heading-style", "setext"],
+ * +  "setext": true,
  *    …
  *  ]
  * ```
@@ -51,14 +50,13 @@
  * ###### `list-marker`
  *
  * The default is `list-marker:hyphen`.
- * For `list-marker:asterisk` or `list-marker:plus`, change the setting for
- * `remark-lint-unordered-list-marker-style` like so:
+ * For `list-marker:asterisk` or `list-marker:plus`, change [`settings.bullet`](https://github.com/remarkjs/remark-lint#configure)
+ * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-unordered-list-marker-style", "*"],
+ * +  "bullet": "*",
  *    …
  *  ]
  * ```
@@ -66,14 +64,13 @@
  * ###### `list-space`
  *
  * The default is `list-space:mixed`.
- * For `list-space:1`, change the setting for `remark-lint-list-item-indent`
+ * For `list-space:1`, change [`settings.listItemIndent`](https://github.com/remarkjs/remark-lint#configure)
  * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-list-item-indent", "space"],
+ * +  "listItemIndent": "one",
  *    …
  *  ]
  * ```
@@ -81,14 +78,13 @@
  * ###### `code`
  *
  * The default is `code:fenced`.
- * For `code:indented`, change the setting for `remark-lint-code-block-style`
+ * For `code:indented`, change [`settings.fences`](https://github.com/remarkjs/remark-lint#configure)
  * like so:
  *
  * ```diff
- *  "plugins": [
+ *  "settings": [
  *    …
- *    "remark-preset-lint-markdown-style-guide",
- * +  ["remark-lint-code-block-style", "indented"],
+ * +  "fences": false,
  *    …
  *  ]
  * ```
@@ -187,7 +183,7 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintHardBreakSpaces,
 
     // https://cirosantilli.com/markdown-style-guide/#headers
-    [remarkLintHeadingStyle, 'atx'],
+    remarkLintHeadingStyle,
     remarkLintHeadingIncrement,
     remarkLintNoDuplicateHeadings,
 
@@ -214,14 +210,14 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintNoBlockquoteWithoutMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#unordered
-    [remarkLintUnorderedListMarkerStyle, '-'],
+    remarkLintUnorderedListMarkerStyle,
 
     // https://cirosantilli.com/markdown-style-guide/#ordered
-    [remarkLintOrderedListMarkerStyle, '.'],
+    remarkLintOrderedListMarkerStyle,
     [remarkLintOrderedListMarkerValue, 'one'],
 
     // https://cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
-    [remarkLintListItemIndent, 'mixed'],
+    remarkLintListItemIndent,
 
     // https://cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
     remarkLintListItemContentIndent,
@@ -239,12 +235,12 @@ const remarkPresetLintMarkdownStyleGuide = {
     // Not checked.
 
     // https://cirosantilli.com/markdown-style-guide/#code-blocks
-    [remarkLintCodeBlockStyle, 'fenced'],
+    remarkLintCodeBlockStyle,
     [remarkLintFencedCodeFlag, {allowEmpty: false}],
-    [remarkLintFencedCodeMarker, '`'],
+    remarkLintFencedCodeMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#horizontal-rules
-    [remarkLintRuleStyle, '---'],
+    remarkLintRuleStyle,
 
     // https://cirosantilli.com/markdown-style-guide/#tables
     remarkLintNoTableIndentation,
@@ -266,13 +262,13 @@ const remarkPresetLintMarkdownStyleGuide = {
     remarkLintDefinitionSpacing,
 
     // https://cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
-    [remarkLintLinkTitleStyle, '"'],
+    remarkLintLinkTitleStyle,
 
     // https://cirosantilli.com/markdown-style-guide/#bold
-    [remarkLintStrongMarker, '*'],
+    remarkLintStrongMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#italic
-    [remarkLintEmphasisMarker, '*'],
+    remarkLintEmphasisMarker,
 
     // https://cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
     // Not checked.
@@ -285,7 +281,20 @@ const remarkPresetLintMarkdownStyleGuide = {
 
     // https://cirosantilli.com/markdown-style-guide/#email-automatic-links.
     // Not checked.
-  ]
+  ],
+  settings: {
+    bullet: '-',
+    bulletOrdered: '.',
+    emphasis: '*',
+    fence: '`',
+    fences: true,
+    incrementListMarker: false,
+    listItemIndent: 'mixed',
+    quote: '"',
+    rule: '-',
+    setext: false,
+    strong: '*'
+  }
 }
 
 export default remarkPresetLintMarkdownStyleGuide

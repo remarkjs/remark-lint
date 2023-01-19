@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   ``'`'``
  *     — prefer grave accents
@@ -23,8 +23,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats fenced code with grave accents by default.
- * Pass
- * [`fence: '~'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfence)
+ * Change
+ * [`settings.fence`](https://github.com/remarkjs/remark-lint#configure) to `'~'`
  * to always use tildes.
  *
  * @module fenced-code-marker
@@ -52,7 +52,29 @@
  *   ```
  *
  * @example
+ *   {"name": "ok.md", "settings": {"fence": "`"}}
+ *
+ *   ```alpha
+ *   bravo()
+ *   ```
+ *
+ *   ```
+ *   charlie()
+ *   ```
+ *
+ * @example
  *   {"name": "ok.md", "config": "~"}
+ *
+ *   ~~~alpha
+ *   bravo()
+ *   ~~~
+ *
+ *   ~~~
+ *   charlie()
+ *   ~~~
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"fence": "~"}}
  *
  *   ~~~alpha
  *   bravo()
@@ -98,6 +120,11 @@
  *   {"name": "not-ok-incorrect.md", "config": "💩", "label": "output", "positionless": true}
  *
  *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
+ *
+ * @example
+ *   {"name": "not-ok-incorrect.md", "settings": {"fence": "💩"}, "label": "output", "positionless": true}
+ *
+ *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
  */
 
 /**
@@ -116,8 +143,14 @@ const remarkLintFencedCodeMarker = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const contents = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.fence || 'consistent'
+    }
 
     if (option !== 'consistent' && option !== '~' && option !== '`') {
       file.fail(

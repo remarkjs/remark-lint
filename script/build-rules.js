@@ -2,6 +2,7 @@
  * @typedef {import('type-fest').PackageJson} PackageJson
  * @typedef {import('mdast').BlockContent|import('mdast').DefinitionContent} BlockContent
  * @typedef {import('mdast').TableContent} TableContent
+ * @typedef {import('mdast').PhrasingContent} PhrasingContent
  */
 
 import fs from 'node:fs'
@@ -18,11 +19,9 @@ import GitHubSlugger from 'github-slugger'
 import parseAuthor from 'parse-author'
 import {rules} from './util/rules.js'
 import {rule} from './util/rule.js'
-import {presets} from './util/presets.js'
+import {formatSettings, presets} from './util/presets.js'
 import {repoUrl} from './util/repo-url.js'
 import {characters} from './characters.js'
-
-const own = {}.hasOwnProperty
 
 const remote = repoUrl('package.json')
 
@@ -341,9 +340,7 @@ presets(root).then((presetObjects) => {
                     },
                     {
                       type: 'tableCell',
-                      children: option
-                        ? [{type: 'inlineCode', value: inspect(option)}]
-                        : []
+                      children: option || []
                     }
                   ]
                 }
@@ -565,148 +562,158 @@ presets(root).then((presetObjects) => {
         ...(categories.example || [])
       )
 
+      // Don't show the same test for both shared settings and rules' options.
+      const inverted = Object.fromEntries(
+        Object.entries(tests).map(([key, value]) => [
+          JSON.stringify(value),
+          key
+        ])
+      )
       let first = true
-      /** @type {string} */
-      let configuration
 
-      for (configuration in tests) {
-        if (own.call(tests, configuration)) {
-          const fixtures = tests[configuration]
+      for (const [fixtures, configuration] of Object.entries(inverted)) {
+        if (first) {
+          children.push({
+            type: 'heading',
+            depth: 2,
+            children: [{type: 'text', value: 'Examples'}]
+          })
+          first = false
+        }
 
-          if (first) {
+        for (const [fileName, fixture] of Object.entries(
+          /** @type {tests[keyof tests]} */ (JSON.parse(fixtures))
+        )) {
+          /** @type {{settings: Record<string, unknown>, config: unknown}} */
+          const {settings, config} = JSON.parse(configuration)
+          let clean = fixture.input
+
+          children.push({
+            type: 'heading',
+            depth: 5,
+            children: [{type: 'inlineCode', value: fileName}]
+          })
+
+          if (settings || config !== true) {
             children.push({
-              type: 'heading',
-              depth: 2,
-              children: [{type: 'text', value: 'Examples'}]
+              type: 'paragraph',
+              children: [
+                {type: 'text', value: 'When '},
+                .../** @type {Array<PhrasingContent>} */ (
+                  settings
+                    ? [
+                        ...formatSettings(settings),
+                        {type: 'text', value: ' and '}
+                      ]
+                    : []
+                ),
+                .../** @type {Array<PhrasingContent>} */ (
+                  config === true
+                    ? [{type: 'text', value: 'the rule is not configured'}]
+                    : [
+                        {type: 'text', value: 'configured with '},
+                        {type: 'inlineCode', value: inspect(config)}
+                      ]
+                ),
+                {type: 'text', value: '.'}
+              ]
             })
-            first = false
           }
 
-          /** @type {string} */
-          let fileName
+          if (
+            fixture.input !== null &&
+            fixture.input !== undefined &&
+            fixture.input.trim() !== ''
+          ) {
+            children.push({
+              type: 'heading',
+              depth: 6,
+              children: [{type: 'text', value: 'In'}]
+            })
 
-          for (fileName in fixtures) {
-            if (own.call(fixtures, fileName)) {
-              const fixture = fixtures[fileName]
-              /** @type {{config: unknown}} */
-              const {config} = JSON.parse(configuration)
-              let clean = fixture.input
-
+            if (fixture.gfm) {
+              hasGfm = true
               children.push({
-                type: 'heading',
-                depth: 5,
-                children: [{type: 'inlineCode', value: fileName}]
-              })
-
-              if (config !== true) {
-                children.push({
-                  type: 'paragraph',
-                  children: [
-                    {type: 'text', value: 'When configured with '},
-                    {type: 'inlineCode', value: inspect(config)},
-                    {type: 'text', value: '.'}
-                  ]
-                })
-              }
-
-              if (
-                fixture.input !== null &&
-                fixture.input !== undefined &&
-                fixture.input.trim() !== ''
-              ) {
-                children.push({
-                  type: 'heading',
-                  depth: 6,
-                  children: [{type: 'text', value: 'In'}]
-                })
-
-                if (fixture.gfm) {
-                  hasGfm = true
-                  children.push({
-                    type: 'blockquote',
+                type: 'blockquote',
+                children: [
+                  {
+                    type: 'paragraph',
                     children: [
+                      {type: 'text', value: '👉 '},
                       {
-                        type: 'paragraph',
-                        children: [
-                          {type: 'text', value: '👉 '},
-                          {
-                            type: 'strong',
-                            children: [{type: 'text', value: 'Note'}]
-                          },
-                          {type: 'text', value: ': this example uses GFM ('},
-                          {
-                            type: 'linkReference',
-                            identifier: 'gfm',
-                            referenceType: 'full',
-                            children: [
-                              {type: 'inlineCode', value: 'remark-gfm'}
-                            ]
-                          },
-                          {type: 'text', value: ').'}
-                        ]
-                      }
+                        type: 'strong',
+                        children: [{type: 'text', value: 'Note'}]
+                      },
+                      {type: 'text', value: ': this example uses GFM ('},
+                      {
+                        type: 'linkReference',
+                        identifier: 'gfm',
+                        referenceType: 'full',
+                        children: [{type: 'inlineCode', value: 'remark-gfm'}]
+                      },
+                      {type: 'text', value: ').'}
                     ]
-                  })
-                }
+                  }
+                ]
+              })
+            }
 
-                let index = -1
-                while (++index < characters.length) {
-                  const char = characters[index]
-                  const next = clean.replace(char.in, char.out)
+            let index = -1
+            while (++index < characters.length) {
+              const char = characters[index]
+              const next = clean.replace(char.in, char.out)
 
-                  if (clean !== next) {
-                    children.push({
-                      type: 'blockquote',
+              if (clean !== next) {
+                children.push({
+                  type: 'blockquote',
+                  children: [
+                    {
+                      type: 'paragraph',
                       children: [
+                        {type: 'text', value: '👉 '},
                         {
-                          type: 'paragraph',
-                          children: [
-                            {type: 'text', value: '👉 '},
-                            {
-                              type: 'strong',
-                              children: [{type: 'text', value: 'Note'}]
-                            },
-                            {type: 'text', value: ': '},
-                            {type: 'inlineCode', value: char.char},
-                            {
-                              type: 'text',
-                              value: ' represents ' + char.name + '.'
-                            }
-                          ]
+                          type: 'strong',
+                          children: [{type: 'text', value: 'Note'}]
+                        },
+                        {type: 'text', value: ': '},
+                        {type: 'inlineCode', value: char.char},
+                        {
+                          type: 'text',
+                          value: ' represents ' + char.name + '.'
                         }
                       ]
-                    })
-
-                    clean = next
-                  }
-                }
-
-                children.push({
-                  type: 'code',
-                  lang: 'markdown',
-                  value: fixture.input
+                    }
+                  ]
                 })
-              }
 
-              children.push({
-                type: 'heading',
-                depth: 6,
-                children: [{type: 'text', value: 'Out'}]
-              })
-
-              if (fixture.output.length === 0) {
-                children.push({
-                  type: 'paragraph',
-                  children: [{type: 'text', value: 'No messages.'}]
-                })
-              } else {
-                children.push({
-                  type: 'code',
-                  lang: 'text',
-                  value: fixture.output.join('\n')
-                })
+                clean = next
               }
             }
+
+            children.push({
+              type: 'code',
+              lang: 'markdown',
+              value: fixture.input
+            })
+          }
+
+          children.push({
+            type: 'heading',
+            depth: 6,
+            children: [{type: 'text', value: 'Out'}]
+          })
+
+          if (fixture.output.length === 0) {
+            children.push({
+              type: 'paragraph',
+              children: [{type: 'text', value: 'No messages.'}]
+            })
+          } else {
+            children.push({
+              type: 'code',
+              lang: 'text',
+              value: fixture.output.join('\n')
+            })
           }
         }
       }

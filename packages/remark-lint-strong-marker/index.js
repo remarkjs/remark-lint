@@ -5,7 +5,7 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * The following options (default: [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) or `'consistent'`) are accepted:
  *
  * *   `'*'`
  *     — prefer asterisks
@@ -29,8 +29,8 @@
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * formats strong with asterisks by default.
- * Pass
- * [`strong: '_'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsstrong)
+ * Change
+ * [`settings.strong`](https://github.com/remarkjs/remark-lint#configure) to `'_'`
  * to always use underscores.
  *
  * @module strong-marker
@@ -55,7 +55,17 @@
  *   **foo**.
  *
  * @example
+ *   {"name": "ok.md", "settings": {"strong": "*"}}
+ *
+ *   **foo**.
+ *
+ * @example
  *   {"name": "ok.md", "config": "_"}
+ *
+ *   __foo__.
+ *
+ * @example
+ *   {"name": "ok.md", "settings": {"strong": "_"}}
  *
  *   __foo__.
  *
@@ -71,6 +81,11 @@
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *
+ *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "settings": {"strong": "💩"}, "positionless": true}
  *
  *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
  */
@@ -91,8 +106,14 @@ const remarkLintStrongMarker = lintRule(
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker#readme'
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  function (tree, file, option) {
     const value = String(file)
+
+    if (!option) {
+      /** @type {import('remark-stringify').Options} */
+      const settings = this.data().settings || {}
+      option = settings.strong || 'consistent'
+    }
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {
       file.fail(

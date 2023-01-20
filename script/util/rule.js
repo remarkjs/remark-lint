@@ -34,8 +34,11 @@ export function rule(filePath) {
   const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf8')
   const fileInfo = parse(code, {spacing: 'preserve'})[0]
   const tags = fileInfo.tags
+  // @ts-expect-error comment-parse types cannot be resolved by ESM, see https://github.com/syavorsky/comment-parser/issues/159 and https://github.com/syavorsky/comment-parser/pull/161
   const moduleTag = tags.find((d) => d.tag === 'module')
+  // @ts-expect-error comment-parse types cannot be resolved by ESM, see https://github.com/syavorsky/comment-parser/issues/159 and https://github.com/syavorsky/comment-parser/pull/161
   const summaryTag = tags.find((d) => d.tag === 'summary')
+  // @ts-expect-error comment-parse types cannot be resolved by ESM, see https://github.com/syavorsky/comment-parser/issues/159 and https://github.com/syavorsky/comment-parser/pull/161
   const deprecatedTag = tags.find((d) => d.tag === 'deprecated')
 
   /* c8 ignore next 3 */
@@ -70,7 +73,9 @@ export function rule(filePath) {
   }
 
   const examples = tags
+    // @ts-expect-error comment-parse types cannot be resolved by ESM, see https://github.com/syavorsky/comment-parser/issues/159 and https://github.com/syavorsky/comment-parser/pull/161
     .filter((d) => d.tag === 'example')
+    // @ts-expect-error comment-parse types cannot be resolved by ESM, see https://github.com/syavorsky/comment-parser/issues/159 and https://github.com/syavorsky/comment-parser/pull/161
     .map((d) => d.description.replace(/^\r?\n|\r?\n$/g, ''))
   let index = -1
 

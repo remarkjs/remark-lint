@@ -2,8 +2,8 @@
  * @typedef {import('unified').Plugin} Plugin
  * @typedef {import('vfile-message').VFileMessage} VFileMessage
  * @typedef {import('tape').Test} Test
- * @typedef {import('./script/util/rule').Rule} Rule
- * @typedef {import('./script/util/rule').Check} Check
+ * @typedef {import('./script/util/rule.js').Rule} Rule
+ * @typedef {import('./script/util/rule.js').Check} Check
  */
 
 import url from 'node:url'

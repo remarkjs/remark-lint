@@ -39,6 +39,7 @@ presets(root).then((presetObjects) => {
     const doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
     const fileInfo = parse(doc, {spacing: 'preserve'})[0]
     const tags = fileInfo.tags
+    // @ts-expect-error comment-parse types cannot be resolved by ESM, see https://github.com/syavorsky/comment-parser/issues/159 and https://github.com/syavorsky/comment-parser/pull/161
     const summaryTag = tags.find((d) => d.tag === 'summary')
     const author =
       typeof pack.author === 'string' ? parseAuthor(pack.author) : pack.author

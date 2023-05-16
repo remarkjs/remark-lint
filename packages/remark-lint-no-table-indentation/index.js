@@ -135,6 +135,7 @@ const remarkLintNoTableIndentation = lintRule(
           }
 
           if (lineColumn !== offset) {
+            // @ts-expect-error: assume we have a correct point.
             file.message('Do not indent table rows', loc.toPoint(offset))
           }
         }

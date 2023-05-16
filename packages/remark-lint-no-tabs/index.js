@@ -110,6 +110,7 @@ const remarkLintNoTabs = lintRule(
     let index = value.indexOf('\t')
 
     while (index !== -1) {
+      // @ts-expect-error: assume we have a correct point.
       file.message('Use spaces instead of tabs', toPoint(index))
       index = value.indexOf('\t', index + 1)
     }

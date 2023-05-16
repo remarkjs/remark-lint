@@ -84,17 +84,23 @@ function coerce(name, config) {
   switch (severity) {
     case false:
     case 'off':
-    case 0:
+    case 0: {
       return [0, ...options]
+    }
+
     case true:
     case 'on':
     case 'warn':
-    case 1:
+    case 1: {
       return [1, ...options]
+    }
+
     case 'error':
-    case 2:
+    case 2: {
       return [2, ...options]
-    default:
+    }
+
+    default: {
       if (typeof severity !== 'number') return [1, config]
       throw new Error(
         'Incorrect severity `' +
@@ -104,5 +110,6 @@ function coerce(name, config) {
           '`, ' +
           'expected 0, 1, or 2'
       )
+    }
   }
 }

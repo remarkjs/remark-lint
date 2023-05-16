@@ -129,11 +129,9 @@ export function rule(filePath) {
       }
     }
 
-    if (info.label === 'output') {
-      context[name][info.label] = exampleValue.split('\n')
-    } else {
-      context[name][info.label] = exampleValue
-    }
+    // @ts-expect-error: fine: array for output, string for rest.
+    context[name][info.label] =
+      info.label === 'output' ? exampleValue.split('\n') : exampleValue
   }
 
   return result

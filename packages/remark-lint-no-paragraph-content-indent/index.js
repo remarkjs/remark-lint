@@ -150,6 +150,7 @@ const remarkLintNoParagraphContentIndent = lintRule(
           if (lineColumn !== offset) {
             file.message(
               'Expected no indentation in paragraph content',
+              // @ts-expect-error: assume we have a correct point.
               loc.toPoint(offset)
             )
           }

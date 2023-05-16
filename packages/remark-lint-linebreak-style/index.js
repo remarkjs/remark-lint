@@ -103,6 +103,7 @@ const remarkLintLinebreakStyle = lintRule(
             ' (`' +
             escaped[type] +
             '`)',
+          // @ts-expect-error: assume we have a correct point.
           toPoint(index)
         )
       }

@@ -348,6 +348,7 @@ const remarkLintNoUndefinedReferences = lintRule(
           !(normalizeIdentifier(id) in map) &&
           !isAllowed(id)
         ) {
+          // @ts-expect-error: assume we have a correct point.
           file.message('Found reference to undefined definition', pos)
         }
       }

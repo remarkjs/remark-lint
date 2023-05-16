@@ -14,7 +14,7 @@ import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import {findAndReplace} from 'mdast-util-find-and-replace'
 import {toString} from 'mdast-util-to-string'
-import GitHubSlugger from 'github-slugger'
+import {slug as githubSlug} from 'github-slugger'
 import parseAuthor from 'parse-author'
 import {rules} from './util/rules.js'
 import {rule} from './util/rule.js'
@@ -28,7 +28,7 @@ const remote = repoUrl('package.json')
 
 const root = path.join(process.cwd(), 'packages')
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity, unicorn/prefer-top-level-await
 presets(root).then((presetObjects) => {
   const allRules = rules(root)
   let index = -1
@@ -103,7 +103,7 @@ presets(root).then((presetObjects) => {
     while (++contentIndex < descriptionContent.length) {
       const node = descriptionContent[contentIndex]
       if (node.type === 'heading' && node.depth === 2) {
-        category = GitHubSlugger.slug(toString(node))
+        category = githubSlug(toString(node))
       }
 
       if (!(category in categories)) {

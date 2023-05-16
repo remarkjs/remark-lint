@@ -110,6 +110,7 @@ const remarkLintCheckboxContentIndent = lintRule(
       while (/[\t ]/.test(value.charAt(final))) final++
 
       if (final - initial > 0) {
+        // @ts-expect-error: assume we have a correct point.
         file.message('Checkboxes should be followed by a single character', {
           start: loc.toPoint(initial),
           end: loc.toPoint(final)

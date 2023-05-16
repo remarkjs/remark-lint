@@ -211,6 +211,7 @@ const remarkLintLinkTitleStyle = lintRule(
             'Titles should use `' +
               (look === ')' ? '()' : look) +
               '` as a quote',
+            // @ts-expect-error: assume we have a correct point.
             {
               start: loc.toPoint(first),
               end: loc.toPoint(last + 1)

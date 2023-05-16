@@ -25,6 +25,7 @@ const own = {}.hasOwnProperty
 
 const root = path.join(process.cwd(), 'packages')
 
+// eslint-disable-next-line unicorn/prefer-top-level-await
 presets(root).then((presetObjects) => {
   let index = -1
 

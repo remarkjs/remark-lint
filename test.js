@@ -1,15 +1,15 @@
 /**
- * @typedef {import('tape').Test} Test
  * @typedef {import('unified').Plugin} Plugin
  * @typedef {import('vfile-message').VFileMessage} VFileMessage
  * @typedef {import('./script/util/rule.js').Check} Check
  * @typedef {import('./script/util/rule.js').Rule} Rule
  */
 
-import url from 'node:url'
+import assert from 'node:assert/strict'
 import path from 'node:path'
 import process from 'node:process'
-import test from 'tape'
+import test from 'node:test'
+import url from 'node:url'
 import {toVFile} from 'to-vfile'
 import {removePosition} from 'unist-util-remove-position'
 import {remark} from 'remark'
@@ -26,7 +26,7 @@ import finalNewline from './packages/remark-lint-final-newline/index.js'
 
 const own = {}.hasOwnProperty
 
-test('core', async (t) => {
+test('core', async () => {
   const doc = [
     '# A heading',
     '',
@@ -43,7 +43,7 @@ test('core', async (t) => {
     .use(lint)
     .process(toVFile({path: 'virtual.md', value: doc}))
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     [
       'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
@@ -58,7 +58,7 @@ test('core', async (t) => {
     .use(noMultipleToplevelHeadings)
     .process(toVFile({path: 'virtual.md', value: doc}))
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     [
       'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
@@ -69,15 +69,19 @@ test('core', async (t) => {
 
   file = await remark().use(lint).process('.')
 
-  t.deepEqual(asStrings(file.messages), [], 'should support no rules')
+  assert.deepEqual(asStrings(file.messages), [], 'should support no rules')
 
   file = await remark().use(finalNewline).process('')
 
-  t.deepEqual(asStrings(file.messages), [], 'should support successful rules')
+  assert.deepEqual(
+    asStrings(file.messages),
+    [],
+    'should support successful rules'
+  )
 
   file = await remark().use(finalNewline, [2]).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
@@ -101,7 +105,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, true).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     ['1:1: Missing newline character at end of file'],
     'should support a boolean (`true`)'
@@ -109,7 +113,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, false).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     [],
     'should support a boolean (`false`)'
@@ -117,7 +121,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, [true]).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     ['1:1: Missing newline character at end of file'],
     'should support a list with a boolean severity (true, for on)'
@@ -125,7 +129,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, [false]).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     [],
     'should support a list with boolean severity (false, for off)'
@@ -133,7 +137,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, ['error']).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
@@ -157,7 +161,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, ['on']).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
@@ -181,7 +185,7 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, ['warn']).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
@@ -205,13 +209,13 @@ test('core', async (t) => {
 
   file = await remark().use(finalNewline, ['off']).process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     [],
     'should support a list with string severity (`off`)'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       remark().use(finalNewline, [3]).freeze()
     },
@@ -219,7 +223,7 @@ test('core', async (t) => {
     'should fail on incorrect severities (too high)'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       remark().use(finalNewline, [-1]).freeze()
     },
@@ -236,7 +240,7 @@ test('core', async (t) => {
       })
     )
 
-  t.deepEqual(
+  assert.deepEqual(
     asStrings(file.messages),
     ['virtual.md:3:1-3:9: Found reference to undefined definition'],
     'no-undefined-references allow option should work with native regex'
@@ -251,7 +255,7 @@ test('core', async (t) => {
     )
     .process('.')
 
-  t.deepEqual(
+  assert.deepEqual(
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
@@ -291,58 +295,38 @@ test('rules', async (t) => {
     const fn = pluginMod.default
 
     if (Object.keys(info.tests).length === 0) {
-      t.pass(info.ruleId + ': no tests')
+      assert.ok(true, info.ruleId + ': no tests')
     } else {
-      t.test(info.ruleId, (t) => {
-        assertRule(t, fn, info)
-      })
-    }
-  }
-
-  t.end()
-})
-
-/**
- * Assert a rule.
- *
- * @param {Test} t
- * @param {Plugin} rule
- * @param {Rule} info
- */
-function assertRule(t, rule, info) {
-  const tests = info.tests
-  /** @type {string} */
-  let configuration
-
-  for (configuration in tests) {
-    if (own.call(tests, configuration)) {
-      const checks = tests[configuration]
-      /** @type {{config: unknown}} */
-      const {config} = JSON.parse(configuration)
-
-      t.test(configuration, (t) => {
+      await t.test(info.ruleId, async () => {
+        const tests = info.tests
         /** @type {string} */
-        let name
+        let configuration
 
-        for (name in checks) {
-          if (own.call(checks, name)) {
-            const basename = name
-            const check = checks[name]
+        for (configuration in tests) {
+          if (own.call(tests, configuration)) {
+            const checks = tests[configuration]
+            /** @type {{config: unknown}} */
+            const {config} = JSON.parse(configuration)
 
-            t.test(name, (t) => {
-              assertFixture(t, rule, info, check, basename, config)
-            })
+            /** @type {string} */
+            let name
+
+            for (name in checks) {
+              if (own.call(checks, name)) {
+                const basename = name
+                const check = checks[name]
+
+                await assertFixture(fn, info, check, basename, config)
+              }
+            }
           }
         }
       })
     }
   }
-
-  t.end()
-}
+})
 
 /**
- * @param {Test} t
  * @param {Plugin} rule
  * @param {Rule} info
  * @param {Check} fixture
@@ -350,7 +334,7 @@ function assertRule(t, rule, info) {
  * @param {unknown} config
  */
 /* eslint-disable-next-line max-params */
-function assertFixture(t, rule, info, fixture, basename, config) {
+function assertFixture(rule, info, fixture, basename, config) {
   const ruleId = info.ruleId
   const file = toVFile(basename)
   const expected = fixture.output
@@ -360,8 +344,6 @@ function assertFixture(t, rule, info, fixture, basename, config) {
   if (fixture.gfm) proc.use(remarkGfm)
 
   file.value = preprocess(fixture.input || '')
-
-  t.plan(positionless ? 1 : 2)
 
   try {
     proc.runSync(proc.parse(file), file)
@@ -402,7 +384,11 @@ function assertFixture(t, rule, info, fixture, basename, config) {
     }
   }
 
-  t.deepEqual(normalize(file.messages), expected, 'should equal with position')
+  assert.deepEqual(
+    normalize(file.messages),
+    expected,
+    'should equal with position'
+  )
 
   if (!positionless) {
     file.messages = []
@@ -412,7 +398,11 @@ function assertFixture(t, rule, info, fixture, basename, config) {
     if (fixture.gfm) proc.use(remarkGfm)
     proc.processSync(file)
 
-    t.deepEqual(normalize(file.messages), [], 'should equal without position')
+    assert.deepEqual(
+      normalize(file.messages),
+      [],
+      'should equal without position'
+    )
   }
 }
 

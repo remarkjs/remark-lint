@@ -111,7 +111,6 @@ The rules that are maintained here:
 *   [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 *   [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
 *   [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
-*   [`remark-lint-fenced-code-flag-case`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-fenced-code-flag-case) — warn when fenced code blocks have improperly cased language flags
 *   [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style
 *   [`remark-lint-file-extension`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension) — warn when the file’s extension violates the given style
 *   [`remark-lint-final-definition`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition) — warn when definitions are not placed at the end of the file
@@ -120,14 +119,12 @@ The rules that are maintained here:
 *   [`remark-lint-hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
 *   [`remark-lint-heading-increment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
 *   [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) — warn when heading style violates the given style
-*   [`remark-lint-heading-word-length`](https://github.com/Xunnamius/unified-utils/tree/main/packages/remark-lint-heading-word-length) — warn when headings have too many or too few words with unicode support
 *   [`remark-lint-linebreak-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style) — warn when linebreaks violate a given or detected style
 *   [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
 *   [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
 *   [`remark-lint-list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation
 *   [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — warn when the spacing between a list item’s bullet and its content violates a given style
 *   [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
-*   [`remark-lint-list-item-style`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-list-item-style) — warn when list items violate a given capitalization or punctuation style
 *   [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 *   [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
 *   [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
@@ -185,13 +182,15 @@ The following rules are maintained by the community:
 
 <!--
   👉 **Note**: this list is ordered based on the name without prefix, so
-  excluding `remark-lint-no-` or `remark-lint-`
+  excluding `remark-lint-`
 -->
 
 *   [`remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
     — ensure list items are in alphabetical order
 *   [`remark-lint-appropriate-heading`](https://github.com/RichardLitt/remark-lint-appropriate-heading)
     — check that the top level heading matches the directory name
+*   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
+    — check if your links are reachable and/or unique
 *   [`remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
     — ensure a specific number of lines between blocks
 *   [`remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
@@ -199,6 +198,22 @@ The following rules are maintained by the community:
 *   [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
     — lint fenced code blocks by corresponding language tags,
     currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
+*   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
+    — ensure the same URL is not linked multiple times.
+*   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
+    — enforce a limit of emoji per paragraph
+*   [`remark-lint-fenced-code-flag-case`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-fenced-code-flag-case)
+    — warn when fenced code blocks have improperly cased language flags
+*   [`remark-lint-frontmatter-schema`](https://github.com/JulianCataldo/remark-lint-frontmatter-schema)
+    — validate YAML frontmatter against a JSON schema
+*   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
+    — ensure headings have the appropriate length
+*   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
+    — ensure heading parsing is not broken by weird whitespace
+*   [`remark-lint-heading-word-length`](https://github.com/Xunnamius/unified-utils/tree/main/packages/remark-lint-heading-word-length)
+    — warn when headings have too many or too few words with unicode support
+*   [`remark-lint-list-item-style`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-list-item-style)
+    — warn when list items violate a given capitalization or punctuation style
 *   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-match-punctuation)
     — ensures punctuations are used in pairs if necessary.
 *   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
@@ -207,32 +222,20 @@ The following rules are maintained by the community:
     — ensures that Chinese punctuation’s not used in numbers
 *   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
     — check that external links are alive
+*   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
+    — ensure every heading is followed by content (forming a section)
 *   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-long-code)
     — ensures that each line in code block won't be too long.
 *   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-repeat-punctuation)
     — ensures punctuation is not repeated
-*   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
-    — enforce a limit of emoji per paragraph
-*   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
-    — ensure every heading is followed by content (forming a section)
-*   [`remark-lint-frontmatter-schema`](https://github.com/JulianCataldo/remark-lint-frontmatter-schema)
-    — validate YAML frontmatter against a JSON schema
-*   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
-    — ensure headings have the appropriate length
-*   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
-    — ensure heading parsing is not broken by weird whitespace
-*   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
-    — check if your links are reachable and/or unique
+*   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
+    — ensure that the `href` of links has no trailing slash
 *   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-number)
     — ensures there are spaces around number and Chinese.
 *   [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-word)
     — ensures there are spaces around English word and Chinese.
-*   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
-    — ensure that the `href` of links has no trailing slash
 *   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
     — wrapper for `write-good`
-*   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
-    — ensure the same URL is not linked multiple times.
 
 For help creating your own rule, it’s suggested to look at existing rules and to
 [follow this tutorial][tutorial].

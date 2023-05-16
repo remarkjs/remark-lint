@@ -61,7 +61,7 @@ const remarkLintListItemContentIndent = lintRule(
 
     visit(tree, 'listItem', (node) => {
       let index = -1
-      /** @type {number|undefined} */
+      /** @type {number | undefined} */
       let style
 
       while (++index < node.children.length) {

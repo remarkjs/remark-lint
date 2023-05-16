@@ -1,8 +1,8 @@
 /**
- * @typedef {import('type-fest').PackageJson} PackageJson
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').List} List
  * @typedef {import('mdast').ListItem} ListItem
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('type-fest').PackageJson} PackageJson
  */
 
 import fs from 'node:fs'

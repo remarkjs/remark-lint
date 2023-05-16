@@ -36,8 +36,8 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').DefinitionContent} DefinitionContent
+ * @typedef {import('mdast').Root} Root
  */
 
 import {lintRule} from 'unified-lint-rule'

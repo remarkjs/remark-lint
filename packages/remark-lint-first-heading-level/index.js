@@ -107,10 +107,16 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Heading} Heading
  * @typedef {import('mdast').HTML} HTML
- * @typedef {import('mdast').Heading['depth']} Depth
+ * @typedef {import('mdast').Root} Root
+ */
+
+/**
+ * @typedef {Heading['depth']} Depth
+ *   Styles.
  * @typedef {Depth} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -128,7 +134,7 @@ const remarkLintFirstHeadingLevel = lintRule(
   (tree, file, option = 1) => {
     visit(tree, (node) => {
       if (!generated(node)) {
-        /** @type {Depth|undefined} */
+        /** @type {Depth | undefined} */
         let rank
 
         if (node.type === 'heading') {
@@ -153,10 +159,10 @@ export default remarkLintFirstHeadingLevel
 
 /**
  * @param {HTML} node
- * @returns {Depth|undefined}
+ * @returns {Depth | undefined}
  */
 function infer(node) {
   const results = node.value.match(re)
-  // @ts-expect-error: can be castes fine.
+  // @ts-expect-error: can be casted fine.
   return results ? Number(results[1]) : undefined
 }

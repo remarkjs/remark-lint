@@ -89,12 +89,18 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- *
+ */
+
+/**
  * @typedef Styles
- * @property {'x'|'X'|'consistent'} [checked='consistent']
- * @property {' '|'\x09'|'consistent'} [unchecked='consistent']
+ *   Styles.
+ * @property {'x' | 'X' | 'consistent'} [checked='consistent']
+ *   Preferred style to use for checked checkboxes (default: `'consistent'`).
+ * @property {' ' | '\t' | 'consistent'} [unchecked='consistent']
+ *   Preferred style to use for unchecked checkboxes (default: `'consistent'`).
  *
- * @typedef {'consistent'|Styles} Options
+ * @typedef {'consistent' | Styles} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -109,9 +115,9 @@ const remarkLintCheckboxCharacterStyle = lintRule(
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 'consistent') => {
     const value = String(file)
-    /** @type {'x'|'X'|'consistent'} */
+    /** @type {'x' | 'X' | 'consistent'} */
     let checked = 'consistent'
-    /** @type {' '|'\x09'|'consistent'} */
+    /** @type {' ' | '\x09' | 'consistent'} */
     let unchecked = 'consistent'
 
     if (typeof option === 'object') {

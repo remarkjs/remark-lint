@@ -73,8 +73,8 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('mdast').Root} Root
  */
 
 import {lintRule} from 'unified-lint-rule'

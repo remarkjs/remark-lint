@@ -43,7 +43,11 @@
 
 /**
  * @typedef {import('mdast').Root} Root
+ */
+
+/**
  * @typedef {string} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

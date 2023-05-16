@@ -45,7 +45,11 @@
 /**
  * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').Heading} Heading
+ */
+
+/**
  * @typedef {Heading['depth']} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -61,7 +65,7 @@ const remarkLintNoMultipleToplevelHeadings = lintRule(
   },
   /** @type {import('unified-lint-rule').Rule<Root, Options>} */
   (tree, file, option = 1) => {
-    /** @type {string|undefined} */
+    /** @type {string | undefined} */
     let duplicate
 
     visit(tree, 'heading', (node) => {

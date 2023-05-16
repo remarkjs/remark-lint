@@ -46,8 +46,12 @@
  */
 
 /**
+ * @typedef {import('mdast').Heading} Heading
  * @typedef {import('mdast').Root} Root
- * @typedef {import('mdast').Heading['depth']} Depth
+ */
+
+/**
+ * @typedef {Heading['depth']} Depth
  */
 
 import {lintRule} from 'unified-lint-rule'

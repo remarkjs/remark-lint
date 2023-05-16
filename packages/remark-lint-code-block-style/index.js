@@ -128,8 +128,13 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'fenced'|'indented'} Style
- * @typedef {'consistent'|Style} Options
+ */
+
+/**
+ * @typedef {'fenced' | 'indented'} Style
+ *   Styles.
+ * @typedef {'consistent' | Style} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

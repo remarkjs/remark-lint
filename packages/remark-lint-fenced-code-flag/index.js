@@ -97,14 +97,21 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- *
+ */
+
+/**
  * @typedef {Array<string>} Flags
+ *   Language flags.
  *
  * @typedef FlagMap
+ *   Configuration.
  * @property {Flags} [flags]
+ *   Language flags.
  * @property {boolean} [allowEmpty=false]
+ *   Allow language flags to be omitted (default: `false`).
  *
- * @typedef {Flags|FlagMap} Options
+ * @typedef {Flags | FlagMap} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

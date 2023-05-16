@@ -109,8 +109,11 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {import('mdast').Parent} Parent
+ */
+
+/**
  * @typedef {number} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -160,9 +163,7 @@ const remarkLintMaximumLineLength = lintRule(
     // the wrap.
     // However, when they do, and there’s whitespace after it, they are not
     // allowed.
-    visit(tree, (node, pos, parent_) => {
-      const parent = /** @type {Parent} */ (parent_)
-
+    visit(tree, (node, pos, parent) => {
       if (
         (node.type === 'link' ||
           node.type === 'image' ||

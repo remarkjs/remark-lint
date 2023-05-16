@@ -151,7 +151,11 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'single'|'one'|'ordered'} Options
+ */
+
+/**
+ * @typedef {'single' | 'one' | 'ordered'} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

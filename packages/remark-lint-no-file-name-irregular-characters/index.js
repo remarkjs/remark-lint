@@ -43,8 +43,11 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- *
- * @typedef {RegExp|string} Options
+ */
+
+/**
+ * @typedef {RegExp | string} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

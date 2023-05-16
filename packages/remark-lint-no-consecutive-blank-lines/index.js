@@ -113,7 +113,7 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
      *
      * @param {Point} start
      * @param {Point} end
-     * @param {0|1|2} max
+     * @param {0 | 1 | 2} max
      */
     function compare(start, end, max) {
       const diff = end.line - start.line

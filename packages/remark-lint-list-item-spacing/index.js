@@ -136,7 +136,9 @@
  * @typedef {import('mdast').ListItem} ListItem
  *
  * @typedef Options
- * @property {boolean} [checkBlanks=false]
+ *   Options.
+ * @property {boolean | null | undefined} [checkBlanks=false]
+ *   Adhere to CommonMark looseness instead of markdown-style-guide preference.
  */
 
 import {lintRule} from 'unified-lint-rule'

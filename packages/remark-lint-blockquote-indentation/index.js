@@ -79,9 +79,13 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').Blockquote} Blockquote
- * @typedef {'consistent'|number} Options
+ * @typedef {import('mdast').Root} Root
+ */
+
+/**
+ * @typedef {'consistent' | number} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

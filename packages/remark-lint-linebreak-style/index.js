@@ -67,8 +67,13 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'unix'|'windows'} Type
- * @typedef {'consistent'|Type} Options
+ */
+
+/**
+ * @typedef {'unix' | 'windows'} Type
+ *   Styles.
+ * @typedef {'consistent' | Type} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

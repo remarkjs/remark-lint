@@ -12,7 +12,7 @@
  *         default: `[]`)
  *         — text or regex that you want to be allowed between `[` and `]`
  *         even though it’s undefined; regex is provided via a `RegExp` object
- *         or via a `{ source: string }` object where `source` is the source
+ *         or via a `{source: string}` object where `source` is the source
  *         text of a case-insensitive regex
  *
  * ## Recommendation
@@ -121,12 +121,19 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').Heading} Heading
  * @typedef {import('mdast').Paragraph} Paragraph
- *
+ * @typedef {import('mdast').Root} Root
+ */
+
+/**
  * @typedef Options
- * @property {Array<string | RegExp | { source: string }>} [allow]
+ * @property {Array<string | RegExp | {source: string}> | null | undefined} [allow]
+ *   Text or regex that you want to be allowed between `[` and `]` even though
+ *   it’s `undefined` (default: `[]`).
+ *
+ *   Regex is provided via a `RegExp` object or via a `{source: string}` object
+ *   where `source` is the source text of a case-insensitive regex.
  *
  * @typedef {Array<number>} Range
  */
@@ -200,7 +207,7 @@ const remarkLintNoUndefinedReferences = lintRule(
     })
 
     /**
-     * @param {Heading|Paragraph} node
+     * @param {Heading | Paragraph} node
      */
     function findInPhrasing(node) {
       /** @type {Array<Range>} */

@@ -46,7 +46,11 @@
 
 /**
  * @typedef {import('mdast').Root} Root
+ */
+
+/**
  * @typedef {number} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

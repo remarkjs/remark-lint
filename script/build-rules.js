@@ -1,7 +1,12 @@
 /**
- * @typedef {import('type-fest').PackageJson} PackageJson
- * @typedef {import('mdast').BlockContent|import('mdast').DefinitionContent} BlockContent
+ * @typedef {import('mdast').BlockContent} BlockContent
+ * @typedef {import('mdast').DefinitionContent} DefinitionContent
  * @typedef {import('mdast').TableContent} TableContent
+ * @typedef {import('type-fest').PackageJson} PackageJson
+ */
+
+/**
+ * @typedef {BlockContent | DefinitionContent} BlockAndDefinitionContent
  */
 
 import fs from 'node:fs'
@@ -78,10 +83,10 @@ presets(root).then((presetObjects) => {
       )
       .runSync(summaryTree)
 
-    const descriptionContent = /** @type {Array<BlockContent>} */ (
+    const descriptionContent = /** @type {Array<BlockAndDefinitionContent>} */ (
       descriptionTree.children
     )
-    const summaryContent = /** @type {Array<BlockContent>} */ (
+    const summaryContent = /** @type {Array<BlockAndDefinitionContent>} */ (
       summaryTree.children
     )
 
@@ -95,7 +100,7 @@ presets(root).then((presetObjects) => {
       )
     }
 
-    /** @type {Record<string, Array<BlockContent>>} */
+    /** @type {Record<string, Array<BlockAndDefinitionContent>>} */
     const categories = {}
     let category = 'Intro'
     let contentIndex = -1
@@ -117,7 +122,7 @@ presets(root).then((presetObjects) => {
       (preset) => basename in preset.packages
     )
 
-    /** @type {Array<BlockContent>} */
+    /** @type {Array<BlockAndDefinitionContent>} */
     const children = [
       {type: 'html', value: '<!--This file is generated-->'},
       {

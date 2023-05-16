@@ -1,6 +1,6 @@
 /**
- * @typedef {import('unified').Preset} Preset
  * @typedef {import('unified').Plugin} Plugin
+ * @typedef {import('unified').Preset} Preset
  */
 
 import {promises as fs} from 'node:fs'

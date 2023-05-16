@@ -2,7 +2,7 @@
  * @typedef Rule
  * @property {string} ruleId
  * @property {string} description
- * @property {string|undefined} summary
+ * @property {string | undefined} summary
  * @property {boolean} deprecated
  * @property {Record<string, Checks>} tests
  * @property {string} filePath
@@ -78,7 +78,7 @@ export function rule(filePath) {
 
   while (++index < examples.length) {
     const lines = examples[index].split('\n')
-    /** @type {{name: string, label?: 'input'|'output', config?: unknown, positionless?: boolean, gfm?: boolean}} */
+    /** @type {{name: string, label?: 'input' | 'output', config?: unknown, positionless?: boolean, gfm?: boolean}} */
     let info
 
     try {

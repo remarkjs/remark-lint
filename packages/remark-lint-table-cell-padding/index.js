@@ -187,10 +187,16 @@
  * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').TableCell} TableCell
  * @typedef {import('unist').Point} Point
- * @typedef {'padded'|'compact'} Style
- * @typedef {'consistent'|Style} Options
+ */
+
+/**
+ * @typedef {'padded' | 'compact'} Style
+ *   Styles.
+ * @typedef {'consistent' | Style} Options
+ *   Options.
  *
  * @typedef Entry
+ *   Cell info.
  * @property {TableCell} node
  * @property {number} start
  * @property {number} end
@@ -304,9 +310,9 @@ const remarkLintTableCellPadding = lintRule(
     })
 
     /**
-     * @param {'start'|'end'} side
+     * @param {'start' | 'end'} side
      * @param {Entry} entry
-     * @param {0|1} style
+     * @param {0 | 1} style
      * @param {Array<number>} sizes
      */
     function checkSide(side, entry, style, sizes) {

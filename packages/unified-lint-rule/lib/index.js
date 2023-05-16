@@ -1,14 +1,22 @@
 /**
  * @typedef {import('unist').Node} Node
  * @typedef {import('vfile').VFile} VFile
- *
- * @typedef {0|1|2} Severity
- * @typedef {'warn'|'on'|'off'|'error'} Label
+ */
+
+/**
+ * @typedef {0 | 1 | 2} Severity
+ *   Numeric severity (`0`: `'off'`, `1`: `'on'`, `2`: `'error'`).
+ * @typedef {'warn' | 'on' | 'off' | 'error'} Label
+ *   Severity label (`'off'`: `0`, `'on'`: `1`, `'error'`: `2`).
  * @typedef {[Severity, ...Array<unknown>]} SeverityTuple
+ *   Parsed severty and options.
  *
  * @typedef RuleMeta
- * @property {string} origin name of the lint rule
- * @property {string} [url] link to documentation
+ *   Rule metadata.
+ * @property {string} origin
+ *   Name of the lint rule.
+ * @property {string | null | undefined} [url]
+ *   Link to documentation.
  */
 
 /**
@@ -28,7 +36,7 @@ import {wrap} from 'trough'
  * @template {any} [Options=unknown]
  * @param {string | RuleMeta} meta
  * @param {Rule<Tree, Options>} rule
- * @returns {import('unified').Plugin<void[] | [Options | [boolean | Label | Severity, (Options | undefined)?]], Tree>}
+ * @returns {import('unified').Plugin<Array<void> | [Options | [boolean | Label | Severity, (Options | undefined)?]], Tree>}
  */
 export function lintRule(meta, rule) {
   const id = typeof meta === 'string' ? meta : meta.origin
@@ -44,7 +52,7 @@ export function lintRule(meta, rule) {
   // @ts-expect-error: to do: fix.
   return plugin
 
-  /** @type {import('unified').Plugin<[unknown]|Array<void>>} */
+  /** @type {import('unified').Plugin<[unknown] | Array<void>>} */
   function plugin(config) {
     const [severity, options] = coerce(ruleId, config)
 

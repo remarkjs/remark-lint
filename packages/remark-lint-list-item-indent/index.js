@@ -152,7 +152,11 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'tab-size'|'space'|'mixed'} Options
+ */
+
+/**
+ * @typedef {'tab-size' | 'space' | 'mixed'} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

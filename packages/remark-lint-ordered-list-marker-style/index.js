@@ -81,8 +81,13 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'.'|')'} Marker
- * @typedef {'consistent'|Marker} Options
+ */
+
+/**
+ * @typedef {'.' | ')'} Marker
+ *   Style.
+ * @typedef {'consistent' | Marker} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

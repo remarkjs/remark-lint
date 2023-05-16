@@ -78,9 +78,13 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- *
+ */
+
+/**
  * @typedef Options
- * @property {boolean} [exceptTightLists=false]
+ *   Options.
+ * @property {boolean | null | undefined} [exceptTightLists=false]
+ *   Allow tight list items.
  */
 
 import {lintRule} from 'unified-lint-rule'

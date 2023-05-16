@@ -114,8 +114,13 @@
 
 /**
  * @typedef {import('mdast').Root} Root
- * @typedef {'atx'|'atx-closed'|'setext'} Type
- * @typedef {'consistent'|Type} Options
+ */
+
+/**
+ * @typedef {'atx' | 'atx-closed' | 'setext'} Type
+ *   Styles.
+ * @typedef {'consistent' | Type} Options
+ *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'

@@ -32,6 +32,8 @@ export function rule(filePath) {
   /** @type {Record<string, Checks>} */
   const tests = {}
   const code = fs.readFileSync(path.join(filePath, 'index.js'), 'utf8')
+  // Note: To do: `comment-parser` types are wrong.
+  /** @type {import('comment-parser/primitives').Block} */
   const fileInfo = parse(code, {spacing: 'preserve'})[0]
   const tags = fileInfo.tags
   const moduleTag = tags.find((d) => d.tag === 'module')

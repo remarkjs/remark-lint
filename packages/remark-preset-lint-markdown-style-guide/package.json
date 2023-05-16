@@ -81,9 +81,7 @@
     "remark-lint-unordered-list-marker-style": "^3.0.0",
     "unified": "^10.0.0"
   },
-  "scripts": {
-    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
-  },
+  "scripts": {},
   "xo": false,
   "typeCoverage": {
     "atLeast": 100,

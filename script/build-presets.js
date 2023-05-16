@@ -38,6 +38,8 @@ presets(root).then((presetObjects) => {
     )
     const version = (pack.version || '0').split('.')[0]
     const doc = fs.readFileSync(path.join(base, 'index.js'), 'utf8')
+    // Note: To do: `comment-parser` types are wrong.
+    /** @type {import('comment-parser/primitives').Block} */
     const fileInfo = parse(doc, {spacing: 'preserve'})[0]
     const tags = fileInfo.tags
     const summaryTag = tags.find((d) => d.tag === 'summary')

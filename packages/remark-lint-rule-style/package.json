@@ -41,9 +41,7 @@
     "unist-util-position": "^4.0.0",
     "unist-util-visit": "^4.0.0"
   },
-  "scripts": {
-    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
-  },
+  "scripts": {},
   "xo": false,
   "typeCoverage": {
     "atLeast": 100,

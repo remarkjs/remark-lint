@@ -9,19 +9,26 @@
  * @typedef RuleMeta
  * @property {string} origin name of the lint rule
  * @property {string} [url] link to documentation
- *
+ */
+
+/**
+ * @template {Node} [Tree=Node]
+ * @template {any} [Options=unknown]
  * @callback Rule
- * @param {Node} tree
+ * @param {Tree} tree
  * @param {VFile} file
- * @param {unknown} options
- * @returns {void}
+ * @param {Options} options
+ * @returns {Promise<Tree | undefined | void> | Tree | undefined | void}
  */
 
 import {wrap} from 'trough'
 
 /**
- * @param {string|RuleMeta} meta
- * @param {Rule} rule
+ * @template {Node} [Tree=Node]
+ * @template {any} [Options=unknown]
+ * @param {string | RuleMeta} meta
+ * @param {Rule<Tree, Options>} rule
+ * @returns {import('unified').Plugin<void[] | [Options | [boolean | Label | Severity, (Options | undefined)?]], Tree>}
  */
 export function lintRule(meta, rule) {
   const id = typeof meta === 'string' ? meta : meta.origin
@@ -34,6 +41,7 @@ export function lintRule(meta, rule) {
 
   Object.defineProperty(plugin, 'name', {value: id})
 
+  // @ts-expect-error: to do: fix.
   return plugin
 
   /** @type {import('unified').Plugin<[unknown]|Array<void>>} */

@@ -1,4 +1,18 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["*.js"]
+  "references": [
+    {"path": "../remark-lint"},
+    {"path": "../remark-lint-blockquote-indentation"},
+    {"path": "../remark-lint-checkbox-character-style"},
+    {"path": "../remark-lint-code-block-style"},
+    {"path": "../remark-lint-emphasis-marker"},
+    {"path": "../remark-lint-fenced-code-marker"},
+    {"path": "../remark-lint-heading-style"},
+    {"path": "../remark-lint-link-title-style"},
+    {"path": "../remark-lint-list-item-content-indent"},
+    {"path": "../remark-lint-ordered-list-marker-style"},
+    {"path": "../remark-lint-rule-style"},
+    {"path": "../remark-lint-strong-marker"},
+    {"path": "../remark-lint-table-cell-padding"}
+  ]
 }

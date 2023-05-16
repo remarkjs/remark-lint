@@ -39,9 +39,7 @@
     "unified": "^10.0.0",
     "vfile": "^5.0.0"
   },
-  "scripts": {
-    "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
-  },
+  "scripts": {},
   "xo": false,
   "typeCoverage": {
     "atLeast": 100,

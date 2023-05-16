@@ -49,9 +49,7 @@
     "remark-lint-table-cell-padding": "^4.0.0",
     "unified": "^10.0.0"
   },
-  "scripts": {
-    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
-  },
+  "scripts": {},
   "xo": false,
   "typeCoverage": {
     "atLeast": 100,

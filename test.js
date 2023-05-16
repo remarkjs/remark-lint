@@ -288,10 +288,8 @@ test('rules', async (t) => {
     const info = rule(base)
     const href = url.pathToFileURL(base).href + '/index.js'
 
-    // type-coverage:ignore-next-line
+    /** @type {{default: Plugin}} */
     const pluginMod = await import(href)
-    /** @type {Plugin} */
-    // type-coverage:ignore-next-line
     const fn = pluginMod.default
 
     if (Object.keys(info.tests).length === 0) {

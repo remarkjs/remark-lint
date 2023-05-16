@@ -54,6 +54,14 @@
  *
  *   3:9-3:10: Misaligned table fence
  *   3:17-3:18: Misaligned table fence
+ *
+ * @example
+ *   {"name": "ok-empty-cells.md", "gfm": true}
+ *
+ *   | | B     |   |
+ *   |-| ----- | - |
+ *   | | Bravo |   |
+ *
  */
 
 /**
@@ -87,8 +95,16 @@ const remarkLintTablePipeAlignment = lintRule(
           const cell = row.children[column]
           const nextColumn = column + 1
           const next = row.children[nextColumn]
-          const initial = cell ? pointEnd(cell).offset : pointStart(row).offset
-          const final = next ? pointStart(next).offset : pointEnd(row).offset
+          const initial = cell
+            ? cell.children.length === 0
+              ? pointStart(cell).offset
+              : pointEnd(cell.children[cell.children.length - 1]).offset
+            : pointStart(row).offset
+          const final = next
+            ? next.children.length === 0
+              ? pointEnd(next).offset
+              : pointStart(next.children[0]).offset
+            : pointEnd(row).offset
 
           if (
             typeof initial !== 'number' ||

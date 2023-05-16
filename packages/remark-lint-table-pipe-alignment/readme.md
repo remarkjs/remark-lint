@@ -184,6 +184,22 @@ No messages.
 3:17-3:18: Misaligned table fence
 ```
 
+##### `ok-empty-cells.md`
+
+###### In
+
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+
+```markdown
+| | B     |   |
+|-| ----- | - |
+| | Bravo |   |
+```
+
+###### Out
+
+No messages.
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained

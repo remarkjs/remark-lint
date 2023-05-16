@@ -66,11 +66,11 @@
  *   3:9: Cell should be padded
  *   7:2: Cell should be padded
  *   7:17: Cell should be padded
- *   13:9: Cell should be padded with 1 space, not 2
- *   13:20: Cell should be padded with 1 space, not 2
- *   13:21: Cell should be padded with 1 space, not 2
- *   13:29: Cell should be padded with 1 space, not 2
- *   13:30: Cell should be padded with 1 space, not 2
+ *   13:7: Cell should be padded with 1 space, not 2
+ *   13:18: Cell should be padded with 1 space, not 2
+ *   13:23: Cell should be padded with 1 space, not 2
+ *   13:27: Cell should be padded with 1 space, not 2
+ *   13:32: Cell should be padded with 1 space, not 2
  *
  * @example
  *   {"name": "ok.md", "config": "compact", "gfm": true}
@@ -93,9 +93,9 @@
  * @example
  *   {"name": "not-ok.md", "label": "output", "config": "compact", "gfm": true}
  *
- *   3:2: Cell should be compact
- *   3:11: Cell should be compact
- *   7:16: Cell should be compact
+ *   3:5: Cell should be compact
+ *   3:12: Cell should be compact
+ *   7:15: Cell should be compact
  *
  * @example
  *   {"name": "ok-padded.md", "config": "consistent", "gfm": true}
@@ -149,7 +149,7 @@
  * @example
  *   {"name": "not-ok-compact.md", "label": "output", "config": "consistent", "gfm": true}
  *
- *   7:16: Cell should be compact
+ *   7:15: Cell should be compact
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true, "gfm": true}
@@ -255,38 +255,38 @@ const remarkLintTableCellPadding = lintRule(
         while (++column < row.children.length) {
           const cell = row.children[column]
 
-          if (cell.children.length > 0) {
-            const cellStart = pointStart(cell).offset
-            const cellEnd = pointEnd(cell).offset
-            const contentStart = pointStart(cell.children[0]).offset
-            const contentEnd = pointEnd(
-              cell.children[cell.children.length - 1]
-            ).offset
+          const cellStart = pointStart(cell).offset
+          const cellEnd = pointEnd(cell).offset
+          const contentStart = pointStart(cell.children[0]).offset
+          const contentEnd = pointEnd(
+            cell.children[cell.children.length - 1]
+          ).offset
 
-            if (
-              typeof cellStart !== 'number' ||
-              typeof cellEnd !== 'number' ||
-              typeof contentStart !== 'number' ||
-              typeof contentEnd !== 'number'
-            ) {
-              continue
-            }
-
-            entries.push({
-              node: cell,
-              start: contentStart - cellStart - (column ? 0 : 1),
-              end: cellEnd - contentEnd - 1,
-              column
-            })
-
-            // Detect max space per column.
-            sizes[column] = Math.max(
-              // More cells could exist than the align row for generated tables.
-              /* c8 ignore next */
-              sizes[column] || 0,
-              contentEnd - contentStart
-            )
+          if (
+            typeof cellStart !== 'number' ||
+            typeof cellEnd !== 'number' ||
+            typeof contentStart !== 'number' ||
+            typeof contentEnd !== 'number'
+          ) {
+            continue
           }
+
+          entries.push({
+            node: cell,
+            start: contentStart - cellStart - 1,
+            end:
+              cellEnd -
+              contentEnd -
+              (column === row.children.length - 1 ? 1 : 0),
+            column
+          })
+
+          // Detect max space per column.
+          sizes[column] = Math.max(
+            /* c8 ignore next */
+            sizes[column] || 0,
+            contentEnd - contentStart
+          )
         }
       }
 
@@ -346,28 +346,12 @@ const remarkLintTableCellPadding = lintRule(
         }
       }
 
-      /** @type {Point} */
-      let point
-
-      if (side === 'start') {
-        point = pointStart(cell)
-        if (!column) {
-          point.column++
-
-          if (typeof point.offset === 'number') {
-            point.offset++
-          }
-        }
-      } else {
-        point = pointEnd(cell)
-        point.column--
-
-        if (typeof point.offset === 'number') {
-          point.offset--
-        }
-      }
-
-      file.message(reason, point)
+      file.message(
+        reason,
+        side === 'start'
+          ? pointStart(cell.children[0])
+          : pointEnd(cell.children[cell.children.length - 1])
+      )
     }
   }
 )

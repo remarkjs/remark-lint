@@ -199,11 +199,11 @@ Too much padding isn’t good either:
 3:9: Cell should be padded
 7:2: Cell should be padded
 7:17: Cell should be padded
-13:9: Cell should be padded with 1 space, not 2
-13:20: Cell should be padded with 1 space, not 2
-13:21: Cell should be padded with 1 space, not 2
-13:29: Cell should be padded with 1 space, not 2
-13:30: Cell should be padded with 1 space, not 2
+13:7: Cell should be padded with 1 space, not 2
+13:18: Cell should be padded with 1 space, not 2
+13:23: Cell should be padded with 1 space, not 2
+13:27: Cell should be padded with 1 space, not 2
+13:32: Cell should be padded with 1 space, not 2
 ```
 
 ##### `empty.md`
@@ -290,9 +290,9 @@ When configured with `'compact'`.
 ###### Out
 
 ```text
-3:2: Cell should be compact
-3:11: Cell should be compact
-7:16: Cell should be compact
+3:5: Cell should be compact
+3:12: Cell should be compact
+7:15: Cell should be compact
 ```
 
 ##### `ok-padded.md`
@@ -384,7 +384,7 @@ When configured with `'consistent'`.
 ###### Out
 
 ```text
-7:16: Cell should be compact
+7:15: Cell should be compact
 ```
 
 ##### `not-ok.md`

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-file-name-articles",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "remark-lint rule to warn when file name start with an article",
   "license": "MIT",
   "keywords": [

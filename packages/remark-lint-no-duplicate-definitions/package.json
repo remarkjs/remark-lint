@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-duplicate-definitions",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "remark-lint rule to warn on duplicate definitions",
   "license": "MIT",
   "keywords": [

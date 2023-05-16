@@ -1,6 +1,6 @@
 {
   "name": "remark-lint",
-  "version": "9.1.1",
+  "version": "9.1.2",
   "description": "remark plugin to lint Markdown code style",
   "license": "MIT",
   "keywords": [

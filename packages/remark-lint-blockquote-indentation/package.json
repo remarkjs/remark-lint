@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-blockquote-indentation",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "remark-lint rule to warn when block quotes are either indented too much or too little",
   "license": "MIT",
   "keywords": [

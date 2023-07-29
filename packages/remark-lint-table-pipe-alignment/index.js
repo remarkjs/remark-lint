@@ -56,12 +56,18 @@
  *   3:17-3:18: Misaligned table fence
  *
  * @example
- *   {"name": "ok-empty-cells.md", "gfm": true}
+ *   {"name": "ok-empty-columns.md", "gfm": true}
  *
  *   | | B     |   |
  *   |-| ----- | - |
  *   | | Bravo |   |
  *
+ * @example
+ *   {"name": "ok-empty-cells.md", "gfm": true}
+ *
+ *   |   |     |         |
+ *   | - | --- | ------- |
+ *   | A | Bra | Charlie |
  */
 
 /**
@@ -95,12 +101,12 @@ const remarkLintTablePipeAlignment = lintRule(
           const cell = row.children[column]
           const nextColumn = column + 1
           const next = row.children[nextColumn]
-          const initial = cell
+          let initial = cell
             ? cell.children.length === 0
               ? pointStart(cell).offset
               : pointEnd(cell.children[cell.children.length - 1]).offset
             : pointStart(row).offset
-          const final = next
+          let final = next
             ? next.children.length === 0
               ? pointEnd(next).offset
               : pointStart(next.children[0]).offset
@@ -114,9 +120,13 @@ const remarkLintTablePipeAlignment = lintRule(
             continue
           }
 
+          if (cell && cell.children.length === 0) initial++
+          if (next && next.children.length === 0) final--
+
           const fence = value.slice(initial, final)
           const pos = initial + fence.indexOf('|') - begin.offset + 1
 
+          // First cell at this column.
           if (indices[nextColumn] === undefined) {
             indices[nextColumn] = pos
           } else if (pos !== indices[nextColumn]) {

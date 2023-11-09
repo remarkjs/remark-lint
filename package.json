@@ -136,28 +136,28 @@
     "xo": "^0.56.0"
   },
   "scripts": {
-    "prepack": "npm run build && npm run format",
-    "build-packages": "node script/build-presets && node script/build-rules",
-    "build-monorepo": "tsc --build --clean && tsc --build && type-coverage",
-    "build": "npm run build-packages && npm run build-monorepo",
-    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
+    "generate": "node --conditions development script/build-presets.js && node --conditions development script/build-rules.js",
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
+    "test": "npm run build && npm run generate && npm run format && npm run test-coverage",
     "test-api": "node --conditions development test.js",
-    "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov npm run test-api",
-    "test": "npm run build && npm run format && npm run test-coverage"
+    "test-coverage": "c8 --100 --check-coverage --reporter lcov npm run test-api"
   },
   "prettier": {
-    "tabWidth": 2,
-    "useTabs": false,
-    "singleQuote": true,
     "bracketSpacing": false,
+    "singleQuote": true,
     "semi": false,
-    "trailingComma": "none"
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
   },
   "xo": {
-    "prettier": true,
-    "rules": {
-      "unicorn/prefer-string-replace-all": "off"
-    },
     "overrides": [
       {
         "files": [
@@ -169,12 +169,10 @@
           "no-await-in-loop": "off"
         }
       }
-    ]
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
+    ],
+    "prettier": true,
+    "rules": {
+      "unicorn/prefer-string-replace-all": "off"
+    }
   }
 }

@@ -112,13 +112,13 @@
   "devDependencies": {
     "@types/mdast": "^3.0.0",
     "@types/parse-author": "^2.0.0",
-    "@types/pluralize": "^0.0.29",
-    "c8": "^7.0.0",
+    "@types/pluralize": "^0.0.33",
+    "c8": "^8.0.0",
     "comment-parser": "^1.0.0",
     "github-slugger": "^2.0.0",
     "mdast-zone": "^5.0.0",
     "parse-author": "^2.0.0",
-    "prettier": "^2.0.0",
+    "prettier": "^3.0.0",
     "remark": "^14.0.0",
     "remark-cli": "^11.0.0",
     "remark-comment-config": "^7.0.0",
@@ -129,18 +129,18 @@
     "strip-indent": "^4.0.0",
     "to-vfile": "^7.0.0",
     "type-coverage": "^2.0.0",
-    "type-fest": "^3.0.0",
+    "type-fest": "^4.0.0",
     "typescript": "^5.0.0",
     "unist-builder": "^3.0.0",
     "unist-util-remove-position": "^4.0.0",
-    "xo": "^0.54.0"
+    "xo": "^0.56.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
     "build-packages": "node script/build-presets && node script/build-rules",
     "build-monorepo": "tsc --build --clean && tsc --build && type-coverage",
     "build": "npm run build-packages && npm run build-monorepo",
-    "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
+    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
     "test-api": "node --conditions development test.js",
     "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov npm run test-api",
     "test": "npm run build && npm run format && npm run test-coverage"
@@ -156,9 +156,7 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "capitalized-comments": "off",
-      "unicorn/prefer-code-point": "off",
-      "unicorn/prefer-switch": "off"
+      "unicorn/prefer-string-replace-all": "off"
     },
     "overrides": [
       {

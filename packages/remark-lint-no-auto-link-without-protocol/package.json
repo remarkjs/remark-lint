@@ -44,7 +44,13 @@
     "unist-util-visit": "^4.0.0"
   },
   "scripts": {},
-  "xo": false,
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "unicorn/prefer-at": "off"
+    }
+  },
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,

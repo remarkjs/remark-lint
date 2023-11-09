@@ -42,7 +42,16 @@
     "unist-util-visit": "^4.0.0"
   },
   "scripts": {},
-  "xo": false,
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "unicorn/prefer-at": "off",
+      "unicorn/prefer-code-point": "off",
+      "unicorn/prefer-string-replace-all": "off",
+      "unicorn/prefer-switch": "off"
+    }
+  },
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,

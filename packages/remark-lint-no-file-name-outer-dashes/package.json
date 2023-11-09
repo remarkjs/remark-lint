@@ -41,7 +41,12 @@
     "unified-lint-rule": "^2.0.0"
   },
   "scripts": {},
-  "xo": false,
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off"
+    }
+  },
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,

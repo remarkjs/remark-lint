@@ -4,17 +4,18 @@
   "description": "remark-lint rule to warn when linebreaks violate a given or detected style",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
-    "linebreak",
-    "line",
     "break",
-    "unix",
-    "windows",
     "crlf",
-    "lf"
+    "lf",
+    "line",
+    "linebreak",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "unix",
+    "windows"
   ],
   "repository": {
     "type": "git",
@@ -45,16 +46,16 @@
     "vfile-location": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

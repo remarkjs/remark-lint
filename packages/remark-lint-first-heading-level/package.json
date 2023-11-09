@@ -4,14 +4,15 @@
   "description": "remark-lint rule to warn when the first heading has a level other than a specified value",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
+    "depth",
     "first",
     "heading",
     "level",
-    "depth"
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
   ],
   "repository": {
     "type": "git",
@@ -43,16 +44,16 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

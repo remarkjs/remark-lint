@@ -4,11 +4,12 @@
   "description": "unified plugin to make it a bit easier to create linting rules",
   "license": "MIT",
   "keywords": [
-    "unified",
-    "unified-plugin",
-    "plugin",
     "lint",
-    "rule"
+    "plugin",
+    "remark-lint",
+    "rule",
+    "unified",
+    "unified-plugin"
   ],
   "repository": {
     "type": "git",
@@ -40,16 +41,16 @@
     "vfile": "^6.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

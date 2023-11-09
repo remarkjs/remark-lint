@@ -4,14 +4,15 @@
   "description": "remark-lint rule to warn when table pipes are not aligned",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
-    "table",
+    "align",
     "cell",
+    "lint",
     "pipe",
-    "align"
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "table"
   ],
   "repository": {
     "type": "git",
@@ -43,17 +44,17 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off",
       "unicorn/prefer-at": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

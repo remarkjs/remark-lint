@@ -4,10 +4,11 @@
   "description": "remark preset to configure remark-lint with rules that prevent mistakes or stuff that fails across vendors.",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "remark-preset",
     "preset",
-    "recommended"
+    "recommended",
+    "remark",
+    "remark-lint",
+    "remark-preset"
   ],
   "repository": {
     "type": "git",
@@ -51,16 +52,16 @@
     "unified": "^11.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

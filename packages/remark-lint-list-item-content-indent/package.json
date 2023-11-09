@@ -4,14 +4,15 @@
   "description": "remark-lint rule to warn when the content of a list item has mixed indentation",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
-    "list",
-    "item",
     "content",
-    "indent"
+    "indent",
+    "item",
+    "lint",
+    "list",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
   ],
   "repository": {
     "type": "git",
@@ -44,16 +45,16 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

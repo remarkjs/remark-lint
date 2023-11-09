@@ -4,12 +4,13 @@
   "description": "remark-lint rule to warn for too many consecutive blank lines",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
     "blank",
-    "lines"
+    "lines",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
   ],
   "repository": {
     "type": "git",
@@ -43,17 +44,17 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off",
       "unicorn/prefer-at": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

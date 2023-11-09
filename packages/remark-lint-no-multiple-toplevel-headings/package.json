@@ -4,12 +4,13 @@
   "description": "remark-lint rule to warn when multiple top level headings are used",
   "license": "MIT",
   "keywords": [
-    "remark",
+    "heading",
     "lint",
-    "rule",
+    "remark",
+    "remark-lint",
     "remark-lint-rule",
-    "top-level",
-    "heading"
+    "rule",
+    "top-level"
   ],
   "repository": {
     "type": "git",
@@ -43,16 +44,16 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

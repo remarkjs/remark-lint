@@ -4,13 +4,14 @@
   "description": "remark-lint rule to warn when link and definition titles occur with incorrect quotes",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
-    "link",
-    "image",
     "definition",
+    "image",
+    "link",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
     "style"
   ],
   "repository": {
@@ -44,17 +45,17 @@
     "vfile-location": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off",
       "unicorn/prefer-at": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

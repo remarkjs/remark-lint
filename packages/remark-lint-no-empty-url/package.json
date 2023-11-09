@@ -4,14 +4,15 @@
   "description": "remark-lint rule to warn on empty URLs in links and images",
   "license": "MIT",
   "keywords": [
-    "remark",
-    "lint",
-    "rule",
-    "remark-lint-rule",
     "empty",
-    "url",
+    "image",
     "link",
-    "image"
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "url"
   ],
   "repository": {
     "type": "git",
@@ -43,16 +44,16 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
       "capitalized-comments": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

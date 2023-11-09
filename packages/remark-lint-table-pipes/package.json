@@ -4,13 +4,14 @@
   "description": "remark-lint rule to warn when table rows are not fenced with pipes",
   "license": "MIT",
   "keywords": [
-    "remark",
     "lint",
-    "rule",
+    "pipe",
+    "remark",
+    "remark-lint",
     "remark-lint-rule",
-    "table",
     "row",
-    "pipe"
+    "rule",
+    "table"
   ],
   "repository": {
     "type": "git",
@@ -42,6 +43,12 @@
     "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
   "xo": {
     "prettier": true,
     "rules": {
@@ -51,11 +58,5 @@
       "unicorn/prefer-string-replace-all": "off",
       "unicorn/prefer-switch": "off"
     }
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "detail": true,
-    "strict": true,
-    "ignoreCatch": true
   }
 }

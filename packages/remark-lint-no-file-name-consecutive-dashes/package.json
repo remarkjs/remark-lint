@@ -34,6 +34,7 @@
   "exports": "./index.js",
   "files": [
     "index.d.ts",
+    "index.d.ts.map",
     "index.js"
   ],
   "dependencies": {

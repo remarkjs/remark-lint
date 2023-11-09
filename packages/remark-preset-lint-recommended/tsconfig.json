@@ -1,20 +1,3 @@
 {
-  "extends": "../../tsconfig.json",
-  "references": [
-    {"path": "../remark-lint"},
-    {"path": "../remark-lint-final-newline"},
-    {"path": "../remark-lint-hard-break-spaces"},
-    {"path": "../remark-lint-list-item-bullet-indent"},
-    {"path": "../remark-lint-list-item-indent"},
-    {"path": "../remark-lint-no-blockquote-without-marker"},
-    {"path": "../remark-lint-no-duplicate-definitions"},
-    {"path": "../remark-lint-no-heading-content-indent"},
-    {"path": "../remark-lint-no-inline-padding"},
-    {"path": "../remark-lint-no-literal-urls"},
-    {"path": "../remark-lint-no-shortcut-reference-image"},
-    {"path": "../remark-lint-no-shortcut-reference-link"},
-    {"path": "../remark-lint-no-undefined-references"},
-    {"path": "../remark-lint-no-unused-definitions"},
-    {"path": "../remark-lint-ordered-list-marker-style"}
-  ]
+  "extends": "../../tsconfig.json"
 }

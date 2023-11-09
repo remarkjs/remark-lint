@@ -93,7 +93,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintOrderedListMarkerStyle = lintRule(
   {
@@ -119,14 +118,18 @@ const remarkLintOrderedListMarkerStyle = lintRule(
 
       while (++index < node.children.length) {
         const child = node.children[index]
+        const start = pointStart(child)
+        const end = pointStart(child.children[0])
 
-        if (!generated(child)) {
+        if (
+          start &&
+          end &&
+          typeof start.offset === 'number' &&
+          typeof end.offset === 'number'
+        ) {
           const marker = /** @type {Marker} */ (
             value
-              .slice(
-                pointStart(child).offset,
-                pointStart(child.children[0]).offset
-              )
+              .slice(start.offset, end.offset)
               .replace(/\s|\d/g, '')
               .replace(/\[[x ]?]\s*$/i, '')
           )

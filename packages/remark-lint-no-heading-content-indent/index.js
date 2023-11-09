@@ -70,7 +70,6 @@ import {visit} from 'unist-util-visit'
 import {headingStyle} from 'mdast-util-heading-style'
 import plural from 'pluralize'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   {
@@ -80,21 +79,20 @@ const remarkLintNoHeadingContentIndent = lintRule(
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'heading', (node) => {
-      if (generated(node)) {
-        return
-      }
-
+      const start = pointStart(node)
       const type = headingStyle(node, 'atx')
 
+      if (!start) return
+
       if (type === 'atx' || type === 'atx-closed') {
-        const head = pointStart(node.children[0]).column
+        const headStart = pointStart(node.children[0])
 
         // Ignore empty headings.
-        if (!head) {
+        if (!headStart) {
           return
         }
 
-        const diff = head - pointStart(node).column - 1 - node.depth
+        const diff = headStart.column - start.column - 1 - node.depth
 
         if (diff) {
           file.message(
@@ -112,7 +110,12 @@ const remarkLintNoHeadingContentIndent = lintRule(
       // the final hashes, thus, there is no `add x spaces`.
       if (type === 'atx-closed') {
         const final = pointEnd(node.children[node.children.length - 1])
-        const diff = pointEnd(node).column - final.column - 1 - node.depth
+        const end = pointEnd(node)
+
+        /* c8 ignore next -- we get here if we have offsets. */
+        if (!final || !end) return
+
+        const diff = end.column - final.column - 1 - node.depth
 
         if (diff) {
           file.message(

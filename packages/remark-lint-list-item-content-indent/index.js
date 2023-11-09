@@ -67,14 +67,16 @@ const remarkLintListItemContentIndent = lintRule(
       while (++index < node.children.length) {
         const item = node.children[index]
         const begin = pointStart(item)
-        let column = begin.column
 
         if (
+          !begin ||
           typeof begin.column !== 'number' ||
           typeof begin.offset !== 'number'
         ) {
           continue
         }
+
+        let column = begin.column
 
         // Get indentation for the first child.
         // Only the first item can have a checkbox, so here we remove that from
@@ -111,7 +113,7 @@ const remarkLintListItemContentIndent = lintRule(
               abs +
               ' ' +
               plural('space', abs),
-            {line: pointStart(item).line, column}
+            {line: begin.line, column}
           )
         }
       }

@@ -32,7 +32,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/mdast": "^3.0.0",
+    "@types/mdast": "^4.0.0",
     "remark-lint": "^9.0.0",
     "remark-lint-final-newline": "^2.0.0",
     "remark-lint-hard-break-spaces": "^3.0.0",
@@ -48,7 +48,7 @@
     "remark-lint-no-undefined-references": "^4.0.0",
     "remark-lint-no-unused-definitions": "^3.0.0",
     "remark-lint-ordered-list-marker-style": "^3.0.0",
-    "unified": "^10.0.0"
+    "unified": "^11.0.0"
   },
   "scripts": {},
   "xo": {

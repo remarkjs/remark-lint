@@ -103,19 +103,19 @@ const remarkLintTablePipeAlignment = lintRule(
           const next = row.children[nextColumn]
           let initial = cell
             ? cell.children.length === 0
-              ? pointStart(cell).offset
-              : pointEnd(cell.children[cell.children.length - 1]).offset
-            : pointStart(row).offset
+              ? pointStart(cell)?.offset
+              : pointEnd(cell.children[cell.children.length - 1])?.offset
+            : pointStart(row)?.offset
           let final = next
             ? next.children.length === 0
-              ? pointEnd(next).offset
-              : pointStart(next.children[0]).offset
-            : pointEnd(row).offset
+              ? pointEnd(next)?.offset
+              : pointStart(next.children[0])?.offset
+            : pointEnd(row)?.offset
 
           if (
             typeof initial !== 'number' ||
             typeof final !== 'number' ||
-            typeof begin.offset !== 'number'
+            typeof begin?.offset !== 'number'
           ) {
             continue
           }

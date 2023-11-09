@@ -119,7 +119,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintMaximumLineLength = lintRule(
   {
@@ -133,29 +132,33 @@ const remarkLintMaximumLineLength = lintRule(
 
     visit(tree, (node) => {
       if (
-        (node.type === 'heading' ||
-          node.type === 'table' ||
-          node.type === 'code' ||
-          node.type === 'definition' ||
-          node.type === 'html' ||
-          // @ts-expect-error: These are from MDX@1 and MDX@2: <https://github.com/mdx-js/specification>.
-          node.type === 'jsx' ||
-          // @ts-expect-error: MDX
-          node.type === 'mdxFlowExpression' ||
-          // @ts-expect-error: MDX
-          node.type === 'mdxJsxFlowElement' ||
-          // @ts-expect-error: MDX
-          node.type === 'mdxJsxTextElement' ||
-          // @ts-expect-error: MDX
-          node.type === 'mdxTextExpression' ||
-          // @ts-expect-error: MDX
-          node.type === 'mdxjsEsm' ||
-          node.type === 'yaml' ||
-          // @ts-expect-error: YAML and TOML are from frontmatter.
-          node.type === 'toml') &&
-        !generated(node)
+        node.type === 'heading' ||
+        node.type === 'table' ||
+        node.type === 'code' ||
+        node.type === 'definition' ||
+        node.type === 'html' ||
+        // @ts-expect-error: These are from MDX@1 and MDX@2: <https://github.com/mdx-js/specification>.
+        node.type === 'jsx' ||
+        // @ts-expect-error: MDX
+        node.type === 'mdxFlowExpression' ||
+        // @ts-expect-error: MDX
+        node.type === 'mdxJsxFlowElement' ||
+        // @ts-expect-error: MDX
+        node.type === 'mdxJsxTextElement' ||
+        // @ts-expect-error: MDX
+        node.type === 'mdxTextExpression' ||
+        // @ts-expect-error: MDX
+        node.type === 'mdxjsEsm' ||
+        node.type === 'yaml' ||
+        // @ts-expect-error: YAML and TOML are from frontmatter.
+        node.type === 'toml'
       ) {
-        allowList(pointStart(node).line - 1, pointEnd(node).line)
+        const start = pointStart(node)
+        const end = pointEnd(node)
+
+        if (start && end) {
+          allowList(start.line - 1, end.line)
+        }
       }
     })
 
@@ -164,28 +167,31 @@ const remarkLintMaximumLineLength = lintRule(
     // However, when they do, and there’s whitespace after it, they are not
     // allowed.
     visit(tree, (node, pos, parent) => {
+      const initial = pointStart(node)
+      const final = pointEnd(node)
+
       if (
         (node.type === 'link' ||
           node.type === 'image' ||
           node.type === 'inlineCode') &&
-        !generated(node) &&
+        initial &&
+        final &&
         parent &&
         typeof pos === 'number'
       ) {
-        const initial = pointStart(node)
-        const final = pointEnd(node)
-
         // Not allowing when starting after the border, or ending before it.
         if (initial.column > option || final.column < option) {
           return
         }
 
         const next = parent.children[pos + 1]
+        const nextStart = pointStart(next)
 
         // Not allowing when there’s whitespace after the link.
         if (
           next &&
-          pointStart(next).line === initial.line &&
+          nextStart &&
+          nextStart.line === initial.line &&
           (!('value' in next) || /^(.+?[ \t].+?)/.test(next.value))
         ) {
           return

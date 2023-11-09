@@ -85,19 +85,13 @@ test('core', async () => {
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
-        name: '1:1',
+        fatal: true,
         message: 'Missing newline character at end of file',
+        name: '1:1',
         reason: 'Missing newline character at end of file',
-        line: null,
-        column: null,
-        source: 'remark-lint',
         ruleId: 'final-newline',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
-        position: {
-          start: {line: null, column: null},
-          end: {line: null, column: null}
-        },
-        fatal: true
+        source: 'remark-lint',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
       }
     ],
     'should support a list with a severity'
@@ -141,19 +135,13 @@ test('core', async () => {
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
-        name: '1:1',
+        fatal: true,
         message: 'Missing newline character at end of file',
+        name: '1:1',
         reason: 'Missing newline character at end of file',
-        line: null,
-        column: null,
-        source: 'remark-lint',
         ruleId: 'final-newline',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
-        position: {
-          start: {line: null, column: null},
-          end: {line: null, column: null}
-        },
-        fatal: true
+        source: 'remark-lint',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
       }
     ],
     'should support a list with string severity (`error`)'
@@ -165,19 +153,13 @@ test('core', async () => {
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
-        name: '1:1',
+        fatal: false,
         message: 'Missing newline character at end of file',
+        name: '1:1',
         reason: 'Missing newline character at end of file',
-        line: null,
-        column: null,
-        source: 'remark-lint',
         ruleId: 'final-newline',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
-        position: {
-          start: {line: null, column: null},
-          end: {line: null, column: null}
-        },
-        fatal: false
+        source: 'remark-lint',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
       }
     ],
     'should support a list with string severity (`on`)'
@@ -189,19 +171,13 @@ test('core', async () => {
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
-        name: '1:1',
+        fatal: false,
         message: 'Missing newline character at end of file',
+        name: '1:1',
         reason: 'Missing newline character at end of file',
-        line: null,
-        column: null,
-        source: 'remark-lint',
         ruleId: 'final-newline',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme',
-        position: {
-          start: {line: null, column: null},
-          end: {line: null, column: null}
-        },
-        fatal: false
+        source: 'remark-lint',
+        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
       }
     ],
     'should support a list with string severity (`warn`)'
@@ -259,18 +235,12 @@ test('core', async () => {
     file.messages.map((d) => JSON.parse(JSON.stringify(d))),
     [
       {
-        name: '1:1',
+        fatal: false,
         message: 'Test message',
+        name: '1:1',
         reason: 'Test message',
-        line: null,
-        column: null,
-        source: 'test',
         ruleId: 'rule',
-        position: {
-          start: {line: null, column: null},
-          end: {line: null, column: null}
-        },
-        fatal: false
+        source: 'test'
       }
     ],
     'should support string meta'
@@ -337,6 +307,7 @@ function assertFixture(rule, info, fixture, basename, config) {
   const file = toVFile(basename)
   const expected = fixture.output
   const positionless = fixture.positionless
+  // @ts-expect-error: to do: fix types.
   let proc = remark().use(rule, config)
 
   if (fixture.gfm) proc.use(remarkGfm)
@@ -392,6 +363,7 @@ function assertFixture(rule, info, fixture, basename, config) {
     file.messages = []
     proc = remark()
       .use(() => (tree) => removePosition(tree))
+      // @ts-expect-error: to do: fix types.
       .use(rule, config)
     if (fixture.gfm) proc.use(remarkGfm)
     proc.processSync(file)

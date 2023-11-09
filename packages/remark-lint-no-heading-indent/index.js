@@ -78,7 +78,6 @@ import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintNoHeadingIndent = lintRule(
   {
@@ -88,13 +87,15 @@ const remarkLintNoHeadingIndent = lintRule(
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'heading', (node, _, parent) => {
+      const start = pointStart(node)
+
       // Note: it’s rather complex to detect what the expected indent is in block
       // quotes and lists, so let’s only do directly in root for now.
-      if (generated(node) || (parent && parent.type !== 'root')) {
+      if (!start || (parent && parent.type !== 'root')) {
         return
       }
 
-      const diff = pointStart(node).column - 1
+      const diff = start.column - 1
 
       if (diff) {
         file.message(

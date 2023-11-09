@@ -96,33 +96,40 @@ const remarkLintNoTableIndentation = lintRule(
     const loc = location(value)
 
     visit(tree, 'table', (node, _, parent) => {
-      const end = pointEnd(node).line
-      let line = pointStart(node).line
-      let column = 0
+      const end = pointEnd(node)
+      let line = pointStart(node)?.line
+      /** @type {number | undefined} */
+      let column
 
       if (parent && parent.type === 'root') {
         column = 1
       } else if (parent && parent.type === 'blockquote') {
-        column = pointStart(parent).column + 2
+        const parentStart = pointStart(parent)
+        if (parentStart) column = parentStart.column + 2
       } else if (parent && parent.type === 'listItem') {
-        column = pointStart(parent.children[0]).column
+        column = pointStart(parent.children[0])?.column
 
         // Skip past the first line if we’re the first child of a list item.
         /* c8 ignore next 3 */
-        if (parent.children[0] === node) {
+        if (typeof line === 'number' && parent.children[0] === node) {
           line++
         }
       }
 
       // In a parent we don’t know, exit.
-      if (!column || !line) {
+      if (!end || !column || !line) {
         return
       }
 
-      while (line <= end) {
+      while (line <= end.line) {
         let offset = loc.toOffset({line, column})
-        const lineColumn = offset
 
+        /* c8 ignore next 3 -- we get here if we have offsets. */
+        if (typeof offset !== 'number') {
+          continue
+        }
+
+        const lineColumn = offset
         while (/[ \t]/.test(value.charAt(offset - 1))) {
           offset--
         }
@@ -135,7 +142,6 @@ const remarkLintNoTableIndentation = lintRule(
           }
 
           if (lineColumn !== offset) {
-            // @ts-expect-error: assume we have a correct point.
             file.message('Do not indent table rows', loc.toPoint(offset))
           }
         }

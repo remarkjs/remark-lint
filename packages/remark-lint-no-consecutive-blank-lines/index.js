@@ -60,7 +60,6 @@ import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const unknownContainerSize = new Set(['mdxJsxFlowElement', 'mdxJsxTextElement'])
 
@@ -72,13 +71,15 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, (node) => {
-      if (!generated(node) && 'children' in node) {
+      if ('children' in node) {
         const head = node.children[0]
+        const start = pointStart(node)
+        const headStart = pointStart(head)
 
-        if (head && !generated(head)) {
+        if (head && start && headStart) {
           if (!unknownContainerSize.has(node.type)) {
             // Compare parent and first child.
-            compare(pointStart(node), pointStart(head), 0)
+            compare(start, headStart, 0)
           }
 
           // Compare between each child.
@@ -87,21 +88,26 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
           while (++index < node.children.length) {
             const previous = node.children[index - 1]
             const child = node.children[index]
+            const previousEnd = pointEnd(previous)
+            const childStart = pointStart(child)
 
-            if (previous && !generated(previous) && !generated(child)) {
-              compare(pointEnd(previous), pointStart(child), 2)
+            if (previous && previousEnd && childStart) {
+              compare(previousEnd, childStart, 2)
             }
           }
 
+          const end = pointEnd(node)
           const tail = node.children[node.children.length - 1]
+          const tailEnd = pointEnd(tail)
 
           // Compare parent and last child.
           if (
+            end &&
+            tailEnd &&
             tail !== head &&
-            !generated(tail) &&
             !unknownContainerSize.has(node.type)
           ) {
-            compare(pointEnd(node), pointEnd(tail), 1)
+            compare(end, tailEnd, 1)
           }
         }
       }

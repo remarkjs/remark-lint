@@ -148,6 +148,7 @@ const remarkLintCheckboxCharacterStyle = lintRule(
       // Exit early for items without checkbox.
       // A list item cannot be checked and empty, according to GFM.
       if (
+        !point ||
         typeof node.checked !== 'boolean' ||
         !head ||
         typeof point.offset !== 'number'

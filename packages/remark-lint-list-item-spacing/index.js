@@ -171,15 +171,15 @@ const remarkLintListItemSpacing = lintRule(
         index = 0 // Skip over first.
 
         while (++index < node.children.length) {
-          const child = node.children[index - 1]
-          const next = node.children[index]
+          const start = pointEnd(node.children[index - 1])
+          const end = pointStart(node.children[index])
 
-          if (pointStart(next).line - pointEnd(child).line < 2 !== tight) {
+          if (start && end && end.line - start.line < 2 !== tight) {
             file.message(
               tight
                 ? 'Extraneous new line after list item'
                 : 'Missing new line after list item',
-              {start: pointEnd(child), end: pointStart(next)}
+              {start, end}
             )
           }
         }
@@ -198,11 +198,11 @@ function inferBlankLine(node) {
   let index = 0
 
   while (++index < node.children.length) {
-    const child = node.children[index - 1]
-    const next = node.children[index]
+    const start = pointStart(node.children[index])
+    const end = pointEnd(node.children[index - 1])
 
     // All children in `listItem`s are block.
-    if (pointStart(next).line - pointEnd(child).line > 1) {
+    if (start && end && start.line - end.line > 1) {
       return true
     }
   }
@@ -215,9 +215,8 @@ function inferBlankLine(node) {
  * @returns {boolean}
  */
 function inferMultiline(node) {
-  return (
-    pointEnd(node.children[node.children.length - 1]).line -
-      pointStart(node.children[0]).line >
-    0
-  )
+  const end = pointEnd(node.children[node.children.length - 1])
+  const start = pointStart(node.children[0])
+
+  return Boolean(start && end && end.line - start.line > 0)
 }

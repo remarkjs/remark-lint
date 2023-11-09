@@ -35,13 +35,12 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/mdast": "^3.0.0",
-    "mdast-util-to-string": "^3.0.0",
-    "unified": "^10.0.0",
+    "@types/mdast": "^4.0.0",
+    "mdast-util-to-string": "^4.0.0",
+    "unified": "^11.0.0",
     "unified-lint-rule": "^2.0.0",
-    "unist-util-generated": "^2.0.0",
-    "unist-util-position": "^4.0.0",
-    "unist-util-visit": "^4.0.0"
+    "unist-util-position": "^5.0.0",
+    "unist-util-visit": "^5.0.0"
   },
   "scripts": {},
   "xo": {

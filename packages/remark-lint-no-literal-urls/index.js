@@ -48,7 +48,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
 const remarkLintNoLiteralUrls = lintRule(
@@ -60,12 +59,16 @@ const remarkLintNoLiteralUrls = lintRule(
   (tree, file) => {
     visit(tree, 'link', (node) => {
       const value = toString(node)
+      const start = pointStart(node)
+      const end = pointEnd(node)
+      const headStart = pointStart(node.children[0])
+      const tailEnd = pointEnd(node.children[node.children.length - 1])
 
       if (
-        !generated(node) &&
-        pointStart(node).column === pointStart(node.children[0]).column &&
-        pointEnd(node).column ===
-          pointEnd(node.children[node.children.length - 1]).column &&
+        start &&
+        end &&
+        start.column === headStart?.column &&
+        end.column === tailEnd?.column &&
         (node.url === 'mailto:' + value || node.url === value)
       ) {
         file.message('Don’t use literal URLs without angle brackets', node)

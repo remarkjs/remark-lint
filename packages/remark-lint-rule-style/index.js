@@ -103,11 +103,16 @@ const remarkLintRuleStyle = lintRule(
     }
 
     visit(tree, 'thematicBreak', (node) => {
-      const initial = pointStart(node).offset
-      const final = pointEnd(node).offset
+      const initial = pointStart(node)
+      const final = pointEnd(node)
 
-      if (typeof initial === 'number' && typeof final === 'number') {
-        const rule = value.slice(initial, final)
+      if (
+        initial &&
+        final &&
+        typeof initial.offset === 'number' &&
+        typeof final.offset === 'number'
+      ) {
+        const rule = value.slice(initial.offset, final.offset)
 
         if (option === 'consistent') {
           option = rule

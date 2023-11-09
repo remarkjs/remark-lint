@@ -106,32 +106,40 @@ const remarkLintNoParagraphContentIndent = lintRule(
     const value = String(file)
     const loc = location(value)
 
+    // eslint-disable-next-line complexity
     visit(tree, 'paragraph', (node, _, parent) => {
-      const end = pointEnd(node).line
-      let line = pointStart(node).line
-      let column = 0
+      const end = pointEnd(node)?.line
+      let line = pointStart(node)?.line
+      /** @type {number | undefined} */
+      let column
 
       if (parent && parent.type === 'root') {
         column = 1
       } else if (parent && parent.type === 'blockquote') {
-        column = pointStart(parent).column + 2
+        const parentStart = pointStart(parent)
+        if (parentStart) column = parentStart.column + 2
       } else if (parent && parent.type === 'listItem') {
-        column = pointStart(parent.children[0]).column
+        column = pointStart(parent.children[0])?.column
 
         // Skip past the first line if we’re the first child of a list item.
-        if (parent.children[0] === node) {
+        if (line && parent.children[0] === node) {
           line++
         }
       }
 
       // In a parent we don’t know, exit.
-      if (!column || !line) {
+      if (!column || !line || !end) {
         return
       }
 
       while (line <= end) {
         let offset = loc.toOffset({line, column})
         const lineColumn = offset
+
+        /* c8 ignore next 3 -- we get here if we have offsets. */
+        if (typeof lineColumn !== 'number' || typeof offset !== 'number') {
+          continue
+        }
 
         while (/[ \t]/.test(value.charAt(offset - 1))) {
           offset--
@@ -150,7 +158,6 @@ const remarkLintNoParagraphContentIndent = lintRule(
           if (lineColumn !== offset) {
             file.message(
               'Expected no indentation in paragraph content',
-              // @ts-expect-error: assume we have a correct point.
               loc.toPoint(offset)
             )
           }

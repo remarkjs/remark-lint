@@ -133,11 +133,11 @@ const remarkLintFencedCodeMarker = lintRule(
     }
 
     visit(tree, 'code', (node) => {
-      const start = pointStart(node).offset
+      const start = pointStart(node)
 
-      if (typeof start === 'number') {
+      if (start && typeof start.offset === 'number') {
         const marker = contents
-          .slice(start, start + 4)
+          .slice(start.offset, start.offset + 4)
           .replace(/^\s+/, '')
           .charAt(0)
 

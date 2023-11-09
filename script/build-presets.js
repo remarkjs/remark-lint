@@ -62,14 +62,17 @@ presets(root).then((presetObjects) => {
       .use(
         /** @type {import('unified').Plugin<Array<void>, import('mdast').Root>} */
         () => (tree) => {
-          findAndReplace(tree, /remark-lint/g, () => {
-            return {
-              type: 'linkReference',
-              identifier: 'mono',
-              referenceType: 'full',
-              children: [{type: 'inlineCode', value: 'remark-lint'}]
+          findAndReplace(tree, [
+            /remark-lint/g,
+            () => {
+              return {
+                type: 'linkReference',
+                identifier: 'mono',
+                referenceType: 'full',
+                children: [{type: 'inlineCode', value: 'remark-lint'}]
+              }
             }
-          })
+          ])
         }
       )
       .runSync(summaryTree)
@@ -721,7 +724,11 @@ presets(root).then((presetObjects) => {
 
     fs.writeFileSync(
       path.join(base, 'readme.md'),
-      remark().use(remarkGfm).stringify({type: 'root', children})
+      remark()
+        // To do: change.
+        .use({settings: {listItemIndent: 'tab'}})
+        .use(remarkGfm)
+        .stringify({type: 'root', children})
     )
 
     console.log('✓ wrote `readme.md` in `' + name + '`')

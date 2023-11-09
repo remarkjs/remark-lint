@@ -87,6 +87,7 @@ const remarkLintCheckboxContentIndent = lintRule(
       // Exit early for items without checkbox.
       // A list item cannot be checked and empty, according to GFM.
       if (
+        !point ||
         typeof node.checked !== 'boolean' ||
         !head ||
         typeof point.offset !== 'number'
@@ -110,11 +111,14 @@ const remarkLintCheckboxContentIndent = lintRule(
       while (/[\t ]/.test(value.charAt(final))) final++
 
       if (final - initial > 0) {
-        // @ts-expect-error: assume we have a correct point.
-        file.message('Checkboxes should be followed by a single character', {
-          start: loc.toPoint(initial),
-          end: loc.toPoint(final)
-        })
+        const start = loc.toPoint(initial)
+        const end = loc.toPoint(final)
+
+        file.message(
+          'Checkboxes should be followed by a single character',
+          /* c8 ignore next -- we get here if we have offsets. */
+          start && end ? {start, end} : undefined
+        )
       }
     })
   }

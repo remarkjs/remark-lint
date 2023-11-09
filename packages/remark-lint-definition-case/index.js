@@ -58,11 +58,16 @@ const remarkLintDefinitionCase = lintRule(
 
     visit(tree, (node) => {
       if (node.type === 'definition' || node.type === 'footnoteDefinition') {
-        const start = pointStart(node).offset
-        const end = pointEnd(node).offset
+        const start = pointStart(node)
+        const end = pointEnd(node)
 
-        if (typeof start === 'number' && typeof end === 'number') {
-          const match = value.slice(start, end).match(label)
+        if (
+          start &&
+          end &&
+          typeof start.offset === 'number' &&
+          typeof end.offset === 'number'
+        ) {
+          const match = value.slice(start.offset, end.offset).match(label)
 
           if (match && match[1] !== match[1].toLowerCase()) {
             file.message(

@@ -33,7 +33,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/mdast": "^3.0.0",
+    "@types/mdast": "^4.0.0",
     "remark-lint": "^9.0.0",
     "remark-lint-blockquote-indentation": "^3.0.0",
     "remark-lint-checkbox-character-style": "^4.0.0",
@@ -47,7 +47,7 @@
     "remark-lint-rule-style": "^3.0.0",
     "remark-lint-strong-marker": "^3.0.0",
     "remark-lint-table-cell-padding": "^4.0.0",
-    "unified": "^10.0.0"
+    "unified": "^11.0.0"
   },
   "scripts": {},
   "xo": {

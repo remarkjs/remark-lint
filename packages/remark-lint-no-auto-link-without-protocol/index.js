@@ -38,7 +38,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
 
 // Protocol expression.
@@ -53,11 +52,18 @@ const remarkLintNoAutoLinkWithoutProtocol = lintRule(
   /** @type {import('unified-lint-rule').Rule<Root, void>} */
   (tree, file) => {
     visit(tree, 'link', (node) => {
+      const end = pointEnd(node)
+      const headStart = pointStart(node.children[0])
+      const start = pointStart(node)
+      const tailEnd = pointEnd(node.children[node.children.length - 1])
+
       if (
-        !generated(node) &&
-        pointStart(node).column === pointStart(node.children[0]).column - 1 &&
-        pointEnd(node).column ===
-          pointEnd(node.children[node.children.length - 1]).column + 1 &&
+        end &&
+        headStart &&
+        start &&
+        tailEnd &&
+        start.column === headStart.column - 1 &&
+        end.column === tailEnd.column + 1 &&
         !protocol.test(toString(node))
       ) {
         file.message('All automatic links must start with a protocol', node)

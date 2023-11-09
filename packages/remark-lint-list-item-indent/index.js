@@ -191,32 +191,40 @@ const remarkLintListItemIndent = lintRule(
       while (++index < node.children.length) {
         const item = node.children[index]
         const head = item.children[0]
+        const start = pointStart(item)
         const final = pointStart(head)
 
-        const marker = value
-          .slice(pointStart(item).offset, final.offset)
-          .replace(/\[[x ]?]\s*$/i, '')
+        if (
+          start &&
+          final &&
+          typeof start.offset === 'number' &&
+          typeof final.offset === 'number'
+        ) {
+          const marker = value
+            .slice(start.offset, final.offset)
+            .replace(/\[[x ]?]\s*$/i, '')
 
-        const bulletSize = marker.replace(/\s+$/, '').length
+          const bulletSize = marker.replace(/\s+$/, '').length
 
-        const style =
-          option === 'tab-size' || (option === 'mixed' && spread)
-            ? Math.ceil(bulletSize / 4) * 4
-            : bulletSize + 1
+          const style =
+            option === 'tab-size' || (option === 'mixed' && spread)
+              ? Math.ceil(bulletSize / 4) * 4
+              : bulletSize + 1
 
-        if (marker.length !== style) {
-          const diff = style - marker.length
-          const abs = Math.abs(diff)
+          if (marker.length !== style) {
+            const diff = style - marker.length
+            const abs = Math.abs(diff)
 
-          file.message(
-            'Incorrect list-item indent: ' +
-              (diff > 0 ? 'add' : 'remove') +
-              ' ' +
-              abs +
-              ' ' +
-              plural('space', abs),
-            final
-          )
+            file.message(
+              'Incorrect list-item indent: ' +
+                (diff > 0 ? 'add' : 'remove') +
+                ' ' +
+                abs +
+                ' ' +
+                plural('space', abs),
+              final
+            )
+          }
         }
       }
     })

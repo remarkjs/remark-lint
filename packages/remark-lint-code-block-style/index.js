@@ -140,7 +140,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintCodeBlockStyle = lintRule(
   {
@@ -164,15 +163,21 @@ const remarkLintCodeBlockStyle = lintRule(
     }
 
     visit(tree, 'code', (node) => {
-      if (generated(node)) {
+      const initial = pointStart(node)
+      const final = pointEnd(node)
+
+      if (
+        !initial ||
+        !final ||
+        typeof initial.offset !== 'number' ||
+        typeof final.offset !== 'number'
+      ) {
         return
       }
 
-      const initial = pointStart(node).offset
-      const final = pointEnd(node).offset
-
       const current =
-        node.lang || /^\s*([~`])\1{2,}/.test(value.slice(initial, final))
+        node.lang ||
+        /^\s*([~`])\1{2,}/.test(value.slice(initial.offset, final.offset))
           ? 'fenced'
           : 'indented'
 

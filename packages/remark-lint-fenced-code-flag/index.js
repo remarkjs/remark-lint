@@ -117,7 +117,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const fence = /^ {0,3}([~`])\1{2,}/
 
@@ -146,16 +145,21 @@ const remarkLintFencedCodeFlag = lintRule(
     }
 
     visit(tree, 'code', (node) => {
-      if (!generated(node)) {
+      const start = pointStart(node)
+      const end = pointEnd(node)
+
+      if (
+        start &&
+        end &&
+        typeof start.offset === 'number' &&
+        typeof end.offset === 'number'
+      ) {
         if (node.lang) {
           if (allowed.length > 0 && !allowed.includes(node.lang)) {
             file.message('Incorrect code language flag', node)
           }
         } else {
-          const slice = value.slice(
-            pointStart(node).offset,
-            pointEnd(node).offset
-          )
+          const slice = value.slice(start.offset, end.offset)
 
           if (!allowEmpty && fence.test(slice)) {
             file.message('Missing code language flag', node)

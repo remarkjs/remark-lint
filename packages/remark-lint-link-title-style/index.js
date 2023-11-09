@@ -179,6 +179,8 @@ const remarkLintLinkTitleStyle = lintRule(
         const end = pointEnd(node)
 
         if (
+          !begin ||
+          !end ||
           typeof begin.offset !== 'number' ||
           typeof end.offset !== 'number'
         ) {
@@ -212,15 +214,15 @@ const remarkLintLinkTitleStyle = lintRule(
         if (look === 'consistent') {
           look = final
         } else if (look !== final) {
+          const start = loc.toPoint(first)
+          const end = loc.toPoint(last + 1)
+
           file.message(
             'Titles should use `' +
               (look === ')' ? '()' : look) +
               '` as a quote',
-            // @ts-expect-error: assume we have a correct point.
-            {
-              start: loc.toPoint(first),
-              end: loc.toPoint(last + 1)
-            }
+            /* c8 ignore next -- we get here if we have offsets. */
+            start && end ? {start, end} : undefined
           )
         }
       }

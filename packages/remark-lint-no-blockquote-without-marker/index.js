@@ -71,7 +71,6 @@ import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
   {
@@ -88,17 +87,21 @@ const remarkLintNoBlockquoteWithoutMarker = lintRule(
 
       while (++index < node.children.length) {
         const child = node.children[index]
+        const start = pointStart(child)
+        const end = pointEnd(child)
 
-        if (child.type === 'paragraph' && !generated(child)) {
-          const end = pointEnd(child).line
-          const column = pointStart(child).column
-          let line = pointStart(child).line
+        if (child.type === 'paragraph' && start && end) {
+          const column = start.column
+          let line = start.line
 
           // Skip past the first line.
-          while (++line <= end) {
+          while (++line <= end.line) {
             const offset = loc.toOffset({line, column})
 
-            if (/>[\t ]+$/.test(value.slice(offset - 5, offset))) {
+            if (
+              typeof offset !== 'number' ||
+              />[\t ]+$/.test(value.slice(offset - 5, offset))
+            ) {
               continue
             }
 

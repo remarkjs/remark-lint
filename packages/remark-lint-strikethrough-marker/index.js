@@ -115,10 +115,10 @@ const remarkLintStrikethroughMarker = lintRule(
     }
 
     visit(tree, 'delete', (node) => {
-      const start = pointStart(node).offset
+      const start = pointStart(node)
 
-      if (typeof start === 'number') {
-        const both = value.slice(start, start + 2)
+      if (start && typeof start.offset === 'number') {
+        const both = value.slice(start.offset, start.offset + 2)
         const marker = both === '~~' ? '~~' : '~'
 
         if (option === 'consistent') {

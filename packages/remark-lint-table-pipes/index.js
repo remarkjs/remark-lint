@@ -79,6 +79,7 @@ const remarkLintTablePipes = lintRule(
         const end = pointEnd(row)
 
         if (
+          start &&
           typeof start.offset === 'number' &&
           value.charCodeAt(start.offset) !== 124
         ) {
@@ -86,6 +87,7 @@ const remarkLintTablePipes = lintRule(
         }
 
         if (
+          end &&
           typeof end.offset === 'number' &&
           value.charCodeAt(end.offset - 1) !== 124
         ) {

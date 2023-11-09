@@ -114,18 +114,23 @@ const remarkLintNoMissingBlankLines = lintRule(
     const {exceptTightLists} = option
 
     visit(tree, (node, index, parent) => {
+      const end = pointEnd(node)
+
       if (
+        end &&
         parent &&
         typeof index === 'number' &&
         !generated(node) &&
         (!exceptTightLists || parent.type !== 'listItem')
       ) {
         const next = parent.children[index + 1]
+        const nextPoint = pointStart(next)
 
         if (
           next &&
+          nextPoint &&
           types.has(next.type) &&
-          pointStart(next).line === pointEnd(node).line + 1
+          nextPoint.line === end.line + 1
         ) {
           file.message('Missing blank line before block node', next)
         }

@@ -106,23 +106,30 @@ const remarkLintBlockquoteIndentation = lintRule(
         return
       }
 
-      if (option === 'consistent') {
-        option = check(node)
-      } else {
-        const diff = option - check(node)
+      const start = pointStart(node)
+      const head = pointStart(node.children[0])
+      /* c8 ignore next -- we get here if we have offsets. */
+      const count = head && start ? head.column - start.column : undefined
 
-        if (diff !== 0) {
-          const abs = Math.abs(diff)
+      if (typeof count === 'number') {
+        if (option === 'consistent') {
+          option = count
+        } else {
+          const diff = option - count
 
-          file.message(
-            (diff > 0 ? 'Add' : 'Remove') +
-              ' ' +
-              abs +
-              ' ' +
-              plural('space', abs) +
-              ' between block quote and content',
-            pointStart(node.children[0])
-          )
+          if (diff !== 0) {
+            const abs = Math.abs(diff)
+
+            file.message(
+              (diff > 0 ? 'Add' : 'Remove') +
+                ' ' +
+                abs +
+                ' ' +
+                plural('space', abs) +
+                ' between block quote and content',
+              pointStart(node.children[0])
+            )
+          }
         }
       }
     })
@@ -130,11 +137,3 @@ const remarkLintBlockquoteIndentation = lintRule(
 )
 
 export default remarkLintBlockquoteIndentation
-
-/**
- * @param {Blockquote} node
- * @returns {number}
- */
-function check(node) {
-  return pointStart(node.children[0]).column - pointStart(node).column
-}

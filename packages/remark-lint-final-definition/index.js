@@ -61,7 +61,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintFinalDefinition = lintRule(
   {
@@ -75,16 +74,18 @@ const remarkLintFinalDefinition = lintRule(
     visit(
       tree,
       (node) => {
+        const start = pointStart(node)
+
         // Ignore generated and HTML comment nodes.
         if (
           node.type === 'root' ||
-          generated(node) ||
+          !start ||
           (node.type === 'html' && /^\s*<!--/.test(node.value))
         ) {
           return
         }
 
-        const line = pointStart(node).line
+        const line = start.line
 
         if (node.type === 'definition') {
           if (last && last > line) {

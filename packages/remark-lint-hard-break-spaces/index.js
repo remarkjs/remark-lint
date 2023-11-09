@@ -46,7 +46,6 @@
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
 import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const remarkLintHardBreakSpaces = lintRule(
   {
@@ -58,9 +57,17 @@ const remarkLintHardBreakSpaces = lintRule(
     const value = String(file)
 
     visit(tree, 'break', (node) => {
-      if (!generated(node)) {
+      const start = pointStart(node)
+      const end = pointEnd(node)
+
+      if (
+        end &&
+        start &&
+        typeof end.offset === 'number' &&
+        typeof start.offset === 'number'
+      ) {
         const slice = value
-          .slice(pointStart(node).offset, pointEnd(node).offset)
+          .slice(start.offset, end.offset)
           .split('\n', 1)[0]
           .replace(/\r$/, '')
 

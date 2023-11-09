@@ -255,12 +255,12 @@ const remarkLintTableCellPadding = lintRule(
         while (++column < row.children.length) {
           const cell = row.children[column]
 
-          const cellStart = pointStart(cell).offset
-          const cellEnd = pointEnd(cell).offset
-          const contentStart = pointStart(cell.children[0]).offset
+          const cellStart = pointStart(cell)?.offset
+          const cellEnd = pointEnd(cell)?.offset
+          const contentStart = pointStart(cell.children[0])?.offset
           const contentEnd = pointEnd(
             cell.children[cell.children.length - 1]
-          ).offset
+          )?.offset
 
           if (
             typeof cellStart !== 'number' ||
@@ -363,8 +363,8 @@ export default remarkLintTableCellPadding
  * @returns {number}
  */
 function size(node) {
-  const head = pointStart(node.children[0]).offset
-  const tail = pointEnd(node.children[node.children.length - 1]).offset
+  const head = pointStart(node.children[0])?.offset
+  const tail = pointEnd(node.children[node.children.length - 1])?.offset
   // Only called when we’re sure offsets exist.
   /* c8 ignore next */
   return typeof head === 'number' && typeof tail === 'number' ? tail - head : 0

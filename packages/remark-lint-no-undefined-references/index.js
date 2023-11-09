@@ -213,6 +213,7 @@ const remarkLintNoUndefinedReferences = lintRule(
       /** @type {Array<Range>} */
       let ranges = []
 
+      // eslint-disable-next-line complexity
       visit(node, (child) => {
         // Ignore the node itself.
         if (child === node) return
@@ -226,17 +227,22 @@ const remarkLintNoUndefinedReferences = lintRule(
         // Enter non-text.
         if (child.type !== 'text') return
 
-        const start = pointStart(child).offset
-        const end = pointEnd(child).offset
+        const start = pointStart(child)
+        const end = pointEnd(child)
 
         // Bail if there’s no positional info.
-        if (typeof start !== 'number' || typeof end !== 'number') {
+        if (
+          !start ||
+          !end ||
+          typeof start.offset !== 'number' ||
+          typeof end.offset !== 'number'
+        ) {
           return EXIT
         }
 
-        const source = contents.slice(start, end)
+        const source = contents.slice(start.offset, end.offset)
         /** @type {Array<[number, string]>} */
-        const lines = [[start, '']]
+        const lines = [[start.offset, '']]
         let last = 0
 
         lineEnding.lastIndex = 0
@@ -246,7 +252,7 @@ const remarkLintNoUndefinedReferences = lintRule(
           const index = match.index
           lines[lines.length - 1][1] = source.slice(last, index)
           last = index + match[0].length
-          lines.push([start + last, ''])
+          lines.push([start.offset + last, ''])
           match = lineEnding.exec(source)
         }
 

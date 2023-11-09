@@ -119,10 +119,10 @@ const remarkLintEmphasisMarker = lintRule(
     }
 
     visit(tree, 'emphasis', (node) => {
-      const start = pointStart(node).offset
+      const start = pointStart(node)
 
-      if (typeof start === 'number') {
-        const marker = /** @type {Marker} */ (value.charAt(start))
+      if (start && typeof start.offset === 'number') {
+        const marker = /** @type {Marker} */ (value.charAt(start.offset))
 
         if (option === 'consistent') {
           option = marker

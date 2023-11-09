@@ -34,7 +34,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/mdast": "^3.0.0",
+    "@types/mdast": "^4.0.0",
     "remark-lint": "^9.0.0",
     "remark-lint-blockquote-indentation": "^3.0.0",
     "remark-lint-code-block-style": "^3.0.0",
@@ -79,7 +79,7 @@
     "remark-lint-table-pipe-alignment": "^3.0.0",
     "remark-lint-table-pipes": "^4.0.0",
     "remark-lint-unordered-list-marker-style": "^3.0.0",
-    "unified": "^10.0.0"
+    "unified": "^11.0.0"
   },
   "scripts": {},
   "xo": {

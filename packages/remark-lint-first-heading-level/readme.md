@@ -14,18 +14,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintFirstHeadingLevel[, config])`](#unifieduseremarklintfirstheadinglevel-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintFirstHeadingLevel[, config])`](#unifieduseremarklintfirstheadinglevel-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -120,8 +120,8 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `1`) are accepted:
 
-*   `number` (example `1`)
-    — expected rank of first heading
+* `number` (example `1`)
+  — expected rank of first heading
 
 ## Recommendation
 

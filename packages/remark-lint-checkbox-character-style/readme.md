@@ -15,19 +15,19 @@ style.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintCheckboxCharacterStyle[, config])`](#unifieduseremarklintcheckboxcharacterstyle-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintCheckboxCharacterStyle[, config])`](#unifieduseremarklintcheckboxcharacterstyle-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -127,14 +127,14 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'consistent'`) are accepted:
 
-*   `Object` with the following fields:
-    *   `checked` (`'x'`, `'X'`, or `'consistent'`, default: `'consistent'`)
-        — preferred character to use for checked checkboxes
-    *   `unchecked` (`'·'` (a space), `'»'` (a tab), or `'consistent'`,
-        default: `'consistent'`)
-        — preferred character to use for unchecked checkboxes
-*   `'consistent'`
-    — detect the first used styles and warn when further checkboxes differ
+* `Object` with the following fields:
+  * `checked` (`'x'`, `'X'`, or `'consistent'`, default: `'consistent'`)
+    — preferred character to use for checked checkboxes
+  * `unchecked` (`'·'` (a space), `'»'` (a tab), or `'consistent'`,
+    default: `'consistent'`)
+    — preferred character to use for unchecked checkboxes
+* `'consistent'`
+  — detect the first used styles and warn when further checkboxes differ
 
 ## Recommendation
 

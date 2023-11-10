@@ -14,18 +14,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintMaximumHeadingLength[, config])`](#unifieduseremarklintmaximumheadinglength-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintMaximumHeadingLength[, config])`](#unifieduseremarklintmaximumheadinglength-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -124,8 +124,8 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `60`) are accepted:
 
-*   `number` (example: `72`)
-    — max number of characters to accept in heading text
+* `number` (example: `72`)
+  — max number of characters to accept in heading text
 
 Ignores syntax, only checks the plain text content.
 

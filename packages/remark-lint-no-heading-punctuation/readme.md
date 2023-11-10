@@ -14,17 +14,17 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintNoHeadingPunctuation[, config])`](#unifieduseremarklintnoheadingpunctuation-config)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintNoHeadingPunctuation[, config])`](#unifieduseremarklintnoheadingpunctuation-config)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -123,11 +123,11 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'\\.,;:!?'`) are accepted:
 
-*   `string` (example `'\\.,;:'`)
-    — disallowed characters, wrapped in `new RegExp('[' + x + ']')`, make sure
-    to double escape regexp characters
-*   `RegExp` (example `/\p{P}/u`)
-    — disallowed pattern
+* `string` (example `'\\.,;:'`)
+  — disallowed characters, wrapped in `new RegExp('[' + x + ']')`, make sure
+  to double escape regexp characters
+* `RegExp` (example `/\p{P}/u`)
+  — disallowed pattern
 
 ## Examples
 

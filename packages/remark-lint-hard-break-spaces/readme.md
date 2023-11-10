@@ -15,18 +15,18 @@ for hard breaks.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintHardBreakSpaces[, config])`](#unifieduseremarklinthardbreakspaces-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintHardBreakSpaces[, config])`](#unifieduseremarklinthardbreakspaces-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 

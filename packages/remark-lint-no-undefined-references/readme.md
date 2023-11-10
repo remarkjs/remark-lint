@@ -14,18 +14,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintNoUndefinedReferences[, config])`](#unifieduseremarklintnoundefinedreferences-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintNoUndefinedReferences[, config])`](#unifieduseremarklintnoundefinedreferences-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -124,13 +124,13 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `undefined`) are accepted:
 
-*   `Object` with the following fields:
-    *   `allow` (`Array<string | RegExp | { source: string }>`,
-        default: `[]`)
-        — text or regex that you want to be allowed between `[` and `]`
-        even though it’s undefined; regex is provided via a `RegExp` object
-        or via a `{source: string}` object where `source` is the source
-        text of a case-insensitive regex
+* `Object` with the following fields:
+  * `allow` (`Array<string | RegExp | { source: string }>`,
+    default: `[]`)
+    — text or regex that you want to be allowed between `[` and `]`
+    even though it’s undefined; regex is provided via a `RegExp` object
+    or via a `{source: string}` object where `source` is the source
+    text of a case-insensitive regex
 
 ## Recommendation
 

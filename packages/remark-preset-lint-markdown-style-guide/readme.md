@@ -14,16 +14,16 @@ Preset of [`remark-lint`][mono] rules that follow an opinionated style guide.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Rules](#rules)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkPresetLintMarkdownStyleGuide)`](#unifieduseremarkpresetlintmarkdownstyleguide)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Rules](#rules)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkPresetLintMarkdownStyleGuide)`](#unifieduseremarkpresetlintmarkdownstyleguide)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 

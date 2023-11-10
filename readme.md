@@ -11,23 +11,23 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Rules](#rules)
-*   [Configure](#configure)
-*   [Ignore warnings](#ignore-warnings)
-*   [Examples](#examples)
-    *   [Example: check markdown on the API](#example-check-markdown-on-the-api)
-    *   [Example: check and format markdown on the API](#example-check-and-format-markdown-on-the-api)
-    *   [Example: check markdown on the CLI](#example-check-markdown-on-the-cli)
-    *   [Example: check and format markdown on the CLI](#example-check-and-format-markdown-on-the-cli)
-*   [Integrations](#integrations)
-*   [Syntax](#syntax)
-*   [Compatibility](#compatibility)
-*   [Security](#security)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Rules](#rules)
+* [Configure](#configure)
+* [Ignore warnings](#ignore-warnings)
+* [Examples](#examples)
+  * [Example: check markdown on the API](#example-check-markdown-on-the-api)
+  * [Example: check and format markdown on the API](#example-check-and-format-markdown-on-the-api)
+  * [Example: check markdown on the CLI](#example-check-markdown-on-the-cli)
+  * [Example: check and format markdown on the CLI](#example-check-and-format-markdown-on-the-cli)
+* [Integrations](#integrations)
+* [Syntax](#syntax)
+* [Compatibility](#compatibility)
+* [Security](#security)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -87,9 +87,9 @@ The presets that are maintained here:
 
 <!--presets start-->
 
-*   [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) — rules that enforce consistency
-*   [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
-*   [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) — rules that prevent mistakes or stuff that fails across vendors.
+* [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) — rules that enforce consistency
+* [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) — rules that enforce the markdown style guide
+* [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) — rules that prevent mistakes or stuff that fails across vendors.
 
 <!--presets end-->
 
@@ -103,72 +103,72 @@ The rules that are maintained here:
 
 <!--rules start-->
 
-*   [`remark-lint-blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation) — warn when block quotes are either indented too much or too little
-*   [`remark-lint-checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
-*   [`remark-lint-checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
-*   [`remark-lint-code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) — warn when code blocks do not adhere to a given style
-*   [`remark-lint-definition-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
-*   [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
-*   [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
-*   [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
-*   [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style
-*   [`remark-lint-file-extension`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension) — warn when the file’s extension violates the given style
-*   [`remark-lint-final-definition`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition) — warn when definitions are not placed at the end of the file
-*   [`remark-lint-final-newline`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline) — warn when a newline at the end of a file is missing
-*   [`remark-lint-first-heading-level`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-first-heading-level) — warn when the first heading has a level other than a specified value
-*   [`remark-lint-hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
-*   [`remark-lint-heading-increment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
-*   [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) — warn when heading style violates the given style
-*   [`remark-lint-linebreak-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style) — warn when linebreaks violate a given or detected style
-*   [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
-*   [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
-*   [`remark-lint-list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation
-*   [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — warn when the spacing between a list item’s bullet and its content violates a given style
-*   [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
-*   [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
-*   [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
-*   [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
-*   [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
-*   [`remark-lint-no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls
-*   [`remark-lint-no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions) — warn on duplicate definitions
-*   [`remark-lint-no-duplicate-headings`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings) — warn on duplicate headings
-*   [`remark-lint-no-duplicate-headings-in-section`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings-in-section) — warn on duplicate headings in a section
-*   [`remark-lint-no-emphasis-as-heading`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading) — warn when emphasis or importance is used instead of a heading
-*   [`remark-lint-no-empty-url`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-empty-url) — warn on empty URLs in links and images
-*   [`remark-lint-no-file-name-articles`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-articles) — warn when file name start with an article
-*   [`remark-lint-no-file-name-consecutive-dashes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-consecutive-dashes) — warn when file names contain consecutive dashes
-*   [`remark-lint-no-file-name-irregular-characters`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-irregular-characters) — warn when file names contain irregular characters
-*   [`remark-lint-no-file-name-mixed-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-mixed-case) — warn when file names use mixed case
-*   [`remark-lint-no-file-name-outer-dashes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-outer-dashes) — warn when file names contain initial or final dashes
-*   [`remark-lint-no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent) — warn when heading content is indented
-*   [`remark-lint-no-heading-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-indent) — warn when headings are indented
-*   [`remark-lint-no-heading-like-paragraph`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-like-paragraph) — for too many hashes (h7+ “headings”)
-*   [`remark-lint-no-heading-punctuation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation) — warn when headings end in illegal characters
-*   [`remark-lint-no-html`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-html) — warn when HTML nodes are used
-*   [`remark-lint-no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-inline-padding) — warn when inline nodes are padded with spaces
-*   [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) — warn when URLs without angle brackets are used
-*   [`remark-lint-no-missing-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-missing-blank-lines) — warn when missing blank lines
-*   [`remark-lint-no-multiple-toplevel-headings`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-multiple-toplevel-headings) — warn when multiple top level headings are used
-*   [`remark-lint-no-paragraph-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent) — warn when the content in paragraphs are indented
-*   [`remark-lint-no-reference-like-url`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url) — warn when URLs are also defined identifiers
-*   [`remark-lint-no-shell-dollars`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shell-dollars) — warn when shell code is prefixed by dollars
-*   [`remark-lint-no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-image) — warn when shortcut reference images are used
-*   [`remark-lint-no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link) — warn when shortcut reference links are used
-*   [`remark-lint-no-table-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation) — warn when tables are indented
-*   [`remark-lint-no-tabs`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-tabs) — warn when hard tabs are used instead of spaces
-*   [`remark-lint-no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) — warn when references to undefined definitions are found
-*   [`remark-lint-no-unneeded-full-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image) — warn when full reference images are used if they can be collapsed
-*   [`remark-lint-no-unneeded-full-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link) — warn when full reference links are used if they can be collapsed
-*   [`remark-lint-no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) — warn when unused definitions are found
-*   [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) — warn when the markers of ordered lists violate a given style
-*   [`remark-lint-ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) — warn when the marker value of ordered lists violates a given style
-*   [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) — warn when horizontal rules violate a given style
-*   [`remark-lint-strikethrough-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker) — warn when strikethrough markers violate the given style
-*   [`remark-lint-strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) — warn when importance (strong) markers violate the given style
-*   [`remark-lint-table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding) — warn when table cells are incorrectly padded
-*   [`remark-lint-table-pipe-alignment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment) — warn when table pipes are not aligned
-*   [`remark-lint-table-pipes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipes) — warn when table rows are not fenced with pipes
-*   [`remark-lint-unordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style) — warn when markers of unordered lists violate a given style
+* [`remark-lint-blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation) — warn when block quotes are either indented too much or too little
+* [`remark-lint-checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
+* [`remark-lint-checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
+* [`remark-lint-code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) — warn when code blocks do not adhere to a given style
+* [`remark-lint-definition-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
+* [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
+* [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
+* [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
+* [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style
+* [`remark-lint-file-extension`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension) — warn when the file’s extension violates the given style
+* [`remark-lint-final-definition`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition) — warn when definitions are not placed at the end of the file
+* [`remark-lint-final-newline`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline) — warn when a newline at the end of a file is missing
+* [`remark-lint-first-heading-level`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-first-heading-level) — warn when the first heading has a level other than a specified value
+* [`remark-lint-hard-break-spaces`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces) — warn when too many spaces are used to create a hard break
+* [`remark-lint-heading-increment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment) — warn when headings increment with more than 1 level at a time
+* [`remark-lint-heading-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style) — warn when heading style violates the given style
+* [`remark-lint-linebreak-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style) — warn when linebreaks violate a given or detected style
+* [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
+* [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
+* [`remark-lint-list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation
+* [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — warn when the spacing between a list item’s bullet and its content violates a given style
+* [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
+* [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
+* [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
+* [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
+* [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
+* [`remark-lint-no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls
+* [`remark-lint-no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions) — warn on duplicate definitions
+* [`remark-lint-no-duplicate-headings`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings) — warn on duplicate headings
+* [`remark-lint-no-duplicate-headings-in-section`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings-in-section) — warn on duplicate headings in a section
+* [`remark-lint-no-emphasis-as-heading`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading) — warn when emphasis or importance is used instead of a heading
+* [`remark-lint-no-empty-url`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-empty-url) — warn on empty URLs in links and images
+* [`remark-lint-no-file-name-articles`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-articles) — warn when file name start with an article
+* [`remark-lint-no-file-name-consecutive-dashes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-consecutive-dashes) — warn when file names contain consecutive dashes
+* [`remark-lint-no-file-name-irregular-characters`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-irregular-characters) — warn when file names contain irregular characters
+* [`remark-lint-no-file-name-mixed-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-mixed-case) — warn when file names use mixed case
+* [`remark-lint-no-file-name-outer-dashes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-outer-dashes) — warn when file names contain initial or final dashes
+* [`remark-lint-no-heading-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent) — warn when heading content is indented
+* [`remark-lint-no-heading-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-indent) — warn when headings are indented
+* [`remark-lint-no-heading-like-paragraph`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-like-paragraph) — for too many hashes (h7+ “headings”)
+* [`remark-lint-no-heading-punctuation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation) — warn when headings end in illegal characters
+* [`remark-lint-no-html`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-html) — warn when HTML nodes are used
+* [`remark-lint-no-inline-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-inline-padding) — warn when inline nodes are padded with spaces
+* [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) — warn when URLs without angle brackets are used
+* [`remark-lint-no-missing-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-missing-blank-lines) — warn when missing blank lines
+* [`remark-lint-no-multiple-toplevel-headings`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-multiple-toplevel-headings) — warn when multiple top level headings are used
+* [`remark-lint-no-paragraph-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent) — warn when the content in paragraphs are indented
+* [`remark-lint-no-reference-like-url`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url) — warn when URLs are also defined identifiers
+* [`remark-lint-no-shell-dollars`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shell-dollars) — warn when shell code is prefixed by dollars
+* [`remark-lint-no-shortcut-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-image) — warn when shortcut reference images are used
+* [`remark-lint-no-shortcut-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link) — warn when shortcut reference links are used
+* [`remark-lint-no-table-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation) — warn when tables are indented
+* [`remark-lint-no-tabs`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-tabs) — warn when hard tabs are used instead of spaces
+* [`remark-lint-no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) — warn when references to undefined definitions are found
+* [`remark-lint-no-unneeded-full-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image) — warn when full reference images are used if they can be collapsed
+* [`remark-lint-no-unneeded-full-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link) — warn when full reference links are used if they can be collapsed
+* [`remark-lint-no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) — warn when unused definitions are found
+* [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) — warn when the markers of ordered lists violate a given style
+* [`remark-lint-ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) — warn when the marker value of ordered lists violates a given style
+* [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) — warn when horizontal rules violate a given style
+* [`remark-lint-strikethrough-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker) — warn when strikethrough markers violate the given style
+* [`remark-lint-strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) — warn when importance (strong) markers violate the given style
+* [`remark-lint-table-cell-padding`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding) — warn when table cells are incorrectly padded
+* [`remark-lint-table-pipe-alignment`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment) — warn when table pipes are not aligned
+* [`remark-lint-table-pipes`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipes) — warn when table rows are not fenced with pipes
+* [`remark-lint-unordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style) — warn when markers of unordered lists violate a given style
 
 <!--rules end-->
 
@@ -185,57 +185,57 @@ The following rules are maintained by the community:
   excluding `remark-lint-`
 -->
 
-*   [`remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
-    — ensure list items are in alphabetical order
-*   [`remark-lint-appropriate-heading`](https://github.com/RichardLitt/remark-lint-appropriate-heading)
-    — check that the top level heading matches the directory name
-*   [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
-    — check if your links are reachable and/or unique
-*   [`remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
-    — ensure a specific number of lines between blocks
-*   [`remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
-    — ensure links in lists of books follow a standard format
-*   [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
-    — lint fenced code blocks by corresponding language tags,
-    currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
-*   [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
-    — ensure the same URL is not linked multiple times.
-*   [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
-    — enforce a limit of emoji per paragraph
-*   [`remark-lint-fenced-code-flag-case`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-fenced-code-flag-case)
-    — warn when fenced code blocks have improperly cased language flags
-*   [`remark-lint-frontmatter-schema`](https://github.com/JulianCataldo/remark-lint-frontmatter-schema)
-    — validate YAML frontmatter against a JSON schema
-*   [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
-    — ensure headings have the appropriate length
-*   [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
-    — ensure heading parsing is not broken by weird whitespace
-*   [`remark-lint-heading-word-length`](https://github.com/Xunnamius/unified-utils/tree/main/packages/remark-lint-heading-word-length)
-    — warn when headings have too many or too few words with unicode support
-*   [`remark-lint-list-item-style`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-list-item-style)
-    — warn when list items violate a given capitalization or punctuation style
-*   [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-match-punctuation)
-    — ensures punctuations are used in pairs if necessary.
-*   [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
-    — ensure em-dash (`—`) style follows a standard format
-*   [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-chinese-punctuation-in-number)
-    — ensures that Chinese punctuation’s not used in numbers
-*   [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
-    — check that external links are alive
-*   [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
-    — ensure every heading is followed by content (forming a section)
-*   [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-long-code)
-    — ensures that each line in code block won't be too long.
-*   [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-repeat-punctuation)
-    — ensures punctuation is not repeated
-*   [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
-    — ensure that the `href` of links has no trailing slash
-*   [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-number)
-    — ensures there are spaces around number and Chinese.
-*   [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-word)
-    — ensures there are spaces around English word and Chinese.
-*   [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
-    — wrapper for `write-good`
+* [`remark-lint-alphabetize-lists`](https://github.com/vhf/remark-lint-alphabetize-lists)
+  — ensure list items are in alphabetical order
+* [`remark-lint-appropriate-heading`](https://github.com/RichardLitt/remark-lint-appropriate-heading)
+  — check that the top level heading matches the directory name
+* [`remark-lint-are-links-valid`](https://github.com/wemake-services/remark-lint-are-links-valid)
+  — check if your links are reachable and/or unique
+* [`remark-lint-blank-lines-1-0-2`](https://github.com/vhf/remark-lint-blank-lines-1-0-2)
+  — ensure a specific number of lines between blocks
+* [`remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
+  — ensure links in lists of books follow a standard format
+* [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
+  — lint fenced code blocks by corresponding language tags,
+  currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
+* [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
+  — ensure the same URL is not linked multiple times.
+* [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
+  — enforce a limit of emoji per paragraph
+* [`remark-lint-fenced-code-flag-case`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-fenced-code-flag-case)
+  — warn when fenced code blocks have improperly cased language flags
+* [`remark-lint-frontmatter-schema`](https://github.com/JulianCataldo/remark-lint-frontmatter-schema)
+  — validate YAML frontmatter against a JSON schema
+* [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
+  — ensure headings have the appropriate length
+* [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)
+  — ensure heading parsing is not broken by weird whitespace
+* [`remark-lint-heading-word-length`](https://github.com/Xunnamius/unified-utils/tree/main/packages/remark-lint-heading-word-length)
+  — warn when headings have too many or too few words with unicode support
+* [`remark-lint-list-item-style`](https://github.com/Xunnamius/unified-utils/blob/main/packages/remark-lint-list-item-style)
+  — warn when list items violate a given capitalization or punctuation style
+* [`remark-lint-match-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-match-punctuation)
+  — ensures punctuations are used in pairs if necessary.
+* [`remark-lint-mdash-style`](https://github.com/alexandrtovmach/remark-lint-mdash-style)
+  — ensure em-dash (`—`) style follows a standard format
+* [`remark-lint-no-chinese-punctuation-in-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-chinese-punctuation-in-number)
+  — ensures that Chinese punctuation’s not used in numbers
+* [`remark-lint-no-dead-urls`](https://github.com/davidtheclark/remark-lint-no-dead-urls)
+  — check that external links are alive
+* [`remark-lint-no-empty-sections`](https://github.com/vhf/remark-lint-no-empty-sections)
+  — ensure every heading is followed by content (forming a section)
+* [`remark-lint-no-long-code`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-long-code)
+  — ensures that each line in code block won't be too long.
+* [`remark-lint-no-repeat-punctuation`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-no-repeat-punctuation)
+  — ensures punctuation is not repeated
+* [`remark-lint-no-url-trailing-slash`](https://github.com/vhf/remark-lint-no-url-trailing-slash)
+  — ensure that the `href` of links has no trailing slash
+* [`remark-lint-spaces-around-number`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-number)
+  — ensures there are spaces around number and Chinese.
+* [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-word)
+  — ensures there are spaces around English word and Chinese.
+* [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
+  — wrapper for `write-good`
 
 For help creating your own rule, it’s suggested to look at existing rules and to
 [follow this tutorial][tutorial].
@@ -573,18 +573,18 @@ npm run format
 
 ## Integrations
 
-*   [`vscode-remark-lint`](https://github.com/drewbourne/vscode-remark-lint)
-    ([VS Code](https://code.visualstudio.com))
-    — use `remark-lint` from Visual Studio Code
-*   [`SublimeLinter-contrib-remark-lint`](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint)
-    ([Sublime](https://www.sublimetext.com))
-    — use `remark-lint` from Sublime Text
-*   [`ale`](https://github.com/w0rp/ale)
-    ([Vim](https://www.vim.org))
-    — use `remark-lint` from Vim
-*   [`jest-runner-remark`](https://github.com/keplersj/jest-runner-remark)
-    ([Jest](https://jestjs.io))
-    — use remark with Jest
+* [`vscode-remark-lint`](https://github.com/drewbourne/vscode-remark-lint)
+  ([VS Code](https://code.visualstudio.com))
+  — use `remark-lint` from Visual Studio Code
+* [`SublimeLinter-contrib-remark-lint`](https://packagecontrol.io/packages/SublimeLinter-contrib-remark-lint)
+  ([Sublime](https://www.sublimetext.com))
+  — use `remark-lint` from Sublime Text
+* [`ale`](https://github.com/w0rp/ale)
+  ([Vim](https://www.vim.org))
+  — use `remark-lint` from Vim
+* [`jest-runner-remark`](https://github.com/keplersj/jest-runner-remark)
+  ([Jest](https://jestjs.io))
+  — use remark with Jest
 
 ## Syntax
 

@@ -14,18 +14,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintNoMultipleToplevelHeadings[, config])`](#unifieduseremarklintnomultipletoplevelheadings-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintNoMultipleToplevelHeadings[, config])`](#unifieduseremarklintnomultipletoplevelheadings-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -125,8 +125,8 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `1`) are accepted:
 
-*   `number` (example: `1`)
-    — assumed top level heading rank
+* `number` (example: `1`)
+  — assumed top level heading rank
 
 ## Recommendation
 

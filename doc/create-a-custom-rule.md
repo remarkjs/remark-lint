@@ -5,14 +5,14 @@ getting started to create your first linting plugin for `remark`.
 
 ## Contents
 
-*   [Set up the project](#set-up-the-project)
-*   [Set up remark](#set-up-remark)
-*   [The `no-invalid-gif` rule](#the-no-invalid-gif-rule)
-*   [Create the custom rule](#create-the-custom-rule)
-*   [Rule arguments](#rule-arguments)
-*   [Rule implementation](#rule-implementation)
-*   [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
-*   [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
+* [Set up the project](#set-up-the-project)
+* [Set up remark](#set-up-remark)
+* [The `no-invalid-gif` rule](#the-no-invalid-gif-rule)
+* [Create the custom rule](#create-the-custom-rule)
+* [Rule arguments](#rule-arguments)
+* [Rule implementation](#rule-implementation)
+* [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
+* [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
 
 ## Set up the project
 
@@ -32,10 +32,10 @@ Now we can start installing our dependencies:
 npm install remark-lint remark-cli
 ```
 
-*   [`remark-lint`][remark-lint]
-    — core lint plugin
-*   [`remark-cli`][remark-cli]
-    — command line interface
+* [`remark-lint`][remark-lint]
+  — core lint plugin
+* [`remark-cli`][remark-cli]
+  — command line interface
 
 We will also use some utilities:
 
@@ -171,9 +171,9 @@ Your rule function will receive three arguments:
 (tree, file, options) => {}
 ```
 
-*   `tree` (*required*): [mdast][]
-*   `file` (*required*): [virtual file][vfile]
-*   `options` (*optional*): additional info passed to the rule by users
+* `tree` (*required*): [mdast][]
+* `file` (*required*): [virtual file][vfile]
+* `options` (*optional*): additional info passed to the rule by users
 
 ## Rule implementation
 

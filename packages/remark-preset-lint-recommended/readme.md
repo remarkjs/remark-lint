@@ -14,16 +14,16 @@ Preset of [`remark-lint`][mono] rules to warn for some likely problems.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Rules](#rules)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkPresetLintRecommended)`](#unifieduseremarkpresetlintrecommended)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Rules](#rules)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkPresetLintRecommended)`](#unifieduseremarkpresetlintrecommended)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 

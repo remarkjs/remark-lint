@@ -14,19 +14,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintLinkTitleStyle[, config])`](#unifieduseremarklintlinktitlestyle-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintLinkTitleStyle[, config])`](#unifieduseremarklintlinktitlestyle-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -126,14 +126,14 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'consistent'`) are accepted:
 
-*   `'"'`
-    — prefer double quotes
-*   `"'"`
-    — prefer single quotes
-*   `'()'`
-    — prefer parens
-*   `'consistent'`
-    — detect the first used style and warn when further titles differ
+* `'"'`
+  — prefer double quotes
+* `"'"`
+  — prefer single quotes
+* `'()'`
+  — prefer parens
+* `'consistent'`
+  — detect the first used style and warn when further titles differ
 
 ## Recommendation
 

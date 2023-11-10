@@ -14,19 +14,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintLinebreakStyle[, config])`](#unifieduseremarklintlinebreakstyle-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintLinebreakStyle[, config])`](#unifieduseremarklintlinebreakstyle-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -121,12 +121,12 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'consistent'`) are accepted:
 
-*   `'unix'`
-    — prefer Unix line endings (`\n`, `␊`):
-*   `'window'`
-    — prefer Windows line endings (`\r\n`, `␍␊`):
-*   `'consistent'`
-    — detect the first used style and warn when further line endings differ
+* `'unix'`
+  — prefer Unix line endings (`\n`, `␊`):
+* `'window'`
+  — prefer Windows line endings (`\r\n`, `␍␊`):
+* `'consistent'`
+  — detect the first used style and warn when further line endings differ
 
 ## Recommendation
 

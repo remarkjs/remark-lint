@@ -14,18 +14,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintFencedCodeFlag[, config])`](#unifieduseremarklintfencedcodeflag-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintFencedCodeFlag[, config])`](#unifieduseremarklintfencedcodeflag-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -125,13 +125,13 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `undefined`) are accepted:
 
-*   `Array<string>`
-    — as if passing `{flags: options}`
-*   `Object` with the following fields:
-    *   `allowEmpty` (`boolean`, default: `false`)
-        — allow language flags to be omitted
-    *   `flags` (`Array<string>` default: `[]`)
-        — specific flags to allow (other flags will result in a warning)
+* `Array<string>`
+  — as if passing `{flags: options}`
+* `Object` with the following fields:
+  * `allowEmpty` (`boolean`, default: `false`)
+    — allow language flags to be omitted
+  * `flags` (`Array<string>` default: `[]`)
+    — specific flags to allow (other flags will result in a warning)
 
 ## Recommendation
 

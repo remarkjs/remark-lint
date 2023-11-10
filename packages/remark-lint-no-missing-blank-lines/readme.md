@@ -14,19 +14,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintNoMissingBlankLines[, config])`](#unifieduseremarklintnomissingblanklines-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintNoMissingBlankLines[, config])`](#unifieduseremarklintnomissingblanklines-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -121,9 +121,9 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `undefined`) are accepted:
 
-*   `Object` with the following fields:
-    *   `exceptTightLists` (`boolean`, default: `false`)
-        — allow tight list items
+* `Object` with the following fields:
+  * `exceptTightLists` (`boolean`, default: `false`)
+    — allow tight list items
 
 ## Recommendation
 

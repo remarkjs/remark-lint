@@ -14,19 +14,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintHeadingStyle[, config])`](#unifieduseremarklintheadingstyle-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintHeadingStyle[, config])`](#unifieduseremarklintheadingstyle-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -126,24 +126,24 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'consistent'`) are accepted:
 
-*   `'atx'`
-    — prefer ATX headings:
-    ```markdown
-    ## Hello
-    ```
-*   `'atx-closed'`
-    — prefer ATX headings with a closing sequence:
-    ```markdown
-    ## Hello ##
-    ```
-*   `'setext'`
-    — prefer setext headings:
-    ```markdown
-    Hello
-    -----
-    ```
-*   `'consistent'`
-    — detect the first used style and warn when further headings differ
+* `'atx'`
+  — prefer ATX headings:
+  ```markdown
+  ## Hello
+  ```
+* `'atx-closed'`
+  — prefer ATX headings with a closing sequence:
+  ```markdown
+  ## Hello ##
+  ```
+* `'setext'`
+  — prefer setext headings:
+  ```markdown
+  Hello
+  -----
+  ```
+* `'consistent'`
+  — detect the first used style and warn when further headings differ
 
 ## Recommendation
 
@@ -154,12 +154,12 @@ allows one line.
 The number of used markers in their underline does not matter, leading to
 either:
 
-*   1 marker (`Hello\n-`), which is the bare minimum, and for rank 2 headings
-    looks suspiciously like an empty list item
-*   using as many markers as the content (`Hello\n-----`), which is hard to
-    maintain
-*   an arbitrary number (`Hello\n---`), which for rank 2 headings looks
-    suspiciously like a thematic break
+* 1 marker (`Hello\n-`), which is the bare minimum, and for rank 2 headings
+  looks suspiciously like an empty list item
+* using as many markers as the content (`Hello\n-----`), which is hard to
+  maintain
+* an arbitrary number (`Hello\n---`), which for rank 2 headings looks
+  suspiciously like a thematic break
 
 Setext headings are also rather uncommon.
 Using a sequence of hashes at the end of ATX headings is even more uncommon.

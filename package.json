@@ -151,6 +151,33 @@
     "trailingComma": "none",
     "useTabs": false
   },
+  "remarkConfig": {
+    "plugins": [
+      "remark-comment-config",
+      [
+        "remark-gfm",
+        {
+          "tablePipeAlign": false
+        }
+      ],
+      "remark-github",
+      "remark-preset-lint-consistent",
+      "remark-preset-lint-recommended",
+      [
+        "remark-toc",
+        {
+          "maxDepth": 3
+        }
+      ],
+      "remark-validate-links",
+      [
+        "remark-lint-list-item-indent",
+        "space"
+      ],
+      "./script/plugin/list-of-presets.js",
+      "./script/plugin/list-of-rules.js"
+    ]
+  },
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,

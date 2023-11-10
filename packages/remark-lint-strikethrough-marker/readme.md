@@ -15,19 +15,19 @@ is inconsistent.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintStrikethroughMarker[, config])`](#unifieduseremarklintstrikethroughmarker-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintStrikethroughMarker[, config])`](#unifieduseremarklintstrikethroughmarker-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -125,12 +125,12 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'consistent'`) are accepted:
 
-*   `'~'`
-    — prefer one strikethrough marker
-*   `'~~'`
-    — prefer two strikethrough markers
-*   `'consistent'`
-    — detect the first used style and warn when further strikethrough differs
+* `'~'`
+  — prefer one strikethrough marker
+* `'~~'`
+  — prefer two strikethrough markers
+* `'consistent'`
+  — detect the first used style and warn when further strikethrough differs
 
 ## Recommendation
 

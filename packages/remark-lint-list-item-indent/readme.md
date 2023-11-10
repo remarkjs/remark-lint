@@ -15,19 +15,19 @@ content is inconsistent.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintListItemIndent[, config])`](#unifieduseremarklintlistitemindent-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintListItemIndent[, config])`](#unifieduseremarklintlistitemindent-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -128,12 +128,12 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'tab-size'`) are accepted:
 
-*   `'space'`
-    — prefer a single space
-*   `'tab-size'`
-    — prefer spaces the size of the next tab stop
-*   `'mixed'`
-    — prefer `'space'` for tight lists and `'tab-size'` for loose lists
+* `'space'`
+  — prefer a single space
+* `'tab-size'`
+  — prefer spaces the size of the next tab stop
+* `'mixed'`
+  — prefer `'space'` for tight lists and `'tab-size'` for loose lists
 
 ## Recommendation
 

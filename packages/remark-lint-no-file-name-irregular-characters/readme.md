@@ -14,17 +14,17 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintNoFileNameIrregularCharacters[, config])`](#unifieduseremarklintnofilenameirregularcharacters-config)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintNoFileNameIrregularCharacters[, config])`](#unifieduseremarklintnofilenameirregularcharacters-config)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -123,11 +123,11 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'\\.a-zA-Z0-9-'`) are accepted:
 
-*   `string` (example `'\w\\.'`)
-    — allowed characters, wrapped in `new RegExp('[^' + x + ']')`, make sure
-    to double escape regexp characters
-*   `RegExp` (example `/[^\.a-zA-Z0-9-]/`)
-    — disallowed pattern
+* `string` (example `'\w\\.'`)
+  — allowed characters, wrapped in `new RegExp('[^' + x + ']')`, make sure
+  to double escape regexp characters
+* `RegExp` (example `/[^\.a-zA-Z0-9-]/`)
+  — disallowed pattern
 
 ## Examples
 

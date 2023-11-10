@@ -14,15 +14,15 @@ See the [monorepo readme][mono] for more info on remark lint.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`lintRule(origin|meta, rule)`](#lintruleoriginmeta-rule)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`lintRule(origin|meta, rule)`](#lintruleoriginmeta-rule)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -90,18 +90,18 @@ Create a plugin.
 
 ###### Parameters
 
-*   `origin` (`string`)
-    — treated as a `meta` of `{origin}`
-*   `meta` (`Object`)
-    — rule metadata
-*   `meta.origin` (`string`)
-    — message origin, either a rule name (`'file-extension'`) or both
-    a rule source and name joined with `:` (`'remark-lint:file-extension'`)
-*   `meta.url` (`string`, optional)
-    — URL to documentation for messages
-*   `rule` (`Function`, optional)
-    — your code, like a transform function, except that an extra `option` is
-    passed
+* `origin` (`string`)
+  — treated as a `meta` of `{origin}`
+* `meta` (`Object`)
+  — rule metadata
+* `meta.origin` (`string`)
+  — message origin, either a rule name (`'file-extension'`) or both
+  a rule source and name joined with `:` (`'remark-lint:file-extension'`)
+* `meta.url` (`string`, optional)
+  — URL to documentation for messages
+* `rule` (`Function`, optional)
+  — your code, like a transform function, except that an extra `option` is
+  passed
 
 ###### Returns
 

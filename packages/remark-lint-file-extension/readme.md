@@ -14,18 +14,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintFileExtension[, config])`](#unifieduseremarklintfileextension-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintFileExtension[, config])`](#unifieduseremarklintfileextension-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -124,8 +124,8 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'md'`) are accepted:
 
-*   `string` (example `'markdown'`)
-    — preferred file extension (no dot)
+* `string` (example `'markdown'`)
+  — preferred file extension (no dot)
 
 > 👉 **Note**: does not warn when files have no file extensions (such as
 > `AUTHORS` or `LICENSE`).

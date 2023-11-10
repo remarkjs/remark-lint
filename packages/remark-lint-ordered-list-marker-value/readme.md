@@ -14,19 +14,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintOrderedListMarkerValue[, config])`](#unifieduseremarklintorderedlistmarkervalue-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintOrderedListMarkerValue[, config])`](#unifieduseremarklintorderedlistmarkervalue-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -125,12 +125,12 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'ordered'`) are accepted:
 
-*   `'ordered'`
-    — values should increment by one from the first item
-*   `'single'`
-    — values should stay the same as the first item
-*   `'one'`
-    — values should always be exactly `1`
+* `'ordered'`
+  — values should increment by one from the first item
+* `'single'`
+  — values should stay the same as the first item
+* `'one'`
+  — values should always be exactly `1`
 
 ## Recommendation
 

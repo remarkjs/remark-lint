@@ -15,18 +15,18 @@ or vice versa.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintListItemSpacing[, config])`](#unifieduseremarklintlistitemspacing-config)
-*   [Recommendation](#recommendation)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintListItemSpacing[, config])`](#unifieduseremarklintlistitemspacing-config)
+* [Recommendation](#recommendation)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -126,10 +126,10 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `undefined`) are accepted:
 
-*   `Object` with the following fields:
-    *   `checkBlanks` (`boolean`, default: `false`)
-        — adhere to CommonMark looseness instead of markdown-style-guide
-        preference
+* `Object` with the following fields:
+  * `checkBlanks` (`boolean`, default: `false`)
+    — adhere to CommonMark looseness instead of markdown-style-guide
+    preference
 
 ## Recommendation
 

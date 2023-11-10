@@ -959,11 +959,7 @@ presets(root).then((presetObjects) => {
 
     fs.writeFileSync(
       path.join(base, 'readme.md'),
-      remark()
-        // To do: change.
-        .use({settings: {listItemIndent: 'tab'}})
-        .use(remarkGfm)
-        .stringify({type: 'root', children})
+      remark().use(remarkGfm).stringify({type: 'root', children})
     )
 
     console.log('✓ wrote `readme.md` in `' + basename + '`')

@@ -14,19 +14,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Presets](#presets)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(remarkLintRuleStyle[, config])`](#unifieduseremarklintrulestyle-config)
-*   [Recommendation](#recommendation)
-*   [Fix](#fix)
-*   [Examples](#examples)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(remarkLintRuleStyle[, config])`](#unifieduseremarklintrulestyle-config)
+* [Recommendation](#recommendation)
+* [Fix](#fix)
+* [Examples](#examples)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -127,10 +127,10 @@ This rule supports standard configuration that all remark lint rules accept
 
 The following options (default: `'consistent'`) are accepted:
 
-*   `string` (example: `'** * **'`, `'___'`)
-    — thematic break to prefer
-*   `'consistent'`
-    — detect the first used style and warn when further rules differ
+* `string` (example: `'** * **'`, `'___'`)
+  — thematic break to prefer
+* `'consistent'`
+  — detect the first used style and warn when further rules differ
 
 ## Recommendation
 
@@ -148,12 +148,12 @@ Due to this, it’s recommended to pass `'***'`.
 formats rules with `***` by default.
 There are three settings to control rules:
 
-*   [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
-    (default: `'*'`) — marker
-*   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
-    (default: `3`) — repetitions
-*   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
-    (default: `false`) — use spaces between markers
+* [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
+  (default: `'*'`) — marker
+* [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
+  (default: `3`) — repetitions
+* [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
+  (default: `false`) — use spaces between markers
 
 ## Examples
 

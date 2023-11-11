@@ -285,7 +285,20 @@ const remarkPresetLintMarkdownStyleGuide = {
 
     // https://cirosantilli.com/markdown-style-guide/#email-automatic-links.
     // Not checked.
-  ]
+  ],
+  settings: {
+    bullet: '-',
+    bulletOrdered: '.',
+    emphasis: '*',
+    fence: '`',
+    fences: true,
+    incrementListMarker: false,
+    listItemIndent: 'mixed',
+    quote: '"',
+    rule: '-',
+    setext: false,
+    strong: '*'
+  }
 }
 
 export default remarkPresetLintMarkdownStyleGuide

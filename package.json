@@ -116,7 +116,11 @@
     "c8": "^8.0.0",
     "comment-parser": "^1.0.0",
     "github-slugger": "^2.0.0",
+    "mdast-util-from-markdown": "^2.0.0",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-to-markdown": "^2.0.0",
     "mdast-zone": "^6.0.0",
+    "micromark-extension-gfm": "^3.0.0",
     "parse-author": "^2.0.0",
     "prettier": "^3.0.0",
     "remark": "^15.0.0",
@@ -127,16 +131,16 @@
     "remark-toc": "^9.0.0",
     "remark-validate-links": "^13.0.0",
     "strip-indent": "^4.0.0",
-    "to-vfile": "^8.0.0",
     "type-coverage": "^2.0.0",
     "type-fest": "^4.0.0",
     "typescript": "^5.0.0",
     "unist-builder": "^4.0.0",
     "unist-util-remove-position": "^5.0.0",
+    "vfile": "^6.0.0",
     "xo": "^0.56.0"
   },
   "scripts": {
-    "generate": "node --conditions development script/build-presets.js && node --conditions development script/build-rules.js",
+    "generate": "node --conditions development script/build-plugins.js && node --conditions development script/build-presets.js",
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
     "test": "npm run build && npm run generate && npm run format && npm run test-coverage",
@@ -174,8 +178,8 @@
         "remark-lint-list-item-indent",
         "space"
       ],
-      "./script/plugin/list-of-presets.js",
-      "./script/plugin/list-of-rules.js"
+      "./script/plugin/list-of-plugins.js",
+      "./script/plugin/list-of-presets.js"
     ]
   },
   "typeCoverage": {
@@ -193,7 +197,8 @@
         ],
         "rules": {
           "max-depth": "off",
-          "no-await-in-loop": "off"
+          "no-await-in-loop": "off",
+          "unicorn/no-array-callback-reference": "off"
         }
       }
     ],

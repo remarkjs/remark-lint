@@ -75,22 +75,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintStrongMarker from 'remark-lint-strong-marker'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintStrongMarker)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintStrongMarker)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -178,20 +176,6 @@ __foo__ and __bar__.
 
 No messages.
 
-##### `not-ok.md`
-
-###### In
-
-```markdown
-**foo** and __bar__.
-```
-
-###### Out
-
-```text
-1:13-1:20: Strong should use `*` as a marker
-```
-
 ##### `ok.md`
 
 When configured with `'*'`.
@@ -219,6 +203,20 @@ __foo__.
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+###### In
+
+```markdown
+**foo** and __bar__.
+```
+
+###### Out
+
+```text
+1:13-1:20: Strong should use `*` as a marker
+```
 
 ##### `not-ok.md`
 

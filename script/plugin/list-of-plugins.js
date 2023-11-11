@@ -9,24 +9,25 @@
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import {zone} from 'mdast-zone'
-import {packagesUrl, presets} from '../info.js'
+import {packagesUrl, plugins} from '../info.js'
 
 /**
- * @type {Array<ListItem>}
+ * @type {Array<ListItem | undefined>}
  *   List items.
  */
 const items = await Promise.all(
-  presets.map(async function (info) {
+  plugins.map(async function (info) {
     const packageUrl = new URL(info.name + '/', packagesUrl)
     /** @type {PackageJson} */
     const pack = JSON.parse(
-      await fs.readFile(new URL('package.json', packageUrl), 'utf8')
+      String(await fs.readFile(new URL('package.json', packageUrl)))
     )
-
     const description = String(pack.description || '').replace(
-      /^remark preset to configure remark-lint with ?/i,
+      /^remark-lint rule to ?/i,
       ''
     )
+
+    if (/^deprecated/i.test(description)) return
 
     assert(pack.repository && typeof pack.repository === 'object')
     assert(pack.repository.directory)
@@ -53,15 +54,21 @@ const items = await Promise.all(
 )
 
 /** @type {List} */
-const list = {type: 'list', ordered: false, spread: false, children: items}
+const list = {
+  type: 'list',
+  ordered: false,
+  spread: false,
+  // @ts-expect-error: filter is correct.
+  children: items.filter(Boolean)
+}
 
 /**
- * List presets.
+ * List rules.
  *
  * @returns
  *   Transform.
  */
-export default function remarkListOfPresets() {
+export default function remarkListOfRules() {
   /**
    * Transform.
    *
@@ -71,7 +78,7 @@ export default function remarkListOfPresets() {
    *   Nothing.
    */
   return function (tree) {
-    zone(tree, 'presets', function (start, _, end) {
+    zone(tree, 'rules', function (start, _, end) {
       return [start, structuredClone(list), end]
     })
   }

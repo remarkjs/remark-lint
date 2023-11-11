@@ -53,7 +53,8 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "capitalized-comments": "off"
+      "capitalized-comments": "off",
+      "complexity": "off"
     }
   }
 }

@@ -71,22 +71,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintNoUnneededFullReferenceImage from 'remark-lint-no-unneeded-full-reference-image'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintNoUnneededFullReferenceImage)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintNoUnneededFullReferenceImage)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:

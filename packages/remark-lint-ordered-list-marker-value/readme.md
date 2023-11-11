@@ -74,22 +74,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintOrderedListMarkerValue from 'remark-lint-ordered-list-marker-value'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintOrderedListMarkerValue)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintOrderedListMarkerValue)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -202,40 +200,6 @@ Paragraph.
 
 No messages.
 
-##### `not-ok.md`
-
-When configured with `'one'`.
-
-###### In
-
-```markdown
-1.  Foo
-2.  Bar
-```
-
-###### Out
-
-```text
-2:1-2:8: Marker should be `1`, was `2`
-```
-
-##### `also-not-ok.md`
-
-When configured with `'one'`.
-
-###### In
-
-```markdown
-2.  Foo
-1.  Bar
-```
-
-###### Out
-
-```text
-1:1-1:8: Marker should be `1`, was `2`
-```
-
 ##### `ok.md`
 
 When configured with `'single'`.
@@ -291,6 +255,40 @@ Paragraph.
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+When configured with `'one'`.
+
+###### In
+
+```markdown
+1.  Foo
+2.  Bar
+```
+
+###### Out
+
+```text
+2:1-2:8: Marker should be `1`, was `2`
+```
+
+##### `also-not-ok.md`
+
+When configured with `'one'`.
+
+###### In
+
+```markdown
+2.  Foo
+1.  Bar
+```
+
+###### Out
+
+```text
+1:1-1:8: Marker should be `1`, was `2`
+```
 
 ##### `not-ok.md`
 

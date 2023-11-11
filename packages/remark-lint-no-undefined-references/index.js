@@ -213,7 +213,6 @@ const remarkLintNoUndefinedReferences = lintRule(
       /** @type {Array<Range>} */
       let ranges = []
 
-      // eslint-disable-next-line complexity
       visit(node, (child) => {
         // Ignore the node itself.
         if (child === node) return
@@ -292,12 +291,10 @@ const remarkLintNoUndefinedReferences = lintRule(
                 let range = ranges.pop()
 
                 // Range should always exist.
-                // eslint-disable-next-line max-depth
                 if (range) {
                   range.push(lines[lineIndex][0] + index)
 
                   // This is the end of a reference already.
-                  // eslint-disable-next-line max-depth
                   if (range.length === 4) {
                     handleRange(range)
                     range = []
@@ -314,7 +311,6 @@ const remarkLintNoUndefinedReferences = lintRule(
                 const range = ranges.pop()
 
                 // Range should always exist.
-                // eslint-disable-next-line max-depth
                 if (range) {
                   range.push(lines[lineIndex][0] + index)
                   handleRange(range)

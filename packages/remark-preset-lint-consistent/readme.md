@@ -82,20 +82,18 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkPresetLintConsistent)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkPresetLintConsistent)
+  .process(await read('example.md'))
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:

@@ -72,22 +72,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintNoFileNameIrregularCharacters from 'remark-lint-no-file-name-irregular-characters'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintNoFileNameIrregularCharacters)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintNoFileNameIrregularCharacters)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -151,14 +149,6 @@ No messages.
 1:1: Do not use `_` in a file name
 ```
 
-##### `plug ins.md`
-
-###### Out
-
-```text
-1:1: Do not use ` ` in a file name
-```
-
 ##### `README.md`
 
 When configured with `'\\.a-z0-9'`.
@@ -167,6 +157,14 @@ When configured with `'\\.a-z0-9'`.
 
 ```text
 1:1: Do not use `R` in a file name
+```
+
+##### `plug ins.md`
+
+###### Out
+
+```text
+1:1: Do not use ` ` in a file name
 ```
 
 ## Compatibility

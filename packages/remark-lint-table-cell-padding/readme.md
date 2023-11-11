@@ -77,22 +77,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintTableCellPadding)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintTableCellPadding)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -205,51 +203,6 @@ Too much padding isn’t good either:
 13:27: Cell should be padded with 1 space, not 2
 13:32: Cell should be padded with 1 space, not 2
 ```
-
-##### `empty.md`
-
-When configured with `'padded'`.
-
-###### In
-
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
-
-```markdown
-<!-- Empty cells are OK, but those surrounding them may not be. -->
-
-|        | Alpha | Bravo|
-| ------ | ----- | ---: |
-| Charlie|       |  Echo|
-```
-
-###### Out
-
-```text
-3:25: Cell should be padded
-5:10: Cell should be padded
-5:25: Cell should be padded
-```
-
-##### `missing-body.md`
-
-When configured with `'padded'`.
-
-###### In
-
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
-
-```markdown
-<!-- Missing cells are fine as well. -->
-
-| Alpha | Bravo   | Charlie |
-| ----- | ------- | ------- |
-| Delta |
-| Echo  | Foxtrot |
-```
-
-###### Out
-
-No messages.
 
 ##### `ok.md`
 
@@ -396,6 +349,51 @@ When configured with `'💩'`.
 ```text
 1:1: Incorrect table cell padding style `💩`, expected `'padded'`, `'compact'`, or `'consistent'`
 ```
+
+##### `empty.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+
+```markdown
+<!-- Empty cells are OK, but those surrounding them may not be. -->
+
+|        | Alpha | Bravo|
+| ------ | ----- | ---: |
+| Charlie|       |  Echo|
+```
+
+###### Out
+
+```text
+3:25: Cell should be padded
+5:10: Cell should be padded
+5:25: Cell should be padded
+```
+
+##### `missing-body.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+
+```markdown
+<!-- Missing cells are fine as well. -->
+
+| Alpha | Bravo   | Charlie |
+| ----- | ------- | ------- |
+| Delta |
+| Echo  | Foxtrot |
+```
+
+###### Out
+
+No messages.
 
 ## Compatibility
 

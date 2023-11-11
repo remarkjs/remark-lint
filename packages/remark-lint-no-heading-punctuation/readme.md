@@ -72,22 +72,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintNoHeadingPunctuation)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintNoHeadingPunctuation)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -143,6 +141,20 @@ The following options (default: `'\\.,;:!?'`) are accepted:
 
 No messages.
 
+##### `ok.md`
+
+When configured with `',;:!?'`.
+
+###### In
+
+```markdown
+# Hello…
+```
+
+###### Out
+
+No messages.
+
 ##### `not-ok.md`
 
 ###### In
@@ -168,20 +180,6 @@ No messages.
 7:1-7:9: Don’t add a trailing `,` to headings
 9:1-9:9: Don’t add a trailing `;` to headings
 ```
-
-##### `ok.md`
-
-When configured with `',;:!?'`.
-
-###### In
-
-```markdown
-# Hello…
-```
-
-###### Out
-
-No messages.
 
 ## Compatibility
 

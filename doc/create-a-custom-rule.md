@@ -58,9 +58,14 @@ touch .remarkrc.js
 
 ```js
 // .remarkrc.js
-module.exports = {
-  plugins: []
-}
+/**
+ * @typedef {import('unified').Preset} Preset
+ */
+
+/** @type {Preset} */
+const preset = {plugins: []}
+
+export default preset
 ```
 
 Then, in our `package.json`, add the following script to process all the
@@ -142,7 +147,7 @@ import {lintRule} from 'unified-lint-rule'
 
 const remarkLintNoGifAllowed = lintRule(
   'remark-lint:no-gif-allowed',
-  (tree, file, options) => {
+  function (tree, file, options) {
     // Rule implementation
   }
 )
@@ -155,9 +160,16 @@ namespace.
 If your project was named `my-project`, then you can export your rule as:
 
 ```js
-const remarkLintNoGifAllowed = lintRule('my-project-name:no-gif-allowed', () => {})
+const remarkLintNoGifAllowed = lintRule(
+  'my-project-name:no-gif-allowed',
+  function () {}
+)
+
 // Or:
-const remarkLintNoGifAllowed = lintRule('my-npm-published-package:no-gif-allowed', () => {})
+const remarkLintNoGifAllowed = lintRule(
+  'my-npm-published-package:no-gif-allowed',
+  function () {}
+)
 ```
 
 This can help you when wanting to create a group of rules under the same
@@ -168,7 +180,7 @@ This can help you when wanting to create a group of rules under the same
 Your rule function will receive three arguments:
 
 ```js
-(tree, file, options) => {}
+function rule(tree, file, options) {}
 ```
 
 * `tree` (*required*): [mdast][]
@@ -187,38 +199,36 @@ recursively inspect all the image nodes, and
 nodes that we have generated ourselves and do not belong to the `doc.md`.
 
 ```js
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-visit-util'
-import {generated} from 'unist-util-generated'
+/**
+ * @typedef {import('mdast').Root} Root
+ */
 
-function isValidNode(node) {
-  // Here we check whether the given node violates our rule.
-  // Implementation details are not relevant to the scope of this example.
-  // This is an overly simplified solution for demonstration purposes
-  if (node.url && typeof node.url === 'string') {
-    return !node.url.endsWith('.gif')
-  }
-}
+import {lintRule} from 'unified-lint-rule'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoGifAllowed = lintRule(
   'remark-lint:no-gif-allowed',
-  (tree, file, options) => {
-    visit(tree, 'image', (node) => {
-      if (!generated(node)) {
-        // This is an extremely simplified example of how to structure
-        // the logic to check whether a node violates your rule.
-        // You have complete freedom over how to visit/inspect the tree,
-        // and on how to implement the validation logic for your node.
-        const isValid = isValidNode(node)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    visit(tree, 'image', function (node) {
+      // This is an extremely simplified example of how to structure
+      // the logic to check whether a node violates your rule.
+      // You have complete freedom over how to visit/inspect the tree,
+      // and on how to implement the validation logic for your node.
+      const isValid = !node.url.endsWith('.gif')
 
-        if (!isValid) {
-          // Remember to provide the node as second argument to the message,
-          // in order to obtain the position and column where the violation occurred.
-          file.message(
-            'Invalid image file extensions. Please do not use gifs',
-            node
-          )
-        }
+      if (!isValid) {
+        // Remember to provide the node as second argument to the message,
+        // in order to obtain the position and column where the violation occurred.
+        file.message(
+          'Invalid image file extensions. Please do not use gifs',
+          node
+        )
       }
     })
   }
@@ -236,13 +246,14 @@ You can do that by importing your rule and adding it in `plugins` array:
 
 ```js
 // .remarkrc.js
+/**
+ * @typedef {import('unified').Preset} Preset
+ */
+
 import remarkLintNoGifAllowed from './rules/no-gif-allowed.js'
 
-const plugins = {
-  plugins: [remarkLintNoGifAllowed]
-}
-
-const preset = {plugins}
+/** @type {Preset} */
+const preset = {plugins: [remarkLintNoGifAllowed]}
 
 export default preset
 ```

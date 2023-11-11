@@ -1,32 +1,33 @@
 /**
- * @typedef {import('unified').Plugin} Plugin
- * @typedef {import('vfile-message').VFileMessage} VFileMessage
- * @typedef {import('./script/util/rule.js').Check} Check
- * @typedef {import('./script/util/rule.js').Rule} Rule
+ * @typedef {import('unified').PluggableList} PluggableList
+ * @typedef {import('unified').Plugin<[unknown]>} Plugin
+ *
+ * @typedef {import('./script/info.js').Check} Check
+ * @typedef {import('./script/info.js').PluginInfo} PluginInfo
  */
 
 import assert from 'node:assert/strict'
-import path from 'node:path'
-import process from 'node:process'
 import test from 'node:test'
-import url from 'node:url'
-import {toVFile} from 'to-vfile'
-import {removePosition} from 'unist-util-remove-position'
 import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
+import remarkLint from 'remark-lint'
+import remarkLintFinalNewline from 'remark-lint-final-newline'
+import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
+import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
+import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
 import {lintRule} from 'unified-lint-rule'
-import {rules} from './script/util/rules.js'
-import {rule} from './script/util/rule.js'
+import {removePosition} from 'unist-util-remove-position'
+import {VFile} from 'vfile'
 import {characters} from './script/characters.js'
-import lint from './packages/remark-lint/index.js'
-import noHeadingPunctuation from './packages/remark-lint-no-heading-punctuation/index.js'
-import noMultipleToplevelHeadings from './packages/remark-lint-no-multiple-toplevel-headings/index.js'
-import noUndefinedReferences from './packages/remark-lint-no-undefined-references/index.js'
-import finalNewline from './packages/remark-lint-final-newline/index.js'
+import {plugins} from './script/info.js'
 
-const own = {}.hasOwnProperty
+test('remark-lint', async function (t) {
+  await t.test('should expose the public api', async function () {
+    assert.deepEqual(Object.keys(await import('remark-lint')).sort(), [
+      'default'
+    ])
+  })
 
-test('core', async () => {
   const doc = [
     '# A heading',
     '',
@@ -37,53 +38,48 @@ test('core', async () => {
     '# Another main heading.'
   ].join('\n')
 
-  let file = await remark()
-    .use(noHeadingPunctuation)
-    .use(noMultipleToplevelHeadings)
-    .use(lint)
-    .process(toVFile({path: 'virtual.md', value: doc}))
+  await t.test('should support `remark-lint` last', async function () {
+    const file = await remark()
+      .use(remarkLintNoHeadingPunctuation)
+      .use(remarkLintNoMultipleToplevelHeadings)
+      .use(remarkLint)
+      .process({path: 'virtual.md', value: doc})
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    [
+    assert.deepEqual(file.messages.map(String), [
       'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
       'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
-    ],
-    'should support `remark-lint` last'
-  )
+    ])
+  })
 
-  file = await remark()
-    .use(lint)
-    .use(noHeadingPunctuation)
-    .use(noMultipleToplevelHeadings)
-    .process(toVFile({path: 'virtual.md', value: doc}))
+  await t.test('should support `remark-lint` first', async function () {
+    const file = await remark()
+      .use(remarkLint)
+      .use(remarkLintNoHeadingPunctuation)
+      .use(remarkLintNoMultipleToplevelHeadings)
+      .process({path: 'virtual.md', value: doc})
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    [
+    assert.deepEqual(file.messages.map(String), [
       'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
       'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
-    ],
-    'should support `remark-lint` first'
-  )
+    ])
+  })
 
-  file = await remark().use(lint).process('.')
+  await t.test('should support no rules', async function () {
+    const file = await remark().use(remarkLint).process('.')
 
-  assert.deepEqual(asStrings(file.messages), [], 'should support no rules')
+    assert.deepEqual(file.messages, [])
+  })
 
-  file = await remark().use(finalNewline).process('')
+  await t.test('should support successful rules', async function () {
+    const file = await remark().use(remarkLintFinalNewline).process('')
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    [],
-    'should support successful rules'
-  )
+    assert.deepEqual(file.messages, [])
+  })
 
-  file = await remark().use(finalNewline, [2]).process('.')
+  await t.test('should support a list with a severity', async function () {
+    const file = await remark().use(remarkLintFinalNewline, [2]).process('.')
 
-  assert.deepEqual(
-    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
-    [
+    assert.deepEqual(file.messages.map(jsonClone), [
       {
         fatal: true,
         message: 'Missing newline character at end of file',
@@ -93,315 +89,269 @@ test('core', async () => {
         source: 'remark-lint',
         url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
       }
-    ],
-    'should support a list with a severity'
+    ])
+  })
+
+  await t.test('should support a boolean (`true`)', async function () {
+    const file = await remark().use(remarkLintFinalNewline, true).process('.')
+
+    assert.deepEqual(file.messages.map(String), [
+      '1:1: Missing newline character at end of file'
+    ])
+  })
+
+  await t.test('should support a boolean (`false`)', async function () {
+    const file = await remark().use(remarkLintFinalNewline, false).process('.')
+
+    assert.deepEqual(file.messages, [])
+  })
+
+  await t.test(
+    'should support a list with a boolean severity (true, for on)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFinalNewline, [true])
+        .process('.')
+
+      assert.deepEqual(file.messages.map(String), [
+        '1:1: Missing newline character at end of file'
+      ])
+    }
   )
 
-  file = await remark().use(finalNewline, true).process('.')
+  await t.test(
+    'should support a list with boolean severity (false, for off)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFinalNewline, [false])
+        .process('.')
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    ['1:1: Missing newline character at end of file'],
-    'should support a boolean (`true`)'
+      assert.deepEqual(file.messages, [])
+    }
   )
 
-  file = await remark().use(finalNewline, false).process('.')
+  await t.test(
+    'should support a list with string severity (`error`)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFinalNewline, ['error'])
+        .process('.')
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    [],
-    'should support a boolean (`false`)'
+      assert.deepEqual(file.messages.map(jsonClone), [
+        {
+          fatal: true,
+          message: 'Missing newline character at end of file',
+          name: '1:1',
+          reason: 'Missing newline character at end of file',
+          ruleId: 'final-newline',
+          source: 'remark-lint',
+          url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
+        }
+      ])
+    }
   )
 
-  file = await remark().use(finalNewline, [true]).process('.')
+  await t.test(
+    'should support a list with string severity (`on`)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFinalNewline, ['on'])
+        .process('.')
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    ['1:1: Missing newline character at end of file'],
-    'should support a list with a boolean severity (true, for on)'
+      assert.deepEqual(file.messages.map(jsonClone), [
+        {
+          fatal: false,
+          message: 'Missing newline character at end of file',
+          name: '1:1',
+          reason: 'Missing newline character at end of file',
+          ruleId: 'final-newline',
+          source: 'remark-lint',
+          url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
+        }
+      ])
+    }
   )
 
-  file = await remark().use(finalNewline, [false]).process('.')
+  await t.test(
+    'should support a list with string severity (`warn`)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFinalNewline, ['warn'])
+        .process('.')
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    [],
-    'should support a list with boolean severity (false, for off)'
+      assert.deepEqual(file.messages.map(jsonClone), [
+        {
+          fatal: false,
+          message: 'Missing newline character at end of file',
+          name: '1:1',
+          reason: 'Missing newline character at end of file',
+          ruleId: 'final-newline',
+          source: 'remark-lint',
+          url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
+        }
+      ])
+    }
   )
 
-  file = await remark().use(finalNewline, ['error']).process('.')
+  await t.test(
+    'should support a list with string severity (`off`)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFinalNewline, ['off'])
+        .process('.')
 
-  assert.deepEqual(
-    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
-    [
-      {
-        fatal: true,
-        message: 'Missing newline character at end of file',
-        name: '1:1',
-        reason: 'Missing newline character at end of file',
-        ruleId: 'final-newline',
-        source: 'remark-lint',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
-      }
-    ],
-    'should support a list with string severity (`error`)'
+      assert.deepEqual(file.messages, [])
+    }
   )
 
-  file = await remark().use(finalNewline, ['on']).process('.')
-
-  assert.deepEqual(
-    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
-    [
-      {
-        fatal: false,
-        message: 'Missing newline character at end of file',
-        name: '1:1',
-        reason: 'Missing newline character at end of file',
-        ruleId: 'final-newline',
-        source: 'remark-lint',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
-      }
-    ],
-    'should support a list with string severity (`on`)'
+  await t.test(
+    'should fail on incorrect severities (too high)',
+    async function () {
+      assert.throws(function () {
+        remark().use(remarkLintFinalNewline, [3]).freeze()
+      }, /^Error: Incorrect severity `3` for `final-newline`, expected 0, 1, or 2$/)
+    }
   )
 
-  file = await remark().use(finalNewline, ['warn']).process('.')
-
-  assert.deepEqual(
-    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
-    [
-      {
-        fatal: false,
-        message: 'Missing newline character at end of file',
-        name: '1:1',
-        reason: 'Missing newline character at end of file',
-        ruleId: 'final-newline',
-        source: 'remark-lint',
-        url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
-      }
-    ],
-    'should support a list with string severity (`warn`)'
+  await t.test(
+    'should fail on incorrect severities (too low)',
+    async function () {
+      assert.throws(function () {
+        remark().use(remarkLintFinalNewline, [-1]).freeze()
+      }, /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/)
+    }
   )
 
-  file = await remark().use(finalNewline, ['off']).process('.')
+  await t.test(
+    'should support regex as options (remark-lint-no-undefined-references)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintNoUndefinedReferences, {allow: [/^b\./i]})
+        .process({
+          path: 'virtual.md',
+          value: ['[foo][b.c]', '', '[bar][b]'].join('\n')
+        })
 
-  assert.deepEqual(
-    asStrings(file.messages),
-    [],
-    'should support a list with string severity (`off`)'
+      assert.deepEqual(file.messages.map(String), [
+        'virtual.md:3:1-3:9: Found reference to undefined definition'
+      ])
+    }
   )
 
-  assert.throws(
-    () => {
-      remark().use(finalNewline, [3]).freeze()
-    },
-    /^Error: Incorrect severity `3` for `final-newline`, expected 0, 1, or 2$/,
-    'should fail on incorrect severities (too high)'
-  )
+  await t.test(
+    'should support meta as a string (unified-lint-rule)',
+    async function () {
+      const file = await remark()
+        .use(
+          lintRule('test:rule', function (_, file) {
+            file.message('Test message')
+          }),
+          ['warn']
+        )
+        .process('.')
 
-  assert.throws(
-    () => {
-      remark().use(finalNewline, [-1]).freeze()
-    },
-    /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/,
-    'should fail on incorrect severities (too low)'
-  )
-
-  file = await remark()
-    .use(noUndefinedReferences, {allow: [/^b\./i]})
-    .process(
-      toVFile({
-        path: 'virtual.md',
-        value: ['[foo][b.c]', '', '[bar][b]'].join('\n')
-      })
-    )
-
-  assert.deepEqual(
-    asStrings(file.messages),
-    ['virtual.md:3:1-3:9: Found reference to undefined definition'],
-    'no-undefined-references allow option should work with native regex'
-  )
-
-  file = await remark()
-    .use(
-      lintRule('test:rule', (tree, file) => {
-        file.message('Test message')
-      }),
-      ['warn']
-    )
-    .process('.')
-
-  assert.deepEqual(
-    file.messages.map((d) => JSON.parse(JSON.stringify(d))),
-    [
-      {
-        fatal: false,
-        message: 'Test message',
-        name: '1:1',
-        reason: 'Test message',
-        ruleId: 'rule',
-        source: 'test'
-      }
-    ],
-    'should support string meta'
+      assert.deepEqual(file.messages.map(jsonClone), [
+        {
+          fatal: false,
+          message: 'Test message',
+          name: '1:1',
+          reason: 'Test message',
+          ruleId: 'rule',
+          source: 'test'
+        }
+      ])
+    }
   )
 })
 
-test('rules', async (t) => {
-  const root = path.join(process.cwd(), 'packages')
-  const all = rules(root)
-  let index = -1
+test('plugins', async function (t) {
+  for (const plugin of plugins) {
+    await t.test(plugin.name, async function () {
+      await assertPlugin(plugin)
+    })
+  }
+})
 
-  while (++index < all.length) {
-    const basename = all[index]
-    const base = path.resolve(root, basename)
-    const info = rule(base)
-    const href = url.pathToFileURL(base).href + '/index.js'
+/**
+ * @param {PluginInfo} info
+ *   Info.
+ * @returns {Promise<undefined>}
+ *   Nothing.
+ */
+async function assertPlugin(info) {
+  /** @type {{default: Plugin}} */
+  const pluginMod = await import(info.name)
+  const plugin = pluginMod.default
 
-    /** @type {{default: Plugin}} */
-    const pluginMod = await import(href)
-    const fn = pluginMod.default
+  for (const check of info.checks) {
+    await assertCheck(plugin, info, check)
+  }
+}
 
-    if (Object.keys(info.tests).length === 0) {
-      assert.ok(true, info.ruleId + ': no tests')
-    } else {
-      await t.test(info.ruleId, async () => {
-        const tests = info.tests
-        /** @type {string} */
-        let configuration
+/**
+ * @param {Plugin} plugin
+ *   Plugin.
+ * @param {PluginInfo} info
+ *   info.
+ * @param {Check} check
+ *   Check.
+ * @returns {Promise<undefined>}
+ *   Nothing.
+ */
+async function assertCheck(plugin, info, check) {
+  /** @type {{config: unknown}} */
+  const {config} = JSON.parse(check.configuration)
+  /** @type {PluggableList} */
+  const extras = check.gfm ? [remarkGfm] : []
+  let value = check.input
 
-        for (configuration in tests) {
-          if (own.call(tests, configuration)) {
-            const checks = tests[configuration]
-            /** @type {{config: unknown}} */
-            const {config} = JSON.parse(configuration)
+  for (const character of characters) {
+    value = value.replace(character.in, character.out)
+  }
 
-            /** @type {string} */
-            let name
+  const file = await remark()
+    .use(plugin, config)
+    .use(extras)
+    .process(new VFile({path: check.name, value}))
 
-            for (name in checks) {
-              if (own.call(checks, name)) {
-                const basename = name
-                const check = checks[name]
+  for (const message of file.messages) {
+    assert.equal(message.ruleId, info.ruleId)
+    assert.equal(
+      message.url,
+      'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-' +
+        info.ruleId +
+        '#readme'
+    )
+  }
 
-                await assertFixture(fn, info, check, basename, config)
-              }
-            }
-          }
+  assert.deepEqual(
+    file.messages.map(String).map(function (value) {
+      return value.slice(value.indexOf(':') + 1)
+    }),
+    check.output
+  )
+
+  if (!check.positionless) {
+    const file = await remark()
+      .use(function () {
+        return function (tree) {
+          removePosition(tree)
         }
       })
-    }
-  }
-})
+      .use(plugin, config)
+      .use(extras)
+      .process(new VFile({path: check.name, value}))
 
-/**
- * @param {Plugin} rule
- * @param {Rule} info
- * @param {Check} fixture
- * @param {string} basename
- * @param {unknown} config
- */
-/* eslint-disable-next-line max-params */
-function assertFixture(rule, info, fixture, basename, config) {
-  const ruleId = info.ruleId
-  const file = toVFile(basename)
-  const expected = fixture.output
-  const positionless = fixture.positionless
-  // @ts-expect-error: to do: fix types.
-  let proc = remark().use(rule, config)
-
-  if (fixture.gfm) proc.use(remarkGfm)
-
-  file.value = preprocess(fixture.input || '')
-
-  try {
-    proc.runSync(proc.parse(file), file)
-  } catch (error) {
-    const exception = /** @type VFileMessage */ (error)
-    if (exception && exception.source !== 'remark-lint') {
-      throw exception
-    }
-  }
-
-  let index = -1
-  while (++index < file.messages.length) {
-    const message = file.messages[index]
-    if (message.ruleId !== ruleId) {
-      throw new Error(
-        'Expected `' +
-          ruleId +
-          '`, not `' +
-          message.ruleId +
-          '` as `ruleId` for ' +
-          message
-      )
-    }
-
-    const expectedUrl =
-      'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-' +
-      ruleId +
-      '#readme'
-    if (message.url !== expectedUrl) {
-      throw new Error(
-        'Expected `' +
-          expectedUrl +
-          '`, not `' +
-          message.url +
-          '` as `ruleId` for ' +
-          message
-      )
-    }
-  }
-
-  assert.deepEqual(
-    normalize(file.messages),
-    expected,
-    'should equal with position'
-  )
-
-  if (!positionless) {
-    file.messages = []
-    proc = remark()
-      .use(() => (tree) => removePosition(tree))
-      // @ts-expect-error: to do: fix types.
-      .use(rule, config)
-    if (fixture.gfm) proc.use(remarkGfm)
-    proc.processSync(file)
-
-    assert.deepEqual(
-      normalize(file.messages),
-      [],
-      'should equal without position'
-    )
+    assert.deepEqual(file.messages, [])
   }
 }
 
 /**
- * @param {Array<VFileMessage>} messages
- * @returns {Array<string>}
+ * @param {unknown} d
+ *   Value.
+ * @returns {unknown}
+ *   Cloned value.
  */
-function normalize(messages) {
-  return asStrings(messages).map((value) => value.slice(value.indexOf(':') + 1))
-}
-
-/**
- * @param {Array<VFileMessage>} messages
- * @returns {Array<string>}
- */
-function asStrings(messages) {
-  return messages.map(String)
-}
-
-/**
- * @param {string} value
- * @returns {string}
- */
-function preprocess(value) {
-  let index = -1
-
-  while (++index < characters.length) {
-    value = value.replace(characters[index].in, characters[index].out)
-  }
-
-  return value
+function jsonClone(d) {
+  return JSON.parse(JSON.stringify(d))
 }

@@ -75,22 +75,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintFencedCodeMarker from 'remark-lint-fenced-code-marker'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintFencedCodeMarker)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintFencedCodeMarker)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -162,46 +160,6 @@ Indented code blocks are not affected by this rule:
 
 No messages.
 
-##### `not-ok-consistent-tick.md`
-
-###### In
-
-````markdown
-```alpha
-bravo()
-```
-
-~~~
-charlie()
-~~~
-````
-
-###### Out
-
-```text
-5:1-7:4: Fenced code should use `` ` `` as a marker
-```
-
-##### `not-ok-consistent-tilde.md`
-
-###### In
-
-````markdown
-~~~alpha
-bravo()
-~~~
-
-```
-charlie()
-```
-````
-
-###### Out
-
-```text
-5:1-7:4: Fenced code should use `~` as a marker
-```
-
 ##### `ok.md`
 
 When configured with ``'`'``.
@@ -241,6 +199,46 @@ charlie()
 ###### Out
 
 No messages.
+
+##### `not-ok-consistent-tick.md`
+
+###### In
+
+````markdown
+```alpha
+bravo()
+```
+
+~~~
+charlie()
+~~~
+````
+
+###### Out
+
+```text
+5:1-7:4: Fenced code should use `` ` `` as a marker
+```
+
+##### `not-ok-consistent-tilde.md`
+
+###### In
+
+````markdown
+~~~alpha
+bravo()
+~~~
+
+```
+charlie()
+```
+````
+
+###### Out
+
+```text
+5:1-7:4: Fenced code should use `~` as a marker
+```
 
 ##### `not-ok-incorrect.md`
 

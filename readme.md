@@ -369,28 +369,24 @@ npm install vfile-reporter remark remark-preset-lint-consistent remark-preset-li
 Then create a module `example.js` that contains:
 
 ```js
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
+import remarkLintListItemIndent from 'remark-lint-list-item-indent'
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent'
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended'
-import remarkLintListItemIndent from 'remark-lint-list-item-indent'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await remark()
+  // Check that markdown is consistent.
+  .use(remarkPresetLintConsistent)
+  // Few recommended rules.
+  .use(remarkPresetLintRecommended)
+  // `remark-lint-list-item-indent` is configured with `tab-size` in the
+  // recommended preset, but if we’d prefer something else, it can be
+  // reconfigured:
+  .use(remarkLintListItemIndent, 'space')
+  .process('1) Hello, _Jupiter_ and *Neptune*!')
 
-async function main() {
-  const file = await remark()
-    // Check that markdown is consistent.
-    .use(remarkPresetLintConsistent)
-    // Few recommended rules.
-    .use(remarkPresetLintRecommended)
-    // `remark-lint-list-item-indent` is configured with `tab-size` in the
-    // recommended preset, but if we’d prefer something else, it can be
-    // reconfigured:
-    .use(remarkLintListItemIndent, 'space')
-    .process('1) Hello, _Jupiter_ and *Neptune*!')
-
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 Running that with `node example.js` yields:
@@ -411,25 +407,21 @@ When you configure lint rules and use remark to format markdown, you must
 manually synchronize their configuration:
 
 ```js
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
 import remarkLintStrongMarker from 'remark-lint-strong-marker'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await remark()
+  .use(remarkLintEmphasisMarker, '*')
+  .use(remarkLintStrongMarker, '*')
+  .use({
+    settings: {emphasis: '*', strong: '*'} // `remark-stringify` settings.
+  })
+  .process('_Hello_, __world__!')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLintEmphasisMarker, '*')
-    .use(remarkLintStrongMarker, '*')
-    .use({
-      settings: {emphasis: '*', strong: '*'} // `remark-stringify` settings.
-    })
-    .process('_Hello_, __world__!')
-
-  console.error(reporter(file))
-  console.log(String(file))
-}
+console.error(reporter(file))
+console.log(String(file))
 ```
 
 Yields:

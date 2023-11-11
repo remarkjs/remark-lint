@@ -75,22 +75,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintUnorderedListMarkerStyle from 'remark-lint-unordered-list-marker-style'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintUnorderedListMarkerStyle)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintUnorderedListMarkerStyle)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -174,23 +172,6 @@ Ordered lists are not affected.
 
 No messages.
 
-##### `not-ok.md`
-
-###### In
-
-```markdown
-* Foo
-- Bar
-+ Baz
-```
-
-###### Out
-
-```text
-2:1-2:6: Marker style should be `*`
-3:1-3:6: Marker style should be `*`
-```
-
 ##### `ok.md`
 
 When configured with `'*'`.
@@ -232,6 +213,23 @@ When configured with `'+'`.
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+###### In
+
+```markdown
+* Foo
+- Bar
++ Baz
+```
+
+###### Out
+
+```text
+2:1-2:6: Marker style should be `*`
+3:1-3:6: Marker style should be `*`
+```
 
 ##### `not-ok.md`
 

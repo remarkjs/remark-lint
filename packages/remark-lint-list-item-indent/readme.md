@@ -77,22 +77,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintListItemIndent from 'remark-lint-list-item-indent'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintListItemIndent)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintListItemIndent)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -230,24 +228,6 @@ Paragraph.
 
 No messages.
 
-##### `not-ok.md`
-
-When configured with `'mixed'`.
-
-###### In
-
-> 👉 **Note**: `·` represents a space.
-
-```markdown
-*···List item.
-```
-
-###### Out
-
-```text
-1:5: Incorrect list-item indent: remove 2 spaces
-```
-
 ##### `ok.md`
 
 When configured with `'space'`.
@@ -312,6 +292,24 @@ When configured with `'tab-size'`.
 
 ```text
 1:3: Incorrect list-item indent: add 2 spaces
+```
+
+##### `not-ok.md`
+
+When configured with `'mixed'`.
+
+###### In
+
+> 👉 **Note**: `·` represents a space.
+
+```markdown
+*···List item.
+```
+
+###### Out
+
+```text
+1:5: Incorrect list-item indent: remove 2 spaces
 ```
 
 ##### `not-ok.md`

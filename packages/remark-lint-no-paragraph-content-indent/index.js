@@ -106,7 +106,6 @@ const remarkLintNoParagraphContentIndent = lintRule(
     const value = String(file)
     const loc = location(value)
 
-    // eslint-disable-next-line complexity
     visit(tree, 'paragraph', (node, _, parent) => {
       const end = pointEnd(node)?.line
       let line = pointStart(node)?.line

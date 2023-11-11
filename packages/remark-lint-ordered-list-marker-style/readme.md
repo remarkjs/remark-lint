@@ -76,22 +76,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintOrderedListMarkerStyle)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintOrderedListMarkerStyle)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -170,22 +168,6 @@ Unordered lists are not affected by this rule.
 
 No messages.
 
-##### `not-ok.md`
-
-###### In
-
-```markdown
-1.  Foo
-
-2)  Bar
-```
-
-###### Out
-
-```text
-3:1-3:8: Marker style should be `.`
-```
-
 ##### `ok.md`
 
 When configured with `'.'`.
@@ -217,6 +199,22 @@ When configured with `')'`.
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+###### In
+
+```markdown
+1.  Foo
+
+2)  Bar
+```
+
+###### Out
+
+```text
+3:1-3:8: Marker style should be `.`
+```
 
 ##### `not-ok.md`
 

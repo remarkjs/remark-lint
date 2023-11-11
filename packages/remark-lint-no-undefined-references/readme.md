@@ -73,22 +73,20 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {read} from 'to-vfile'
-import {reporter} from 'vfile-reporter'
 import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
+import {read} from 'to-vfile'
+import {reporter} from 'vfile-reporter'
 
-main()
+const file = await read('example.md')
 
-async function main() {
-  const file = await remark()
-    .use(remarkLint)
-    .use(remarkLintNoUndefinedReferences)
-    .process(await read('example.md'))
+await remark()
+  .use(remarkLint)
+  .use(remarkLintNoUndefinedReferences)
+  .process(file)
 
-  console.error(reporter(file))
-}
+console.error(reporter(file))
 ```
 
 On the CLI:
@@ -178,6 +176,38 @@ Just two braces can’t link: [].
 
 No messages.
 
+##### `ok-allow.md`
+
+When configured with `{ allow: [ '...', '…' ] }`.
+
+###### In
+
+```markdown
+> Eliding a portion of a quoted passage […] is acceptable.
+```
+
+###### Out
+
+No messages.
+
+##### `ok-allow.md`
+
+When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
+
+###### In
+
+```markdown
+[foo][b.c]
+
+[bar][a]
+
+Matching is case-insensitive: [bar][B.C]
+```
+
+###### Out
+
+No messages.
+
 ##### `not-ok.md`
 
 ###### In
@@ -215,38 +245,6 @@ Multiple pairs: [a][b][c].
 17:17-17:23: Found reference to undefined definition
 17:23-17:26: Found reference to undefined definition
 ```
-
-##### `ok-allow.md`
-
-When configured with `{ allow: [ '...', '…' ] }`.
-
-###### In
-
-```markdown
-> Eliding a portion of a quoted passage […] is acceptable.
-```
-
-###### Out
-
-No messages.
-
-##### `ok-allow.md`
-
-When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
-
-###### In
-
-```markdown
-[foo][b.c]
-
-[bar][a]
-
-Matching is case-insensitive: [bar][B.C]
-```
-
-###### Out
-
-No messages.
 
 ##### `not-ok.md`
 

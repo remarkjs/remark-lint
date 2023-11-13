@@ -72,8 +72,8 @@ while (++index < plugins.length) {
 
   assert.equal(info.name, pack.name, 'expected correct package name')
 
-  /** @type {Record<string, Array<TopLevelContent>>} */
-  const categories = {}
+  /** @type {Map<string, Array<TopLevelContent>>} */
+  const categories = new Map()
   let category = 'Intro'
   let contentIndex = -1
 
@@ -84,11 +84,14 @@ while (++index < plugins.length) {
       category = githubSlug(toString(node))
     }
 
-    if (!(category in categories)) {
-      categories[category] = []
+    let list = categories.get(category)
+
+    if (!list) {
+      list = []
+      categories.set(category, list)
     }
 
-    categories[category].push(node)
+    list.push(node)
   }
 
   const includes = presets.filter(function (preset) {
@@ -255,7 +258,7 @@ while (++index < plugins.length) {
           }
         ]
       },
-      ...(categories['when-should-i-use-this'] || []),
+      ...(categories.get('when-should-i-use-this') || []),
       {
         type: 'heading',
         depth: 2,
@@ -495,8 +498,10 @@ while (++index < plugins.length) {
       }
     )
 
-    if ('api' in categories) {
-      const [apiHeading, ...apiBody] = categories.api
+    const apiCategory = categories.get('api')
+
+    if (apiCategory) {
+      const [apiHeading, ...apiBody] = apiCategory
 
       children.push(
         apiHeading,
@@ -541,9 +546,9 @@ while (++index < plugins.length) {
     }
 
     children.push(
-      ...(categories.recommendation || []),
-      ...(categories.fix || []),
-      ...(categories.example || [])
+      ...(categories.get('recommendation') || []),
+      ...(categories.get('fix') || []),
+      ...(categories.get('example') || [])
     )
 
     let first = true

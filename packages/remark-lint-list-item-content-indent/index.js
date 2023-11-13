@@ -45,21 +45,26 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import {visit} from 'unist-util-visit'
+import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintListItemContentIndent = lintRule(
   {
     origin: 'remark-lint:list-item-content-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
 
-    visit(tree, 'listItem', (node) => {
+    visit(tree, 'listItem', function (node) {
       let index = -1
       /** @type {number | undefined} */
       let style
@@ -68,11 +73,7 @@ const remarkLintListItemContentIndent = lintRule(
         const item = node.children[index]
         const begin = pointStart(item)
 
-        if (
-          !begin ||
-          typeof begin.column !== 'number' ||
-          typeof begin.offset !== 'number'
-        ) {
+        if (!begin || typeof begin.offset !== 'number') {
           continue
         }
 

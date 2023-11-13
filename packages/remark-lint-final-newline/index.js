@@ -69,12 +69,18 @@ const remarkLintFinalNewline = lintRule(
     origin: 'remark-lint:final-newline',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (_, file) => {
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file) {
     const value = String(file)
     const last = value.length - 1
 
     if (last > -1 && value.charAt(last) !== '\n') {
+      // To do: warn at last character.
       file.message('Missing newline character at end of file')
     }
   }

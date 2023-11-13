@@ -56,7 +56,7 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {pointEnd, pointStart} from 'unist-util-position'
 
 const reasonStart = 'Missing initial pipe in table fence'
 const reasonEnd = 'Missing final pipe in table fence'
@@ -66,11 +66,16 @@ const remarkLintTablePipes = lintRule(
     origin: 'remark-lint:table-pipes',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipes#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
 
-    visit(tree, 'table', (node) => {
+    visit(tree, 'table', function (node) {
       let index = -1
 
       while (++index < node.children.length) {

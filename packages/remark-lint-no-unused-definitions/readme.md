@@ -156,6 +156,25 @@ No messages.
 1:1-1:27: Found unused definition
 ```
 
+##### `footnote.md`
+
+###### In
+
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+
+```markdown
+a[^x].
+
+[^x]: ok
+[^y]: not ok
+```
+
+###### Out
+
+```text
+4:1-4:13: Found unused definition
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
@@ -226,3 +245,5 @@ abide by its terms.
 [license]: https://github.com/remarkjs/remark-lint/blob/main/license
 
 [author]: https://wooorm.com
+
+[gfm]: https://github.com/remarkjs/remark-gfm

@@ -42,8 +42,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 
 const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
 
@@ -52,20 +52,25 @@ const remarkLintDefinitionCase = lintRule(
     origin: 'remark-lint:definition-case',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
 
-    visit(tree, (node) => {
+    visit(tree, function (node) {
       if (node.type === 'definition' || node.type === 'footnoteDefinition') {
-        const start = pointStart(node)
         const end = pointEnd(node)
+        const start = pointStart(node)
 
         if (
-          start &&
           end &&
-          typeof start.offset === 'number' &&
-          typeof end.offset === 'number'
+          start &&
+          typeof end.offset === 'number' &&
+          typeof start.offset === 'number'
         ) {
           const match = value.slice(start.offset, end.offset).match(label)
 

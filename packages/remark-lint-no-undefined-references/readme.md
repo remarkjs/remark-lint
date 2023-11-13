@@ -123,7 +123,7 @@ This rule supports standard configuration that all remark lint rules accept
 The following options (default: `undefined`) are accepted:
 
 * `Object` with the following fields:
-  * `allow` (`Array<string | RegExp | { source: string }>`,
+  * `allow` (`Array<RegExp | {source: string} | string>`,
     default: `[]`)
     — text or regex that you want to be allowed between `[` and `]`
     even though it’s undefined; regex is provided via a `RegExp` object

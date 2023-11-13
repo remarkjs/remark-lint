@@ -47,7 +47,7 @@
 
 /**
  * @typedef {RegExp | string} Options
- *   Options.
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -59,9 +59,16 @@ const remarkLintNoFileNameIrregularCharacters = lintRule(
     origin: 'remark-lint:no-file-name-irregular-characters',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-irregular-characters#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (_, file, option) => {
-    let preferred = option || expression
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (default: `/[^\\.a-zA-Z\d-]/`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file, options) {
+    let preferred = options || expression
 
     if (typeof preferred === 'string') {
       preferred = new RegExp('[^' + preferred + ']')

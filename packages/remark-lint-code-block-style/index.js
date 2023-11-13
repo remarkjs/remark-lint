@@ -131,29 +131,38 @@
  */
 
 /**
- * @typedef {'fenced' | 'indented'} Style
+ * @typedef {Style | 'consistent'} Options
+ *   Configuration.
+ *
+ * @typedef {'indented' | 'fenced'} Style
  *   Styles.
- * @typedef {'consistent' | Style} Options
- *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 
 const remarkLintCodeBlockStyle = lintRule(
   {
     origin: 'remark-lint:code-block-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    let option = options || 'consistent'
     const value = String(file)
 
     if (
       option !== 'consistent' &&
-      option !== 'fenced' &&
-      option !== 'indented'
+      option !== 'indented' &&
+      option !== 'fenced'
     ) {
       file.fail(
         'Incorrect code block style `' +
@@ -162,22 +171,22 @@ const remarkLintCodeBlockStyle = lintRule(
       )
     }
 
-    visit(tree, 'code', (node) => {
-      const initial = pointStart(node)
-      const final = pointEnd(node)
+    visit(tree, 'code', function (node) {
+      const end = pointEnd(node)
+      const start = pointStart(node)
 
       if (
-        !initial ||
-        !final ||
-        typeof initial.offset !== 'number' ||
-        typeof final.offset !== 'number'
+        !start ||
+        !end ||
+        typeof start.offset !== 'number' ||
+        typeof end.offset !== 'number'
       ) {
         return
       }
 
       const current =
         node.lang ||
-        /^\s*([~`])\1{2,}/.test(value.slice(initial.offset, final.offset))
+        /^\s*([~`])\1{2,}/.test(value.slice(start.offset, end.offset))
           ? 'fenced'
           : 'indented'
 

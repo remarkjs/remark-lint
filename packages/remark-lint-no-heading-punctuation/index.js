@@ -61,27 +61,36 @@
  *   Options.
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoHeadingPunctuation = lintRule(
   {
     origin: 'remark-lint:no-heading-punctuation',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = '\\.,;:!?') => {
-    const expression = new RegExp('[' + option + ']')
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (default: `'\\.,;:!?'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const expression = new RegExp('[' + (options || '\\.,;:!?') + ']')
 
-    visit(tree, 'heading', (node) => {
-      if (!generated(node)) {
+    visit(tree, 'heading', function (node) {
+      const place = position(node)
+
+      if (place) {
         const value = toString(node)
         const tail = value.charAt(value.length - 1)
 
         if (expression.test(tail)) {
-          file.message('Don’t add a trailing `' + tail + '` to headings', node)
+          file.message('Don’t add a trailing `' + tail + '` to headings', place)
         }
       }
     })

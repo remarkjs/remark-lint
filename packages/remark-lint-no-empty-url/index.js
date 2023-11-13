@@ -54,25 +54,32 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 const remarkLintNoEmptyUrl = lintRule(
   {
     origin: 'remark-lint:no-empty-url',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-empty-url#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, function (node) {
+      const place = position(node)
+
       if (
-        (node.type === 'link' ||
+        (node.type === 'definition' ||
           node.type === 'image' ||
-          node.type === 'definition') &&
-        !generated(node) &&
+          node.type === 'link') &&
+        place &&
         !node.url
       ) {
-        file.message('Don’t use ' + node.type + 's without URL', node)
+        file.message('Don’t use ' + node.type + 's without URL', place)
       }
     })
   }

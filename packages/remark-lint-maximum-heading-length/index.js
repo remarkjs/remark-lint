@@ -48,26 +48,32 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef {number} Options
- *   Options.
- */
-
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintMaximumHeadingLength = lintRule(
   {
     origin: 'remark-lint:maximum-heading-length',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 60) => {
-    visit(tree, 'heading', (node) => {
-      if (!generated(node) && toString(node).length > option) {
-        file.message('Use headings shorter than `' + option + '`', node)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {number | null | undefined} [options=60]
+   *   Configuration (default: `60`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const option = options || 60
+
+    visit(tree, 'heading', function (node) {
+      const place = position(node)
+
+      if (place && toString(node).length > option) {
+        file.message('Use headings shorter than `' + option + '`', place)
       }
     })
   }

@@ -40,8 +40,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
+import {pointStart, position} from 'unist-util-position'
 import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
 
@@ -50,29 +49,38 @@ const remarkLintNoDuplicateDefinitions = lintRule(
     origin: 'remark-lint:no-duplicate-definitions',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    /** @type {Record<string, string>} */
-    const map = Object.create(null)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    /** @type {Map<string, string>} */
+    const map = new Map()
 
-    visit(tree, (node) => {
+    visit(tree, function (node) {
+      const place = position(node)
+      const start = pointStart(node)
+
       if (
         (node.type === 'definition' || node.type === 'footnoteDefinition') &&
-        !generated(node)
+        place &&
+        start
       ) {
         const identifier = node.identifier
-        const duplicate = map[identifier]
+        const duplicate = map.get(identifier)
 
         if (duplicate) {
           file.message(
             'Do not use definitions with the same identifier (' +
               duplicate +
               ')',
-            node
+            place
           )
         }
 
-        map[identifier] = stringifyPosition(pointStart(node))
+        map.set(identifier, stringifyPosition(start))
       }
     })
   }

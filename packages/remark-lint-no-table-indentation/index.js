@@ -81,8 +81,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit, SKIP} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {SKIP, visit} from 'unist-util-visit'
 import {location} from 'vfile-location'
 
 const remarkLintNoTableIndentation = lintRule(
@@ -90,36 +90,44 @@ const remarkLintNoTableIndentation = lintRule(
     origin: 'remark-lint:no-table-indentation',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
     const loc = location(value)
 
-    visit(tree, 'table', (node, _, parent) => {
+    visit(tree, 'table', function (node, _, parent) {
+      const parentStart = pointStart(parent)
       const end = pointEnd(node)
-      let line = pointStart(node)?.line
+      const start = pointStart(node)
       /** @type {number | undefined} */
       let column
+
+      if (!start || !end) return
+
+      let line = start.line
 
       if (parent && parent.type === 'root') {
         column = 1
       } else if (parent && parent.type === 'blockquote') {
-        const parentStart = pointStart(parent)
         if (parentStart) column = parentStart.column + 2
       } else if (parent && parent.type === 'listItem') {
-        column = pointStart(parent.children[0])?.column
+        const head = parent.children[0]
+        column = pointStart(head)?.column
 
         // Skip past the first line if we’re the first child of a list item.
         /* c8 ignore next 3 */
-        if (typeof line === 'number' && parent.children[0] === node) {
+        if (typeof line === 'number' && head === node) {
           line++
         }
       }
 
-      // In a parent we don’t know, exit.
-      if (!end || !column || !line) {
-        return
-      }
+      /* c8 ignore next -- in a parent we don’t know, exit */
+      if (!column) return
 
       while (line <= end.line) {
         let offset = loc.toOffset({line, column})

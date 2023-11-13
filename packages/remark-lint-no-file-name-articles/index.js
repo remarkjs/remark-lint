@@ -49,8 +49,13 @@ const remarkLintNoFileNameArticles = lintRule(
     origin: 'remark-lint:no-file-name-articles',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-articles#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (_, file) => {
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file) {
     const match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)
 
     if (match) {

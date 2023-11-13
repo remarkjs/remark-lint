@@ -68,21 +68,26 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {location} from 'vfile-location'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {location} from 'vfile-location'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
   {
     origin: 'remark-lint:no-blockquote-without-marker',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
     const loc = location(file)
 
-    visit(tree, 'blockquote', (node) => {
+    visit(tree, 'blockquote', function (node) {
       let index = -1
 
       while (++index < node.children.length) {

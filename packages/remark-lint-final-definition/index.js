@@ -59,27 +59,33 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintFinalDefinition = lintRule(
   {
     origin: 'remark-lint:final-definition',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     let last = 0
 
     visit(
       tree,
-      (node) => {
+      function (node) {
         const start = pointStart(node)
 
+        // To do: ignore MDX comments?
         // Ignore generated and HTML comment nodes.
         if (
-          node.type === 'root' ||
           !start ||
+          node.type === 'root' ||
           (node.type === 'html' && /^\s*<!--/.test(node.value))
         ) {
           return

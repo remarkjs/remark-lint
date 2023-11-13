@@ -87,24 +87,34 @@
  */
 
 /**
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
+ *
  * @typedef {'~' | '~~'} Marker
  *   Styles.
- * @typedef {'consistent' | Marker} Options
- *   Options.
+ *
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintStrikethroughMarker = lintRule(
   {
     origin: 'remark-lint:strikethrough-marker',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    let option = options || 'consistent'
 
     if (option !== '~' && option !== '~~' && option !== 'consistent') {
       file.fail(
@@ -114,7 +124,7 @@ const remarkLintStrikethroughMarker = lintRule(
       )
     }
 
-    visit(tree, 'delete', (node) => {
+    visit(tree, 'delete', function (node) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {

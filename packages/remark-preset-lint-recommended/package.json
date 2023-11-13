@@ -33,7 +33,6 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/mdast": "^4.0.0",
     "remark-lint": "^9.0.0",
     "remark-lint-final-newline": "^2.0.0",
     "remark-lint-hard-break-spaces": "^3.0.0",

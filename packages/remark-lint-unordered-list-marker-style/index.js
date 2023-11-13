@@ -92,26 +92,35 @@
  */
 
 /**
- * @typedef {'-' | '*' | '+'} Marker
+ * @typedef {'*' | '+' | '-'} Marker
  *   Styles.
- * @typedef {'consistent' | Marker} Options
- *   Options.
+ *
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
-const markers = new Set(['-', '*', '+'])
+const markers = new Set(['*', '+', '-'])
 
 const remarkLintUnorderedListMarkerStyle = lintRule(
   {
     origin: 'remark-lint:unordered-list-marker-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-unordered-list-marker-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    let option = options || 'consistent'
 
     if (option !== 'consistent' && !markers.has(option)) {
       file.fail(
@@ -121,21 +130,21 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
       )
     }
 
-    visit(tree, 'list', (node) => {
+    visit(tree, 'list', function (node) {
       if (node.ordered) return
 
       let index = -1
 
       while (++index < node.children.length) {
         const child = node.children[index]
-        const start = pointStart(child)
         const end = pointStart(child.children[0])
+        const start = pointStart(child)
 
         if (
-          start &&
           end &&
-          typeof start.offset === 'number' &&
-          typeof end.offset === 'number'
+          start &&
+          typeof end.offset === 'number' &&
+          typeof start.offset === 'number'
         ) {
           const marker = /** @type {Marker} */ (
             value

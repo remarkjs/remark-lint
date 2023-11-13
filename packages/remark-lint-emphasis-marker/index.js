@@ -93,22 +93,31 @@
 /**
  * @typedef {'*' | '_'} Marker
  *   Styles.
- * @typedef {'consistent' | Marker} Options
- *   Options.
+ *
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintEmphasisMarker = lintRule(
   {
     origin: 'remark-lint:emphasis-marker',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent`').
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    let option = options || 'consistent'
 
     if (option !== '*' && option !== '_' && option !== 'consistent') {
       file.fail(
@@ -118,7 +127,7 @@ const remarkLintEmphasisMarker = lintRule(
       )
     }
 
-    visit(tree, 'emphasis', (node) => {
+    visit(tree, 'emphasis', function (node) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {

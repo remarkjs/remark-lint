@@ -34,8 +34,13 @@ const remarkLintNoFileNameConsecutiveDashes = lintRule(
     origin: 'remark-lint:no-file-name-consecutive-dashes',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-file-name-consecutive-dashes#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (_, file) => {
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file) {
     if (file.stem && /-{2,}/.test(file.stem)) {
       file.message('Do not use consecutive dashes in a file name')
     }

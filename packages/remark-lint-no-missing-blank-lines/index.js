@@ -82,15 +82,14 @@
 
 /**
  * @typedef Options
- *   Options.
+ *   Configuration.
  * @property {boolean | null | undefined} [exceptTightLists=false]
- *   Allow tight list items.
+ *   Allow tight list items (default: `false`).
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
 
 const types = new Set([
   'paragraph',
@@ -109,18 +108,24 @@ const remarkLintNoMissingBlankLines = lintRule(
     origin: 'remark-lint:no-missing-blank-lines',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-missing-blank-lines#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = {}) => {
-    const {exceptTightLists} = option
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const exceptTightLists = options ? options.exceptTightLists : false
 
-    visit(tree, (node, index, parent) => {
+    visit(tree, function (node, index, parent) {
       const end = pointEnd(node)
 
       if (
-        end &&
         parent &&
         typeof index === 'number' &&
-        !generated(node) &&
+        end &&
         (!exceptTightLists || parent.type !== 'listItem')
       ) {
         const next = parent.children[index + 1]

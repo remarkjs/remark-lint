@@ -75,8 +75,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 // List of shell script file extensions (also used as code flags for syntax
 // highlighting on GitHub):
@@ -99,14 +99,21 @@ const remarkLintNoShellDollars = lintRule(
     origin: 'remark-lint:no-shell-dollars',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shell-dollars#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'code', (node) => {
-      // Check both known shell code and unknown code.
-      if (!generated(node) && node.lang && flags.has(node.lang)) {
-        const lines = node.value
-          .split('\n')
-          .filter((line) => line.trim().length > 0)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'code', function (node) {
+      const place = position(node)
+
+      // Check known shell code and unknown code.
+      if (place && node.lang && flags.has(node.lang)) {
+        const lines = node.value.split('\n').filter(function (line) {
+          return line.trim().length > 0
+        })
         let index = -1
 
         if (lines.length === 0) {
@@ -121,7 +128,7 @@ const remarkLintNoShellDollars = lintRule(
           }
         }
 
-        file.message('Do not use dollar signs before shell commands', node)
+        file.message('Do not use dollar signs before shell commands', place)
       }
     })
   }

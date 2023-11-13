@@ -92,37 +92,44 @@
  */
 
 /**
+ * @typedef {Styles | 'consistent'} Options
+ *   Configuration.
+ *
  * @typedef Styles
  *   Styles.
- * @property {'x' | 'X' | 'consistent'} [checked='consistent']
+ * @property {'X' | 'x' | 'consistent' | null | undefined} [checked='consistent']
  *   Preferred style to use for checked checkboxes (default: `'consistent'`).
- * @property {' ' | '\t' | 'consistent'} [unchecked='consistent']
+ * @property {'\t' | ' ' | 'consistent' | null | undefined} [unchecked='consistent']
  *   Preferred style to use for unchecked checkboxes (default: `'consistent'`).
- *
- * @typedef {'consistent' | Styles} Options
- *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintCheckboxCharacterStyle = lintRule(
   {
     origin: 'remark-lint:checkbox-character-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
-    /** @type {'x' | 'X' | 'consistent'} */
+    /** @type {'X' | 'x' | 'consistent'} */
     let checked = 'consistent'
-    /** @type {' ' | '\x09' | 'consistent'} */
+    /** @type {'\x09' | ' ' | 'consistent'} */
     let unchecked = 'consistent'
 
-    if (typeof option === 'object') {
-      checked = option.checked || 'consistent'
-      unchecked = option.unchecked || 'consistent'
+    if (options && typeof options === 'object') {
+      checked = options.checked || 'consistent'
+      unchecked = options.unchecked || 'consistent'
     }
 
     if (unchecked !== 'consistent' && unchecked !== ' ' && unchecked !== '\t') {
@@ -141,7 +148,7 @@ const remarkLintCheckboxCharacterStyle = lintRule(
       )
     }
 
-    visit(tree, 'listItem', (node) => {
+    visit(tree, 'listItem', function (node) {
       const head = node.children[0]
       const point = pointStart(head)
 
@@ -149,8 +156,8 @@ const remarkLintCheckboxCharacterStyle = lintRule(
       // A list item cannot be checked and empty, according to GFM.
       if (
         !point ||
-        typeof node.checked !== 'boolean' ||
         !head ||
+        typeof node.checked !== 'boolean' ||
         typeof point.offset !== 'number'
       ) {
         return

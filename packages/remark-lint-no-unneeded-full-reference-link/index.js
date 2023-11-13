@@ -60,21 +60,27 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
+import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoUnneededFullReferenceLink = lintRule(
   {
     origin: 'remark-lint:no-unneeded-full-reference-link',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'linkReference', (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'linkReference', function (node) {
+      const place = position(node)
       if (
-        generated(node) ||
+        !place ||
         node.referenceType !== 'full' ||
         node.children.length !== 1 ||
         node.children[0].type !== 'text' ||
@@ -86,7 +92,7 @@ const remarkLintNoUnneededFullReferenceLink = lintRule(
 
       file.message(
         'Remove the link label as it matches the reference text',
-        node
+        place
       )
     })
   }

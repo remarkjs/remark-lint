@@ -35,10 +35,10 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 // Protocol expression.
 // See: <https://en.wikipedia.org/wiki/URI_scheme#Generic_syntax>.
@@ -49,9 +49,14 @@ const remarkLintNoAutoLinkWithoutProtocol = lintRule(
     origin: 'remark-lint:no-auto-link-without-protocol',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-auto-link-without-protocol#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'link', (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'link', function (node) {
       const end = pointEnd(node)
       const headStart = pointStart(node.children[0])
       const start = pointStart(node)
@@ -62,8 +67,8 @@ const remarkLintNoAutoLinkWithoutProtocol = lintRule(
         headStart &&
         start &&
         tailEnd &&
-        start.column === headStart.column - 1 &&
         end.column === tailEnd.column + 1 &&
+        start.column === headStart.column - 1 &&
         !protocol.test(toString(node))
       ) {
         file.message('All automatic links must start with a protocol', node)

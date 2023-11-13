@@ -47,19 +47,25 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 const remarkLintNoShortcutReferenceLink = lintRule(
   {
     origin: 'remark-lint:no-shortcut-reference-link',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-shortcut-reference-link#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'linkReference', (node) => {
-      if (!generated(node) && node.referenceType === 'shortcut') {
-        file.message('Use the trailing `[]` on reference links', node)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'linkReference', function (node) {
+      const place = position(node)
+      if (place && node.referenceType === 'shortcut') {
+        file.message('Use the trailing `[]` on reference links', place)
       }
     })
   }

@@ -77,41 +77,47 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-import {visit} from 'unist-util-visit'
-import {stringifyPosition} from 'unist-util-stringify-position'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {pointStart, position} from 'unist-util-position'
+import {stringifyPosition} from 'unist-util-stringify-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateHeadingsInSection = lintRule(
   {
     origin: 'remark-lint:no-duplicate-headings-in-section',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings-in-section#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    /** @type {Array<Record<string, Heading>>} */
-    let stack = []
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    /** @type {Array<Map<string, string>>} */
+    const stack = []
 
-    visit(tree, 'heading', (node) => {
-      const depth = node.depth
+    visit(tree, 'heading', function (node) {
       const value = toString(node).toUpperCase()
-      const index = depth - 1
-      const scope = stack[index] || (stack[index] = {})
-      const duplicate = scope[value]
+      const index = node.depth - 1
+      const scope = stack[index] || (stack[index] = new Map())
+      const duplicate = scope.get(value)
+      const place = position(node)
+      const start = pointStart(node)
 
-      if (!generated(node) && duplicate) {
+      if (place && duplicate) {
         file.message(
           'Do not use headings with similar content per section (' +
-            stringifyPosition(pointStart(duplicate)) +
+            duplicate +
             ')',
-          node
+          place
         )
       }
 
-      scope[value] = node
-      stack = stack.slice(0, depth)
+      scope.set(value, stringifyPosition(start))
+      // Drop things after it.
+      stack.length = node.depth
     })
   }
 )

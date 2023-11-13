@@ -92,8 +92,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit, SKIP} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {SKIP, visit} from 'unist-util-visit'
 import {location} from 'vfile-location'
 
 const remarkLintNoParagraphContentIndent = lintRule(
@@ -101,12 +101,17 @@ const remarkLintNoParagraphContentIndent = lintRule(
     origin: 'remark-lint:no-paragraph-content-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
     const loc = location(value)
 
-    visit(tree, 'paragraph', (node, _, parent) => {
+    visit(tree, 'paragraph', function (node, _, parent) {
       const end = pointEnd(node)?.line
       let line = pointStart(node)?.line
       /** @type {number | undefined} */

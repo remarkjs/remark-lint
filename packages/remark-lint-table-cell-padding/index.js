@@ -98,7 +98,9 @@
  *   7:15: Cell should be compact
  *
  * @example
- *   {"name": "ok-padded.md", "config": "consistent", "gfm": true}
+ *   {"name": "ok-padded.md", "gfm": true}
+ *
+ *   The default is `'consistent'`.
  *
  *   | A     | B     |
  *   | ----- | ----- |
@@ -186,38 +188,51 @@
 /**
  * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').TableCell} TableCell
- * @typedef {import('unist').Point} Point
  */
 
 /**
- * @typedef {'padded' | 'compact'} Style
- *   Styles.
- * @typedef {'consistent' | Style} Options
- *   Options.
- *
  * @typedef Entry
  *   Cell info.
- * @property {TableCell} node
- * @property {number} start
- * @property {number} end
  * @property {number} column
+ *   Column.
+ * @property {number} end
+ *   End of content.
+ * @property {TableCell} node
+ *   Node.
+ * @property {number} start
+ *   Start of content.
+ *
+ * @typedef {Style | 'consistent'} Options
+ *   Configuration.
+ *
+ * @typedef {'compact' | 'padded'} Style
+ *   Styles.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit, SKIP} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {SKIP, visit} from 'unist-util-visit'
 
 const remarkLintTableCellPadding = lintRule(
   {
     origin: 'remark-lint:table-cell-padding',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const option = options || 'consistent'
+
     if (
-      option !== 'padded' &&
       option !== 'compact' &&
-      option !== 'consistent'
+      option !== 'consistent' &&
+      option !== 'padded'
     ) {
       file.fail(
         'Incorrect table cell padding style `' +
@@ -226,10 +241,9 @@ const remarkLintTableCellPadding = lintRule(
       )
     }
 
-    visit(tree, 'table', (node) => {
+    visit(tree, 'table', function (node) {
       const rows = node.children
-      // To do: fix types to always have `align` defined.
-      /* c8 ignore next */
+      /* c8 ignore next -- to do: fix types to always have `align` defined. */
       const align = node.align || []
       /** @type {Array<number>} */
       const sizes = []
@@ -254,7 +268,6 @@ const remarkLintTableCellPadding = lintRule(
         // Check fences (before, between, and after cells).
         while (++column < row.children.length) {
           const cell = row.children[column]
-
           const cellStart = pointStart(cell)?.offset
           const cellEnd = pointEnd(cell)?.offset
           const contentStart = pointStart(cell.children[0])?.offset
@@ -296,8 +309,8 @@ const remarkLintTableCellPadding = lintRule(
             ? 0
             : 1
           : option === 'padded'
-          ? 1
-          : 0
+            ? 1
+            : 0
 
       index = -1
 
@@ -310,10 +323,16 @@ const remarkLintTableCellPadding = lintRule(
     })
 
     /**
-     * @param {'start' | 'end'} side
+     * @param {'end' | 'start'} side
+     *   Side to check.
      * @param {Entry} entry
+     *   Cell info.
      * @param {0 | 1} style
+     *   Expected style.
      * @param {Array<number>} sizes
+     *   Max sizes per column.
+     * @returns {undefined}
+     *   Nothing.
      */
     function checkSide(side, entry, style, sizes) {
       const cell = entry.node
@@ -360,7 +379,9 @@ export default remarkLintTableCellPadding
 
 /**
  * @param {TableCell} node
+ *   Cell.
  * @returns {number}
+ *   Size of `node`.
  */
 function size(node) {
   const head = pointStart(node.children[0])?.offset

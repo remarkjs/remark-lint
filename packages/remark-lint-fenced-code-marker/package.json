@@ -37,7 +37,6 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
-    "unified": "^11.0.0",
     "unified-lint-rule": "^2.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit": "^5.0.0"
@@ -52,7 +51,8 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "capitalized-comments": "off"
+      "capitalized-comments": "off",
+      "unicorn/prefer-default-parameters": "off"
     }
   }
 }

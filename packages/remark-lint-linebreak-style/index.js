@@ -72,7 +72,7 @@
 /**
  * @typedef {'unix' | 'windows'} Type
  *   Styles.
- * @typedef {'consistent' | Type} Options
+ * @typedef {Type | 'consistent'} Options
  *   Options.
  */
 
@@ -86,8 +86,16 @@ const remarkLintLinebreakStyle = lintRule(
     origin: 'remark-lint:linebreak-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-linebreak-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (_, file, option = 'consistent') => {
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file, options) {
+    let option = options || 'consistent'
     const value = String(file)
     const toPoint = location(value).toPoint
     let index = value.indexOf('\n')

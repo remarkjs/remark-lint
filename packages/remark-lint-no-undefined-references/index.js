@@ -7,13 +7,13 @@
  *
  * The following options (default: `undefined`) are accepted:
  *
- * *   `Object` with the following fields:
- *     *   `allow` (`Array<string | RegExp | { source: string }>`,
- *         default: `[]`)
- *         — text or regex that you want to be allowed between `[` and `]`
- *         even though it’s undefined; regex is provided via a `RegExp` object
- *         or via a `{source: string}` object where `source` is the source
- *         text of a case-insensitive regex
+ * * `Object` with the following fields:
+ *   * `allow` (`Array<RegExp | {source: string} | string>`,
+ *     default: `[]`)
+ *     — text or regex that you want to be allowed between `[` and `]`
+ *     even though it’s undefined; regex is provided via a `RegExp` object
+ *     or via a `{source: string}` object where `source` is the source
+ *     text of a case-insensitive regex
  *
  * ## Recommendation
  *
@@ -128,37 +128,52 @@
 
 /**
  * @typedef Options
- * @property {Array<string | RegExp | {source: string}> | null | undefined} [allow]
- *   Text or regex that you want to be allowed between `[` and `]` even though
- *   it’s `undefined` (default: `[]`).
- *
- *   Regex is provided via a `RegExp` object or via a `{source: string}` object
- *   where `source` is the source text of a case-insensitive regex.
+ *   Configuration.
+ * @property {Readonly<Array<RegExp | RegexLike | string>> | null | undefined} [allow]
+ *   Text or regexes to allow between `[` and `]` even though they’re not
+ *   defined (optional).
  *
  * @typedef {Array<number>} Range
+ *   Range.
+ *
+ * @typedef RegexLike
+ *   Regex-like object.
+ * @property {string} source
+ *   Source of regex.
  */
 
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
-import {location} from 'vfile-location'
 import {lintRule} from 'unified-lint-rule'
-import {generated} from 'unist-util-generated'
-import {pointStart, pointEnd} from 'unist-util-position'
-import {visit, SKIP, EXIT} from 'unist-util-visit'
+import {pointEnd, pointStart, position} from 'unist-util-position'
+import {EXIT, SKIP, visit} from 'unist-util-visit'
+import {location} from 'vfile-location'
+
+/** @type {Readonly<Options>} */
+const emptyOptions = {}
+/** @type {Readonly<Array<RegExp | RegexLike | string>>} */
+const emptyAllow = []
 
 const remarkLintNoUndefinedReferences = lintRule(
   {
     origin: 'remark-lint:no-undefined-references',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = {}) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Readonly<Options> | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const settings = options || emptyOptions
+    const allow = settings.allow || emptyAllow
     const contents = String(file)
     const loc = location(file)
     const lineEnding = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
-    /** @type {Record<string, boolean>} */
-    const map = Object.create(null)
-
-    const allow = option.allow || []
+    /** @type {Set<string>} */
+    const defined = new Set()
     /** @type {Array<RegExp>} */
     const regexes = []
     /** @type {Set<string>} */
@@ -177,16 +192,14 @@ const remarkLintNoUndefinedReferences = lintRule(
       }
     }
 
-    visit(tree, (node) => {
-      if (
-        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
-        !generated(node)
-      ) {
-        map[normalizeIdentifier(node.identifier)] = true
+    visit(tree, function (node) {
+      if (node.type === 'definition' || node.type === 'footnoteDefinition') {
+        defined.add(normalizeIdentifier(node.identifier))
       }
     })
 
-    visit(tree, (node) => {
+    visit(tree, function (node) {
+      const place = position(node)
       // CM specifiers that references only form when defined.
       // Still, they could be added by plugins, so let’s keep it.
       /* c8 ignore next 10 */
@@ -194,26 +207,30 @@ const remarkLintNoUndefinedReferences = lintRule(
         (node.type === 'imageReference' ||
           node.type === 'linkReference' ||
           node.type === 'footnoteReference') &&
-        !generated(node) &&
-        !(normalizeIdentifier(node.identifier) in map) &&
-        !isAllowed(node.identifier)
+        place &&
+        !defined.has(normalizeIdentifier(node.identifier)) &&
+        !allowed(node.identifier)
       ) {
-        file.message('Found reference to undefined definition', node)
+        file.message('Found reference to undefined definition', place)
       }
 
       if (node.type === 'paragraph' || node.type === 'heading') {
         findInPhrasing(node)
+        return SKIP
       }
     })
 
     /**
      * @param {Heading | Paragraph} node
+     *   Node.
+     * @returns {undefined}
+     *   Nothing.
      */
     function findInPhrasing(node) {
       /** @type {Array<Range>} */
       let ranges = []
 
-      visit(node, (child) => {
+      visit(node, function (child) {
         // Ignore the node itself.
         if (child === node) return
 
@@ -331,10 +348,11 @@ const remarkLintNoUndefinedReferences = lintRule(
         handleRange(ranges[index])
       }
 
-      return SKIP
-
       /**
        * @param {Range} range
+       *   Range.
+       * @returns {undefined}
+       *   Nothing.
        */
       function handleRange(range) {
         if (range.length === 1) return
@@ -347,31 +365,33 @@ const remarkLintNoUndefinedReferences = lintRule(
         const id = contents
           .slice(range[0 + offset] + 1, range[1 + offset] - 1)
           .replace(lineEnding, ' ')
-        const pos = {
-          start: loc.toPoint(range[0]),
-          end: loc.toPoint(range[range.length - 1])
-        }
+        const start = loc.toPoint(range[0])
+        const end = loc.toPoint(range[range.length - 1])
 
         if (
-          !generated({position: pos}) &&
-          !(normalizeIdentifier(id) in map) &&
-          !isAllowed(id)
+          start &&
+          end &&
+          !defined.has(normalizeIdentifier(id)) &&
+          !allowed(id)
         ) {
-          // @ts-expect-error: assume we have a correct point.
-          file.message('Found reference to undefined definition', pos)
+          file.message('Found reference to undefined definition', {start, end})
         }
       }
     }
 
     /**
      * @param {string} id
+     *   Identifier.
      * @returns {boolean}
+     *   Whether `id` is allowed.
      */
-    function isAllowed(id) {
+    function allowed(id) {
       const normalized = normalizeIdentifier(id)
       return (
         strings.has(normalized) ||
-        regexes.some((regex) => regex.test(normalized))
+        regexes.some(function (regex) {
+          return regex.test(normalized)
+        })
       )
     }
   }

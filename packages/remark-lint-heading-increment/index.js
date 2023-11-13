@@ -55,25 +55,32 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 const remarkLintHeadingIncrement = lintRule(
   {
     origin: 'remark-lint:heading-increment',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-increment#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    /** @type {Depth} */
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    /** @type {Depth | undefined} */
     let previous
 
-    visit(tree, 'heading', (node) => {
-      if (!generated(node)) {
+    visit(tree, 'heading', function (node) {
+      const place = position(node)
+
+      if (place) {
         if (previous && node.depth > previous + 1) {
           file.message(
             'Heading levels should increment by one level at a time',
-            node
+            place
           )
         }
 

@@ -40,7 +40,7 @@ npm install remark-lint remark-cli
 We will also use some utilities:
 
 ```sh
-npm install unified-lint-rule unist-util-generated unist-util-visit
+npm install unified-lint-rule unist-util-visit
 ```
 
 These will help us creating and managing our custom rules.

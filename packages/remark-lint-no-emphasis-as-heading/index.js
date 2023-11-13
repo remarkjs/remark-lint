@@ -52,22 +52,28 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
+import {position} from 'unist-util-position'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
   {
     origin: 'remark-lint:no-emphasis-as-heading',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'paragraph', (node, index, parent) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'paragraph', function (node, index, parent) {
       const head = node.children[0]
+      const place = position(node)
 
       if (
+        place &&
         parent &&
         typeof index === 'number' &&
-        !generated(node) &&
         node.children.length === 1 &&
         (head.type === 'emphasis' || head.type === 'strong')
       ) {
@@ -81,7 +87,7 @@ const remarkLintNoEmphasisAsHeading = lintRule(
         ) {
           file.message(
             'Don’t use emphasis to introduce a section, use a heading',
-            node
+            place
           )
         }
       }

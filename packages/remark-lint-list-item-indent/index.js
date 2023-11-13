@@ -155,26 +155,33 @@
  */
 
 /**
- * @typedef {'tab-size' | 'space' | 'mixed'} Options
- *   Options.
+ * @typedef {'mixed' | 'space' | 'tab-size'} Options
+ *   Configuration.
  */
 
-import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import {visit} from 'unist-util-visit'
+import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
 
 const remarkLintListItemIndent = lintRule(
   {
     origin: 'remark-lint:list-item-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'tab-size') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='tab-size']
+   *   Configuration (default: `'tab-size'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    const option = options || 'tab-size'
 
-    if (option !== 'tab-size' && option !== 'space' && option !== 'mixed') {
+    if (option !== 'mixed' && option !== 'space' && option !== 'tab-size') {
       file.fail(
         'Incorrect list-item indent style `' +
           option +
@@ -182,9 +189,7 @@ const remarkLintListItemIndent = lintRule(
       )
     }
 
-    visit(tree, 'list', (node) => {
-      if (generated(node)) return
-
+    visit(tree, 'list', function (node) {
       const spread = node.spread
       let index = -1
 

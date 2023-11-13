@@ -65,20 +65,25 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {headingStyle} from 'mdast-util-heading-style'
 import plural from 'pluralize'
-import {pointStart, pointEnd} from 'unist-util-position'
+import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   {
     origin: 'remark-lint:no-heading-content-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-content-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'heading', (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'heading', function (node) {
       const start = pointStart(node)
       const type = headingStyle(node, 'atx')
 

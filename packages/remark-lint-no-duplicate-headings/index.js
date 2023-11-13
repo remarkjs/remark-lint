@@ -51,27 +51,34 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
-import {visit} from 'unist-util-visit'
-import {stringifyPosition} from 'unist-util-stringify-position'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {pointStart, position} from 'unist-util-position'
+import {stringifyPosition} from 'unist-util-stringify-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoDuplicateHeadings = lintRule(
   {
     origin: 'remark-lint:no-duplicate-headings',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    /** @type {Record<string, string>} */
-    const map = Object.create(null)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    /** @type {Map<string, string>} */
+    const map = new Map()
 
-    visit(tree, 'heading', (node) => {
-      if (!generated(node)) {
+    visit(tree, 'heading', function (node) {
+      const place = position(node)
+      const start = pointStart(node)
+
+      if (place && start) {
         const value = toString(node).toUpperCase()
-        const duplicate = map[value]
+        const duplicate = map.get(value)
 
         if (duplicate) {
           file.message(
@@ -80,7 +87,7 @@ const remarkLintNoDuplicateHeadings = lintRule(
           )
         }
 
-        map[value] = stringifyPosition(pointStart(node))
+        map.set(value, stringifyPosition(start))
       }
     })
   }

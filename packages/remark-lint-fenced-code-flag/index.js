@@ -100,23 +100,23 @@
  */
 
 /**
+ * @typedef FlagMap
+ *   Configuration.
+ * @property {boolean | null | undefined} [allowEmpty=false]
+ *   Allow language flags to be omitted (default: `false`).
+ * @property {Flags | null | undefined} [flags]
+ *   Language flags (optional).
+ *
  * @typedef {Array<string>} Flags
  *   Language flags.
  *
- * @typedef FlagMap
+ * @typedef {FlagMap | Flags} Options
  *   Configuration.
- * @property {Flags} [flags]
- *   Language flags.
- * @property {boolean} [allowEmpty=false]
- *   Allow language flags to be omitted (default: `false`).
- *
- * @typedef {Flags | FlagMap} Options
- *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 
 const fence = /^ {0,3}([~`])\1{2,}/
 
@@ -125,34 +125,41 @@ const remarkLintFencedCodeFlag = lintRule(
     origin: 'remark-lint:fenced-code-flag',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
     let allowEmpty = false
     /** @type {Array<string>} */
     let allowed = []
 
-    if (typeof option === 'object') {
-      if (Array.isArray(option)) {
-        allowed = option
+    if (options && typeof options === 'object') {
+      if (Array.isArray(options)) {
+        allowed = options
       } else {
-        allowEmpty = Boolean(option.allowEmpty)
+        allowEmpty = Boolean(options.allowEmpty)
 
-        if (option.flags) {
-          allowed = option.flags
+        if (options.flags) {
+          allowed = options.flags
         }
       }
     }
 
-    visit(tree, 'code', (node) => {
-      const start = pointStart(node)
+    visit(tree, 'code', function (node) {
       const end = pointEnd(node)
+      const start = pointStart(node)
 
       if (
-        start &&
         end &&
-        typeof start.offset === 'number' &&
-        typeof end.offset === 'number'
+        start &&
+        typeof end.offset === 'number' &&
+        typeof start.offset === 'number'
       ) {
         if (node.lang) {
           if (allowed.length > 0 && !allowed.includes(node.lang)) {

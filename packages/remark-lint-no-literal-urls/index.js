@@ -45,30 +45,37 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoLiteralUrls = lintRule(
   {
     origin: 'remark-lint:no-literal-urls',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'link', (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'link', function (node) {
       const value = toString(node)
-      const start = pointStart(node)
       const end = pointEnd(node)
+      const start = pointStart(node)
       const headStart = pointStart(node.children[0])
       const tailEnd = pointEnd(node.children[node.children.length - 1])
 
       if (
-        start &&
         end &&
-        start.column === headStart?.column &&
-        end.column === tailEnd?.column &&
+        start &&
+        headStart &&
+        tailEnd &&
+        end.column === tailEnd.column &&
+        start.column === headStart.column &&
         (node.url === 'mailto:' + value || node.url === value)
       ) {
         file.message('Don’t use literal URLs without angle brackets', node)

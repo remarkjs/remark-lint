@@ -103,8 +103,13 @@ const remarkLintNoTabs = lintRule(
     origin: 'remark-lint:no-tabs',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-tabs#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (_, file) => {
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file) {
     const value = String(file)
     const toPoint = location(file).toPoint
     let index = value.indexOf('\t')

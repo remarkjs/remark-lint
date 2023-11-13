@@ -108,20 +108,20 @@
 
 /**
  * @typedef {import('mdast').Heading} Heading
- * @typedef {import('mdast').HTML} HTML
  * @typedef {import('mdast').Root} Root
  */
 
 /**
  * @typedef {Heading['depth']} Depth
  *   Styles.
+ *
  * @typedef {Depth} Options
- *   Options.
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit, EXIT} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
+import {position} from 'unist-util-position'
+import {EXIT, visit} from 'unist-util-visit'
 
 const re = /<h([1-6])/
 
@@ -130,22 +130,38 @@ const remarkLintFirstHeadingLevel = lintRule(
     origin: 'remark-lint:first-heading-level',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-first-heading-level#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 1) => {
-    visit(tree, (node) => {
-      if (!generated(node)) {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options=1]
+   *   Configuration (default: `1`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const option = options || 1
+
+    visit(tree, function (node) {
+      const place = position(node)
+
+      if (place) {
         /** @type {Depth | undefined} */
         let rank
 
+        // To do: MDX?
         if (node.type === 'heading') {
           rank = node.depth
         } else if (node.type === 'html') {
-          rank = infer(node)
+          const results = node.value.match(re)
+          rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
         }
 
-        if (rank !== undefined) {
+        if (rank) {
           if (rank !== option) {
-            file.message('First heading level should be `' + option + '`', node)
+            file.message(
+              'First heading level should be `' + option + '`',
+              place
+            )
           }
 
           return EXIT
@@ -156,13 +172,3 @@ const remarkLintFirstHeadingLevel = lintRule(
 )
 
 export default remarkLintFirstHeadingLevel
-
-/**
- * @param {HTML} node
- * @returns {Depth | undefined}
- */
-function infer(node) {
-  const results = node.value.match(re)
-  // @ts-expect-error: can be casted fine.
-  return results ? Number(results[1]) : undefined
-}

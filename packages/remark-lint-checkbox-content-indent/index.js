@@ -66,21 +66,26 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {location} from 'vfile-location'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
+import {location} from 'vfile-location'
 
 const remarkLintCheckboxContentIndent = lintRule(
   {
     origin: 'remark-lint:checkbox-content-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     const value = String(file)
     const loc = location(file)
 
-    visit(tree, 'listItem', (node) => {
+    visit(tree, 'listItem', function (node) {
       const head = node.children[0]
       const point = pointStart(head)
 
@@ -88,8 +93,8 @@ const remarkLintCheckboxContentIndent = lintRule(
       // A list item cannot be checked and empty, according to GFM.
       if (
         !point ||
-        typeof node.checked !== 'boolean' ||
         !head ||
+        typeof node.checked !== 'boolean' ||
         typeof point.offset !== 'number'
       ) {
         return
@@ -100,8 +105,7 @@ const remarkLintCheckboxContentIndent = lintRule(
         value.slice(point.offset - 4, point.offset + 1)
       )
 
-      // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
-      /* c8 ignore next */
+      /* c8 ignore next -- make sure we don’t crash if there actually isn’t a checkbox. */
       if (!match) return
 
       // Move past checkbox.

@@ -47,7 +47,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {generated} from 'unist-util-generated'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
 
 const remarkLintNoReferenceLikeUrl = lintRule(
@@ -55,21 +55,27 @@ const remarkLintNoReferenceLikeUrl = lintRule(
     origin: 'remark-lint:no-reference-like-url',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    /** @type {Array<string>} */
-    const identifiers = []
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    /** @type {Set<string>} */
+    const identifiers = new Set()
 
-    visit(tree, 'definition', (node) => {
-      if (!generated(node)) {
-        identifiers.push(node.identifier.toLowerCase())
-      }
+    visit(tree, 'definition', function (node) {
+      identifiers.add(node.identifier.toLowerCase())
     })
 
-    visit(tree, (node) => {
+    visit(tree, function (node) {
+      const place = position(node)
+
       if (
+        place &&
         (node.type === 'image' || node.type === 'link') &&
-        identifiers.includes(node.url.toLowerCase())
+        identifiers.has(node.url.toLowerCase())
       ) {
         file.message(
           'Did you mean to use `[' +
@@ -78,7 +84,7 @@ const remarkLintNoReferenceLikeUrl = lintRule(
             '`(' +
             node.url +
             ')`, a reference?',
-          node
+          place
         )
       }
     })

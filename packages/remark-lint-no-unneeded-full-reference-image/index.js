@@ -54,23 +54,29 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
+import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoUnneededFullReferenceImage = lintRule(
   {
     origin: 'remark-lint:no-unneeded-full-reference-image',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'imageReference', (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'imageReference', function (node) {
+      const place = position(node)
+
       if (
-        generated(node) ||
+        !place ||
         node.referenceType !== 'full' ||
-        // To do: update types to force `alt` existing.
         /* c8 ignore next */
         normalizeIdentifier(node.alt || '') !== node.identifier.toUpperCase()
       ) {
@@ -79,7 +85,7 @@ const remarkLintNoUnneededFullReferenceImage = lintRule(
 
       file.message(
         'Remove the image label as it matches the reference text',
-        node
+        place
       )
     })
   }

@@ -128,16 +128,15 @@
 /**
  * @typedef {'"' | '\'' | '()'} Marker
  *   Styles.
- * @typedef {'consistent' | Marker} Options
- *   Options.
+ *
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {location} from 'vfile-location'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
-
-const own = {}.hasOwnProperty
+import {location} from 'vfile-location'
 
 const markers = {
   '"': '"',
@@ -150,14 +149,22 @@ const remarkLintLinkTitleStyle = lintRule(
     origin: 'remark-lint:link-title-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
     const loc = location(file)
-    // @ts-expect-error: allow other paren combos.
+    const option = options || 'consistent'
+    // @ts-expect-error: allow `(` too, even though untyped.
     let look = option === '()' || option === '(' ? ')' : option
 
-    if (look !== 'consistent' && !own.call(markers, look)) {
+    if (look !== 'consistent' && !Object.hasOwn(markers, look)) {
       file.fail(
         'Incorrect link title style marker `' +
           look +
@@ -165,11 +172,11 @@ const remarkLintLinkTitleStyle = lintRule(
       )
     }
 
-    visit(tree, (node) => {
+    visit(tree, function (node) {
       if (
-        node.type === 'link' ||
+        node.type === 'definition' ||
         node.type === 'image' ||
-        node.type === 'definition'
+        node.type === 'link'
       ) {
         const tail =
           'children' in node
@@ -216,13 +223,14 @@ const remarkLintLinkTitleStyle = lintRule(
         } else if (look !== final) {
           const start = loc.toPoint(first)
           const end = loc.toPoint(last + 1)
+          /* c8 ignore next -- we get here if we have offsets. */
+          const place = start && end ? {start, end} : undefined
 
           file.message(
             'Titles should use `' +
               (look === ')' ? '()' : look) +
               '` as a quote',
-            /* c8 ignore next -- we get here if we have offsets. */
-            start && end ? {start, end} : undefined
+            place
           )
         }
       }

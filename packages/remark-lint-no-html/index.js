@@ -37,19 +37,25 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 const remarkLintNoHtml = lintRule(
   {
     origin: 'remark-lint:no-html',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-html#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'html', (node) => {
-      if (!generated(node) && !/^\s*<!--/.test(node.value)) {
-        file.message('Do not use HTML in markdown', node)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'html', function (node) {
+      const place = position(node)
+      if (place && !/^\s*<!--/.test(node.value)) {
+        file.message('Do not use HTML in markdown', place)
       }
     })
   }

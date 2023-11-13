@@ -63,12 +63,28 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
+/**
+ * @typedef {import('mdast').Root} Root
+ */
+
+/**
+ * @typedef {string} Options
+ *   Configuration.
+ */
+
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFileExtension = lintRule(
   'remark-lint:file-extension',
-  (tree, file, option = 'md') => {
-    var ext = file.extname
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} options
+   *   Configuration (default: `'md'`).
+   */
+  function (tree, file, options) {
+    const ext = file.extname
+    const option = options || 'md'
 
     if (ext && ext.slice(1) !== option) {
       file.message('Incorrect extension: use `' + option + '`')

@@ -49,34 +49,44 @@
 
 /**
  * @typedef {Heading['depth']} Options
- *   Options.
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
+import {pointStart, position} from 'unist-util-position'
 import {stringifyPosition} from 'unist-util-stringify-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoMultipleToplevelHeadings = lintRule(
   {
     origin: 'remark-lint:no-multiple-toplevel-headings',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-multiple-toplevel-headings#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 1) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options=1]
+   *   Configuration (default: `1`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    const option = options || 1
     /** @type {string | undefined} */
     let duplicate
 
-    visit(tree, 'heading', (node) => {
-      if (!generated(node) && node.depth === option) {
+    visit(tree, 'heading', function (node) {
+      const start = pointStart(node)
+      const place = position(node)
+
+      if (start && place && node.depth === option) {
         if (duplicate) {
           file.message(
             'Don’t use multiple top level headings (' + duplicate + ')',
-            node
+            place
           )
         } else {
-          duplicate = stringifyPosition(pointStart(node))
+          duplicate = stringifyPosition(start)
         }
       }
     })

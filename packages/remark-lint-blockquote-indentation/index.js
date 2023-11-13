@@ -79,39 +79,42 @@
  */
 
 /**
- * @typedef {import('mdast').Blockquote} Blockquote
  * @typedef {import('mdast').Root} Root
  */
 
 /**
- * @typedef {'consistent' | number} Options
- *   Options.
+ * @typedef {number | 'consistent'} Options
+ *   Configuration.
  */
 
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
-import plural from 'pluralize'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
+import {visit} from 'unist-util-visit'
 
 const remarkLintBlockquoteIndentation = lintRule(
   {
     origin: 'remark-lint:blockquote-indentation',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
-    visit(tree, 'blockquote', (node) => {
-      if (generated(node) || node.children.length === 0) {
-        return
-      }
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    let option = options || 'consistent'
 
+    visit(tree, 'blockquote', function (node) {
       const start = pointStart(node)
       const head = pointStart(node.children[0])
-      /* c8 ignore next -- we get here if we have offsets. */
-      const count = head && start ? head.column - start.column : undefined
 
-      if (typeof count === 'number') {
+      if (head && start) {
+        const count = head.column - start.column
+
         if (option === 'consistent') {
           option = count
         } else {
@@ -125,9 +128,9 @@ const remarkLintBlockquoteIndentation = lintRule(
                 ' ' +
                 abs +
                 ' ' +
-                plural('space', abs) +
+                pluralize('space', abs) +
                 ' between block quote and content',
-              pointStart(node.children[0])
+              head
             )
           }
         }

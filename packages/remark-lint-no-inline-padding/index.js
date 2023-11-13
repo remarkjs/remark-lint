@@ -36,29 +36,33 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 import {toString} from 'mdast-util-to-string'
+import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoInlinePadding = lintRule(
   {
     origin: 'remark-lint:no-inline-padding',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-inline-padding#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
     // Note: `emphasis`, `strong`, `delete` (GFM) can’t have padding anymore
     // since CM.
-    visit(tree, (node) => {
-      if (
-        (node.type === 'link' || node.type === 'linkReference') &&
-        !generated(node)
-      ) {
+    visit(tree, function (node) {
+      const place = position(node)
+
+      if ((node.type === 'link' || node.type === 'linkReference') && place) {
         const value = toString(node)
 
         if (value.charAt(0) === ' ' || value.charAt(value.length - 1) === ' ') {
-          file.message('Don’t pad `' + node.type + '` with inner spaces', node)
+          file.message('Don’t pad `' + node.type + '` with inner spaces', place)
         }
       }
     })

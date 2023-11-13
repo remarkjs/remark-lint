@@ -62,8 +62,9 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
+import {lintRule} from 'unified-lint-rule'
+import {pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
 
 const remarkLintListItemBulletIndent = lintRule(
@@ -71,24 +72,28 @@ const remarkLintListItemBulletIndent = lintRule(
     origin: 'remark-lint:list-item-bullet-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'list', (list, _, grandparent) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'list', function (list, _, grandparent) {
       let index = -1
+      const pointStartGrandparent = pointStart(grandparent)
 
       while (++index < list.children.length) {
         const item = list.children[index]
+        const itemStart = pointStart(item)
 
         if (
           grandparent &&
-          grandparent.type === 'root' &&
-          grandparent.position &&
-          typeof grandparent.position.start.column === 'number' &&
-          item.position &&
-          typeof item.position.start.column === 'number'
+          pointStartGrandparent &&
+          itemStart &&
+          grandparent.type === 'root'
         ) {
-          const indent =
-            item.position.start.column - grandparent.position.start.column
+          const indent = itemStart.column - pointStartGrandparent.column
 
           if (indent) {
             file.message(
@@ -96,7 +101,7 @@ const remarkLintListItemBulletIndent = lintRule(
                 indent +
                 ' ' +
                 plural('space', indent),
-              item.position.start
+              itemStart
             )
           }
         }

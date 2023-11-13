@@ -41,8 +41,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {pointStart} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
+import {pointStart, position} from 'unist-util-position'
 import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
 
@@ -51,26 +50,34 @@ const remarkLintNoDuplicateDefinedUrls = lintRule(
     origin: 'remark-lint:no-duplicate-defined-urls',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    /** @type {Record<string, string>} */
-    const map = Object.create(null)
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    /** @type {Map<string, string>} */
+    const map = new Map()
 
-    visit(tree, 'definition', (node) => {
-      if (!generated(node) && node.url) {
+    visit(tree, 'definition', function (node) {
+      const place = position(node)
+      const start = pointStart(node)
+
+      if (place && start && node.url) {
         const url = String(node.url).toUpperCase()
-        const duplicate = map[url]
+        const duplicate = map.get(url)
 
         if (duplicate) {
           file.message(
             'Do not use different definitions with the same URL (' +
               duplicate +
               ')',
-            node
+            place
           )
         }
 
-        map[url] = stringifyPosition(pointStart(node))
+        map.set(url, stringifyPosition(start))
       }
     })
   }

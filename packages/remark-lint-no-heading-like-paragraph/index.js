@@ -40,8 +40,8 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {generated} from 'unist-util-generated'
 
 const fence = '#######'
 
@@ -50,10 +50,17 @@ const remarkLintNoHeadingLikeParagraph = lintRule(
     origin: 'remark-lint:no-heading-like-paragraph',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-like-paragraph#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'paragraph', (node) => {
-      if (!generated(node)) {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'paragraph', function (node) {
+      const place = position(node)
+
+      if (place) {
         const head = node.children[0]
 
         if (
@@ -63,7 +70,7 @@ const remarkLintNoHeadingLikeParagraph = lintRule(
         ) {
           file.message(
             'This looks like a heading but has too many hashes',
-            node
+            place
           )
         }
       }

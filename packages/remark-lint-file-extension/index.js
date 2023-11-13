@@ -47,7 +47,7 @@
 
 /**
  * @typedef {string} Options
- *   Options.
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -57,8 +57,16 @@ const remarkLintFileExtension = lintRule(
     origin: 'remark-lint:file-extension',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-file-extension#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (_, file, option = 'md') => {
+  /**
+   * @param {Root} _
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (default: `'md'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (_, file, options) {
+    const option = options || 'md'
     const ext = file.extname
 
     if (ext && ext.slice(1) !== option) {

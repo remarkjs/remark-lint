@@ -132,56 +132,68 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').ListItem} ListItem
- *
+ * @typedef {import('mdast').Root} Root
+ */
+
+/**
  * @typedef Options
- *   Options.
+ *   Configuration.
  * @property {boolean | null | undefined} [checkBlanks=false]
- *   Adhere to CommonMark looseness instead of markdown-style-guide preference.
+ *   Follow CommonMark looseness instead of markdown-style-guide preference
+ *   (default: `false`).
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
-import {generated} from 'unist-util-generated'
+
+/** @type {Readonly<Options>} */
+const emptyOptions = {}
 
 const remarkLintListItemSpacing = lintRule(
   {
     origin: 'remark-lint:list-item-spacing',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = {}) => {
-    const {checkBlanks} = option
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Readonly<Options> | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    // To do: change options? Follow CM by default?
+    const settings = options || emptyOptions
+    const checkBlanks = settings.checkBlanks || false
     const infer = checkBlanks ? inferBlankLine : inferMultiline
 
-    visit(tree, 'list', (node) => {
-      if (!generated(node)) {
-        let tight = true
-        let index = -1
+    visit(tree, 'list', function (node) {
+      let tight = true
+      let index = -1
 
-        while (++index < node.children.length) {
-          if (infer(node.children[index])) {
-            tight = false
-            break
-          }
+      while (++index < node.children.length) {
+        if (infer(node.children[index])) {
+          tight = false
+          break
         }
+      }
 
-        index = 0 // Skip over first.
+      index = 0 // Skip over first.
 
-        while (++index < node.children.length) {
-          const start = pointEnd(node.children[index - 1])
-          const end = pointStart(node.children[index])
+      while (++index < node.children.length) {
+        const start = pointEnd(node.children[index - 1])
+        const end = pointStart(node.children[index])
 
-          if (start && end && end.line - start.line < 2 !== tight) {
-            file.message(
-              tight
-                ? 'Extraneous new line after list item'
-                : 'Missing new line after list item',
-              {start, end}
-            )
-          }
+        if (start && end && end.line - start.line < 2 !== tight) {
+          file.message(
+            tight
+              ? 'Extraneous new line after list item'
+              : 'Missing new line after list item',
+            {start, end}
+          )
         }
       }
     })
@@ -192,7 +204,9 @@ export default remarkLintListItemSpacing
 
 /**
  * @param {ListItem} node
+ *   Item.
  * @returns {boolean}
+ *   Whether there’s a blank line between item children.
  */
 function inferBlankLine(node) {
   let index = 0
@@ -212,7 +226,9 @@ function inferBlankLine(node) {
 
 /**
  * @param {ListItem} node
+ *   Item.
  * @returns {boolean}
+ *   Whether `node` is multiline.
  */
 function inferMultiline(node) {
   const end = pointEnd(node.children[node.children.length - 1])

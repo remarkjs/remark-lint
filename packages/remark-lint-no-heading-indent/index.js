@@ -74,19 +74,24 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
-import {visit} from 'unist-util-visit'
+import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintNoHeadingIndent = lintRule(
   {
     origin: 'remark-lint:no-heading-indent',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-indent#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, 'heading', (node, _, parent) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, 'heading', function (node, _, parent) {
       const start = pointStart(node)
 
       // Note: it’s rather complex to detect what the expected indent is in block
@@ -104,7 +109,7 @@ const remarkLintNoHeadingIndent = lintRule(
             ' ' +
             plural('space', diff) +
             ' before this heading',
-          pointStart(node)
+          start
         )
       }
     })

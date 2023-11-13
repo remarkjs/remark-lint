@@ -250,13 +250,13 @@ When configured with `'compact'`.
 
 ##### `ok-padded.md`
 
-When configured with `'consistent'`.
-
 ###### In
 
 > 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
 
 ```markdown
+The default is `'consistent'`.
+
 | A     | B     |
 | ----- | ----- |
 | Alpha | Bravo |

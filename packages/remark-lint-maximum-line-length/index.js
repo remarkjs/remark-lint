@@ -111,32 +111,37 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef {number} Options
- *   Options.
- */
-
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 
 const remarkLintMaximumLineLength = lintRule(
   {
     origin: 'remark-lint:maximum-line-length',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 80) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {number | null | undefined} [options=80]
+   *   Configuration (default: `80`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
     const lines = value.split(/\r?\n/)
+    const option = options || 80
 
-    visit(tree, (node) => {
+    visit(tree, function (node) {
+      // To do: add MDX types, etc.
+      // To do: remove MDX 1?
       if (
-        node.type === 'heading' ||
-        node.type === 'table' ||
         node.type === 'code' ||
         node.type === 'definition' ||
+        node.type === 'heading' ||
         node.type === 'html' ||
+        node.type === 'table' ||
         // @ts-expect-error: These are from MDX@1 and MDX@2: <https://github.com/mdx-js/specification>.
         node.type === 'jsx' ||
         // @ts-expect-error: MDX
@@ -149,14 +154,14 @@ const remarkLintMaximumLineLength = lintRule(
         node.type === 'mdxTextExpression' ||
         // @ts-expect-error: MDX
         node.type === 'mdxjsEsm' ||
-        node.type === 'yaml' ||
-        // @ts-expect-error: YAML and TOML are from frontmatter.
-        node.type === 'toml'
+        // @ts-expect-error: TOML from frontmatter.
+        node.type === 'toml' ||
+        node.type === 'yaml'
       ) {
-        const start = pointStart(node)
         const end = pointEnd(node)
+        const start = pointStart(node)
 
-        if (start && end) {
+        if (end && start) {
           allowList(start.line - 1, end.line)
         }
       }
@@ -166,14 +171,14 @@ const remarkLintMaximumLineLength = lintRule(
     // the wrap.
     // However, when they do, and there’s whitespace after it, they are not
     // allowed.
-    visit(tree, (node, pos, parent) => {
-      const initial = pointStart(node)
+    visit(tree, function (node, pos, parent) {
       const final = pointEnd(node)
+      const initial = pointStart(node)
 
       if (
-        (node.type === 'link' ||
-          node.type === 'image' ||
-          node.type === 'inlineCode') &&
+        (node.type === 'image' ||
+          node.type === 'inlineCode' ||
+          node.type === 'link') &&
         initial &&
         final &&
         parent &&
@@ -219,7 +224,11 @@ const remarkLintMaximumLineLength = lintRule(
      * Allowlist from `initial` to `final`, zero-based.
      *
      * @param {number} initial
+     *   Initial line.
      * @param {number} final
+     *   Final line.
+     * @returns {undefined}
+     *   Nothing.
      */
     function allowList(initial, final) {
       while (initial < final) {

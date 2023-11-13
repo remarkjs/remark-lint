@@ -84,24 +84,33 @@
  */
 
 /**
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
+ *
  * @typedef {'.' | ')'} Marker
  *   Style.
- * @typedef {'consistent' | Marker} Options
- *   Options.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintOrderedListMarkerStyle = lintRule(
   {
     origin: 'remark-lint:ordered-list-marker-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    let option = options || 'consistent'
 
     if (option !== 'consistent' && option !== '.' && option !== ')') {
       file.fail(
@@ -111,21 +120,21 @@ const remarkLintOrderedListMarkerStyle = lintRule(
       )
     }
 
-    visit(tree, 'list', (node) => {
+    visit(tree, 'list', function (node) {
       let index = -1
 
       if (!node.ordered) return
 
       while (++index < node.children.length) {
         const child = node.children[index]
-        const start = pointStart(child)
         const end = pointStart(child.children[0])
+        const start = pointStart(child)
 
         if (
-          start &&
           end &&
-          typeof start.offset === 'number' &&
-          typeof end.offset === 'number'
+          start &&
+          typeof end.offset === 'number' &&
+          typeof start.offset === 'number'
         ) {
           const marker = /** @type {Marker} */ (
             value

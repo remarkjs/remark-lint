@@ -105,23 +105,32 @@
  */
 
 /**
- * @typedef {'~' | '`'} Marker
+ * @typedef {'`' | '~'} Marker
  *   Styles.
- * @typedef {'consistent' | Marker} Options
- *   Options.
+ *
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintFencedCodeMarker = lintRule(
   {
     origin: 'remark-lint:fenced-code-marker',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    let option = options || 'consistent'
     const contents = String(file)
 
     if (option !== 'consistent' && option !== '~' && option !== '`') {
@@ -132,7 +141,7 @@ const remarkLintFencedCodeMarker = lintRule(
       )
     }
 
-    visit(tree, 'code', (node) => {
+    visit(tree, 'code', function (node) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {
@@ -142,7 +151,7 @@ const remarkLintFencedCodeMarker = lintRule(
           .charAt(0)
 
         // Ignore unfenced code blocks.
-        if (marker === '~' || marker === '`') {
+        if (marker === '`' || marker === '~') {
           if (option === 'consistent') {
             option = marker
           } else if (marker !== option) {

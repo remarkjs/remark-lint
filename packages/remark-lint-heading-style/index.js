@@ -117,28 +117,38 @@
  */
 
 /**
+ * @typedef {Type | 'consistent'} Options
+ *   Configuration.
+ *
  * @typedef {'atx' | 'atx-closed' | 'setext'} Type
  *   Styles.
- * @typedef {'consistent' | Type} Options
- *   Options.
  */
 
-import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {headingStyle} from 'mdast-util-heading-style'
-import {generated} from 'unist-util-generated'
+import {lintRule} from 'unified-lint-rule'
+import {position} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 const remarkLintHeadingStyle = lintRule(
   {
     origin: 'remark-lint:heading-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-heading-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
+    let option = options || 'consistent'
+
     if (
-      option !== 'consistent' &&
       option !== 'atx' &&
       option !== 'atx-closed' &&
+      option !== 'consistent' &&
       option !== 'setext'
     ) {
       file.fail(
@@ -148,14 +158,15 @@ const remarkLintHeadingStyle = lintRule(
       )
     }
 
-    visit(tree, 'heading', (node) => {
-      if (!generated(node)) {
+    visit(tree, 'heading', function (node) {
+      const place = position(node)
+
+      if (place) {
         if (option === 'consistent') {
-          // Funky nodes perhaps cannot be detected.
-          /* c8 ignore next */
+          /* c8 ignore next -- funky nodes perhaps cannot be detected. */
           option = headingStyle(node) || 'consistent'
         } else if (headingStyle(node, option) !== option) {
-          file.message('Headings should use ' + option, node)
+          file.message('Headings should use ' + option, place)
         }
       }
     })

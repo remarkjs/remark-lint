@@ -154,8 +154,8 @@
  */
 
 /**
- * @typedef {'single' | 'one' | 'ordered'} Options
- *   Options.
+ * @typedef {'one' | 'ordered' | 'single'} Options
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -167,11 +167,19 @@ const remarkLintOrderedListMarkerValue = lintRule(
     origin: 'remark-lint:ordered-list-marker-value',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'ordered') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='ordered']
+   *   Configuration (default: `'ordered'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    const option = options || 'ordered'
 
-    if (option !== 'ordered' && option !== 'one' && option !== 'single') {
+    if (option !== 'one' && option !== 'ordered' && option !== 'single') {
       file.fail(
         'Incorrect ordered list item marker value `' +
           option +
@@ -179,26 +187,24 @@ const remarkLintOrderedListMarkerValue = lintRule(
       )
     }
 
-    visit(tree, 'list', (node) => {
+    visit(tree, 'list', function (node) {
       if (!node.ordered) return
 
       let expected =
-        option === 'one' || node.start === null || node.start === undefined
-          ? 1
-          : node.start
+        option === 'one' || typeof node.start !== 'number' ? 1 : node.start
       let index = -1
 
       while (++index < node.children.length) {
         const child = node.children[index]
-        const start = pointStart(child)
         const end = pointStart(child.children[0])
+        const start = pointStart(child)
 
         // Ignore generated nodes, first items.
         if (
-          !start ||
-          typeof start.offset !== 'number' ||
           !end ||
+          !start ||
           typeof end.offset !== 'number' ||
+          typeof start.offset !== 'number' ||
           (index === 0 && option !== 'one')
         ) {
           continue

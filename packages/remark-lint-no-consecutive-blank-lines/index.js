@@ -56,10 +56,10 @@
  * @typedef {import('unist').Point} Point
  */
 
-import {lintRule} from 'unified-lint-rule'
 import plural from 'pluralize'
+import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 
 const unknownContainerSize = new Set(['mdxJsxFlowElement', 'mdxJsxTextElement'])
 
@@ -68,15 +68,20 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
     origin: 'remark-lint:no-consecutive-blank-lines',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, void>} */
-  (tree, file) => {
-    visit(tree, (node) => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file) {
+    visit(tree, function (node) {
       if ('children' in node) {
-        const head = node.children[0]
         const start = pointStart(node)
+        const head = node.children[0]
         const headStart = pointStart(head)
 
-        if (head && start && headStart) {
+        if (head && headStart && start) {
           if (!unknownContainerSize.has(node.type)) {
             // Compare parent and first child.
             compare(start, headStart, 0)
@@ -118,8 +123,13 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
      * difference exceeds `max`.
      *
      * @param {Point} start
+     *   Start.
      * @param {Point} end
+     *   End.
      * @param {0 | 1 | 2} max
+     *   Max.
+     * @returns {undefined}
+     *   Nothing.
      */
     function compare(start, end, max) {
       const diff = end.line - start.line

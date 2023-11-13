@@ -80,21 +80,29 @@
 
 /**
  * @typedef {string} Options
- *   Options.
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
-import {pointStart, pointEnd} from 'unist-util-position'
 
 const remarkLintRuleStyle = lintRule(
   {
     origin: 'remark-lint:rule-style',
     url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style#readme'
   },
-  /** @type {import('unified-lint-rule').Rule<Root, Options>} */
-  (tree, file, option = 'consistent') => {
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options='consistent']
+   *   Configuration (default: `'consistent'`).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function (tree, file, options) {
     const value = String(file)
+    let option = options || 'consistent'
 
     if (option !== 'consistent' && /[^-_* ]/.test(option)) {
       file.fail(
@@ -102,17 +110,17 @@ const remarkLintRuleStyle = lintRule(
       )
     }
 
-    visit(tree, 'thematicBreak', (node) => {
-      const initial = pointStart(node)
-      const final = pointEnd(node)
+    visit(tree, 'thematicBreak', function (node) {
+      const end = pointEnd(node)
+      const start = pointStart(node)
 
       if (
-        initial &&
-        final &&
-        typeof initial.offset === 'number' &&
-        typeof final.offset === 'number'
+        start &&
+        end &&
+        typeof start.offset === 'number' &&
+        typeof end.offset === 'number'
       ) {
-        const rule = value.slice(initial.offset, final.offset)
+        const rule = value.slice(start.offset, end.offset)
 
         if (option === 'consistent') {
           option = rule

@@ -21,13 +21,13 @@
  * @typedef ExampleInfo
  *   Example.
  * @property {unknown} [config]
- *   Configuration.
+ *   Configuration (optional).
  * @property {boolean} [gfm]
- *   Whether to use GFM.
+ *   Whether to use GFM (optional).
  * @property {'input' | 'output'} [label]
- *   Label.
+ *   Label (optional).
  * @property {boolean} [positionless]
- *   Whether this check also applies without positions.
+ *   Whether this check also applies without positions (optional).
  * @property {string} name
  *   Name.
  *

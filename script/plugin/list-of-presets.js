@@ -8,6 +8,7 @@
 
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
+import structuredClone from '@ungap/structured-clone'
 import {zone} from 'mdast-zone'
 import {packagesUrl, presets} from '../info.js'
 

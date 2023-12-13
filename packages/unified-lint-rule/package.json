@@ -11,11 +11,7 @@
     "unified",
     "unified-plugin"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/remarkjs/remark-lint",
-    "directory": "packages/unified-lint-rule"
-  },
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/unified-lint-rule",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -23,16 +19,16 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com>"
   ],
   "sideEffects": false,
   "type": "module",
   "exports": "./index.js",
   "files": [
-    "lib/",
     "index.d.ts",
     "index.d.ts.map",
-    "index.js"
+    "index.js",
+    "lib/"
   ],
   "dependencies": {
     "@types/unist": "^3.0.0",

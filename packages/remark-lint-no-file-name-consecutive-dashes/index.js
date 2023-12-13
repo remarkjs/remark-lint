@@ -1,16 +1,32 @@
 /**
+ * remark-lint rule to warn when file names contain consecutive dashes.
+ *
+ * ## What is this?
+ *
+ * This package checks file names.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that no consecutive dashes appear in
- * file names.
+ * You can use this package to check that file names are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoFileNameConsecutiveDashes)`
+ *
+ * Warn when file names contain consecutive dashes.
+ *
+ * ###### Parameters
+ *
  * There are no options.
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-file-name-consecutive-dashes]: #unifieduseremarklintnofilenameconsecutivedashes
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-file-name-consecutive-dashes
- * @summary
- *   remark-lint rule to warn when consecutive dashes appear in file names.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

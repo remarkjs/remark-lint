@@ -1,28 +1,57 @@
 /**
+ * remark-lint rule to warn when link title markers violate a given style.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of link title markers.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that title markers are consistent.
+ * You can use this package to check that the style of link title markers is
+ * consistent.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintLinkTitleStyle[, options])`
  *
- * *   `'"'`
- *     — prefer double quotes
- * *   `"'"`
- *     — prefer single quotes
- * *   `'()'`
- *     — prefer parens
- * *   `'consistent'`
- *     — detect the first used style and warn when further titles differ
+ * Warn when link title markers violate a given style.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = '"' | '\'' | '()'
+ * ```
  *
  * ## Recommendation
  *
- * Parens in titles were not supported in markdown before CommonMark.
- * While they should work in most places now, not all markdown parsers follow
- * CommonMark.
- * Parens for titles also arguably look a bit weird because they’re inside more
- * parens: `[text](url (title))`.
+ * Before CommonMark, parens for titles were not supported in markdown.
+ * They should now work in most places.
+ * Parens do look a bit weird as they’re inside more parens:
+ * `[text](url (title))`.
  *
  * In HTML, attributes are commonly written with double quotes.
  * Due to this, titles are almost exclusively wrapped in double quotes in
@@ -30,16 +59,18 @@
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats titles with double quotes by default.
- * Pass
- * [`quote: "'"`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsquote)
- * to use single quotes.
+ * [`remark-stringify`][github-remark-stringify]  formats titles with double
+ * quotes by default.
+ * Pass `quote: "'"` to use single quotes.
  * There is no option to use parens.
  *
+ * [api-options]: #options
+ * [api-remark-lint-link-title-style]: #unifieduseremarklintlinktitlestyle-options
+ * [api-style]: #style
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module link-title-style
- * @summary
- *   remark-lint rule to warn when title markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -126,11 +157,11 @@
  */
 
 /**
- * @typedef {'"' | '\'' | '()'} Marker
- *   Styles.
- *
- * @typedef {Marker | 'consistent'} Options
+ * @typedef {Style | 'consistent'} Options
  *   Configuration.
+ *
+ * @typedef {'"' | '\'' | '()'} Style
+ *   Styles.
  */
 
 import {lintRule} from 'unified-lint-rule'

@@ -1,21 +1,23 @@
-# ![remark-lint][logo]
+<!--This file is generated-->
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
+# remark-lint
 
-**[remark][]** plugin to support configuration comments for remark lint rules.
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
+[![Sponsors][badge-funding-sponsors-image]][badge-funding-url]
+[![Backers][badge-funding-backers-image]][badge-funding-url]
+[![Chat][badge-chat-image]][badge-chat-url]
 
-See the [monorepo readme][mono] for more info on remark lint.
+**[remark][github-remark]** plugin to support configuration comments for
+[`remark-lint`][github-remark-lint] rules.
 
 ## Contents
 
 * [What is this?](#what-is-this)
 * [When should I use this?](#when-should-i-use-this)
+* [Presets](#presets)
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
@@ -26,8 +28,8 @@ See the [monorepo readme][mono] for more info on remark lint.
 
 ## What is this?
 
-This package is a [unified][] ([remark][]) plugin to add support for
-configuration comments to control remark lint rule messages.
+This plugin adds support for configuration comments to control remark lint
+rule messages.
 
 ## When should I use this?
 
@@ -36,26 +38,37 @@ authors ignore messages in certain cases.
 This package is already included in all our presets.
 If you’re building a preset yourself, you should include this package.
 
+## Presets
+
+This plugin is included in the following presets:
+
+| Preset | Options |
+| - | - |
+| [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | |
+| [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | |
+
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 16+),
+install with [npm][npm-install]:
 
 ```sh
 npm install remark-lint
 ```
 
-In Deno with [`esm.sh`][esmsh]:
+In Deno with [`esm.sh`][esm-sh]:
 
 ```js
 import remarkLint from 'https://esm.sh/remark-lint@9'
 ```
 
-In browsers with [`esm.sh`][esmsh]:
+In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLint from 'https://esm.sh/remark-lint@9?build'
+  import remarkLint from 'https://esm.sh/remark-lint@9?bundle'
 </script>
 ```
 
@@ -64,15 +77,19 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {remark} from 'remark'
 import remarkLint from 'remark-lint'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
+import {unified} from 'unified'
 import {reporter} from 'vfile-reporter'
 
 const file = await read('example.md')
 
-await remark()
+await unified()
+  .use(remarkParse)
   .use(remarkLint)
+  .use(remarkStringify)
   .process(file)
 
 console.error(reporter(file))
@@ -81,7 +98,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --use remark-lint example.md
+remark --frail --use remark-lint .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -101,86 +118,97 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-The default export is `remarkLint`.
+It exports no additional [TypeScript][typescript] types.
+The default export is
+[`remarkLint`][api-remark-lint].
 
 ### `unified().use(remarkLint)`
 
 Add support for configuration comments.
-There are no options.
 
-See [Ignore warnings][ignore] in the monorepo readme for how to use it.
+See [Ignore warnings][mono-ignore] in the monorepo readme for how to use it.
+
+###### Returns
+
+Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`remark-lint@9`,
+compatible with Node.js 12.
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
+See [`contributing.md`][github-dotfiles-contributing] in [`remarkjs/.github`][github-dotfiles-health] for ways
 to get started.
-See [`support.md`][support] for ways to get help.
+See [`support.md`][github-dotfiles-support] for ways to get help.
 
-This project has a [code of conduct][coc].
+This project has a [code of conduct][github-dotfiles-coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][author]
 
-[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/014fca7/logo.svg?sanitize=true
-
-[build-badge]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
-
-[build]: https://github.com/remarkjs/remark-lint/actions
-
-[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
-
-[coverage]: https://codecov.io/github/remarkjs/remark-lint
-
-[downloads-badge]: https://img.shields.io/npm/dm/remark-lint.svg
-
-[downloads]: https://www.npmjs.com/package/remark-lint
-
-[size-badge]: https://img.shields.io/bundlephobia/minzip/remark-lint.svg
-
-[size]: https://bundlephobia.com/result?p=remark-lint
-
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
-
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
-
-[collective]: https://opencollective.com/unified
-
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
-[chat]: https://github.com/remarkjs/remark/discussions
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-
-[esmsh]: https://esm.sh
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[health]: https://github.com/remarkjs/.github
-
-[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
-
-[support]: https://github.com/remarkjs/.github/blob/main/support.md
-
-[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
-
-[license]: https://github.com/remarkjs/remark-lint/blob/main/license
+[api-remark-lint]: #unifieduseremarklint
 
 [author]: https://wooorm.com
 
-[unified]: https://github.com/unifiedjs/unified
+[badge-build-image]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
 
-[remark]: https://github.com/remarkjs/remark
+[badge-build-url]: https://github.com/remarkjs/remark-lint/actions
 
-[mono]: https://github.com/remarkjs/remark-lint
+[badge-chat-image]: https://img.shields.io/badge/chat-discussions-success.svg
 
-[ignore]: https://github.com/remarkjs/remark-lint#ignore-warnings
+[badge-chat-url]: https://github.com/remarkjs/remark/discussions
+
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
+
+[badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
+
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint.svg
+
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint
+
+[badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
+
+[badge-funding-sponsors-image]: https://opencollective.com/unified/sponsors/badge.svg
+
+[badge-funding-url]: https://opencollective.com/unified
+
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint
+
+[badge-size-url]: https://bundlejs.com/?q=remark-lint
+
+[esm-sh]: https://esm.sh
+
+[file-license]: https://github.com/remarkjs/remark-lint/blob/main/license
+
+[github-dotfiles-coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+
+[github-dotfiles-contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
+
+[github-dotfiles-health]: https://github.com/remarkjs/.github
+
+[github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
+
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark]: https://github.com/remarkjs/remark
+
+[github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+
+[mono-ignore]: https://github.com/remarkjs/remark-lint#ignore-warnings
+
+[npm-install]: https://docs.npmjs.com/cli/install
+
+[typescript]: https://www.typescriptlang.org

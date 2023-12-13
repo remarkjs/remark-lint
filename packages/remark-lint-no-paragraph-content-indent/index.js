@@ -1,21 +1,37 @@
 /**
+ * remark-lint rule to warn when text in paragraphs is indented.
+ *
+ * ## What is this?
+ *
+ * This package checks that text in paragraphs is not indented.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that content in paragraphs is not
- * indented.
+ * You can use this package to check that paragraphs are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoParagraphContentIndent)`
+ *
+ * Warn when text in paragraphs is indented.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * Indenting further lines in a paragraph has no effect.
- * Due to this, it’s recommended to turn this rule on.
+ * So it’s recommended to turn this rule on.
+ *
+ * [api-remark-lint-no-paragraph-content-indent]: #unifieduseremarklintnoparagraphcontentindent
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-paragraph-content-indent
- * @summary
- *   remark-lint rule to warn when content in paragraphs is indented.
  * @author Titus Wormer
  * @copyright 2017 Titus Wormer
  * @license MIT
@@ -51,28 +67,28 @@
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   ·Alpha
+ *   ␠Alpha
  *
  *   Bravo
- *   ·Charlie.
+ *   ␠Charlie.
  *
  *   *   Delta
- *       ·Echo.
+ *       ␠Echo.
  *
  *   > Foxtrot
- *   > ·Golf.
+ *   > ␠Golf.
  *
  *   `hotel()`
- *   ·india.
+ *   ␠india.
  *
  *   -   `juliett()`
- *       ·kilo.
+ *       ␠kilo.
  *
- *   ·![lima]() mike
+ *   ␠![lima]() mike
  *
  *   * november
  *   oscar
- *     ·papa.
+ *     ␠papa.
  *
  * @example
  *   {"name": "not-ok.md", "label": "output"}

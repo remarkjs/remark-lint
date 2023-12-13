@@ -1,16 +1,32 @@
 /**
+ * remark-lint rule to warn when file names start with `a`, `the`, and such.
+ *
+ * ## What is this?
+ *
+ * This package checks file names.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that file names do not start with
- *  articles (`a`, `the`, etc).
+ * You can use this package to check that file names are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoFileNameArticles)`
+ *
+ * Warn when file names start with `a`, `the`, and such.
+ *
+ * ###### Parameters
+ *
  * There are no options.
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-file-name-articles]: #unifieduseremarklintnofilenamearticles
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-file-name-articles
- * @summary
- *   remark-lint rule to warn when file names start with articles.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

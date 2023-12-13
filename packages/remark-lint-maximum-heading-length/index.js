@@ -1,28 +1,42 @@
 /**
+ * remark-lint rule to warn when headings are too long.
+ *
+ * ## What is this?
+ *
+ * This package checks the length of heading text.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that heading text is within reason.
  *
  * ## API
  *
- * The following options (default: `60`) are accepted:
+ * ### `unified().use(remarkLintMaximumHeadingLength[, options])`
  *
- * *   `number` (example: `72`)
- *     — max number of characters to accept in heading text
+ * Warn when headings are too long.
  *
- * Ignores syntax, only checks the plain text content.
+ * ###### Parameters
+ *
+ * * `options` (`number`, default: `60`)
+ *   — preferred max size
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * While this rule is sometimes annoying, reasonable size headings
- * do help SEO purposes (bots prefer reasonable headings), visual users
- * (headings are typically displayed quite large), and users of screen readers
- * (who typically use “jump to heading” features to navigate within a page,
- * which reads every heading out loud).
+ * While this rule is sometimes annoying,
+ * reasonable size headings do help SEO purposes (bots prefer reasonable
+ * headings),
+ * visual users (headings are typically displayed quite large),
+ * and users of screen readers (who use “jump to heading” features that read
+ * every heading out loud to navigate within a page).
+ *
+ * [api-remark-lint-maximum-heading-length]: #unifieduseremarklintmaximumheadinglength-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module maximum-heading-length
- * @summary
- *   remark-lint rule to warn when headings are too long.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

@@ -1,20 +1,37 @@
 /**
+ * remark-lint rule to warn when URLs are defined multiple times.
+ *
+ * ## What is this?
+ *
+ * This package checks that defined URLs are unique.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that URLs are defined once.
+ * You can use this package to check that definitions are useful.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoDuplicateDefinedUrls)`
+ *
+ * Warn when URLs are defined multiple times.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * It’s likely a mistake when the same URL is defined with different
  * identifiers.
  *
+ * [api-remark-lint-no-duplicate-defined-urls]: #unifieduseremarklintnoduplicatedefinedurls
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-duplicate-defined-urls
- * @summary
- *   remark-lint rule to warn when URLs are defined multiple times.
  * @author Titus Wormer
  * @copyright 2020 Titus Wormer
  * @license MIT

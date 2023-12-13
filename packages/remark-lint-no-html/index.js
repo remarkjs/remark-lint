@@ -1,15 +1,32 @@
 /**
+ * remark-lint rule to warn when HTML is used.
+ *
+ * ## What is this?
+ *
+ * This package checks HTML.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that no HTML (other than comments) is used.
+ * You can use this package to check that no HTML is used.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoHtml)`
+ *
+ * Warn when HTML is used.
+ *
+ * ###### Parameters
+ *
  * There are no options.
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-html]: #unifieduseremarklintnohtml
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-html
- * @summary
- *   remark-lint rule to warn when HTML is used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

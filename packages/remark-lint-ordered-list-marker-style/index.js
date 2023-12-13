@@ -1,37 +1,70 @@
 /**
+ * remark-lint rule to warn when ordered list markers are inconsistent.
+ *
+ * ## What is this?
+ *
+ * This package checks ordered list markers.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that ordered list markers are consistent.
+ * You can use this package to check ordered lists.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintOrderedListMarkerStyle[, options])`
  *
- * *   `'.'`
- *     — prefer dots
- * *   `')'`
- *     — prefer parens
- * *   `'consistent'`
- *     — detect the first used style and warn when further markers differ
+ * Warn when ordered list markers are inconsistent.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Marker`
+ *
+ * Marker (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Marker = '.' | ')'
+ * ```
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Marker | 'consistent'
+ * ```
  *
  * ## Recommendation
  *
  * Parens for list markers were not supported in markdown before CommonMark.
- * While they should work in most places now, not all markdown parsers follow
- * CommonMark.
- * Due to this, it’s recommended to prefer dots.
+ * While they should work in most places now,
+ * not all markdown parsers follow CommonMark.
+ * So it’s recommended to prefer dots.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats ordered lists with dots by default.
- * Pass
- * [`bulletOrdered: ')'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbulletordered)
- * to always use parens.
+ * [`remark-stringify`][github-remark-stringify] formats ordered lists with
+ * dots by default.
+ * Pass `bulletOrdered: ')'` to always use parens.
+ *
+ * [api-marker]: #marker
+ * [api-options]: #options
+ * [api-remark-lint-ordered-list-marker-style]: #unifieduseremarklintorderedlistmarkerstyle-options
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module ordered-list-marker-style
- * @summary
- *   remark-lint rule to warn when ordered list markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

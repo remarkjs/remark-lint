@@ -1,21 +1,35 @@
 /**
+ * remark-lint rule to warn when headings end in punctuation.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of hedings.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that headings don’t end in punctuation.
+ * You can use this package to check that heading text is consistent.
  *
  * ## API
  *
- * The following options (default: `'\\.,;:!?'`) are accepted:
+ * ### `unified().use(remarkLintNoHeadingPunctuation[, options])`
  *
- * *   `string` (example `'\\.,;:'`)
- *     — disallowed characters, wrapped in `new RegExp('[' + x + ']')`, make sure
- *     to double escape regexp characters
- * *   `RegExp` (example `/\p{P}/u`)
- *     — disallowed pattern
+ * Warn when headings end in punctuation.
+ *
+ * ###### Parameters
+ *
+ * * `options` (`string`, default: `'!,\\.:;?'`)
+ *   — configuration,
+ *   wrapped in `new RegExp('[' + x + ']')` so make sure to escape regexp
+ *   characters
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-heading-punctuation]: #unifieduseremarklintnoheadingpunctuation-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-heading-punctuation
- * @summary
- *   remark-lint rule to warn headings end in certain punctuation.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -56,11 +70,6 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef {string} Options
- *   Options.
- */
-
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
@@ -74,13 +83,15 @@ const remarkLintNoHeadingPunctuation = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {Options | null | undefined} [options]
-   *   Configuration (default: `'\\.,;:!?'`).
+   * @param {string | null | undefined} [options]
+   *   Configuration (default: `'!,\\.:;?'`),
+   *   wrapped in `new RegExp('[' + x + ']')` so make sure to double escape
+   *   regexp characters.
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
-    const expression = new RegExp('[' + (options || '\\.,;:!?') + ']')
+    const expression = new RegExp('[' + (options || '!,\\.:;?') + ']')
 
     visit(tree, 'heading', function (node) {
       const place = position(node)

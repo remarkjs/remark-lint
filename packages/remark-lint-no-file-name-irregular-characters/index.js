@@ -1,21 +1,35 @@
 /**
+ * remark-lint rule to warn when file names contain irregular characters.
+ *
+ * ## What is this?
+ *
+ * This package checks file names.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that file names contain regular characters.
+ * You can use this package to check that file names are consistent.
  *
  * ## API
  *
- * The following options (default: `'\\.a-zA-Z0-9-'`) are accepted:
+ * ### `unified().use(remarkLintNoFileNameIrregularCharacters[, options])`
  *
- * *   `string` (example `'\w\\.'`)
- *     — allowed characters, wrapped in `new RegExp('[^' + x + ']')`, make sure
- *     to double escape regexp characters
- * *   `RegExp` (example `/[^\.a-zA-Z0-9-]/`)
- *     — disallowed pattern
+ * Warn when file names contain contain irregular characters.
+ *
+ * ###### Parameters
+ *
+ * * `options` (`RegExp` or `string`, default: `/[^-.\dA-Za-z]/`)
+ *   — configuration,
+ *   when string wrapped in `new RegExp('[^' + x + ']')` so make sure
+ *   to escape regexp characters
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-file-name-irregular-characters]: #unifieduseremarklintnofilenameirregularcharacters-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-file-name-irregular-characters
- * @summary
- *   remark-lint rule to warn when file names contain irregular characters.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -45,14 +59,9 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef {RegExp | string} Options
- *   Configuration.
- */
-
 import {lintRule} from 'unified-lint-rule'
 
-const expression = /[^\\.a-zA-Z\d-]/
+const expression = /[^-.\dA-Za-z]/
 
 const remarkLintNoFileNameIrregularCharacters = lintRule(
   {
@@ -62,8 +71,10 @@ const remarkLintNoFileNameIrregularCharacters = lintRule(
   /**
    * @param {Root} _
    *   Tree.
-   * @param {Options | null | undefined} [options]
-   *   Configuration (default: `/[^\\.a-zA-Z\d-]/`).
+   * @param {RegExp | string | null | undefined} [options]
+   *   Configuration (default: `/[^-.\dA-Za-z]/`),
+   *   when string wrapped in `new RegExp('[^' + x + ']')` so make sure to
+   *   double escape regexp characters
    * @returns {undefined}
    *   Nothing.
    */

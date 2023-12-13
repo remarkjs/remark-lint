@@ -1,17 +1,33 @@
 /**
+ * remark-lint rule to warn when “headings” have too many hashes.
+ *
+ * ## What is this?
+ *
+ * This package checks for broken headings.
+ *
  * ## When should I use this?
  *
- * You can use this package to ensure that no heading-like constructs are
- * created, which instead will result in paragraphs with the `#` characters
- * shown.
+ * You can use this package to ensure that no broken headings are user, which
+ * instead will result in paragraphs with the `#` characters shown.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoHeadingLikeParagraph)`
+ *
+ * Warn when “headings” have too many hashes.
+ *
+ * ###### Parameters
+ *
  * There are no options.
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-heading-like-paragraph]: #unifieduseremarklintnoheadinglikeparagraph
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-heading-like-paragraph
- * @summary
- *   remark-lint rule to warn when h7+ “headings” are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

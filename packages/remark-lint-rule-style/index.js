@@ -1,44 +1,69 @@
 /**
+ * remark-lint rule to warn when thematic breaks (horizontal rules) are
+ * inconsistent.
+ *
+ * ## What is this?
+ *
+ * This package checks markers and whitespace of thematic rules.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that rules (thematic breaks, horizontal
- * rules) are consistent.
+ * You can use this package to check that thematic breaks are consistent.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintRuleStyle[, options])`
  *
- * *   `string` (example: `'** * **'`, `'___'`)
- *     — thematic break to prefer
- * *   `'consistent'`
- *     — detect the first used style and warn when further rules differ
+ * Warn when thematic breaks (horizontal rules) are inconsistent.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * * `'consistent'`
+ *   — detect the first used style and warn when further rules differ
+ * * `string` (example: `'** * **'`, `'___'`)
+ *   — thematic break to prefer
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = string | 'consistent'
+ * ```
  *
  * ## Recommendation
  *
- * Rules consist of a `*`, `-`, or `_` character, which occurs at least three
- * times with nothing else except for arbitrary spaces or tabs on a single line.
- * Using spaces, tabs, and more than three markers seems unnecessary work to
- * type out.
- * Because asterisks can be used as a marker for more markdown constructs,
+ * Rules consist of a `*`, `-`, or `_` character,
+ * which occurs at least three times with nothing else except for arbitrary
+ * spaces or tabs on a single line.
+ * Using spaces, tabs, or more than three markers is unnecessary work to type
+ * out.
+ * As asterisks can be used as a marker for more markdown constructs,
  * it’s recommended to use that for rules (and lists, emphasis, strong) too.
- * Due to this, it’s recommended to pass `'***'`.
+ * So it’s recommended to pass `'***'`.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats rules with `***` by default.
+ * [`remark-stringify`][github-remark-stringify] formats rules with `***` by
+ * default.
  * There are three settings to control rules:
  *
- * *   [`rule`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrule)
- *     (default: `'*'`) — marker
- * *   [`ruleRepetition`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulerepetition)
- *     (default: `3`) — repetitions
- * *   [`ruleSpaces`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsrulespaces)
- *     (default: `false`) — use spaces between markers
+ * * `rule` (default: `'*'`) — marker
+ * * `ruleRepetition` (default: `3`) — repetitions
+ * * `ruleSpaces` (default: `false`) — use spaces between markers
+ *
+ * [api-options]: #options
+ * [api-remark-lint-rule-style]: #unifieduseremarklintrulestyle-options
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module rule-style
- * @summary
- *   remark-lint rule to warn when rule markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

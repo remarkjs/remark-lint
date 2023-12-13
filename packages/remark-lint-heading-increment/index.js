@@ -1,27 +1,46 @@
 /**
+ * remark-lint rule to warn when heading ranks increment with more than
+ * 1 at a time.
+ *
+ * ## What is this?
+ *
+ * This package checks the increase of headings.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that heading ranks increment with one
- * at a time.
+ * You can use this package to check the increase of headings.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintHeadingIncrement)`
+ *
+ * Warn when heading ranks increment with more than 1 at a time.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * While markdown is not only used for HTML, HTML accessibility guidelines
- * state that headings should increment by one at a time.
- * As in, say the previous heading had a rank of 2 (so `<h2>`), then the
- * following heading that is to be considered “inside” it should have a rank of
- * 3 (`<h3>`).
- * Due to this, it’s recommended that when HTML output is a goal of the
- * document, that this rule is turned on.
+ * While markdown is not only used for HTML,
+ * HTML accessibility guidelines state that headings should increment by one at
+ * a time.
+ * As in,
+ * say the previous heading had a rank of 2 (so `<h2>`),
+ * then the following heading that is to be considered “inside” it should have
+ * a rank of 3 (`<h3>`).
+ * Due to this,
+ * when HTML output is a goal of the document,
+ * it’s recommended that this rule is turned on.
+ *
+ * [api-remark-lint-heading-increment]: #unifieduseremarklintheadingincrement
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module heading-increment
- * @summary
- *   remark-lint rule to warn when heading ranks increment with more than
- *   1 at a time.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -50,10 +69,6 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef {Heading['depth']} Depth
- */
-
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
@@ -70,7 +85,7 @@ const remarkLintHeadingIncrement = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Depth | undefined} */
+    /** @type {Heading['depth'] | undefined} */
     let previous
 
     visit(tree, 'heading', function (node) {

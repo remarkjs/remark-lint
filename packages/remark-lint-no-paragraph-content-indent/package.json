@@ -13,11 +13,7 @@
     "remark-lint-rule",
     "rule"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/remarkjs/remark-lint",
-    "directory": "packages/remark-lint-no-paragraph-content-indent"
-  },
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -25,7 +21,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com>"
   ],
   "sideEffects": false,
   "type": "module",

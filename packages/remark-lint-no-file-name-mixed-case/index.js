@@ -1,16 +1,33 @@
 /**
+ * remark-lint rule to warn when file names case is inconsistent.
+ *
+ * ## What is this?
+ *
+ * This package checks file names.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that file name casing is consistent
- * (either lowercase or uppercase).
+ * You can use this package to check that file names are consistent (either
+ * lowercase or uppercase).
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoFileNameMixedCase)`
+ *
+ * Warn when file names case is inconsistent.
+ *
+ * ###### Parameters
+ *
  * There are no options.
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-file-name-mixed-case]: #unifieduseremarklintnofilenamemixedcase
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-file-name-mixed-case
- * @summary
- *   remark-lint rule to warn when file name casing is inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

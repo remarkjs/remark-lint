@@ -1,10 +1,25 @@
 /**
+ * Preset of remark-lint rules to warn for likely problems.
+ *
+ * ## What is this?
+ *
+ * This package is a preset containing `remark-lint` rules.
+ * Lint rules check markdown code style.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that markdown follows some best practices.
  *
- * @summary
- *   Preset of remark-lint rules to warn for some likely problems.
+ * ## API
+ *
+ * ### `unified().use(remarkPresetLintRecommended)`
+ *
+ * Check that markdown follows some best practices.
+ *
+ * You can reconfigure rules in the preset by using them afterwards with different
+ * options.
+ *
+ * [api-remark-preset-lint-recommended]: #unifieduseremarkpresetlintrecommended
  */
 
 /**
@@ -13,19 +28,19 @@
 
 import remarkLint from 'remark-lint'
 import remarkLintFinalNewline from 'remark-lint-final-newline'
+import remarkLintHardBreakSpaces from 'remark-lint-hard-break-spaces'
 import remarkLintListItemBulletIndent from 'remark-lint-list-item-bullet-indent'
 import remarkLintListItemIndent from 'remark-lint-list-item-indent'
 import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
-import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
-import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
-import remarkLintHardBreakSpaces from 'remark-lint-hard-break-spaces'
 import remarkLintNoDuplicateDefinitions from 'remark-lint-no-duplicate-definitions'
 import remarkLintNoHeadingContentIndent from 'remark-lint-no-heading-content-indent'
 import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
+import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
 import remarkLintNoShortcutReferenceImage from 'remark-lint-no-shortcut-reference-image'
 import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference-link'
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
 import remarkLintNoUnusedDefinitions from 'remark-lint-no-unused-definitions'
+import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
 
 /** @type {Preset} */
 const remarkPresetLintRecommended = {

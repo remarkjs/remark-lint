@@ -1,46 +1,67 @@
 /**
+ * remark-lint rule to warn when undefined definitions are referenced.
+ *
+ * ## What is this?
+ *
+ * This package checks that referenced definitions are defined.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that referenced definitions are defined.
+ * You can use this package to check for broken references.
  *
  * ## API
  *
- * The following options (default: `undefined`) are accepted:
+ * ### `unified().use(remarkLintNoUndefinedReferences[, options])`
  *
- * * `Object` with the following fields:
- *   * `allow` (`Array<RegExp | {source: string} | string>`,
- *     default: `[]`)
- *     — text or regex that you want to be allowed between `[` and `]`
- *     even though it’s undefined; regex is provided via a `RegExp` object
- *     or via a `{source: string}` object where `source` is the source
- *     text of a case-insensitive regex
+ * Warn when undefined definitions are referenced.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], optional)
+ *   — configuration
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Fields
+ *
+ * * `allow` (`Array<RegExp | string>`, optional)
+ *   — list of values to allow between `[` and `]`
  *
  * ## Recommendation
  *
  * Shortcut references use an implicit syntax that could also occur as plain
  * text.
- * For example, it is reasonable to expect an author adding `[…]` to abbreviate
- * some text somewhere in a document:
+ * To illustrate,
+ * it is reasonable to expect an author adding `[…]` to abbreviate some text
+ * somewhere in a document:
  *
  * ```markdown
  * > Some […] quote.
  * ```
  *
- * This isn’t a problem, but it might become one when an author later adds a
- * definition:
+ * This isn’t a problem,
+ * but it might become one when an author later adds a definition:
  *
  * ```markdown
- * Some text. […][]
+ * Some new text […][]
  *
- * […] #read-more "Read more"
+ * […]: #read-more
  * ```
  *
  * The second author might expect only their newly added text to form a link,
- * but their changes also result in a link for the first author’s text.
+ * but their changes also result in a link for the text by the first author.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-no-undefined-references]: #unifieduseremarklintnoundefinedreferences-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-undefined-references
- * @summary
- *   remark-lint rule to warn when undefined definitions are referenced.
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
@@ -129,17 +150,9 @@
 /**
  * @typedef Options
  *   Configuration.
- * @property {Readonly<Array<RegExp | RegexLike | string>> | null | undefined} [allow]
+ * @property {Readonly<Array<RegExp | {source: string} | string>> | null | undefined} [allow]
  *   Text or regexes to allow between `[` and `]` even though they’re not
  *   defined (optional).
- *
- * @typedef {Array<number>} Range
- *   Range.
- *
- * @typedef RegexLike
- *   Regex-like object.
- * @property {string} source
- *   Source of regex.
  */
 
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
@@ -150,7 +163,7 @@ import {location} from 'vfile-location'
 
 /** @type {Readonly<Options>} */
 const emptyOptions = {}
-/** @type {Readonly<Array<RegExp | RegexLike | string>>} */
+/** @type {Readonly<Array<RegExp | {source: string} | string>>} */
 const emptyAllow = []
 
 const remarkLintNoUndefinedReferences = lintRule(
@@ -227,7 +240,7 @@ const remarkLintNoUndefinedReferences = lintRule(
      *   Nothing.
      */
     function findInPhrasing(node) {
-      /** @type {Array<Range>} */
+      /** @type {Array<Array<number>>} */
       let ranges = []
 
       visit(node, function (child) {
@@ -349,7 +362,7 @@ const remarkLintNoUndefinedReferences = lintRule(
       }
 
       /**
-       * @param {Range} range
+       * @param {Array<number>} range
        *   Range.
        * @returns {undefined}
        *   Nothing.

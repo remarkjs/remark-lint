@@ -1,4 +1,11 @@
 /**
+ * remark-lint rule to warn when list item checkboxes violate a given
+ * style.
+ *
+ * ## What is this?
+ *
+ * This package checks the character used in checkboxes.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that the style of GFM tasklists is
@@ -6,33 +13,60 @@
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintCheckboxCharacterStyle[, options])`
  *
- * *   `Object` with the following fields:
- *     *   `checked` (`'x'`, `'X'`, or `'consistent'`, default: `'consistent'`)
- *         — preferred character to use for checked checkboxes
- *     *   `unchecked` (`'·'` (a space), `'»'` (a tab), or `'consistent'`,
- *         default: `'consistent'`)
- *         — preferred character to use for unchecked checkboxes
- * *   `'consistent'`
- *     — detect the first used styles and warn when further checkboxes differ
+ * Warn when list item checkboxes violate a given style.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — either preferred values or whether to detect the first styles
+ *   and warn for further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Styles | 'consistent'
+ * ```
+ *
+ * ### `Styles`
+ *
+ * Styles (TypeScript type).
+ *
+ * ###### Fields
+ *
+ * * `checked` (`'X'`, `'x'`, or `'consistent'`, default: `'consistent'`)
+ *   — preferred style to use for checked checkboxes
+ * * `unchecked` (`'␉'` (a tab), `'␠'` (a space), or `'consistent'`, default:
+ *   `'consistent'`)
+ *   — preferred style to use for unchecked checkboxes
  *
  * ## Recommendation
  *
  * It’s recommended to set `options.checked` to `'x'` (a lowercase X) as it
- * prevents an extra keyboard press and `options.unchecked` to `'·'` (a space)
+ * prevents an extra keyboard press and `options.unchecked` to `'␠'` (a space)
  * to make all checkboxes align.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats checked checkboxes using `'x'` (lowercase X) and unchecked checkboxes
- * using `'·'` (a space).
+ * [`remark-stringify`][github-remark-stringify] formats checked checkboxes
+ * using `'x'` (lowercase X) and unchecked checkboxes using `'␠'` (a space).
+ *
+ * [api-options]: #options
+ * [api-remark-lint-checkbox-character-style]: #unifieduseremarklintcheckboxcharacterstyle-options
+ * [api-styles]: #styles
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module checkbox-character-style
- * @summary
- *   remark-lint rule to warn when list item checkboxes violate a given
- *   style.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -53,14 +87,14 @@
  *
  *   - [ ] List item
  *   - [ ] List item
- *   - [ ]··
+ *   - [ ]␠␠
  *   - [ ]
  *
  * @example
  *   {"name": "ok.md", "config": {"unchecked": "\t"}, "gfm": true}
  *
- *   - [»] List item
- *   - [»] List item
+ *   - [␉] List item
+ *   - [␉] List item
  *
  * @example
  *   {"name": "not-ok.md", "label": "input", "gfm": true}
@@ -68,7 +102,7 @@
  *   - [x] List item
  *   - [X] List item
  *   - [ ] List item
- *   - [»] List item
+ *   - [␉] List item
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "gfm": true}

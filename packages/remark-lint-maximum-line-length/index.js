@@ -1,27 +1,45 @@
 /**
+ * remark-lint rule to warn when lines are too long.
+ *
+ * ## What is this?
+ *
+ * This package checks the length of lines.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that lines do not exceed a certain size.
+ * You can use this package to check that lines are within reason.
  *
  * ## API
  *
- * The following options (default: `80`) are accepted:
+ * ### `unified().use(remarkLintMaximumLineLength[, options])`
  *
- * *   `number` (example: `72`)
- *     — max number of characters to accept in heading text
+ * Warn when lines are too long.
  *
- * Ignores nodes that cannot be wrapped, such as headings, tables, code,
- * definitions, HTML, and JSX.
- * Ignores images, links, and code (inline) if they start before the wrap, end
- * after the wrap, and there’s no white space after them.
+ * Nodes that cannot be wrapped are ignored, such as JSX, HTML, code (flow),
+ * definitions, headings, and tables.
+ *
+ * When code (phrasing), images, and links start before the wrap,
+ * end after the wrap,
+ * and contain no whitespace,
+ * they are also ignored.
+ *
+ * ###### Parameters
+ *
+ * * `options` (`number`, default: `80`)
+ *   — preferred max size
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * Whether to wrap prose or not is a stylistic choice.
  *
+ * [api-remark-lint-maximum-line-length]: #unifieduseremarklintmaximumlinelength-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module maximum-line-length
- * @summary
- *   remark-lint rule to warn when lines are too long.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -85,18 +103,12 @@
  * @example
  *   {"name": "ok-mixed-line-endings.md", "config": 10, "positionless": true}
  *
- *   0123456789␍␊
- *   0123456789␊
- *   01234␍␊
- *   01234␊
+ *   0123456789␍␊0123456789␊01234␍␊01234␊
  *
  * @example
  *   {"name": "not-ok-mixed-line-endings.md", "config": 10, "label": "input", "positionless": true}
  *
- *   012345678901␍␊
- *   012345678901␊
- *   01234567890␍␊
- *   01234567890␊
+ *   012345678901␍␊012345678901␊01234567890␍␊01234567890␊
  *
  * @example
  *   {"name": "not-ok-mixed-line-endings.md", "config": 10, "label": "output", "positionless": true}

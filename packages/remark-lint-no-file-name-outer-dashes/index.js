@@ -1,16 +1,32 @@
 /**
+ * remark-lint rule to warn when file names start or end with dashes.
+ *
+ * ## What is this?
+ *
+ * This package checks file names.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that no initial or final dashes appear in
- * file names.
+ * You can use this package to check that file names are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoFileNameOuterDashes)`
+ *
+ * Warn when file names start or end with dashes.
+ *
+ * ###### Parameters
+ *
  * There are no options.
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * [api-remark-lint-no-file-name-outer-dashes]: #unifieduseremarklintnofilenameouterdashes
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-file-name-outer-dashes
- * @summary
- *   remark-lint rule to warn when initial or final dashes appear in file names.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

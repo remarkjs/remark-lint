@@ -1,24 +1,40 @@
 /**
+ * remark-lint rule to warn when shortcut reference links are used.
+ *
+ * ## What is this?
+ *
+ * This package checks that collapsed or full reference links are used.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that collapsed or full reference links
- * are used.
+ * You can use this package to check that references are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoShortcutReferenceLink)`
+ *
+ * Warn when shortcut reference links are used.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * Shortcut references use an implicit style that looks a lot like something
  * that could occur as plain text instead of syntax.
- * In some cases, plain text is intended instead of a link.
- * Due to this, it’s recommended to use collapsed (or full) references
- * instead.
+ * In some cases,
+ * plain text is intended instead of a link.
+ * So it’s recommended to use collapsed or full references instead.
+ *
+ * [api-remark-lint-no-shortcut-reference-link]: #unifieduseremarklintnoshortcutreferencelink
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-shortcut-reference-link
- * @summary
- *   remark-lint rule to warn when shortcut reference links are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

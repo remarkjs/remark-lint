@@ -1,25 +1,40 @@
 /**
+ * remark-lint rule to warn when consecutive whitespace is used in
+ * a definition label.
+ *
+ * ## What is this?
+ *
+ * This package checks the whitepsace in definition labels.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that the labels used in definitions
- * do not use meaningless white space.
+ * You can use this package to check that definition labels are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintDefinitionSpacing)`
+ *
+ * Warn when consecutive whitespace is used in a definition label.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * Definitions and references are matched together by collapsing white space.
- * Using more white space in labels might incorrectly indicate that they are of
+ * Definitions and references are matched together by collapsing whitespace.
+ * Using more whitespace in labels might incorrectly indicate that they are of
  * importance.
- * Due to this, it’s recommended to use one space (or a line ending if needed)
- * and turn this rule on.
+ * Due to this, it’s recommended to use one space and turn this rule on.
+ *
+ * [api-remark-lint-definition-spacing]: #unifieduseremarklintdefinitionspacing
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module definition-spacing
- * @summary
- *   remark-lint rule to warn when consecutive whitespace is used in
- *   a definition label.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -31,7 +46,7 @@
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   [example····domain]: http://example.com "Example Domain"
+ *   [example␠␠␠␠domain]: http://example.com "Example Domain"
  *
  * @example
  *   {"name": "not-ok.md", "label": "output"}

@@ -1,11 +1,29 @@
 /**
+ * remark-lint rule to warn when the indent of list item content is not
+ * consistent.
+ *
+ * ## What is this?
+ *
+ * This package checks the indent of list item content.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that list item content is aligned.
+ * You can use this package to check that list item content is indented
+ * consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintListItemContentIndent)`
+ *
+ * Warn when the indent of list item content is not consistent.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -14,26 +32,27 @@
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * aligns the content of items.
+ * [`remark-stringify`][github-remark-stringify] aligns the content of items.
+ *
+ * [api-remark-lint-list-item-content-indent]: #unifieduseremarklintlistitemcontentindent
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module list-item-content-indent
- * @summary
- *   remark-lint rule to warn when list item content is not aligned.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
  *   {"name": "ok.md", "gfm": true}
  *
- *   1.·[x] Alpha
- *   ···1. Bravo
+ *   1.␠[x] Alpha
+ *   ␠␠␠1. Bravo
  *
  * @example
  *   {"name": "not-ok.md", "label": "input", "gfm": true}
  *
- *   1.·[x] Charlie
- *   ····1. Delta
+ *   1.␠[x] Charlie
+ *   ␠␠␠␠1. Delta
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "gfm": true}

@@ -1,37 +1,55 @@
 /**
+ * remark-lint rule to warn when GFM table cells are aligned inconsistently.
+ *
+ * ## What is this?
+ *
+ * This package checks table cell dividers are aligned.
+ * Tables are a GFM feature enabled with [`remark-gfm`][github-remark-gfm].
+ *
  * ## When should I use this?
  *
- * You can use this package to check that table cell dividers are aligned.
- * Tables are a GFM feature enabled with
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ * You can use this package to check that tables are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintTablePipeAlignment)`
+ *
+ * Warn when GFM table cells are aligned inconsistently.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * While aligning table dividers improves their legibility, it is somewhat
- * hard to maintain manually, especially for tables with many rows.
+ * While aligning table dividers improves their legibility,
+ * it is somewhat hard to maintain manually,
+ * especially for tables with many rows.
  *
  * ## Fix
  *
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
- * aligns table dividers by default.
- * Pass
- * [`tablePipeAlign: false`](https://github.com/remarkjs/remark-gfm#optionstablepipealign)
- * to use a more compact style.
+ * [`remark-stringify`][github-remark-stringify] with
+ * [`remark-gfm`][github-remark-gfm] aligns table cell dividers by default.
+ * Pass `tablePipeAlign: false` to use a more compact style.
  *
- * Aligning characters is impossible because whether they look aligned or not
- * depends on where the markup is shown: some characters (such as emoji or
- * Chinese characters) show smaller or bigger in different places.
- * You can pass your own
- * [`stringLength`](https://github.com/remarkjs/remark-gfm#optionsstringlength)
- * to `remark-gfm`, in which case this rule must be turned off.
+ * Aligning perfectly in all cases is not possible because whether characters
+ * look aligned or not depends on where the markup is shown.
+ * Some characters (such as emoji or Chinese characters) show smaller or bigger
+ * in different places.
+ * You can pass a `stringLength` function to `remark-gfm`,
+ * to align better for your use case,
+ * in which case this rule must be turned off.
+ *
+ * [api-remark-lint-table-pipe-alignment]: #unifieduseremarklinttablepipealignment
+ * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module table-pipe-alignment
- * @summary
- *   remark-lint rule to warn when table cells are inconsistently padded.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

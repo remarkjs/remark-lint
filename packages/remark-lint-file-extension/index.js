@@ -1,17 +1,31 @@
 /**
+ * remark-lint rule to warn for unexpected file extensions.
+ *
+ * ## What is this?
+ *
+ * This package checks the file extension.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that file extensions are `md`.
+ * You can use this package to check that file extensions are consistent.
  *
  * ## API
  *
- * The following options (default: `'md'`) are accepted:
+ * ### `unified().use(remarkLintFileExtension[, options])`
  *
- * *   `string` (example `'markdown'`)
- *     — preferred file extension (no dot)
+ * Warn for unexpected extensions.
  *
  * > 👉 **Note**: does not warn when files have no file extensions (such as
  * > `AUTHORS` or `LICENSE`).
+ *
+ * ###### Parameters
+ *
+ * * `options` (`string`, default: `'md'`)
+ *   — preferred file extension
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -20,9 +34,10 @@
  * GFM, frontmatter, or math).
  * Do not use `md` for MDX: use `mdx` instead.
  *
+ * [api-remark-lint-file-extension]: #unifieduseremarklintfileextension-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module file-extension
- * @summary
- *   remark-lint rule to check the file extension.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -45,11 +60,6 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef {string} Options
- *   Configuration.
- */
-
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFileExtension = lintRule(
@@ -60,7 +70,7 @@ const remarkLintFileExtension = lintRule(
   /**
    * @param {Root} _
    *   Tree.
-   * @param {Options | null | undefined} [options]
+   * @param {string | null | undefined} [options='md']
    *   Configuration (default: `'md'`).
    * @returns {undefined}
    *   Nothing.

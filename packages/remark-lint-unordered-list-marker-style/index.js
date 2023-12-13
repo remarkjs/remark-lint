@@ -1,21 +1,49 @@
 /**
+ * remark-lint rule to warn when unordered list markers are inconsistent.
+ *
+ * ## What is this?
+ *
+ * This package checks unordered list markers.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that unordered list markers (bullets)
- * are consistent.
+ * You can use this package to check unordered lists.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintUnorderedListMarkerStyle[, options])`
  *
- * *   `'*'`
- *     — prefer asterisks
- * *   `'+'`
- *     — prefer plusses
- * *   `'-'`
- *     — prefer dashes
- * *   `'consistent'`
- *     — detect the first used style and warn when further markers differ
+ * Warn when unordered list markers are inconsistent.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Marker`
+ *
+ * Marker (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Marker = '*' | '+' | '-'
+ * ```
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Marker | 'consistent'
+ * ```
  *
  * ## Recommendation
  *
@@ -25,15 +53,17 @@
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats ordered lists with asterisks by default.
- * Pass
- * [`bullet: '+'` or `bullet: '-'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsbullet)
- * to always use plusses or dashes.
+ * [`remark-stringify`][github-remark-stringify] formats unordered lists with
+ * asterisks by default.
+ * Pass `bullet: '+'` or `bullet: '-'` to use a different marker.
+ *
+ * [api-marker]: #marker
+ * [api-options]: #options
+ * [api-remark-lint-unordered-list-marker-style]: #unifieduseremarklintunorderedlistmarkerstyle-options
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module unordered-list-marker-style
- * @summary
- *   remark-lint rule to warn when unordered list markers are inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

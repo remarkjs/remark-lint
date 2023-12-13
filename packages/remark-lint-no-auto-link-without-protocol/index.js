@@ -1,8 +1,16 @@
 /**
+ * Deprecated.
+ *
+ * ## API
+ *
+ * to do: remove.
+ *
+ * [api-remark-lint-no-auto-link-without-protocol]: #api
+ *
+ * @module no-auto-link-without-protocol
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module no-auto-link-without-protocol
  * @deprecated
  *   **Stability: Legacy**.
  *   This rule is no longer recommended for use.

@@ -1,20 +1,40 @@
 /**
+ * remark-lint rule to warn when tabs are used.
+ *
+ * ## What is this?
+ *
+ * This package checks for tabs.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that tabs are not used.
+ * You can use this package to check tabs.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoTabs)`
+ *
+ * Warn when tabs are used.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * Regardless of the debate in other languages of whether to use tabs vs.
- * spaces, when it comes to markdown, tabs do not work as expected.
- * Largely around contains such as block quotes and lists.
+ * Regardless of the debate in other languages of whether to use tabs versus
+ * spaces,
+ * when it comes to markdown,
+ * tabs do not work as expected.
+ * Largely around things such as block quotes, lists, and indented code.
+ *
  * Take for example block quotes: `>\ta` gives a paragraph with the text `a`
- * in a blockquote, so one might expect that `>\t\ta` results in indented code
- * with the text `a` in a block quote.
+ * in a blockquote,
+ * so one might expect that `>\t\ta` results in indented code with the text `a`
+ * in a block quote.
  *
  * ```markdown
  * >\ta
@@ -34,11 +54,14 @@
  * </blockquote>
  * ```
  *
- * Because markdown uses a hardcoded tab size of 4, the first tab could be
- * represented as 3 spaces (because there’s a `>` before).
+ * Because markdown uses a hardcoded tab size of 4,
+ * the first tab could be represented as 3 spaces (because there’s a `>`
+ * before).
  * One of those “spaces” is taken because block quotes allow the `>` to be
- * followed by one space, leaving 2 spaces.
- * The next tab can be represented as 4 spaces, so together we have 6 spaces.
+ * followed by one space,
+ * leaving 2 spaces.
+ * The next tab can be represented as 4 spaces,
+ * so together we have 6 spaces.
  * The indented code uses 4 spaces, so there are two spaces left, which are
  * shown in the indented code.
  *
@@ -47,9 +70,10 @@
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * uses spaces exclusively for indentation.
  *
+ * [api-remark-lint-no-tabs]: #unifieduseremarklintnotabs
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-tabs
- * @summary
- *   remark-lint rule to warn when tabs are used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -58,24 +82,24 @@
  *
  *   Foo Bar
  *
- *   ····Foo
+ *   ␠␠␠␠Foo
  *
  * @example
  *   {"name": "not-ok.md", "label": "input", "positionless": true}
  *
- *   »Here's one before a code block.
+ *   ␉Here's one before a code block.
  *
- *   Here's a tab:», and here is another:».
+ *   Here's a tab:␉, and here is another:␉.
  *
- *   And this is in `inline»code`.
+ *   And this is in `inline␉code`.
  *
- *   >»This is in a block quote.
+ *   >␉This is in a block quote.
  *
- *   *»And…
+ *   *␉And…
  *
- *   »1.»in a list.
+ *   ␉1.␉in a list.
  *
- *   And this is a tab as the last character.»
+ *   And this is a tab as the last character.␉
  *
  * @example
  *   {"name": "not-ok.md", "label": "output"}

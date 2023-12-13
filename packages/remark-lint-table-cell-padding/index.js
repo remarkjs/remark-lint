@@ -1,20 +1,55 @@
 /**
+ * remark-lint rule to warn when GFM table cells are padded inconsistently.
+ *
+ * ## What is this?
+ *
+ * This package checks table cell padding.
+ * Tables are a GFM feature enabled with [`remark-gfm`][github-remark-gfm].
+ *
  * ## When should I use this?
  *
- * You can use this package to check that table cells are padded consistently.
- * Tables are a GFM feature enabled with
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ * You can use this package to check that tables are consistent.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintTableCellPadding[, options])`
  *
- * *   `'padded'`
- *     — prefer at least one space between pipes and content
- * *   `'compact'`
- *     — prefer zero spaces between pipes and content
- * *   `'consistent'`
- *     — detect the first used style and warn when further tables differ
+ * Warn when GFM table cells are padded inconsistently.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], optional)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * * `'compact'`
+ *   — prefer zero spaces between pipes and content
+ * * `'padded'`
+ *   — prefer at least one space between pipes and content
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = 'compact' | 'padded'
+ * ```
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Style | 'consistent'
+ * ```
  *
  * ## Recommendation
  *
@@ -23,15 +58,19 @@
  *
  * ## Fix
  *
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
- * formats all table cells as padded by default.
- * Pass
- * [`tableCellPadding: false`](https://github.com/remarkjs/remark-gfm#optionstablecellpadding)
- * to use a more compact style.
+ * [`remark-stringify`][github-remark-stringify] with
+ * [`remark-gfm`][github-remark-gfm] formats all table cells as padded by
+ * default.
+ * Pass `tableCellPadding: false` to use a more compact style.
+ *
+ * [api-options]: #options
+ * [api-style]: #style
+ * [api-remark-lint-table-cell-padding]: #unifieduseremarklinttablecellpadding-options
+ * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module table-cell-padding
- * @summary
- *   remark-lint rule to warn when table cells are inconsistently padded.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -191,17 +230,6 @@
  */
 
 /**
- * @typedef Entry
- *   Cell info.
- * @property {number} column
- *   Column.
- * @property {number} end
- *   End of content.
- * @property {TableCell} node
- *   Node.
- * @property {number} start
- *   Start of content.
- *
  * @typedef {Style | 'consistent'} Options
  *   Configuration.
  *
@@ -247,7 +275,7 @@ const remarkLintTableCellPadding = lintRule(
       const align = node.align || []
       /** @type {Array<number>} */
       const sizes = []
-      /** @type {Array<Entry>} */
+      /** @type {Array<{column: number, end: number, node: TableCell, start: number}>} */
       const entries = []
       let index = -1
 
@@ -325,7 +353,7 @@ const remarkLintTableCellPadding = lintRule(
     /**
      * @param {'end' | 'start'} side
      *   Side to check.
-     * @param {Entry} entry
+     * @param {{column: number, end: number, node: TableCell, start: number}} entry
      *   Cell info.
      * @param {0 | 1} style
      *   Expected style.

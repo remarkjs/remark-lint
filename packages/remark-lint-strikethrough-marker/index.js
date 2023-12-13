@@ -1,21 +1,52 @@
 /**
+ * remark-lint rule to warn when the number of GFM strikethrough markers are
+ * inconsistent.
+ *
+ * ## What is this?
+ *
+ * This package checks the number of strikethrough markers.
+ * Strikethrough is a GFM feature enabled with
+ * [`remark-gfm`][github-remark-gfm].
+ *
  * ## When should I use this?
  *
- * You can use this package to check that the number of strikethrough
- * markers is consistent.
- * Strikethrough is a GFM feature enabled with
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ * You can use this package to check that GFM strikethrough is consistent.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintStrikethroughMarker[, options])`
  *
- * *   `'~'`
- *     — prefer one strikethrough marker
- * *   `'~~'`
- *     — prefer two strikethrough markers
- * *   `'consistent'`
- *     — detect the first used style and warn when further strikethrough differs
+ * Warn when the number of GFM strikethrough markers are inconsistent.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Marker`
+ *
+ * Marker (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Marker = '~~' | '~'
+ * ```
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Marker | 'consistent'
+ * ```
  *
  * ## Recommendation
  *
@@ -25,13 +56,17 @@
  *
  * ## Fix
  *
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
- * formats all strikethrough with two tildes.
+ * [`remark-stringify`][github-remark-stringify] with
+ * [`remark-gfm`][github-remark-gfm] formats all strikethrough with two tildes.
+ *
+ * [api-marker]: #marker
+ * [api-options]: #options
+ * [api-remark-lint-strikethrough-marker]: #unifieduseremarklintstrikethroughmarker-options
+ * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module strikethrough-marker
- * @summary
- *   remark-lint rule to warn when the number of strikethrough markers
- *   is inconsistent.
  * @author Denis Augsburger
  * @copyright 2021 Denis Augsburger
  * @license MIT
@@ -87,12 +122,11 @@
  */
 
 /**
- * @typedef {Marker | 'consistent'} Options
- *   Configuration.
- *
  * @typedef {'~' | '~~'} Marker
  *   Styles.
  *
+ * @typedef {Marker | 'consistent'} Options
+ *   Configuration.
  */
 
 import {lintRule} from 'unified-lint-rule'

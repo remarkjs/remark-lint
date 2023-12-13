@@ -1,29 +1,48 @@
 /**
+ * remark-lint rule to warn when GFM table rows have no initial or
+ * final cell delimiter.
+ *
+ * ## What is this?
+ *
+ * This package checks that table rows have initial and final delimiters.
+ * Tables are a GFM feature enabled with [`remark-gfm`][github-remark-gfm].
+ *
  * ## When should I use this?
  *
- * You can use this package to check that tables have initial and final
- * delimiters.
- * Tables are a GFM feature enabled with
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ * You can use this package to check that tables are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintTablePipes)`
+ *
+ * Warn when GFM table rows have no initial or final cell delimiter.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * While tables don’t require initial or final delimiters (pipes before the
- * first and after the last cells in a row), it arguably does look weird.
+ * While tables don’t require initial or final delimiters (the pipes before the
+ * first and after the last cells in a row),
+ * it arguably does look weird without.
  *
  * ## Fix
  *
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
- * formats all tables with initial and final delimiters.
+ * [`remark-stringify`][github-remark-stringify] with
+ * [`remark-gfm`][github-remark-gfm] formats all tables with initial and final
+ * delimiters.
+ *
+ * [api-remark-lint-table-pipes]: #unifieduseremarklinttablepipes
+ * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module table-pipes
- * @summary
- *   remark-lint rule to warn when tables are missing initial and final
- *   delimiters.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

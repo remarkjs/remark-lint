@@ -1,23 +1,40 @@
 /**
+ * remark-lint rule to warn when emphasis or strong are used instead of a
+ * heading.
+ *
+ * ## What is this?
+ *
+ * This package checks emphasis and strong.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that headings are used to introduce
- * paragraphs instead of “fake” headings made with emphasis or strong.
+ * You can use this package to check that headings are used.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoEmphasisAsHeading)`
+ *
+ * Warn when emphasis or strong are used instead of a heading.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * While not always the case, typically emphasis or strong around the text
- * in a paragraph is used as a “faux” heading.
+ * While not always the case,
+ * typically emphasis or strong around the text in a paragraph is used as a
+ * “faux” heading.
  * It’s recommended to use actual headings instead.
  *
+ * [api-remark-lint-no-emphasis-as-heading]: #unifieduseremarklintnoemphasisasheading
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-emphasis-as-heading
- * @summary
- *   remark-lint rule to warn when emphasis or strong are used to introduce
- *   a paragraph.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

@@ -1,16 +1,16 @@
+<!--This file is generated-->
+
 # unified-lint-rule
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
+[![Sponsors][badge-funding-sponsors-image]][badge-funding-url]
+[![Backers][badge-funding-backers-image]][badge-funding-url]
+[![Chat][badge-chat-image]][badge-chat-url]
 
-**[unified][]** plugin to help make lint rules.
-
-See the [monorepo readme][mono] for more info on remark lint.
+**[unified][github-unified]** helper to help make lint rules.
 
 ## Contents
 
@@ -19,19 +19,17 @@ See the [monorepo readme][mono] for more info on remark lint.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`lintRule(origin|meta, rule)`](#lintruleoriginmeta-rule)
+  * [`lintRule(meta, rule)`](#lintrulemeta-rule)
+  * [`Meta`](#meta)
+  * [`Rule`](#rule)
+  * [`RuleMeta`](#rulemeta)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
 * [License](#license)
 
 ## What is this?
 
-This package is a [unified][] plugin that makes it a bit easier to create
-linting rules.
-
-**unified** is a project that transforms content with abstract syntax trees
-(ASTs).
-This is a plugin that make it easier to inspect trees.
+This package is a helper that makes it a bit easier to create linting rules.
 
 ## When should I use this?
 
@@ -39,20 +37,21 @@ You can use this package when you want to make custom lint rules.
 
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 16+),
+install with [npm][npm-install]:
 
 ```sh
 npm install unified-lint-rule
 ```
 
-In Deno with [`esm.sh`][esmsh]:
+In Deno with [`esm.sh`][esm-sh]:
 
 ```js
 import {lintRule} from 'https://esm.sh/unified-lint-rule@2'
 ```
 
-In browsers with [`esm.sh`][esmsh]:
+In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
@@ -63,25 +62,10 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-/**
- * @typedef {import('mdast').Root} Root
- */
-
-/**
- * @typedef {string} Options
- *   Configuration.
- */
-
 import {lintRule} from 'unified-lint-rule'
 
 const remarkLintFileExtension = lintRule(
   'remark-lint:file-extension',
-  /**
-   * @param {Root} tree
-   *   Tree.
-   * @param {Options | null | undefined} options
-   *   Configuration (default: `'md'`).
-   */
   function (tree, file, options) {
     const ext = file.extname
     const option = options || 'md'
@@ -97,100 +81,145 @@ export default remarkLintFileExtension
 
 ## API
 
-This package exports the following identifier: `lintRule`.
+This package exports the identifier
+[`lintRule`][api-lint-rule].
+It exports the [TypeScript][typescript] types
+[`Meta`][api-meta] and
+[`RuleMeta`][api-rule-meta].
 There is no default export.
 
-### `lintRule(origin|meta, rule)`
+### `lintRule(meta, rule)`
 
 Create a plugin.
 
 ###### Parameters
 
-* `origin` (`string`)
-  — treated as a `meta` of `{origin}`
-* `meta` (`Object`)
-  — rule metadata
-* `meta.origin` (`string`)
-  — message origin, either a rule name (`'file-extension'`) or both
-  a rule source and name joined with `:` (`'remark-lint:file-extension'`)
-* `meta.url` (`string`, optional)
-  — URL to documentation for messages
-* `rule` (`Function`, optional)
-  — your code, like a transform function, except that an extra `option` is
-  passed
+* `meta` ([`Meta`][api-meta] or `string`)
+  — info or origin
+* `rule` ([`Rule`][api-rule])
+  — rule
 
 ###### Returns
 
-A unified plugin that handles all kinds of options (see [Configure][configure]
-in the monorepo readme for how them).
+Plugin ([`Plugin` from `unified`][github-unified-plugin]).
+
+### `Meta`
+
+Rule metadata (TypeScript type).
+
+###### Fields
+
+* `origin` (`string`)
+  — name of the lint rule
+* `url` (`string`, optional)
+  — link to documentation
+
+### `Rule`
+
+Rule (TypeScript type).
+
+###### Parameters
+
+* `tree` ([`Node` from `unist`][github-unist-node])
+  — tree
+* `file` ([`VFile`][github-vfile])
+  — file
+* `options` (`any`, optional)
+  — parameter
+
+###### Returns
+
+Nothing (`Promise<undefined>` or `undefined`).
+
+### `RuleMeta`
+
+Deprecated.
+
+<!-- To do: remove. -->
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`unified-lint-rule@2`,
+compatible with Node.js 12.
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
+See [`contributing.md`][github-dotfiles-contributing] in [`remarkjs/.github`][github-dotfiles-health] for ways
 to get started.
-See [`support.md`][support] for ways to get help.
+See [`support.md`][github-dotfiles-support] for ways to get help.
 
-This project has a [code of conduct][coc].
+This project has a [code of conduct][github-dotfiles-coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][author]
 
-[build-badge]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
+[api-lint-rule]: #lintrulemeta-rule
 
-[build]: https://github.com/remarkjs/remark-lint/actions
+[api-meta]: #meta
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
+[api-rule]: #rule
 
-[coverage]: https://codecov.io/github/remarkjs/remark-lint
-
-[downloads-badge]: https://img.shields.io/npm/dm/unified-lint-rule.svg
-
-[downloads]: https://www.npmjs.com/package/unified-lint-rule
-
-[size-badge]: https://img.shields.io/bundlephobia/minzip/unified-lint-rule.svg
-
-[size]: https://bundlephobia.com/result?p=unified-lint-rule
-
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
-
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
-
-[collective]: https://opencollective.com/unified
-
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
-[chat]: https://github.com/remarkjs/remark/discussions
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-
-[esmsh]: https://esm.sh
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[health]: https://github.com/remarkjs/.github
-
-[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
-
-[support]: https://github.com/remarkjs/.github/blob/main/support.md
-
-[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
-
-[license]: https://github.com/remarkjs/remark-lint/blob/main/license
+[api-rule-meta]: #rulemeta
 
 [author]: https://wooorm.com
 
-[unified]: https://github.com/unifiedjs/unified
+[badge-build-image]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
 
-[mono]: https://github.com/remarkjs/remark-lint
+[badge-build-url]: https://github.com/remarkjs/remark-lint/actions
 
-[configure]: https://github.com/remarkjs/remark-lint#configure
+[badge-chat-image]: https://img.shields.io/badge/chat-discussions-success.svg
+
+[badge-chat-url]: https://github.com/remarkjs/remark/discussions
+
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
+
+[badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
+
+[badge-downloads-image]: https://img.shields.io/npm/dm/unified-lint-rule.svg
+
+[badge-downloads-url]: https://www.npmjs.com/package/unified-lint-rule
+
+[badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
+
+[badge-funding-sponsors-image]: https://opencollective.com/unified/sponsors/badge.svg
+
+[badge-funding-url]: https://opencollective.com/unified
+
+[badge-size-image]: https://img.shields.io/bundlejs/size/unified-lint-rule
+
+[badge-size-url]: https://bundlejs.com/?q=unified-lint-rule
+
+[esm-sh]: https://esm.sh
+
+[file-license]: https://github.com/remarkjs/remark-lint/blob/main/license
+
+[github-dotfiles-coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+
+[github-dotfiles-contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
+
+[github-dotfiles-health]: https://github.com/remarkjs/.github
+
+[github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
+
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-unified]: https://github.com/unifiedjs/unified
+
+[github-unified-plugin]: https://github.com/unifiedjs/unified#plugin
+
+[github-unist-node]: https://github.com/syntax-tree/unist#node
+
+[github-vfile]: https://github.com/vfile/vfile
+
+[npm-install]: https://docs.npmjs.com/cli/install
+
+[typescript]: https://www.typescriptlang.org

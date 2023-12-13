@@ -1,122 +1,157 @@
 /**
+ * remark-lint rule to warn when the whitespace after list item markers violate
+ * a given style.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of whitespace after list item markers.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that the spacing between list item markers
- * and content is inconsistent.
+ * You can use this package to check that the style of whitespace after list
+ * item markers and before content is consistent.
  *
  * ## API
  *
- * The following options (default: `'tab-size'`) are accepted:
+ * ### `unified().use(remarkLintListItemIndent[, options])`
  *
- * *   `'space'`
- *     — prefer a single space
- * *   `'tab-size'`
- *     — prefer spaces the size of the next tab stop
- * *   `'mixed'`
- *     — prefer `'space'` for tight lists and `'tab-size'` for loose lists
+ * Warn when the whitespace after list item markers violate a given style.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'tab-size'`)
+ *   — preferred style
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * * `'space'`
+ *   — prefer a single space
+ * * `'tab-size'`
+ *   — prefer spaces the size of the next tab stop
+ * * `'mixed'`
+ *   — prefer `'space'` for tight lists and `'tab-size'` for loose lists
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = 'mixed' | 'space' | 'tab-size'
+ * ```
  *
  * ## Recommendation
  *
- * First, some background.
+ * First some background.
  * The number of spaces that occur after list markers (`*`, `-`, and `+` for
- * unordered lists, or `.` and `)` for unordered lists) and before the content
- * on the first line, defines how much indentation can be used for further
- * lines.
- * At least one space is required and up to 4 spaces are allowed (if there is no
- * further content after the marker then it’s a blank line which is handled as
- * if there was one space; if there are 5 or more spaces and then content, it’s
- * also seen as one space and the rest is seen as indented code).
+ * unordered lists and `.` and `)` for unordered lists) and before the content
+ * on the first line,
+ * defines how much indentation can be used for further lines.
+ * At least one space is required and up to 4 spaces are allowed.
+ * If there is no further content after the marker then it’s a blank line which
+ * is handled as if there was one space.
+ * If there are 5 or more spaces and then content then it’s also seen as one
+ * space and the rest is seen as indented code.
  *
- * There are two types of lists in markdown (other than ordered and unordered):
- * tight and loose lists.
+ * Regardless of ordered and unordered,
+ * there are two kinds of lists in markdown,
+ * tight and loose.
  * Lists are tight by default but if there is a blank line between two list
- * items or between two blocks inside an item, that turns the whole list into a
- * loose list.
- * When turning markdown into HTML, paragraphs in tight lists are not wrapped
- * in `<p>` tags.
+ * items or between two blocks inside an item,
+ * that turns the whole list into a loose list.
+ * When turning markdown into HTML,
+ * paragraphs in tight lists are not wrapped in `<p>` tags.
  *
- * Historically, how indentation of lists works in markdown has been a mess,
+ * How indentation of lists works in markdown has historically been a mess,
  * especially with how they interact with indented code.
- * CommonMark made that a *lot* better, but there remain (documented but
- * complex) edge cases and some behavior intuitive.
+ * CommonMark made that a *lot* better,
+ * but there remain (documented but complex) edge cases and some behavior
+ * intuitive.
  * Due to this, the default of this list is `'tab-size'`, which worked the best
- * in most markdown parsers.
- * Currently, the situation between markdown parsers is better, so choosing
- * `'space'` (which seems to be the most common style used by authors) should
- * be okay.
+ * in most markdown parsers *and* in CommonMark.
+ * Currently the situation between markdown parsers is better,
+ * so choosing `'space'`, which seems to be the most common style used by
+ * authors,
+ * is okay.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * uses `'tab-size'` (named `'tab'` there) by default.
- * [`listItemIndent: '1'` (for `'space'`) or `listItemIndent: 'mixed'`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionslistitemindent)
- * is supported.
+ * [`remark-stringify`][github-remark-stringify] uses `listItemIndent: 'one'`,
+ * for `'space'`,
+ * by default.
+ * `listItemIndent: 'mixed'` or `listItemIndent: 'tab'` (for `'tab-size'`) is
+ * also supported.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-list-item-indent]: #unifieduseremarklintlistitemindent-options
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module list-item-indent
- * @summary
- *   remark-lint rule to warn when spacing between list item markers and
- *   content is inconsistent.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
  *   {"name": "ok.md"}
  *
- *   *···List
- *   ····item.
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
  *   Paragraph.
  *
- *   11.·List
- *   ····item.
+ *   11.␠List
+ *   ␠␠␠␠item.
  *
  *   Paragraph.
  *
- *   *···List
- *   ····item.
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
- *   *···List
- *   ····item.
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
  * @example
  *   {"name": "ok.md", "config": "mixed"}
  *
- *   *·List item.
+ *   *␠List item.
  *
  *   Paragraph.
  *
- *   11.·List item
+ *   11.␠List item
  *
  *   Paragraph.
  *
- *   *···List
- *   ····item.
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
- *   *···List
- *   ····item.
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
  * @example
  *   {"name": "ok.md", "config": "space"}
  *
- *   *·List item.
+ *   *␠List item.
  *
  *   Paragraph.
  *
- *   11.·List item
+ *   11.␠List item
  *
  *   Paragraph.
  *
- *   *·List
- *   ··item.
+ *   *␠List
+ *   ␠␠item.
  *
- *   *·List
- *   ··item.
+ *   *␠List
+ *   ␠␠item.
  *
  * @example
  *   {"name": "not-ok.md", "config": "space", "label": "input"}
  *
- *   *···List
- *   ····item.
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
  * @example
  *   {"name": "not-ok.md", "config": "space", "label": "output"}
@@ -126,8 +161,8 @@
  * @example
  *   {"name": "not-ok.md", "config": "tab-size", "label": "input"}
  *
- *   *·List
- *   ··item.
+ *   *␠List
+ *   ␠␠item.
  *
  * @example
  *   {"name": "not-ok.md", "config": "tab-size", "label": "output"}
@@ -137,7 +172,7 @@
  * @example
  *   {"name": "not-ok.md", "config": "mixed", "label": "input"}
  *
- *   *···List item.
+ *   *␠␠␠List item.
  *
  * @example
  *   {"name": "not-ok.md", "config": "mixed", "label": "output"}

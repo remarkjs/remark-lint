@@ -1,28 +1,47 @@
 /**
+ * remark-lint rule to warn when GFM tables are indented.
+ *
+ * ## What is this?
+ *
+ * This package checks the indent of GFM tables.
+ * Tables are a GFM feature enabled with
+ * [`remark-gfm`][github-remark-gfm].
+ *
  * ## When should I use this?
  *
- * You can use this package to check that tables are not indented.
- * Tables are a GFM feature enabled with
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+ * You can use this package to check that tables are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoTableIndentation)`
+ *
+ * Warn when GFM tables are indented.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * There is no specific handling of indented tables (or anything else) in
  * markdown.
- * Hence, it’s recommended to not indent tables and to turn this rule on.
+ * So it’s recommended to not indent tables and to turn this rule on.
  *
  * ## Fix
  *
- * [`remark-gfm`](https://github.com/remarkjs/remark-gfm)
- * formats all tables without indent.
+ * [`remark-stringify`][github-remark-stringify] with
+ * [`remark-gfm`][github-remark-gfm] formats all tables without indent.
+ *
+ * [api-remark-lint-no-table-indentation]: #unifieduseremarklintnotableindentation
+ * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-table-indentation
- * @summary
- *   remark-lint rule to warn when tables are indented.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -40,9 +59,9 @@
  *
  *   Paragraph.
  *
- *   ···| A     | B     |
- *   ···| ----- | ----- |
- *   ···| Alpha | Bravo |
+ *   ␠␠␠| A     | B     |
+ *   ␠␠␠| ----- | ----- |
+ *   ␠␠␠| Alpha | Bravo |
  *
  * @example
  *   {"name": "not-ok.md", "label": "output", "gfm": true}
@@ -54,8 +73,8 @@
  * @example
  *   {"name": "not-ok-blockquote.md", "label": "input", "gfm": true}
  *
- *   >··| A |
- *   >·| - |
+ *   >␠␠| A |
+ *   >␠| - |
  *
  * @example
  *   {"name": "not-ok-blockquote.md", "label": "output", "gfm": true}
@@ -65,10 +84,10 @@
  * @example
  *   {"name": "not-ok-list.md", "label": "input", "gfm": true}
  *
- *   -···paragraph
+ *   -␠␠␠paragraph
  *
- *   ·····| A |
- *   ····| - |
+ *   ␠␠␠␠␠| A |
+ *   ␠␠␠␠| - |
  *
  * @example
  *   {"name": "not-ok-list.md", "label": "output", "gfm": true}

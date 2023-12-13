@@ -12,11 +12,7 @@
     "remark-lint-rule",
     "rule"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/remarkjs/remark-lint",
-    "directory": "packages/remark-lint-no-undefined-references"
-  },
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -24,7 +20,9 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+    "Merlijn Vos <merlijn@soverin.net>",
+    "Murderlon <merlijn@soverin.net>",
+    "Titus Wormer <tituswormer@gmail.com>"
   ],
   "sideEffects": false,
   "type": "module",

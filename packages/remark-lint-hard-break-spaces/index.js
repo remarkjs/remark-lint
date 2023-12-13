@@ -1,12 +1,29 @@
 /**
+ * remark-lint rule to warn when more spaces are used than needed
+ * for hard breaks.
+ *
+ * ## What is this?
+ *
+ * This package checks the whitespace of hard breaks.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that hard breaks use two spaces and
- * not more.
+ * You can use this package to check that the number of spaces in hard breaks
+ * are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintHardBreakSpaces)`
+ *
+ * Warn when more spaces are used than needed for hard breaks.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -14,23 +31,23 @@
  * have no effect.
  * Due to this, it’s recommended to turn this rule on.
  *
+ * [api-remark-lint-hard-break-spaces]: #unifieduseremarklinthardbreakspaces
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module hard-break-spaces
- * @summary
- *   remark-lint rule to warn when more spaces are used than needed
- *   for hard breaks.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
  *   {"name": "ok.md"}
  *
- *   Lorem ipsum··
+ *   Lorem ipsum␠␠
  *   dolor sit amet
  *
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   Lorem ipsum···
+ *   Lorem ipsum␠␠␠
  *   dolor sit amet.
  *
  * @example

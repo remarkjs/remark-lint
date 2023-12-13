@@ -1,4 +1,11 @@
 /**
+ * Preset of remark-lint rules that follow an opinionated style guide.
+ *
+ * ## What is this?
+ *
+ * This package is a preset containing `remark-lint` rules.
+ * Lint rules check markdown code style.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that markdown follows the
@@ -93,8 +100,16 @@
  *  ]
  * ```
  *
- * @summary
- *   Preset of remark-lint rules that follow an opinionated style guide.
+ * ## API
+ *
+ * ### `unified().use(remarkPresetLintMarkdownStyleGuide)`
+ *
+ * Check that markdown follows “Markdown Style Guide”.
+ *
+ * You can reconfigure rules in the preset by using them afterwards with different
+ * options.
+ *
+ * [api-remark-preset-lint-markdown-style-guide]: #unifieduseremarkpresetlintmarkdownstyleguide
  */
 
 /**
@@ -102,49 +117,49 @@
  */
 
 import remarkLint from 'remark-lint'
-import remarkLintFileExtension from 'remark-lint-file-extension'
-import remarkLintNoFileNameMixedCase from 'remark-lint-no-file-name-mixed-case'
-import remarkLintNoFileNameArticles from 'remark-lint-no-file-name-articles'
-import remarkLintNoFileNameIrregularCharacters from 'remark-lint-no-file-name-irregular-characters'
-import remarkLintNoFileNameConsecutiveDashes from 'remark-lint-no-file-name-consecutive-dashes'
-import remarkLintNoFileNameOuterDashes from 'remark-lint-no-file-name-outer-dashes'
-import remarkLintNoConsecutiveBlankLines from 'remark-lint-no-consecutive-blank-lines'
-import remarkLintMaximumLineLength from 'remark-lint-maximum-line-length'
-import remarkLintNoShellDollars from 'remark-lint-no-shell-dollars'
-import remarkLintHardBreakSpaces from 'remark-lint-hard-break-spaces'
-import remarkLintHeadingStyle from 'remark-lint-heading-style'
-import remarkLintHeadingIncrement from 'remark-lint-heading-increment'
-import remarkLintNoDuplicateHeadings from 'remark-lint-no-duplicate-headings'
-import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
-import remarkLintMaximumHeadingLength from 'remark-lint-maximum-heading-length'
-import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
 import remarkLintBlockquoteIndentation from 'remark-lint-blockquote-indentation'
-import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
-import remarkLintUnorderedListMarkerStyle from 'remark-lint-unordered-list-marker-style'
-import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
-import remarkLintOrderedListMarkerValue from 'remark-lint-ordered-list-marker-value'
-import remarkLintListItemIndent from 'remark-lint-list-item-indent'
-import remarkLintListItemContentIndent from 'remark-lint-list-item-content-indent'
-import remarkLintListItemSpacing from 'remark-lint-list-item-spacing'
 import remarkLintCodeBlockStyle from 'remark-lint-code-block-style'
-import remarkLintFencedCodeFlag from 'remark-lint-fenced-code-flag'
-import remarkLintFencedCodeMarker from 'remark-lint-fenced-code-marker'
-import remarkLintRuleStyle from 'remark-lint-rule-style'
-import remarkLintNoTableIndentation from 'remark-lint-no-table-indentation'
-import remarkLintTablePipes from 'remark-lint-table-pipes'
-import remarkLintTablePipeAlignment from 'remark-lint-table-pipe-alignment'
-import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
-import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
-import remarkLintNoShortcutReferenceImage from 'remark-lint-no-shortcut-reference-image'
-import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference-link'
-import remarkLintFinalDefinition from 'remark-lint-final-definition'
 import remarkLintDefinitionCase from 'remark-lint-definition-case'
 import remarkLintDefinitionSpacing from 'remark-lint-definition-spacing'
-import remarkLintLinkTitleStyle from 'remark-lint-link-title-style'
-import remarkLintStrongMarker from 'remark-lint-strong-marker'
 import remarkLintEmphasisMarker from 'remark-lint-emphasis-marker'
+import remarkLintFencedCodeFlag from 'remark-lint-fenced-code-flag'
+import remarkLintFencedCodeMarker from 'remark-lint-fenced-code-marker'
+import remarkLintFileExtension from 'remark-lint-file-extension'
+import remarkLintFinalDefinition from 'remark-lint-final-definition'
+import remarkLintHardBreakSpaces from 'remark-lint-hard-break-spaces'
+import remarkLintHeadingIncrement from 'remark-lint-heading-increment'
+import remarkLintHeadingStyle from 'remark-lint-heading-style'
+import remarkLintLinkTitleStyle from 'remark-lint-link-title-style'
+import remarkLintListItemContentIndent from 'remark-lint-list-item-content-indent'
+import remarkLintListItemIndent from 'remark-lint-list-item-indent'
+import remarkLintListItemSpacing from 'remark-lint-list-item-spacing'
+import remarkLintMaximumHeadingLength from 'remark-lint-maximum-heading-length'
+import remarkLintMaximumLineLength from 'remark-lint-maximum-line-length'
+import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
+import remarkLintNoConsecutiveBlankLines from 'remark-lint-no-consecutive-blank-lines'
+import remarkLintNoDuplicateHeadings from 'remark-lint-no-duplicate-headings'
 import remarkLintNoEmphasisAsHeading from 'remark-lint-no-emphasis-as-heading'
+import remarkLintNoFileNameArticles from 'remark-lint-no-file-name-articles'
+import remarkLintNoFileNameConsecutiveDashes from 'remark-lint-no-file-name-consecutive-dashes'
+import remarkLintNoFileNameIrregularCharacters from 'remark-lint-no-file-name-irregular-characters'
+import remarkLintNoFileNameMixedCase from 'remark-lint-no-file-name-mixed-case'
+import remarkLintNoFileNameOuterDashes from 'remark-lint-no-file-name-outer-dashes'
+import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
+import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
 import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
+import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
+import remarkLintNoShellDollars from 'remark-lint-no-shell-dollars'
+import remarkLintNoShortcutReferenceImage from 'remark-lint-no-shortcut-reference-image'
+import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference-link'
+import remarkLintNoTableIndentation from 'remark-lint-no-table-indentation'
+import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
+import remarkLintOrderedListMarkerValue from 'remark-lint-ordered-list-marker-value'
+import remarkLintUnorderedListMarkerStyle from 'remark-lint-unordered-list-marker-style'
+import remarkLintRuleStyle from 'remark-lint-rule-style'
+import remarkLintStrongMarker from 'remark-lint-strong-marker'
+import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
+import remarkLintTablePipeAlignment from 'remark-lint-table-pipe-alignment'
+import remarkLintTablePipes from 'remark-lint-table-pipes'
 
 /** @type {Preset} */
 const remarkPresetLintMarkdownStyleGuide = {

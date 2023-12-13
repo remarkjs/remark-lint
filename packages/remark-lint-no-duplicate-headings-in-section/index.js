@@ -1,22 +1,38 @@
 /**
+ * remark-lint rule to warn when the same text is used in multiple headings
+ * in a section.
+ *
+ * ## What is this?
+ *
+ * This package checks that headings are unique in sections.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that headings with the same text are
- * used once per section.
+ * You can use this package to check that headings are unique.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoDuplicateHeadingsInSection)`
+ *
+ * Warn when the same text is used in multiple headings in a section.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * It’s likely a mistake that the same heading text is used in the same
  * section.
  *
+ * [api-remark-lint-no-duplicate-headings-in-section]: #unifieduseremarklintnoduplicateheadingsinsection
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-duplicate-headings-in-section
- * @summary
- *   remark-lint rule to warn when headings with the same text are used
- *   multiple times per section.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

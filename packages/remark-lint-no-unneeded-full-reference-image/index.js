@@ -1,22 +1,37 @@
 /**
+ * remark-lint rule to warn when unneeded full reference images are used.
+ *
+ * ## What is this?
+ *
+ * This package checks for unneeded full reference images.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that collapsed reference images are
- * used instead of full references where possible.
+ * You can use this package to check that reference images are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoUnneededFullReferenceImage)`
+ *
+ * Warn when unneeded full reference images are used.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * Full reference syntax (`[Text][text]`) is quite verbose compared to
- * the concise collapsed reference syntax (`[Text][]`).
+ * Full reference syntax (`![Alt][alt]`) is quite verbose compared to
+ * the concise collapsed reference syntax (`![Alt][]`).
+ *
+ * [api-remark-lint-no-unneeded-full-reference-image]: #unifieduseremarklintnounneededfullreferenceimage
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-unneeded-full-reference-image
- * @summary
- *   remark-lint rule to warn when full reference images are used that
- *   could be collapsed.
  * @author Titus Wormer
  * @copyright 2019 Titus Wormer
  * @license MIT

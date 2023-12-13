@@ -1,24 +1,40 @@
 /**
+ * remark-lint rule to warn when every line in shell code is preceded by `$`s.
+ *
+ * ## What is this?
+ *
+ * This package checks for `$` markers prefixing shell code,
+ * which are hard to copy/paste.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that not all lines in shell code are
- * preceded by dollars (`$`).
+ * You can use this package to check shell code blocks.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoShellDollars)`
+ *
+ * Warn when every line in shell code is preceded by `$`s.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * Dollars make copy/pasting hard.
- * Either put both dollars in front of some lines (to indicate shell commands)
- * and don’t put them in front of other lines, or use fenced code to indicate
- * shell commands on their own, followed by another fenced code that contains
- * just the output.
+ * Either put dollars in front of some lines (commands) and don’t put them in
+ * front of other lines (output),
+ * or use different code blocks for commands and output.
+ *
+ * [api-remark-lint-no-shell-dollars]: #unifieduseremarklintnoshelldollars
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-shell-dollars
- * @summary
- *   remark-lint rule to warn every line in shell code is preceded by `$`s.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -78,20 +94,33 @@ import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
 
-// List of shell script file extensions (also used as code flags for syntax
-// highlighting on GitHub):
-// See: <https://github.com/github/linguist/blob/40992ba/lib/linguist/languages.yml#L4984>
+// See: <https://github.com/wooorm/starry-night/blob/a3e35db/lang/source.shell.js#L8>
 const flags = new Set([
-  'sh',
+  // Extensions.
   'bash',
   'bats',
-  'cgi',
   'command',
-  'fcgi',
+  'csh',
+  'ebuild',
+  'eclass',
   'ksh',
+  'sh',
+  'sh.in',
+  'tcsh',
   'tmux',
   'tool',
-  'zsh'
+  'zsh',
+  'zsh-theme',
+  // Names (w/o extensions).
+  'abuild',
+  'alpine-abuild',
+  'apkbuild',
+  'gentoo-ebuild',
+  'gentoo-eclass',
+  'openrc',
+  'openrc-runscript',
+  'shell',
+  'shell-script'
 ])
 
 const remarkLintNoShellDollars = lintRule(
@@ -109,7 +138,7 @@ const remarkLintNoShellDollars = lintRule(
     visit(tree, 'code', function (node) {
       const place = position(node)
 
-      // Check known shell code and unknown code.
+      // Check known shell code.
       if (place && node.lang && flags.has(node.lang)) {
         const lines = node.value.split('\n').filter(function (line) {
           return line.trim().length > 0
@@ -121,9 +150,9 @@ const remarkLintNoShellDollars = lintRule(
         }
 
         while (++index < lines.length) {
-          const line = lines[index]
+          const line = lines[index].trim()
 
-          if (line.trim() && !/^\s*\$\s*/.test(line)) {
+          if (!/^\$/.test(line)) {
             return
           }
         }

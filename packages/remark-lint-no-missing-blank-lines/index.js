@@ -1,31 +1,55 @@
 /**
+ * remark-lint rule to warn when there are no blank lines between blocks.
+ *
+ * ## What is this?
+ *
+ * This package checks missing blank lines.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that blank lines are used between blocks.
+ * You can use this package to check blank lines.
  *
  * ## API
  *
- * The following options (default: `undefined`) are accepted:
+ * ### `unified().use(remarkLintNoMissingBlankLines[, options])`
  *
- * *   `Object` with the following fields:
- *     *   `exceptTightLists` (`boolean`, default: `false`)
- *         — allow tight list items
+ * Warn when there are no blank lines between blocks.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], optional)
+ *   — configuration
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Fields
+ *
+ * * `exceptTightLists` (`boolean`, default: `false`)
+ *   — allow tight list items
  *
  * ## Recommendation
  *
- * While not always required, blank lines are required in certain, sometimes
- * confusing, cases.
- * Due to this, it’s recommended to always use blank lines between blocks.
+ * Blank lines are required in certain sometimes confusing cases.
+ * So it’s recommended to always use blank lines between blocks.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * always uses blank lines between blocks.
+ * [`remark-stringify`][github-remark-stringify] always uses blank lines
+ * between blocks.
  * It has a `join` function to customize such behavior.
  *
+ * [api-options]: #options
+ * [api-remark-lint-no-missing-blank-lines]: #unifieduseremarklintnomissingblanklines-options
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-missing-blank-lines
- * @summary
- *   remark-lint rule to warn when blank lines are missing.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

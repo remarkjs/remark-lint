@@ -1,22 +1,42 @@
 /**
+ * remark-lint rule to warn when a final line ending is missing.
+ *
+ * ## What is this?
+ *
+ * This package checks the final line ending.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that fenced code markers are consistent.
+ * You can use this package to check final line endings.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintFinalNewline)`
+ *
+ * Warn when a final line ending is missing.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * Turn this rule on.
- * See [StackExchange](https://unix.stackexchange.com/questions/18743) for more
- * info.
+ * See [StackExchange][] for more info.
  *
  * ## Fix
  *
  * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
  * always adds final line endings.
+ *
+ * [api-remark-lint-final-newline]: #unifieduseremarklintfinalnewline
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ * [stackexchange]: https://unix.stackexchange.com/questions/18743
  *
  * ## Example
  *
@@ -51,8 +71,6 @@
  * ```
  *
  * @module final-newline
- * @summary
- *   remark-lint rule to warn when files don’t end in a newline.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

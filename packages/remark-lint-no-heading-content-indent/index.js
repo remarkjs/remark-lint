@@ -1,12 +1,28 @@
 /**
+ * remark-lint rule to warn when extra whitespace is used between hashes and
+ * content in headings.
+ *
+ * ## What is this?
+ *
+ * This package checks whitespace between hashes and content.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that there is on space between `#`
- * characters and the content in headings.
+ * You can use this package to check that headings are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoHeadingContentIndent)`
+ *
+ * Warn when extra whitespace is used between hashes and content in headings.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -15,24 +31,24 @@
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats headings with exactly one space.
+ * [`remark-stringify`][github-remark-stringify] formats headings with one space.
+ *
+ * [api-remark-lint-no-heading-content-indent]: #unifieduseremarklintnoheadingcontentindent
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-heading-content-indent
- * @summary
- *   remark-lint rule to warn when there are too many spaces between
- *   hashes and content in headings.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
  *   {"name": "ok.md"}
  *
- *   #·Foo
+ *   #␠Foo
  *
- *   ## Bar·##
+ *   ## Bar␠##
  *
- *     ##·Baz
+ *     ##␠Baz
  *
  *   Setext headings are not affected.
  *
@@ -42,11 +58,11 @@
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   #··Foo
+ *   #␠␠Foo
  *
- *   ## Bar··##
+ *   ## Bar␠␠##
  *
- *     ##··Baz
+ *     ##␠␠Baz
  *
  * @example
  *   {"name": "not-ok.md", "label": "output"}
@@ -58,7 +74,7 @@
  * @example
  *   {"name": "empty-heading.md"}
  *
- *   #··
+ *   #␠␠
  */
 
 /**

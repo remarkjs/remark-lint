@@ -1,24 +1,50 @@
 /**
+ * remark-lint rule to warn when multiple top-level headings are used.
+ *
+ * ## What is this?
+ *
+ * This package checks that no more than one top level heading is used.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that no more than one top level heading
- * is used.
+ * You can use this package to check heading structure.
  *
  * ## API
  *
- * The following options (default: `1`) are accepted:
+ * ### `unified().use(remarkLintNoMultipleToplevelHeadings[, options])`
  *
- * *   `number` (example: `1`)
- *     — assumed top level heading rank
+ * Warn when multiple top-level headings are used.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `1`)
+ *   — configuration
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = 1 | 2 | 3 | 4 | 5 | 6
+ * ```
  *
  * ## Recommendation
  *
- * Documents should almost always have one main heading, which is typically a
- * heading with a rank of `1`.
+ * Documents should almost always have one main heading,
+ * which is typically a heading with a rank of `1`.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-no-multiple-toplevel-headings]: #unifieduseremarklintnomultipletoplevelheadings-options
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-multiple-toplevel-headings
- * @summary
- *   remark-lint rule to warn when more than one top level heading is used.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

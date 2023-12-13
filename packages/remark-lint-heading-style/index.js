@@ -1,63 +1,83 @@
 /**
+ * remark-lint rule to warn when headings violate a given style.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of headings.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that headings are consistent.
+ * You can use this package to check that the style of headings is consistent.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintHeadingStyle[, options])`
  *
- * *   `'atx'`
- *     — prefer ATX headings:
- *     ```markdown
- *     ## Hello
- *     ```
- * *   `'atx-closed'`
- *     — prefer ATX headings with a closing sequence:
- *     ```markdown
- *     ## Hello ##
- *     ```
- * *   `'setext'`
- *     — prefer setext headings:
- *     ```markdown
- *     Hello
- *     -----
- *     ```
- * *   `'consistent'`
- *     — detect the first used style and warn when further headings differ
+ * Warn when headings violate a given style.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = 'atx' | 'atx-closed' | 'setext'
+ * ```
  *
  * ## Recommendation
  *
  * Setext headings are limited in that they can only construct headings with a
  * rank of one and two.
- * On the other hand, they do allow multiple lines of content whereas ATX only
- * allows one line.
- * The number of used markers in their underline does not matter, leading to
- * either:
+ * They do allow multiple lines of content where ATX only allows one line.
+ * The number of used markers in their underline does not matter,
+ * leading to either:
  *
- * *   1 marker (`Hello\n-`), which is the bare minimum, and for rank 2 headings
- *     looks suspiciously like an empty list item
- * *   using as many markers as the content (`Hello\n-----`), which is hard to
- *     maintain
- * *   an arbitrary number (`Hello\n---`), which for rank 2 headings looks
- *     suspiciously like a thematic break
+ * * 1 marker (`Hello\n-`),
+ *   which is the bare minimum,
+ *   and for rank 2 headings looks suspiciously like an empty list item
+ * * using as many markers as the content (`Hello\n-----`),
+ *   which is hard to maintain and diff
+ * * an arbitrary number (`Hello\n---`), which for rank 2 headings looks
+ *   suspiciously like a thematic break
  *
- * Setext headings are also rather uncommon.
+ * Setext headings are also uncommon.
  * Using a sequence of hashes at the end of ATX headings is even more uncommon.
- * Due to this, it’s recommended to prefer ATX headings.
+ * Due to this,
+ * it’s recommended to use ATX headings, without closing hashes.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats headings as ATX by default.
- * The other styles can be configured with
- * [`setext: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionssetext)
- * or
- * [`closeAtx: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionscloseatx).
+ * [`remark-stringify`][github-remark-stringify] formats headings as ATX by default.
+ * The other styles can be configured with `setext: true` or `closeAtx: true`.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-heading-style]: #unifieduseremarklintheadingstyle-options
+ * [api-style]: #style
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module heading-style
- * @summary
- *   remark-lint rule to warn when headings violate a given style.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -117,10 +137,10 @@
  */
 
 /**
- * @typedef {Type | 'consistent'} Options
+ * @typedef {Style | 'consistent'} Options
  *   Configuration.
  *
- * @typedef {'atx' | 'atx-closed' | 'setext'} Type
+ * @typedef {'atx' | 'atx-closed' | 'setext'} Style
  *   Styles.
  */
 

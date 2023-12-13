@@ -1,19 +1,36 @@
 /**
+ * remark-lint rule to warn when unreferenced definitions are used.
+ *
+ * ## What is this?
+ *
+ * This package checks that definitions are referenced.
+ *
  * ## When should I use this?
  *
- * You can use this package to check definitions are referenced.
+ * You can use this package to check definitions.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoUnusedDefinitions)`
+ *
+ * Warn when unreferenced definitions are used.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
  * Unused definitions do not contribute anything, so they can be removed.
  *
+ * [api-remark-lint-no-unused-definitions]: #unifieduseremarklintnounuseddefinitions
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-unused-definitions
- * @summary
- *   remark-lint rule to warn when unreferenced definitions are used.
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
@@ -53,15 +70,6 @@
  * @typedef {import('mdast').Root} Root
  */
 
-/**
- * @typedef Info
- *   Info.
- * @property {DefinitionContent | undefined} node
- *   Definition.
- * @property {boolean} used
- *   Whether the definition is used.
- */
-
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
@@ -78,7 +86,7 @@ const remarkLintNoUnusedDefinitions = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Map<string, Info>} */
+    /** @type {Map<string, {node: DefinitionContent | undefined, used: boolean}>} */
     const map = new Map()
 
     // To do: separate maps for footnotes/definitions.

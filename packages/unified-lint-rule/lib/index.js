@@ -7,7 +7,7 @@
  * @typedef {'error' | 'on' | 'off' | 'warn'} Label
  *   Severity label (`'off'`: `0`, `'on'`: `1`, `'error'`: `2`).
  *
- * @typedef RuleMeta
+ * @typedef Meta
  *   Rule metadata.
  * @property {string} origin
  *   Name of the lint rule.
@@ -34,8 +34,8 @@
  *   File.
  * @param {Option} option
  *   Parameter.
- * @returns {Promise<Tree | undefined | void> | Tree | undefined | void}
- *   Result.
+ * @returns {Promise<undefined | void> | undefined | void}
+ *   Nothing.
  */
 
 import {wrap} from 'trough'
@@ -45,7 +45,7 @@ import {wrap} from 'trough'
  *   Node kind.
  * @template {any} [Option=unknown]
  *   Parameter kind.
- * @param {RuleMeta | string} meta
+ * @param {Meta | string} meta
  *   Info.
  * @param {Rule<Tree, Option>} rule
  *   Rule.

@@ -1,25 +1,44 @@
 /**
+ * remark-lint rule to warn for lazy lines in block quotes.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of block quotes.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that lines in block quotes start with `>`.
+ * You can use this package to check that the style of block quotes is
+ * consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoBlockquoteWithoutMarker)`
+ *
+ * Warn for lazy lines in block quotes.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * Rules around “lazy” lines are not straightforward and visually confusing,
+ * Rules around lazy lines are not straightforward and visually confusing,
  * so it’s recommended to start each line with a `>`.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * adds `>` markers to every line in a block quote.
+ * [`remark-stringify`][github-remark-stringify] adds `>` markers to every line
+ * in a block quote.
+ *
+ * [api-remark-lint-no-blockquote-without-marker]: #unifieduseremarklintnoblockquotewithoutmarker
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-blockquote-without-marker
- * @summary
- *   remark-lint rule to warn when lines in block quotes start without `>`.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -33,9 +52,9 @@
  * @example
  *   {"name": "ok-tabs.md"}
  *
- *   >»Foo…
- *   >»…bar…
- *   >»…baz.
+ *   >␉Foo…
+ *   >␉…bar…
+ *   >␉…baz.
  *
  * @example
  *   {"name": "not-ok.md", "label": "input"}
@@ -52,8 +71,8 @@
  * @example
  *   {"name": "not-ok-tabs.md", "label": "input"}
  *
- *   >»Foo…
- *   »…bar…
+ *   >␉Foo…
+ *   ␉…bar…
  *   …baz.
  *
  * @example

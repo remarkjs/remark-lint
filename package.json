@@ -1,11 +1,12 @@
 {
   "private": true,
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/remarkjs/remark-lint"
-  },
+  "repository": "https://github.com/remarkjs/remark-lint",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
@@ -117,12 +118,17 @@
     "@ungap/structured-clone": "^1.0.0",
     "c8": "^8.0.0",
     "comment-parser": "^1.0.0",
+    "control-pictures": "^2.0.0",
+    "estree-util-is-identifier-name": "^3.0.0",
     "github-slugger": "^2.0.0",
+    "mdast-util-find-and-replace": "^3.0.0",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-gfm": "^3.0.0",
     "mdast-util-to-markdown": "^2.0.0",
+    "mdast-util-to-string": "^4.0.0",
     "mdast-zone": "^6.0.0",
     "micromark-extension-gfm": "^3.0.0",
+    "micromark-util-normalize-identifier": "^2.0.0",
     "parse-author": "^2.0.0",
     "prettier": "^3.0.0",
     "remark": "^15.0.0",
@@ -133,6 +139,7 @@
     "remark-toc": "^9.0.0",
     "remark-validate-links": "^13.0.0",
     "strip-indent": "^4.0.0",
+    "to-vfile": "^8.0.0",
     "type-coverage": "^2.0.0",
     "type-fest": "^4.0.0",
     "typescript": "^5.0.0",
@@ -140,10 +147,13 @@
     "unist-builder": "^4.0.0",
     "unist-util-remove-position": "^5.0.0",
     "vfile": "^6.0.0",
+    "vfile-find-down": "^7.0.0",
+    "vfile-reporter": "^8.0.0",
+    "vfile-sort": "^4.0.0",
     "xo": "^0.56.0"
   },
   "scripts": {
-    "generate": "node --conditions development script/build-plugins.js && node --conditions development script/build-presets.js",
+    "generate": "node --conditions development script/build-packages.js",
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
     "test": "npm run build && npm run generate && npm run format && npm run test-coverage",
@@ -152,8 +162,8 @@
   },
   "prettier": {
     "bracketSpacing": false,
-    "singleQuote": true,
     "semi": false,
+    "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "none",
     "useTabs": false

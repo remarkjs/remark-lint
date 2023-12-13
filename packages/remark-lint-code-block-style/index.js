@@ -1,49 +1,75 @@
 /**
+ * remark-lint rule to warn when code blocks violate a given style.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of code blocks.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that code blocks are consistent.
+ * You can use this package to check that the style of code blocks is
+ * consistent.
  *
  * ## API
  *
- * The following options (default: `'consistent'`) are accepted:
+ * ### `unified().use(remarkLintCodeBlockStyle[, options])`
  *
- * *   `'fenced'`
- *     — prefer fenced code blocks:
- *     ````markdown
- *     ```js
- *     code()
- *     ```
- *     ````
- * *   `'indented'`
- *     — prefer indented code blocks:
- *     ```markdown
- *         code()
- *     ```
- * *   `'consistent'`
- *     — detect the first used style and warn when further code blocks differ
+ * Warn when code blocks violate a given style.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = 'indented' | 'fenced'
+ * ```
  *
  * ## Recommendation
  *
- * Indentation in markdown is complex, especially because lists and indented
- * code can interfere in unexpected ways.
- * Fenced code has more features than indented code: importantly, specifying a
+ * Indentation in markdown is complex as lists and indented code interfere in
+ * unexpected ways.
+ * Fenced code has more features than indented code: it can specify a
  * programming language.
- * Since CommonMark took the idea of fenced code from GFM, fenced code became
- * widely supported.
+ * Since CommonMark took the idea of fenced code from GFM,
+ * fenced code became widely supported.
  * Due to this, it’s recommended to configure this rule with `'fenced'`.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats code blocks as fenced code when they have a language flag and as
- * indented code otherwise.
- * Pass
- * [`fences: true`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#optionsfences)
- * to always use fenced code.
+ * [`remark-stringify`][github-remark-stringify] always formats code blocks as
+ * fenced.
+ * Pass `fences: false` to only use fenced code blocks when they have a
+ * language and as indented code otherwise.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-code-block-style]: #unifieduseremarklintcodeblockstyle-options
+ * [api-style]: #style
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module code-block-style
- * @summary
- *   remark-lint rule to warn when code blocks violate a given style.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

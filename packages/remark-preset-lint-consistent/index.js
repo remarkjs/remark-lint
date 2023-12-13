@@ -1,10 +1,25 @@
 /**
+ * Preset of remark-lint rules to warn for inconsistencies.
+ *
+ * ## What is this?
+ *
+ * This package is a preset containing `remark-lint` rules.
+ * Lint rules check markdown code style.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that markdown is consistent.
  *
- * @summary
- *   Preset of remark-lint rules to warn for inconsistencies.
+ * ## API
+ *
+ * ### `unified().use(remarkPresetLintConsistent)`
+ *
+ * Check that markdown is consistent.
+ *
+ * You can reconfigure rules in the preset by using them afterwards with different
+ * options.
+ *
+ * [api-remark-preset-lint-consistent]: #unifieduseremarkpresetlintconsistent
  */
 
 /**

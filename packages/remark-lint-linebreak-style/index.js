@@ -1,48 +1,81 @@
 /**
+ * remark-lint rule to warn when line endings violate a given style.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that line endings are consistent.
+ * This package checks the style of line endings.
+ *
+ * ## When should I use this?
+ *
+ * You can use this package to check that the style of line endings is
+ * consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintLinebreakStyle[, options])`
  *
- * The following options (default: `'consistent'`) are accepted:
+ * Warn when line endings violate a given style.
  *
- * *   `'unix'`
- *     — prefer Unix line endings (`\n`, `␊`):
- * *   `'window'`
- *     — prefer Windows line endings (`\r\n`, `␍␊`):
- * *   `'consistent'`
- *     — detect the first used style and warn when further line endings differ
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
+ *   — preferred style or whether to detect the first style and warn for
+ *   further differences
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = 'unix' | 'windows'
+ * ```
  *
  * ## Recommendation
  *
- * In Git projects, you can configure it to automatically switch between line
+ * In Git projects, you can configure to automatically switch between line
  * endings based on who checks the repo out.
- * In other places, you might manually want to force that one or the other is
- * used, in which case this rule can be used and configured.
+ * In other places, you may want to manually force that one or the other is
+ * used.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * always uses Unix linebreaks.
+ * [`remark-stringify`][github-remark-stringify] always uses Unix linebreaks.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-linebreak-style]: #unifieduseremarklintlinebreakstyle-options
+ * [api-style]: #style
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module linebreak-style
- * @summary
- *   remark-lint rule to warn when line endings don’t match a given style.
  * @author Titus Wormer
  * @copyright 2017 Titus Wormer
  * @license MIT
  * @example
  *   {"name": "ok-consistent-as-windows.md"}
  *
- *   Alpha␍␊
- *   Bravo␍␊
+ *   Alpha␍␊Bravo␍␊
  *
  * @example
  *   {"name": "ok-consistent-as-unix.md"}
  *
- *   Alpha␊
- *   Bravo␊
+ *   Alpha␊Bravo␊
  *
  * @example
  *   {"name": "not-ok-unix.md", "label": "input", "config": "unix", "positionless": true}
@@ -70,10 +103,11 @@
  */
 
 /**
- * @typedef {'unix' | 'windows'} Type
- *   Styles.
- * @typedef {Type | 'consistent'} Options
+ * @typedef {Style | 'consistent'} Options
  *   Options.
+ *
+ * @typedef {'unix' | 'windows'} Style
+ *   Styles.
  */
 
 import {lintRule} from 'unified-lint-rule'

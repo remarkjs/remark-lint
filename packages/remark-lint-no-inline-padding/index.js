@@ -1,21 +1,22 @@
 /**
- * ## When should I use this?
- *
- * You can use this package to check that inline constructs (links) are
- * not padded.
- * Historically, it was possible to pad emphasis, strong, and strikethrough
- * too, but this was removed in CommonMark, making this rule much less useful.
+ * Deprecated.
  *
  * ## API
  *
- * There are no options.
+ * to do: remove.
+ *
+ * [api-remark-lint-no-inline-padding]: #api
  *
  * @module no-inline-padding
- * @summary
- *   remark-lint rule to warn when inline constructs are padded.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ * @deprecated
+ *   **Stability: Legacy**.
+ *   This rule is no longer recommended for use.
+ *   With CommonMark, inlines can no longer be padded.
+ *   Otherwise they don’t parse.
+ *
  * @example
  *   {"name": "ok.md"}
  *

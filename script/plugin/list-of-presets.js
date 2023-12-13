@@ -29,8 +29,7 @@ const items = await Promise.all(
       ''
     )
 
-    assert(pack.repository && typeof pack.repository === 'object')
-    assert(pack.repository.directory)
+    assert(typeof pack.repository === 'string')
 
     return {
       type: 'listItem',
@@ -41,8 +40,7 @@ const items = await Promise.all(
           children: [
             {
               type: 'link',
-              url:
-                pack.repository.url + '/tree/main/' + pack.repository.directory,
+              url: pack.repository,
               children: [{type: 'inlineCode', value: info.name}]
             },
             {type: 'text', value: ' — ' + description}

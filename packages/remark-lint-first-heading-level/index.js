@@ -1,26 +1,65 @@
 /**
+ * remark-lint rule to warn when the first heading has an unexpected rank.
+ *
+ * ## What is this?
+ *
+ * This package checks the rank of the first heading.
+ *
  * ## When should I use this?
  *
- * You can use this package to check the heading rank of the first heading.
+ * You can use this package to check that the rank of first headings is
+ * consistent.
  *
  * ## API
  *
- * The following options (default: `1`) are accepted:
+ * ### `unified().use(remarkLintFirstHeadingLevel[, options])`
  *
- * *   `number` (example `1`)
- *     — expected rank of first heading
+ * Warn when the first heading has an unexpected rank.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], default: `1`)
+ *   — configuration
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Depth`
+ *
+ * Depth (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Depth = 1 | 2 | 3 | 4 | 5 | 6
+ * ```
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Options = Depth
+ * ```
  *
  * ## Recommendation
  *
  * In most cases you’d want to first heading in a markdown document to start at
- * rank 1.
- * In some cases a different rank makes more sense, such as when building a blog
- * and generating the primary heading from frontmatter metadata, in which case
- * a value of `2` can be defined here.
+ * rank `1`.
+ * In some cases a different rank makes more sense,
+ * such as when building a blog and generating the primary heading from
+ * frontmatter metadata,
+ * in which case a value of `2` can be defined here.
+ *
+ * [api-depth]: #depth
+ * [api-options]: #options
+ * [api-remark-lint-first-heading-level]: #unifieduseremarklintfirstheadinglevel-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module first-heading-level
- * @summary
- *   remark-lint rule to warn when the first heading has an unexpected rank.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

@@ -1,21 +1,40 @@
 /**
+ * remark-lint rule to warn when empty URLs are used.
+ *
+ * ## What is this?
+ *
+ * This package checks URLs of definitions, images, and links.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that links and images have URLs.
+ * You can use this package to check that URLs of definitions, images, and
+ * links are not empty.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoEmptyUrl)`
+ *
+ * Warn when empty URLs are used.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * While it is possible to omit URLs in links and images, that typically
- * indicates a “placeholder” or todo that has to be filled out later.
+ * While it is possible to omit URLs in links and images,
+ * that typically indicates a “placeholder” or something that has to be filled
+ * out later.
  * It’s recommended to fill them out.
  *
+ * [api-remark-lint-no-empty-url]: #unifieduseremarklintnoemptyurl
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module no-empty-url
- * @summary
- *   remark-lint rule to warn for empty URLs in links and images.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

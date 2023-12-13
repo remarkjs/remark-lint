@@ -1,5 +1,6 @@
 /**
  * @typedef {import('unified').Preset} Preset
+ * @typedef {import('type-fest').PackageJson} PackageJson
  */
 
 /**
@@ -39,10 +40,8 @@
  *   Description.
  * @property {string} name
  *   Name.
- * @property {string} ruleId
+ * @property {string | undefined} ruleId
  *   Rule ID.
- * @property {string | undefined} summary
- *   Summary.
  * @property {Array<Check>} checks
  *   Checks.
  *
@@ -50,7 +49,7 @@
  *   Preset.
  * @property {string} name
  *   Name.
- * @property {Array<[string, unknown]>} plugins
+ * @property {Array<[name: string, options: unknown]>} plugins
  *   Plugins and their configuration.
  */
 
@@ -58,8 +57,16 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import {parse} from 'comment-parser'
 import strip from 'strip-indent'
+import {read} from 'to-vfile'
 
-export const packagesUrl = new URL('../packages/', import.meta.url)
+const packagesUrl = new URL('../packages/', import.meta.url)
+
+/** @type {PackageJson} */
+export const ancestorPackage = JSON.parse(
+  String(await read(new URL('../package.json', packagesUrl)))
+)
+
+export {packagesUrl}
 
 /**
  * @type {Array<PluginInfo>}
@@ -76,7 +83,7 @@ export const presets = []
 const names = await fs.readdir(packagesUrl)
 
 for (const name of names) {
-  if (name.startsWith('remark-lint-')) {
+  if (name.startsWith('remark-lint')) {
     await addPlugin(name)
   }
 
@@ -92,42 +99,48 @@ for (const name of names) {
  *   Nothing.
  */
 async function addPlugin(name) {
-  const ruleId = name.slice('remark-lint-'.length)
   const code = await fs.readFile(
     new URL(name + '/index.js', packagesUrl),
     'utf8'
   )
   const fileInfo = parse(code, {spacing: 'preserve'})[0]
   const tags = fileInfo.tags
-  const deprecatedTag = tags.find(function (d) {
-    return d.tag === 'deprecated'
-  })
-  const moduleTag = tags.find(function (d) {
-    return d.tag === 'module'
-  })
-  const summaryTag = tags.find(function (d) {
-    return d.tag === 'summary'
-  })
+  let description = ''
+  /** @type {string | undefined} */
+  let ruleId
+  let deprecated = false
 
-  assert(moduleTag, 'expected `@module` in JSDoc')
+  if (name === 'remark-lint') {
+    // Empty.
+  } else {
+    ruleId = name.slice('remark-lint-'.length)
 
-  assert.equal(moduleTag.name, ruleId, 'expected correct `@module`')
+    const deprecatedTag = tags.find(function (d) {
+      return d.tag === 'deprecated'
+    })
+    const moduleTag = tags.find(function (d) {
+      return d.tag === 'module'
+    })
 
-  let description = deprecatedTag
-    ? deprecatedTag.description
-    : fileInfo.description
+    assert(moduleTag, 'expected `@module` in JSDoc')
+    assert.equal(moduleTag.name, ruleId, 'expected correct `@module`')
 
-  assert(description, 'expected description (or `@deprecated`)')
+    description = deprecatedTag
+      ? deprecatedTag.description
+      : fileInfo.description
 
-  description = strip(description)
+    assert(description, 'expected description (or `@deprecated`)')
+
+    description = strip(description).trim()
+    deprecated = Boolean(deprecatedTag)
+  }
 
   /** @type {PluginInfo} */
   const result = {
-    deprecated: Boolean(deprecatedTag),
-    description: description.trim(),
+    deprecated,
+    description,
     name,
     ruleId,
-    summary: summaryTag ? strip(summaryTag.description).trim() : undefined,
     checks: []
   }
 

@@ -1,12 +1,29 @@
 /**
+ * remark-lint rule to warn when definitions are used *in* the
+ * document instead of at the end.
+ *
+ * ## What is this?
+ *
+ * This package checks where definitions are placed.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that definitions are placed at the end of
- * the document.
+ * You can use this package to check that definitions are consistently at the
+ * end of the document.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintFinalDefinition)`
+ *
+ * Warn when definitions are used *in* the document instead of at the end.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -14,10 +31,10 @@
  * The simplest is perhaps to place them all at the bottem of documents.
  * If you prefer that, turn on this rule.
  *
+ * [api-remark-lint-final-definition]: #unifieduseremarklintfinaldefinition
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ *
  * @module final-definition
- * @summary
- *   remark-lint rule to warn when definitions are used *in* the document
- *   instead of at the end.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

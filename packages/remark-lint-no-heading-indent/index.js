@@ -1,11 +1,27 @@
 /**
+ * remark-lint rule to warn when headings are indented.
+ *
+ * ## What is this?
+ *
+ * This package checks the indent of headings.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that headings are not indented.
+ * You can use this package to check that headings are consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintNoHeadingIndent)`
+ *
+ * Warn when headings are indented.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -26,24 +42,25 @@
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats all headings without indent.
+ * [`remark-stringify`][github-remark-stringify] formats headings without indent.
+ *
+ * [api-remark-lint-no-heading-indent]: #unifieduseremarklintnoheadingindent
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module no-heading-indent
- * @summary
- *   remark-lint rule to warn when headings are indented.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @example
  *   {"name": "ok.md"}
  *
- *   #·Hello world
+ *   #␠Hello world
  *
  *   Foo
  *   -----
  *
- *   #·Hello world·#
+ *   #␠Hello world␠#
  *
  *   Bar
  *   =====
@@ -51,14 +68,14 @@
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   ···# Hello world
+ *   ␠␠␠# Hello world
  *
- *   ·Foo
+ *   ␠Foo
  *   -----
  *
- *   ·# Hello world #
+ *   ␠# Hello world #
  *
- *   ···Bar
+ *   ␠␠␠Bar
  *   =====
  *
  * @example

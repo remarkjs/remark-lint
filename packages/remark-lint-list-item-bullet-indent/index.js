@@ -1,16 +1,32 @@
 /**
+ * remark-lint rule to warn when list item markers are indented.
+ *
+ * ## What is this?
+ *
+ * This package checks indentation before list item markers.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that list items are not indented.
+ * You can use this package to check that the style of list items is
+ * consistent.
  *
  * ## API
  *
+ * ### `unified().use(remarkLintListItemBulletIndent)`
+ *
+ * Warn when list item markers are indented.
+ *
+ * ###### Parameters
+ *
  * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
- * There is no specific handling of indented list items (or anything else) in
- * markdown.
+ * There is no specific handling of indented list items in markdown.
  * While it is possible to use an indent to align ordered lists on their marker:
  *
  * ```markdown
@@ -19,19 +35,21 @@
  * 100. Hundred
  * ```
  *
- * …such a style is uncommon and a bit hard to maintain: adding a 10th item
- * means 9 other items have to change (more arduous, while unlikely, would be
+ * …such a style is uncommon and hard to maintain as adding a 10th item
+ * means 9 other items have to change (more arduous while unlikely would be
  * the 100th item).
- * Hence, it’s recommended to not indent items and to turn this rule on.
+ * So it is recommended to not indent items and to turn this rule on.
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats all items without indent.
+ * [`remark-stringify`][github-remark-stringify] formats all items without
+ * indent.
+ *
+ * [api-remark-lint-list-item-bullet-indent]: #unifieduseremarklintlistitembulletindent
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module list-item-bullet-indent
- * @summary
- *   remark-lint rule to warn when list items are indented.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -48,8 +66,8 @@
  *
  *   Paragraph.
  *
- *   ·* List item
- *   ·* List item
+ *   ␠* List item
+ *   ␠* List item
  *
  * @example
  *   {"name": "not-ok.md", "label": "output"}

@@ -1,40 +1,66 @@
 /**
+ * remark-lint rule to warn when lists violate a given style.
+ *
+ * ## What is this?
+ *
+ * This package checks the style of lists.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that lists are loose or tight when
- * they should be.
+ * they should be is.
  *
  * ## API
  *
- * The following options (default: `undefined`) are accepted:
+ * ### `unified().use(remarkLintListItemSpacing[, options])`
  *
- * *   `Object` with the following fields:
- *     *   `checkBlanks` (`boolean`, default: `false`)
- *         — adhere to CommonMark looseness instead of markdown-style-guide
- *         preference
+ * Warn when lists violate a given style.
+ *
+ * ###### Parameters
+ *
+ * * `options` ([`Options`][api-options], optional)
+ *   — configuration
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Fields
+ *
+ * * `checkBlanks` (`boolean`, default: `false`)
+ *   — whether to follow CommonMark looseness instead of `markdown-style-guide`
+ *   preference
  *
  * ## Recommendation
  *
- * First, some background.
- * There are two types of lists in markdown (other than ordered and unordered):
- * tight and loose lists.
+ * First some background.
+ * Regardless of ordered and unordered,
+ * there are two kinds of lists in markdown,
+ * tight and loose.
  * Lists are tight by default but if there is a blank line between two list
- * items or between two blocks inside an item, that turns the whole list into a
- * loose list.
- * When turning markdown into HTML, paragraphs in tight lists are not wrapped
- * in `<p>` tags.
+ * items or between two blocks inside an item,
+ * that turns the whole list into a loose list.
+ * When turning markdown into HTML,
+ * paragraphs in tight lists are not wrapped in `<p>` tags.
  *
- * This rule defaults to the
- * [`markdown style guide`](https://cirosantilli.com/markdown-style-guide/)
- * preference for which lists should be loose or not: loose when at least one
- * item spans more than one line, tight otherwise.
- * With `{checkBlanks: true}`, this rule dictates that when at least one item is
- * loose, all items must be loose.
+ * This rule defaults to the [`markdown-style-guide`][markdown-style-guide]
+ * preference for which lists should be loose or not:
+ * loose when at least one item spans more than one line and tight otherwise.
+ * With `{checkBlanks: true}`,
+ * this rule follows whether a list is loose or not according to Commonmark,
+ * and when one item is loose,
+ * all items must be loose.
+ *
+ * [api-options]: #options
+ * [api-remark-lint-list-item-spacing]: #unifieduseremarklintlistitemspacing-options
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+ * [markdown-style-guide]: https://cirosantilli.com/markdown-style-guide/
  *
  * @module list-item-spacing
- * @summary
- *   remark-lint rule to warn when lists are loose when they should be tight,
- *   or vice versa.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
@@ -140,8 +166,8 @@
  * @typedef Options
  *   Configuration.
  * @property {boolean | null | undefined} [checkBlanks=false]
- *   Follow CommonMark looseness instead of markdown-style-guide preference
- *   (default: `false`).
+ *   Whether to follow CommonMark looseness instead of `markdown-style-guide`
+ *   preference (default: `false`).
  */
 
 import {lintRule} from 'unified-lint-rule'

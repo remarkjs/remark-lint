@@ -2,16 +2,16 @@
 
 # remark-lint-strikethrough-marker
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
+[![Sponsors][badge-funding-sponsors-image]][badge-funding-url]
+[![Backers][badge-funding-backers-image]][badge-funding-url]
+[![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][mono] rule to warn when the number of strikethrough markers
-is inconsistent.
+[`remark-lint`][github-remark-lint] rule to warn when the number of GFM strikethrough markers are
+inconsistent.
 
 ## Contents
 
@@ -21,7 +21,9 @@ is inconsistent.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintStrikethroughMarker[, config])`](#unifieduseremarklintstrikethroughmarker-config)
+  * [`unified().use(remarkLintStrikethroughMarker[, options])`](#unifieduseremarklintstrikethroughmarker-options)
+  * [`Marker`](#marker)
+  * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
 * [Examples](#examples)
@@ -31,37 +33,35 @@ is inconsistent.
 
 ## What is this?
 
-This package is a [unified][] ([remark][]) plugin, specifically a `remark-lint`
-rule.
-Lint rules check markdown code style.
+This package checks the number of strikethrough markers.
+Strikethrough is a GFM feature enabled with
+[`remark-gfm`][github-remark-gfm].
 
 ## When should I use this?
 
-You can use this package to check that the number of strikethrough
-markers is consistent.
-Strikethrough is a GFM feature enabled with
-[`remark-gfm`](https://github.com/remarkjs/remark-gfm).
+You can use this package to check that GFM strikethrough is consistent.
 
 ## Presets
 
-This rule is not included in a preset maintained here.
+This plugin is not included in presets maintained here.
 
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 16+),
+install with [npm][npm-install]:
 
 ```sh
 npm install remark-lint-strikethrough-marker
 ```
 
-In Deno with [`esm.sh`][esmsh]:
+In Deno with [`esm.sh`][esm-sh]:
 
 ```js
 import remarkLintStrikethroughMarker from 'https://esm.sh/remark-lint-strikethrough-marker@2'
 ```
 
-In browsers with [`esm.sh`][esmsh]:
+In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
@@ -74,17 +74,21 @@ In browsers with [`esm.sh`][esmsh]:
 On the API:
 
 ```js
-import {remark} from 'remark'
 import remarkLint from 'remark-lint'
 import remarkLintStrikethroughMarker from 'remark-lint-strikethrough-marker'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
+import {unified} from 'unified'
 import {reporter} from 'vfile-reporter'
 
 const file = await read('example.md')
 
-await remark()
+await unified()
+  .use(remarkParse)
   .use(remarkLint)
   .use(remarkLintStrikethroughMarker)
+  .use(remarkStringify)
   .process(file)
 
 console.error(reporter(file))
@@ -93,7 +97,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --use remark-lint --use remark-lint-strikethrough-marker example.md
+remark --frail --use remark-lint --use remark-lint-strikethrough-marker .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -114,21 +118,45 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-The default export is `remarkLintStrikethroughMarker`.
+It exports the [TypeScript][typescript] types
+[`Marker`][api-marker] and
+[`Options`][api-options].
+The default export is
+[`remarkLintStrikethroughMarker`][api-remark-lint-strikethrough-marker].
 
-### `unified().use(remarkLintStrikethroughMarker[, config])`
+### `unified().use(remarkLintStrikethroughMarker[, options])`
 
-This rule supports standard configuration that all remark lint rules accept
-(such as `false` to turn it off or `[1, options]` to configure it).
+Warn when the number of GFM strikethrough markers are inconsistent.
 
-The following options (default: `'consistent'`) are accepted:
+###### Parameters
 
-* `'~'`
-  — prefer one strikethrough marker
-* `'~~'`
-  — prefer two strikethrough markers
-* `'consistent'`
-  — detect the first used style and warn when further strikethrough differs
+* `options` ([`Options`][api-options], default: `'consistent'`)
+  — preferred style or whether to detect the first style and warn for
+  further differences
+
+###### Returns
+
+Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Marker`
+
+Marker (TypeScript type).
+
+###### Type
+
+```ts
+type Marker = '~~' | '~'
+```
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Type
+
+```ts
+type Options = Marker | 'consistent'
+```
 
 ## Recommendation
 
@@ -138,8 +166,8 @@ It’s recommended to use two tildes.
 
 ## Fix
 
-[`remark-gfm`](https://github.com/remarkjs/remark-gfm)
-formats all strikethrough with two tildes.
+[`remark-stringify`][github-remark-stringify] with
+[`remark-gfm`][github-remark-gfm] formats all strikethrough with two tildes.
 
 ## Examples
 
@@ -149,7 +177,7 @@ When configured with `'~'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 ~foo~
@@ -165,7 +193,7 @@ When configured with `'~'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 ~~foo~~
@@ -183,7 +211,7 @@ When configured with `'~~'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 ~~foo~~
@@ -199,7 +227,7 @@ When configured with `'~~'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 ~foo~
@@ -215,7 +243,7 @@ When configured with `'~~'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][gfm]).
+> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 ~~foo~~
@@ -240,73 +268,85 @@ When configured with `'💩'`.
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`remark-lint-strikethrough-marker@2`,
+compatible with Node.js 12.
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
+See [`contributing.md`][github-dotfiles-contributing] in [`remarkjs/.github`][github-dotfiles-health] for ways
 to get started.
-See [`support.md`][support] for ways to get help.
+See [`support.md`][github-dotfiles-support] for ways to get help.
 
-This project has a [code of conduct][coc].
+This project has a [code of conduct][github-dotfiles-coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][author]
 
-[build-badge]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
+[api-marker]: #marker
 
-[build]: https://github.com/remarkjs/remark-lint/actions
+[api-options]: #options
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
-
-[coverage]: https://codecov.io/github/remarkjs/remark-lint
-
-[downloads-badge]: https://img.shields.io/npm/dm/remark-lint-strikethrough-marker.svg
-
-[downloads]: https://www.npmjs.com/package/remark-lint-strikethrough-marker
-
-[size-badge]: https://img.shields.io/bundlephobia/minzip/remark-lint-strikethrough-marker.svg
-
-[size]: https://bundlephobia.com/result?p=remark-lint-strikethrough-marker
-
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
-
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
-
-[collective]: https://opencollective.com/unified
-
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
-[chat]: https://github.com/remarkjs/remark/discussions
-
-[unified]: https://github.com/unifiedjs/unified
-
-[remark]: https://github.com/remarkjs/remark
-
-[mono]: https://github.com/remarkjs/remark-lint
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-
-[esmsh]: https://esm.sh
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[health]: https://github.com/remarkjs/.github
-
-[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
-
-[support]: https://github.com/remarkjs/.github/blob/main/support.md
-
-[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
-
-[license]: https://github.com/remarkjs/remark-lint/blob/main/license
+[api-remark-lint-strikethrough-marker]: #unifieduseremarklintstrikethroughmarker-options
 
 [author]: https://wooorm.com
 
-[gfm]: https://github.com/remarkjs/remark-gfm
+[badge-build-image]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
+
+[badge-build-url]: https://github.com/remarkjs/remark-lint/actions
+
+[badge-chat-image]: https://img.shields.io/badge/chat-discussions-success.svg
+
+[badge-chat-url]: https://github.com/remarkjs/remark/discussions
+
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
+
+[badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
+
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-strikethrough-marker.svg
+
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-strikethrough-marker
+
+[badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
+
+[badge-funding-sponsors-image]: https://opencollective.com/unified/sponsors/badge.svg
+
+[badge-funding-url]: https://opencollective.com/unified
+
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-strikethrough-marker
+
+[badge-size-url]: https://bundlejs.com/?q=remark-lint-strikethrough-marker
+
+[esm-sh]: https://esm.sh
+
+[file-license]: https://github.com/remarkjs/remark-lint/blob/main/license
+
+[github-dotfiles-coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+
+[github-dotfiles-contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
+
+[github-dotfiles-health]: https://github.com/remarkjs/.github
+
+[github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
+
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+
+[github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+
+[github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
+
+[npm-install]: https://docs.npmjs.com/cli/install
+
+[typescript]: https://www.typescriptlang.org

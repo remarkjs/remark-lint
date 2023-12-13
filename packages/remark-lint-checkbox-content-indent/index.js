@@ -1,12 +1,29 @@
 /**
+ * remark-lint rule to warn when GFM tasklist checkboxes are followed by
+ * more than one space.
+ *
+ * ## What is this?
+ *
+ * This package checks the space after checkboxes.
+ *
  * ## When should I use this?
  *
- * You can use this package to check that the “indent” after a GFM tasklist
- * checkbox is a single space.
+ * You can use this package to check that the style of GFM tasklists is
+ * a single space.
  *
  * ## API
  *
- * There are no accepted options.
+ * ### `unified().use(remarkLintCheckboxContentIndent)`
+ *
+ * Warn when GFM tasklist checkboxes are followed by more than one space.
+ *
+ * ###### Parameters
+ *
+ * There are no options.
+ *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
  * ## Recommendation
  *
@@ -27,13 +44,14 @@
  *
  * ## Fix
  *
- * [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
- * formats checkboxes and the content after them with a single space between.
+ * [`remark-stringify`][github-remark-stringify] formats checkboxes and the
+ * content after them with a single space between.
+ *
+ * [api-remark-lint-checkbox-content-indent]: #unifieduseremarklintcheckboxcontentindent
+ * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+ * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
  * @module checkbox-content-indent
- * @summary
- *   remark-lint rule to warn when GFM tasklist checkboxes are followed by
- *   more than one space.
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT

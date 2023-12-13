@@ -8,6 +8,7 @@
 
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import {controlPictures} from 'control-pictures'
 import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
 import remarkLint from 'remark-lint'
@@ -18,7 +19,6 @@ import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references
 import {lintRule} from 'unified-lint-rule'
 import {removePosition} from 'unist-util-remove-position'
 import {VFile} from 'vfile'
-import {characters} from './script/characters.js'
 import {plugins} from './script/info.js'
 
 test('remark-lint', async function (t) {
@@ -303,11 +303,7 @@ async function assertCheck(plugin, info, check) {
   const {config} = JSON.parse(check.configuration)
   /** @type {PluggableList} */
   const extras = check.gfm ? [remarkGfm] : []
-  let value = check.input
-
-  for (const character of characters) {
-    value = value.replace(character.in, character.out)
-  }
+  const value = controlPictures(check.input)
 
   const file = await remark()
     .use(plugin, config)

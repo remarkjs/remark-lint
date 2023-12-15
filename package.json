@@ -80,7 +80,6 @@
     "packages/remark-lint-no-heading-like-paragraph/",
     "packages/remark-lint-no-heading-punctuation/",
     "packages/remark-lint-no-html/",
-    "packages/remark-lint-no-inline-padding/",
     "packages/remark-lint-no-literal-urls/",
     "packages/remark-lint-no-missing-blank-lines/",
     "packages/remark-lint-no-multiple-toplevel-headings/",

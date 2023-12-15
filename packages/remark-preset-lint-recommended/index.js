@@ -34,7 +34,6 @@ import remarkLintListItemIndent from 'remark-lint-list-item-indent'
 import remarkLintNoBlockquoteWithoutMarker from 'remark-lint-no-blockquote-without-marker'
 import remarkLintNoDuplicateDefinitions from 'remark-lint-no-duplicate-definitions'
 import remarkLintNoHeadingContentIndent from 'remark-lint-no-heading-content-indent'
-import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
 import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
 import remarkLintNoShortcutReferenceImage from 'remark-lint-no-shortcut-reference-image'
 import remarkLintNoShortcutReferenceLink from 'remark-lint-no-shortcut-reference-link'
@@ -58,7 +57,6 @@ const remarkPresetLintRecommended = {
     remarkLintHardBreakSpaces,
     remarkLintNoDuplicateDefinitions,
     remarkLintNoHeadingContentIndent,
-    remarkLintNoInlinePadding,
     remarkLintNoShortcutReferenceImage,
     remarkLintNoShortcutReferenceLink,
     remarkLintNoUndefinedReferences,

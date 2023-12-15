@@ -145,7 +145,6 @@ import remarkLintNoFileNameIrregularCharacters from 'remark-lint-no-file-name-ir
 import remarkLintNoFileNameMixedCase from 'remark-lint-no-file-name-mixed-case'
 import remarkLintNoFileNameOuterDashes from 'remark-lint-no-file-name-outer-dashes'
 import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
-import remarkLintNoInlinePadding from 'remark-lint-no-inline-padding'
 import remarkLintNoLiteralUrls from 'remark-lint-no-literal-urls'
 import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
 import remarkLintNoShellDollars from 'remark-lint-no-shell-dollars'
@@ -269,9 +268,6 @@ const remarkPresetLintMarkdownStyleGuide = {
 
     // https://cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
     // Not checked.
-
-    // https://cirosantilli.com/markdown-style-guide/#span-elements
-    remarkLintNoInlinePadding,
 
     // https://cirosantilli.com/markdown-style-guide/#reference-style-links
     remarkLintNoShortcutReferenceImage,

@@ -38,8 +38,6 @@
  *
  * @typedef PluginInfo
  *   Plugin.
- * @property {boolean} deprecated
- *   Whether the plugin is deprecated.
  * @property {string} description
  *   Description.
  * @property {string} name
@@ -112,16 +110,12 @@ async function addPlugin(name) {
   let description = ''
   /** @type {string | undefined} */
   let ruleId
-  let deprecated = false
 
   if (name === 'remark-lint') {
     // Empty.
   } else {
     ruleId = name.slice('remark-lint-'.length)
 
-    const deprecatedTag = tags.find(function (d) {
-      return d.tag === 'deprecated'
-    })
     const moduleTag = tags.find(function (d) {
       return d.tag === 'module'
     })
@@ -129,19 +123,14 @@ async function addPlugin(name) {
     assert(moduleTag, 'expected `@module` in JSDoc')
     assert.equal(moduleTag.name, ruleId, 'expected correct `@module`')
 
-    description = deprecatedTag
-      ? deprecatedTag.description
-      : fileInfo.description
-
-    assert(description, 'expected description (or `@deprecated`)')
+    description = fileInfo.description
+    assert(description, 'expected description')
 
     description = strip(description).trim()
-    deprecated = Boolean(deprecatedTag)
   }
 
   /** @type {PluginInfo} */
   const result = {
-    deprecated,
     description,
     name,
     ruleId,

@@ -44,7 +44,7 @@ export default function remarkListOfRules() {
           ''
         )
 
-        if (!info.ruleId || /^deprecated/i.test(description)) return
+        if (!info.ruleId) return
 
         assert(typeof pack.repository === 'string')
 

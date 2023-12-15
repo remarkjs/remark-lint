@@ -37,7 +37,6 @@
     "remark-lint-no-blockquote-without-marker": "^5.0.0",
     "remark-lint-no-duplicate-definitions": "^3.0.0",
     "remark-lint-no-heading-content-indent": "^4.0.0",
-    "remark-lint-no-inline-padding": "^4.0.0",
     "remark-lint-no-literal-urls": "^3.0.0",
     "remark-lint-no-shortcut-reference-image": "^3.0.0",
     "remark-lint-no-shortcut-reference-link": "^3.0.0",

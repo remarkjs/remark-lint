@@ -40,8 +40,4 @@ rules and **remark-lint**’s rules.
 | MD034 | no-literal-urls | - |
 | MD035 | rule-style | - |
 | MD036 | no-emphasis-as-heading | remark-lint only warns when the emphasis is followed by a colon, but that might change. |
-| MD037 | no-inline-padding | - |
-| MD038 | no-inline-padding | - |
-| MD039 | no-inline-padding | - |
-| MD039 | no-inline-padding | - |
 | MD040 | fenced-code-flag | - |

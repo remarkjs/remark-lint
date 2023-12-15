@@ -60,7 +60,6 @@
     "remark-lint-no-file-name-mixed-case": "^2.0.0",
     "remark-lint-no-file-name-outer-dashes": "^2.0.0",
     "remark-lint-no-heading-punctuation": "^3.0.0",
-    "remark-lint-no-inline-padding": "^4.0.0",
     "remark-lint-no-literal-urls": "^3.0.0",
     "remark-lint-no-multiple-toplevel-headings": "^3.0.0",
     "remark-lint-no-shell-dollars": "^3.0.0",

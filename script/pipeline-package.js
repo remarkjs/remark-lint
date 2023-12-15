@@ -437,7 +437,7 @@ async function generateReadme(state) {
       : []),
     ...(categories.recommendation || []),
     ...(categories.fix || []),
-    ...(categories.example || generateReadmeExample(state)),
+    ...(categories.examples || generateReadmeExample(state)),
     ...generateReadmeTail(state)
   ]
 

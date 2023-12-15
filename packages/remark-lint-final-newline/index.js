@@ -38,13 +38,11 @@
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  * [stackexchange]: https://unix.stackexchange.com/questions/18743
  *
- * ## Example
+ * ## Examples
  *
  * ##### `ok.md`
  *
  * ###### In
- *
- * > 👉 **Note**: `␊` represents a line feed (`\n`).
  *
  * ```markdown
  * Alpha␊
@@ -58,8 +56,6 @@
  *
  * ###### In
  *
- * > 👉 **Note**: `␀` represents the end of the file.
- *
  * ```markdown
  * Bravo␀
  * ```
@@ -67,7 +63,7 @@
  * ###### Out
  *
  * ```text
- * 1:1: Missing newline character at end of file
+ * 1:6: Missing newline character at end of file
  * ```
  *
  * @module final-newline

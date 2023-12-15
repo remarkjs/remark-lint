@@ -23,7 +23,7 @@
   * [`unified().use(remarkLintFinalNewline)`](#unifieduseremarklintfinalnewline)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
-* [Example](#example)
+* [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
 * [License](#license)
@@ -143,13 +143,11 @@ See [StackExchange][] for more info.
 [`remark-stringify`](https://github.com/remarkjs/remark/tree/main/packages/remark-stringify)
 always adds final line endings.
 
-## Example
+## Examples
 
 ##### `ok.md`
 
 ###### In
-
-> 👉 **Note**: `␊` represents a line feed (`\n`).
 
 ```markdown
 Alpha␊
@@ -163,8 +161,6 @@ No messages.
 
 ###### In
 
-> 👉 **Note**: `␀` represents the end of the file.
-
 ```markdown
 Bravo␀
 ```
@@ -172,7 +168,7 @@ Bravo␀
 ###### Out
 
 ```text
-1:1: Missing newline character at end of file
+1:6: Missing newline character at end of file
 ```
 
 ## Compatibility

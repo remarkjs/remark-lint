@@ -30,12 +30,11 @@
 
 ## What is this?
 
-This package checks the style of lists.
+This package checks blank lines between list items.
 
 ## When should I use this?
 
-You can use this package to check that lists are loose or tight when
-they should be is.
+You can use this package to check the style of lists.
 
 ## Presets
 
@@ -143,8 +142,10 @@ Configuration (TypeScript type).
 ###### Fields
 
 * `checkBlanks` (`boolean`, default: `false`)
-  — whether to follow CommonMark looseness instead of `markdown-style-guide`
-  preference
+  — expect blank lines between items based on whether an item has blank
+  lines *in* them;
+  the default is to expect blank lines based on whether items span multiple
+  lines
 
 ## Recommendation
 

@@ -3,12 +3,11 @@
  *
  * ## What is this?
  *
- * This package checks the style of lists.
+ * This package checks blank lines between list items.
  *
  * ## When should I use this?
  *
- * You can use this package to check that lists are loose or tight when
- * they should be is.
+ * You can use this package to check the style of lists.
  *
  * ## API
  *
@@ -32,8 +31,10 @@
  * ###### Fields
  *
  * * `checkBlanks` (`boolean`, default: `false`)
- *   — whether to follow CommonMark looseness instead of `markdown-style-guide`
- *   preference
+ *   — expect blank lines between items based on whether an item has blank
+ *   lines *in* them;
+ *   the default is to expect blank lines based on whether items span multiple
+ *   lines
  *
  * ## Recommendation
  *
@@ -191,35 +192,42 @@ const remarkLintListItemSpacing = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    // To do: change options? Follow CM by default?
     const settings = options || emptyOptions
     const checkBlanks = settings.checkBlanks || false
-    const infer = checkBlanks ? inferBlankLine : inferMultiline
+    const infer = checkBlanks ? blanksBetween : multiline
 
     visit(tree, 'list', function (node) {
-      let tight = true
       let index = -1
+      let anySpaced = false
 
       while (++index < node.children.length) {
-        if (infer(node.children[index])) {
-          tight = false
+        const spaced = infer(node.children[index])
+
+        if (spaced) {
+          anySpaced = true
           break
         }
       }
 
-      index = 0 // Skip over first.
+      index = 0 // Skip first.
 
       while (++index < node.children.length) {
-        const start = pointEnd(node.children[index - 1])
-        const end = pointStart(node.children[index])
+        const previous = node.children[index - 1]
+        const current = node.children[index]
+        const previousEnd = pointEnd(previous)
+        const start = pointStart(current)
 
-        if (start && end && end.line - start.line < 2 !== tight) {
-          file.message(
-            tight
-              ? 'Extraneous new line after list item'
-              : 'Missing new line after list item',
-            {start, end}
-          )
+        if (previousEnd && start) {
+          const spaced = start.line - previousEnd.line > 1
+
+          if (spaced !== anySpaced) {
+            file.message(
+              anySpaced
+                ? 'Missing new line after list item'
+                : 'Extraneous new line after list item',
+              {start: previousEnd, end: start}
+            )
+          }
         }
       }
     })
@@ -232,17 +240,17 @@ export default remarkLintListItemSpacing
  * @param {ListItem} node
  *   Item.
  * @returns {boolean}
- *   Whether there’s a blank line between item children.
+ *   Whether there is a blank line between one of the children.
  */
-function inferBlankLine(node) {
-  let index = 0
+function blanksBetween(node) {
+  let index = 0 // Skip first.
 
   while (++index < node.children.length) {
+    const previousEnd = pointEnd(node.children[index - 1])
     const start = pointStart(node.children[index])
-    const end = pointEnd(node.children[index - 1])
 
-    // All children in `listItem`s are block.
-    if (start && end && start.line - end.line > 1) {
+    // Note: all children in `listItem`s are flow.
+    if (start && previousEnd && start.line - previousEnd.line > 1) {
       return true
     }
   }
@@ -254,11 +262,13 @@ function inferBlankLine(node) {
  * @param {ListItem} node
  *   Item.
  * @returns {boolean}
- *   Whether `node` is multiline.
+ *   Whether `node` spans multiple lines.
  */
-function inferMultiline(node) {
-  const end = pointEnd(node.children[node.children.length - 1])
-  const start = pointStart(node.children[0])
+function multiline(node) {
+  const head = node.children[0]
+  const tail = node.children[node.children.length - 1]
+  const end = pointEnd(tail)
+  const start = pointStart(head)
 
-  return Boolean(start && end && end.line - start.line > 0)
+  return Boolean(end && start && end.line - start.line > 0)
 }

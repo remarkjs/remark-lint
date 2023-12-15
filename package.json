@@ -62,7 +62,6 @@
     "packages/remark-lint-list-item-spacing/",
     "packages/remark-lint-maximum-heading-length/",
     "packages/remark-lint-maximum-line-length/",
-    "packages/remark-lint-no-auto-link-without-protocol/",
     "packages/remark-lint-no-blockquote-without-marker/",
     "packages/remark-lint-no-consecutive-blank-lines/",
     "packages/remark-lint-no-duplicate-defined-urls/",

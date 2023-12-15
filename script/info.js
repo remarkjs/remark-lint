@@ -12,6 +12,8 @@
  *   Whether to use GFM.
  * @property {string} input
  *   Input.
+ * @property {boolean} mdx
+ *   Whether to use MDX.
  * @property {string} name
  *   Name.
  * @property {Array<string>} output
@@ -27,6 +29,8 @@
  *   Whether to use GFM (optional).
  * @property {'input' | 'output'} [label]
  *   Label (optional).
+ * @property {boolean} [mdx]
+ *   Whether to use MDX (optional).
  * @property {boolean} [positionless]
  *   Whether this check also applies without positions (optional).
  * @property {string} name
@@ -168,7 +172,14 @@ async function addPlugin(name) {
       throw new Error('Could not parse example in `' + ruleId + '`', {cause})
     }
 
-    const exampleValue = strip(lines.join('\n').replace(/^\r?\n/g, ''))
+    const exampleValue = strip(
+      lines
+        .join('\n')
+        // Remove head.
+        .replace(/^\r?\n/g, '')
+        // Remove magic handling of `nul` control picture.
+        .replace(/␀/g, '')
+    )
     const configuration = JSON.stringify({config: info.config || true})
     const name = info.name
 
@@ -179,6 +190,7 @@ async function addPlugin(name) {
         positionless: info.positionless || false,
         gfm: info.gfm || false,
         input: exampleValue,
+        mdx: info.mdx || false,
         output: []
       })
 
@@ -198,6 +210,7 @@ async function addPlugin(name) {
         positionless: info.positionless || false,
         gfm: info.gfm || false,
         input: '',
+        mdx: info.mdx || false,
         output: []
       }
       result.checks.push(found)

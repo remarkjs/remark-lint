@@ -206,8 +206,8 @@ const remarkLintCheckboxCharacterStyle = lintRule(
         value.slice(point.offset - 2, point.offset + 1)
       )
 
-      // Failsafe to make sure we don‘t crash if there actually isn’t a checkbox.
-      /* c8 ignore next */
+      /* c8 ignore next 2 -- failsafe so we don’t crash if there actually isn’t
+       * a checkbox. */
       if (!match) return
 
       const style = node.checked ? checked : unchecked

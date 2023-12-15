@@ -57,26 +57,44 @@
  * @example
  *   {"name": "not-ok.md", "label": "output"}
  *
- *   3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
+ *   3:1-3:47: Move definitions to the end of the file (after `5:19`)
  *
  * @example
- *   {"name": "ok-comments.md"}
+ *   {"name": "ok-html-comments.md"}
  *
  *   Paragraph.
  *
  *   [example-1]: http://example.com/one/
  *
- *   <!-- Comments are fine between and after definitions -->
+ *   <!-- Comments are fine between and after definitions. -->
+ *
+ *   [example-2]: http://example.com/two/
+ *
+ * @example
+ *   {"name": "ok-mdx-comments.mdx", "mdx": true}
+ *
+ *   Paragraph.
+ *
+ *   [example-1]: http://example.com/one/
+ *
+ *   {/* Comments are fine in MDX. *␀/}
  *
  *   [example-2]: http://example.com/two/
  */
 
 /**
+ * @typedef {import('mdast').Definition} Definition
+ * @typedef {import('mdast').FootnoteDefinition} FootnoteDefinition
  * @typedef {import('mdast').Root} Root
+ *
+ * @typedef {import('unist').Point} Point
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {lintRule} from 'unified-lint-rule'
-import {pointStart} from 'unist-util-position'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
 
 const remarkLintFinalDefinition = lintRule(
@@ -91,40 +109,47 @@ const remarkLintFinalDefinition = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    let last = 0
+    /** @type {Array<Definition | FootnoteDefinition>} */
+    const definitions = []
+    /** @type {Point | undefined} */
+    let last
 
-    visit(
-      tree,
-      function (node) {
-        const start = pointStart(node)
+    visit(tree, function (node) {
+      if (node.type === 'definition' || node.type === 'footnoteDefinition') {
+        definitions.push(node)
+      } else if (
+        node.type === 'root' ||
+        node.type === 'blockquote' ||
+        node.type === 'listItem' ||
+        // Ignore HTML comments.
+        (node.type === 'html' && /^[\t ]*<!--/.test(node.value)) ||
+        // Ignore MDX comments.
+        ((node.type === 'mdxFlowExpression' ||
+          node.type === 'mdxTextExpression') &&
+          /^\s*\/\*/.test(node.value))
+      ) {
+        // Empty.
+      } else {
+        const place = pointEnd(node)
 
-        // To do: ignore MDX comments?
-        // Ignore generated and HTML comment nodes.
-        if (
-          !start ||
-          node.type === 'root' ||
-          (node.type === 'html' && /^\s*<!--/.test(node.value))
-        ) {
-          return
+        if (place) {
+          last = place
         }
+      }
+    })
 
-        const line = start.line
+    for (const node of definitions) {
+      const point = pointStart(node)
 
-        if (node.type === 'definition') {
-          if (last && last > line) {
-            file.message(
-              'Move definitions to the end of the file (after the node at line `' +
-                last +
-                '`)',
-              node
-            )
-          }
-        } else if (last === 0) {
-          last = line
-        }
-      },
-      true
-    )
+      if (point && last && point.line < last.line) {
+        file.message(
+          'Move definitions to the end of the file (after `' +
+            stringifyPosition(last) +
+            '`)',
+          node
+        )
+      }
+    }
   }
 )
 

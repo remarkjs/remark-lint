@@ -170,7 +170,8 @@ No messages.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 a[^x].
@@ -182,7 +183,7 @@ a[^x].
 ###### Out
 
 ```text
-4:1-4:13: Found unused definition
+4:1-4:13: Found unused footnote definition
 ```
 
 ## Compatibility

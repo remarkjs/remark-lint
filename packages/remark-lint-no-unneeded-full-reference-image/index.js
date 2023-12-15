@@ -92,7 +92,7 @@ const remarkLintNoUnneededFullReferenceImage = lintRule(
       if (
         !place ||
         node.referenceType !== 'full' ||
-        /* c8 ignore next */
+        /* c8 ignore next -- generated AST can omit `alt`. */
         normalizeIdentifier(node.alt || '') !== node.identifier.toUpperCase()
       ) {
         return

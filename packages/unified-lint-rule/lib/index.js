@@ -56,8 +56,7 @@ export function lintRule(meta, rule) {
   const id = typeof meta === 'string' ? meta : meta.origin
   const url = typeof meta === 'string' ? undefined : meta.url
   const parts = id.split(':')
-  // Possibly useful if externalised later.
-  /* c8 ignore next */
+  /* c8 ignore next -- Possibly useful if externalised later. */
   const source = parts[1] ? parts[0] : undefined
   const ruleId = parts[1]
 
@@ -94,9 +93,9 @@ export function lintRule(meta, rule) {
       wrap(rule, function (error) {
         const messages = file.messages
 
-        // Add the error, if not already properly added.
-        // Only happens for incorrect plugins.
-        /* c8 ignore next 6 */
+        /* c8 ignore next 8 -- add the error,
+         * if not already properly added.
+         * Only happens for incorrect plugins. */
         // @ts-expect-error: errors could be `messages`.
         if (error && !messages.includes(error)) {
           try {

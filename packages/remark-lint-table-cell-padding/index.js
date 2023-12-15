@@ -271,7 +271,7 @@ const remarkLintTableCellPadding = lintRule(
 
     visit(tree, 'table', function (node) {
       const rows = node.children
-      /* c8 ignore next -- to do: fix types to always have `align` defined. */
+      /* c8 ignore next -- generated AST can omit `align`. */
       const align = node.align || []
       /** @type {Array<number>} */
       const sizes = []
@@ -414,7 +414,6 @@ export default remarkLintTableCellPadding
 function size(node) {
   const head = pointStart(node.children[0])?.offset
   const tail = pointEnd(node.children[node.children.length - 1])?.offset
-  // Only called when we’re sure offsets exist.
-  /* c8 ignore next */
+  /* c8 ignore next -- Only called when we’re sure offsets exist. */
   return typeof head === 'number' && typeof tail === 'number' ? tail - head : 0
 }

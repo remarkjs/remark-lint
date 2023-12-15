@@ -213,9 +213,9 @@ const remarkLintNoUndefinedReferences = lintRule(
 
     visit(tree, function (node) {
       const place = position(node)
-      // CM specifiers that references only form when defined.
-      // Still, they could be added by plugins, so let’s keep it.
-      /* c8 ignore next 10 */
+      /* c8 ignore next 12 -- CM specifies that references only form when
+       * defined.
+       * Still, they could be added by plugins, so let’s keep it. */
       if (
         (node.type === 'imageReference' ||
           node.type === 'linkReference' ||

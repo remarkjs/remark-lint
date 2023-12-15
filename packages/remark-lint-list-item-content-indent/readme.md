@@ -151,7 +151,8 @@ Further children should align with it.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 1.␠[x] Alpha
@@ -166,7 +167,8 @@ No messages.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 1.␠[x] Charlie

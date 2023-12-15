@@ -1255,6 +1255,10 @@ function generateReadmeExample(state) {
       'github-remark-gfm',
       'https://github.com/remarkjs/remark-gfm'
     )
+    state.urls.set(
+      'github-remark-mdx',
+      'https://mdxjs.com/packages/remark-mdx/'
+    )
 
     if (!empty) {
       children.push({
@@ -1263,8 +1267,40 @@ function generateReadmeExample(state) {
         children: [{type: 'text', value: 'In'}]
       })
 
-      // To do: other plugins.
+      /** @type {Array<PhrasingContent>} */
+      const phrasing = []
+
       if (check.gfm) {
+        phrasing.push(
+          {type: 'text', value: 'GFM ('},
+          {
+            type: 'linkReference',
+            identifier: 'github-remark-gfm',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'remark-gfm'}]
+          },
+          {type: 'text', value: ')'}
+        )
+      }
+
+      if (check.mdx) {
+        if (phrasing.length > 0) {
+          phrasing.push({type: 'text', value: ',\n'})
+        }
+
+        phrasing.push(
+          {type: 'text', value: 'MDX ('},
+          {
+            type: 'linkReference',
+            identifier: 'github-remark-mdx',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'remark-mdx'}]
+          },
+          {type: 'text', value: ')'}
+        )
+      }
+
+      if (phrasing.length > 0) {
         children.push({
           type: 'blockquote',
           children: [
@@ -1276,14 +1312,9 @@ function generateReadmeExample(state) {
                   type: 'strong',
                   children: [{type: 'text', value: 'Note'}]
                 },
-                {type: 'text', value: ': this example uses GFM ('},
-                {
-                  type: 'linkReference',
-                  identifier: 'github-remark-gfm',
-                  referenceType: 'full',
-                  children: [{type: 'inlineCode', value: 'remark-gfm'}]
-                },
-                {type: 'text', value: ').'}
+                {type: 'text', value: ': this example uses\n'},
+                ...phrasing,
+                {type: 'text', value: '.'}
               ]
             }
           ]
@@ -1292,7 +1323,7 @@ function generateReadmeExample(state) {
 
       children.push({
         type: 'code',
-        lang: 'markdown',
+        lang: check.mdx ? 'mdx' : 'markdown',
         value: check.input
       })
     }

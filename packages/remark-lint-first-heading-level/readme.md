@@ -305,6 +305,23 @@ Paragraph.
 1:1-1:14: First heading level should be `2`
 ```
 
+##### `ok.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+In <b>MDX</b>, JSX is supported.
+
+<h1>First heading</h1>
+```
+
+###### Out
+
+No messages.
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -379,6 +396,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

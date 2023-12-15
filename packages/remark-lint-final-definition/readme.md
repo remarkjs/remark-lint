@@ -171,10 +171,10 @@ Another paragraph.
 ###### Out
 
 ```text
-3:1-3:47: Move definitions to the end of the file (after the node at line `5`)
+3:1-3:47: Move definitions to the end of the file (after `5:19`)
 ```
 
-##### `ok-comments.md`
+##### `ok-html-comments.md`
 
 ###### In
 
@@ -183,7 +183,28 @@ Paragraph.
 
 [example-1]: http://example.com/one/
 
-<!-- Comments are fine between and after definitions -->
+<!-- Comments are fine between and after definitions. -->
+
+[example-2]: http://example.com/two/
+```
+
+###### Out
+
+No messages.
+
+##### `ok-mdx-comments.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+Paragraph.
+
+[example-1]: http://example.com/one/
+
+{/* Comments are fine in MDX. */}
 
 [example-2]: http://example.com/two/
 ```
@@ -262,6 +283,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

@@ -126,8 +126,7 @@ const remarkLintListItemContentIndent = lintRule(
 
           file.message(
             'Don’t use mixed indentation for children, ' +
-              // Hard to test, I couldn’t find it at least.
-              /* c8 ignore next */
+              /* c8 ignore next -- hard to test, I couldn’t find it at least. */
               (diff > 0 ? 'add' : 'remove') +
               ' ' +
               abs +

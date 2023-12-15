@@ -62,11 +62,12 @@
  * @example
  *   {"name": "footnote.md", "gfm": true, "label": "output"}
  *
- *   4:1-4:13: Found unused definition
+ *   4:1-4:13: Found unused footnote definition
  */
 
 /**
- * @typedef {import('mdast').DefinitionContent} DefinitionContent
+ * @typedef {import('mdast').Definition} Definition
+ * @typedef {import('mdast').FootnoteDefinition} FootnoteDefinition
  * @typedef {import('mdast').Root} Root
  */
 
@@ -86,13 +87,19 @@ const remarkLintNoUnusedDefinitions = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Map<string, {node: DefinitionContent | undefined, used: boolean}>} */
-    const map = new Map()
+    /** @type {Map<string, {node: Definition | FootnoteDefinition | undefined, used: boolean}>} */
+    const footnoteDefinitions = new Map()
+    /** @type {Map<string, {node: Definition | FootnoteDefinition | undefined, used: boolean}>} */
+    const definitions = new Map()
 
-    // To do: separate maps for footnotes/definitions.
     visit(tree, function (node) {
       if ('identifier' in node) {
         const id = node.identifier.toLowerCase()
+        const map =
+          node.type === 'footnoteDefinition' ||
+          node.type === 'footnoteReference'
+            ? footnoteDefinitions
+            : definitions
         let entry = map.get(id)
 
         if (!entry) {
@@ -112,7 +119,15 @@ const remarkLintNoUnusedDefinitions = lintRule(
       }
     })
 
-    for (const entry of map.values()) {
+    for (const entry of footnoteDefinitions.values()) {
+      const place = position(entry.node)
+
+      if (place && !entry.used) {
+        file.message('Found unused footnote definition', place)
+      }
+    }
+
+    for (const entry of definitions.values()) {
       const place = position(entry.node)
 
       if (place && !entry.used) {

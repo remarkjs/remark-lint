@@ -152,7 +152,8 @@ So it’s recommended to not indent tables and to turn this rule on.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 Paragraph.
@@ -170,7 +171,8 @@ No messages.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 Paragraph.
@@ -192,7 +194,8 @@ Paragraph.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 >␠␠| A |
@@ -209,7 +212,8 @@ Paragraph.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 -␠␠␠paragraph

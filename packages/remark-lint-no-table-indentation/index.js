@@ -138,8 +138,8 @@ const remarkLintNoTableIndentation = lintRule(
         const head = parent.children[0]
         column = pointStart(head)?.column
 
-        // Skip past the first line if we’re the first child of a list item.
-        /* c8 ignore next 3 */
+        /* c8 ignore next 4 -- skip past the first line if we’re the first
+         * child of a list item. */
         if (typeof line === 'number' && head === node) {
           line++
         }

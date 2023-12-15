@@ -186,7 +186,8 @@ When configured with `'padded'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 | A     | B     |
@@ -204,7 +205,8 @@ When configured with `'padded'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 | A    |    B |
@@ -242,7 +244,8 @@ When configured with `'compact'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 |A    |B    |
@@ -260,7 +263,8 @@ When configured with `'compact'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 |   A    | B    |
@@ -284,7 +288,8 @@ When configured with `'compact'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 The default is `'consistent'`.
@@ -308,7 +313,8 @@ When configured with `'consistent'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 | A     | B     |
@@ -332,7 +338,8 @@ When configured with `'consistent'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 |A    |B    |
@@ -354,7 +361,8 @@ When configured with `'consistent'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 |A    |B    |
@@ -388,7 +396,8 @@ When configured with `'padded'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 <!-- Empty cells are OK, but those surrounding them may not be. -->
@@ -412,7 +421,8 @@ When configured with `'padded'`.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 <!-- Missing cells are fine as well. -->

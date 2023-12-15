@@ -159,7 +159,8 @@ content after them with a single space between.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 - [ ] List item
@@ -176,7 +177,8 @@ No messages.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 - [ ] List item

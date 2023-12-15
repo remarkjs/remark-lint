@@ -143,6 +143,13 @@
  *   {"name": "not-ok-html.md", "config": 2, "label": "output"}
  *
  *   1:1-1:14: First heading level should be `2`
+ *
+ * @example
+ *   {"name": "ok.mdx", "mdx": true}
+ *
+ *   In <b>MDX</b>, JSX is supported.
+ *
+ *   <h1>First heading</h1>
  */
 
 /**
@@ -158,11 +165,14 @@
  *   Configuration.
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {EXIT, visit} from 'unist-util-visit'
 
-const re = /<h([1-6])/
+const htmlRe = /<h([1-6])/
+const jsxNameRe = /h([1-6])/
 
 const remarkLintFirstHeadingLevel = lintRule(
   {
@@ -187,11 +197,17 @@ const remarkLintFirstHeadingLevel = lintRule(
         /** @type {Depth | undefined} */
         let rank
 
-        // To do: MDX?
         if (node.type === 'heading') {
           rank = node.depth
         } else if (node.type === 'html') {
-          const results = node.value.match(re)
+          const results = node.value.match(htmlRe)
+          rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
+        } else if (
+          (node.type === 'mdxJsxFlowElement' ||
+            node.type === 'mdxJsxTextElement') &&
+          node.name
+        ) {
+          const results = node.name.match(jsxNameRe)
           rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
         }
 

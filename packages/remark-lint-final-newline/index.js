@@ -81,6 +81,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {location} from 'vfile-location'
 
 const remarkLintFinalNewline = lintRule(
   {
@@ -95,11 +96,11 @@ const remarkLintFinalNewline = lintRule(
    */
   function (_, file) {
     const value = String(file)
+    const end = location(file).toPoint(value.length)
     const last = value.length - 1
 
-    if (last > -1 && value.charAt(last) !== '\n') {
-      // To do: warn at last character.
-      file.message('Missing newline character at end of file')
+    if (end && last > -1 && value.charAt(last) !== '\n') {
+      file.message('Missing newline character at end of file', end)
     }
   }
 )

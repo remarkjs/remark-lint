@@ -151,7 +151,8 @@ Whether to wrap prose or not is a stylistic choice.
 
 ###### In
 
-> 👉 **Note**: this example uses GFM ([`remark-gfm`][github-remark-gfm]).
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
 This line is simply not toooooooooooooooooooooooooooooooooooooooooooo

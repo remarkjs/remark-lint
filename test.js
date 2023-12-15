@@ -16,6 +16,7 @@ import remarkLintFinalNewline from 'remark-lint-final-newline'
 import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
 import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
+import remarkMdx from 'remark-mdx'
 import {lintRule} from 'unified-lint-rule'
 import {removePosition} from 'unist-util-remove-position'
 import {VFile} from 'vfile'
@@ -81,9 +82,12 @@ test('remark-lint', async function (t) {
 
     assert.deepEqual(file.messages.map(jsonClone), [
       {
+        column: 2,
         fatal: true,
+        line: 1,
         message: 'Missing newline character at end of file',
-        name: '1:1',
+        name: '1:2',
+        place: {column: 2, line: 1, offset: 1},
         reason: 'Missing newline character at end of file',
         ruleId: 'final-newline',
         source: 'remark-lint',
@@ -96,7 +100,7 @@ test('remark-lint', async function (t) {
     const file = await remark().use(remarkLintFinalNewline, true).process('.')
 
     assert.deepEqual(file.messages.map(String), [
-      '1:1: Missing newline character at end of file'
+      '1:2: Missing newline character at end of file'
     ])
   })
 
@@ -114,7 +118,7 @@ test('remark-lint', async function (t) {
         .process('.')
 
       assert.deepEqual(file.messages.map(String), [
-        '1:1: Missing newline character at end of file'
+        '1:2: Missing newline character at end of file'
       ])
     }
   )
@@ -139,9 +143,12 @@ test('remark-lint', async function (t) {
 
       assert.deepEqual(file.messages.map(jsonClone), [
         {
+          column: 2,
           fatal: true,
+          line: 1,
           message: 'Missing newline character at end of file',
-          name: '1:1',
+          name: '1:2',
+          place: {column: 2, line: 1, offset: 1},
           reason: 'Missing newline character at end of file',
           ruleId: 'final-newline',
           source: 'remark-lint',
@@ -160,9 +167,12 @@ test('remark-lint', async function (t) {
 
       assert.deepEqual(file.messages.map(jsonClone), [
         {
+          column: 2,
           fatal: false,
+          line: 1,
           message: 'Missing newline character at end of file',
-          name: '1:1',
+          name: '1:2',
+          place: {column: 2, line: 1, offset: 1},
           reason: 'Missing newline character at end of file',
           ruleId: 'final-newline',
           source: 'remark-lint',
@@ -181,9 +191,12 @@ test('remark-lint', async function (t) {
 
       assert.deepEqual(file.messages.map(jsonClone), [
         {
+          column: 2,
           fatal: false,
+          line: 1,
           message: 'Missing newline character at end of file',
-          name: '1:1',
+          name: '1:2',
+          place: {column: 2, line: 1, offset: 1},
           reason: 'Missing newline character at end of file',
           ruleId: 'final-newline',
           source: 'remark-lint',
@@ -302,8 +315,16 @@ async function assertCheck(plugin, info, check) {
   /** @type {{config: unknown}} */
   const {config} = JSON.parse(check.configuration)
   /** @type {PluggableList} */
-  const extras = check.gfm ? [remarkGfm] : []
+  const extras = []
   const value = controlPictures(check.input)
+
+  if (check.gfm) {
+    extras.push(remarkGfm)
+  }
+
+  if (check.mdx) {
+    extras.push(remarkMdx)
+  }
 
   const file = await remark()
     .use(plugin, config)

@@ -90,6 +90,7 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {collapseWhiteSpace} from 'collapse-white-space'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
@@ -140,21 +141,25 @@ const remarkLintNoShellDollars = lintRule(
 
       // Check known shell code.
       if (place && node.lang && flags.has(node.lang)) {
-        const lines = node.value.split('\n').filter(function (line) {
-          return line.trim().length > 0
-        })
+        const lines = node.value.split('\n')
         let index = -1
 
-        if (lines.length === 0) {
-          return
-        }
+        let hasLines = false
 
         while (++index < lines.length) {
-          const line = lines[index].trim()
+          const line = collapseWhiteSpace(lines[index], {style: 'html'})
+
+          if (!line) continue
+
+          hasLines = true
 
           if (!/^\$/.test(line)) {
             return
           }
+        }
+
+        if (!hasLines) {
+          return
         }
 
         file.message('Do not use dollar signs before shell commands', place)

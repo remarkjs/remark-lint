@@ -119,6 +119,8 @@
  *   4:12: Line must be at most 10 characters
  */
 
+/// <reference types="mdast-util-mdx" />
+
 /**
  * @typedef {import('mdast').Root} Root
  */
@@ -146,26 +148,14 @@ const remarkLintMaximumLineLength = lintRule(
     const option = options || 80
 
     visit(tree, function (node) {
-      // To do: add MDX types, etc.
-      // To do: remove MDX 1?
       if (
         node.type === 'code' ||
         node.type === 'definition' ||
         node.type === 'heading' ||
         node.type === 'html' ||
-        node.type === 'table' ||
-        // @ts-expect-error: These are from MDX@1 and MDX@2: <https://github.com/mdx-js/specification>.
-        node.type === 'jsx' ||
-        // @ts-expect-error: MDX
-        node.type === 'mdxFlowExpression' ||
-        // @ts-expect-error: MDX
-        node.type === 'mdxJsxFlowElement' ||
-        // @ts-expect-error: MDX
         node.type === 'mdxJsxTextElement' ||
-        // @ts-expect-error: MDX
         node.type === 'mdxTextExpression' ||
-        // @ts-expect-error: MDX
-        node.type === 'mdxjsEsm' ||
+        node.type === 'table' ||
         // @ts-expect-error: TOML from frontmatter.
         node.type === 'toml' ||
         node.type === 'yaml'

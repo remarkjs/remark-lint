@@ -147,9 +147,9 @@ It’s recommended to fill them out.
 
 ![charlie](http://delta.com/echo.png "foxtrot").
 
-[zulu][yankee].
+[golf][hotel].
 
-[yankee]: http://xray.com
+[india]: http://juliett.com
 ```
 
 ###### Out
@@ -161,21 +161,19 @@ No messages.
 ###### In
 
 ```markdown
-[golf]().
+[alpha]().
 
-![hotel]().
+![bravo](#).
 
-[zulu][yankee].
-
-[yankee]: <>
+[charlie]: <>
 ```
 
 ###### Out
 
 ```text
-1:1-1:9: Don’t use links without URL
-3:1-3:11: Don’t use images without URL
-7:1-7:13: Don’t use definitions without URL
+1:1-1:10: Don’t use links without URL
+3:1-3:12: Don’t use images without URL
+5:1-5:14: Don’t use definitions without URL
 ```
 
 ## Compatibility

@@ -45,27 +45,25 @@
  *
  *   ![charlie](http://delta.com/echo.png "foxtrot").
  *
- *   [zulu][yankee].
+ *   [golf][hotel].
  *
- *   [yankee]: http://xray.com
+ *   [india]: http://juliett.com
  *
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   [golf]().
+ *   [alpha]().
  *
- *   ![hotel]().
+ *   ![bravo](#).
  *
- *   [zulu][yankee].
- *
- *   [yankee]: <>
+ *   [charlie]: <>
  *
  * @example
  *   {"name": "not-ok.md", "label": "output"}
  *
- *   1:1-1:9: Don’t use links without URL
- *   3:1-3:11: Don’t use images without URL
- *   7:1-7:13: Don’t use definitions without URL
+ *   1:1-1:10: Don’t use links without URL
+ *   3:1-3:12: Don’t use images without URL
+ *   5:1-5:14: Don’t use definitions without URL
  */
 
 /**
@@ -96,7 +94,7 @@ const remarkLintNoEmptyUrl = lintRule(
           node.type === 'image' ||
           node.type === 'link') &&
         place &&
-        !node.url
+        (!node.url || node.url === '#' || node.url === '?')
       ) {
         file.message('Don’t use ' + node.type + 's without URL', place)
       }

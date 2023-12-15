@@ -22,7 +22,6 @@
   * [`lintRule(meta, rule)`](#lintrulemeta-rule)
   * [`Meta`](#meta)
   * [`Rule`](#rule)
-  * [`RuleMeta`](#rulemeta)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
 * [License](#license)
@@ -83,9 +82,8 @@ export default remarkLintFileExtension
 
 This package exports the identifier
 [`lintRule`][api-lint-rule].
-It exports the [TypeScript][typescript] types
-[`Meta`][api-meta] and
-[`RuleMeta`][api-rule-meta].
+It exports the [TypeScript][typescript] type
+[`Meta`][api-meta].
 There is no default export.
 
 ### `lintRule(meta, rule)`
@@ -131,12 +129,6 @@ Rule (TypeScript type).
 
 Nothing (`Promise<undefined>` or `undefined`).
 
-### `RuleMeta`
-
-Deprecated.
-
-<!-- To do: remove. -->
-
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -167,8 +159,6 @@ abide by its terms.
 [api-meta]: #meta
 
 [api-rule]: #rule
-
-[api-rule-meta]: #rulemeta
 
 [author]: https://wooorm.com
 

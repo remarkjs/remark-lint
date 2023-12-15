@@ -5,11 +5,15 @@ import {write} from 'to-vfile'
 import {plugins, presets} from './info.js'
 import {pipelinePackage} from './pipeline-package.js'
 
-const results = await Promise.all(
-  [...plugins, ...presets].map(function (d) {
+const results = await Promise.all([
+  pipelinePackage('unified-lint-rule'),
+  ...plugins.map(function (d) {
+    return pipelinePackage(d.name)
+  }),
+  ...presets.map(function (d) {
     return pipelinePackage(d.name)
   })
-)
+])
 
 const files = results.flat()
 

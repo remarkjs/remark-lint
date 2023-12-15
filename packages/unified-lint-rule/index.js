@@ -74,15 +74,8 @@
  *
  * Nothing (`Promise<undefined>` or `undefined`).
  *
- * ### `RuleMeta`
- *
- * Deprecated.
- *
- * <!-- To do: remove. -->
- *
  * [api-meta]: #meta
  * [api-rule]: #rule
- * [api-rule-meta]: #rulemeta
  * [api-lint-rule]: #lintrulemeta-rule
  * [github-unist-node]: https://github.com/syntax-tree/unist#node
  * [github-unified-plugin]: https://github.com/unifiedjs/unified#plugin
@@ -94,9 +87,6 @@
  */
 
 /**
- * @typedef {import('./lib/index.js').Meta} RuleMeta
- *   To do: deprecate.
- *
  * @typedef {import('./lib/index.js').Meta} Meta
  */
 

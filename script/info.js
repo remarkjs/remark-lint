@@ -85,12 +85,12 @@ export const presets = []
 const names = await fs.readdir(packagesUrl)
 
 for (const name of names) {
-  if (name.startsWith('remark-lint')) {
-    await addPlugin(name)
-  }
-
   if (name.startsWith('remark-preset-lint-')) {
     await addPreset(name)
+  } else if (name === 'unified-lint-rule') {
+    // Empty.
+  } else {
+    await addPlugin(name)
   }
 }
 
@@ -111,9 +111,7 @@ async function addPlugin(name) {
   /** @type {string | undefined} */
   let ruleId
 
-  if (name === 'remark-lint') {
-    // Empty.
-  } else {
+  if (name.startsWith('remark-lint-')) {
     ruleId = name.slice('remark-lint-'.length)
 
     const moduleTag = tags.find(function (d) {

@@ -295,7 +295,8 @@ async function generateReadme(state) {
       return d.name === state.name
     })
   ) {
-    const name = state.name === 'remark-lint' ? state.id : state.origin
+    const name = state.name.startsWith('remark-lint-') ? state.origin : state.id
+
     assert(name)
     if (
       !('default' in indexModule) ||

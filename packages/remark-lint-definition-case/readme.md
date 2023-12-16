@@ -167,6 +167,23 @@ No messages.
 1:1-1:47: Do not use uppercase characters in definition labels
 ```
 
+##### `gfm.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+[^X]: Footnote definitions (from GFM) are checked too.
+```
+
+###### Out
+
+```text
+1:1-1:55: Do not use uppercase characters in definition labels
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -235,6 +252,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

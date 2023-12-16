@@ -8,10 +8,14 @@
  *   Check.
  * @property {string} configuration
  *   Configuration.
+ * @property {boolean} directive
+ *   Whether to use directives.
  * @property {boolean} gfm
  *   Whether to use GFM.
  * @property {string} input
  *   Input.
+ * @property {boolean} math
+ *   Whether to use math.
  * @property {boolean} mdx
  *   Whether to use MDX.
  * @property {string} name
@@ -25,10 +29,14 @@
  *   Example.
  * @property {unknown} [config]
  *   Configuration (optional).
+ * @property {boolean} [directive]
+ *   Whether to use directives.
  * @property {boolean} [gfm]
  *   Whether to use GFM (optional).
  * @property {'input' | 'output'} [label]
  *   Label (optional).
+ * @property {boolean} [math]
+ *   Whether to use math.
  * @property {boolean} [mdx]
  *   Whether to use MDX (optional).
  * @property {boolean} [positionless]
@@ -173,12 +181,14 @@ async function addPlugin(name) {
     if (!info.label) {
       result.checks.push({
         configuration,
-        name,
-        positionless: info.positionless || false,
+        directive: info.directive || false,
         gfm: info.gfm || false,
         input: exampleValue,
+        math: info.math || false,
         mdx: info.mdx || false,
-        output: []
+        name,
+        output: [],
+        positionless: info.positionless || false
       })
 
       continue
@@ -193,12 +203,14 @@ async function addPlugin(name) {
     if (!found) {
       found = {
         configuration,
-        name,
-        positionless: info.positionless || false,
+        directive: info.directive || false,
         gfm: info.gfm || false,
         input: '',
+        math: info.math || false,
         mdx: info.mdx || false,
-        output: []
+        name,
+        output: [],
+        positionless: info.positionless || false
       }
       result.checks.push(found)
     }

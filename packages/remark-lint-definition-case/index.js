@@ -51,6 +51,16 @@
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   1:1-1:47: Do not use uppercase characters in definition labels
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm.md"}
+ *
+ *   [^X]: Footnote definitions (from GFM) are checked too.
+ *
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm.md"}
+ *
+ *   1:1-1:55: Do not use uppercase characters in definition labels
  */
 
 /**

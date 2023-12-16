@@ -62,6 +62,20 @@
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   3:1-3:10: Heading levels should increment by one level at a time
+ *
+ * @example
+ *   {"name": "html.md"}
+ *
+ *   In markdown, <b>HTML</b> is supported.
+ *
+ *   <h1>First heading</h1>
+ *
+ * @example
+ *   {"name": "ok.mdx", "mdx": true}
+ *
+ *   In MDX, <b>JSX</b> is supported.
+ *
+ *   <h1>First heading</h1>
  */
 
 /**
@@ -69,9 +83,14 @@
  * @typedef {import('mdast').Root} Root
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
+
+const htmlRe = /<h([1-6])/
+const jsxNameRe = /^h([1-6])$/
 
 const remarkLintHeadingIncrement = lintRule(
   {
@@ -88,18 +107,41 @@ const remarkLintHeadingIncrement = lintRule(
     /** @type {Heading['depth'] | undefined} */
     let previous
 
-    visit(tree, 'heading', function (node) {
+    visit(tree, function (node) {
       const place = position(node)
 
       if (place) {
-        if (previous && node.depth > previous + 1) {
-          file.message(
-            'Heading levels should increment by one level at a time',
-            place
-          )
+        /** @type {Heading['depth'] | undefined} */
+        let rank
+
+        if (node.type === 'heading') {
+          rank = node.depth
+        } else if (node.type === 'html') {
+          const results = node.value.match(htmlRe)
+          rank = results
+            ? /** @type {Heading['depth']} */ (Number(results[1]))
+            : undefined
+        } else if (
+          (node.type === 'mdxJsxFlowElement' ||
+            node.type === 'mdxJsxTextElement') &&
+          node.name
+        ) {
+          const results = node.name.match(jsxNameRe)
+          rank = results
+            ? /** @type {Heading['depth']} */ (Number(results[1]))
+            : undefined
         }
 
-        previous = node.depth
+        if (rank) {
+          if (previous && rank > previous + 1) {
+            file.message(
+              'Heading levels should increment by one level at a time',
+              place
+            )
+          }
+
+          previous = rank
+        }
       }
     })
   }

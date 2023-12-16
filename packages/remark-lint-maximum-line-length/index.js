@@ -119,11 +119,11 @@
  *   4:12: Line must be at most 10 characters
  */
 
-/// <reference types="mdast-util-mdx" />
-
 /**
  * @typedef {import('mdast').Root} Root
  */
+
+/// <reference types="mdast-util-mdx" />
 
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
@@ -147,6 +147,7 @@ const remarkLintMaximumLineLength = lintRule(
     const lines = value.split(/\r?\n/)
     const option = options || 80
 
+    // Allow nodes that cannot be wrapped.
     visit(tree, function (node) {
       if (
         node.type === 'code' ||
@@ -169,11 +170,8 @@ const remarkLintMaximumLineLength = lintRule(
       }
     })
 
-    // Finally, allow some inline spans, but only if they occur at or after
-    // the wrap.
-    // However, when they do, and there’s whitespace after it, they are not
-    // allowed.
-    visit(tree, function (node, pos, parent) {
+    // Allow text spans to cross the border.
+    visit(tree, function (node, index, parent) {
       const final = pointEnd(node)
       const initial = pointStart(node)
 
@@ -184,14 +182,14 @@ const remarkLintMaximumLineLength = lintRule(
         initial &&
         final &&
         parent &&
-        typeof pos === 'number'
+        typeof index === 'number'
       ) {
         // Not allowing when starting after the border, or ending before it.
         if (initial.column > option || final.column < option) {
           return
         }
 
-        const next = parent.children[pos + 1]
+        const next = parent.children[index + 1]
         const nextStart = pointStart(next)
 
         // Not allowing when there’s whitespace after the link.
@@ -208,7 +206,7 @@ const remarkLintMaximumLineLength = lintRule(
       }
     })
 
-    // Iterate over every line, and warn for violating lines.
+    // Iterate over every line and warn for violating lines.
     let index = -1
 
     while (++index < lines.length) {

@@ -32,6 +32,9 @@ a definition label.
 
 This package checks the whitepsace in definition labels.
 
+GFM footnotes are not affected by this rule as footnote labels cannot
+contain whitespace.
+
 ## When should I use this?
 
 You can use this package to check that definition labels are consistent.

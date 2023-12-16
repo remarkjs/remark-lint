@@ -166,7 +166,7 @@ No messages.
 1:1-1:27: Found unused definition
 ```
 
-##### `footnote.md`
+##### `gfm.md`
 
 ###### In
 

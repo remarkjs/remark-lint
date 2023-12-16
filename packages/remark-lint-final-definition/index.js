@@ -119,8 +119,6 @@ const remarkLintFinalDefinition = lintRule(
         definitions.push(node)
       } else if (
         node.type === 'root' ||
-        node.type === 'blockquote' ||
-        node.type === 'listItem' ||
         // Ignore HTML comments.
         (node.type === 'html' && /^[\t ]*<!--/.test(node.value)) ||
         // Ignore MDX comments.

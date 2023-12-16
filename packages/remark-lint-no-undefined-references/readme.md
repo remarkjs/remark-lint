@@ -193,7 +193,7 @@ No messages.
 
 ##### `ok-allow.md`
 
-When configured with `{ allow: [ '...', '…' ] }`.
+When configured with `{ allow: [ '…' ] }`.
 
 ###### In
 
@@ -205,7 +205,7 @@ When configured with `{ allow: [ '...', '…' ] }`.
 
 No messages.
 
-##### `ok-allow.md`
+##### `ok-allow-source.md`
 
 When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
 
@@ -261,7 +261,7 @@ Multiple pairs: [a][b][c].
 17:23-17:26: Found reference to undefined definition
 ```
 
-##### `not-ok.md`
+##### `not-ok-source.md`
 
 When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
 
@@ -278,6 +278,25 @@ When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
 ```text
 1:1-1:11: Found reference to undefined definition
 3:1-3:9: Found reference to undefined definition
+```
+
+##### `gfm.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+GFM footnote calls are supported too.
+
+Alpha[^a]
+```
+
+###### Out
+
+```text
+3:6-3:10: Found reference to undefined definition
 ```
 
 ## Compatibility
@@ -350,6 +369,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

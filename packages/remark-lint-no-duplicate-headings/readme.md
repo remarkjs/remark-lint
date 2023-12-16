@@ -179,6 +179,26 @@ No messages.
 5:1-5:29: Do not use headings with similar content (3:1)
 ```
 
+##### `mdx.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+MDX is supported too.
+
+<h1>Alpha</h1>
+<h2>Alpha</h2>
+```
+
+###### Out
+
+```text
+4:1-4:15: Do not use headings with similar content (3:1)
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -249,6 +269,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

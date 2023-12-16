@@ -174,6 +174,25 @@ When configured with `40`.
 1:1-1:52: Use headings shorter than `40`
 ```
 
+##### `ok.mdx`
+
+When configured with `30`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+<h1>In MDX, headings are checked too</h1>
+```
+
+###### Out
+
+```text
+1:1-1:42: Use headings shorter than `30`
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -244,6 +263,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

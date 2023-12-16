@@ -1253,8 +1253,16 @@ function generateReadmeExample(state) {
     const empty = check.input.trim() === ''
 
     state.urls.set(
+      'github-remark-directive',
+      'https://github.com/remarkjs/remark-directive'
+    )
+    state.urls.set(
       'github-remark-gfm',
       'https://github.com/remarkjs/remark-gfm'
+    )
+    state.urls.set(
+      'github-remark-math',
+      'https://github.com/remarkjs/remark-math'
     )
     state.urls.set(
       'github-remark-mdx',
@@ -1271,7 +1279,28 @@ function generateReadmeExample(state) {
       /** @type {Array<PhrasingContent>} */
       const phrasing = []
 
+      if (check.directive) {
+        if (phrasing.length > 0) {
+          phrasing.push({type: 'text', value: ',\n'})
+        }
+
+        phrasing.push(
+          {type: 'text', value: 'directives ('},
+          {
+            type: 'linkReference',
+            identifier: 'github-remark-directive',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'remark-directive'}]
+          },
+          {type: 'text', value: ')'}
+        )
+      }
+
       if (check.gfm) {
+        if (phrasing.length > 0) {
+          phrasing.push({type: 'text', value: ',\n'})
+        }
+
         phrasing.push(
           {type: 'text', value: 'GFM ('},
           {
@@ -1279,6 +1308,23 @@ function generateReadmeExample(state) {
             identifier: 'github-remark-gfm',
             referenceType: 'full',
             children: [{type: 'inlineCode', value: 'remark-gfm'}]
+          },
+          {type: 'text', value: ')'}
+        )
+      }
+
+      if (check.math) {
+        if (phrasing.length > 0) {
+          phrasing.push({type: 'text', value: ',\n'})
+        }
+
+        phrasing.push(
+          {type: 'text', value: 'math ('},
+          {
+            type: 'linkReference',
+            identifier: 'github-remark-math',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'remark-math'}]
           },
           {type: 'text', value: ')'}
         )

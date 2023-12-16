@@ -80,12 +80,12 @@
  *   [foo]: https://example.com
  *
  * @example
- *   {"name": "ok-allow.md", "config": {"allow": ["...", "…"]}}
+ *   {"config": {"allow": ["…"]}, "name": "ok-allow.md"}
  *
  *   > Eliding a portion of a quoted passage […] is acceptable.
  *
  * @example
- *   {"name": "ok-allow.md", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *   {"config": {"allow": ["a", {"source": "^b\\."}]}, "name": "ok-allow-source.md"}
  *
  *   [foo][b.c]
  *
@@ -94,7 +94,7 @@
  *   Matching is case-insensitive: [bar][B.C]
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
  *   [bar]
  *
@@ -113,9 +113,8 @@
  *   Can include [*emphasis*].
  *
  *   Multiple pairs: [a][b][c].
- *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
  *   1:1-1:6: Found reference to undefined definition
  *   3:1-3:8: Found reference to undefined definition
@@ -128,17 +127,27 @@
  *   17:23-17:26: Found reference to undefined definition
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *   {"config": {"allow": ["a", {"source": "^b\\."}]}, "label": "input", "name": "not-ok-source.md"}
  *
  *   [foo][a.c]
  *
  *   [bar][b]
- *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": {"allow": ["a", {"source": "^b\\."}]}}
+ *   {"config": {"allow": ["a", {"source": "^b\\."}]}, "label": "output", "name": "not-ok-source.md"}
  *
  *   1:1-1:11: Found reference to undefined definition
  *   3:1-3:9: Found reference to undefined definition
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm.md"}
+ *
+ *   GFM footnote calls are supported too.
+ *
+ *   Alpha[^a]
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm.md"}
+ *
+ *   3:6-3:10: Found reference to undefined definition
  */
 
 /**
@@ -150,7 +159,7 @@
 /**
  * @typedef Options
  *   Configuration.
- * @property {Readonly<Array<RegExp | {source: string} | string>> | null | undefined} [allow]
+ * @property {ReadonlyArray<{source: string} | RegExp | string> | null | undefined} [allow]
  *   Text or regexes to allow between `[` and `]` even though they’re not
  *   defined (optional).
  */
@@ -163,7 +172,7 @@ import {location} from 'vfile-location'
 
 /** @type {Readonly<Options>} */
 const emptyOptions = {}
-/** @type {Readonly<Array<RegExp | {source: string} | string>>} */
+/** @type {ReadonlyArray<{source: string} | RegExp | string>} */
 const emptyAllow = []
 
 const remarkLintNoUndefinedReferences = lintRule(
@@ -196,6 +205,7 @@ const remarkLintNoUndefinedReferences = lintRule(
 
     while (++index < allow.length) {
       const value = allow[index]
+
       if (typeof value === 'string') {
         strings.add(normalizeIdentifier(value))
       } else if (value instanceof RegExp) {
@@ -213,6 +223,7 @@ const remarkLintNoUndefinedReferences = lintRule(
 
     visit(tree, function (node) {
       const place = position(node)
+
       /* c8 ignore next 12 -- CM specifies that references only form when
        * defined.
        * Still, they could be added by plugins, so let’s keep it. */
@@ -227,7 +238,7 @@ const remarkLintNoUndefinedReferences = lintRule(
         file.message('Found reference to undefined definition', place)
       }
 
-      if (node.type === 'paragraph' || node.type === 'heading') {
+      if (node.type === 'heading' || node.type === 'paragraph') {
         findInPhrasing(node)
         return SKIP
       }

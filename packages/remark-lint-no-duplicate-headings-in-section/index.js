@@ -86,6 +86,19 @@
  *   {"name": "not-ok-tolerant-heading-increment.md", "label": "output"}
  *
  *   7:1-7:11: Do not use headings with similar content per section (3:1)
+ *
+ * @example
+ *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   MDX is supported <em>too</em>.
+ *
+ *   <h2>Alpha</h2>
+ *   <h2>Alpha</h2>
+ *
+ * @example
+ *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   4:1-4:15: Do not use headings with similar content per section (3:1)
  */
 
 /**
@@ -93,11 +106,15 @@
  * @typedef {import('mdast').Root} Root
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart, position} from 'unist-util-position'
 import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
+
+const jsxNameRe = /^h([1-6])$/
 
 const remarkLintNoDuplicateHeadingsInSection = lintRule(
   {
@@ -114,26 +131,44 @@ const remarkLintNoDuplicateHeadingsInSection = lintRule(
     /** @type {Array<Map<string, string>>} */
     const stack = []
 
-    visit(tree, 'heading', function (node) {
-      const value = toString(node).toUpperCase()
-      const index = node.depth - 1
-      const scope = stack[index] || (stack[index] = new Map())
-      const duplicate = scope.get(value)
-      const place = position(node)
-      const start = pointStart(node)
+    visit(tree, function (node) {
+      /** @type {Heading['depth'] | undefined} */
+      let rank
 
-      if (place && duplicate) {
-        file.message(
-          'Do not use headings with similar content per section (' +
-            duplicate +
-            ')',
-          place
-        )
+      if (node.type === 'heading') {
+        rank = node.depth
+      } else if (
+        (node.type === 'mdxJsxFlowElement' ||
+          node.type === 'mdxJsxTextElement') &&
+        node.name
+      ) {
+        const match = node.name.match(jsxNameRe)
+        rank = match
+          ? /** @type {Heading['depth']} */ (Number(match[1]))
+          : undefined
       }
 
-      scope.set(value, stringifyPosition(start))
-      // Drop things after it.
-      stack.length = node.depth
+      if (rank) {
+        const value = toString(node).toLowerCase()
+        const index = rank - 1
+        const scope = stack[index] || (stack[index] = new Map())
+        const duplicate = scope.get(value)
+        const place = position(node)
+        const start = pointStart(node)
+
+        if (place && duplicate) {
+          file.message(
+            'Do not use headings with similar content per section (' +
+              duplicate +
+              ')',
+            place
+          )
+        }
+
+        scope.set(value, stringifyPosition(start))
+        // Drop things after it.
+        stack.length = rank
+      }
     })
   }
 )

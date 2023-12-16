@@ -129,8 +129,8 @@ Warn for unexpected extensions.
 
 ###### Parameters
 
-* `options` (`string`, default: `'md'`)
-  — preferred file extension
+* `options` (`Array<string>` or `string`, default: `['mdx', 'md']`)
+  — allowed file extension(s)
 
 ###### Returns
 
@@ -162,7 +162,7 @@ No messages.
 ###### Out
 
 ```text
-1:1: Incorrect extension: use `md`
+1:1: Incorrect extension: use `mdx` or `md`
 ```
 
 ##### `readme.mkd`

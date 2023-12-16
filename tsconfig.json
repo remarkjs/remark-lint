@@ -6,7 +6,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "exactOptionalPropertyTypes": true,
-    "lib": ["es2022"],
+    "lib": ["dom", "es2022"],
     "module": "node16",
     "strict": true,
     "target": "es2020"

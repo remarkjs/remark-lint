@@ -6,6 +6,9 @@
  *
  * This package checks the whitepsace in definition labels.
  *
+ * GFM footnotes are not affected by this rule as footnote labels cannot
+ * contain whitespace.
+ *
  * ## When should I use this?
  *
  * You can use this package to check that definition labels are consistent.
@@ -79,7 +82,7 @@ const remarkLintDefinitionSpacing = lintRule(
     const value = String(file)
 
     visit(tree, function (node) {
-      if (node.type === 'definition' || node.type === 'footnoteDefinition') {
+      if (node.type === 'definition') {
         const end = pointEnd(node)
         const start = pointStart(node)
 

@@ -52,7 +52,7 @@
  *   1:1-1:27: Found unused definition
  *
  * @example
- *   {"name": "footnote.md", "gfm": true, "label": "input"}
+ *   {"gfm": true, "label": "input", "name": "gfm.md"}
  *
  *   a[^x].
  *
@@ -60,7 +60,7 @@
  *   [^y]: not ok
  *
  * @example
- *   {"name": "footnote.md", "gfm": true, "label": "output"}
+ *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
  *   4:1-4:13: Found unused footnote definition
  */

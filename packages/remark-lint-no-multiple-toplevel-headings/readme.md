@@ -21,6 +21,7 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintNoMultipleToplevelHeadings[, options])`](#unifieduseremarklintnomultipletoplevelheadings-options)
+  * [`Depth`](#depth)
   * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
@@ -117,7 +118,8 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports the [TypeScript][typescript] type
+It exports the [TypeScript][typescript] types
+[`Depth`][api-depth] and
 [`Options`][api-options].
 The default export is
 [`remarkLintNoMultipleToplevelHeadings`][api-remark-lint-no-multiple-toplevel-headings].
@@ -135,6 +137,16 @@ Warn when multiple top-level headings are used.
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
+### `Depth`
+
+Depth (TypeScript type).
+
+###### Type
+
+```ts
+type Depth = 1 | 2 | 3 | 4 | 5 | 6
+```
+
 ### `Options`
 
 Configuration (TypeScript type).
@@ -142,7 +154,7 @@ Configuration (TypeScript type).
 ###### Type
 
 ```ts
-type Options = 1 | 2 | 3 | 4 | 5 | 6
+type Options = Depth
 ```
 
 ## Recommendation
@@ -186,6 +198,44 @@ When configured with `1`.
 3:1-3:6: Don’t use multiple top level headings (1:1)
 ```
 
+##### `html.md`
+
+###### In
+
+```markdown
+In markdown, <b>HTML</b> is supported.
+
+<h1>First</h1>
+
+<h1>Second</h1>
+```
+
+###### Out
+
+```text
+5:1-5:16: Don’t use multiple top level headings (3:1)
+```
+
+##### `mdx.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+In MDX, <b>JSX</b> is supported.
+
+<h1>First</h1>
+<h1>Second</h1>
+```
+
+###### Out
+
+```text
+4:1-4:16: Don’t use multiple top level headings (3:1)
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -210,6 +260,8 @@ abide by its terms.
 ## License
 
 [MIT][file-license] © [Titus Wormer][author]
+
+[api-depth]: #depth
 
 [api-options]: #options
 
@@ -258,6 +310,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

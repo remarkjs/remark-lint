@@ -20,8 +20,8 @@
  *
  * ###### Parameters
  *
- * * `options` (`string`, default: `'md'`)
- *   — preferred file extension
+ * * `options` (`Array<string>` or `string`, default: `['mdx', 'md']`)
+ *   — allowed file extension(s)
  *
  * ###### Returns
  *
@@ -50,7 +50,7 @@
  * @example
  *   {"name": "readme.mkd", "label": "output", "positionless": true}
  *
- *   1:1: Incorrect extension: use `md`
+ *   1:1: Incorrect extension: use `mdx` or `md`
  *
  * @example
  *   {"name": "readme.mkd", "config": "mkd"}
@@ -61,6 +61,12 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
+import {quotation} from 'quotation'
+
+/** @type {ReadonlyArray<string>} */
+const defaultExtensions = ['mdx', 'md']
+
+const listFormat = new Intl.ListFormat('en', {type: 'disjunction'})
 
 const remarkLintFileExtension = lintRule(
   {
@@ -70,17 +76,22 @@ const remarkLintFileExtension = lintRule(
   /**
    * @param {Root} _
    *   Tree.
-   * @param {string | null | undefined} [options='md']
+   * @param {ReadonlyArray<string> | string | null | undefined} [options='md']
    *   Configuration (default: `'md'`).
    * @returns {undefined}
    *   Nothing.
    */
   function (_, file, options) {
-    const option = options || 'md'
-    const ext = file.extname
+    const extensions =
+      typeof options === 'string' ? [options] : options || defaultExtensions
+    const extname = file.extname
+    const extension = extname ? extname.slice(1) : undefined
 
-    if (ext && ext.slice(1) !== option) {
-      file.message('Incorrect extension: use `' + option + '`')
+    if (extension && !extensions.includes(extension)) {
+      file.message(
+        'Incorrect extension: use ' +
+          listFormat.format(quotation(extensions, '`'))
+      )
     }
   }
 )

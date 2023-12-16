@@ -10,12 +10,14 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {controlPictures} from 'control-pictures'
 import {remark} from 'remark'
+import remarkDirective from 'remark-directive'
 import remarkGfm from 'remark-gfm'
 import remarkLint from 'remark-lint'
 import remarkLintFinalNewline from 'remark-lint-final-newline'
 import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
 import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
+import remarkMath from 'remark-math'
 import remarkMdx from 'remark-mdx'
 import {lintRule} from 'unified-lint-rule'
 import {removePosition} from 'unist-util-remove-position'
@@ -318,13 +320,10 @@ async function assertCheck(plugin, info, check) {
   const extras = []
   const value = controlPictures(check.input)
 
-  if (check.gfm) {
-    extras.push(remarkGfm)
-  }
-
-  if (check.mdx) {
-    extras.push(remarkMdx)
-  }
+  if (check.directive) extras.push(remarkDirective)
+  if (check.gfm) extras.push(remarkGfm)
+  if (check.math) extras.push(remarkMath)
+  if (check.mdx) extras.push(remarkMdx)
 
   const file = await remark()
     .use(plugin, config)

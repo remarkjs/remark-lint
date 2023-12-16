@@ -17,9 +17,9 @@
  *
  * ###### Parameters
  *
- * * `options` (`string`, default: `'!,\\.:;?'`)
+ * * `options` (`string`, default: `'!,.:;?'`)
  *   — configuration,
- *   wrapped in `new RegExp('[' + x + ']')` so make sure to escape regexp
+ *   wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to escape regexp
  *   characters
  *
  * ###### Returns
@@ -64,16 +64,32 @@
  *   5:1-5:9: Don’t add a trailing `!` to headings
  *   7:1-7:9: Don’t add a trailing `,` to headings
  *   9:1-9:9: Don’t add a trailing `;` to headings
+ *
+ * @example
+ *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   MDX is supported <em>too</em>.
+ *
+ *   <h1>Hi?</h1>
+ *
+ * @example
+ *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   3:1-3:13: Don’t add a trailing `?` to headings
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
+
+const jsxNameRe = /^h([1-6])$/
 
 const remarkLintNoHeadingPunctuation = lintRule(
   {
@@ -84,24 +100,34 @@ const remarkLintNoHeadingPunctuation = lintRule(
    * @param {Root} tree
    *   Tree.
    * @param {string | null | undefined} [options]
-   *   Configuration (default: `'!,\\.:;?'`),
-   *   wrapped in `new RegExp('[' + x + ']')` so make sure to double escape
+   *   Configuration (default: `'!,.:;?'`),
+   *   wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to double escape
    *   regexp characters.
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
-    const expression = new RegExp('[' + (options || '!,\\.:;?') + ']')
+    const expression = new RegExp('[' + (options || '!,.:;?') + ']', 'u')
 
-    visit(tree, 'heading', function (node) {
-      const place = position(node)
+    visit(tree, function (node) {
+      if (
+        node.type === 'heading' ||
+        ((node.type === 'mdxJsxFlowElement' ||
+          node.type === 'mdxJsxTextElement') &&
+          node.name &&
+          jsxNameRe.test(node.name))
+      ) {
+        const place = position(node)
 
-      if (place) {
-        const value = toString(node)
-        const tail = value.charAt(value.length - 1)
+        if (place) {
+          const tail = Array.from(toString(node)).at(-1)
 
-        if (expression.test(tail)) {
-          file.message('Don’t add a trailing `' + tail + '` to headings', place)
+          if (tail && expression.test(tail)) {
+            file.message(
+              'Don’t add a trailing `' + tail + '` to headings',
+              place
+            )
+          }
         }
       }
     })

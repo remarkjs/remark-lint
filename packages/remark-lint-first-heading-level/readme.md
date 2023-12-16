@@ -161,7 +161,8 @@ rank `1`.
 In some cases a different rank makes more sense,
 such as when building a blog and generating the primary heading from
 frontmatter metadata,
-in which case a value of `2` can be defined here.
+in which case a value of `2` can be defined here or the rule can be turned
+off.
 
 ## Examples
 
@@ -313,7 +314,7 @@ Paragraph.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-In <b>MDX</b>, JSX is supported.
+In MDX, <b>JSX</b> is supported.
 
 <h1>First heading</h1>
 ```

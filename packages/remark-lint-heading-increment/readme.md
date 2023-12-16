@@ -178,6 +178,37 @@ No messages.
 3:1-3:10: Heading levels should increment by one level at a time
 ```
 
+##### `html.md`
+
+###### In
+
+```markdown
+In markdown, <b>HTML</b> is supported.
+
+<h1>First heading</h1>
+```
+
+###### Out
+
+No messages.
+
+##### `ok.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+In MDX, <b>JSX</b> is supported.
+
+<h1>First heading</h1>
+```
+
+###### Out
+
+No messages.
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -248,6 +279,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

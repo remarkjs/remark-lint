@@ -166,6 +166,26 @@ No messages.
 2:1-2:11: Do not use definitions with the same identifier (1:1)
 ```
 
+##### `gfm.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+GFM footnote definitions are checked too[^a].
+
+[^a]: alpha
+[^a]: bravo
+```
+
+###### Out
+
+```text
+4:1-4:12: Do not use footnote definitions with the same identifier (3:1)
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -234,6 +254,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

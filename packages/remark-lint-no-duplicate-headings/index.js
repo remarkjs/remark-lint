@@ -50,7 +50,7 @@
  *   ## Bar
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
  *   # Foo
  *
@@ -59,21 +59,38 @@
  *   ## [Foo](http://foo.com/bar)
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
  *   3:1-3:7: Do not use headings with similar content (1:1)
  *   5:1-5:29: Do not use headings with similar content (3:1)
+ *
+ * @example
+ *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   MDX is supported too.
+ *
+ *   <h1>Alpha</h1>
+ *   <h2>Alpha</h2>
+ *
+ * @example
+ *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   4:1-4:15: Do not use headings with similar content (3:1)
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart, position} from 'unist-util-position'
 import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
+
+const jsxNameRe = /^h([1-6])$/
 
 const remarkLintNoDuplicateHeadings = lintRule(
   {
@@ -90,22 +107,30 @@ const remarkLintNoDuplicateHeadings = lintRule(
     /** @type {Map<string, string>} */
     const map = new Map()
 
-    visit(tree, 'heading', function (node) {
-      const place = position(node)
-      const start = pointStart(node)
+    visit(tree, function (node) {
+      if (
+        node.type === 'heading' ||
+        ((node.type === 'mdxJsxFlowElement' ||
+          node.type === 'mdxJsxTextElement') &&
+          node.name &&
+          jsxNameRe.test(node.name))
+      ) {
+        const place = position(node)
+        const start = pointStart(node)
 
-      if (place && start) {
-        const value = toString(node).toUpperCase()
-        const duplicate = map.get(value)
+        if (place && start) {
+          const value = toString(node).toLowerCase()
+          const duplicate = map.get(value)
 
-        if (duplicate) {
-          file.message(
-            'Do not use headings with similar content (' + duplicate + ')',
-            node
-          )
+          if (duplicate) {
+            file.message(
+              'Do not use headings with similar content (' + duplicate + ')',
+              node
+            )
+          }
+
+          map.set(value, stringifyPosition(start))
         }
-
-        map.set(value, stringifyPosition(start))
       }
     })
   }

@@ -56,16 +56,29 @@
  *   {"name": "not-ok.md", "config": 40, "label": "output"}
  *
  *   1:1-1:52: Use headings shorter than `40`
+ *
+ * @example
+ *   {"config": 30, "label": "input", "mdx": true, "name": "ok.mdx"}
+ *
+ *   <h1>In MDX, headings are checked too</h1>
+ * @example
+ *   {"config": 30, "label": "output", "mdx": true, "name": "ok.mdx"}
+ *
+ *   1:1-1:42: Use headings shorter than `30`
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+/// <reference types="mdast-util-mdx" />
+
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
+
+const jsxNameRe = /^h([1-6])$/
 
 const remarkLintMaximumHeadingLength = lintRule(
   {
@@ -83,11 +96,23 @@ const remarkLintMaximumHeadingLength = lintRule(
   function (tree, file, options) {
     const option = options || 60
 
-    visit(tree, 'heading', function (node) {
-      const place = position(node)
+    // Note: HTML headings cannot properly be checked,
+    // because for markdown, blocks are one single raw string.
 
-      if (place && toString(node).length > option) {
-        file.message('Use headings shorter than `' + option + '`', place)
+    visit(tree, function (node) {
+      if (
+        node.type === 'heading' ||
+        ((node.type === 'mdxJsxFlowElement' ||
+          node.type === 'mdxJsxTextElement') &&
+          node.name &&
+          jsxNameRe.test(node.name))
+      ) {
+        const place = position(node)
+        const codePoints = Array.from(toString(node, {includeHtml: false}))
+
+        if (place && codePoints.length > option) {
+          file.message('Use headings shorter than `' + option + '`', place)
+        }
       }
     })
   }

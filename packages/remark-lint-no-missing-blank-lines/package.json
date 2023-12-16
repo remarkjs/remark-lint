@@ -32,6 +32,9 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "mdast-util-directive": "^3.0.0",
+    "mdast-util-math": "^3.0.0",
+    "mdast-util-mdx": "^3.0.0",
     "unified-lint-rule": "^2.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit": "^5.0.0"

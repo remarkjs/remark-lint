@@ -50,6 +50,19 @@
  *   {"name": "not-ok.md", "label": "output"}
  *
  *   2:1-2:11: Do not use definitions with the same identifier (1:1)
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm.md"}
+ *
+ *   GFM footnote definitions are checked too[^a].
+ *
+ *   [^a]: alpha
+ *   [^a]: bravo
+ *
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm.md"}
+ *
+ *   4:1-4:12: Do not use footnote definitions with the same identifier (3:1)
  */
 
 /**
@@ -60,6 +73,9 @@ import {lintRule} from 'unified-lint-rule'
 import {pointStart, position} from 'unist-util-position'
 import {stringifyPosition} from 'unist-util-stringify-position'
 import {visit} from 'unist-util-visit'
+
+/** @type {ReadonlyArray<never>} */
+const empty = []
 
 const remarkLintNoDuplicateDefinitions = lintRule(
   {
@@ -74,23 +90,28 @@ const remarkLintNoDuplicateDefinitions = lintRule(
    */
   function (tree, file) {
     /** @type {Map<string, string>} */
-    const map = new Map()
+    const definitions = new Map()
+    /** @type {Map<string, string>} */
+    const footnoteDefinitions = new Map()
 
     visit(tree, function (node) {
       const place = position(node)
       const start = pointStart(node)
+      const [map, identifier] =
+        node.type === 'definition'
+          ? [definitions, node.identifier]
+          : node.type === 'footnoteDefinition'
+            ? [footnoteDefinitions, node.identifier]
+            : empty
 
-      if (
-        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
-        place &&
-        start
-      ) {
-        const identifier = node.identifier
+      if (map && identifier && place && start) {
         const duplicate = map.get(identifier)
 
         if (duplicate) {
           file.message(
-            'Do not use definitions with the same identifier (' +
+            'Do not use' +
+              (node.type === 'footnoteDefinition' ? ' footnote' : '') +
+              ' definitions with the same identifier (' +
               duplicate +
               ')',
             place

@@ -139,7 +139,7 @@ Configuration (TypeScript type).
 ###### Fields
 
 * `exceptTightLists` (`boolean`, default: `false`)
-  — allow tight list items
+  — allow omitting blank lines in list items
 
 ## Recommendation
 
@@ -217,6 +217,122 @@ Paragraph.
 2:1-2:7: Missing blank line before block node
 ```
 
+##### `containers.md`
+
+###### In
+
+```markdown
+> # Alpha
+>
+> Bravo.
+
+- charlie.
+- delta.
+
++ # Echo
+  Foxtrot.
+```
+
+###### Out
+
+```text
+9:3-9:11: Missing blank line before block node
+```
+
+##### `gfm.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+GFM tables and footnotes are also checked[^e]
+
+| Alpha   | Bravo |
+| ------- | ----- |
+| Charlie | Delta |
+
+[^e]: Echo
+[^f]: Foxtrot.
+```
+
+###### Out
+
+```text
+8:1-8:15: Missing blank line before block node
+```
+
+##### `mdx.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+MDX JSX flow elements and expressions are also checked.
+
+<Tip kind="info">
+  # Alpha
+  Bravo.
+</Tip>
+{Math.PI}
+```
+
+###### Out
+
+```text
+5:3-5:9: Missing blank line before block node
+7:1-7:10: Missing blank line before block node
+```
+
+##### `math.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> math ([`remark-math`][github-remark-math]).
+
+```markdown
+Math is also checked.
+
+$$
+\frac{1}{2}
+$$
+$$
+\frac{2}{3}
+$$
+```
+
+###### Out
+
+```text
+6:1-8:3: Missing blank line before block node
+```
+
+##### `directive.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> directives ([`remark-directive`][github-remark-directive]).
+
+```markdown
+Directives are also checked.
+
+::video{#123}
+:::tip
+Tip!
+:::
+```
+
+###### Out
+
+```text
+4:1-6:4: Missing blank line before block node
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -288,7 +404,15 @@ abide by its terms.
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
+[github-remark-directive]: https://github.com/remarkjs/remark-directive
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-math]: https://github.com/remarkjs/remark-math
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
 

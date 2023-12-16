@@ -52,7 +52,8 @@
  * In some cases a different rank makes more sense,
  * such as when building a blog and generating the primary heading from
  * frontmatter metadata,
- * in which case a value of `2` can be defined here.
+ * in which case a value of `2` can be defined here or the rule can be turned
+ * off.
  *
  * [api-depth]: #depth
  * [api-options]: #options
@@ -145,9 +146,9 @@
  *   1:1-1:14: First heading level should be `2`
  *
  * @example
- *   {"name": "ok.mdx", "mdx": true}
+ *   {"mdx": true, "name": "ok.mdx"}
  *
- *   In <b>MDX</b>, JSX is supported.
+ *   In MDX, <b>JSX</b> is supported.
  *
  *   <h1>First heading</h1>
  */
@@ -172,7 +173,7 @@ import {position} from 'unist-util-position'
 import {EXIT, visit} from 'unist-util-visit'
 
 const htmlRe = /<h([1-6])/
-const jsxNameRe = /h([1-6])/
+const jsxNameRe = /^h([1-6])$/
 
 const remarkLintFirstHeadingLevel = lintRule(
   {
@@ -191,36 +192,31 @@ const remarkLintFirstHeadingLevel = lintRule(
     const option = options || 1
 
     visit(tree, function (node) {
-      const place = position(node)
+      /** @type {Depth | undefined} */
+      let rank
 
-      if (place) {
-        /** @type {Depth | undefined} */
-        let rank
+      if (node.type === 'heading') {
+        rank = node.depth
+      } else if (node.type === 'html') {
+        const results = node.value.match(htmlRe)
+        rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
+      } else if (
+        (node.type === 'mdxJsxFlowElement' ||
+          node.type === 'mdxJsxTextElement') &&
+        node.name
+      ) {
+        const results = node.name.match(jsxNameRe)
+        rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
+      }
 
-        if (node.type === 'heading') {
-          rank = node.depth
-        } else if (node.type === 'html') {
-          const results = node.value.match(htmlRe)
-          rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
-        } else if (
-          (node.type === 'mdxJsxFlowElement' ||
-            node.type === 'mdxJsxTextElement') &&
-          node.name
-        ) {
-          const results = node.name.match(jsxNameRe)
-          rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
+      if (rank) {
+        const place = position(node)
+
+        if (place && rank !== option) {
+          file.message('First heading level should be `' + option + '`', place)
         }
 
-        if (rank) {
-          if (rank !== option) {
-            file.message(
-              'First heading level should be `' + option + '`',
-              place
-            )
-          }
-
-          return EXIT
-        }
+        return EXIT
       }
     })
   }

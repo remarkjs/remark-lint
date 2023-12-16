@@ -31,7 +31,7 @@
  * ###### Fields
  *
  * * `exceptTightLists` (`boolean`, default: `false`)
- *   — allow tight list items
+ *   — allow omitting blank lines in list items
  *
  * ## Recommendation
  *
@@ -98,9 +98,93 @@
  *   {"name": "tight.md", "config": {"exceptTightLists": true}, "label": "output"}
  *
  *   2:1-2:7: Missing blank line before block node
+ *
+ * @example
+ *   {"name": "containers.md", "label": "input"}
+ *
+ *   > # Alpha
+ *   >
+ *   > Bravo.
+ *
+ *   - charlie.
+ *   - delta.
+ *
+ *   + # Echo
+ *     Foxtrot.
+ * @example
+ *   {"name": "containers.md", "label": "output"}
+ *
+ *   9:3-9:11: Missing blank line before block node
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm.md"}
+ *
+ *   GFM tables and footnotes are also checked[^e]
+ *
+ *   | Alpha   | Bravo |
+ *   | ------- | ----- |
+ *   | Charlie | Delta |
+ *
+ *   [^e]: Echo
+ *   [^f]: Foxtrot.
+ *
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm.md"}
+ *
+ *   8:1-8:15: Missing blank line before block node
+ *
+ * @example
+ *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   MDX JSX flow elements and expressions are also checked.
+ *
+ *   <Tip kind="info">
+ *     # Alpha
+ *     Bravo.
+ *   </Tip>
+ *   {Math.PI}
+ *
+ * @example
+ *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   5:3-5:9: Missing blank line before block node
+ *   7:1-7:10: Missing blank line before block node
+ *
+ * @example
+ *   {"label": "input", "math": true, "name": "math.md"}
+ *
+ *   Math is also checked.
+ *
+ *   $$
+ *   \frac{1}{2}
+ *   $$
+ *   $$
+ *   \frac{2}{3}
+ *   $$
+ *
+ * @example
+ *   {"label": "output", "math": true, "name": "math.md"}
+ *
+ *   6:1-8:3: Missing blank line before block node
+ *
+ * @example
+ *   {"directive": true, "label": "input", "name": "directive.md"}
+ *
+ *   Directives are also checked.
+ *
+ *   ::video{#123}
+ *   :::tip
+ *   Tip!
+ *   :::
+ *
+ * @example
+ *   {"directive": true, "label": "output", "name": "directive.md"}
+ *
+ *   4:1-6:4: Missing blank line before block node
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
@@ -111,21 +195,36 @@
  *   Allow tight list items (default: `false`).
  */
 
+/// <reference types="mdast-util-directive" />
+/// <reference types="mdast-util-math" />
+/// <reference types="mdast-util-mdx" />
+
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
 
-const types = new Set([
-  'paragraph',
-  'heading',
-  'thematicBreak',
+/** @type {ReadonlyArray<Nodes['type']>} */
+// eslint-disable-next-line unicorn/prefer-set-has
+const types = [
   'blockquote',
-  'list',
-  'table',
-  'html',
   'code',
+  'containerDirective',
+  'definition',
+  'footnoteDefinition',
+  'heading',
+  'html',
+  'leafDirective',
+  'list',
+  'math',
+  'mdxFlowExpression',
+  'mdxJsxFlowElement',
+  'paragraph',
+  'table',
+  'thematicBreak',
+  // @ts-expect-error: `remark-frontmatter`.
+  'toml',
   'yaml'
-])
+]
 
 const remarkLintNoMissingBlankLines = lintRule(
   {
@@ -144,24 +243,23 @@ const remarkLintNoMissingBlankLines = lintRule(
     const exceptTightLists = options ? options.exceptTightLists : false
 
     visit(tree, function (node, index, parent) {
-      const end = pointEnd(node)
-
       if (
         parent &&
         typeof index === 'number' &&
-        end &&
-        (!exceptTightLists || parent.type !== 'listItem')
+        types.includes(node.type) &&
+        (parent.type !== 'listItem' || !exceptTightLists)
       ) {
-        const next = parent.children[index + 1]
-        const nextPoint = pointStart(next)
+        const start = pointStart(node)
+        const previous = parent.children[index - 1]
+        const previousEnd = pointEnd(previous)
 
         if (
-          next &&
-          nextPoint &&
-          types.has(next.type) &&
-          nextPoint.line === end.line + 1
+          start &&
+          previousEnd &&
+          types.includes(previous.type) &&
+          start.line === previousEnd.line + 1
         ) {
-          file.message('Missing blank line before block node', next)
+          file.message('Missing blank line before block node', node)
         }
       }
     })

@@ -19,7 +19,7 @@
  *
  * ###### Parameters
  *
- * * `options` ([`Options`][api-options], default: `'tab'`)
+ * * `options` ([`Options`][api-options], default: `'one'`)
  *   — preferred style
  *
  * ###### Returns
@@ -30,12 +30,12 @@
  *
  * Configuration (TypeScript type).
  *
- * * `'one'`
- *   — prefer a single space
- * * `'tab'`
- *   — prefer spaces the size of the next tab stop
  * * `'mixed'`
  *   — prefer `'one'` for tight lists and `'tab'` for loose lists
+ * * `'one'`
+ *   — prefer the size of the bullet and a single space
+ * * `'tab'`
+ *   — prefer the size of the bullet and a single space to the next tab stop
  *
  * ###### Type
  *
@@ -70,11 +70,11 @@
  * CommonMark made that a *lot* better,
  * but there remain (documented but complex) edge cases and some behavior
  * intuitive.
- * Due to this, the default of this list is `'tab'`, which worked the best
- * in most markdown parsers *and* in CommonMark.
+ * Due to this, `'tab'` works the best in most markdown parsers *and* in
+ * CommonMark.
  * Currently the situation between markdown parsers is better,
- * so choosing `'one'`, which seems to be the most common style used by
- * authors,
+ * so the default `'one'`,
+ * which seems to be the most common style used by authors,
  * is okay.
  *
  * ## Fix
@@ -95,8 +95,8 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   *␠List
+ *   ␠␠item.
  *
  *   Paragraph.
  *
@@ -105,11 +105,11 @@
  *
  *   Paragraph.
  *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   *␠List
+ *   ␠␠item.
  *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   *␠List
+ *   ␠␠item.
  *
  * @example
  *   {"name": "ok.md", "config": "mixed"}
@@ -144,6 +144,25 @@
  *
  *   *␠List
  *   ␠␠item.
+ *
+ * @example
+ *   {"config": "tab", "name": "ok.md"}
+ *
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
+ *
+ *   Paragraph.
+ *
+ *   11.␠List
+ *   ␠␠␠␠item.
+ *
+ *   Paragraph.
+ *
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
+ *
+ *   *␠␠␠List
+ *   ␠␠␠␠item.
  *
  * @example
  *   {"name": "not-ok.md", "config": "one", "label": "input"}
@@ -205,14 +224,14 @@ const remarkLintListItemIndent = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {Options | null | undefined} [options='tab']
-   *   Configuration (default: `'tab'`).
+   * @param {Options | null | undefined} [options='one']
+   *   Configuration (default: `'one'`).
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
     const value = String(file)
-    const option = options || 'tab'
+    const option = options || 'one'
 
     /* c8 ignore next 13 -- previous names. */
     // @ts-expect-error: old name.

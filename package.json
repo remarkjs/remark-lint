@@ -190,7 +190,7 @@
       "remark-validate-links",
       [
         "remark-lint-list-item-indent",
-        "space"
+        "one"
       ],
       "./script/plugin/list-of-plugins.js",
       "./script/plugin/list-of-presets.js"

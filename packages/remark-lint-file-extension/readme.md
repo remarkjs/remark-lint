@@ -21,6 +21,8 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintFileExtension[, options])`](#unifieduseremarklintfileextension-options)
+  * [`Extensions`](#extensions)
+  * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
@@ -116,7 +118,9 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports no additional [TypeScript][typescript] types.
+It exports the [TypeScript][typescript] types
+[`Extensions`][api-extensions] and
+[`Options`][api-options].
 The default export is
 [`remarkLintFileExtension`][api-remark-lint-file-extension].
 
@@ -124,17 +128,36 @@ The default export is
 
 Warn for unexpected extensions.
 
-> 👉 **Note**: does not warn when files have no file extensions (such as
-> `AUTHORS` or `LICENSE`).
-
 ###### Parameters
 
-* `options` (`Array<string>` or `string`, default: `['mdx', 'md']`)
-  — allowed file extension(s)
+* `options` ([`Extensions`][api-extensions] or [`Options`][api-options],
+  optional)
+  — configuration
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Extensions`
+
+File extension(s) (TypeScript type).
+
+###### Type
+
+```ts
+type Extensions = Array<string> | string
+```
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+* `allowExtensionless` (`boolean`, default: `true`)
+  — allow no file extension such as `AUTHORS` or `LICENSE`
+* `extensions` ([`Extensions`][api-extensions], default: `['mdx', 'md']`)
+  — allowed file extension(s)
 
 ## Recommendation
 
@@ -151,11 +174,27 @@ Do not use `md` for MDX: use `mdx` instead.
 
 No messages.
 
+##### `readme.mdx`
+
+###### Out
+
+No messages.
+
 ##### `readme`
 
 ###### Out
 
 No messages.
+
+##### `readme`
+
+When configured with `{ allowExtensionless: false }`.
+
+###### Out
+
+```text
+1:1: Incorrect extension: use `mdx` or `md`
+```
 
 ##### `readme.mkd`
 
@@ -168,6 +207,14 @@ No messages.
 ##### `readme.mkd`
 
 When configured with `'mkd'`.
+
+###### Out
+
+No messages.
+
+##### `readme.mkd`
+
+When configured with `[ 'mkd' ]`.
 
 ###### Out
 
@@ -197,6 +244,10 @@ abide by its terms.
 ## License
 
 [MIT][file-license] © [Titus Wormer][author]
+
+[api-extensions]: #extensions
+
+[api-options]: #options
 
 [api-remark-lint-file-extension]: #unifieduseremarklintfileextension-options
 

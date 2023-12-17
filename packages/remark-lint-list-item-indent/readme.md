@@ -46,7 +46,7 @@ This plugin is included in the following presets:
 | Preset | Options |
 | - | - |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'mixed'` |
-| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | `'tab-size'` |
+| [`remark-preset-lint-recommended`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended) | `'tab'` |
 
 ## Install
 
@@ -132,7 +132,7 @@ Warn when the whitespace after list item markers violate a given style.
 
 ###### Parameters
 
-* `options` ([`Options`][api-options], default: `'tab-size'`)
+* `options` ([`Options`][api-options], default: `'tab'`)
   — preferred style
 
 ###### Returns
@@ -143,17 +143,17 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 Configuration (TypeScript type).
 
-* `'space'`
+* `'one'`
   — prefer a single space
-* `'tab-size'`
+* `'tab'`
   — prefer spaces the size of the next tab stop
 * `'mixed'`
-  — prefer `'space'` for tight lists and `'tab-size'` for loose lists
+  — prefer `'one'` for tight lists and `'tab'` for loose lists
 
 ###### Type
 
 ```ts
-type Options = 'mixed' | 'space' | 'tab-size'
+type Options = 'mixed' | 'one' | 'tab'
 ```
 
 ## Recommendation
@@ -183,20 +183,18 @@ especially with how they interact with indented code.
 CommonMark made that a *lot* better,
 but there remain (documented but complex) edge cases and some behavior
 intuitive.
-Due to this, the default of this list is `'tab-size'`, which worked the best
+Due to this, the default of this list is `'tab'`, which worked the best
 in most markdown parsers *and* in CommonMark.
 Currently the situation between markdown parsers is better,
-so choosing `'space'`, which seems to be the most common style used by
+so choosing `'one'`, which seems to be the most common style used by
 authors,
 is okay.
 
 ## Fix
 
-[`remark-stringify`][github-remark-stringify] uses `listItemIndent: 'one'`,
-for `'space'`,
+[`remark-stringify`][github-remark-stringify] uses `listItemIndent: 'one'`
 by default.
-`listItemIndent: 'mixed'` or `listItemIndent: 'tab'` (for `'tab-size'`) is
-also supported.
+`listItemIndent: 'mixed'` or `listItemIndent: 'tab'` is also supported.
 
 ## Examples
 
@@ -254,7 +252,7 @@ No messages.
 
 ##### `ok.md`
 
-When configured with `'space'`.
+When configured with `'one'`.
 
 ###### In
 
@@ -280,7 +278,7 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `'space'`.
+When configured with `'one'`.
 
 ###### In
 
@@ -297,7 +295,7 @@ When configured with `'space'`.
 
 ##### `not-ok.md`
 
-When configured with `'tab-size'`.
+When configured with `'tab'`.
 
 ###### In
 
@@ -335,7 +333,7 @@ When configured with `'💩'`.
 ###### Out
 
 ```text
-1:1: Incorrect list-item indent style `💩`: use either `'tab-size'`, `'space'`, or `'mixed'`
+1:1: Incorrect list-item indent style `💩`: use either `'mixed'`, `'one'`, or `'tab'`
 ```
 
 ## Compatibility

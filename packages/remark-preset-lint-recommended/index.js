@@ -49,7 +49,7 @@ const remarkPresetLintRecommended = {
     remarkLintFinalNewline,
     // Rendering across vendors differs greatly if using other styles.
     remarkLintListItemBulletIndent,
-    [remarkLintListItemIndent, 'tab-size'],
+    [remarkLintListItemIndent, 'tab'],
     remarkLintNoBlockquoteWithoutMarker,
     remarkLintNoLiteralUrls,
     [remarkLintOrderedListMarkerStyle, '.'],

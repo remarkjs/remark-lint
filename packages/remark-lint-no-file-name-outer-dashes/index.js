@@ -30,18 +30,19 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "readme.md"}
  *
  * @example
- *   {"name": "-readme.md", "label": "output", "positionless": true}
- *
- *   1:1: Do not use initial or final dashes in a file name
+ *   {"name": "mercury-and-venus.md"}
  *
  * @example
- *   {"name": "readme-.md", "label": "output", "positionless": true}
+ *   {"label": "output", "name": "-mercury.md", "positionless": true}
  *
- *   1:1: Do not use initial or final dashes in a file name
+ *   1:1: Unexpected initial or final dashes in file name, expected dashes to join words
+ *
+ * @example
+ *   {"label": "output", "name": "venus-.md", "positionless": true}
+ *
+ *   1:1: Unexpected initial or final dashes in file name, expected dashes to join words
  */
 
 /**
@@ -63,7 +64,9 @@ const remarkLintNofileNameOuterDashes = lintRule(
    */
   function (_, file) {
     if (file.stem && /^-|-$/.test(file.stem)) {
-      file.message('Do not use initial or final dashes in a file name')
+      file.message(
+        'Unexpected initial or final dashes in file name, expected dashes to join words'
+      )
     }
   }
 )

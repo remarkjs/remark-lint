@@ -148,9 +148,9 @@ So it’s recommended to use collapsed or full references instead.
 ###### In
 
 ```markdown
-[foo][]
+[Mercury][]
 
-[foo]: http://foo.bar/baz
+[mercury]: http://example.com/mercury/
 ```
 
 ###### Out
@@ -162,15 +162,15 @@ No messages.
 ###### In
 
 ```markdown
-[foo]
+[Mercury]
 
-[foo]: http://foo.bar/baz
+[mercury]: http://example.com/mercury/
 ```
 
 ###### Out
 
 ```text
-1:1-1:6: Use the trailing `[]` on reference links
+1:1-1:10: Unexpected shortcut reference link (`[text]`), expected collapsed reference (`[text][]`)
 ```
 
 ## Compatibility

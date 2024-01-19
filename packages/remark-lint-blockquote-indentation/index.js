@@ -65,41 +65,52 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "config": 4}
- *
- *   >   Hello
- *
- *   Paragraph.
- *
- *   >   World
- * @example
- *   {"name": "ok.md", "config": 2}
- *
- *   > Hello
- *
- *   Paragraph.
- *
- *   > World
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"config": 2, "name": "ok-2.md"}
  *
- *   >  Hello
+ *   > Mercury.
  *
- *   Paragraph.
+ *   Venus.
  *
- *   >   World
- *
- *   Paragraph.
- *
- *   > World
+ *   > Earth.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"config": 4, "name": "ok-4.md"}
  *
- *   5:5: Remove 1 space between block quote and content
- *   9:3: Add 1 space between block quote and content
+ *   >   Mercury.
+ *
+ *   Venus.
+ *
+ *   >   Earth.
+ *
+ * @example
+ *   { "name": "ok-tab.md"}
+ *
+ *   >␉Mercury.
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok.md"}
+ *
+ *   >  Mercury.
+ *
+ *   Venus.
+ *
+ *   >   Earth.
+ *
+ *   Mars.
+ *
+ *   > Jupiter
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   5:5: Unexpected `4` spaces between block quote marker and content, expected `3` spaces, remove `1` space
+ *   9:3: Unexpected `2` spaces between block quote marker and content, expected `3` spaces, add `1` space
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok-options.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `number` or `'consistent'`
  */
 
 /**
@@ -114,7 +125,7 @@
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintBlockquoteIndentation = lintRule(
   {
@@ -130,33 +141,53 @@ const remarkLintBlockquoteIndentation = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    let option = options || 'consistent'
+    /** @type {number | undefined} */
+    let expected
 
-    visit(tree, 'blockquote', function (node) {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (typeof options === 'number') {
+      expected = options
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `number` or `'consistent'`"
+      )
+    }
+
+    visitParents(tree, 'blockquote', function (node, parents) {
       const start = pointStart(node)
-      const head = pointStart(node.children[0])
+      const headStart = pointStart(node.children[0])
 
-      if (head && start) {
-        const count = head.column - start.column
+      if (headStart && start) {
+        const actual = headStart.column - start.column
 
-        if (option === 'consistent') {
-          option = count
-        } else {
-          const diff = option - count
+        if (expected) {
+          const difference = expected - actual
+          const differenceAbsolute = Math.abs(difference)
 
-          if (diff !== 0) {
-            const abs = Math.abs(diff)
-
+          if (difference !== 0) {
             file.message(
-              (diff > 0 ? 'Add' : 'Remove') +
-                ' ' +
-                abs +
-                ' ' +
-                pluralize('space', abs) +
-                ' between block quote and content',
-              head
+              'Unexpected `' +
+                actual +
+                '` ' +
+                pluralize('space', actual) +
+                ' between block quote marker and content, expected `' +
+                expected +
+                '` ' +
+                pluralize('space', expected) +
+                ', ' +
+                (difference > 0 ? 'add' : 'remove') +
+                ' `' +
+                differenceAbsolute +
+                '` ' +
+                pluralize('space', differenceAbsolute),
+              {ancestors: [...parents, node], place: headStart}
             )
           }
+        } else {
+          expected = actual
         }
       }
     })

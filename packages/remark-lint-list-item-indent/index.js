@@ -92,114 +92,204 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   *␠List
- *   ␠␠item.
+ *   *␠Mercury.
+ *   *␠Venus.
  *
- *   Paragraph.
+ *   111.␠Earth
+ *   ␠␠␠␠␠and Mars.
  *
- *   11.␠List
- *   ␠␠␠␠item.
+ *   *␠**Jupiter**.
  *
- *   Paragraph.
+ *   ␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠System.
  *
- *   *␠List
- *   ␠␠item.
+ *   *␠Saturn.
  *
- *   *␠List
- *   ␠␠item.
- *
- * @example
- *   {"name": "ok.md", "config": "mixed"}
- *
- *   *␠List item.
- *
- *   Paragraph.
- *
- *   11.␠List item
- *
- *   Paragraph.
- *
- *   *␠␠␠List
- *   ␠␠␠␠item.
- *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   ␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
  *
  * @example
- *   {"name": "ok.md", "config": "one"}
+ *   {"config": "mixed", "name": "ok.md"}
  *
- *   *␠List item.
+ *   *␠Mercury.
+ *   *␠Venus.
  *
- *   Paragraph.
+ *   111.␠Earth
+ *   ␠␠␠␠␠and Mars.
  *
- *   11.␠List item
+ *   *␠␠␠**Jupiter**.
  *
- *   Paragraph.
+ *   ␠␠␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠␠␠System.
  *
- *   *␠List
- *   ␠␠item.
+ *   *␠␠␠Saturn.
  *
- *   *␠List
- *   ␠␠item.
+ *   ␠␠␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+ *
+ * @example
+ *   {"config": "mixed", "label": "input", "name": "not-ok.md"}
+ *
+ *   *␠␠␠Mercury.
+ *   *␠␠␠Venus.
+ *
+ *   111.␠␠␠␠Earth
+ *   ␠␠␠␠␠␠␠␠and Mars.
+ *
+ *   *␠**Jupiter**.
+ *
+ *   ␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠System.
+ *
+ *   *␠Saturn.
+ *
+ *   ␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+ * @example
+ *   {"config": "mixed", "label": "output", "name": "not-ok.md"}
+ *
+ *   1:5: Unexpected `3` spaces between list item marker and content in tight list, expected `1` space, remove `2` spaces
+ *   2:5: Unexpected `3` spaces between list item marker and content in tight list, expected `1` space, remove `2` spaces
+ *   4:9: Unexpected `4` spaces between list item marker and content in tight list, expected `1` space, remove `3` spaces
+ *   7:3: Unexpected `1` space between list item marker and content in loose list, expected `3` spaces, add `2` spaces
+ *   12:3: Unexpected `1` space between list item marker and content in loose list, expected `3` spaces, add `2` spaces
+ *
+ * @example
+ *   {"config": "one", "name": "ok.md"}
+ *
+ *   *␠Mercury.
+ *   *␠Venus.
+ *
+ *   111.␠Earth
+ *   ␠␠␠␠␠and Mars.
+ *
+ *   *␠**Jupiter**.
+ *
+ *   ␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠System.
+ *
+ *   *␠Saturn.
+ *
+ *   ␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+ *
+ * @example
+ *   {"config": "one", "label": "input", "name": "not-ok.md"}
+ *
+ *   *␠␠␠Mercury.
+ *   *␠␠␠Venus.
+ *
+ *   111.␠␠␠␠Earth
+ *   ␠␠␠␠␠␠␠␠and Mars.
+ *
+ *   *␠␠␠**Jupiter**.
+ *
+ *   ␠␠␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠␠␠System.
+ *
+ *   *␠␠␠Saturn.
+ *
+ *   ␠␠␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+ * @example
+ *   {"config": "one", "label": "output", "name": "not-ok.md"}
+ *
+ *   1:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+ *   2:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+ *   4:9: Unexpected `4` spaces between list item marker and content, expected `1` space, remove `3` spaces
+ *   7:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+ *   12:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
  *
  * @example
  *   {"config": "tab", "name": "ok.md"}
  *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   *␠␠␠Mercury.
+ *   *␠␠␠Venus.
  *
- *   Paragraph.
+ *   111.␠␠␠␠Earth
+ *   ␠␠␠␠␠␠␠␠and Mars.
  *
- *   11.␠List
- *   ␠␠␠␠item.
+ *   *␠␠␠**Jupiter**.
  *
- *   Paragraph.
+ *   ␠␠␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠␠␠System.
  *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   *␠␠␠Saturn.
  *
- *   *␠␠␠List
- *   ␠␠␠␠item.
- *
- * @example
- *   {"name": "not-ok.md", "config": "one", "label": "input"}
- *
- *   *␠␠␠List
- *   ␠␠␠␠item.
+ *   ␠␠␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
  *
  * @example
- *   {"name": "not-ok.md", "config": "one", "label": "output"}
+ *   {"config": "tab", "label": "input", "name": "not-ok.md"}
  *
- *    1:5: Incorrect list-item indent: remove 2 spaces
+ *   *␠Mercury.
+ *   *␠Venus.
+ *
+ *   111.␠Earth
+ *   ␠␠␠␠␠and Mars.
+ *
+ *   *␠**Jupiter**.
+ *
+ *   ␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+ *   ␠␠System.
+ *
+ *   *␠Saturn.
+ *
+ *   ␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+ * @example
+ *   {"config": "tab", "label": "output", "name": "not-ok.md"}
+ *
+ *   1:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
+ *   2:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
+ *   4:6: Unexpected `1` space between list item marker and content, expected `4` spaces, add `3` spaces
+ *   7:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
+ *   12:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
  *
  * @example
- *   {"name": "not-ok.md", "config": "tab", "label": "input"}
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
  *
- *   *␠List
- *   ␠␠item.
- *
- * @example
- *   {"name": "not-ok.md", "config": "tab", "label": "output"}
- *
- *    1:3: Incorrect list-item indent: add 2 spaces
+ *   1:1: Unexpected value `🌍` for `options`, expected `'mixed'`, `'one'`, or `'tab'`
  *
  * @example
- *   {"name": "not-ok.md", "config": "mixed", "label": "input"}
+ *   {"config": "mixed", "gfm": true, "label": "input", "name": "gfm.md"}
  *
- *   *␠␠␠List item.
+ *   *␠[x] Mercury.
+ *
+ *   1.␠␠[ ] Venus.
+ *
+ *   2.␠␠[ ] Earth.
  *
  * @example
- *   {"name": "not-ok.md", "config": "mixed", "label": "output"}
+ *   {"config": "one", "gfm": true, "name": "gfm.md"}
  *
- *    1:5: Incorrect list-item indent: remove 2 spaces
+ *   *␠[x] Mercury.
+ *
+ *   1.␠[ ] Venus.
+ *
+ *   2.␠[ ] Earth.
  *
  * @example
- *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *   {"config": "tab", "gfm": true, "name": "gfm.md"}
  *
- *    1:1: Incorrect list-item indent style `💩`: use either `'mixed'`, `'one'`, or `'tab'`
+ *   *␠␠␠[x] Mercury.
+ *
+ *   1.␠␠[ ] Venus.
+ *
+ *   2.␠␠[ ] Earth.
+ *
+ * @example
+ *   {"config": "mixed", "name": "loose-tight.md"}
+ *
+ *   Loose lists have blank lines between items:
+ *
+ *   *␠␠␠Mercury.
+ *
+ *   *␠␠␠Venus.
+ *
+ *   …or between children of items:
+ *
+ *   1.␠␠Earth.
+ *
+ *   ␠␠␠␠Earth is the third planet from the Sun and the only astronomical
+ *   ␠␠␠␠object known to harbor life.
  */
 
 /**
@@ -211,10 +301,10 @@
  *   Configuration.
  */
 
-import plural from 'pluralize'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintListItemIndent = lintRule(
   {
@@ -231,70 +321,106 @@ const remarkLintListItemIndent = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    const option = options || 'one'
+    /** @type {Options} */
+    let expected
 
-    /* c8 ignore next 13 -- previous names. */
-    // @ts-expect-error: old name.
-    if (option === 'space') {
+    if (options === null || options === undefined) {
+      expected = 'one'
+      /* c8 ignore next 10 -- previous names. */
+      // @ts-expect-error: old name.
+    } else if (options === 'space') {
       file.fail(
-        'Incorrect list-item indent style `' + option + "`: use `'one'` instead"
+        'Unexpected value `' + options + "` for `options`, expected `'one'`"
+      )
+      // @ts-expect-error: old name.
+    } else if (options === 'tab-size') {
+      file.fail(
+        'Unexpected value `' + options + "` for `options`, expected `'tab'`"
+      )
+    } else if (options === 'mixed' || options === 'one' || options === 'tab') {
+      expected = options
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'mixed'`, `'one'`, or `'tab'`"
       )
     }
 
-    // @ts-expect-error: old name.
-    if (option === 'tab-size') {
-      file.fail(
-        'Incorrect list-item indent style `' + option + "`: use `'tab'` instead"
-      )
-    }
+    visitParents(tree, 'list', function (list, parents) {
+      let loose = list.spread
 
-    if (option !== 'mixed' && option !== 'one' && option !== 'tab') {
-      file.fail(
-        'Incorrect list-item indent style `' +
-          option +
-          "`: use either `'mixed'`, `'one'`, or `'tab'`"
-      )
-    }
+      if (!loose) {
+        for (const item of list.children) {
+          if (item.spread) {
+            loose = true
+            break
+          }
+        }
+      }
 
-    visit(tree, 'list', function (node) {
-      const spread = node.spread
-      let index = -1
-
-      while (++index < node.children.length) {
-        const item = node.children[index]
+      for (const item of list.children) {
         const head = item.children[0]
-        const start = pointStart(item)
-        const final = pointStart(head)
+        const itemStart = pointStart(item)
+        const headStart = pointStart(head)
 
         if (
-          start &&
-          final &&
-          typeof start.offset === 'number' &&
-          typeof final.offset === 'number'
+          itemStart &&
+          headStart &&
+          typeof itemStart.offset === 'number' &&
+          typeof headStart.offset === 'number'
         ) {
-          const marker = value
-            .slice(start.offset, final.offset)
-            .replace(/\[[x ]?]\s*$/i, '')
+          let slice = value.slice(itemStart.offset, headStart.offset)
 
-          const bulletSize = marker.replace(/\s+$/, '').length
+          // GFM tasklist.
+          const checkboxIndex = slice.indexOf('[')
+          if (checkboxIndex !== -1) slice = slice.slice(0, checkboxIndex)
 
-          const style =
-            option === 'tab' || (option === 'mixed' && spread)
-              ? Math.ceil(bulletSize / 4) * 4
-              : bulletSize + 1
+          const actualIndent = slice.length
 
-          if (marker.length !== style) {
-            const diff = style - marker.length
-            const abs = Math.abs(diff)
+          // To do: actual hard tabs?
+          // Remove whitespace.
+          let end = actualIndent
+          let previous = slice.charCodeAt(end - 1)
+
+          while (previous === 9 || previous === 32) {
+            end--
+            previous = slice.charCodeAt(end - 1)
+          }
+
+          let expectedIndent = end + 1 // One space needed after marker.
+
+          if (expected === 'tab' || (expected === 'mixed' && loose)) {
+            expectedIndent = Math.ceil(expectedIndent / 4) * 4
+          }
+
+          const expectedSpaces = expectedIndent - end
+          const actualSpaces = actualIndent - end
+
+          if (actualSpaces !== expectedSpaces) {
+            const difference = expectedSpaces - actualSpaces
+            const differenceAbsolute = Math.abs(difference)
 
             file.message(
-              'Incorrect list-item indent: ' +
-                (diff > 0 ? 'add' : 'remove') +
-                ' ' +
-                abs +
-                ' ' +
-                plural('space', abs),
-              final
+              'Unexpected `' +
+                actualSpaces +
+                '` ' +
+                pluralize('space', actualSpaces) +
+                ' between list item marker and content' +
+                (expected === 'mixed'
+                  ? ' in ' + (loose ? 'loose' : 'tight') + ' list'
+                  : '') +
+                ', expected `' +
+                expectedSpaces +
+                '` ' +
+                pluralize('space', expectedSpaces) +
+                ', ' +
+                (difference > 0 ? 'add' : 'remove') +
+                ' `' +
+                differenceAbsolute +
+                '` ' +
+                pluralize('space', differenceAbsolute),
+              {ancestors: [...parents, list, item], place: headStart}
             )
           }
         }

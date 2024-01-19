@@ -25,16 +25,6 @@
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
- * ### `Depth`
- *
- * Depth (TypeScript type).
- *
- * ###### Type
- *
- * ```ts
- * type Depth = 1 | 2 | 3 | 4 | 5 | 6
- * ```
- *
  * ### `Options`
  *
  * Configuration (TypeScript type).
@@ -42,7 +32,7 @@
  * ###### Type
  *
  * ```ts
- * type Options = Depth
+ * type Options = 1 | 2 | 3 | 4 | 5 | 6
  * ```
  *
  * ## Recommendation
@@ -55,7 +45,6 @@
  * in which case a value of `2` can be defined here or the rule can be turned
  * off.
  *
- * [api-depth]: #depth
  * [api-options]: #options
  * [api-remark-lint-first-heading-level]: #unifieduseremarklintfirstheadinglevel-options
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
@@ -64,93 +53,55 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   # The default is to expect a level one heading
+ *   # Mercury
+ *
+ * @example
+ *   {"name": "ok-delay.md"}
+ *
+ *   Mercury.
+ *
+ *   # Venus
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok.md"}
+ *
+ *   ## Mercury
+ *
+ *   Venus.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:11: Unexpected first heading rank `2`, expected rank `1`
+ *
+ * @example
+ *   {"config": 2, "name": "ok.md"}
+ *
+ *   ## Mercury
+ *
+ *   Venus.
  *
  * @example
  *   {"name": "ok-html.md"}
  *
- *   <h1>An HTML heading is also seen by this rule.</h1>
+ *   <div>Mercury.</div>
+ *
+ *   <h1>Venus</h1>
  *
  * @example
- *   {"name": "ok-delayed.md"}
+ *   {"mdx": true, "name": "ok-mdx.mdx"}
  *
- *   You can use markdown content before the heading.
+ *   <div>Mercury.</div>
  *
- *   <div>Or non-heading HTML</div>
- *
- *   <h1>So the first heading, be it HTML or markdown, is checked</h1>
+ *   <h1>Venus</h1>
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"config": "🌍", "label": "output", "name": "not-ok-options.md", "positionless": true}
  *
- *   ## Bravo
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok.md", "label": "output"}
- *
- *   1:1-1:9: First heading level should be `1`
- *
- * @example
- *   {"name": "not-ok-html.md", "label": "input"}
- *
- *   <h2>Charlie</h2>
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok-html.md", "label": "output"}
- *
- *   1:1-1:17: First heading level should be `1`
- *
- * @example
- *   {"name": "ok.md", "config": 2}
- *
- *   ## Delta
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "ok-html.md", "config": 2}
- *
- *   <h2>Echo</h2>
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok.md", "config": 2, "label": "input"}
- *
- *   # Foxtrot
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok.md", "config": 2, "label": "output"}
- *
- *   1:1-1:10: First heading level should be `2`
- *
- * @example
- *   {"name": "not-ok-html.md", "config": 2, "label": "input"}
- *
- *   <h1>Golf</h1>
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok-html.md", "config": 2, "label": "output"}
- *
- *   1:1-1:14: First heading level should be `2`
- *
- * @example
- *   {"mdx": true, "name": "ok.mdx"}
- *
- *   In MDX, <b>JSX</b> is supported.
- *
- *   <h1>First heading</h1>
+ *   1:1: Unexpected value `🌍` for `options`, expected `1`, `2`, `3`, `4`, `5`, or `6`
  */
 
 /**
@@ -159,18 +110,14 @@
  */
 
 /**
- * @typedef {Heading['depth']} Depth
- *   Styles.
- *
- * @typedef {Depth} Options
+ * @typedef {1 | 2 | 3 | 4 | 5 | 6} Options
  *   Configuration.
  */
 
 /// <reference types="mdast-util-mdx" />
 
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {EXIT, visit} from 'unist-util-visit'
+import {EXIT, visitParents} from 'unist-util-visit-parents'
 
 const htmlRe = /<h([1-6])/
 const jsxNameRe = /^h([1-6])$/
@@ -189,31 +136,60 @@ const remarkLintFirstHeadingLevel = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    const option = options || 1
+    /** @type {Heading['depth']} */
+    let expected
 
-    visit(tree, function (node) {
-      /** @type {Depth | undefined} */
-      let rank
+    if (options === null || options === undefined) {
+      expected = 1
+    } else if (
+      options === 1 ||
+      options === 2 ||
+      options === 3 ||
+      options === 4 ||
+      options === 5 ||
+      options === 6
+    ) {
+      expected = options
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          '` for `options`, expected `1`, `2`, `3`, `4`, `5`, or `6`'
+      )
+    }
+
+    visitParents(tree, function (node, parents) {
+      /** @type {Heading['depth'] | undefined} */
+      let actual
 
       if (node.type === 'heading') {
-        rank = node.depth
+        actual = node.depth
       } else if (node.type === 'html') {
         const results = node.value.match(htmlRe)
-        rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
+        actual = results
+          ? /** @type {Heading['depth']} */ (Number(results[1]))
+          : undefined
       } else if (
         (node.type === 'mdxJsxFlowElement' ||
           node.type === 'mdxJsxTextElement') &&
         node.name
       ) {
         const results = node.name.match(jsxNameRe)
-        rank = results ? /** @type {Depth} */ (Number(results[1])) : undefined
+        actual = results
+          ? /** @type {Heading['depth']} */ (Number(results[1]))
+          : undefined
       }
 
-      if (rank) {
-        const place = position(node)
-
-        if (place && rank !== option) {
-          file.message('First heading level should be `' + option + '`', place)
+      if (actual && node.position) {
+        if (node.position && actual !== expected) {
+          file.message(
+            'Unexpected first heading rank `' +
+              actual +
+              '`, expected rank `' +
+              expected +
+              '`',
+            {ancestors: [...parents, node], place: node.position}
+          )
         }
 
         return EXIT

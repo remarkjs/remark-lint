@@ -147,9 +147,10 @@ It’s recommended to use actual headings instead.
 ###### In
 
 ```markdown
-# Foo
+# Mercury
 
-Bar.
+**Mercury** is the first planet from the Sun and the smallest in the Solar
+System.
 ```
 
 ###### Out
@@ -161,20 +162,21 @@ No messages.
 ###### In
 
 ```markdown
-*Foo*
+**Mercury**
 
-Bar.
+**Mercury** is the first planet from the Sun and the smallest in the Solar
+System.
 
-__Qux__
+*Venus*
 
-Quux.
+**Venus** is the second planet from the Sun.
 ```
 
 ###### Out
 
 ```text
-1:1-1:6: Don’t use emphasis to introduce a section, use a heading
-5:1-5:8: Don’t use emphasis to introduce a section, use a heading
+1:1-1:12: Unexpected strong introducing a section, expected a heading instead
+6:1-6:8: Unexpected emphasis introducing a section, expected a heading instead
 ```
 
 ## Compatibility

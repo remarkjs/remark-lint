@@ -195,11 +195,11 @@ When configured with `'atx'`.
 ###### In
 
 ```markdown
-# Alpha
+# Mercury
 
-## Bravo
+## Venus
 
-### Charlie
+### Earth
 ```
 
 ###### Out
@@ -213,11 +213,11 @@ When configured with `'atx-closed'`.
 ###### In
 
 ```markdown
-# Delta ##
+# Mercury ##
 
-## Echo ##
+## Venus ##
 
-### Foxtrot ###
+### Earth ###
 ```
 
 ###### Out
@@ -231,13 +231,13 @@ When configured with `'setext'`.
 ###### In
 
 ```markdown
-Golf
-====
+Mercury
+=======
 
-Hotel
+Venus
 -----
 
-### India
+### Earth
 ```
 
 ###### Out
@@ -249,29 +249,29 @@ No messages.
 ###### In
 
 ```markdown
-Juliett
+Mercury
 =======
 
-## Kilo
+## Venus
 
-### Lima ###
+### Earth ###
 ```
 
 ###### Out
 
 ```text
-4:1-4:8: Headings should use setext
-6:1-6:13: Headings should use setext
+4:1-4:9: Unexpected ATX heading, expected setext
+6:1-6:14: Unexpected ATX (closed) heading, expected setext
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect heading style type `💩`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`
+1:1: Unexpected value `🌍` for `options`, expected `'atx'`, `'atx-closed'`, `'setext'`, or `'consistent'`
 ```
 
 ## Compatibility

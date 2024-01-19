@@ -35,32 +35,33 @@
  * @author Titus Wormer
  * @copyright 2020 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [alpha]: alpha.com
- *   [bravo]: bravo.com
+ *   [mercury]: https://example.com/mercury/
+ *   [venus]: https://example.com/venus/
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   [alpha]: alpha.com
- *   [bravo]: alpha.com
- *
+ *   [mercury]: https://example.com/mercury/
+ *   [venus]: https://example.com/mercury/
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   2:1-2:19: Do not use different definitions with the same URL (1:1)
+ *   2:1-2:38: Unexpected definition with an already defined URL (as `mercury`), expected unique URLs
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
-import {pointStart, position} from 'unist-util-position'
-import {stringifyPosition} from 'unist-util-stringify-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintNoDuplicateDefinedUrls = lintRule(
   {
@@ -74,27 +75,39 @@ const remarkLintNoDuplicateDefinedUrls = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Map<string, string>} */
+    /** @type {Map<string, Array<Nodes>>} */
     const map = new Map()
 
-    visit(tree, 'definition', function (node) {
-      const place = position(node)
-      const start = pointStart(node)
+    visitParents(tree, 'definition', function (node, parents) {
+      const ancestors = [...parents, node]
 
-      if (place && start && node.url) {
-        const url = String(node.url).toUpperCase()
-        const duplicate = map.get(url)
+      if (node.position && node.url) {
+        const urlNormal = String(node.url).toUpperCase()
+        const duplicateAncestors = map.get(urlNormal)
 
-        if (duplicate) {
+        if (duplicateAncestors) {
+          const duplicate = duplicateAncestors.at(-1)
+          assert(duplicate) // Always defined.
+          assert(duplicate.type === 'definition') // Always tail.
+
           file.message(
-            'Do not use different definitions with the same URL (' +
-              duplicate +
-              ')',
-            place
+            'Unexpected definition with an already defined URL (as `' +
+              duplicate.identifier +
+              '`), expected unique URLs',
+            {
+              ancestors,
+              cause: new VFileMessage('URL already defined here', {
+                ancestors: duplicateAncestors,
+                place: duplicate.position,
+                source: 'remark-lint',
+                ruleId: 'no-duplicate-defined-urls'
+              }),
+              place: node.position
+            }
           )
         }
 
-        map.set(url, stringifyPosition(start))
+        map.set(urlNormal, ancestors)
       }
     })
   }

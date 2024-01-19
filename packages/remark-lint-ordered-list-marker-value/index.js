@@ -28,17 +28,30 @@
  *
  * Configuration (TypeScript type).
  *
- * * `'ordered'`
- *   — values should increment by one from the first item
- * * `'single'`
- *   — values should stay the same as the first item
- * * `'one'`
- *   — values should always be exactly `1`
+ * `consistent` looks at the first list with two or more items, and
+ * infer `'single'` if both are the same, and `'ordered'` otherwise.
  *
  * ###### Type
  *
  * ```ts
- * type Options = 'one' | 'ordered' | 'single'
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Counter style (TypeScript type).
+ *
+ * * `'one'`
+ *   — values should always be exactly `1`
+ * * `'ordered'`
+ *   — values should increment by one from the first item
+ * * `'single'`
+ *   — values should stay the same as the first item
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = 'one' | 'ordered' | 'single'
  * ```
  *
  * ## Recommendation
@@ -61,6 +74,7 @@
  * Pass `incrementListMarker: false` to not increment further items.
  *
  * [api-options]: #options
+ * [api-style]: #style
  * [api-remark-lint-ordered-list-marker-value]: #unifieduseremarklintorderedlistmarkervalue-options
  * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
@@ -69,128 +83,165 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   The default value is `ordered`, so unless changed, the below
- *   is OK.
+ *   1. Mercury
+ *   2. Venus
  *
- *   1.  Foo
- *   2.  Bar
- *   3.  Baz
+ *   ***
  *
- *   Paragraph.
+ *   3. Earth
+ *   4. Mars
  *
- *   3.  Alpha
- *   4.  Bravo
- *   5.  Charlie
+ *   ***
  *
- *   Unordered lists are not affected by this rule.
- *
- *   *   Anton
+ *   * Jupiter
  *
  * @example
- *   {"name": "ok.md", "config": "one"}
+ *   {"name": "ok-infer-single.md"}
  *
- *   1.  Foo
- *   1.  Bar
- *   1.  Baz
+ *   2. Mercury
+ *   2. Venus
  *
- *   Paragraph.
+ *   ***
  *
- *   1.  Alpha
- *   1.  Bravo
- *   1.  Charlie
+ *   3. Earth
+ *   3. Mars
  *
  * @example
- *   {"name": "ok.md", "config": "single"}
+ *   {"label": "input", "name": "nok-chaotic.md"}
  *
- *   1.  Foo
- *   1.  Bar
- *   1.  Baz
+ *   2. Mercury
+ *   1. Venus
  *
- *   Paragraph.
+ *   ***
  *
- *   3.  Alpha
- *   3.  Bravo
- *   3.  Charlie
+ *   1. Earth
+ *   1. Mars
+ * @example
+ *   {"label": "output", "name": "nok-chaotic.md"}
  *
- *   Paragraph.
+ *   2:2: Unexpected ordered list item value `1`, expected `3`
+ *   7:2: Unexpected ordered list item value `1`, expected `2`
  *
- *   0.  Delta
- *   0.  Echo
- *   0.  Foxtrot
+ * @example
+ *   {"config": "one", "name": "ok.md"}
+ *
+ *   1. Mercury
+ *   1. Venus
  *
  * @example
  *   {"name": "ok.md", "config": "ordered"}
  *
- *   1.  Foo
- *   2.  Bar
- *   3.  Baz
+ *   1. Mercury
+ *   2. Venus
  *
- *   Paragraph.
+ *   ***
  *
- *   3.  Alpha
- *   4.  Bravo
- *   5.  Charlie
+ *   3. Earth
+ *   4. Mars
  *
- *   Paragraph.
+ *   ***
  *
- *   0.  Delta
- *   1.  Echo
- *   2.  Foxtrot
+ *   0. Jupiter
+ *   1. Saturn
  *
  * @example
- *   {"name": "not-ok.md", "config": "one", "label": "input"}
+ *   {"config": "single", "name": "ok.md"}
  *
- *   1.  Foo
- *   2.  Bar
+ *   1. Mercury
+ *   1. Venus
  *
- * @example
- *   {"name": "not-ok.md", "config": "one", "label": "output"}
+ *   ***
  *
- *   2:1-2:8: Marker should be `1`, was `2`
+ *   3. Earth
+ *   3. Mars
  *
- * @example
- *   {"name": "also-not-ok.md", "config": "one", "label": "input"}
+ *   ***
  *
- *   2.  Foo
- *   1.  Bar
- *
- * @example
- *   {"name": "also-not-ok.md", "config": "one", "label": "output"}
- *
- *   1:1-1:8: Marker should be `1`, was `2`
+ *   0. Jupiter
+ *   0. Saturn
  *
  * @example
- *   {"name": "not-ok.md", "config": "ordered", "label": "input"}
+ *   {"config": "one", "label": "input", "name": "not-ok.md"}
  *
- *   1.  Foo
- *   1.  Bar
+ *   1. Mercury
+ *   2. Venus
+ *
+ *   ***
+ *
+ *   3. Earth
+ *
+ *   ***
+ *
+ *   2. Mars
+ *   1. Jupiter
+ * @example
+ *   {"config": "one", "label": "output", "name": "not-ok.md"}
+ *
+ *   2:2: Unexpected ordered list item value `2`, expected `1`
+ *   6:2: Unexpected ordered list item value `3`, expected `1`
+ *   10:2: Unexpected ordered list item value `2`, expected `1`
  *
  * @example
- *   {"name": "not-ok.md", "config": "ordered", "label": "output"}
+ *   {"config": "ordered", "label": "input", "name": "not-ok.md"}
  *
- *   2:1-2:8: Marker should be `2`, was `1`
+ *   1. Mercury
+ *   1. Venus
+ *
+ *   ***
+ *
+ *   2. Mars
+ *   1. Jupiter
+ * @example
+ *   {"config": "ordered", "label": "output", "name": "not-ok.md"}
+ *
+ *   2:2: Unexpected ordered list item value `1`, expected `2`
+ *   7:2: Unexpected ordered list item value `1`, expected `3`
  *
  * @example
- *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *   {"config": "single", "label": "input", "name": "not-ok.md"}
  *
- *   1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'`, `'one'`, or `'single'`
+ *   1. Mercury
+ *   2. Venus
+ *
+ *   ***
+ *
+ *   2. Mars
+ *   1. Jupiter
+ * @example
+ *   {"config": "single", "label": "output", "name": "not-ok.md"}
+ *
+ *   2:2: Unexpected ordered list item value `2`, expected `1`
+ *   7:2: Unexpected ordered list item value `1`, expected `2`
+ *
+ * @example
+ *   {"name": "not-ok.md", "config": "🌍", "label": "output", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'one'`, `'ordered'`, `'single'`, or `'consistent'`
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
 /**
- * @typedef {'one' | 'ordered' | 'single'} Options
+ * @typedef {Style | 'consistent'} Options
  *   Configuration.
- */
 
+ * @typedef {'one' | 'ordered' | 'single'} Style
+ *   Counter style.
+*/
+
+import {ok as assert} from 'devlop'
+import {asciiDigit} from 'micromark-util-character'
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
 import {pointStart} from 'unist-util-position'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintOrderedListMarkerValue = lintRule(
   {
@@ -200,66 +251,156 @@ const remarkLintOrderedListMarkerValue = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {Options | null | undefined} [options='ordered']
+   * @param {Options | null | undefined} [options='consistent']
    *   Configuration (default: `'ordered'`).
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
     const value = String(file)
-    const option = options || 'ordered'
+    /** @type {Style | undefined} */
+    let style
+    /** @type {VFileMessage | undefined} */
+    let cause
 
-    if (option !== 'one' && option !== 'ordered' && option !== 'single') {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (
+      options === 'one' ||
+      options === 'ordered' ||
+      options === 'single'
+    ) {
+      style = options
+    } else {
       file.fail(
-        'Incorrect ordered list item marker value `' +
-          option +
-          "`: use either `'ordered'`, `'one'`, or `'single'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'one'`, `'ordered'`, `'single'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'list', function (node) {
+    /** @type {Array<{ancestors: Array<Nodes>, counters: Array<string | undefined>}>} */
+    const lists = []
+
+    visitParents(tree, 'list', function (node, parents) {
       if (!node.ordered) return
 
-      let expected =
-        option === 'one' || typeof node.start !== 'number' ? 1 : node.start
+      /** @type {Array<string | undefined>} */
+      const values = []
+
+      for (const item of node.children) {
+        const start = pointStart(item)
+        /** @type {string | undefined} */
+        let counter
+
+        if (start && typeof start.offset === 'number') {
+          let index = start.offset
+          let code = value.charCodeAt(index)
+
+          while (asciiDigit(code)) {
+            index++
+            code = value.charCodeAt(index)
+          }
+
+          counter = value.slice(start.offset, index)
+        }
+
+        values.push(counter)
+      }
+
+      lists.push({ancestors: [...parents, node], counters: values})
+    })
+
+    // Infer style.
+    if (!style) {
+      for (const info of lists) {
+        // Could be `undefined` for short lists *or* w/o positional info.
+        const [first, second] = info.counters
+
+        if (first && second) {
+          const inferredStyle =
+            second === String(Number(first) + 1)
+              ? 'ordered'
+              : second === first
+                ? 'single'
+                : undefined
+
+          if (inferredStyle) {
+            const node = info.ancestors.at(-1)
+            assert(node) // Always defined.
+            assert(node.type === 'list') // Always list.
+            style = inferredStyle
+            cause = new VFileMessage(
+              'Ordered list marker style `' +
+                style +
+                "` first defined for `'consistent'` here",
+              {
+                ancestors: info.ancestors,
+                place: node.position,
+                ruleId: 'ordered-list-marker-value',
+                source: 'remark-lint'
+              }
+            )
+          }
+
+          break
+        }
+      }
+    }
+
+    if (!style) {
+      style = 'ordered'
+      cause = new VFileMessage(
+        "Ordered list marker style `ordered` assumed for `'consistent'`",
+        {ruleId: 'ordered-list-marker-value', source: 'remark-lint'}
+      )
+    }
+
+    for (const info of lists) {
+      const startValue = style === 'one' ? 1 : info.counters[0]
+      const node = info.ancestors.at(-1)
+      assert(node) // Always defined.
+      assert(node.type === 'list') // Always list.
+
+      // No positional info on first item.
+      if (!startValue) continue
+
+      const start = Number(startValue)
       let index = -1
 
-      while (++index < node.children.length) {
-        const child = node.children[index]
-        const end = pointStart(child.children[0])
-        const start = pointStart(child)
+      while (++index < info.counters.length) {
+        const item = node.children[index]
+        const actual = info.counters[index]
+        if (!actual) continue
 
-        // Ignore generated nodes, first items.
-        if (
-          !end ||
-          !start ||
-          typeof end.offset !== 'number' ||
-          typeof start.offset !== 'number' ||
-          (index === 0 && option !== 'one')
-        ) {
-          continue
-        }
+        const startPoint = pointStart(item)
+        assert(startPoint) // Always defined, we checked when we found items.
+        assert(typeof startPoint.offset === 'number') // Same.
 
-        // Increase the expected line number when in `ordered` mode.
-        if (option === 'ordered') {
-          expected++
-        }
-
-        const marker = Number(
-          value
-            .slice(start.offset, end.offset)
-            .replace(/[\s.)]/g, '')
-            .replace(/\[[x ]?]\s*$/i, '')
+        const expected = String(
+          style === 'one' ? 1 : style === 'single' ? start : start + index
         )
 
-        if (marker !== expected) {
+        if (actual !== expected) {
           file.message(
-            'Marker should be `' + expected + '`, was `' + marker + '`',
-            child
+            'Unexpected ordered list item value `' +
+              actual +
+              '`, expected `' +
+              expected +
+              '`',
+            {
+              ancestors: [...info.ancestors, item],
+              cause,
+              place: {
+                line: startPoint.line,
+                column: startPoint.column + actual.length,
+                offset: startPoint.offset + actual.length
+              }
+            }
           )
         }
       }
-    })
+    }
   }
 )
 

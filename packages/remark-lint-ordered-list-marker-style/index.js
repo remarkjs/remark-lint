@@ -25,16 +25,6 @@
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
- * ### `Marker`
- *
- * Marker (TypeScript type).
- *
- * ###### Type
- *
- * ```ts
- * type Marker = '.' | ')'
- * ```
- *
  * ### `Options`
  *
  * Configuration (TypeScript type).
@@ -42,7 +32,17 @@
  * ###### Type
  *
  * ```ts
- * type Options = Marker | 'consistent'
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = '.' | ')'
  * ```
  *
  * ## Recommendation
@@ -58,7 +58,7 @@
  * dots by default.
  * Pass `bulletOrdered: ')'` to always use parens.
  *
- * [api-marker]: #marker
+ * [api-style]: #style
  * [api-options]: #options
  * [api-remark-lint-ordered-list-marker-style]: #unifieduseremarklintorderedlistmarkerstyle-options
  * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
@@ -68,48 +68,42 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   1.  Foo
+ *   1. Mercury
  *
+ *   * Venus
  *
- *   1.  Bar
- *
- *   Unordered lists are not affected by this rule.
- *
- *   * Foo
+ *   1. Earth
  *
  * @example
  *   {"name": "ok.md", "config": "."}
  *
- *   1.  Foo
- *
- *   2.  Bar
+ *   1. Mercury
  *
  * @example
  *   {"name": "ok.md", "config": ")"}
  *
- *   1)  Foo
- *
- *   2)  Bar
+ *   1) Mercury
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1.  Foo
+ *   1. Mercury
  *
- *   2)  Bar
- *
- * @example
- *   {"name": "not-ok.md", "label": "output"}
- *
- *   3:1-3:8: Marker style should be `.`
+ *   1) Venus
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
+ *   3:2: Unexpected ordered list marker `)`, expected `.`
+ *
+ * @example
+ *   {"name": "not-ok.md", "label": "output", "config": "🌍", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'.'`, `')'`, or `'consistent'`
  */
 
 /**
@@ -117,16 +111,18 @@
  */
 
 /**
- * @typedef {Marker | 'consistent'} Options
+ * @typedef {Style | 'consistent'} Options
  *   Configuration.
  *
- * @typedef {'.' | ')'} Marker
+ * @typedef {'.' | ')'} Style
  *   Style.
  */
 
+import {asciiDigit} from 'micromark-util-character'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintOrderedListMarkerStyle = lintRule(
   {
@@ -143,44 +139,75 @@ const remarkLintOrderedListMarkerStyle = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    let option = options || 'consistent'
+    /** @type {Style | undefined} */
+    let expected
+    /** @type {VFileMessage | undefined} */
+    let cause
 
-    if (option !== 'consistent' && option !== '.' && option !== ')') {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === '.' || options === ')') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect ordered list item marker style `' +
-          option +
-          "`: use either `'.'` or `')'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'.'`, `')'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'list', function (node) {
-      let index = -1
+    visitParents(tree, 'listItem', function (node, parents) {
+      const parent = parents.at(-1)
 
-      if (!node.ordered) return
+      if (!parent || parent.type !== 'list' || !parent.ordered) return
 
-      while (++index < node.children.length) {
-        const child = node.children[index]
-        const end = pointStart(child.children[0])
-        const start = pointStart(child)
+      const start = pointStart(node)
 
-        if (
-          end &&
-          start &&
-          typeof end.offset === 'number' &&
-          typeof start.offset === 'number'
-        ) {
-          const marker = /** @type {Marker} */ (
-            value
-              .slice(start.offset, end.offset)
-              .replace(/\s|\d/g, '')
-              .replace(/\[[x ]?]\s*$/i, '')
-          )
+      if (start && typeof start.offset === 'number') {
+        let index = start.offset
+        let code = value.charCodeAt(index)
+        while (asciiDigit(code)) {
+          index++
+          code = value.charCodeAt(index)
+        }
 
-          if (option === 'consistent') {
-            option = marker
-          } else if (marker !== option) {
-            file.message('Marker style should be `' + option + '`', child)
+        /* c8 ignore next 2 -- weird ASTs. */
+        const actual =
+          code === 41 /* `)` */ ? ')' : code === 46 /* `.` */ ? '.' : undefined
+
+        /* c8 ignore next -- weird ASTs. */
+        if (!actual) return
+
+        const place = {
+          line: start.line,
+          column: start.column + (index - start.offset),
+          offset: start.offset + (index - start.offset)
+        }
+
+        if (expected) {
+          if (actual !== expected) {
+            file.message(
+              'Unexpected ordered list marker `' +
+                actual +
+                '`, expected `' +
+                expected +
+                '`',
+              {ancestors: [...parents, node], cause, place}
+            )
           }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            'Ordered list marker style `' +
+              expected +
+              "` first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place,
+              ruleId: 'ordered-list-marker-style',
+              source: 'remark-lint'
+            }
+          )
         }
       }
     })

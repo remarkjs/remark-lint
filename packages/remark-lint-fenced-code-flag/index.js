@@ -59,66 +59,79 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   ```alpha
- *   bravo()
+ *   ```markdown
+ *   # Mercury
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
  *   ```
- *   alpha()
+ *   mercury()
+ *   ```
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-3:4: Unexpected missing fenced code language flag in info string, expected keyword
+ *
+ * @example
+ *   {"config": {"allowEmpty": true}, "name": "ok-allow-empty.md"}
+ *
+ *   ```
+ *   mercury()
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
- *
- *   1:1-3:4: Missing code language flag
- *
- * @example
- *   {"name": "ok.md", "config": {"allowEmpty": true}}
+ *   {"config": {"allowEmpty": false}, "label": "input", "name": "not-ok-allow-empty.md"}
  *
  *   ```
- *   alpha()
+ *   mercury()
  *   ```
+ * @example
+ *   {"config": {"allowEmpty": false}, "label": "output", "name": "not-ok-allow-empty.md"}
+ *
+ *   1:1-3:4: Unexpected missing fenced code language flag in info string, expected keyword
  *
  * @example
- *   {"name": "not-ok.md", "config": {"allowEmpty": false}, "label": "input"}
+ *   {"config": ["markdown"], "name": "ok-array.md"}
  *
- *   ```
- *   alpha()
- *   ```
- *
- * @example
- *   {"name": "not-ok.md", "config": {"allowEmpty": false}, "label": "output"}
- *
- *   1:1-3:4: Missing code language flag
- *
- * @example
- *   {"name": "ok.md", "config": ["alpha"]}
- *
- *   ```alpha
- *   bravo()
+ *   ```markdown
+ *   # Mercury
  *   ```
  *
  * @example
- *   {"name": "ok.md", "config": {"flags":["alpha"]}}
+ *   {"config": {"flags":["markdown"]}, "name": "ok-options.md"}
  *
- *   ```alpha
- *   bravo()
+ *   ```markdown
+ *   # Mercury
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "config": ["charlie"], "label": "input"}
+ *   {"config": ["markdown"], "label": "input", "name": "not-ok-array.md"}
  *
- *   ```alpha
- *   bravo()
+ *   ```javascript
+ *   mercury()
  *   ```
+ * @example
+ *   {"config": ["markdown"], "label": "output", "name": "not-ok-array.md"}
+ *
+ *   1:1-3:4: Unexpected fenced code language flag `javascript` in info string, expected `markdown`
  *
  * @example
- *   {"name": "not-ok.md", "config": ["charlie"], "label": "output"}
+ *   {"config": ["javascript", "markdown", "mdx", "typescript"], "label": "input", "name": "not-ok-long-array.md"}
  *
- *   1:1-3:4: Incorrect code language flag
+ *   ```html
+ *   <h1>Mercury</h1>
+ *   ```
+ * @example
+ *   {"config": ["javascript", "markdown", "mdx", "typescript"], "label": "output", "name": "not-ok-long-array.md"}
+ *
+ *   1:1-3:4: Unexpected fenced code language flag `html` in info string, expected `javascript`, `markdown`, `mdx`, …
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok-options.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected array or object
  */
 
 /**
@@ -135,13 +148,15 @@
  *   other flags will result in a warning (optional).
  */
 
+import {quotation} from 'quotation'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const fence = /^ {0,3}([~`])\1{2,}/
-/** @type {ReadonlyArray<string>} */
-const emptyFlags = []
+
+const listFormat = new Intl.ListFormat('en', {type: 'disjunction'})
+const listFormatUnit = new Intl.ListFormat('en', {type: 'unit'})
 
 const remarkLintFencedCodeFlag = lintRule(
   {
@@ -159,24 +174,45 @@ const remarkLintFencedCodeFlag = lintRule(
   function (tree, file, options) {
     const value = String(file)
     let allowEmpty = false
-    let allowed = emptyFlags
+    /** @type {ReadonlyArray<string> | undefined} */
+    let allowed
 
-    if (options && typeof options === 'object') {
+    if (options === null || options === undefined) {
+      // Empty.
+    } else if (typeof options === 'object') {
       // Note: casts because `isArray` and `readonly` don’t mix.
       if (Array.isArray(options)) {
         const flags = /** @type {ReadonlyArray<string>} */ (options)
         allowed = flags
       } else {
         const settings = /** @type {Options} */ (options)
-        allowEmpty = Boolean(settings.allowEmpty)
+        allowEmpty = settings.allowEmpty === true
 
         if (settings.flags) {
           allowed = settings.flags
         }
       }
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          '` for `options`, expected array or object'
+      )
     }
 
-    visit(tree, 'code', function (node) {
+    /** @type {string} */
+    let allowedDisplay
+
+    if (allowed) {
+      allowedDisplay =
+        allowed.length > 3
+          ? listFormatUnit.format([...quotation(allowed.slice(0, 3), '`'), '…'])
+          : listFormat.format(quotation(allowed, '`'))
+    } else {
+      allowedDisplay = 'keyword'
+    }
+
+    visitParents(tree, 'code', function (node, parents) {
       const end = pointEnd(node)
       const start = pointStart(node)
 
@@ -187,14 +223,24 @@ const remarkLintFencedCodeFlag = lintRule(
         typeof start.offset === 'number'
       ) {
         if (node.lang) {
-          if (allowed.length > 0 && !allowed.includes(node.lang)) {
-            file.message('Incorrect code language flag', node)
+          if (allowed && !allowed.includes(node.lang)) {
+            file.message(
+              'Unexpected fenced code language flag `' +
+                node.lang +
+                '` in info string, expected ' +
+                allowedDisplay,
+              {ancestors: [...parents, node], place: node.position}
+            )
           }
-        } else {
+        } else if (!allowEmpty) {
           const slice = value.slice(start.offset, end.offset)
 
-          if (!allowEmpty && fence.test(slice)) {
-            file.message('Missing code language flag', node)
+          if (fence.test(slice)) {
+            file.message(
+              'Unexpected missing fenced code language flag in info string, expected ' +
+                allowedDisplay,
+              {ancestors: [...parents, node], place: node.position}
+            )
           }
         }
       }

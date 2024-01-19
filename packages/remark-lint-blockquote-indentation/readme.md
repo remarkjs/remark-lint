@@ -171,36 +171,48 @@ Due to this, it’s recommended to configure this rule with `2`.
 
 ## Examples
 
-##### `ok.md`
-
-When configured with `4`.
-
-###### In
-
-```markdown
->   Hello
-
-Paragraph.
-
->   World
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
+##### `ok-2.md`
 
 When configured with `2`.
 
 ###### In
 
 ```markdown
-> Hello
+> Mercury.
 
-Paragraph.
+Venus.
 
-> World
+> Earth.
+```
+
+###### Out
+
+No messages.
+
+##### `ok-4.md`
+
+When configured with `4`.
+
+###### In
+
+```markdown
+>   Mercury.
+
+Venus.
+
+>   Earth.
+```
+
+###### Out
+
+No messages.
+
+##### `ok-tab.md`
+
+###### In
+
+```markdown
+>␉Mercury.
 ```
 
 ###### Out
@@ -212,22 +224,32 @@ No messages.
 ###### In
 
 ```markdown
->  Hello
+>  Mercury.
 
-Paragraph.
+Venus.
 
->   World
+>   Earth.
 
-Paragraph.
+Mars.
 
-> World
+> Jupiter
 ```
 
 ###### Out
 
 ```text
-5:5: Remove 1 space between block quote and content
-9:3: Add 1 space between block quote and content
+5:5: Unexpected `4` spaces between block quote marker and content, expected `3` spaces, remove `1` space
+9:3: Unexpected `2` spaces between block quote marker and content, expected `3` spaces, add `1` space
+```
+
+##### `not-ok-options.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `number` or `'consistent'`
 ```
 
 ## Compatibility

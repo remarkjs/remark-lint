@@ -41,51 +41,57 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   #␠Foo
+ *   #␠Mercury
  *
- *   ## Bar␠##
+ *   ##␠Venus␠##
  *
- *     ##␠Baz
+ *   ␠␠##␠Earth
  *
- *   Setext headings are not affected.
+ *   Setext headings are not affected:
  *
- *   Baz
- *   ===
+ *   ␠Mars
+ *   =====
  *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   #␠␠Foo
- *
- *   ## Bar␠␠##
- *
- *     ##␠␠Baz
+ *   ␠Jupiter
+ *   --------
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:4: Remove 1 space before this heading’s content
- *   3:7: Remove 1 space after this heading’s content
- *   5:7: Remove 1 space before this heading’s content
+ *   #␠␠Mercury
+ *
+ *   ##␠Venus␠␠##
+ *
+ *   ␠␠##␠␠␠Earth
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:4: Unexpected `2` spaces between hashes and content, expected `1` space, remove `1` space
+ *   3:11: Unexpected `2` spaces between content and hashes, expected `1` space, remove `1` space
+ *   5:8: Unexpected `3` spaces between hashes and content, expected `1` space, remove `2` spaces
  *
  * @example
- *   {"name": "empty-heading.md"}
+ *   {"label": "input", "name": "empty-heading.md"}
  *
  *   #␠␠
+ * @example
+ *   {"label": "output", "name": "empty-heading.md"}
+ *
+ *   1:4: Unexpected `2` spaces between hashes and content, expected `1` space, remove `1` space
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
-import {headingStyle} from 'mdast-util-heading-style'
-import plural from 'pluralize'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   {
@@ -99,55 +105,116 @@ const remarkLintNoHeadingContentIndent = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'heading', function (node) {
+    const value = String(file)
+
+    visitParents(tree, 'heading', function (node, parents) {
       const start = pointStart(node)
-      const type = headingStyle(node, 'atx')
+      const end = pointEnd(node)
 
-      if (!start) return
-
-      if (type === 'atx' || type === 'atx-closed') {
-        const headStart = pointStart(node.children[0])
-
-        // Ignore empty headings.
-        if (!headStart) {
-          return
-        }
-
-        const diff = headStart.column - start.column - 1 - node.depth
-
-        if (diff) {
-          file.message(
-            'Remove ' +
-              Math.abs(diff) +
-              ' ' +
-              plural('space', Math.abs(diff)) +
-              ' before this heading’s content',
-            pointStart(node.children[0])
-          )
-        }
+      if (
+        !end ||
+        !start ||
+        typeof end.offset !== 'number' ||
+        typeof start.offset !== 'number'
+      ) {
+        return
       }
 
-      // Closed ATX headings always must have a space between their content and
-      // the final hashes, thus, there is no `add x spaces`.
-      if (type === 'atx-closed') {
-        const final = pointEnd(node.children[node.children.length - 1])
-        const end = pointEnd(node)
+      let index = start.offset
+      let code = value.charCodeAt(index)
+      // Node positional info starts after whitespace,
+      // so we don’t need to walk past it.
+      let found = false
 
-        /* c8 ignore next -- we get here if we have offsets. */
-        if (!final || !end) return
+      while (value.charCodeAt(index) === 35 /* `#` */) {
+        index++
+        found = true
+        continue
+      }
 
-        const diff = end.column - final.column - 1 - node.depth
+      const from = index
 
-        if (diff) {
-          file.message(
-            'Remove ' +
-              diff +
-              ' ' +
-              plural('space', diff) +
-              ' after this heading’s content',
-            final
-          )
-        }
+      code = value.charCodeAt(index)
+
+      while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+        code = value.charCodeAt(++index)
+        continue
+      }
+
+      const size = index - from
+
+      // Not ATX / fine.
+      if (found && size > 1) {
+        file.message(
+          'Unexpected `' +
+            size +
+            '` ' +
+            pluralize('space', size) +
+            ' between hashes and content, expected `1` space, remove `' +
+            (size - 1) +
+            '` ' +
+            pluralize('space', size - 1),
+          {
+            ancestors: [...parents, node],
+            place: {
+              line: start.line,
+              column: start.column + (index - start.offset),
+              offset: start.offset + (index - start.offset)
+            }
+          }
+        )
+      }
+
+      const contentStart = index
+
+      index = end.offset
+      code = value.charCodeAt(index - 1)
+
+      while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+        index--
+        code = value.charCodeAt(index - 1)
+        continue
+      }
+
+      let endFound = false
+
+      while (value.charCodeAt(index - 1) === 35 /* `#` */) {
+        index--
+        endFound = true
+        continue
+      }
+
+      const endFrom = index
+
+      code = value.charCodeAt(index - 1)
+
+      while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+        index--
+        code = value.charCodeAt(index - 1)
+        continue
+      }
+
+      const endSize = endFrom - index
+
+      if (endFound && index > contentStart && endSize > 1) {
+        file.message(
+          'Unexpected `' +
+            endSize +
+            '` ' +
+            pluralize('space', endSize) +
+            ' between content and hashes, expected `1` space, remove `' +
+            (endSize - 1) +
+            '` ' +
+            pluralize('space', endSize - 1),
+          {
+            ancestors: [...parents, node],
+            place: {
+              line: end.line,
+              column: end.column - (end.offset - endFrom),
+              offset: end.offset - (end.offset - endFrom)
+            }
+          }
+        )
       }
     })
   }

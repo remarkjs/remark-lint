@@ -42,53 +42,51 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   # Foo
+ *   # Mercury
  *
- *   ## Bar
+ *   ## Venus
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}
  *
- *   # Foo
+ *   # Mercury
  *
- *   ## Foo
+ *   ## Mercury
  *
- *   ## [Foo](http://foo.com/bar)
- *
+ *   ## [Mercury](http://example.com/mercury/)
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
- *   3:1-3:7: Do not use headings with similar content (1:1)
- *   5:1-5:29: Do not use headings with similar content (3:1)
+ *   3:1-3:11: Unexpected heading with equivalent text, expected unique headings
+ *   5:1-5:42: Unexpected heading with equivalent text, expected unique headings
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
  *
- *   MDX is supported too.
- *
- *   <h1>Alpha</h1>
- *   <h2>Alpha</h2>
- *
+ *   <h1>Mercury</h1>
+ *   <h2>Mercury</h2>
  * @example
  *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
  *
- *   4:1-4:15: Do not use headings with similar content (3:1)
+ *   2:1-2:17: Unexpected heading with equivalent text, expected unique headings
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
 /// <reference types="mdast-util-mdx" />
 
+import {ok as assert} from 'devlop'
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
-import {pointStart, position} from 'unist-util-position'
-import {stringifyPosition} from 'unist-util-stringify-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const jsxNameRe = /^h([1-6])$/
 
@@ -104,10 +102,10 @@ const remarkLintNoDuplicateHeadings = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Map<string, string>} */
+    /** @type {Map<string, Array<Nodes>>} */
     const map = new Map()
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       if (
         node.type === 'heading' ||
         ((node.type === 'mdxJsxFlowElement' ||
@@ -115,22 +113,30 @@ const remarkLintNoDuplicateHeadings = lintRule(
           node.name &&
           jsxNameRe.test(node.name))
       ) {
-        const place = position(node)
-        const start = pointStart(node)
+        const ancestors = [...parents, node]
+        const value = toString(node).toLowerCase()
+        const duplicateAncestors = map.get(value)
 
-        if (place && start) {
-          const value = toString(node).toLowerCase()
-          const duplicate = map.get(value)
+        if (node.position && duplicateAncestors) {
+          const duplicate = duplicateAncestors.at(-1)
+          assert(duplicate) // Always defined.
 
-          if (duplicate) {
-            file.message(
-              'Do not use headings with similar content (' + duplicate + ')',
-              node
-            )
-          }
-
-          map.set(value, stringifyPosition(start))
+          file.message(
+            'Unexpected heading with equivalent text, expected unique headings',
+            {
+              ancestors,
+              cause: new VFileMessage('Equivalent heading text defined here', {
+                ancestors: duplicateAncestors,
+                place: duplicate.position,
+                source: 'remark-lint',
+                ruleId: 'no-duplicate-headings'
+              }),
+              place: node.position
+            }
+          )
         }
+
+        map.set(value, ancestors)
       }
     })
   }

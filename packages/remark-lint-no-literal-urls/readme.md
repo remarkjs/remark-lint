@@ -31,10 +31,12 @@
 ## What is this?
 
 This package checks that regular autolinks or full links are used.
+Literal autolinks is a GFM feature enabled with
+[`remark-gfm`][github-remark-gfm].
 
 ## When should I use this?
 
-You can use this package to check links.
+You can use this package to check that links are consistent.
 
 ## Presets
 
@@ -154,8 +156,13 @@ It always generates regular autolinks or full links.
 
 ###### In
 
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
 ```markdown
-<http://foo.bar/baz>
+<https://example.com/mercury/>
+
+![Venus](http://example.com/venus/).
 ```
 
 ###### Out
@@ -170,13 +177,19 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-http://foo.bar/baz
+https://example.com/mercury/
+
+www.example.com/venus/
+
+earth@mars.planets
 ```
 
 ###### Out
 
 ```text
-1:1-1:19: Don’t use literal URLs without angle brackets
+1:1-1:29: Unexpected GFM autolink literal, expected regular autolink, add `<` before and `>` after
+3:1-3:23: Unexpected GFM autolink literal, expected regular autolink, add `<http://` before and `>` after
+5:1-5:19: Unexpected GFM autolink literal, expected regular autolink, add `<mailto:` before and `>` after
 ```
 
 ## Compatibility

@@ -10,6 +10,8 @@
  *
  * You can use this package to check that the style of GFM tasklists is
  * consistent.
+ * Task lists are a GFM feature enabled with
+ * [`remark-gfm`][github-remark-gfm].
  *
  * ## API
  *
@@ -63,6 +65,7 @@
  * [api-options]: #options
  * [api-remark-lint-checkbox-character-style]: #unifieduseremarklintcheckboxcharacterstyle-options
  * [api-styles]: #styles
+ * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
  * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
@@ -70,55 +73,60 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "config": {"checked": "x"}, "gfm": true}
- *
- *   - [x] List item
- *   - [x] List item
  *
  * @example
- *   {"name": "ok.md", "config": {"checked": "X"}, "gfm": true}
+ *   {"config": {"checked": "x"}, "gfm": true, "name": "ok-x.md"}
  *
- *   - [X] List item
- *   - [X] List item
+ *   - [x] Mercury.
+ *   - [x] Venus.
  *
  * @example
- *   {"name": "ok.md", "config": {"unchecked": " "}, "gfm": true}
+ *   {"config": {"checked": "X"}, "gfm": true, "name": "ok-x-upper.md"}
  *
- *   - [ ] List item
- *   - [ ] List item
+ *   - [X] Mercury.
+ *   - [X] Venus.
+ *
+ * @example
+ *   {"config": {"unchecked": " "}, "gfm": true, "name": "ok-space.md"}
+ *
+ *   - [ ] Mercury.
+ *   - [ ] Venus.
  *   - [ ]␠␠
  *   - [ ]
  *
  * @example
- *   {"name": "ok.md", "config": {"unchecked": "\t"}, "gfm": true}
+ *   {"config": {"unchecked": "\t"}, "gfm": true, "name": "ok-tab.md"}
  *
- *   - [␉] List item
- *   - [␉] List item
- *
- * @example
- *   {"name": "not-ok.md", "label": "input", "gfm": true}
- *
- *   - [x] List item
- *   - [X] List item
- *   - [ ] List item
- *   - [␉] List item
+ *   - [␉] Mercury.
+ *   - [␉] Venus.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"label": "input", "gfm": true, "name": "not-ok-default.md"}
  *
- *   2:5: Checked checkboxes should use `x` as a marker
- *   4:5: Unchecked checkboxes should use ` ` as a marker
+ *   - [x] Mercury.
+ *   - [X] Venus.
+ *   - [ ] Earth.
+ *   - [␉] Mars.
+ * @example
+ *   {"label": "output", "gfm": true, "name": "not-ok-default.md"}
+ *
+ *   2:5: Unexpected checked checkbox value `X`, expected `x`
+ *   4:5: Unexpected unchecked checkbox value `\t`, expected ` `
  *
  * @example
- *   {"config": {"unchecked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ *   {"config": "🌍", "label": "output", "name": "not-ok-option.md", "positionless": true}
  *
- *   1:1: Incorrect unchecked checkbox marker `💩`: use either `'\t'`, or `' '`
+ *   1:1: Unexpected value `🌍` for `options`, expected an object or `'consistent'`
  *
  * @example
- *   {"config": {"checked": "💩"}, "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ *   {"config": {"unchecked": "🌍"}, "label": "output", "name": "not-ok-option-unchecked.md", "positionless": true}
  *
- *   1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
+ *   1:1: Unexpected value `🌍` for `options.unchecked`, expected `'\t'`, `' '`, or `'consistent'`
+ *
+ * @example
+ *   {"config": {"checked": "🌍"}, "label": "output", "name": "not-ok-option-checked.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options.checked`, expected `'X'`, `'x'`, or `'consistent'`
  */
 
 /**
@@ -139,7 +147,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintCheckboxCharacterStyle = lintRule(
   {
@@ -156,77 +165,115 @@ const remarkLintCheckboxCharacterStyle = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    /** @type {'X' | 'x' | 'consistent'} */
-    let checked = 'consistent'
-    /** @type {'\x09' | ' ' | 'consistent'} */
-    let unchecked = 'consistent'
+    /** @type {'X' | 'x' | undefined} */
+    let checkedExpected
+    /** @type {VFileMessage | undefined} */
+    let checkedConsistentCause
+    /** @type {'\t' | ' ' | undefined} */
+    let uncheckedExpected
+    /** @type {VFileMessage | undefined} */
+    let uncheckedConsistentCause
 
-    if (options && typeof options === 'object') {
-      checked = options.checked || 'consistent'
-      unchecked = options.unchecked || 'consistent'
-    }
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (typeof options === 'object') {
+      if (options.checked === 'X' || options.checked === 'x') {
+        checkedExpected = options.checked
+      } else if (options.checked && options.checked !== 'consistent') {
+        file.fail(
+          'Unexpected value `' +
+            options.checked +
+            "` for `options.checked`, expected `'X'`, `'x'`, or `'consistent'`"
+        )
+      }
 
-    if (unchecked !== 'consistent' && unchecked !== ' ' && unchecked !== '\t') {
+      if (options.unchecked === '\t' || options.unchecked === ' ') {
+        uncheckedExpected = options.unchecked
+      } else if (options.unchecked && options.unchecked !== 'consistent') {
+        file.fail(
+          'Unexpected value `' +
+            options.unchecked +
+            "` for `options.unchecked`, expected `'\\t'`, `' '`, or `'consistent'`"
+        )
+      }
+    } else {
       file.fail(
-        'Incorrect unchecked checkbox marker `' +
-          unchecked +
-          "`: use either `'\\t'`, or `' '`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected an object or `'consistent'`"
       )
     }
 
-    if (checked !== 'consistent' && checked !== 'x' && checked !== 'X') {
-      file.fail(
-        'Incorrect checked checkbox marker `' +
-          checked +
-          "`: use either `'x'`, or `'X'`"
-      )
-    }
-
-    visit(tree, 'listItem', function (node) {
+    visitParents(tree, 'listItem', function (node, parents) {
       const head = node.children[0]
-      const point = pointStart(head)
+      const headStart = pointStart(head)
 
       // Exit early for items without checkbox.
       // A list item cannot be checked and empty, according to GFM.
       if (
-        !point ||
         !head ||
+        !headStart ||
         typeof node.checked !== 'boolean' ||
-        typeof point.offset !== 'number'
+        typeof headStart.offset !== 'number'
       ) {
         return
       }
 
       // Move back to before `] `.
-      point.offset -= 2
-      point.column -= 2
+      headStart.offset -= 2
+      headStart.column -= 2
 
       // Assume we start with a checkbox, because well, `checked` is set.
       const match = /\[([\t Xx])]/.exec(
-        value.slice(point.offset - 2, point.offset + 1)
+        value.slice(headStart.offset - 2, headStart.offset + 1)
       )
 
       /* c8 ignore next 2 -- failsafe so we don’t crash if there actually isn’t
        * a checkbox. */
       if (!match) return
 
-      const style = node.checked ? checked : unchecked
+      const actual = match[1]
+      const actualDisplay = actual === '\t' ? '\\t' : actual
+      const expected = node.checked ? checkedExpected : uncheckedExpected
+      const expectedDisplay = expected === '\t' ? '\\t' : expected
 
-      if (style === 'consistent') {
+      if (!expected) {
+        const cause = new VFileMessage(
+          (node.checked ? 'C' : 'Unc') +
+            "hecked checkbox style `'" +
+            actualDisplay +
+            "'` first defined for `'consistent'` here",
+          {
+            ancestors: [...parents, node],
+            place: headStart,
+            ruleId: 'checkbox-character-style',
+            source: 'remark-lint'
+          }
+        )
+
         if (node.checked) {
-          // @ts-expect-error: valid marker.
-          checked = match[1]
+          checkedExpected = /** @type {'X' | 'x'} */ (actual)
+          checkedConsistentCause = cause
         } else {
-          // @ts-expect-error: valid marker.
-          unchecked = match[1]
+          uncheckedExpected = /** @type {'\t' | ' '} */ (actual)
+          uncheckedConsistentCause = cause
         }
-      } else if (match[1] !== style) {
+      } else if (actual !== expected) {
         file.message(
-          (node.checked ? 'Checked' : 'Unchecked') +
-            ' checkboxes should use `' +
-            style +
-            '` as a marker',
-          point
+          'Unexpected ' +
+            (node.checked ? '' : 'un') +
+            'checked checkbox value `' +
+            actualDisplay +
+            '`, expected `' +
+            expectedDisplay +
+            '`',
+          {
+            ancestors: [...parents, node],
+            cause: node.checked
+              ? checkedConsistentCause
+              : uncheckedConsistentCause,
+            place: headStart
+          }
         )
       }
     })

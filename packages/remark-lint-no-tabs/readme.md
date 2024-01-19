@@ -183,9 +183,7 @@ uses spaces exclusively for indentation.
 ###### In
 
 ```markdown
-Foo Bar
-
-␠␠␠␠Foo
+␠␠␠␠mercury()
 ```
 
 ###### Out
@@ -197,33 +195,16 @@ No messages.
 ###### In
 
 ```markdown
-␉Here's one before a code block.
+␉mercury()
 
-Here's a tab:␉, and here is another:␉.
-
-And this is in `inline␉code`.
-
->␉This is in a block quote.
-
-*␉And…
-
-␉1.␉in a list.
-
-And this is a tab as the last character.␉
+Venus␉and Earth.
 ```
 
 ###### Out
 
 ```text
-1:1: Use spaces instead of tabs
-3:14: Use spaces instead of tabs
-3:37: Use spaces instead of tabs
-5:23: Use spaces instead of tabs
-7:2: Use spaces instead of tabs
-9:2: Use spaces instead of tabs
-11:1: Use spaces instead of tabs
-11:4: Use spaces instead of tabs
-13:41: Use spaces instead of tabs
+1:1: Unexpected tab (`\t`), expected spaces
+3:6: Unexpected tab (`\t`), expected spaces
 ```
 
 ## Compatibility

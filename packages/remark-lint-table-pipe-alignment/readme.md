@@ -164,9 +164,13 @@ in which case this rule must be turned off.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| A     | B     |
-| ----- | ----- |
-| Alpha | Bravo |
+| Planet  | Mean anomaly (°) |
+| ------- | ---------------: |
+| Mercury |          174 796 |
+
+|Planet|Mean anomaly (°)|
+|------|---------------:|
+|Venus |         50 115 |
 ```
 
 ###### Out
@@ -181,19 +185,21 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| A | B |
-| -- | -- |
-| Alpha | Bravo |
+| Planet | Mean anomaly (°) |
+| - | -: |
+| Mercury | 174 796 |
 ```
 
 ###### Out
 
 ```text
-3:9-3:10: Misaligned table fence
-3:17-3:18: Misaligned table fence
+1:10: Unexpected unaligned cell, expected aligned pipes, add `1` space
+2:5: Unexpected unaligned cell, expected aligned pipes, add `6` spaces (or add `-` to pad alignment row cells)
+2:7: Unexpected unaligned cell, expected aligned pipes, add `14` spaces (or add `-` to pad alignment row cells)
+3:13: Unexpected unaligned cell, expected aligned pipes, add `9` spaces
 ```
 
-##### `ok-empty-columns.md`
+##### `empty.md`
 
 ###### In
 
@@ -201,16 +207,16 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| | B     |   |
-|-| ----- | - |
-| | Bravo |   |
+|         | Satellites |     |
+| ------- | ---------- | --- |
+| Mercury |            |     |
 ```
 
 ###### Out
 
 No messages.
 
-##### `ok-empty-cells.md`
+##### `missing-cells.md`
 
 ###### In
 
@@ -218,14 +224,168 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-|   |     |         |
-| - | --- | ------- |
-| A | Bra | Charlie |
+| Planet  | Symbol | Satellites |
+| ------- | ------ | ---------- |
+| Mercury |
+| Venus   | ♀      |
+| Earth   | ♁      | 1          |
+| Mars    | ♂      | 2          | 19 412 |
 ```
 
 ###### Out
 
 No messages.
+
+##### `alignment.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Planet | Symbol | Satellites | Mean anomaly (°) |
+| - | :- | :-: | -: |
+| Mercury | ☿ | None | 174 796 |
+```
+
+###### Out
+
+```text
+1:10: Unexpected unaligned cell, expected aligned pipes, add `1` space
+2:5: Unexpected unaligned cell, expected aligned pipes, add `6` spaces (or add `-` to pad alignment row cells)
+2:10: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+2:12: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+2:16: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+2:18: Unexpected unaligned cell, expected aligned pipes, add `14` spaces (or add `-` to pad alignment row cells)
+3:15: Unexpected unaligned cell, expected aligned pipes, add `5` spaces
+3:17: Unexpected unaligned cell, expected aligned pipes, add `3` spaces
+3:22: Unexpected unaligned cell, expected aligned pipes, add `3` spaces
+3:24: Unexpected unaligned cell, expected aligned pipes, add `9` spaces
+```
+
+##### `missing-fences.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Planet | Satellites
+-: | -
+Mercury | ☿
+```
+
+###### Out
+
+```text
+1:1: Unexpected unaligned cell, expected aligned pipes, add `1` space
+2:1: Unexpected unaligned cell, expected aligned pipes, add `5` spaces (or add `-` to pad alignment row cells)
+```
+
+##### `trailing-spaces.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Planet |␠␠
+| -: |␠
+```
+
+###### Out
+
+```text
+2:3: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+```
+
+##### `nothing.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+||||
+|-|-|-|
+```
+
+###### Out
+
+```text
+1:2: Unexpected unaligned cell, expected aligned pipes, add `1` space
+1:3: Unexpected unaligned cell, expected aligned pipes, add `1` space
+1:4: Unexpected unaligned cell, expected aligned pipes, add `1` space
+```
+
+##### `more-weirdness.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Mercury
+|-
+
+Venus
+-|
+```
+
+###### Out
+
+```text
+5:2: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+```
+
+##### `containers.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+> | Mercury|
+> | - |
+
+* | Venus|
+  | - |
+
+> * > | Earth|
+>   > | - |
+```
+
+###### Out
+
+```text
+2:5: Unexpected unaligned cell, expected aligned pipes, add `5` spaces (or add `-` to pad alignment row cells)
+5:5: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+8:5: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+```
+
+##### `windows.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Mercury|␍␊| --- |␍␊| None |
+```
+
+###### Out
+
+```text
+2:7: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+3:8: Unexpected unaligned cell, expected aligned pipes, add `2` spaces
+```
 
 ## Compatibility
 

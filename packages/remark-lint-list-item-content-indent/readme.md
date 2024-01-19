@@ -32,6 +32,8 @@ consistent.
 ## What is this?
 
 This package checks the indent of list item content.
+It checks the first thing in a list item and makes sure that all other
+children have the same indent.
 
 ## When should I use this?
 
@@ -151,12 +153,10 @@ Further children should align with it.
 
 ###### In
 
-> 👉 **Note**: this example uses
-> GFM ([`remark-gfm`][github-remark-gfm]).
-
 ```markdown
-1.␠[x] Alpha
-␠␠␠1. Bravo
+1.␠Mercury.
+␠␠␠***
+␠␠␠* Venus.
 ```
 
 ###### Out
@@ -167,18 +167,82 @@ No messages.
 
 ###### In
 
-> 👉 **Note**: this example uses
-> GFM ([`remark-gfm`][github-remark-gfm]).
-
 ```markdown
-1.␠[x] Charlie
-␠␠␠␠1. Delta
+1.␠Mercury.
+␠␠␠␠␠***
+␠␠␠␠* Venus.
 ```
 
 ###### Out
 
 ```text
-2:5: Don’t use mixed indentation for children, remove 1 space
+2:6: Unexpected unaligned list item child, expected to align with first child, remove `2` spaces
+3:5: Unexpected unaligned list item child, expected to align with first child, remove `1` space
+```
+
+##### `ok-more.md`
+
+###### In
+
+```markdown
+*␠␠␠Mercury.
+␠␠␠␠***
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok-more.md`
+
+###### In
+
+```markdown
+*␠␠␠Mercury.
+␠␠␠␠␠␠***
+```
+
+###### Out
+
+```text
+2:7: Unexpected unaligned list item child, expected to align with first child, remove `2` spaces
+```
+
+##### `gfm-nok.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+1.␠[x] Mercury
+␠␠␠␠␠***
+␠␠␠␠* Venus
+```
+
+###### Out
+
+```text
+2:6: Unexpected unaligned list item child, expected to align with first child, remove `2` spaces
+3:5: Unexpected unaligned list item child, expected to align with first child, remove `1` space
+```
+
+##### `initial-blank.md`
+
+###### In
+
+```markdown
+*
+␠␠␠␠␠asd
+
+␠␠***
+```
+
+###### Out
+
+```text
+4:3: Unexpected unaligned list item child, expected to align with first child, add `3` spaces
 ```
 
 ## Compatibility

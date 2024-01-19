@@ -174,20 +174,35 @@ all items must be loose.
 ###### In
 
 ```markdown
-A tight list:
+* Mercury.
+* Venus.
 
--   item 1
--   item 2
--   item 3
++   Mercury and
+    Venus.
 
-A loose list:
++   Earth.
+```
 
--   Wrapped
-    item
+###### Out
 
--   item 2
+No messages.
 
--   item 3
+##### `ok-check-blanks.md`
+
+When configured with `{ checkBlanks: true }`.
+
+###### In
+
+```markdown
+* Mercury.
+* Venus.
+
++   Mercury
+
+    Mercury is the first planet from the Sun and the smallest in the Solar
+    System.
+
++   Earth.
 ```
 
 ###### Out
@@ -199,92 +214,58 @@ No messages.
 ###### In
 
 ```markdown
-A tight list:
+* Mercury.
 
--   Wrapped
-    item
--   item 2
--   item 3
+* Venus.
 
-A loose list:
++   Mercury and
+    Venus.
++   Earth.
 
--   item 1
+*   Mercury.
 
--   item 2
-
--   item 3
+    Mercury is the first planet from the Sun and the smallest in the Solar
+    System.
+*   Earth.
 ```
 
 ###### Out
 
 ```text
-4:9-5:1: Missing new line after list item
-5:11-6:1: Missing new line after list item
-10:11-12:1: Extraneous new line after list item
-12:11-14:1: Extraneous new line after list item
+1:11-3:1: Unexpected `1` blank line between list items, expected `0` blank lines, remove `1` blank line
+6:11-7:1: Unexpected `0` blank lines between list items, expected `1` blank line, add `1` blank line
+12:12-13:1: Unexpected `0` blank lines between list items, expected `1` blank line, add `1` blank line
 ```
 
-##### `ok.md`
+##### `not-ok-blank.md`
 
 When configured with `{ checkBlanks: true }`.
 
 ###### In
 
 ```markdown
-A tight list:
+* Mercury.
 
--   item 1
-    - item 1.A
--   item 2
-    > Block quote
+* Venus.
 
-A loose list:
++   Mercury and
+    Venus.
 
--   item 1
++   Earth.
 
-    - item 1.A
+*   Mercury.
 
--   item 2
-
-    > Block quote
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When configured with `{ checkBlanks: true }`.
-
-###### In
-
-```markdown
-A tight list:
-
--   item 1
-
-    - item 1.A
--   item 2
-
-    > Block quote
--   item 3
-
-A loose list:
-
--   item 1
-    - item 1.A
-
--   item 2
-    > Block quote
+    Mercury is the first planet from the Sun and the smallest in the Solar
+    System.
+*   Earth.
 ```
 
 ###### Out
 
 ```text
-5:15-6:1: Missing new line after list item
-8:18-9:1: Missing new line after list item
-14:15-16:1: Extraneous new line after list item
+1:11-3:1: Unexpected `1` blank line between list items, expected `0` blank lines, remove `1` blank line
+6:11-8:1: Unexpected `1` blank line between list items, expected `0` blank lines, remove `1` blank line
+13:12-14:1: Unexpected `0` blank lines between list items, expected `1` blank line, add `1` blank line
 ```
 
 ## Compatibility

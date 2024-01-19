@@ -203,21 +203,20 @@ by default.
 ###### In
 
 ```markdown
-*␠List
-␠␠item.
+*␠Mercury.
+*␠Venus.
 
-Paragraph.
+111.␠Earth
+␠␠␠␠␠and Mars.
 
-11.␠List
-␠␠␠␠item.
+*␠**Jupiter**.
 
-Paragraph.
+␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠System.
 
-*␠List
-␠␠item.
+*␠Saturn.
 
-*␠List
-␠␠item.
+␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
 ```
 
 ###### Out
@@ -231,112 +230,25 @@ When configured with `'mixed'`.
 ###### In
 
 ```markdown
-*␠List item.
+*␠Mercury.
+*␠Venus.
 
-Paragraph.
+111.␠Earth
+␠␠␠␠␠and Mars.
 
-11.␠List item
+*␠␠␠**Jupiter**.
 
-Paragraph.
+␠␠␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠␠␠System.
 
-*␠␠␠List
-␠␠␠␠item.
+*␠␠␠Saturn.
 
-*␠␠␠List
-␠␠␠␠item.
+␠␠␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
 ```
 
 ###### Out
 
 No messages.
-
-##### `ok.md`
-
-When configured with `'one'`.
-
-###### In
-
-```markdown
-*␠List item.
-
-Paragraph.
-
-11.␠List item
-
-Paragraph.
-
-*␠List
-␠␠item.
-
-*␠List
-␠␠item.
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'tab'`.
-
-###### In
-
-```markdown
-*␠␠␠List
-␠␠␠␠item.
-
-Paragraph.
-
-11.␠List
-␠␠␠␠item.
-
-Paragraph.
-
-*␠␠␠List
-␠␠␠␠item.
-
-*␠␠␠List
-␠␠␠␠item.
-```
-
-###### Out
-
-No messages.
-
-##### `not-ok.md`
-
-When configured with `'one'`.
-
-###### In
-
-```markdown
-*␠␠␠List
-␠␠␠␠item.
-```
-
-###### Out
-
-```text
-1:5: Incorrect list-item indent: remove 2 spaces
-```
-
-##### `not-ok.md`
-
-When configured with `'tab'`.
-
-###### In
-
-```markdown
-*␠List
-␠␠item.
-```
-
-###### Out
-
-```text
-1:3: Incorrect list-item indent: add 2 spaces
-```
 
 ##### `not-ok.md`
 
@@ -345,24 +257,249 @@ When configured with `'mixed'`.
 ###### In
 
 ```markdown
-*␠␠␠List item.
+*␠␠␠Mercury.
+*␠␠␠Venus.
+
+111.␠␠␠␠Earth
+␠␠␠␠␠␠␠␠and Mars.
+
+*␠**Jupiter**.
+
+␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠System.
+
+*␠Saturn.
+
+␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
 ```
 
 ###### Out
 
 ```text
-1:5: Incorrect list-item indent: remove 2 spaces
+1:5: Unexpected `3` spaces between list item marker and content in tight list, expected `1` space, remove `2` spaces
+2:5: Unexpected `3` spaces between list item marker and content in tight list, expected `1` space, remove `2` spaces
+4:9: Unexpected `4` spaces between list item marker and content in tight list, expected `1` space, remove `3` spaces
+7:3: Unexpected `1` space between list item marker and content in loose list, expected `3` spaces, add `2` spaces
+12:3: Unexpected `1` space between list item marker and content in loose list, expected `3` spaces, add `2` spaces
+```
+
+##### `ok.md`
+
+When configured with `'one'`.
+
+###### In
+
+```markdown
+*␠Mercury.
+*␠Venus.
+
+111.␠Earth
+␠␠␠␠␠and Mars.
+
+*␠**Jupiter**.
+
+␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠System.
+
+*␠Saturn.
+
+␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'one'`.
+
+###### In
+
+```markdown
+*␠␠␠Mercury.
+*␠␠␠Venus.
+
+111.␠␠␠␠Earth
+␠␠␠␠␠␠␠␠and Mars.
+
+*␠␠␠**Jupiter**.
+
+␠␠␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠␠␠System.
+
+*␠␠␠Saturn.
+
+␠␠␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+```
+
+###### Out
+
+```text
+1:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+2:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+4:9: Unexpected `4` spaces between list item marker and content, expected `1` space, remove `3` spaces
+7:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+12:5: Unexpected `3` spaces between list item marker and content, expected `1` space, remove `2` spaces
+```
+
+##### `ok.md`
+
+When configured with `'tab'`.
+
+###### In
+
+```markdown
+*␠␠␠Mercury.
+*␠␠␠Venus.
+
+111.␠␠␠␠Earth
+␠␠␠␠␠␠␠␠and Mars.
+
+*␠␠␠**Jupiter**.
+
+␠␠␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠␠␠System.
+
+*␠␠␠Saturn.
+
+␠␠␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+When configured with `'tab'`.
+
+###### In
+
+```markdown
+*␠Mercury.
+*␠Venus.
+
+111.␠Earth
+␠␠␠␠␠and Mars.
+
+*␠**Jupiter**.
+
+␠␠Jupiter is the fifth planet from the Sun and the largest in the Solar
+␠␠System.
+
+*␠Saturn.
+
+␠␠Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.
+```
+
+###### Out
+
+```text
+1:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
+2:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
+4:6: Unexpected `1` space between list item marker and content, expected `4` spaces, add `3` spaces
+7:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
+12:3: Unexpected `1` space between list item marker and content, expected `3` spaces, add `2` spaces
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect list-item indent style `💩`: use either `'mixed'`, `'one'`, or `'tab'`
+1:1: Unexpected value `🌍` for `options`, expected `'mixed'`, `'one'`, or `'tab'`
 ```
+
+##### `gfm.md`
+
+When configured with `'mixed'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+*␠[x] Mercury.
+
+1.␠␠[ ] Venus.
+
+2.␠␠[ ] Earth.
+```
+
+###### Out
+
+No messages.
+
+##### `gfm.md`
+
+When configured with `'one'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+*␠[x] Mercury.
+
+1.␠[ ] Venus.
+
+2.␠[ ] Earth.
+```
+
+###### Out
+
+No messages.
+
+##### `gfm.md`
+
+When configured with `'tab'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+*␠␠␠[x] Mercury.
+
+1.␠␠[ ] Venus.
+
+2.␠␠[ ] Earth.
+```
+
+###### Out
+
+No messages.
+
+##### `loose-tight.md`
+
+When configured with `'mixed'`.
+
+###### In
+
+```markdown
+Loose lists have blank lines between items:
+
+*␠␠␠Mercury.
+
+*␠␠␠Venus.
+
+…or between children of items:
+
+1.␠␠Earth.
+
+␠␠␠␠Earth is the third planet from the Sun and the only astronomical
+␠␠␠␠object known to harbor life.
+```
+
+###### Out
+
+No messages.
 
 ## Compatibility
 
@@ -434,6 +571,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

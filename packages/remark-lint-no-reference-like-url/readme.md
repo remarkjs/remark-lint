@@ -145,9 +145,9 @@ then a link `[text](alpha)` should instead have been `[text][alpha]`.
 ###### In
 
 ```markdown
-[Alpha](http://example.com).
+[**Mercury**][mercury] is the first planet from the sun.
 
-[bravo]: https://example.com
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
@@ -159,15 +159,31 @@ No messages.
 ###### In
 
 ```markdown
-[Charlie](delta).
+[**Mercury**](mercury) is the first planet from the sun.
 
-[delta]: https://example.com
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
 
 ```text
-1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
+1:1-1:23: Unexpected resource link (`[text](url)`) with URL that matches a definition identifier (as `mercury`), expected reference (`[text][id]`)
+```
+
+##### `image.md`
+
+###### In
+
+```markdown
+![**Mercury** is a planet](mercury).
+
+[mercury]: https://example.com/mercury.jpg
+```
+
+###### Out
+
+```text
+1:1-1:36: Unexpected resource image (`![text](url)`) with URL that matches a definition identifier (as `mercury`), expected reference (`![text][id]`)
 ```
 
 ## Compatibility

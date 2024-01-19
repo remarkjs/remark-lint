@@ -1257,6 +1257,10 @@ function generateReadmeExample(state) {
       'https://github.com/remarkjs/remark-directive'
     )
     state.urls.set(
+      'github-remark-frontmatter',
+      'https://github.com/remarkjs/remark-frontmatter'
+    )
+    state.urls.set(
       'github-remark-gfm',
       'https://github.com/remarkjs/remark-gfm'
     )
@@ -1291,6 +1295,23 @@ function generateReadmeExample(state) {
             identifier: 'github-remark-directive',
             referenceType: 'full',
             children: [{type: 'inlineCode', value: 'remark-directive'}]
+          },
+          {type: 'text', value: ')'}
+        )
+      }
+
+      if (check.frontmatter) {
+        if (phrasing.length > 0) {
+          phrasing.push({type: 'text', value: ',\n'})
+        }
+
+        phrasing.push(
+          {type: 'text', value: 'frontmatter ('},
+          {
+            type: 'linkReference',
+            identifier: 'github-remark-frontmatter',
+            referenceType: 'full',
+            children: [{type: 'inlineCode', value: 'remark-frontmatter'}]
           },
           {type: 'text', value: ')'}
         )

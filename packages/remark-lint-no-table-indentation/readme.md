@@ -156,11 +156,9 @@ So it’s recommended to not indent tables and to turn this rule on.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-Paragraph.
-
-| A     | B     |
-| ----- | ----- |
-| Alpha | Bravo |
+| Planet  | Mean anomaly (°) |
+| ------- | ---------------: |
+| Mercury |          174 796 |
 ```
 
 ###### Out
@@ -175,22 +173,20 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-Paragraph.
-
-␠␠␠| A     | B     |
-␠␠␠| ----- | ----- |
-␠␠␠| Alpha | Bravo |
+␠| Planet  | Mean anomaly (°) |
+␠␠| ------- | ---------------: |
+␠␠␠| Mercury |          174 796 |
 ```
 
 ###### Out
 
 ```text
-3:4: Do not indent table rows
-4:4: Do not indent table rows
-5:4: Do not indent table rows
+1:2: Unexpected `1` extra space before table row, remove `1` space
+2:3: Unexpected `2` extra spaces before table row, remove `2` spaces
+3:4: Unexpected `3` extra spaces before table row, remove `3` spaces
 ```
 
-##### `not-ok-blockquote.md`
+##### `blockquote.md`
 
 ###### In
 
@@ -198,17 +194,17 @@ Paragraph.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
->␠␠| A |
->␠| - |
+>␠| Planet  |
+>␠␠| ------- |
 ```
 
 ###### Out
 
 ```text
-1:4: Do not indent table rows
+2:4: Unexpected `1` extra space before table row, remove `1` space
 ```
 
-##### `not-ok-list.md`
+##### `list.md`
 
 ###### In
 
@@ -216,16 +212,14 @@ Paragraph.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
--␠␠␠paragraph
-
-␠␠␠␠␠| A |
-␠␠␠␠| - |
+*␠| Planet  |
+␠␠␠| ------- |
 ```
 
 ###### Out
 
 ```text
-3:6: Do not indent table rows
+2:4: Unexpected `1` extra space before table row, remove `1` space
 ```
 
 ## Compatibility

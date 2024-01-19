@@ -68,71 +68,70 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
- *   {"name": "ok.md"}
+ *   {"name": "ok-indented.md"}
  *
  *   Indented code blocks are not affected by this rule:
  *
- *       bravo()
+ *       mercury()
  *
  * @example
- *   {"name": "ok.md", "config": "`"}
+ *   {"config": "`", "name": "ok-tick.md"}
  *
- *   ```alpha
- *   bravo()
+ *   ```javascript
+ *   mercury()
  *   ```
  *
  *   ```
- *   charlie()
+ *   venus()
  *   ```
  *
  * @example
- *   {"name": "ok.md", "config": "~"}
+ *   {"config": "~", "name": "ok-tilde.md"}
  *
- *   ~~~alpha
- *   bravo()
+ *   ~~~javascript
+ *   mercury()
  *   ~~~
  *
  *   ~~~
- *   charlie()
+ *   venus()
  *   ~~~
  *
  * @example
- *   {"name": "not-ok-consistent-tick.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok-consistent-tick.md"}
  *
- *   ```alpha
- *   bravo()
+ *   ```javascript
+ *   mercury()
  *   ```
  *
  *   ~~~
- *   charlie()
+ *   venus()
  *   ~~~
+ * @example
+ *   {"label": "output", "name": "not-ok-consistent-tick.md"}
+ *
+ *   5:1-7:4: Unexpected fenced code marker `~`, expected `` ` ``
  *
  * @example
- *   {"name": "not-ok-consistent-tick.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok-consistent-tilde.md"}
  *
- *   5:1-7:4: Fenced code should use `` ` `` as a marker
- *
- * @example
- *   {"name": "not-ok-consistent-tilde.md", "label": "input"}
- *
- *   ~~~alpha
- *   bravo()
+ *   ~~~javascript
+ *   mercury()
  *   ~~~
  *
  *   ```
- *   charlie()
+ *   venus()
  *   ```
+ * @example
+ *   {"label": "output", "name": "not-ok-consistent-tilde.md"}
+ *
+ *   5:1-7:4: Unexpected fenced code marker `` ` ``, expected `~`
  *
  * @example
- *   {"name": "not-ok-consistent-tilde.md", "label": "output"}
+ *   {"config": "🌍", "label": "output", "name": "not-ok-incorrect.md", "positionless": true}
  *
- *   5:1-7:4: Fenced code should use `~` as a marker
- *
- * @example
- *   {"name": "not-ok-incorrect.md", "config": "💩", "label": "output", "positionless": true}
- *
- *   1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
+ *   1:1: Unexpected value `🌍` for `options`, expected ``'`'``, `'~'`, or `'consistent'`
  */
 
 /**
@@ -149,7 +148,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintFencedCodeMarker = lintRule(
   {
@@ -165,38 +165,59 @@ const remarkLintFencedCodeMarker = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    let option = options || 'consistent'
-    const contents = String(file)
+    const value = String(file)
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Marker | undefined} */
+    let expected
 
-    if (option !== 'consistent' && option !== '~' && option !== '`') {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === '`' || options === '~') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect fenced code marker `' +
-          option +
-          "`: use either `'consistent'`, `` '`' ``, or `'~'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected ``'`'``, `'~'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'code', function (node) {
+    visitParents(tree, 'code', function (node, parents) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {
-        const marker = contents
+        const actual = value
           .slice(start.offset, start.offset + 4)
           .replace(/^\s+/, '')
           .charAt(0)
 
         // Ignore unfenced code blocks.
-        if (marker === '`' || marker === '~') {
-          if (option === 'consistent') {
-            option = marker
-          } else if (marker !== option) {
+        if (actual !== '`' && actual !== '~') return
+
+        if (expected) {
+          if (actual !== expected) {
             file.message(
-              'Fenced code should use `' +
-                (option === '~' ? option : '` ` `') +
-                '` as a marker',
-              node
+              'Unexpected fenced code marker ' +
+                (actual === '~' ? '`~`' : '`` ` ``') +
+                ', expected ' +
+                (expected === '~' ? '`~`' : '`` ` ``'),
+              {ancestors: [...parents, node], cause, place: node.position}
             )
           }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            'Fenced code marker style ' +
+              (actual === '~' ? "`'~'`" : "``'`'``") +
+              " first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place: node.position,
+              ruleId: 'fenced-code-marker',
+              source: 'remark-lint'
+            }
+          )
         }
       }
     })

@@ -143,9 +143,9 @@ Unused definitions do not contribute anything, so they can be removed.
 ###### In
 
 ```markdown
-[foo][]
+[Mercury][]
 
-[foo]: https://example.com
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
@@ -157,13 +157,13 @@ No messages.
 ###### In
 
 ```markdown
-[bar]: https://example.com
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
 
 ```text
-1:1-1:27: Found unused definition
+1:1-1:40: Unexpected unused definition, expected no definition or one or more references to `mercury`
 ```
 
 ##### `gfm.md`
@@ -174,16 +174,20 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-a[^x].
+Mercury[^mercury] is a planet.
 
-[^x]: ok
-[^y]: not ok
+[^Mercury]:
+    **Mercury** is the first planet from the Sun and the smallest
+    in the Solar System.
+[^Venus]:
+    **Venus** is the second planet from
+    the Sun.
 ```
 
 ###### Out
 
 ```text
-4:1-4:13: Found unused footnote definition
+6:1-8:13: Unexpected unused footnote definition, expected no definition or one or more footnote references to `venus`
 ```
 
 ## Compatibility

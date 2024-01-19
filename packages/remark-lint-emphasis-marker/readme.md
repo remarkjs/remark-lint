@@ -184,89 +184,88 @@ Pass `emphasis: '_'` to always use underscores.
 
 ## Examples
 
-##### `ok.md`
+##### `ok-asterisk.md`
 
 When configured with `'*'`.
 
 ###### In
 
 ```markdown
-*foo*
+*Mercury*.
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-asterisk.md`
 
 When configured with `'*'`.
 
 ###### In
 
 ```markdown
-_foo_
+_Mercury_.
 ```
 
 ###### Out
 
 ```text
-1:1-1:6: Emphasis should use `*` as a marker
+1:1-1:10: Unexpected emphasis marker `_`, expected `*`
 ```
 
-##### `ok.md`
+##### `ok-underscore.md`
 
 When configured with `'_'`.
 
 ###### In
 
 ```markdown
-_foo_
+_Mercury_.
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-underscore.md`
 
 When configured with `'_'`.
 
 ###### In
 
 ```markdown
-*foo*
+*Mercury*.
 ```
 
 ###### Out
 
 ```text
-1:1-1:6: Emphasis should use `_` as a marker
+1:1-1:10: Unexpected emphasis marker `*`, expected `_`
 ```
 
-##### `not-ok.md`
+##### `not-ok-consistent.md`
 
 ###### In
 
 ```markdown
-*foo*
-_bar_
+*Mercury* and _Venus_.
 ```
 
 ###### Out
 
 ```text
-2:1-2:6: Emphasis should use `*` as a marker
+1:15-1:22: Unexpected emphasis marker `_`, expected `*`
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+1:1: Unexpected value `🌍` for `options`, expected `'*'`, `'_'`, or `'consistent'`
 ```
 
 ## Compatibility

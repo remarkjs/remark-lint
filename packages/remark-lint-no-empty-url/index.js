@@ -38,32 +38,31 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [alpha](http://bravo.com).
+ *   [Mercury](http://example.com/mercury/).
  *
- *   ![charlie](http://delta.com/echo.png "foxtrot").
+ *   ![Venus](http://example.com/venus/ "Go to Venus").
  *
- *   [golf][hotel].
- *
- *   [india]: http://juliett.com
+ *   [earth]: http://example.com/earth/
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   [alpha]().
+ *   [Mercury]().
  *
- *   ![bravo](#).
+ *   ![Venus](#).
  *
- *   [charlie]: <>
+ *   [earth]: <>
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1-1:10: Don’t use links without URL
- *   3:1-3:12: Don’t use images without URL
- *   5:1-5:14: Don’t use definitions without URL
+ *   1:1-1:12: Unexpected empty link URL referencing the current document, expected URL
+ *   3:1-3:12: Unexpected empty image URL referencing the current document, expected URL
+ *   5:1-5:12: Unexpected empty definition URL referencing the current document, expected URL
  */
 
 /**
@@ -71,8 +70,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoEmptyUrl = lintRule(
   {
@@ -86,17 +84,20 @@ const remarkLintNoEmptyUrl = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, function (node) {
-      const place = position(node)
-
+    visitParents(tree, function (node, parents) {
       if (
         (node.type === 'definition' ||
           node.type === 'image' ||
           node.type === 'link') &&
-        place &&
+        node.position &&
         (!node.url || node.url === '#' || node.url === '?')
       ) {
-        file.message('Don’t use ' + node.type + 's without URL', place)
+        file.message(
+          'Unexpected empty ' +
+            node.type +
+            ' URL referencing the current document, expected URL',
+          {ancestors: [...parents, node], place: node.position}
+        )
       }
     })
   }

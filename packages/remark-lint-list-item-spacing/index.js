@@ -65,97 +65,77 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   A tight list:
+ *   * Mercury.
+ *   * Venus.
  *
- *   -   item 1
- *   -   item 2
- *   -   item 3
+ *   +   Mercury and
+ *       Venus.
  *
- *   A loose list:
- *
- *   -   Wrapped
- *       item
- *
- *   -   item 2
- *
- *   -   item 3
+ *   +   Earth.
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"config": {"checkBlanks": true}, "name": "ok-check-blanks.md"}
  *
- *   A tight list:
+ *   * Mercury.
+ *   * Venus.
  *
- *   -   Wrapped
- *       item
- *   -   item 2
- *   -   item 3
+ *   +   Mercury
  *
- *   A loose list:
+ *       Mercury is the first planet from the Sun and the smallest in the Solar
+ *       System.
  *
- *   -   item 1
- *
- *   -   item 2
- *
- *   -   item 3
+ *   +   Earth.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   4:9-5:1: Missing new line after list item
- *   5:11-6:1: Missing new line after list item
- *   10:11-12:1: Extraneous new line after list item
- *   12:11-14:1: Extraneous new line after list item
+ *   * Mercury.
+ *
+ *   * Venus.
+ *
+ *   +   Mercury and
+ *       Venus.
+ *   +   Earth.
+ *
+ *   *   Mercury.
+ *
+ *       Mercury is the first planet from the Sun and the smallest in the Solar
+ *       System.
+ *   *   Earth.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:11-3:1: Unexpected `1` blank line between list items, expected `0` blank lines, remove `1` blank line
+ *   6:11-7:1: Unexpected `0` blank lines between list items, expected `1` blank line, add `1` blank line
+ *   12:12-13:1: Unexpected `0` blank lines between list items, expected `1` blank line, add `1` blank line
  *
  * @example
- *   {"name": "ok.md", "config": {"checkBlanks": true}}
+ *   {"config": {"checkBlanks": true}, "label": "input", "name": "not-ok-blank.md"}
  *
- *   A tight list:
+ *   * Mercury.
  *
- *   -   item 1
- *       - item 1.A
- *   -   item 2
- *       > Block quote
+ *   * Venus.
  *
- *   A loose list:
+ *   +   Mercury and
+ *       Venus.
  *
- *   -   item 1
+ *   +   Earth.
  *
- *       - item 1.A
+ *   *   Mercury.
  *
- *   -   item 2
- *
- *       > Block quote
- *
+ *       Mercury is the first planet from the Sun and the smallest in the Solar
+ *       System.
+ *   *   Earth.
  * @example
- *   {"name": "not-ok.md", "config": {"checkBlanks": true}, "label": "input"}
+ *   {"config": {"checkBlanks": true}, "label": "output", "name": "not-ok-blank.md"}
  *
- *   A tight list:
- *
- *   -   item 1
- *
- *       - item 1.A
- *   -   item 2
- *
- *       > Block quote
- *   -   item 3
- *
- *   A loose list:
- *
- *   -   item 1
- *       - item 1.A
- *
- *   -   item 2
- *       > Block quote
- *
- * @example
- *   {"name": "not-ok.md", "config": {"checkBlanks": true}, "label": "output"}
- *
- *   5:15-6:1: Missing new line after list item
- *   8:18-9:1: Missing new line after list item
- *   14:15-16:1: Extraneous new line after list item
+ *   1:11-3:1: Unexpected `1` blank line between list items, expected `0` blank lines, remove `1` blank line
+ *   6:11-8:1: Unexpected `1` blank line between list items, expected `0` blank lines, remove `1` blank line
+ *   13:12-14:1: Unexpected `0` blank lines between list items, expected `1` blank line, add `1` blank line
  */
 
 /**
@@ -171,9 +151,11 @@
  *   preference (default: `false`).
  */
 
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 /** @type {Readonly<Options>} */
 const emptyOptions = {}
@@ -193,82 +175,83 @@ const remarkLintListItemSpacing = lintRule(
    */
   function (tree, file, options) {
     const settings = options || emptyOptions
+    // To do: change options. Maybe to `Style = 'markdown' | 'markdown-style-guide'`?
     const checkBlanks = settings.checkBlanks || false
-    const infer = checkBlanks ? blanksBetween : multiline
 
-    visit(tree, 'list', function (node) {
-      let index = -1
-      let anySpaced = false
+    visitParents(tree, 'list', function (list, parents) {
+      /** @type {VFileMessage | undefined} */
+      let spacedCause
 
-      while (++index < node.children.length) {
-        const spaced = infer(node.children[index])
+      for (const item of list.children) {
+        /** @type {boolean | null | undefined} */
+        let spaced = false
+
+        if (checkBlanks) {
+          spaced = item.spread
+        } else {
+          const tail = item.children.at(-1)
+          const end = pointEnd(tail)
+          const start = pointStart(item)
+          spaced = end && start && end.line - start.line > 0
+        }
 
         if (spaced) {
-          anySpaced = true
+          spacedCause = new VFileMessage(
+            'Spaced list item first defined here',
+            {
+              ancestors: [...parents, list, item],
+              place: item.position,
+              ruleId: 'list-item-spacing',
+              source: 'remark-lint'
+            }
+          )
           break
         }
       }
 
-      index = 0 // Skip first.
+      const expected = spacedCause ? 1 : 0
+      /** @type {ListItem | undefined} */
+      let previous
 
-      while (++index < node.children.length) {
-        const previous = node.children[index - 1]
-        const current = node.children[index]
+      for (const item of list.children) {
         const previousEnd = pointEnd(previous)
-        const start = pointStart(current)
+        const itemStart = pointStart(item)
 
-        if (previousEnd && start) {
-          const spaced = start.line - previousEnd.line > 1
+        if (previousEnd && itemStart) {
+          const actual = itemStart.line - previousEnd.line - 1
 
-          if (spaced !== anySpaced) {
+          if (actual !== expected) {
+            const difference = expected - actual
+            const differenceAbsolute = Math.abs(difference)
+
             file.message(
-              anySpaced
-                ? 'Missing new line after list item'
-                : 'Extraneous new line after list item',
-              {start: previousEnd, end: start}
+              'Unexpected `' +
+                actual +
+                '` blank ' +
+                pluralize('line', actual) +
+                ' between list items, expected `' +
+                expected +
+                '` blank ' +
+                pluralize('line', expected) +
+                ', ' +
+                (difference > 0 ? 'add' : 'remove') +
+                ' `' +
+                differenceAbsolute +
+                '` blank ' +
+                pluralize('line', differenceAbsolute),
+              {
+                ancestors: [...parents, list, item],
+                cause: spacedCause,
+                place: {start: previousEnd, end: itemStart}
+              }
             )
           }
         }
+
+        previous = item
       }
     })
   }
 )
 
 export default remarkLintListItemSpacing
-
-/**
- * @param {ListItem} node
- *   Item.
- * @returns {boolean}
- *   Whether there is a blank line between one of the children.
- */
-function blanksBetween(node) {
-  let index = 0 // Skip first.
-
-  while (++index < node.children.length) {
-    const previousEnd = pointEnd(node.children[index - 1])
-    const start = pointStart(node.children[index])
-
-    // Note: all children in `listItem`s are flow.
-    if (start && previousEnd && start.line - previousEnd.line > 1) {
-      return true
-    }
-  }
-
-  return false
-}
-
-/**
- * @param {ListItem} node
- *   Item.
- * @returns {boolean}
- *   Whether `node` spans multiple lines.
- */
-function multiline(node) {
-  const head = node.children[0]
-  const tail = node.children[node.children.length - 1]
-  const end = pointEnd(tail)
-  const start = pointStart(head)
-
-  return Boolean(end && start && end.line - start.line > 0)
-}

@@ -193,7 +193,7 @@ When configured with `{ allowExtensionless: false }`.
 ###### Out
 
 ```text
-1:1: Incorrect extension: use `mdx` or `md`
+1:1: Unexpected missing file extension, expected `mdx` or `md`
 ```
 
 ##### `readme.mkd`
@@ -201,7 +201,7 @@ When configured with `{ allowExtensionless: false }`.
 ###### Out
 
 ```text
-1:1: Incorrect extension: use `mdx` or `md`
+1:1: Unexpected file extension `mkd`, expected `mdx` or `md`
 ```
 
 ##### `readme.mkd`
@@ -212,13 +212,21 @@ When configured with `'mkd'`.
 
 No messages.
 
-##### `readme.mkd`
+##### `readme.css`
 
-When configured with `[ 'mkd' ]`.
+When configured with `[
+  'markdown', 'md',
+  'mdown',    'mdwn',
+  'mdx',      'mkd',
+  'mkdn',     'mkdown',
+  'ron'
+]`.
 
 ###### Out
 
-No messages.
+```text
+1:1: Unexpected file extension `css`, expected `markdown`, `md`, `mdown`, …
+```
 
 ## Compatibility
 

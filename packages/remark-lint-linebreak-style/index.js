@@ -55,7 +55,7 @@
  *
  * ## Fix
  *
- * [`remark-stringify`][github-remark-stringify] always uses Unix linebreaks.
+ * [`remark-stringify`][github-remark-stringify] always uses Unix line endings.
  *
  * [api-options]: #options
  * [api-remark-lint-linebreak-style]: #unifieduseremarklintlinebreakstyle-options
@@ -67,35 +67,56 @@
  * @author Titus Wormer
  * @copyright 2017 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok-consistent-as-windows.md"}
  *
- *   Alpha␍␊Bravo␍␊
+ *   Mercury␍␊and␍␊Venus.
  *
  * @example
  *   {"name": "ok-consistent-as-unix.md"}
  *
- *   Alpha␊Bravo␊
+ *   Mercury␊and␊Venus.
  *
  * @example
- *   {"name": "not-ok-unix.md", "label": "input", "config": "unix", "positionless": true}
+ *   {"config": "unix", "label": "input", "name": "not-ok-unix.md", "positionless": true}
  *
- *   Alpha␍␊
- *
- * @example
- *   {"name": "not-ok-unix.md", "label": "output", "config": "unix"}
- *
- *   1:7: Expected linebreaks to be unix (`\n`), not windows (`\r\n`)
+ *   Mercury.␍␊
  *
  * @example
- *   {"name": "not-ok-windows.md", "label": "input", "config": "windows", "positionless": true}
+ *   {"config": "unix", "label": "output", "name": "not-ok-unix.md", "positionless": true}
  *
- *   Alpha␊
+ *   1:10: Unexpected windows (`\r\n`) line ending, expected unix (`\n`) line endings
  *
  * @example
- *   {"name": "not-ok-windows.md", "label": "output", "config": "windows"}
+ *   {"config": "windows", "label": "input", "name": "not-ok-windows.md", "positionless": true}
  *
- *   1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
+ *   Mercury.␊
+ *
+ * @example
+ *   {"config": "windows", "label": "output", "name": "not-ok-windows.md", "positionless": true}
+ *
+ *   1:9: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok-options.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'unix'`, `'windows'`, or `'consistent'`
+ *
+ * @example
+ *   {"config": "windows", "label": "input", "name": "many.md", "positionless": true}
+ *
+ *   Mercury.␊Venus.␊Earth.␊Mars.␊Jupiter.␊Saturn.␊Uranus.␊Neptune.␊
+ *
+ * @example
+ *   {"config": "windows", "label": "output", "name": "many.md", "positionless": true}
+ *
+ *   1:9: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+ *   2:7: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+ *   3:7: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+ *   4:6: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+ *   5:9: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+ *   6:8: Unexpected large number of incorrect line endings, stopping
  */
 
 /**
@@ -110,10 +131,12 @@
  *   Styles.
  */
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
+import {VFileMessage} from 'vfile-message'
 
-const escaped = {unix: '\\n', windows: '\\r\\n'}
+const max = 5
 
 const remarkLintLinebreakStyle = lintRule(
   {
@@ -129,28 +152,60 @@ const remarkLintLinebreakStyle = lintRule(
    *   Nothing.
    */
   function (_, file, options) {
-    let option = options || 'consistent'
     const value = String(file)
     const toPoint = location(value).toPoint
     let index = value.indexOf('\n')
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Style | undefined} */
+    let expected
+
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === 'unix' || options === 'windows') {
+      expected = options
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'unix'`, `'windows'`, or `'consistent'`"
+      )
+    }
+
+    let messages = 0
 
     while (index !== -1) {
-      const type = value.charAt(index - 1) === '\r' ? 'windows' : 'unix'
+      const actual = value.charAt(index - 1) === '\r' ? 'windows' : 'unix'
+      const place = toPoint(index)
+      assert(place) // Always defined.
 
-      if (option === 'consistent') {
-        option = type
-      } else if (option !== type) {
-        file.message(
-          'Expected linebreaks to be ' +
-            option +
-            ' (`' +
-            escaped[option] +
-            '`), not ' +
-            type +
-            ' (`' +
-            escaped[type] +
-            '`)',
-          toPoint(index)
+      if (expected) {
+        if (expected !== actual) {
+          if (messages === max) {
+            file.info(
+              'Unexpected large number of incorrect line endings, stopping',
+              {place}
+            )
+            return
+          }
+
+          file.message(
+            'Unexpected ' +
+              displayStyle(actual) +
+              ' line ending, expected ' +
+              displayStyle(expected) +
+              ' line endings',
+            {cause, place}
+          )
+          messages++
+        }
+      } else {
+        expected = actual
+        cause = new VFileMessage(
+          'Line ending style ' +
+            displayStyle(expected) +
+            " first defined for `'consistent'` here",
+          {place, ruleId: 'linebreak-style', source: 'remark-lint'}
         )
       }
 
@@ -160,3 +215,13 @@ const remarkLintLinebreakStyle = lintRule(
 )
 
 export default remarkLintLinebreakStyle
+
+/**
+ * @param {Style} style
+ *   Style.
+ * @returns {string}
+ *   Display.
+ */
+function displayStyle(style) {
+  return style === 'unix' ? 'unix (`\\n`)' : 'windows (`\\r\\n`)'
+}

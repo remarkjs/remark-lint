@@ -34,45 +34,50 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [foo]: bar
- *   [baz]: qux
+ *   [mercury]: https://example.com/mercury/
+ *   [venus]: https://example.com/venus/
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   [foo]: bar
- *   [foo]: qux
- *
+ *   [mercury]: https://example.com/mercury/
+ *   [mercury]: https://example.com/venus/
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   2:1-2:11: Do not use definitions with the same identifier (1:1)
+ *   2:1-2:38: Unexpected definition with an already defined identifier (`mercury`), expected unique identifiers
  *
  * @example
  *   {"gfm": true, "label": "input", "name": "gfm.md"}
  *
- *   GFM footnote definitions are checked too[^a].
+ *   Mercury[^mercury].
  *
- *   [^a]: alpha
- *   [^a]: bravo
+ *   [^mercury]:
+ *     Mercury is the first planet from the Sun and the smallest in the Solar
+ *     System.
+ *
+ *   [^mercury]:
+ *     Venus is the second planet from the Sun.
  *
  * @example
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
- *   4:1-4:12: Do not use footnote definitions with the same identifier (3:1)
+ *   7:1-7:12: Unexpected footnote definition with an already defined identifier (`mercury`), expected unique identifiers
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
-import {pointStart, position} from 'unist-util-position'
-import {stringifyPosition} from 'unist-util-stringify-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 /** @type {ReadonlyArray<never>} */
 const empty = []
@@ -89,14 +94,12 @@ const remarkLintNoDuplicateDefinitions = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Map<string, string>} */
+    /** @type {Map<string, Array<Nodes>>} */
     const definitions = new Map()
-    /** @type {Map<string, string>} */
+    /** @type {Map<string, Array<Nodes>>} */
     const footnoteDefinitions = new Map()
 
-    visit(tree, function (node) {
-      const place = position(node)
-      const start = pointStart(node)
+    visitParents(tree, function (node, parents) {
       const [map, identifier] =
         node.type === 'definition'
           ? [definitions, node.identifier]
@@ -104,21 +107,34 @@ const remarkLintNoDuplicateDefinitions = lintRule(
             ? [footnoteDefinitions, node.identifier]
             : empty
 
-      if (map && identifier && place && start) {
-        const duplicate = map.get(identifier)
+      if (map && identifier && node.position) {
+        const ancestors = [...parents, node]
+        const duplicateAncestors = map.get(identifier)
 
-        if (duplicate) {
+        if (duplicateAncestors) {
+          const duplicate = duplicateAncestors.at(-1)
+          assert(duplicate) // Always defined.
+
           file.message(
-            'Do not use' +
-              (node.type === 'footnoteDefinition' ? ' footnote' : '') +
-              ' definitions with the same identifier (' +
-              duplicate +
-              ')',
-            place
+            'Unexpected ' +
+              (node.type === 'footnoteDefinition' ? 'footnote ' : '') +
+              'definition with an already defined identifier (`' +
+              identifier +
+              '`), expected unique identifiers',
+            {
+              ancestors,
+              cause: new VFileMessage('Identifier already defined here', {
+                ancestors: duplicateAncestors,
+                place: duplicate.position,
+                source: 'remark-lint',
+                ruleId: 'no-duplicate-definitions'
+              }),
+              place: node.position
+            }
           )
         }
 
-        map.set(identifier, stringifyPosition(start))
+        map.set(identifier, ancestors)
       }
     })
   }

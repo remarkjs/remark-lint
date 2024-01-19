@@ -141,21 +141,19 @@ section.
 ###### In
 
 ```markdown
-## Alpha
+# Planets
 
-### Bravo
+## Venus
 
-## Charlie
+### Discovery
 
-### Bravo
+## Mars
 
-### Delta
+### Discovery
 
-#### Bravo
+### Phobos
 
-#### Echo
-
-##### Bravo
+#### Discovery
 ```
 
 ###### Out
@@ -167,39 +165,41 @@ No messages.
 ###### In
 
 ```markdown
-## Foxtrot
+# Planets
 
-### Golf
+## Mars
 
-### Golf
+### Discovery
+
+### Discovery
 ```
 
 ###### Out
 
 ```text
-5:1-5:9: Do not use headings with similar content per section (3:1)
+7:1-7:14: Unexpected heading with equivalent text in section, expected unique headings
 ```
 
-##### `not-ok-tolerant-heading-increment.md`
+##### `tolerant-heading-increment.md`
 
 ###### In
 
 ```markdown
-# Alpha
+# Planets
 
-#### Bravo
+#### Discovery
 
-###### Charlie
+###### Phobos
 
-#### Bravo
+#### Discovery
 
-###### Delta
+###### Deimos
 ```
 
 ###### Out
 
 ```text
-7:1-7:11: Do not use headings with similar content per section (3:1)
+7:1-7:15: Unexpected heading with equivalent text in section, expected unique headings
 ```
 
 ##### `mdx.mdx`
@@ -212,14 +212,16 @@ No messages.
 ```mdx
 MDX is supported <em>too</em>.
 
-<h2>Alpha</h2>
-<h2>Alpha</h2>
+<h1>Planets</h1>
+<h2>Mars</h2>
+<h3>Discovery</h3>
+<h3>Discovery</h3>
 ```
 
 ###### Out
 
 ```text
-4:1-4:15: Do not use headings with similar content per section (3:1)
+6:1-6:19: Unexpected heading with equivalent text in section, expected unique headings
 ```
 
 ## Compatibility

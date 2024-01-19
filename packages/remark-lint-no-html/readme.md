@@ -20,7 +20,8 @@
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintNoHtml)`](#unifieduseremarklintnohtml)
+  * [`unified().use(remarkLintNoHtml[, options])`](#unifieduseremarklintnohtml-options)
+  * [`Options`](#options)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
@@ -111,21 +112,32 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports no additional [TypeScript][typescript] types.
+It exports the [TypeScript][typescript] type
+[`Options`][api-options].
 The default export is
 [`remarkLintNoHtml`][api-remark-lint-no-html].
 
-### `unified().use(remarkLintNoHtml)`
+### `unified().use(remarkLintNoHtml[, options])`
 
 Warn when HTML is used.
 
 ###### Parameters
 
-There are no options.
+* `options` ([`Options`][api-options], optional)
+  — configuration
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+* `allowComments` (`boolean`, default: `true`)
+  — allow comments or not
 
 ## Examples
 
@@ -134,9 +146,9 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 ###### In
 
 ```markdown
-# Hello
+# Mercury
 
-<!--Comments are also OK-->
+<!--Venus-->
 ```
 
 ###### Out
@@ -148,13 +160,29 @@ No messages.
 ###### In
 
 ```markdown
-<h1>Hello</h1>
+<h1>Mercury</h1>
 ```
 
 ###### Out
 
 ```text
-1:1-1:15: Do not use HTML in markdown
+1:1-1:17: Unexpected HTML, use markdown instead
+```
+
+##### `not-ok.md`
+
+When configured with `{ allowComments: false }`.
+
+###### In
+
+```markdown
+<!--Mercury-->
+```
+
+###### Out
+
+```text
+1:1-1:15: Unexpected HTML, use markdown instead
 ```
 
 ## Compatibility
@@ -182,7 +210,9 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-no-html]: #unifieduseremarklintnohtml
+[api-options]: #options
+
+[api-remark-lint-no-html]: #unifieduseremarklintnohtml-options
 
 [author]: https://wooorm.com
 

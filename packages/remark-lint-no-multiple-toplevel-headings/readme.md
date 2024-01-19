@@ -10,7 +10,7 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when multiple top-level headings are used.
+[`remark-lint`][github-remark-lint] rule to warn when top-level headings are used multiple times.
 
 ## Contents
 
@@ -31,7 +31,7 @@
 
 ## What is this?
 
-This package checks that no more than one top level heading is used.
+This package checks that top-level headings are unique.
 
 ## When should I use this?
 
@@ -126,7 +126,7 @@ The default export is
 
 ### `unified().use(remarkLintNoMultipleToplevelHeadings[, options])`
 
-Warn when multiple top-level headings are used.
+Warn when top-level headings are used multiple times.
 
 ###### Parameters
 
@@ -166,14 +166,12 @@ which is typically a heading with a rank of `1`.
 
 ##### `ok.md`
 
-When configured with `1`.
-
 ###### In
 
 ```markdown
-# Foo
+# Mercury
 
-## Bar
+## Venus
 ```
 
 ###### Out
@@ -182,20 +180,36 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `1`.
-
 ###### In
 
 ```markdown
-# Foo
+# Venus
 
-# Bar
+# Mercury
 ```
 
 ###### Out
 
 ```text
-3:1-3:6: Don’t use multiple top level headings (1:1)
+3:1-3:10: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+```
+
+##### `not-ok.md`
+
+When configured with `2`.
+
+###### In
+
+```markdown
+## Venus
+
+## Mercury
+```
+
+###### Out
+
+```text
+3:1-3:11: Unexpected duplicate toplevel heading, exected a single heading with rank `2`
 ```
 
 ##### `html.md`
@@ -203,17 +217,17 @@ When configured with `1`.
 ###### In
 
 ```markdown
-In markdown, <b>HTML</b> is supported.
+Venus <b>and</b> mercury.
 
-<h1>First</h1>
+<h1>Earth</h1>
 
-<h1>Second</h1>
+<h1>Mars</h1>
 ```
 
 ###### Out
 
 ```text
-5:1-5:16: Don’t use multiple top level headings (3:1)
+5:1-5:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
 ```
 
 ##### `mdx.mdx`
@@ -224,16 +238,16 @@ In markdown, <b>HTML</b> is supported.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-In MDX, <b>JSX</b> is supported.
+Venus <b>and</b> mercury.
 
-<h1>First</h1>
-<h1>Second</h1>
+<h1>Earth</h1>
+<h1>Mars</h1>
 ```
 
 ###### Out
 
 ```text
-4:1-4:16: Don’t use multiple top level headings (3:1)
+4:1-4:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
 ```
 
 ## Compatibility

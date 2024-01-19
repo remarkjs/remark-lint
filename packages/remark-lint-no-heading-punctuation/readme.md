@@ -10,7 +10,7 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when headings end in punctuation.
+[`remark-lint`][github-remark-lint] rule to warn when headings end in irregular characters.
 
 ## Contents
 
@@ -28,7 +28,7 @@
 
 ## What is this?
 
-This package checks the style of hedings.
+This package checks heading text.
 
 ## When should I use this?
 
@@ -121,14 +121,14 @@ The default export is
 
 ### `unified().use(remarkLintNoHeadingPunctuation[, options])`
 
-Warn when headings end in punctuation.
+Warn when headings end in irregular characters.
 
 ###### Parameters
 
-* `options` (`string`, default: `'!,.:;?'`)
+* `options` (`RegExp` or `string`, default: `/[!,.:;?]/u`)
   — configuration,
-  wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to escape regexp
-  characters
+  when string wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to
+  escape regexp characters
 
 ###### Returns
 
@@ -141,21 +141,7 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 ###### In
 
 ```markdown
-# Hello
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `',;:!?'`.
-
-###### In
-
-```markdown
-# Hello…
+# Mercury
 ```
 
 ###### Out
@@ -167,28 +153,58 @@ No messages.
 ###### In
 
 ```markdown
-# Hello:
+# Mercury:
 
-# Hello?
+# Venus?
 
-# Hello!
+# Earth!
 
-# Hello,
+# Mars,
 
-# Hello;
+# Jupiter;
 ```
 
 ###### Out
 
 ```text
-1:1-1:9: Don’t add a trailing `:` to headings
-3:1-3:9: Don’t add a trailing `?` to headings
-5:1-5:9: Don’t add a trailing `!` to headings
-7:1-7:9: Don’t add a trailing `,` to headings
-9:1-9:9: Don’t add a trailing `;` to headings
+1:1-1:11: Unexpected character `:` at end of heading, remove it
+3:1-3:9: Unexpected character `?` at end of heading, remove it
+5:1-5:9: Unexpected character `!` at end of heading, remove it
+7:1-7:8: Unexpected character `,` at end of heading, remove it
+9:1-9:11: Unexpected character `;` at end of heading, remove it
 ```
 
-##### `mdx.mdx`
+##### `ok.md`
+
+When configured with `',;:!?'`.
+
+###### In
+
+```markdown
+# Mercury…
+```
+
+###### Out
+
+No messages.
+
+##### `regex.md`
+
+When configured with `{ source: '[^A-Za-z0-9]' }`.
+
+###### In
+
+```markdown
+# Mercury!
+```
+
+###### Out
+
+```text
+1:1-1:11: Unexpected character `!` at end of heading, remove it
+```
+
+##### `example.mdx`
 
 ###### In
 
@@ -196,15 +212,23 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-MDX is supported <em>too</em>.
-
-<h1>Hi?</h1>
+<h1>Mercury?</h1>
 ```
 
 ###### Out
 
 ```text
-3:1-3:13: Don’t add a trailing `?` to headings
+1:1-1:18: Unexpected character `?` at end of heading, remove it
+```
+
+##### `not-ok-options.md`
+
+When configured with `1`.
+
+###### Out
+
+```text
+1:1: Unexpected value `1` for `options`, expected `RegExp` or `string`
 ```
 
 ## Compatibility

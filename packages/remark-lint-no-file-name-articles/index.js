@@ -30,28 +30,24 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "title.md"}
  *
  * @example
- *   {"name": "a-title.md", "label": "output", "positionless": true}
+ *   {"label": "output", "name": "a-title.md", "positionless": true}
  *
- *   1:1: Do not start file names with `a`
- *
- * @example
- *   {"name": "the-title.md", "label": "output", "positionless": true}
- *
- *   1:1: Do not start file names with `the`
+ *   1:1: Unexpected file name starting with `a`, remove it
  *
  * @example
- *   {"name": "teh-title.md", "label": "output", "positionless": true}
+ *   {"label": "output", "name": "the-title.md", "positionless": true}
  *
- *   1:1: Do not start file names with `teh`
+ *   1:1: Unexpected file name starting with `the`, remove it
  *
  * @example
- *   {"name": "an-article.md", "label": "output", "positionless": true}
+ *   {"label": "output", "name": "an-article.md", "positionless": true}
  *
- *   1:1: Do not start file names with `an`
+ *   1:1: Unexpected file name starting with `an`, remove it
  */
 
 /**
@@ -72,10 +68,12 @@ const remarkLintNoFileNameArticles = lintRule(
    *   Nothing.
    */
   function (_, file) {
-    const match = file.stem && file.stem.match(/^(the|teh|an?)\b/i)
+    const match = file.stem && file.stem.match(/^(?:the|teh|an?)\b/i)
 
     if (match) {
-      file.message('Do not start file names with `' + match[0] + '`')
+      file.message(
+        'Unexpected file name starting with `' + match[0] + '`, remove it'
+      )
     }
   }
 )

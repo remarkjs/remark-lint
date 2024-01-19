@@ -140,19 +140,10 @@ the concise collapsed reference syntax (`[Text][]`).
 ###### In
 
 ```markdown
-[alpha][]
-[Bravo][]
-[Charlie][delta]
+[Mercury][] and [Venus][venus-url].
 
-This only works if the link text is a `text` node:
-[`echo`][]
-[*foxtrot*][]
-
-[alpha]: a
-[bravo]: b
-[delta]: d
-[`echo`]: e
-[*foxtrot*]: f
+[mercury]: https://example.com/mercury/
+[venus-url]: https://example.com/venus/
 ```
 
 ###### Out
@@ -164,21 +155,49 @@ No messages.
 ###### In
 
 ```markdown
-[alpha][alpha]
-[Bravo][bravo]
-[charlie][Charlie]
+[Mercury][mercury].
 
-[alpha]: a
-[bravo]: b
-[charlie]: c
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
 
 ```text
-1:1-1:15: Remove the link label as it matches the reference text
-2:1-2:15: Remove the link label as it matches the reference text
-3:1-3:19: Remove the link label as it matches the reference text
+1:1-1:19: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
+```
+
+##### `escape.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Matrix:
+
+| Kind                      | Text normal | Text escape  | Text character reference |
+| ------------------------- | ----------- | ------------ | ------------------------ |
+| Label normal              | [&][&]      | [\&][&]      | [&amp;][&]               |
+| Label escape              | [&][\&]     | [\&][\&]     | [&amp;][\&]              |
+| Label character reference | [&][&amp;]  | [\&][&amp;]  | [&amp;][&amp;]           |
+
+When using the above matrix, the first row will go to `a`, the second
+to `b`, third to `c`.
+Removing all labels, you’d instead get it per column: `a`, `b`, `c`.
+That shows the label is not needed when it matches the text, and is otherwise.
+
+[&]: a
+[\&]: b
+[&amp;]: c
+```
+
+###### Out
+
+```text
+5:31-5:37: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
+6:45-6:53: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
+7:60-7:74: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
 ```
 
 ## Compatibility
@@ -249,6 +268,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

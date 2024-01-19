@@ -39,6 +39,8 @@ This package checks the character used in checkboxes.
 
 You can use this package to check that the style of GFM tasklists is
 consistent.
+Task lists are a GFM feature enabled with
+[`remark-gfm`][github-remark-gfm].
 
 ## Presets
 
@@ -176,7 +178,7 @@ using `'x'` (lowercase X) and unchecked checkboxes using `'␠'` (a space).
 
 ## Examples
 
-##### `ok.md`
+##### `ok-x.md`
 
 When configured with `{ checked: 'x' }`.
 
@@ -186,15 +188,15 @@ When configured with `{ checked: 'x' }`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [x] List item
-- [x] List item
+- [x] Mercury.
+- [x] Venus.
 ```
 
 ###### Out
 
 No messages.
 
-##### `ok.md`
+##### `ok-x-upper.md`
 
 When configured with `{ checked: 'X' }`.
 
@@ -204,15 +206,15 @@ When configured with `{ checked: 'X' }`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [X] List item
-- [X] List item
+- [X] Mercury.
+- [X] Venus.
 ```
 
 ###### Out
 
 No messages.
 
-##### `ok.md`
+##### `ok-space.md`
 
 When configured with `{ unchecked: ' ' }`.
 
@@ -222,8 +224,8 @@ When configured with `{ unchecked: ' ' }`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [ ] List item
-- [ ] List item
+- [ ] Mercury.
+- [ ] Venus.
 - [ ]␠␠
 - [ ]
 ```
@@ -232,7 +234,7 @@ When configured with `{ unchecked: ' ' }`.
 
 No messages.
 
-##### `ok.md`
+##### `ok-tab.md`
 
 When configured with `{ unchecked: '\t' }`.
 
@@ -242,15 +244,15 @@ When configured with `{ unchecked: '\t' }`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [␉] List item
-- [␉] List item
+- [␉] Mercury.
+- [␉] Venus.
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-default.md`
 
 ###### In
 
@@ -258,37 +260,47 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [x] List item
-- [X] List item
-- [ ] List item
-- [␉] List item
+- [x] Mercury.
+- [X] Venus.
+- [ ] Earth.
+- [␉] Mars.
 ```
 
 ###### Out
 
 ```text
-2:5: Checked checkboxes should use `x` as a marker
-4:5: Unchecked checkboxes should use ` ` as a marker
+2:5: Unexpected checked checkbox value `X`, expected `x`
+4:5: Unexpected unchecked checkbox value `\t`, expected ` `
 ```
 
-##### `not-ok.md`
+##### `not-ok-option.md`
 
-When configured with `{ unchecked: '💩' }`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect unchecked checkbox marker `💩`: use either `'\t'`, or `' '`
+1:1: Unexpected value `🌍` for `options`, expected an object or `'consistent'`
 ```
 
-##### `not-ok.md`
+##### `not-ok-option-unchecked.md`
 
-When configured with `{ checked: '💩' }`.
+When configured with `{ unchecked: '🌍' }`.
 
 ###### Out
 
 ```text
-1:1: Incorrect checked checkbox marker `💩`: use either `'x'`, or `'X'`
+1:1: Unexpected value `🌍` for `options.unchecked`, expected `'\t'`, `' '`, or `'consistent'`
+```
+
+##### `not-ok-option-checked.md`
+
+When configured with `{ checked: '🌍' }`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options.checked`, expected `'X'`, `'x'`, or `'consistent'`
 ```
 
 ## Compatibility

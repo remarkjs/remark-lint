@@ -55,38 +55,48 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "gfm": true}
- *
- *   - [ ] List item
- *   +  [x] List Item
- *   *   [X] List item
- *   -    [ ] List item
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"gfm": true, "name": "ok.md"}
  *
- *   - [ ] List item
- *   + [x]  List item
- *   * [X]   List item
- *   - [ ]    List item
+ *   - [ ] Mercury.
+ *   +  [x] Venus.
+ *   *   [X] Earth.
+ *   -    [ ] Mars.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   2:7-2:8: Checkboxes should be followed by a single character
- *   3:7-3:9: Checkboxes should be followed by a single character
- *   4:7-4:10: Checkboxes should be followed by a single character
+ *   - [ ] Mercury.
+ *   + [x]  Venus.
+ *   * [X]   Earth.
+ *   - [ ]    Mars.
+ * @example
+ *   {"gfm": true, "label": "output", "name": "not-ok.md"}
+ *
+ *   2:8: Unexpected `2` spaces between checkbox and content, expected `1` space, remove `1` space
+ *   3:9: Unexpected `3` spaces between checkbox and content, expected `1` space, remove `2` spaces
+ *   4:10: Unexpected `4` spaces between checkbox and content, expected `1` space, remove `3` spaces
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "tab.md"}
+ *
+ *   - [ ]␉Mercury.
+ *   + [x]␉␉Venus.
+ * @example
+ *   {"gfm": true, "label": "output", "name": "tab.md"}
+ *
+ *   2:8: Unexpected `2` spaces between checkbox and content, expected `1` space, remove `1` space
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
-import {location} from 'vfile-location'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintCheckboxContentIndent = lintRule(
   {
@@ -101,45 +111,59 @@ const remarkLintCheckboxContentIndent = lintRule(
    */
   function (tree, file) {
     const value = String(file)
-    const loc = location(file)
 
-    visit(tree, 'listItem', function (node) {
+    visitParents(tree, 'listItem', function (node, parents) {
       const head = node.children[0]
-      const point = pointStart(head)
+      const headStart = pointStart(head)
 
       // Exit early for items without checkbox.
-      // A list item cannot be checked and empty, according to GFM.
+      // A list item cannot be checked and empty according to GFM.
       if (
-        !point ||
         !head ||
+        !headStart ||
         typeof node.checked !== 'boolean' ||
-        typeof point.offset !== 'number'
+        typeof headStart.offset !== 'number'
       ) {
         return
       }
 
-      // Assume we start with a checkbox, because well, `checked` is set.
+      // Assume we start with a checkbox as `checked` is set.
       const match = /\[([\t xX])]/.exec(
-        value.slice(point.offset - 4, point.offset + 1)
+        value.slice(headStart.offset - 4, headStart.offset + 1)
       )
 
       /* c8 ignore next -- make sure we don’t crash if there actually isn’t a checkbox. */
       if (!match) return
 
       // Move past checkbox.
-      const initial = point.offset
-      let final = initial
+      let final = headStart.offset
+      let code = value.charCodeAt(final)
 
-      while (/[\t ]/.test(value.charAt(final))) final++
+      while (code === 9 || code === 32) {
+        final++
+        code = value.charCodeAt(final)
+      }
 
-      if (final - initial > 0) {
-        const start = loc.toPoint(initial)
-        const end = loc.toPoint(final)
+      const size = final - headStart.offset
 
+      if (size) {
         file.message(
-          'Checkboxes should be followed by a single character',
-          /* c8 ignore next -- we get here if we have offsets. */
-          start && end ? {start, end} : undefined
+          'Unexpected `' +
+            (size + 1) +
+            '` ' +
+            pluralize('space', size + 1) +
+            ' between checkbox and content, expected `1` space, remove `' +
+            size +
+            '` ' +
+            pluralize('space', size),
+          {
+            ancestors: [...parents, node],
+            place: {
+              line: headStart.line,
+              column: headStart.column + size,
+              offset: headStart.offset + size
+            }
+          }
         )
       }
     })

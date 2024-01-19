@@ -31,16 +31,17 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "README.md"}
  *
  * @example
- *   {"name": "readme.md"}
+ *   {"name": "MERCURY.md"}
  *
  * @example
- *   {"name": "Readme.md", "label": "output", "positionless": true}
+ *   {"name": "mercury.md"}
  *
- *   1:1: Do not mix casing in file names
+ * @example
+ *   {"label": "output", "name": "Mercury.md", "positionless": true}
+ *
+ *   1:1: Unexpected mixed case in file name, expected either lowercase or uppercase
  */
 
 /**
@@ -64,7 +65,9 @@ const remarkLintNofileNameMixedCase = lintRule(
     const name = file.stem
 
     if (name && !(name === name.toLowerCase() || name === name.toUpperCase())) {
-      file.message('Do not mix casing in file names')
+      file.message(
+        'Unexpected mixed case in file name, expected either lowercase or uppercase'
+      )
     }
   }
 )

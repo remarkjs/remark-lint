@@ -32,8 +32,7 @@ This package checks for broken headings.
 
 ## When should I use this?
 
-You can use this package to ensure that no broken headings are user, which
-instead will result in paragraphs with the `#` characters shown.
+You can use this rule to check markdown code style.
 
 ## Presets
 
@@ -135,9 +134,9 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 ###### In
 
 ```markdown
-###### Alpha
+###### Venus
 
-Bravo.
+Mercury.
 ```
 
 ###### Out
@@ -149,15 +148,20 @@ No messages.
 ###### In
 
 ```markdown
-####### Charlie
+####### Venus
 
-Delta.
+Mercury.
+
+######## Earth
+
+Mars.
 ```
 
 ###### Out
 
 ```text
-1:1-1:16: This looks like a heading but has too many hashes
+1:8: Unexpected `7` hashes starting paragraph looking like a heading, expected up to `6` hashes, remove `1` hash
+5:9: Unexpected `8` hashes starting paragraph looking like a heading, expected up to `6` hashes, remove `2` hashes
 ```
 
 ## Compatibility

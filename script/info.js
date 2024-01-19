@@ -10,6 +10,8 @@
  *   Configuration.
  * @property {boolean} directive
  *   Whether to use directives.
+ * @property {boolean} frontmatter
+ *   Whether to use frontmatter.
  * @property {boolean} gfm
  *   Whether to use GFM.
  * @property {string} input
@@ -30,7 +32,9 @@
  * @property {unknown} [config]
  *   Configuration (optional).
  * @property {boolean} [directive]
- *   Whether to use directives.
+ *   Whether to use directives (optional).
+ * @property {boolean} [frontmatter]
+ *   Whether to use frontmatter (optional).
  * @property {boolean} [gfm]
  *   Whether to use GFM (optional).
  * @property {'input' | 'output'} [label]
@@ -108,6 +112,7 @@ for (const name of names) {
  * @returns {Promise<undefined>}
  *   Nothing.
  */
+// eslint-disable-next-line complexity
 async function addPlugin(name) {
   const code = await fs.readFile(
     new URL(name + '/index.js', packagesUrl),
@@ -182,6 +187,7 @@ async function addPlugin(name) {
       result.checks.push({
         configuration,
         directive: info.directive || false,
+        frontmatter: info.frontmatter || false,
         gfm: info.gfm || false,
         input: exampleValue,
         math: info.math || false,
@@ -204,6 +210,7 @@ async function addPlugin(name) {
       found = {
         configuration,
         directive: info.directive || false,
+        frontmatter: info.frontmatter || false,
         gfm: info.gfm || false,
         input: '',
         math: info.math || false,
@@ -216,8 +223,34 @@ async function addPlugin(name) {
     }
 
     if (info.label === 'input') {
+      /* c8 ignore next 11 -- just to be sure */
+      if (found.input) {
+        console.log(
+          'Duplicate input in `' +
+            ruleId +
+            '` for `' +
+            name +
+            '` w/ config `' +
+            info.config +
+            '`'
+        )
+      }
+
       found.input = exampleValue
     } else {
+      /* c8 ignore next 11 -- just to be sure */
+      if (found.output.length > 0) {
+        console.log(
+          'Duplicate output in `' +
+            ruleId +
+            '` for `' +
+            name +
+            '` w/ config `' +
+            info.config +
+            '`'
+        )
+      }
+
       found.output = exampleValue.split('\n')
     }
   }

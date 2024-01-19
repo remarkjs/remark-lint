@@ -143,8 +143,8 @@ It’s a mistake when the same identifier is defined multiple times.
 ###### In
 
 ```markdown
-[foo]: bar
-[baz]: qux
+[mercury]: https://example.com/mercury/
+[venus]: https://example.com/venus/
 ```
 
 ###### Out
@@ -156,14 +156,14 @@ No messages.
 ###### In
 
 ```markdown
-[foo]: bar
-[foo]: qux
+[mercury]: https://example.com/mercury/
+[mercury]: https://example.com/venus/
 ```
 
 ###### Out
 
 ```text
-2:1-2:11: Do not use definitions with the same identifier (1:1)
+2:1-2:38: Unexpected definition with an already defined identifier (`mercury`), expected unique identifiers
 ```
 
 ##### `gfm.md`
@@ -174,16 +174,20 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-GFM footnote definitions are checked too[^a].
+Mercury[^mercury].
 
-[^a]: alpha
-[^a]: bravo
+[^mercury]:
+  Mercury is the first planet from the Sun and the smallest in the Solar
+  System.
+
+[^mercury]:
+  Venus is the second planet from the Sun.
 ```
 
 ###### Out
 
 ```text
-4:1-4:12: Do not use footnote definitions with the same identifier (3:1)
+7:1-7:12: Unexpected footnote definition with an already defined identifier (`mercury`), expected unique identifiers
 ```
 
 ## Compatibility

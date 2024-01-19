@@ -45,7 +45,7 @@
  * ###### In
  *
  * ```markdown
- * Alpha␊
+ * Mercury␊
  * ```
  *
  * ###### Out
@@ -57,13 +57,13 @@
  * ###### In
  *
  * ```markdown
- * Bravo␀
+ * Mercury␀
  * ```
  *
  * ###### Out
  *
  * ```text
- * 1:6: Missing newline character at end of file
+ * 1:8: Unexpected missing final newline character, expected line feed (`\n`) at end of file
  * ```
  *
  * @module final-newline
@@ -76,6 +76,7 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
 import {location} from 'vfile-location'
 
@@ -95,8 +96,17 @@ const remarkLintFinalNewline = lintRule(
     const end = location(file).toPoint(value.length)
     const last = value.length - 1
 
-    if (end && last > -1 && value.charAt(last) !== '\n') {
-      file.message('Missing newline character at end of file', end)
+    assert(end) // Always defined.
+
+    if (
+      // Empty is fine.
+      last !== -1 &&
+      value.charAt(last) !== '\n'
+    ) {
+      file.message(
+        'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
+        end
+      )
     }
   }
 )

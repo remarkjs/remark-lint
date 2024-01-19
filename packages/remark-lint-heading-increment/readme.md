@@ -153,9 +153,25 @@ it’s recommended that this rule is turned on.
 ###### In
 
 ```markdown
-# Alpha
+# Mercury
 
-## Bravo
+## Nomenclature
+```
+
+###### Out
+
+No messages.
+
+##### `also-ok.md`
+
+###### In
+
+```markdown
+#### Impact basins and craters
+
+#### Plains
+
+#### Compressional features
 ```
 
 ###### Out
@@ -167,15 +183,23 @@ No messages.
 ###### In
 
 ```markdown
-# Charlie
+# Mercury
 
-### Delta
+### Internal structure
+
+### Surface geology
+
+## Observation history
+
+#### Mariner 10
 ```
 
 ###### Out
 
 ```text
-3:1-3:10: Heading levels should increment by one level at a time
+3:1-3:23: Unexpected heading rank `3`, exected rank `2`
+5:1-5:20: Unexpected heading rank `3`, exected rank `2`
+9:1-9:16: Unexpected heading rank `4`, exected rank `3`
 ```
 
 ##### `html.md`
@@ -183,16 +207,23 @@ No messages.
 ###### In
 
 ```markdown
-In markdown, <b>HTML</b> is supported.
+# Mercury
 
-<h1>First heading</h1>
+<b>Mercury</b> is the first planet from the Sun and the smallest
+in the Solar System.
+
+<h3>Internal structure</h3>
+
+<h2>Orbit, rotation, and longitude</h2>
 ```
 
 ###### Out
 
-No messages.
+```text
+6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+```
 
-##### `ok.mdx`
+##### `mdx.mdx`
 
 ###### In
 
@@ -200,14 +231,21 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-In MDX, <b>JSX</b> is supported.
+# Mercury
 
-<h1>First heading</h1>
+<b>Mercury</b> is the first planet from the Sun and the smallest
+in the Solar System.
+
+<h3>Internal structure</h3>
+
+<h2>Orbit, rotation, and longitude</h2>
 ```
 
 ###### Out
 
-No messages.
+```text
+6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+```
 
 ## Compatibility
 

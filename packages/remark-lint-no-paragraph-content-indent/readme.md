@@ -140,31 +140,16 @@ So it’s recommended to turn this rule on.
 ###### In
 
 ```markdown
-Alpha
+Mercury.
 
-Bravo
-Charlie.
-**Delta**.
+Venus and
+**Earth**.
 
-*   Echo
-    Foxtrot.
+* Mars and
+  Jupiter.
 
-> Golf
-> Hotel.
-
-`india()`
-juliett.
-
--   `kilo()`
-    lima.
-
--   `mike()` - november.
-
-![image]() text
-
-![image reference][] text
-
-[![][text]][text]
+> Saturn and
+> Uranus.
 ```
 
 ###### Out
@@ -176,41 +161,35 @@ No messages.
 ###### In
 
 ```markdown
-␠Alpha
+␠Mercury.
 
-Bravo
-␠Charlie.
+Venus and
+␠␠**Earth**.
 
-*   Delta
-    ␠Echo.
+* Mars and
+  ␠␠Jupiter.
 
-> Foxtrot
-> ␠Golf.
+> Saturn and
+> ␠Uranus.
 
-`hotel()`
-␠india.
+* Neptune
+and
+  ␠␠Pluto.
 
--   `juliett()`
-    ␠kilo.
-
-␠![lima]() mike
-
-* november
-oscar
-  ␠papa.
+> Ceres
+and
+> ␠Makemake.
 ```
 
 ###### Out
 
 ```text
-1:2: Expected no indentation in paragraph content
-4:2: Expected no indentation in paragraph content
-7:6: Expected no indentation in paragraph content
-10:4: Expected no indentation in paragraph content
-13:2: Expected no indentation in paragraph content
-16:6: Expected no indentation in paragraph content
-18:2: Expected no indentation in paragraph content
-22:4: Expected no indentation in paragraph content
+1:2: Unexpected `1` extra space before content line, remove `1` space
+4:3: Unexpected `2` extra spaces before content line, remove `2` spaces
+7:5: Unexpected `2` extra spaces before content line, remove `2` spaces
+10:4: Unexpected `1` extra space before content line, remove `1` space
+14:5: Unexpected `2` extra spaces before content line, remove `2` spaces
+18:4: Unexpected `1` extra space before content line, remove `1` space
 ```
 
 ## Compatibility

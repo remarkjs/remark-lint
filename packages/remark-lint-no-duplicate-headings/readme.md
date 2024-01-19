@@ -151,9 +151,9 @@ which makes linking to them prone to changes.
 ###### In
 
 ```markdown
-# Foo
+# Mercury
 
-## Bar
+## Venus
 ```
 
 ###### Out
@@ -165,18 +165,18 @@ No messages.
 ###### In
 
 ```markdown
-# Foo
+# Mercury
 
-## Foo
+## Mercury
 
-## [Foo](http://foo.com/bar)
+## [Mercury](http://example.com/mercury/)
 ```
 
 ###### Out
 
 ```text
-3:1-3:7: Do not use headings with similar content (1:1)
-5:1-5:29: Do not use headings with similar content (3:1)
+3:1-3:11: Unexpected heading with equivalent text, expected unique headings
+5:1-5:42: Unexpected heading with equivalent text, expected unique headings
 ```
 
 ##### `mdx.mdx`
@@ -187,16 +187,14 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-MDX is supported too.
-
-<h1>Alpha</h1>
-<h2>Alpha</h2>
+<h1>Mercury</h1>
+<h2>Mercury</h2>
 ```
 
 ###### Out
 
 ```text
-4:1-4:15: Do not use headings with similar content (3:1)
+2:1-2:17: Unexpected heading with equivalent text, expected unique headings
 ```
 
 ## Compatibility

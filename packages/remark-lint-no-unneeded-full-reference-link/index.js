@@ -35,40 +35,53 @@
  * @author Titus Wormer
  * @copyright 2019 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [alpha][]
- *   [Bravo][]
- *   [Charlie][delta]
+ *   [Mercury][] and [Venus][venus-url].
  *
- *   This only works if the link text is a `text` node:
- *   [`echo`][]
- *   [*foxtrot*][]
- *
- *   [alpha]: a
- *   [bravo]: b
- *   [delta]: d
- *   [`echo`]: e
- *   [*foxtrot*]: f
+ *   [mercury]: https://example.com/mercury/
+ *   [venus-url]: https://example.com/venus/
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   [alpha][alpha]
- *   [Bravo][bravo]
- *   [charlie][Charlie]
+ *   [Mercury][mercury].
  *
- *   [alpha]: a
- *   [bravo]: b
- *   [charlie]: c
+ *   [mercury]: https://example.com/mercury/
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1-1:15: Remove the link label as it matches the reference text
- *   2:1-2:15: Remove the link label as it matches the reference text
- *   3:1-3:19: Remove the link label as it matches the reference text
+ *   1:1-1:19: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "escape.md"}
+ *
+ *   Matrix:
+ *
+ *   | Kind                      | Text normal | Text escape  | Text character reference |
+ *   | ------------------------- | ----------- | ------------ | ------------------------ |
+ *   | Label normal              | [&][&]      | [\&][&]      | [&amp;][&]               |
+ *   | Label escape              | [&][\&]     | [\&][\&]     | [&amp;][\&]              |
+ *   | Label character reference | [&][&amp;]  | [\&][&amp;]  | [&amp;][&amp;]           |
+ *
+ *   When using the above matrix, the first row will go to `a`, the second
+ *   to `b`, third to `c`.
+ *   Removing all labels, you’d instead get it per column: `a`, `b`, `c`.
+ *   That shows the label is not needed when it matches the text, and is otherwise.
+ *
+ *   [&]: a
+ *   [\&]: b
+ *   [&amp;]: c
+ *
+ * @example
+ *   {"label": "output", "name": "escape.md"}
+ *
+ *   5:31-5:37: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
+ *   6:45-6:53: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
+ *   7:60-7:74: Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)
  */
 
 /**
@@ -77,8 +90,8 @@
 
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoUnneededFullReferenceLink = lintRule(
   {
@@ -92,23 +105,39 @@ const remarkLintNoUnneededFullReferenceLink = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'linkReference', function (node) {
-      const place = position(node)
+    const value = String(file)
+
+    visitParents(tree, 'linkReference', function (node, parents) {
+      const end = pointEnd(node)
+      const start = pointStart(node)
+
       if (
-        !place ||
         node.referenceType !== 'full' ||
-        node.children.length !== 1 ||
-        node.children[0].type !== 'text' ||
-        normalizeIdentifier(node.children[0].value) !==
-          node.identifier.toUpperCase()
+        !end ||
+        !start ||
+        typeof end.offset !== 'number' ||
+        typeof start.offset !== 'number'
       ) {
         return
       }
 
-      file.message(
-        'Remove the link label as it matches the reference text',
-        place
-      )
+      const slice = value.slice(start.offset, end.offset)
+      // In a label, the `[` cannot occur unescaped.
+      const index = slice.lastIndexOf('][')
+
+      /* c8 ignore next -- shouldn’t happen */
+      if (index === -1) return
+
+      // `1` for `[`.
+      const text = normalizeIdentifier(slice.slice(1, index))
+      const label = node.identifier.toUpperCase()
+
+      if (text === label) {
+        file.message(
+          'Unexpected full reference link (`[text][label]`) where the identifier can be inferred from the text, expected collapsed reference (`[text][]`)',
+          {ancestors: [...parents, node], place: node.position}
+        )
+      }
     })
   }
 )

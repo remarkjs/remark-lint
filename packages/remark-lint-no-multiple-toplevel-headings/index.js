@@ -1,9 +1,9 @@
 /**
- * remark-lint rule to warn when multiple top-level headings are used.
+ * remark-lint rule to warn when top-level headings are used multiple times.
  *
  * ## What is this?
  *
- * This package checks that no more than one top level heading is used.
+ * This package checks that top-level headings are unique.
  *
  * ## When should I use this?
  *
@@ -13,7 +13,7 @@
  *
  * ### `unified().use(remarkLintNoMultipleToplevelHeadings[, options])`
  *
- * Warn when multiple top-level headings are used.
+ * Warn when top-level headings are used multiple times.
  *
  * ###### Parameters
  *
@@ -59,54 +59,66 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "config": 1}
- *
- *   # Foo
- *
- *   ## Bar
  *
  * @example
- *   {"name": "not-ok.md", "config": 1, "label": "input"}
+ *   {"name": "ok.md"}
  *
- *   # Foo
+ *   # Mercury
  *
- *   # Bar
+ *   ## Venus
  *
  * @example
- *   {"name": "not-ok.md", "config": 1, "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   3:1-3:6: Don’t use multiple top level headings (1:1)
+ *   # Venus
+ *
+ *   # Mercury
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   3:1-3:10: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+ *
+ * @example
+ *   {"config": 2, "label": "input", "name": "not-ok.md"}
+ *
+ *   ## Venus
+ *
+ *   ## Mercury
+ * @example
+ *   {"config": 2, "label": "output", "name": "not-ok.md"}
+ *
+ *   3:1-3:11: Unexpected duplicate toplevel heading, exected a single heading with rank `2`
  *
  * @example
  *   {"label": "input", "name": "html.md"}
  *
- *   In markdown, <b>HTML</b> is supported.
+ *   Venus <b>and</b> mercury.
  *
- *   <h1>First</h1>
+ *   <h1>Earth</h1>
  *
- *   <h1>Second</h1>
+ *   <h1>Mars</h1>
  * @example
  *   {"label": "output", "name": "html.md"}
  *
- *   5:1-5:16: Don’t use multiple top level headings (3:1)
+ *   5:1-5:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
  *
- *   In MDX, <b>JSX</b> is supported.
+ *   Venus <b>and</b> mercury.
  *
- *   <h1>First</h1>
- *   <h1>Second</h1>
+ *   <h1>Earth</h1>
+ *   <h1>Mars</h1>
  * @example
  *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
  *
- *   4:1-4:16: Don’t use multiple top level headings (3:1)
+ *   4:1-4:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
  */
 
 /**
- * @typedef {import('mdast').Root} Root
  * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('mdast').Nodes} Nodes
+ * @typedef {import('mdast').Root} Root
  */
 
 /**
@@ -119,10 +131,10 @@
 
 /// <reference types="mdast-util-mdx" />
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
-import {pointStart, position} from 'unist-util-position'
-import {stringifyPosition} from 'unist-util-stringify-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const htmlRe = /<h([1-6])/
 const jsxNameRe = /^h([1-6])$/
@@ -142,10 +154,10 @@ const remarkLintNoMultipleToplevelHeadings = lintRule(
    */
   function (tree, file, options) {
     const option = options || 1
-    /** @type {string | undefined} */
-    let duplicate
+    /** @type {Array<Nodes> | undefined} */
+    let duplicateAncestors
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       /** @type {Depth | undefined} */
       let rank
 
@@ -164,17 +176,33 @@ const remarkLintNoMultipleToplevelHeadings = lintRule(
       }
 
       if (rank) {
-        const start = pointStart(node)
-        const place = position(node)
+        const ancestors = [...parents, node]
 
-        if (start && place && rank === option) {
-          if (duplicate) {
+        if (node.position && rank === option) {
+          if (duplicateAncestors) {
+            const duplicate = duplicateAncestors.at(-1)
+            assert(duplicate) // Always defined.
+
             file.message(
-              'Don’t use multiple top level headings (' + duplicate + ')',
-              place
+              'Unexpected duplicate toplevel heading, exected a single heading with rank `' +
+                rank +
+                '`',
+              {
+                ancestors,
+                cause: new VFileMessage(
+                  'Toplevel heading already defined here',
+                  {
+                    ancestors: duplicateAncestors,
+                    place: duplicate.position,
+                    source: 'remark-lint',
+                    ruleId: 'no-multiple-toplevel-headings'
+                  }
+                ),
+                place: node.position
+              }
             )
           } else {
-            duplicate = stringifyPosition(start)
+            duplicateAncestors = ancestors
           }
         }
       }

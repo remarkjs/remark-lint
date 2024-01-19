@@ -44,50 +44,88 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   # Alpha
+ *   # Mercury
  *
- *   ## Bravo
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   # Charlie
- *
- *   ### Delta
+ *   ## Nomenclature
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"name": "also-ok.md"}
  *
- *   3:1-3:10: Heading levels should increment by one level at a time
+ *   #### Impact basins and craters
  *
- * @example
- *   {"name": "html.md"}
+ *   #### Plains
  *
- *   In markdown, <b>HTML</b> is supported.
- *
- *   <h1>First heading</h1>
+ *   #### Compressional features
  *
  * @example
- *   {"name": "ok.mdx", "mdx": true}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   In MDX, <b>JSX</b> is supported.
+ *   # Mercury
  *
- *   <h1>First heading</h1>
+ *   ### Internal structure
+ *
+ *   ### Surface geology
+ *
+ *   ## Observation history
+ *
+ *   #### Mariner 10
+ *
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   3:1-3:23: Unexpected heading rank `3`, exected rank `2`
+ *   5:1-5:20: Unexpected heading rank `3`, exected rank `2`
+ *   9:1-9:16: Unexpected heading rank `4`, exected rank `3`
+ *
+ * @example
+ *   {"label": "input", "name": "html.md"}
+ *
+ *   # Mercury
+ *
+ *   <b>Mercury</b> is the first planet from the Sun and the smallest
+ *   in the Solar System.
+ *
+ *   <h3>Internal structure</h3>
+ *
+ *   <h2>Orbit, rotation, and longitude</h2>
+ * @example
+ *   {"label": "output", "name": "html.md"}
+ *
+ *   6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+ *
+ * @example
+ *   {"mdx": true, "name": "mdx.mdx"}
+ *
+ *   # Mercury
+ *
+ *   <b>Mercury</b> is the first planet from the Sun and the smallest
+ *   in the Solar System.
+ *
+ *   <h3>Internal structure</h3>
+ *
+ *   <h2>Orbit, rotation, and longitude</h2>
+ * @example
+ *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   6:1-6:28: Unexpected heading rank `3`, exected rank `2`
  */
 
 /**
  * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
 /// <reference types="mdast-util-mdx" />
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const htmlRe = /<h([1-6])/
 const jsxNameRe = /^h([1-6])$/
@@ -104,47 +142,89 @@ const remarkLintHeadingIncrement = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Heading['depth'] | undefined} */
-    let previous
+    /** @type {Array<Array<Nodes> | undefined>} */
+    const stack = []
 
-    visit(tree, function (node) {
-      const place = position(node)
+    visitParents(tree, function (node, parents) {
+      const rank = inferRank(node)
 
-      if (place) {
-        /** @type {Heading['depth'] | undefined} */
-        let rank
+      if (rank) {
+        let index = rank
+        /** @type {Array<Nodes> | undefined} */
+        let closestAncestors
 
-        if (node.type === 'heading') {
-          rank = node.depth
-        } else if (node.type === 'html') {
-          const results = node.value.match(htmlRe)
-          rank = results
-            ? /** @type {Heading['depth']} */ (Number(results[1]))
-            : undefined
-        } else if (
-          (node.type === 'mdxJsxFlowElement' ||
-            node.type === 'mdxJsxTextElement') &&
-          node.name
-        ) {
-          const results = node.name.match(jsxNameRe)
-          rank = results
-            ? /** @type {Heading['depth']} */ (Number(results[1]))
-            : undefined
+        while (index--) {
+          if (stack[index]) {
+            closestAncestors = stack[index]
+            break
+          }
         }
 
-        if (rank) {
-          if (previous && rank > previous + 1) {
+        if (closestAncestors) {
+          const parent = closestAncestors.at(-1)
+          assert(parent) // Always defined.
+          const parentRank = inferRank(parent)
+          assert(parentRank) // Always defined.
+
+          if (node.position && rank > parentRank + 1) {
             file.message(
-              'Heading levels should increment by one level at a time',
-              place
+              'Unexpected heading rank `' +
+                rank +
+                '`, exected rank `' +
+                (parentRank + 1) +
+                '`',
+              {
+                ancestors: [...parents, node],
+                cause: new VFileMessage('Parent heading defined here', {
+                  ancestors: closestAncestors,
+                  place: parent.position,
+                  source: 'remark-lint',
+                  ruleId: 'heading-increment'
+                }),
+                place: node.position
+              }
             )
           }
-
-          previous = rank
         }
+
+        stack[rank] = [...parents, node]
+        // Drop things after it.
+        stack.length = rank + 1
       }
     })
   }
 )
 
 export default remarkLintHeadingIncrement
+
+/**
+ * Get rank of a node.
+ *
+ * @param {Nodes} node
+ *   Node.
+ * @returns {Heading['depth'] | undefined}
+ *   Rank, if heading.
+ */
+function inferRank(node) {
+  /** @type {Heading['depth'] | undefined} */
+  let rank
+
+  if (node.type === 'heading') {
+    rank = node.depth
+  } else if (node.type === 'html') {
+    const results = node.value.match(htmlRe)
+    rank = results
+      ? /** @type {Heading['depth']} */ (Number(results[1]))
+      : undefined
+  } else if (
+    (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') &&
+    node.name
+  ) {
+    const results = node.name.match(jsxNameRe)
+    rank = results
+      ? /** @type {Heading['depth']} */ (Number(results[1]))
+      : undefined
+  }
+
+  return rank
+}

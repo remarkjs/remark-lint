@@ -38,38 +38,40 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   # Foo
+ *   # Mercury
  *
- *   Bar.
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   *Foo*
- *
- *   Bar.
- *
- *   __Qux__
- *
- *   Quux.
+ *   **Mercury** is the first planet from the Sun and the smallest in the Solar
+ *   System.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:1-1:6: Don’t use emphasis to introduce a section, use a heading
- *   5:1-5:8: Don’t use emphasis to introduce a section, use a heading
+ *   **Mercury**
+ *
+ *   **Mercury** is the first planet from the Sun and the smallest in the Solar
+ *   System.
+ *
+ *   *Venus*
+ *
+ *   **Venus** is the second planet from the Sun.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:12: Unexpected strong introducing a section, expected a heading instead
+ *   6:1-6:8: Unexpected emphasis introducing a section, expected a heading instead
  */
 
 /**
  * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').RootContent} RootContent
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {visit} from 'unist-util-visit'
-import {position} from 'unist-util-position'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
   {
@@ -83,31 +85,37 @@ const remarkLintNoEmphasisAsHeading = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'paragraph', function (node, index, parent) {
+    visitParents(tree, 'paragraph', function (node, parents) {
+      const parent = parents.at(-1)
+
+      if (!node.position || !parent) {
+        return
+      }
+
+      // Next sibling needs to be a paragraph.
+      const siblings = /** @type {Array<RootContent>} */ (parent.children)
+      const next = parent.children[siblings.indexOf(node) + 1]
+
+      if (!next || next.type !== 'paragraph') {
+        return
+      }
+
+      // Only child is emphasis/strong.
       const head = node.children[0]
-      const place = position(node)
 
       if (
-        place &&
-        parent &&
-        typeof index === 'number' &&
-        node.children.length === 1 &&
-        (head.type === 'emphasis' || head.type === 'strong')
+        node.children.length !== 1 ||
+        (head.type !== 'emphasis' && head.type !== 'strong')
       ) {
-        const previous = parent.children[index - 1]
-        const next = parent.children[index + 1]
-
-        if (
-          (!previous || previous.type !== 'heading') &&
-          next &&
-          next.type === 'paragraph'
-        ) {
-          file.message(
-            'Don’t use emphasis to introduce a section, use a heading',
-            place
-          )
-        }
+        return
       }
+
+      file.message(
+        'Unexpected ' +
+          head.type +
+          ' introducing a section, expected a heading instead',
+        {ancestors: [...parents, node, head], place: node.position}
+      )
     })
   }
 )

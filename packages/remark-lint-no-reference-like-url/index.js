@@ -40,33 +40,46 @@
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [Alpha](http://example.com).
+ *   [**Mercury**][mercury] is the first planet from the sun.
  *
- *   [bravo]: https://example.com
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   [Charlie](delta).
- *
- *   [delta]: https://example.com
+ *   [mercury]: https://example.com/mercury/
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:1-1:17: Did you mean to use `[delta]` instead of `(delta)`, a reference?
+ *   [**Mercury**](mercury) is the first planet from the sun.
+ *
+ *   [mercury]: https://example.com/mercury/
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:23: Unexpected resource link (`[text](url)`) with URL that matches a definition identifier (as `mercury`), expected reference (`[text][id]`)
+ *
+ * @example
+ *   {"label": "input", "name": "image.md"}
+ *
+ *   ![**Mercury** is a planet](mercury).
+ *
+ *   [mercury]: https://example.com/mercury.jpg
+ * @example
+ *   {"label": "output", "name": "image.md"}
+ *
+ *   1:1-1:36: Unexpected resource image (`![text](url)`) with URL that matches a definition identifier (as `mercury`), expected reference (`![text][id]`)
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintNoReferenceLikeUrl = lintRule(
   {
@@ -80,32 +93,55 @@ const remarkLintNoReferenceLikeUrl = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Set<string>} */
-    const identifiers = new Set()
+    /** @type {Map<string, Array<Nodes>>} */
+    const definitions = new Map()
+    /** @type {Array<Array<Nodes>>} */
+    const references = []
 
-    visit(tree, 'definition', function (node) {
-      identifiers.add(node.identifier.toLowerCase())
-    })
-
-    visit(tree, function (node) {
-      const place = position(node)
-
-      if (
-        place &&
-        (node.type === 'image' || node.type === 'link') &&
-        identifiers.has(node.url.toLowerCase())
-      ) {
-        file.message(
-          'Did you mean to use `[' +
-            node.url +
-            ']` instead of ' +
-            '`(' +
-            node.url +
-            ')`, a reference?',
-          place
-        )
+    visitParents(tree, function (node, ancestors) {
+      if (node.type === 'definition') {
+        definitions.set(node.identifier.toLowerCase(), [...ancestors, node])
+      } else if (node.type === 'image' || node.type === 'link') {
+        references.push([...ancestors, node])
       }
     })
+
+    for (const ancestors of references) {
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      assert(node.type === 'image' || node.type === 'link') // Always media.
+      const maybeIdentifier = node.url.toLowerCase()
+      const definitionAncestors = definitions.get(maybeIdentifier)
+
+      if (node.position && definitionAncestors) {
+        const definition = definitionAncestors.at(-1)
+        assert(definition) // Always defined.
+        assert(definition.type === 'definition') // Always definition.
+        const prefix = node.type === 'image' ? '!' : ''
+
+        file.message(
+          'Unexpected resource ' +
+            node.type +
+            ' (`' +
+            prefix +
+            '[text](url)`) with URL that matches a definition identifier (as `' +
+            definition.identifier +
+            '`), expected reference (`' +
+            prefix +
+            '[text][id]`)',
+          {
+            ancestors,
+            cause: new VFileMessage('Definition defined here', {
+              ancestors: definitionAncestors,
+              place: definition.position,
+              source: 'remark-lint',
+              ruleId: 'no-reference-like-url'
+            }),
+            place: node.position
+          }
+        )
+      }
+    }
   }
 )
 

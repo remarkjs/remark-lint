@@ -133,26 +133,26 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 ## Examples
 
-##### `readme.md`
+##### `mercury-and-venus.md`
 
 ###### Out
 
 No messages.
 
-##### `-readme.md`
+##### `-mercury.md`
 
 ###### Out
 
 ```text
-1:1: Do not use initial or final dashes in a file name
+1:1: Unexpected initial or final dashes in file name, expected dashes to join words
 ```
 
-##### `readme-.md`
+##### `venus-.md`
 
 ###### Out
 
 ```text
-1:1: Do not use initial or final dashes in a file name
+1:1: Unexpected initial or final dashes in file name, expected dashes to join words
 ```
 
 ## Compatibility

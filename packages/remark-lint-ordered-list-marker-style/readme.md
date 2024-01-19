@@ -21,8 +21,8 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintOrderedListMarkerStyle[, options])`](#unifieduseremarklintorderedlistmarkerstyle-options)
-  * [`Marker`](#marker)
   * [`Options`](#options)
+  * [`Style`](#style)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
 * [Examples](#examples)
@@ -122,8 +122,8 @@ On the CLI in a config file (here a `package.json`):
 
 This package exports no identifiers.
 It exports the [TypeScript][typescript] types
-[`Marker`][api-marker] and
-[`Options`][api-options].
+[`Options`][api-options] and
+[`Style`][api-style].
 The default export is
 [`remarkLintOrderedListMarkerStyle`][api-remark-lint-ordered-list-marker-style].
 
@@ -141,16 +141,6 @@ Warn when ordered list markers are inconsistent.
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
-### `Marker`
-
-Marker (TypeScript type).
-
-###### Type
-
-```ts
-type Marker = '.' | ')'
-```
-
 ### `Options`
 
 Configuration (TypeScript type).
@@ -158,7 +148,17 @@ Configuration (TypeScript type).
 ###### Type
 
 ```ts
-type Options = Marker | 'consistent'
+type Options = Style | 'consistent'
+```
+
+### `Style`
+
+Style (TypeScript type).
+
+###### Type
+
+```ts
+type Style = '.' | ')'
 ```
 
 ## Recommendation
@@ -181,14 +181,11 @@ Pass `bulletOrdered: ')'` to always use parens.
 ###### In
 
 ```markdown
-1.  Foo
+1. Mercury
 
+* Venus
 
-1.  Bar
-
-Unordered lists are not affected by this rule.
-
-* Foo
+1. Earth
 ```
 
 ###### Out
@@ -202,9 +199,7 @@ When configured with `'.'`.
 ###### In
 
 ```markdown
-1.  Foo
-
-2.  Bar
+1. Mercury
 ```
 
 ###### Out
@@ -218,9 +213,7 @@ When configured with `')'`.
 ###### In
 
 ```markdown
-1)  Foo
-
-2)  Bar
+1) Mercury
 ```
 
 ###### Out
@@ -232,25 +225,25 @@ No messages.
 ###### In
 
 ```markdown
-1.  Foo
+1. Mercury
 
-2)  Bar
+1) Venus
 ```
 
 ###### Out
 
 ```text
-3:1-3:8: Marker style should be `.`
+3:2: Unexpected ordered list marker `)`, expected `.`
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect ordered list item marker style `💩`: use either `'.'` or `')'`
+1:1: Unexpected value `🌍` for `options`, expected `'.'`, `')'`, or `'consistent'`
 ```
 
 ## Compatibility
@@ -278,11 +271,11 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-marker]: #marker
-
 [api-options]: #options
 
 [api-remark-lint-ordered-list-marker-style]: #unifieduseremarklintorderedlistmarkerstyle-options
+
+[api-style]: #style
 
 [author]: https://wooorm.com
 

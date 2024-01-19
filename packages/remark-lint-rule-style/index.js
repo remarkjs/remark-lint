@@ -67,36 +67,36 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
- *   {"name": "ok.md", "config": "* * *"}
+ *   {"config": "* * *", "name": "ok.md"}
  *
  *   * * *
  *
  *   * * *
  *
  * @example
- *   {"name": "ok.md", "config": "_______"}
+ *   {"config": "_______", "name": "ok.md"}
  *
  *   _______
  *
  *   _______
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
  *   ***
  *
  *   * * *
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   3:1-3:6: Unexpected thematic rule `* * *`, expected `***`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
  *
- *   3:1-3:6: Rules should use `***`
- *
- * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
- *
- *   1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
+ *   1:1: Unexpected value `🌍` for `options`, expected thematic rule or `'consistent'`
  */
 
 /**
@@ -110,7 +110,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintRuleStyle = lintRule(
   {
@@ -127,15 +128,29 @@ const remarkLintRuleStyle = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    let option = options || 'consistent'
+    /** @type {string | undefined} */
+    let expected
+    /** @type {VFileMessage | undefined} */
+    let cause
 
-    if (option !== 'consistent' && /[^-_* ]/.test(option)) {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (
+      /[^-_* ]/.test(options) ||
+      options.at(0) === ' ' ||
+      options.at(-1) === ' ' ||
+      options.replaceAll(' ', '').length < 3
+    ) {
       file.fail(
-        "Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected thematic rule or `'consistent'`"
       )
+    } else {
+      expected = options
     }
 
-    visit(tree, 'thematicBreak', function (node) {
+    visitParents(tree, 'thematicBreak', function (node, parents) {
       const end = pointEnd(node)
       const start = pointStart(node)
 
@@ -145,12 +160,33 @@ const remarkLintRuleStyle = lintRule(
         typeof start.offset === 'number' &&
         typeof end.offset === 'number'
       ) {
-        const rule = value.slice(start.offset, end.offset)
+        const place = {start, end}
+        const actual = value.slice(start.offset, end.offset)
 
-        if (option === 'consistent') {
-          option = rule
-        } else if (rule !== option) {
-          file.message('Rules should use `' + option + '`', node)
+        if (expected) {
+          if (actual !== expected) {
+            file.message(
+              'Unexpected thematic rule `' +
+                actual +
+                '`, expected `' +
+                expected +
+                '`',
+              {ancestors: [...parents, node], cause, place}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            'Thematic rule style `' +
+              expected +
+              "` first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place,
+              ruleId: 'rule-style',
+              source: 'remark-lint'
+            }
+          )
         }
       }
     })

@@ -150,16 +150,19 @@ Due to this, it’s recommended to turn this rule on.
 ###### In
 
 ```markdown
-#␠Foo
+#␠Mercury
 
-## Bar␠##
+##␠Venus␠##
 
-  ##␠Baz
+␠␠##␠Earth
 
-Setext headings are not affected.
+Setext headings are not affected:
 
-Baz
-===
+␠Mars
+=====
+
+␠Jupiter
+--------
 ```
 
 ###### Out
@@ -171,19 +174,19 @@ No messages.
 ###### In
 
 ```markdown
-#␠␠Foo
+#␠␠Mercury
 
-## Bar␠␠##
+##␠Venus␠␠##
 
-  ##␠␠Baz
+␠␠##␠␠␠Earth
 ```
 
 ###### Out
 
 ```text
-1:4: Remove 1 space before this heading’s content
-3:7: Remove 1 space after this heading’s content
-5:7: Remove 1 space before this heading’s content
+1:4: Unexpected `2` spaces between hashes and content, expected `1` space, remove `1` space
+3:11: Unexpected `2` spaces between content and hashes, expected `1` space, remove `1` space
+5:8: Unexpected `3` spaces between hashes and content, expected `1` space, remove `2` spaces
 ```
 
 ##### `empty-heading.md`
@@ -196,7 +199,9 @@ No messages.
 
 ###### Out
 
-No messages.
+```text
+1:4: Unexpected `2` spaces between hashes and content, expected `1` space, remove `1` space
+```
 
 ## Compatibility
 

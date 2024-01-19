@@ -74,159 +74,327 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "config": "padded", "gfm": true}
- *
- *   | A     | B     |
- *   | ----- | ----- |
- *   | Alpha | Bravo |
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "config": "padded", "gfm": true}
+ *   {"config": "padded", "gfm": true, "name": "ok.md"}
  *
- *   | A    |    B |
- *   | :----|----: |
- *   | Alpha|Bravo |
+ *   | Planet  | Symbol | Satellites | Mean anomaly (°) |
+ *   | ------- | :----- | :--------: | ---------------: |
+ *   | Mercury | ☿      |    None    |          174 796 |
  *
- *   | C      |    D |
- *   | :----- | ---: |
- *   |Charlie | Delta|
- *
- *   Too much padding isn’t good either:
- *
- *   | E     | F        |   G    |      H |
- *   | :---- | -------- | :----: | -----: |
- *   | Echo  | Foxtrot  |  Golf  |  Hotel |
+ *   | Planet | Symbol | Satellites | Mean anomaly (°) |
+ *   | - | :- | :-: | -: |
+ *   | Venus | ♀ | None | 50 115 |
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "padded", "gfm": true}
+ *   {"config": "padded", "gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   3:8: Cell should be padded
- *   3:9: Cell should be padded
- *   7:2: Cell should be padded
- *   7:17: Cell should be padded
- *   13:7: Cell should be padded with 1 space, not 2
- *   13:18: Cell should be padded with 1 space, not 2
- *   13:23: Cell should be padded with 1 space, not 2
- *   13:27: Cell should be padded with 1 space, not 2
- *   13:32: Cell should be padded with 1 space, not 2
+ *   | Planet |
+ *   | -------|
+ *   | Mercury|
+ *
+ *   |Planet |
+ *   |------ |
+ *   |Venus  |
+ *
+ *   |  Planet  |
+ *   |  ------  |
+ *   |  Venus   |
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "output", "name": "not-ok.md"}
+ *
+ *   2:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   3:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   5:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   6:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   7:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   9:4: Unexpected `2` spaces between cell edge and content, expected `1` space, remove `1` space
+ *   9:12: Unexpected `2` spaces between cell content and edge, expected `1` space, remove `1` space
+ *   10:4: Unexpected `2` spaces between cell edge and content, expected `1` space, remove `1` space
+ *   10:12: Unexpected `2` spaces between cell content and edge, expected `1` space, remove `1` space
+ *   11:4: Unexpected `2` spaces between cell edge and content, expected `1` space, remove `1` space
+ *   11:12: Unexpected `3` spaces between cell content and edge, expected between `1` (unaligned) and `2` (aligned) spaces, remove between `1` and `2` spaces
  *
  * @example
- *   {"name": "ok.md", "config": "compact", "gfm": true}
+ *   {"config": "compact", "gfm": true, "name": "ok.md"}
  *
- *   |A    |B    |
- *   |-----|-----|
- *   |Alpha|Bravo|
+ *   |Planet |Symbol|Satellites|Mean anomaly (°)|
+ *   |-------|:-----|:--------:|---------------:|
+ *   |Mercury|☿     |   None   |         174 796|
  *
- * @example
- *   {"name": "not-ok.md", "label": "input", "config": "compact", "gfm": true}
- *
- *   |   A    | B    |
- *   |   -----| -----|
- *   |   Alpha| Bravo|
- *
- *   |C      |     D|
- *   |:------|-----:|
- *   |Charlie|Delta |
+ *   |Planet|Symbol|Satellites|Mean anomaly (°)|
+ *   |-|:-|:-:|-:|
+ *   |Venus|♀|None|50 115|
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "compact", "gfm": true}
+ *   {"config": "compact", "gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   3:5: Cell should be compact
- *   3:12: Cell should be compact
- *   7:15: Cell should be compact
+ *   | Planet |
+ *   | -------|
+ *   | Mercury|
+ *
+ *   |Planet |
+ *   |------ |
+ *   |Venus  |
+ *
+ *   |  Planet  |
+ *   |  ------  |
+ *   |  Venus   |
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "output", "name": "not-ok.md"}
+ *
+ *   1:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   3:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   5:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   6:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   7:9: Unexpected `2` spaces between cell content and edge, expected between `0` (unaligned) and `1` (aligned) space, remove between `1` and `2` spaces
+ *   9:4: Unexpected `2` spaces between cell edge and content, expected `0` spaces, remove `2` spaces
+ *   9:12: Unexpected `2` spaces between cell content and edge, expected `0` spaces, remove `2` spaces
+ *   10:4: Unexpected `2` spaces between cell edge and content, expected `0` spaces, remove `2` spaces
+ *   10:12: Unexpected `2` spaces between cell content and edge, expected `0` spaces, remove `2` spaces
+ *   11:4: Unexpected `2` spaces between cell edge and content, expected `0` spaces, remove `2` spaces
+ *   11:12: Unexpected `3` spaces between cell content and edge, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
  *
  * @example
- *   {"name": "ok-padded.md", "gfm": true}
+ *   {"gfm": true, "name": "consistent-padded-ok.md"}
  *
- *   The default is `'consistent'`.
- *
- *   | A     | B     |
- *   | ----- | ----- |
- *   | Alpha | Bravo |
- *
- *   | C       | D     |
- *   | ------- | ----- |
- *   | Charlie | Delta |
+ *   | Planet |
+ *   | - |
  *
  * @example
- *   {"name": "not-ok-padded.md", "label": "input", "config": "consistent", "gfm": true}
+ *   {"gfm": true, "label": "input", "name": "consistent-padded-nok.md"}
  *
- *   | A     | B     |
- *   | ----- | ----- |
- *   | Alpha | Bravo |
+ *   | Planet|
+ *   | - |
+ * @example
+ *   {"gfm": true, "label": "output", "name": "consistent-padded-nok.md"}
  *
- *   | C      |     D |
- *   | :----- | ----: |
- *   |Charlie | Delta |
+ *   1:9: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
  *
  * @example
- *   {"name": "not-ok-padded.md", "label": "output", "config": "consistent", "gfm": true}
+ *   {"gfm": true, "name": "consistent-compact-ok.md"}
  *
- *   7:2: Cell should be padded
- *
- * @example
- *   {"name": "ok-compact.md", "config": "consistent", "gfm": true}
- *
- *   |A    |B    |
- *   |-----|-----|
- *   |Alpha|Bravo|
- *
- *   |C      |D    |
- *   |-------|-----|
- *   |Charlie|Delta|
+ *   |Planet|
+ *   |-|
  *
  * @example
- *   {"name": "not-ok-compact.md", "label": "input", "config": "consistent", "gfm": true}
+ *   {"gfm": true, "label": "input", "name": "consistent-compact-nok.md"}
  *
- *   |A    |B    |
- *   |-----|-----|
- *   |Alpha|Bravo|
+ *   |Planet |
+ *   |-|
+ * @example
+ *   {"gfm": true, "label": "output", "name": "consistent-compact-nok.md"}
  *
- *   |C      |     D|
- *   |:------|-----:|
- *   |Charlie|Delta |
+ *   1:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
  *
  * @example
- *   {"name": "not-ok-compact.md", "label": "output", "config": "consistent", "gfm": true}
+ *   {"gfm": true, "name": "empty.md"}
  *
- *   7:15: Cell should be compact
- *
- * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true, "gfm": true}
- *
- *   1:1: Incorrect table cell padding style `💩`, expected `'padded'`, `'compact'`, or `'consistent'`
+ *   | | Satellites |
+ *   | - | - |
+ *   | Mercury | |
  *
  * @example
- *   {"name": "empty.md", "label": "input", "config": "padded", "gfm": true}
+ *   {"gfm": true, "name": "missing-cells.md"}
  *
- *   <!-- Empty cells are OK, but those surrounding them may not be. -->
- *
- *   |        | Alpha | Bravo|
- *   | ------ | ----- | ---: |
- *   | Charlie|       |  Echo|
- *
- * @example
- *   {"name": "empty.md", "label": "output", "config": "padded", "gfm": true}
- *
- *   3:25: Cell should be padded
- *   5:10: Cell should be padded
- *   5:25: Cell should be padded
+ *   | Planet | Symbol | Satellites |
+ *   | - | - | - |
+ *   | Mercury |
+ *   | Venus | ♀ |
+ *   | Earth | 🜨 and ♁ | 1 |
+ *   | Mars | ♂ | 2 | 19 412 |
  *
  * @example
- *   {"name": "missing-body.md", "config": "padded", "gfm": true}
+ *   {"config": "padded", "gfm": true, "label": "input", "name": "missing-fences.md"}
  *
- *   <!-- Missing cells are fine as well. -->
+ *   ␠Planet|Symbol|Satellites
+ *   ------:|:-----|----------
+ *   Mercury|☿     |0
  *
- *   | Alpha | Bravo   | Charlie |
- *   | ----- | ------- | ------- |
- *   | Delta |
- *   | Echo  | Foxtrot |
+ *   Planet|Symbol
+ *   -----:|------
+ *   ␠Venus|♀
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "output", "name": "missing-fences.md"}
+ *
+ *   1:8: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   1:9: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   1:15: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   1:16: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   2:8: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   2:9: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   2:15: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   2:16: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   3:8: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   3:9: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   3:16: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   5:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   5:8: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   6:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   6:8: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   7:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   7:8: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "input", "name": "missing-fences.md"}
+ *
+ *   Planet | Symbol | Satellites
+ *   -: | - | -
+ *   Mercury | ☿ | 0
+ *
+ *   Planet | Symbol
+ *   -----: | ------
+ *   ␠Venus | ♀
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "output", "name": "missing-fences.md"}
+ *
+ *   1:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   1:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   1:17: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   1:19: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:4: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   2:6: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   3:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   3:11: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   3:15: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   5:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   5:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   6:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   6:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   7:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   7:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "input", "name": "trailing-spaces.md"}
+ *
+ *   Planet | Symbol␠
+ *   -: | -␠
+ *   Mercury | ☿␠␠
+ *
+ *   | Planet | Symbol |␠
+ *   | ------ | ------ |␠
+ *   | Venus  | ♀      |␠␠
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "output", "name": "trailing-spaces.md"}
+ *
+ *   1:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   1:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:4: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   2:6: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   3:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   3:11: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   5:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   5:10: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   5:12: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   5:19: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   6:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   6:10: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   6:12: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   6:19: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   7:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   7:10: Unexpected `2` spaces between cell content and edge, expected between `0` (unaligned) and `1` (aligned) space, remove between `1` and `2` spaces
+ *   7:12: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   7:19: Unexpected `6` spaces between cell content and edge, expected between `0` (unaligned) and `5` (aligned) spaces, remove between `1` and `6` spaces
+ *
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "input", "name": "nothing.md"}
+ *
+ *   |   |   |   |
+ *   | - | - | - |
+ *   |   |   |   |
+ * @example
+ *   {"config": "compact", "gfm": true, "label": "output", "name": "nothing.md"}
+ *
+ *   1:5: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+ *   1:9: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+ *   1:13: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+ *   2:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:5: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   2:7: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   2:11: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+ *   2:13: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+ *   3:5: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+ *   3:9: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+ *   3:13: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+ *
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "input", "name": "nothing.md"}
+ *
+ *   ||||
+ *   |-|-|-|
+ *   ||||
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "output", "name": "nothing.md"}
+ *
+ *   1:2: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+ *   1:3: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+ *   1:4: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+ *   2:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   2:3: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   2:4: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   2:5: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   2:6: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   2:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   3:2: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+ *   3:3: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+ *   3:4: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+ *
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "input", "name": "more-weirdness.md"}
+ *
+ *   Mercury
+ *   |-
+ *
+ *   Venus
+ *   -|
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "output", "name": "more-weirdness.md"}
+ *
+ *   2:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+ *   5:2: Unexpected `0` spaces between cell content and edge, expected between `1` (unaligned) and `5` (aligned) spaces, add between `5` and `1` space
+ *
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "input", "name": "containers.md"}
+ *
+ *   > | Mercury|
+ *   > | - |
+ *
+ *   * | Venus|
+ *     | - |
+ *
+ *   > * > | Earth|
+ *   >   > | - |
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "output", "name": "containers.md"}
+ *
+ *   1:12: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   4:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *   7:14: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "input", "name": "windows.md"}
+ *
+ *   | Mercury|␍␊| --- |␍␊| None |
+ * @example
+ *   {"config": "padded", "gfm": true, "label": "output", "name": "windows.md"}
+ *
+ *   1:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+ *
+ * @example
+ *   {"config": "🌍", "gfm": true, "label": "output", "name": "not-ok.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'compact'`, `'padded'`, or `'consistent'`
  */
 
 /**
+ * @typedef {import('mdast').AlignType} Align
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
- * @typedef {import('mdast').TableCell} TableCell
+ *
+ * @typedef {import('unist').Point} Point
  */
 
 /**
@@ -237,9 +405,12 @@
  *   Styles.
  */
 
+import {ok as assert} from 'devlop'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {SKIP, visit} from 'unist-util-visit'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintTableCellPadding = lintRule(
   {
@@ -255,165 +426,416 @@ const remarkLintTableCellPadding = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    const option = options || 'consistent'
+    /**
+     * @typedef Entry
+     * @property {Align} align
+     * @property {Array<Nodes>} ancestors
+     * @property {number} column
+     * @property {Size | undefined} size
+     *
+     * @typedef Size
+     * @property {number | undefined} left
+     * @property {Point} leftPoint
+     * @property {number} middle
+     * @property {number | undefined} right
+     * @property {Point} rightPoint
+     */
 
-    if (
-      option !== 'compact' &&
-      option !== 'consistent' &&
-      option !== 'padded'
-    ) {
+    const value = String(file)
+    /** @type {Style | undefined} */
+    let expected
+    /** @type {VFileMessage | undefined} */
+    let cause
+
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === 'compact' || options === 'padded') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect table cell padding style `' +
-          option +
-          "`, expected `'padded'`, `'compact'`, or `'consistent'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'compact'`, `'padded'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'table', function (node) {
-      const rows = node.children
-      /* c8 ignore next -- generated AST can omit `align`. */
-      const align = node.align || []
+    visitParents(tree, 'table', function (table, parents) {
+      const entries = inferTable([...parents, table])
+
+      // Find max column sizes.
       /** @type {Array<number>} */
       const sizes = []
-      /** @type {Array<{column: number, end: number, node: TableCell, start: number}>} */
-      const entries = []
-      let index = -1
 
-      // Check align row.
-      // Because there’s zero to two `:`, and there must be one `-`.
-      while (++index < align.length) {
-        const alignment = align[index]
-        sizes[index] = alignment === 'center' ? 3 : alignment ? 2 : 1
-      }
-
-      index = -1
-
-      // Check rows.
-      while (++index < rows.length) {
-        const row = rows[index]
-        let column = -1
-
-        // Check fences (before, between, and after cells).
-        while (++column < row.children.length) {
-          const cell = row.children[column]
-          const cellStart = pointStart(cell)?.offset
-          const cellEnd = pointEnd(cell)?.offset
-          const contentStart = pointStart(cell.children[0])?.offset
-          const contentEnd = pointEnd(
-            cell.children[cell.children.length - 1]
-          )?.offset
-
-          if (
-            typeof cellStart !== 'number' ||
-            typeof cellEnd !== 'number' ||
-            typeof contentStart !== 'number' ||
-            typeof contentEnd !== 'number'
-          ) {
-            continue
-          }
-
-          entries.push({
-            node: cell,
-            start: contentStart - cellStart - 1,
-            end:
-              cellEnd -
-              contentEnd -
-              (column === row.children.length - 1 ? 1 : 0),
-            column
-          })
-
-          // Detect max space per column.
-          sizes[column] = Math.max(
-            /* c8 ignore next */
-            sizes[column] || 0,
-            contentEnd - contentStart
-          )
+      for (const entry of entries) {
+        if (
+          entry.size &&
+          (sizes[entry.column] === undefined ||
+            entry.size.middle > sizes[entry.column])
+        ) {
+          sizes[entry.column] = entry.size.middle
         }
       }
 
-      const style =
-        option === 'consistent'
-          ? entries[0] && (!entries[0].start || !entries[0].end)
-            ? 0
-            : 1
-          : option === 'padded'
-            ? 1
-            : 0
-
-      index = -1
-
-      while (++index < entries.length) {
-        checkSide('start', entries[index], style, sizes)
-        checkSide('end', entries[index], style, sizes)
+      // Find the first cell that is the biggest in its column.
+      if (!expected) {
+        for (const info of entries) {
+          if (
+            info.size &&
+            info.size.middle &&
+            info.size.middle === sizes[info.column]
+          ) {
+            const node = info.ancestors.at(-1)
+            assert(node) // Always defined.
+            expected = info.size.left ? 'padded' : 'compact'
+            cause = new VFileMessage(
+              "Cell padding style `'" +
+                expected +
+                "'` first defined for `'consistent'` here",
+              {
+                ancestors: info.ancestors,
+                place: node.position,
+                ruleId: 'table-cell-padding',
+                source: 'remark-lint'
+              }
+            )
+          }
+        }
       }
 
+      /* c8 ignore next -- always a cell. */
+      if (!expected) return
+
+      for (const info of entries) {
+        checkSide('left', info, sizes)
+        checkSide('right', info, sizes)
+      }
+
+      // No tables in tables.
       return SKIP
     })
 
     /**
-     * @param {'end' | 'start'} side
+     * @param {'left' | 'right'} side
      *   Side to check.
-     * @param {{column: number, end: number, node: TableCell, start: number}} entry
-     *   Cell info.
-     * @param {0 | 1} style
-     *   Expected style.
+     * @param {Entry} info
+     *   Info.
      * @param {Array<number>} sizes
-     *   Max sizes per column.
+     *   Max column sizes.
      * @returns {undefined}
      *   Nothing.
      */
-    function checkSide(side, entry, style, sizes) {
-      const cell = entry.node
-      const column = entry.column
-      const spacing = entry[side]
-
-      if (spacing === undefined || spacing === style) {
+    function checkSide(side, info, sizes) {
+      if (!info.size) {
         return
       }
 
-      let reason = 'Cell should be '
+      const actual = info.size[side]
 
-      if (style === 0) {
-        // Ignore every cell except the biggest in the column.
-        if (size(cell) < sizes[column]) {
-          return
+      if (actual === undefined) {
+        return
+      }
+
+      const alignSpaces = sizes[info.column] - info.size.middle
+      const min = expected === 'compact' ? 0 : 1
+      /** @type {number} */
+      let max = min
+
+      if (info.align === 'center') {
+        max += Math.ceil(alignSpaces / 2)
+      } else if (info.align === 'right' ? side === 'left' : side === 'right') {
+        max += alignSpaces
+      }
+
+      // For empty cells,
+      // the `left` field is used for all the whitespace in them.
+      if (info.size.middle === 0) {
+        if (side === 'right') return
+        max = Math.max(max, sizes[info.column] + 2 * min)
+      }
+
+      if (actual < min || actual > max) {
+        const differenceMin = min - actual
+        const differenceMinAbsolute = Math.abs(differenceMin)
+        const differenceMax = max - actual
+        const differenceMaxAbsolute = Math.abs(differenceMax)
+
+        file.message(
+          'Unexpected `' +
+            actual +
+            '` ' +
+            pluralize('space', actual) +
+            ' between cell ' +
+            (side === 'left' ? 'edge' : 'content') +
+            ' and ' +
+            (side === 'left' ? 'content' : 'edge') +
+            ', expected ' +
+            (min === max ? '' : 'between `' + min + '` (unaligned) and ') +
+            '`' +
+            max +
+            '` ' +
+            (min === max ? '' : '(aligned) ') +
+            pluralize('space', max) +
+            ', ' +
+            (differenceMin < 0 ? 'remove' : 'add') +
+            (differenceMin === differenceMax
+              ? ''
+              : ' between `' + differenceMaxAbsolute + '` and') +
+            ' `' +
+            differenceMinAbsolute +
+            '` ' +
+            pluralize('space', differenceMinAbsolute),
+          {
+            ancestors: info.ancestors,
+            cause,
+            place: side === 'left' ? info.size.leftPoint : info.size.rightPoint
+          }
+        )
+      }
+    }
+
+    // Note: this code is also in `remark-lint-table-pipe-alignment`.
+    /**
+     * Get info about cells in a table.
+     *
+     * @param {Array<Nodes>} ancestors
+     *   Ancestors.
+     * @returns {Array<Entry>}
+     *   Entries.
+     */
+    function inferTable(ancestors) {
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      assert(node.type === 'table') // Always table.
+      /* c8 ignore next -- `align` is optional in AST. */
+      const align = node.align || []
+      /** @type {Array<Entry>} */
+      const result = []
+      let rowIndex = -1
+
+      // Regular rows.
+      while (++rowIndex < node.children.length) {
+        const row = node.children[rowIndex]
+        let column = -1
+
+        while (++column < row.children.length) {
+          const node = row.children[column]
+
+          result.push({
+            align: align[column],
+            ancestors: [...ancestors, row, node],
+            column,
+            size: inferSize(
+              pointStart(node),
+              pointEnd(node),
+              column === row.children.length - 1
+            )
+          })
         }
 
-        reason += 'compact'
-      } else {
-        reason += 'padded'
-
-        if (spacing > style) {
-          // May be right or center aligned.
-          if (size(cell) < sizes[column]) {
-            return
-          }
-
-          reason += ' with 1 space, not ' + spacing
+        if (rowIndex === 0) {
+          const alignRow = inferAlignRow(ancestors, align)
+          if (alignRow) result.push(...alignRow)
         }
       }
 
-      file.message(
-        reason,
-        side === 'start'
-          ? pointStart(cell.children[0])
-          : pointEnd(cell.children[cell.children.length - 1])
-      )
+      return result
+    }
+
+    /**
+     * @param {Array<Nodes>} ancestors
+     * @param {Array<Align>} align
+     * @returns {Array<Entry> | undefined}
+     */
+    function inferAlignRow(ancestors, align) {
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      assert(node.type === 'table') // Always table.
+      const headEnd = pointEnd(node.children[0])
+
+      if (!headEnd || typeof headEnd.offset !== 'number') return
+
+      let index = headEnd.offset
+
+      if (value.charCodeAt(index) === 13 /* `\r` */) index++
+      /* c8 ignore next -- should never happen, alignment is needed. */
+      if (value.charCodeAt(index) !== 10 /* `\n` */) return
+
+      index++
+
+      /** @type {Array<Entry>} */
+      const result = []
+      const line = headEnd.line + 1
+      // Alignment row can only be on the second line,
+      // so containers can only indent with `>` or spaces.
+      let code = value.charCodeAt(index)
+      while (
+        code === 9 /* `\t` */ ||
+        code === 32 /* ` ` */ ||
+        code === 62 /* `>` */
+      ) {
+        index++
+        code = value.charCodeAt(index)
+      }
+
+      /* c8 ignore next 7 -- should always be found. */
+      if (
+        code !== 45 /* `-` */ &&
+        code !== 58 /* `:` */ &&
+        code !== 124 /* `|` */
+      ) {
+        return
+      }
+
+      let lineEndOffset = value.indexOf('\n', index)
+      if (lineEndOffset === -1) lineEndOffset = value.length
+      if (value.charCodeAt(lineEndOffset - 1) === 13 /* `\r` */) lineEndOffset--
+
+      let column = 0
+      let cellStart = index
+      let cellEnd = value.indexOf('|', index + (code === 124 ? 1 : 0))
+      if (cellEnd === -1 || cellEnd > lineEndOffset) {
+        cellEnd = lineEndOffset
+      }
+
+      while (cellStart !== cellEnd) {
+        let nextCellEnd = value.indexOf('|', cellEnd + 1)
+
+        if (nextCellEnd === -1 || nextCellEnd > lineEndOffset) {
+          nextCellEnd = lineEndOffset
+        }
+
+        // Check if the trail is empty,
+        // which means it’s a closing pipe with trailing whitespace.
+        if (nextCellEnd === lineEndOffset) {
+          let maybeEnd = lineEndOffset
+          let code = value.charCodeAt(maybeEnd - 1)
+          while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+            maybeEnd--
+            code = value.charCodeAt(maybeEnd - 1)
+          }
+
+          if (cellEnd + 1 === maybeEnd) {
+            cellEnd = lineEndOffset
+          }
+        }
+
+        result.push({
+          align: align[column],
+          ancestors,
+          column,
+          size: inferSize(
+            {
+              line,
+              column: cellStart - index + 1,
+              offset: cellStart
+            },
+            {line, column: cellEnd - index + 1, offset: cellEnd},
+            cellEnd === lineEndOffset
+          )
+        })
+
+        cellStart = cellEnd
+        cellEnd = nextCellEnd
+        column++
+      }
+
+      return result
+    }
+
+    /**
+     * @param {Point | undefined} start
+     *   Start point.
+     * @param {Point | undefined} end
+     *   End point.
+     * @param {boolean} tailCell
+     *   Whether this is the last cell in a row.
+     * @returns {Size | undefined}
+     *   Size info.
+     */
+    function inferSize(start, end, tailCell) {
+      if (
+        end &&
+        start &&
+        typeof end.offset === 'number' &&
+        typeof start.offset === 'number'
+      ) {
+        let leftIndex = start.offset
+        /** @type {number | undefined} */
+        let left
+        /** @type {number | undefined} */
+        let right
+
+        if (value.charCodeAt(leftIndex) === 124 /* `|` */) {
+          left = 0
+          leftIndex++
+
+          while (value.charCodeAt(leftIndex) === 32) {
+            left++
+            leftIndex++
+          }
+        }
+        // Else, A leading pipe can only be omitted in the first cell.
+        // Where we never want leading whitespace, as it’s seen as
+        // indentation, and could turn into an indented block.
+
+        let rightIndex = end.offset
+
+        // The final pipe, if it exists, is part of the last cell in a row
+        // according to positional info.
+        if (tailCell) {
+          while (value.charCodeAt(rightIndex - 1) === 32) {
+            rightIndex--
+          }
+
+          // Found a pipe: we expect more whitespace.
+          if (
+            rightIndex > leftIndex &&
+            value.charCodeAt(rightIndex - 1) === 124 /* `|` */
+          ) {
+            rightIndex--
+          }
+          // No pipe at the last cell: the trailing whitespace is part of
+          // the cell.
+          else {
+            rightIndex = end.offset
+          }
+        }
+
+        /** @type {number} */
+        const rightEdgeIndex = rightIndex
+
+        if (value.charCodeAt(rightIndex) === 124 /* `|` */) {
+          right = 0
+
+          while (
+            rightIndex - 1 > leftIndex &&
+            value.charCodeAt(rightIndex - 1) === 32
+          ) {
+            right++
+            rightIndex--
+          }
+        }
+        // Else, a trailing pipe can only be omitted in the last cell.
+        // Where we never want trailing whitespace.
+
+        return {
+          left,
+          leftPoint: {
+            line: start.line,
+            column: start.column + (leftIndex - start.offset),
+            offset: leftIndex
+          },
+          middle: rightIndex - leftIndex,
+          right,
+          rightPoint: {
+            line: end.line,
+            column: end.column - (end.offset - rightEdgeIndex),
+            offset: rightEdgeIndex
+          }
+        }
+      }
     }
   }
 )
 
 export default remarkLintTableCellPadding
-
-/**
- * @param {TableCell} node
- *   Cell.
- * @returns {number}
- *   Size of `node`.
- */
-function size(node) {
-  const head = pointStart(node.children[0])?.offset
-  const tail = pointEnd(node.children[node.children.length - 1])?.offset
-  /* c8 ignore next -- Only called when we’re sure offsets exist. */
-  return typeof head === 'number' && typeof tail === 'number' ? tail - head : 0
-}

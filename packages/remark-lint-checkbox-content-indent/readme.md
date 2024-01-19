@@ -163,10 +163,10 @@ content after them with a single space between.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [ ] List item
-+  [x] List Item
-*   [X] List item
--    [ ] List item
+- [ ] Mercury.
++  [x] Venus.
+*   [X] Earth.
+-    [ ] Mars.
 ```
 
 ###### Out
@@ -181,18 +181,36 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-- [ ] List item
-+ [x]  List item
-* [X]   List item
-- [ ]    List item
+- [ ] Mercury.
++ [x]  Venus.
+* [X]   Earth.
+- [ ]    Mars.
 ```
 
 ###### Out
 
 ```text
-2:7-2:8: Checkboxes should be followed by a single character
-3:7-3:9: Checkboxes should be followed by a single character
-4:7-4:10: Checkboxes should be followed by a single character
+2:8: Unexpected `2` spaces between checkbox and content, expected `1` space, remove `1` space
+3:9: Unexpected `3` spaces between checkbox and content, expected `1` space, remove `2` spaces
+4:10: Unexpected `4` spaces between checkbox and content, expected `1` space, remove `3` spaces
+```
+
+##### `tab.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+- [ ]␉Mercury.
++ [x]␉␉Venus.
+```
+
+###### Out
+
+```text
+2:8: Unexpected `2` spaces between checkbox and content, expected `1` space, remove `1` space
 ```
 
 ## Compatibility

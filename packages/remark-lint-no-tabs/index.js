@@ -77,42 +77,23 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   Foo Bar
- *
- *   ␠␠␠␠Foo
+ *   ␠␠␠␠mercury()
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "positionless": true}
+ *   {"label": "input", "name": "not-ok.md", "positionless": true}
  *
- *   ␉Here's one before a code block.
+ *   ␉mercury()
  *
- *   Here's a tab:␉, and here is another:␉.
- *
- *   And this is in `inline␉code`.
- *
- *   >␉This is in a block quote.
- *
- *   *␉And…
- *
- *   ␉1.␉in a list.
- *
- *   And this is a tab as the last character.␉
- *
+ *   Venus␉and Earth.
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1: Use spaces instead of tabs
- *   3:14: Use spaces instead of tabs
- *   3:37: Use spaces instead of tabs
- *   5:23: Use spaces instead of tabs
- *   7:2: Use spaces instead of tabs
- *   9:2: Use spaces instead of tabs
- *   11:1: Use spaces instead of tabs
- *   11:4: Use spaces instead of tabs
- *   13:41: Use spaces instead of tabs
+ *   1:1: Unexpected tab (`\t`), expected spaces
+ *   3:6: Unexpected tab (`\t`), expected spaces
  */
 
 /**
@@ -139,7 +120,10 @@ const remarkLintNoTabs = lintRule(
     let index = value.indexOf('\t')
 
     while (index !== -1) {
-      file.message('Use spaces instead of tabs', toPoint(index))
+      file.message('Unexpected tab (`\\t`), expected spaces', {
+        place: toPoint(index)
+      })
+
       index = value.indexOf('\t', index + 1)
     }
   }

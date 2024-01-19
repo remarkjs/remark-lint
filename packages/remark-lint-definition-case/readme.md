@@ -146,7 +146,7 @@ Due to this, it’s recommended to use lowercase and turn this rule on.
 ###### In
 
 ```markdown
-[example]: http://example.com "Example Domain"
+[mercury]: http://example.com "Mercury"
 ```
 
 ###### Out
@@ -158,13 +158,13 @@ No messages.
 ###### In
 
 ```markdown
-[Example]: http://example.com "Example Domain"
+[Mercury]: http://example.com "Mercury"
 ```
 
 ###### Out
 
 ```text
-1:1-1:47: Do not use uppercase characters in definition labels
+1:1-1:40: Unexpected uppercase characters in definition label, expected lowercase
 ```
 
 ##### `gfm.md`
@@ -175,13 +175,15 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-[^X]: Footnote definitions (from GFM) are checked too.
+[^Mercury]:
+    **Mercury** is the first planet from the Sun and the smallest
+    in the Solar System.
 ```
 
 ###### Out
 
 ```text
-1:1-1:55: Do not use uppercase characters in definition labels
+1:1-3:25: Unexpected uppercase characters in footnote definition label, expected lowercase
 ```
 
 ## Compatibility

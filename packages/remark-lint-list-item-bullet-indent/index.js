@@ -30,9 +30,9 @@
  * While it is possible to use an indent to align ordered lists on their marker:
  *
  * ```markdown
- *   1. One
- *  10. Ten
- * 100. Hundred
+ *   1. Mercury
+ *  10. Venus
+ * 100. Earth
  * ```
  *
  * …such a style is uncommon and hard to maintain as adding a 10th item
@@ -56,34 +56,33 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   Paragraph.
+ *   Mercury.
  *
- *   * List item
- *   * List item
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   Paragraph.
- *
- *   ␠* List item
- *   ␠* List item
+ *   * Venus.
+ *   * Earth.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   3:2: Incorrect indentation before bullet: remove 1 space
- *   4:2: Incorrect indentation before bullet: remove 1 space
+ *   Mercury.
+ *
+ *   ␠* Venus.
+ *   ␠* Earth.
+ *
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   3:2: Unexpected `1` space before list item, expected `0` spaces, remove them
+ *   4:2: Unexpected `1` space before list item, expected `0` spaces, remove them
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
-import plural from 'pluralize'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
 
 const remarkLintListItemBulletIndent = lintRule(
   {
@@ -97,34 +96,37 @@ const remarkLintListItemBulletIndent = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'list', function (list, _, grandparent) {
-      let index = -1
-      const pointStartGrandparent = pointStart(grandparent)
+    const treeStart = pointStart(tree)
 
-      while (++index < list.children.length) {
-        const item = list.children[index]
-        const itemStart = pointStart(item)
+    // Unknown containers are not supported.
+    if (!tree || tree.type !== 'root' || !treeStart) return
 
-        if (
-          grandparent &&
-          pointStartGrandparent &&
-          itemStart &&
-          grandparent.type === 'root'
-        ) {
-          const indent = itemStart.column - pointStartGrandparent.column
+    for (const child of tree.children) {
+      if (child.type !== 'list') continue
 
-          if (indent) {
-            file.message(
-              'Incorrect indentation before bullet: remove ' +
-                indent +
-                ' ' +
-                plural('space', indent),
-              itemStart
-            )
-          }
+      const list = child
+
+      for (const item of list.children) {
+        const place = pointStart(item)
+
+        /* c8 ignore next 2 -- doesn’t happen in tests as the whole tree is
+         * generated. */
+        if (!place) continue
+
+        const actual = place.column - treeStart.column
+
+        if (actual) {
+          file.message(
+            'Unexpected `' +
+              actual +
+              '` ' +
+              pluralize('space', actual) +
+              ' before list item, expected `0` spaces, remove them',
+            {ancestors: [tree, list, item], place}
+          )
         }
       }
-    })
+    }
   }
 )
 

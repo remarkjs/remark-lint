@@ -150,14 +150,12 @@ It has a `join` option to configure more complex cases.
 ###### In
 
 ```markdown
-Foo…␊␊…Bar.
+# Planets
+
+Mercury.
+
+Venus.
 ```
-
-###### Out
-
-No messages.
-
-##### `empty-document.md`
 
 ###### Out
 
@@ -168,14 +166,250 @@ No messages.
 ###### In
 
 ```markdown
-Foo…␊␊␊…Bar␊␊␊
+# Planets
+
+
+Mercury.
+
+
+
+Venus.
 ```
 
 ###### Out
 
 ```text
-4:1: Remove 1 line before node
-4:5: Remove 2 lines after node
+4:1: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+8:1: Unexpected `3` blank lines before node, expected up to `1` blank line, remove `2` blank lines
+```
+
+##### `initial.md`
+
+###### In
+
+```markdown
+␊Mercury.
+```
+
+###### Out
+
+```text
+2:1: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+```
+
+##### `final-one.md`
+
+###### In
+
+```markdown
+Mercury.␊
+```
+
+###### Out
+
+No messages.
+
+##### `final-more.md`
+
+###### In
+
+```markdown
+Mercury.␊␊
+```
+
+###### Out
+
+```text
+1:9: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
+```
+
+##### `empty-document.md`
+
+###### Out
+
+No messages.
+
+##### `block-quote.md`
+
+###### In
+
+```markdown
+> Mercury.
+
+Venus.
+
+>
+> Earth.
+>
+```
+
+###### Out
+
+```text
+6:3: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+6:9: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
+```
+
+##### `directive.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> directives ([`remark-directive`][github-remark-directive]).
+
+```markdown
+:::mercury
+Venus.
+
+
+Earth.
+:::
+```
+
+###### Out
+
+```text
+5:1: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+```
+
+##### `footnote.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+[^x]:
+    Mercury.
+
+Venus.
+
+[^y]:
+
+    Earth.
+
+
+    Mars.
+```
+
+###### Out
+
+```text
+8:5: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+11:5: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+```
+
+##### `jsx.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+<Mercury>
+  Venus.
+
+
+  Earth.
+</Mercury>
+```
+
+###### Out
+
+```text
+5:3: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+```
+
+##### `list.md`
+
+###### In
+
+```markdown
+* Mercury.
+* Venus.
+
+***
+
+* Mercury.
+
+* Venus.
+
+***
+
+* Mercury.
+
+
+* Venus.
+```
+
+###### Out
+
+```text
+15:1: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+```
+
+##### `list-item.md`
+
+###### In
+
+```markdown
+* Mercury.
+  Venus.
+
+***
+
+* Mercury.
+
+  Venus.
+
+***
+
+* Mercury.
+
+
+  Venus.
+
+***
+
+*
+  Mercury.
+```
+
+###### Out
+
+```text
+15:3: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+20:3: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+```
+
+##### `deep-block-quote.md`
+
+###### In
+
+```markdown
+* > * > # Venus␊␊
+```
+
+###### Out
+
+```text
+1:16: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
+```
+
+##### `deep-list-item.md`
+
+###### In
+
+```markdown
+> * > * # Venus␊␊
+```
+
+###### Out
+
+```text
+1:16: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
 ```
 
 ## Compatibility
@@ -247,7 +481,13 @@ abide by its terms.
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
+[github-remark-directive]: https://github.com/remarkjs/remark-directive
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
 

@@ -144,7 +144,7 @@ No messages.
 ###### Out
 
 ```text
-1:1: Do not use consecutive dashes in a file name
+1:1: Unexpected consecutive dashes in a file name, expected `-`
 ```
 
 ## Compatibility

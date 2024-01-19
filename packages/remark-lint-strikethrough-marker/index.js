@@ -70,51 +70,48 @@
  * @author Denis Augsburger
  * @copyright 2021 Denis Augsburger
  * @license MIT
- * @example
- *   {"config": "~", "name": "ok.md", "gfm": true}
- *
- *   ~foo~
  *
  * @example
- *   {"config": "~", "name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   ~~foo~~
+ *   ~Mercury~Venus and ~~Earth~~Mars.
+ * @example
+ *   {"gfm": true, "label": "output", "name": "not-ok.md"}
+ *
+ *   1:20-1:29: Unexpected double tilde strikethrough sequences (`~~`), expected single tilde (`~`)
  *
  * @example
- *   {"config": "~", "name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"config": "~", "gfm": true, "name": "ok.md"}
  *
- *   1:1-1:8: Strikethrough should use `~` as a marker
- *
- * @example
- *   {"config": "~~", "name": "ok.md", "gfm": true}
- *
- *   ~~foo~~
+ *   ~Mercury~Venus.
  *
  * @example
- *   {"config": "~~", "name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"config": "~", "gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   ~foo~
+ *   ~~Mercury~~Venus.
+ * @example
+ *   {"config": "~", "gfm": true, "label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:12: Unexpected double tilde strikethrough sequences (`~~`), expected single tilde (`~`)
  *
  * @example
- *   {"config": "~~", "name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"config": "~~", "gfm": true, "name": "ok.md"}
  *
- *   1:1-1:6: Strikethrough should use `~~` as a marker
- *
- * @example
- *   {"name": "not-ok.md", "label": "input", "gfm": true}
- *
- *   ~~foo~~
- *   ~bar~
+ *   ~~Mercury~~Venus.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"config": "~~", "gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   2:1-2:6: Strikethrough should use `~~` as a marker
+ *   ~Mercury~Venus.
+ * @example
+ *   {"config": "~~", "gfm": true, "label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:10: Unexpected single tilde strikethrough sequences (`~`), expected double tilde (`~~`)
  *
  * @example
- *   {"config": "💩", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
+ *   {"config": "🌍", "name": "not-ok.md", "label": "output", "positionless": true, "gfm": true}
  *
- *   1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
+ *   1:1: Unexpected value `🌍` for `options`, expected `'~~'`, `'~'`, or `'consistent'`
  */
 
 /**
@@ -131,7 +128,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintStrikethroughMarker = lintRule(
   {
@@ -148,29 +146,58 @@ const remarkLintStrikethroughMarker = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    let option = options || 'consistent'
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Marker | undefined} */
+    let expected
 
-    if (option !== '~' && option !== '~~' && option !== 'consistent') {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === '~~' || options === '~') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect strikethrough marker `' +
-          option +
-          "`: use either `'consistent'`, `'~'`, or `'~~'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'~~'`, `'~'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'delete', function (node) {
+    visitParents(tree, 'delete', function (node, parents) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {
-        const both = value.slice(start.offset, start.offset + 2)
-        const marker = both === '~~' ? '~~' : '~'
+        /* c8 ignore next -- Weird AST. */
+        if (value.charAt(start.offset) !== '~') return
+        const actual = value.charAt(start.offset + 1) === '~' ? '~~' : '~'
 
-        if (option === 'consistent') {
-          option = marker
-        } else if (marker !== option) {
-          file.message(
-            'Strikethrough should use `' + option + '` as a marker',
-            node
+        if (expected) {
+          if (actual !== expected) {
+            file.message(
+              'Unexpected ' +
+                (actual === '~' ? 'single' : 'double') +
+                ' tilde strikethrough sequences (`' +
+                actual +
+                '`), expected ' +
+                (expected === '~' ? 'single' : 'double') +
+                ' tilde (`' +
+                expected +
+                '`)',
+              {ancestors: [...parents, node], cause, place: node.position}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            "Strikethrough sequence style `'" +
+              actual +
+              "'` first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place: node.position,
+              ruleId: 'strikethrough-marker',
+              source: 'remark-lint'
+            }
           )
         }
       }

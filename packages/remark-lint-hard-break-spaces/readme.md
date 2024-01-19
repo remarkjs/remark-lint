@@ -148,8 +148,8 @@ Due to this, it’s recommended to turn this rule on.
 ###### In
 
 ```markdown
-Lorem ipsum␠␠
-dolor sit amet
+**Mercury** is the first planet from the Sun␠␠
+and the smallest in the Solar System.
 ```
 
 ###### Out
@@ -161,14 +161,33 @@ No messages.
 ###### In
 
 ```markdown
-Lorem ipsum␠␠␠
-dolor sit amet.
+**Mercury** is the first planet from the Sun␠␠␠
+and the smallest in the Solar System.
 ```
 
 ###### Out
 
 ```text
-1:12-2:1: Use two spaces for hard line breaks
+1:45-2:1: Unexpected `3` spaces for hard break, expected `2` spaces
+```
+
+##### `containers.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+[^mercury]:
+    > * > * **Mercury** is the first planet from the Sun␠␠␠
+    >   >   and the smallest in the Solar System.
+```
+
+###### Out
+
+```text
+2:57-3:1: Unexpected `3` spaces for hard break, expected `2` spaces
 ```
 
 ## Compatibility
@@ -239,6 +258,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

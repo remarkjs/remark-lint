@@ -25,16 +25,6 @@
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
- * ### `Marker`
- *
- * Marker (TypeScript type).
- *
- * ###### Type
- *
- * ```ts
- * type Marker = '*' | '+' | '-'
- * ```
- *
  * ### `Options`
  *
  * Configuration (TypeScript type).
@@ -42,7 +32,17 @@
  * ###### Type
  *
  * ```ts
- * type Options = Marker | 'consistent'
+ * type Options = Style | 'consistent'
+ * ```
+ *
+ * ### `Style`
+ *
+ * Style (TypeScript type).
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Style = '*' | '+' | '-'
  * ```
  *
  * ## Recommendation
@@ -57,8 +57,8 @@
  * asterisks by default.
  * Pass `bullet: '+'` or `bullet: '-'` to use a different marker.
  *
- * [api-marker]: #marker
  * [api-options]: #options
+ * [api-style]: #style
  * [api-remark-lint-unordered-list-marker-style]: #unifieduseremarklintunorderedlistmarkerstyle-options
  * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
@@ -70,51 +70,45 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   By default (`'consistent'`), if the file uses only one marker,
- *   that’s OK.
+ *   * Mercury
  *
- *   * Foo
- *   * Bar
- *   * Baz
+ *   1. Venus
  *
- *   Ordered lists are not affected.
- *
- *   1. Foo
- *   2. Bar
- *   3. Baz
+ *   * Earth
  *
  * @example
  *   {"name": "ok.md", "config": "*"}
  *
- *   * Foo
+ *   * Mercury
  *
  * @example
  *   {"name": "ok.md", "config": "-"}
  *
- *   - Foo
+ *   - Mercury
  *
  * @example
  *   {"name": "ok.md", "config": "+"}
  *
- *   + Foo
+ *   + Mercury
  *
  * @example
  *   {"name": "not-ok.md", "label": "input"}
  *
- *   * Foo
- *   - Bar
- *   + Baz
+ *   * Mercury
  *
+ *   - Venus
+ *
+ *   + Earth
  * @example
  *   {"name": "not-ok.md", "label": "output"}
  *
- *   2:1-2:6: Marker style should be `*`
- *   3:1-3:6: Marker style should be `*`
+ *   3:1: Unexpected unordered list marker `-`, expected `*`
+ *   5:1: Unexpected unordered list marker `+`, expected `*`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *   {"name": "not-ok.md", "label": "output", "config": "🌍", "positionless": true}
  *
- *   1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
+ *   1:1: Unexpected value `🌍` for `options`, expected `'*'`, `'+'`, `'-'`, or `'consistent'`
  */
 
 /**
@@ -122,18 +116,17 @@
  */
 
 /**
- * @typedef {'*' | '+' | '-'} Marker
- *   Styles.
- *
- * @typedef {Marker | 'consistent'} Options
+ * @typedef {Style | 'consistent'} Options
  *   Configuration.
+ *
+ * @typedef {'*' | '+' | '-'} Style
+ *   Styles.
  */
 
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
-
-const markers = new Set(['*', '+', '-'])
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintUnorderedListMarkerStyle = lintRule(
   {
@@ -150,45 +143,73 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    let option = options || 'consistent'
+    /** @type {Style | undefined} */
+    let expected
+    /** @type {VFileMessage | undefined} */
+    let cause
 
-    if (option !== 'consistent' && !markers.has(option)) {
+    console.log('check:', file.path)
+
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === '*' || options === '+' || options === '-') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect unordered list item marker style `' +
-          option +
-          "`: use either `'-'`, `'*'`, or `'+'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'*'`, `'+'`, `'-'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'list', function (node) {
-      if (node.ordered) return
+    visitParents(tree, 'listItem', function (node, parents) {
+      const parent = parents.at(-1)
 
-      let index = -1
+      if (!parent || parent.type !== 'list' || parent.ordered) return
 
-      while (++index < node.children.length) {
-        const child = node.children[index]
-        const end = pointStart(child.children[0])
-        const start = pointStart(child)
+      const place = pointStart(node)
 
-        if (
-          end &&
-          start &&
-          typeof end.offset === 'number' &&
-          typeof start.offset === 'number'
-        ) {
-          const marker = /** @type {Marker} */ (
-            value
-              .slice(start.offset, end.offset)
-              .replace(/\[[x ]?]\s*$/i, '')
-              .replace(/\s/g, '')
+      if (!place || typeof place.offset !== 'number') return
+
+      const code = value.charCodeAt(place.offset)
+
+      const actual =
+        code === 42 /* `*` */
+          ? '*'
+          : code === 43 /* `+` */
+            ? '+'
+            : code === 45 /* `-` */
+              ? '-'
+              : /* c8 ignore next -- weird ASTs. */
+                undefined
+
+      /* c8 ignore next -- weird ASTs. */
+      if (!actual) return
+
+      if (expected) {
+        if (actual !== expected) {
+          file.message(
+            'Unexpected unordered list marker `' +
+              actual +
+              '`, expected `' +
+              expected +
+              '`',
+            {ancestors: [...parents, node], cause, place}
           )
-
-          if (option === 'consistent') {
-            option = marker
-          } else if (marker !== option) {
-            file.message('Marker style should be `' + option + '`', child)
-          }
         }
+      } else {
+        expected = actual
+        cause = new VFileMessage(
+          'Unordered list marker style `' +
+            expected +
+            "` first defined for `'consistent'` here",
+          {
+            ancestors: [...parents, node],
+            place,
+            ruleId: 'unordered-list-marker-style',
+            source: 'remark-lint'
+          }
+        )
       }
     })
   }

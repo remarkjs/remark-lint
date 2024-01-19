@@ -33,9 +33,11 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "devlop": "^1.0.0",
+    "pluralize": "^8.0.0",
     "unified-lint-rule": "^2.0.0",
     "unist-util-position": "^5.0.0",
-    "unist-util-visit": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.0",
     "vfile-location": "^5.0.0"
   },
   "scripts": {},
@@ -49,7 +51,9 @@
     "prettier": true,
     "rules": {
       "capitalized-comments": "off",
-      "complexity": "off"
+      "complexity": "off",
+      "unicorn/prefer-code-point": "off",
+      "unicorn/prefer-switch": "off"
     }
   }
 }

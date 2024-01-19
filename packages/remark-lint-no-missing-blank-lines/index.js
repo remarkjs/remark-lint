@@ -1,5 +1,5 @@
 /**
- * remark-lint rule to warn when there are no blank lines between blocks.
+ * remark-lint rule to warn when blank lines are missing.
  *
  * ## What is this?
  *
@@ -13,7 +13,7 @@
  *
  * ### `unified().use(remarkLintNoMissingBlankLines[, options])`
  *
- * Warn when there are no blank lines between blocks.
+ * Warn when blank lines are missing.
  *
  * ###### Parameters
  *
@@ -53,107 +53,97 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   # Foo
+ *   # Mercury
  *
- *   ## Bar
+ *   ## Venus
  *
- *   - Paragraph
+ *   * Earth.
  *
- *     + List.
+ *     * Mars.
  *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   # Foo
- *   ## Bar
- *
- *   - Paragraph
- *     + List.
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "not-ok.md", "label": "output"}
- *
- *   2:1-2:7: Missing blank line before block node
- *   5:3-5:10: Missing blank line before block node
- *
- * @example
- *   {"name": "tight.md", "config": {"exceptTightLists": true}, "label": "input"}
- *
- *   # Foo
- *   ## Bar
- *
- *   - Paragraph
- *     + List.
- *
- *   Paragraph.
- *
- * @example
- *   {"name": "tight.md", "config": {"exceptTightLists": true}, "label": "output"}
- *
- *   2:1-2:7: Missing blank line before block node
- *
- * @example
- *   {"name": "containers.md", "label": "input"}
- *
- *   > # Alpha
+ *   > # Jupiter
  *   >
- *   > Bravo.
+ *   > Saturn.
  *
- *   - charlie.
- *   - delta.
- *
- *   + # Echo
- *     Foxtrot.
  * @example
- *   {"name": "containers.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   9:3-9:11: Missing blank line before block node
+ *   # Mercury
+ *   ## Venus
+ *
+ *   * Earth
+ *     * Mars.
+ *
+ *   > # Jupiter
+ *   > Saturn.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *    2:1-2:9: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+ *    5:3-5:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+ *    8:3-8:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+ *
+ * @example
+ *   {"config": {"exceptTightLists": true}, "name": "tight.md"}
+ *
+ *   * Venus.
+ *
+ *     * Mars.
+ *
+ * @example
+ *   {"label": "input", "name": "containers.md"}
+ *
+ *   > # Venus
+ *   >
+ *   > Mercury.
+ *
+ *   - earth.
+ *   - mars.
+ *
+ *   * # Jupiter
+ *     Saturn.
+ * @example
+ *   {"label": "output", "name": "containers.md"}
+ *
+ *   9:3-9:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
  *
  * @example
  *   {"gfm": true, "label": "input", "name": "gfm.md"}
  *
- *   GFM tables and footnotes are also checked[^e]
+ *   | Planet  | Diameter |
+ *   | ------- | -------- |
+ *   | Mercury | 4 880 km |
  *
- *   | Alpha   | Bravo |
- *   | ------- | ----- |
- *   | Charlie | Delta |
- *
- *   [^e]: Echo
- *   [^f]: Foxtrot.
- *
+ *   [^Mercury]:
+ *       **Mercury** is the first planet from the Sun and the smallest
+ *       in the Solar System.
+ *   [^Venus]:
+ *       **Venus** is the second planet from the Sun.
  * @example
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
- *   8:1-8:15: Missing blank line before block node
+ *   8:1-9:49: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
  *
- *   MDX JSX flow elements and expressions are also checked.
- *
  *   <Tip kind="info">
- *     # Alpha
- *     Bravo.
+ *     # Venus
+ *     Mars.
  *   </Tip>
  *   {Math.PI}
- *
  * @example
  *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
  *
- *   5:3-5:9: Missing blank line before block node
- *   7:1-7:10: Missing blank line before block node
+ *    3:3-3:8: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+ *    5:1-5:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
  *
  * @example
  *   {"label": "input", "math": true, "name": "math.md"}
- *
- *   Math is also checked.
  *
  *   $$
  *   \frac{1}{2}
@@ -161,26 +151,24 @@
  *   $$
  *   \frac{2}{3}
  *   $$
- *
  * @example
  *   {"label": "output", "math": true, "name": "math.md"}
  *
- *   6:1-8:3: Missing blank line before block node
+ *   4:1-6:3: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
  *
  * @example
  *   {"directive": true, "label": "input", "name": "directive.md"}
  *
  *   Directives are also checked.
  *
- *   ::video{#123}
- *   :::tip
- *   Tip!
+ *   ::video{#mercury}
+ *   :::planet
+ *   Venus.
  *   :::
- *
  * @example
  *   {"directive": true, "label": "output", "name": "directive.md"}
  *
- *   4:1-6:4: Missing blank line before block node
+ *   4:1-6:4: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
  */
 
 /**
@@ -199,9 +187,10 @@
 /// <reference types="mdast-util-math" />
 /// <reference types="mdast-util-mdx" />
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 /** @type {ReadonlyArray<Nodes['type']>} */
 // eslint-disable-next-line unicorn/prefer-set-has
@@ -242,24 +231,39 @@ const remarkLintNoMissingBlankLines = lintRule(
   function (tree, file, options) {
     const exceptTightLists = options ? options.exceptTightLists : false
 
-    visit(tree, function (node, index, parent) {
+    visitParents(tree, function (node, parents) {
+      const parent = parents[parents.length - 1]
+
+      // Ignore phrasing nodes and non-parents.
+      if (phrasing(node)) return SKIP
+      if (!parent) return
+
       if (
-        parent &&
-        typeof index === 'number' &&
-        types.includes(node.type) &&
-        (parent.type !== 'listItem' || !exceptTightLists)
+        // Children of list items are normally checked.
+        (!exceptTightLists || parent.type !== 'listItem') &&
+        // Known block:
+        types.includes(node.type)
       ) {
         const start = pointStart(node)
-        const previous = parent.children[index - 1]
+        const siblings = /** @type {Array<Nodes>} */ (parent.children)
+        const previous = siblings[siblings.indexOf(node) - 1]
         const previousEnd = pointEnd(previous)
 
         if (
-          start &&
-          previousEnd &&
-          types.includes(previous.type) &&
-          start.line === previousEnd.line + 1
+          !previous ||
+          !previousEnd ||
+          !start ||
+          // Other known block:
+          !types.includes(previous.type)
         ) {
-          file.message('Missing blank line before block node', node)
+          return
+        }
+
+        if (previousEnd.line + 1 === start.line) {
+          file.message(
+            'Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line',
+            {ancestors: [...parents, node], place: node.position}
+          )
         }
       }
     })

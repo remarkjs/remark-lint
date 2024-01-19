@@ -190,9 +190,13 @@ When configured with `'padded'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| A     | B     |
-| ----- | ----- |
-| Alpha | Bravo |
+| Planet  | Symbol | Satellites | Mean anomaly (°) |
+| ------- | :----- | :--------: | ---------------: |
+| Mercury | ☿      |    None    |          174 796 |
+
+| Planet | Symbol | Satellites | Mean anomaly (°) |
+| - | :- | :-: | -: |
+| Venus | ♀ | None | 50 115 |
 ```
 
 ###### Out
@@ -209,33 +213,33 @@ When configured with `'padded'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| A    |    B |
-| :----|----: |
-| Alpha|Bravo |
+| Planet |
+| -------|
+| Mercury|
 
-| C      |    D |
-| :----- | ---: |
-|Charlie | Delta|
+|Planet |
+|------ |
+|Venus  |
 
-Too much padding isn’t good either:
-
-| E     | F        |   G    |      H |
-| :---- | -------- | :----: | -----: |
-| Echo  | Foxtrot  |  Golf  |  Hotel |
+|  Planet  |
+|  ------  |
+|  Venus   |
 ```
 
 ###### Out
 
 ```text
-3:8: Cell should be padded
-3:9: Cell should be padded
-7:2: Cell should be padded
-7:17: Cell should be padded
-13:7: Cell should be padded with 1 space, not 2
-13:18: Cell should be padded with 1 space, not 2
-13:23: Cell should be padded with 1 space, not 2
-13:27: Cell should be padded with 1 space, not 2
-13:32: Cell should be padded with 1 space, not 2
+2:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+3:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+5:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+6:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+7:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+9:4: Unexpected `2` spaces between cell edge and content, expected `1` space, remove `1` space
+9:12: Unexpected `2` spaces between cell content and edge, expected `1` space, remove `1` space
+10:4: Unexpected `2` spaces between cell edge and content, expected `1` space, remove `1` space
+10:12: Unexpected `2` spaces between cell content and edge, expected `1` space, remove `1` space
+11:4: Unexpected `2` spaces between cell edge and content, expected `1` space, remove `1` space
+11:12: Unexpected `3` spaces between cell content and edge, expected between `1` (unaligned) and `2` (aligned) spaces, remove between `1` and `2` spaces
 ```
 
 ##### `ok.md`
@@ -248,9 +252,13 @@ When configured with `'compact'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-|A    |B    |
-|-----|-----|
-|Alpha|Bravo|
+|Planet |Symbol|Satellites|Mean anomaly (°)|
+|-------|:-----|:--------:|---------------:|
+|Mercury|☿     |   None   |         174 796|
+
+|Planet|Symbol|Satellites|Mean anomaly (°)|
+|-|:-|:-:|-:|
+|Venus|♀|None|50 115|
 ```
 
 ###### Out
@@ -267,24 +275,37 @@ When configured with `'compact'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-|   A    | B    |
-|   -----| -----|
-|   Alpha| Bravo|
+| Planet |
+| -------|
+| Mercury|
 
-|C      |     D|
-|:------|-----:|
-|Charlie|Delta |
+|Planet |
+|------ |
+|Venus  |
+
+|  Planet  |
+|  ------  |
+|  Venus   |
 ```
 
 ###### Out
 
 ```text
-3:5: Cell should be compact
-3:12: Cell should be compact
-7:15: Cell should be compact
+1:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+3:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+5:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+6:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+7:9: Unexpected `2` spaces between cell content and edge, expected between `0` (unaligned) and `1` (aligned) space, remove between `1` and `2` spaces
+9:4: Unexpected `2` spaces between cell edge and content, expected `0` spaces, remove `2` spaces
+9:12: Unexpected `2` spaces between cell content and edge, expected `0` spaces, remove `2` spaces
+10:4: Unexpected `2` spaces between cell edge and content, expected `0` spaces, remove `2` spaces
+10:12: Unexpected `2` spaces between cell content and edge, expected `0` spaces, remove `2` spaces
+11:4: Unexpected `2` spaces between cell edge and content, expected `0` spaces, remove `2` spaces
+11:12: Unexpected `3` spaces between cell content and edge, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
 ```
 
-##### `ok-padded.md`
+##### `consistent-padded-ok.md`
 
 ###### In
 
@@ -292,24 +313,15 @@ When configured with `'compact'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-The default is `'consistent'`.
-
-| A     | B     |
-| ----- | ----- |
-| Alpha | Bravo |
-
-| C       | D     |
-| ------- | ----- |
-| Charlie | Delta |
+| Planet |
+| - |
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok-padded.md`
-
-When configured with `'consistent'`.
+##### `consistent-padded-nok.md`
 
 ###### In
 
@@ -317,24 +329,17 @@ When configured with `'consistent'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| A     | B     |
-| ----- | ----- |
-| Alpha | Bravo |
-
-| C      |     D |
-| :----- | ----: |
-|Charlie | Delta |
+| Planet|
+| - |
 ```
 
 ###### Out
 
 ```text
-7:2: Cell should be padded
+1:9: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
 ```
 
-##### `ok-compact.md`
-
-When configured with `'consistent'`.
+##### `consistent-compact-ok.md`
 
 ###### In
 
@@ -342,22 +347,15 @@ When configured with `'consistent'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-|A    |B    |
-|-----|-----|
-|Alpha|Bravo|
-
-|C      |D    |
-|-------|-----|
-|Charlie|Delta|
+|Planet|
+|-|
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok-compact.md`
-
-When configured with `'consistent'`.
+##### `consistent-compact-nok.md`
 
 ###### In
 
@@ -365,77 +363,320 @@ When configured with `'consistent'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-|A    |B    |
-|-----|-----|
-|Alpha|Bravo|
-
-|C      |     D|
-|:------|-----:|
-|Charlie|Delta |
+|Planet |
+|-|
 ```
 
 ###### Out
 
 ```text
-7:15: Cell should be compact
-```
-
-##### `not-ok.md`
-
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect table cell padding style `💩`, expected `'padded'`, `'compact'`, or `'consistent'`
+1:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
 ```
 
 ##### `empty.md`
 
-When configured with `'padded'`.
-
 ###### In
 
 > 👉 **Note**: this example uses
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-<!-- Empty cells are OK, but those surrounding them may not be. -->
-
-|        | Alpha | Bravo|
-| ------ | ----- | ---: |
-| Charlie|       |  Echo|
-```
-
-###### Out
-
-```text
-3:25: Cell should be padded
-5:10: Cell should be padded
-5:25: Cell should be padded
-```
-
-##### `missing-body.md`
-
-When configured with `'padded'`.
-
-###### In
-
-> 👉 **Note**: this example uses
-> GFM ([`remark-gfm`][github-remark-gfm]).
-
-```markdown
-<!-- Missing cells are fine as well. -->
-
-| Alpha | Bravo   | Charlie |
-| ----- | ------- | ------- |
-| Delta |
-| Echo  | Foxtrot |
+| | Satellites |
+| - | - |
+| Mercury | |
 ```
 
 ###### Out
 
 No messages.
+
+##### `missing-cells.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Planet | Symbol | Satellites |
+| - | - | - |
+| Mercury |
+| Venus | ♀ |
+| Earth | 🜨 and ♁ | 1 |
+| Mars | ♂ | 2 | 19 412 |
+```
+
+###### Out
+
+No messages.
+
+##### `missing-fences.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+␠Planet|Symbol|Satellites
+------:|:-----|----------
+Mercury|☿     |0
+
+Planet|Symbol
+-----:|------
+␠Venus|♀
+```
+
+###### Out
+
+```text
+1:8: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+1:9: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+1:15: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+1:16: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+2:8: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+2:9: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+2:15: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+2:16: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+3:8: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+3:9: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+3:16: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+5:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+5:8: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+6:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+6:8: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+7:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+7:8: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+```
+
+##### `missing-fences.md`
+
+When configured with `'compact'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Planet | Symbol | Satellites
+-: | - | -
+Mercury | ☿ | 0
+
+Planet | Symbol
+-----: | ------
+␠Venus | ♀
+```
+
+###### Out
+
+```text
+1:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+1:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+1:17: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+1:19: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:4: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+2:6: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+3:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+3:11: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+3:15: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+5:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+5:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+6:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+6:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+7:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+7:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+```
+
+##### `trailing-spaces.md`
+
+When configured with `'compact'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Planet | Symbol␠
+-: | -␠
+Mercury | ☿␠␠
+
+| Planet | Symbol |␠
+| ------ | ------ |␠
+| Venus  | ♀      |␠␠
+```
+
+###### Out
+
+```text
+1:8: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+1:10: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:4: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+2:6: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+3:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+3:11: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+5:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+5:10: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+5:12: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+5:19: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+6:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+6:10: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+6:12: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+6:19: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+7:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+7:10: Unexpected `2` spaces between cell content and edge, expected between `0` (unaligned) and `1` (aligned) space, remove between `1` and `2` spaces
+7:12: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+7:19: Unexpected `6` spaces between cell content and edge, expected between `0` (unaligned) and `5` (aligned) spaces, remove between `1` and `6` spaces
+```
+
+##### `nothing.md`
+
+When configured with `'compact'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+|   |   |   |
+| - | - | - |
+|   |   |   |
+```
+
+###### Out
+
+```text
+1:5: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+1:9: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+1:13: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+2:3: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:5: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+2:7: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:9: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+2:11: Unexpected `1` space between cell edge and content, expected `0` spaces, remove `1` space
+2:13: Unexpected `1` space between cell content and edge, expected `0` spaces, remove `1` space
+3:5: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+3:9: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+3:13: Unexpected `3` spaces between cell edge and content, expected between `0` (unaligned) and `1` (aligned) space, remove between `2` and `3` spaces
+```
+
+##### `nothing.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+||||
+|-|-|-|
+||||
+```
+
+###### Out
+
+```text
+1:2: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+1:3: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+1:4: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+2:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+2:3: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+2:4: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+2:5: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+2:6: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+2:7: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+3:2: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+3:3: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+3:4: Unexpected `0` spaces between cell edge and content, expected between `1` (unaligned) and `3` (aligned) spaces, add between `3` and `1` space
+```
+
+##### `more-weirdness.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Mercury
+|-
+
+Venus
+-|
+```
+
+###### Out
+
+```text
+2:2: Unexpected `0` spaces between cell edge and content, expected `1` space, add `1` space
+5:2: Unexpected `0` spaces between cell content and edge, expected between `1` (unaligned) and `5` (aligned) spaces, add between `5` and `1` space
+```
+
+##### `containers.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+> | Mercury|
+> | - |
+
+* | Venus|
+  | - |
+
+> * > | Earth|
+>   > | - |
+```
+
+###### Out
+
+```text
+1:12: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+4:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+7:14: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+```
+
+##### `windows.md`
+
+When configured with `'padded'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Mercury|␍␊| --- |␍␊| None |
+```
+
+###### Out
+
+```text
+1:10: Unexpected `0` spaces between cell content and edge, expected `1` space, add `1` space
+```
+
+##### `not-ok.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `'compact'`, `'padded'`, or `'consistent'`
+```
 
 ## Compatibility
 

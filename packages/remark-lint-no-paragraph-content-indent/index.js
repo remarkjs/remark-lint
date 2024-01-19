@@ -35,81 +35,63 @@
  * @author Titus Wormer
  * @copyright 2017 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   Alpha
+ *   Mercury.
  *
- *   Bravo
- *   Charlie.
- *   **Delta**.
+ *   Venus and
+ *   **Earth**.
  *
- *   *   Echo
- *       Foxtrot.
+ *   * Mars and
+ *     Jupiter.
  *
- *   > Golf
- *   > Hotel.
- *
- *   `india()`
- *   juliett.
- *
- *   -   `kilo()`
- *       lima.
- *
- *   -   `mike()` - november.
- *
- *   ![image]() text
- *
- *   ![image reference][] text
- *
- *   [![][text]][text]
+ *   > Saturn and
+ *   > Uranus.
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   ␠Alpha
+ *   ␠Mercury.
  *
- *   Bravo
- *   ␠Charlie.
+ *   Venus and
+ *   ␠␠**Earth**.
  *
- *   *   Delta
- *       ␠Echo.
+ *   * Mars and
+ *     ␠␠Jupiter.
  *
- *   > Foxtrot
- *   > ␠Golf.
+ *   > Saturn and
+ *   > ␠Uranus.
  *
- *   `hotel()`
- *   ␠india.
+ *   * Neptune
+ *   and
+ *     ␠␠Pluto.
  *
- *   -   `juliett()`
- *       ␠kilo.
- *
- *   ␠![lima]() mike
- *
- *   * november
- *   oscar
- *     ␠papa.
+ *   > Ceres
+ *   and
+ *   > ␠Makemake.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:2: Expected no indentation in paragraph content
- *   4:2: Expected no indentation in paragraph content
- *   7:6: Expected no indentation in paragraph content
- *   10:4: Expected no indentation in paragraph content
- *   13:2: Expected no indentation in paragraph content
- *   16:6: Expected no indentation in paragraph content
- *   18:2: Expected no indentation in paragraph content
- *   22:4: Expected no indentation in paragraph content
+ *   1:2: Unexpected `1` extra space before content line, remove `1` space
+ *   4:3: Unexpected `2` extra spaces before content line, remove `2` spaces
+ *   7:5: Unexpected `2` extra spaces before content line, remove `2` spaces
+ *   10:4: Unexpected `1` extra space before content line, remove `1` space
+ *   14:5: Unexpected `2` extra spaces before content line, remove `2` spaces
+ *   18:4: Unexpected `1` extra space before content line, remove `1` space
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+import {ok as assert} from 'devlop'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {SKIP, visit} from 'unist-util-visit'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {location} from 'vfile-location'
 
 const remarkLintNoParagraphContentIndent = lintRule(
@@ -125,60 +107,100 @@ const remarkLintNoParagraphContentIndent = lintRule(
    */
   function (tree, file) {
     const value = String(file)
-    const loc = location(value)
+    const locations = location(value)
 
-    visit(tree, 'paragraph', function (node, _, parent) {
-      const end = pointEnd(node)?.line
-      let line = pointStart(node)?.line
+    // Note: this code is very similar to `remark-lint-no-table-indentation`.
+    visitParents(tree, 'paragraph', function (node, parents) {
+      const parent = parents.at(-1)
+      const end = pointEnd(node)
+      const start = pointStart(node)
+
+      if (!parent || !end || !start) return
+
+      const parentHead = parent.children[0]
+      // Always defined if we have a parent.
+      assert(parentHead)
+      let line = start.line
       /** @type {number | undefined} */
       let column
 
-      if (parent && parent.type === 'root') {
+      if (parent.type === 'root') {
         column = 1
-      } else if (parent && parent.type === 'blockquote') {
+      } else if (parent.type === 'blockquote') {
         const parentStart = pointStart(parent)
-        if (parentStart) column = parentStart.column + 2
-      } else if (parent && parent.type === 'listItem') {
-        column = pointStart(parent.children[0])?.column
 
-        // Skip past the first line if we’re the first child of a list item.
-        if (line && parent.children[0] === node) {
-          line++
+        if (parentStart) {
+          column = parentStart.column + 2
+        }
+      } else if (parent.type === 'listItem') {
+        const headStart = pointStart(parentHead)
+
+        if (headStart) {
+          column = headStart.column
+
+          // Skip past the first line if we’re the first child of a list item.
+          if (parentHead === node) {
+            line++
+          }
         }
       }
 
-      // In a parent we don’t know, exit.
-      if (!column || !line || !end) {
-        return
-      }
+      /* c8 ignore next -- unknown parent. */
+      if (!column) return
 
-      while (line <= end) {
-        let offset = loc.toOffset({line, column})
-        const lineColumn = offset
+      while (line <= end.line) {
+        let index = locations.toOffset({line, column})
 
-        /* c8 ignore next 3 -- we get here if we have offsets. */
-        if (typeof lineColumn !== 'number' || typeof offset !== 'number') {
-          continue
+        /* c8 ignore next -- out of range somehow. */
+        if (typeof index !== 'number') continue
+
+        const expected = index
+
+        // Check that we only have whitespace / block quote marker before.
+        // We expect a line ending or a block quote marker.
+        // Otherwise (weird ancestor or lazy line) we stop.
+        let code = value.charCodeAt(index - 1)
+
+        while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+          index--
+          code = value.charCodeAt(index - 1)
         }
 
-        while (/[ \t]/.test(value.charAt(offset - 1))) {
-          offset--
-        }
+        if (
+          code === 10 /* `\n` */ ||
+          code === 13 /* `\r` */ ||
+          code === 62 /* `>` */ ||
+          Number.isNaN(code)
+        ) {
+          // Now check superfluous indent.
+          let actual = expected
 
-        // Exit if we find some other content before this line.
-        // This might be because the paragraph line is lazy, which isn’t this
-        // rule.
-        if (!offset || /[\r\n>]/.test(value.charAt(offset - 1))) {
-          offset = lineColumn
+          code = value.charCodeAt(actual)
 
-          while (/[ \t]/.test(value.charAt(offset))) {
-            offset++
+          while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+            code = value.charCodeAt(++actual)
           }
 
-          if (lineColumn !== offset) {
+          const difference = actual - expected
+
+          if (difference !== 0) {
             file.message(
-              'Expected no indentation in paragraph content',
-              loc.toPoint(offset)
+              'Unexpected `' +
+                difference +
+                '` extra ' +
+                pluralize('space', difference) +
+                ' before content line, remove `' +
+                difference +
+                '` ' +
+                pluralize('space', difference),
+              {
+                ancestors: [...parents, node],
+                place: {
+                  line,
+                  column: column + difference,
+                  offset: actual
+                }
+              }
             )
           }
         }

@@ -7,8 +7,7 @@
  *
  * ## When should I use this?
  *
- * You can use this package to ensure that no broken headings are user, which
- * instead will result in paragraphs with the `#` characters shown.
+ * You can use this rule to check markdown code style.
  *
  * ## API
  *
@@ -31,35 +30,41 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   ###### Alpha
+ *   ###### Venus
  *
- *   Bravo.
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   ####### Charlie
- *
- *   Delta.
+ *   Mercury.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:1-1:16: This looks like a heading but has too many hashes
+ *   ####### Venus
+ *
+ *   Mercury.
+ *
+ *   ######## Earth
+ *
+ *   Mars.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:8: Unexpected `7` hashes starting paragraph looking like a heading, expected up to `6` hashes, remove `1` hash
+ *   5:9: Unexpected `8` hashes starting paragraph looking like a heading, expected up to `6` hashes, remove `2` hashes
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {pointStart} from 'unist-util-position'
+import {visitParents} from 'unist-util-visit-parents'
 
-const fence = '#######'
+const max = 6
 
 const remarkLintNoHeadingLikeParagraph = lintRule(
   {
@@ -73,20 +78,37 @@ const remarkLintNoHeadingLikeParagraph = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'paragraph', function (node) {
-      const place = position(node)
+    visitParents(tree, 'paragraph', function (node, parents) {
+      const head = node.children[0]
 
-      if (place) {
-        const head = node.children[0]
+      if (head && head.type === 'text') {
+        const start = pointStart(node)
+        let size = 0
 
-        if (
-          head &&
-          head.type === 'text' &&
-          head.value.slice(0, fence.length) === fence
-        ) {
+        while (head.value.charCodeAt(size) === 35 /* `#` */) {
+          size++
+        }
+
+        if (start && typeof start.offset === 'number' && size > max) {
+          const extra = size - max
+
           file.message(
-            'This looks like a heading but has too many hashes',
-            place
+            'Unexpected `' +
+              size +
+              '` hashes starting paragraph looking like a heading, expected up to `' +
+              max +
+              '` hashes, remove `' +
+              extra +
+              '` ' +
+              pluralize('hash', extra),
+            {
+              ancestors: [...parents, node, head],
+              place: {
+                line: start.line,
+                column: start.column + size,
+                offset: start.offset + size
+              }
+            }
           )
         }
       }

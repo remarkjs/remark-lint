@@ -33,6 +33,7 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "devlop": "^1.0.0",
     "unified-lint-rule": "^2.0.0",
     "vfile-location": "^5.0.0"
   },

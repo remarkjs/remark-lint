@@ -149,9 +149,7 @@ every heading out loud to navigate within a page).
 ###### In
 
 ```markdown
-# Alpha bravo charlie delta echo foxtrot golf hotel
-
-# ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
+# Mercury is the first planet from the Sun
 ```
 
 ###### Out
@@ -160,21 +158,21 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `40`.
+When configured with `30`.
 
 ###### In
 
 ```markdown
-# Alpha bravo charlie delta echo foxtrot golf hotel
+# Mercury is the first planet from the Sun
 ```
 
 ###### Out
 
 ```text
-1:1-1:52: Use headings shorter than `40`
+1:1-1:43: Unexpected `40` characters in heading, expected at most `30` characters
 ```
 
-##### `ok.mdx`
+##### `mdx.mdx`
 
 When configured with `30`.
 
@@ -184,13 +182,23 @@ When configured with `30`.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<h1>In MDX, headings are checked too</h1>
+<h1>Mercury is the first planet from the Sun</h1>
 ```
 
 ###### Out
 
 ```text
-1:1-1:42: Use headings shorter than `30`
+1:1-1:50: Unexpected `40` characters in heading, expected at most `30` characters
+```
+
+##### `not-ok.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `number`
 ```
 
 ## Compatibility

@@ -37,43 +37,45 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   [foo][]
+ *   [Mercury][]
  *
- *   [foo]: https://example.com
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   [bar]: https://example.com
+ *   [mercury]: https://example.com/mercury/
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:1-1:27: Found unused definition
+ *   [mercury]: https://example.com/mercury/
+ *
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:40: Unexpected unused definition, expected no definition or one or more references to `mercury`
  *
  * @example
  *   {"gfm": true, "label": "input", "name": "gfm.md"}
  *
- *   a[^x].
+ *   Mercury[^mercury] is a planet.
  *
- *   [^x]: ok
- *   [^y]: not ok
- *
+ *   [^Mercury]:
+ *       **Mercury** is the first planet from the Sun and the smallest
+ *       in the Solar System.
+ *   [^Venus]:
+ *       **Venus** is the second planet from
+ *       the Sun.
  * @example
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
- *   4:1-4:13: Found unused footnote definition
+ *   6:1-8:13: Unexpected unused footnote definition, expected no definition or one or more footnote references to `venus`
  */
 
 /**
- * @typedef {import('mdast').Definition} Definition
- * @typedef {import('mdast').FootnoteDefinition} FootnoteDefinition
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoUnusedDefinitions = lintRule(
   {
@@ -87,28 +89,27 @@ const remarkLintNoUnusedDefinitions = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Map<string, {node: Definition | FootnoteDefinition | undefined, used: boolean}>} */
+    /** @type {Map<string, {ancestors: Array<Nodes> | undefined, used: boolean}>} */
     const footnoteDefinitions = new Map()
-    /** @type {Map<string, {node: Definition | FootnoteDefinition | undefined, used: boolean}>} */
+    /** @type {Map<string, {ancestors: Array<Nodes> | undefined, used: boolean}>} */
     const definitions = new Map()
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       if ('identifier' in node) {
-        const id = node.identifier.toLowerCase()
         const map =
           node.type === 'footnoteDefinition' ||
           node.type === 'footnoteReference'
             ? footnoteDefinitions
             : definitions
-        let entry = map.get(id)
+        let entry = map.get(node.identifier)
 
         if (!entry) {
-          entry = {node: undefined, used: false}
-          map.set(id, entry)
+          entry = {ancestors: undefined, used: false}
+          map.set(node.identifier, entry)
         }
 
         if (node.type === 'definition' || node.type === 'footnoteDefinition') {
-          entry.node = node
+          entry.ancestors = [...parents, node]
         } else if (
           node.type === 'imageReference' ||
           node.type === 'linkReference' ||
@@ -119,19 +120,29 @@ const remarkLintNoUnusedDefinitions = lintRule(
       }
     })
 
-    for (const entry of footnoteDefinitions.values()) {
-      const place = position(entry.node)
+    const entries = [...footnoteDefinitions.values(), ...definitions.values()]
 
-      if (place && !entry.used) {
-        file.message('Found unused footnote definition', place)
-      }
-    }
+    for (const entry of entries) {
+      if (!entry.used) {
+        assert(entry.ancestors) // Always defined if `used`.
+        const node = entry.ancestors.at(-1)
+        assert(node) // Always defined.
+        assert(node.type === 'footnoteDefinition' || node.type === 'definition') // Always definition.
 
-    for (const entry of definitions.values()) {
-      const place = position(entry.node)
+        if (node.position) {
+          const prefix = node.type === 'footnoteDefinition' ? 'footnote ' : ''
 
-      if (place && !entry.used) {
-        file.message('Found unused definition', place)
+          file.message(
+            'Unexpected unused ' +
+              prefix +
+              'definition, expected no definition or one or more ' +
+              prefix +
+              'references to `' +
+              node.identifier +
+              '`',
+            {ancestors: entry.ancestors, place: node.position}
+          )
+        }
       }
     }
   }

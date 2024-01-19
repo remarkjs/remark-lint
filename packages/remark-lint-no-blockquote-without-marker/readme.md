@@ -152,9 +152,11 @@ in a block quote.
 ###### In
 
 ```markdown
-> Foo…
-> …bar…
-> …baz.
+> Mercury,
+> Venus,
+> and Earth.
+
+Mars.
 ```
 
 ###### Out
@@ -166,9 +168,9 @@ No messages.
 ###### In
 
 ```markdown
->␉Foo…
->␉…bar…
->␉…baz.
+>␉Mercury,
+>␉Venus,
+>␉and Earth.
 ```
 
 ###### Out
@@ -180,15 +182,15 @@ No messages.
 ###### In
 
 ```markdown
-> Foo…
-…bar…
-> …baz.
+> Mercury,
+Venus,
+> and Earth.
 ```
 
 ###### Out
 
 ```text
-2:1: Missing marker in block quote
+2:1: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
 ```
 
 ##### `not-ok-tabs.md`
@@ -196,16 +198,49 @@ No messages.
 ###### In
 
 ```markdown
->␉Foo…
-␉…bar…
-…baz.
+>␉Mercury,
+␉Venus,
+and Earth.
 ```
 
 ###### Out
 
 ```text
-2:1: Missing marker in block quote
-3:1: Missing marker in block quote
+2:2: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+3:1: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+```
+
+##### `containers.md`
+
+###### In
+
+```markdown
+* > Mercury and
+Venus.
+
+> * Mercury and
+  Venus.
+
+* > * Mercury and
+    Venus.
+
+> * > Mercury and
+      Venus.
+
+***
+
+> * > Mercury and
+>     Venus.
+```
+
+###### Out
+
+```text
+2:1: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+5:3: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+8:5: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+11:7: Unexpected `0` block quote markers before paragraph line, expected `2` markers, add `2` markers
+16:7: Unexpected `1` block quote marker before paragraph line, expected `2` markers, add `1` marker
 ```
 
 ## Compatibility

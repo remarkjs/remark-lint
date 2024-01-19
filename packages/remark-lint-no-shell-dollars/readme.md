@@ -148,26 +148,22 @@ or use different code blocks for commands and output.
 
 ````markdown
 ```bash
-echo a
+echo "Mercury and Venus"
 ```
 
 ```sh
-echo a
-echo a > file
+echo "Mercury and Venus"
+echo "Earth and Mars" > file
 ```
 
 ```zsh
-$ echo a
-a
-$ echo a > file
+$ echo "Mercury and Venus"
+Mercury and Venus
+$ echo "Earth and Mars" > file
 ```
-
-Some empty code:
 
 ```command
 ```
-
-It’s fine to use dollars in non-shell code.
 
 ```js
 $('div').remove()
@@ -184,20 +180,20 @@ No messages.
 
 ````markdown
 ```sh
-$ echo a
+$ echo "Mercury and Venus"
 ```
 
 ```bash
-$ echo a
-$ echo a > file
+$ echo "Mercury and Venus"
+$ echo "Earth and Mars" > file
 ```
 ````
 
 ###### Out
 
 ```text
-1:1-3:4: Do not use dollar signs before shell commands
-5:1-8:4: Do not use dollar signs before shell commands
+1:1-3:4: Unexpected shell code with every line prefixed by `$`, expected different code for input and output
+5:1-8:4: Unexpected shell code with every line prefixed by `$`, expected different code for input and output
 ```
 
 ## Compatibility

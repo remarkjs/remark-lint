@@ -33,26 +33,37 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "plug-ins.md"}
  *
  * @example
- *   {"name": "plugins.md"}
+ *   {"name": "mercury-and-venus.md"}
  *
  * @example
- *   {"name": "plug_ins.md", "label": "output", "positionless": true}
- *
- *   1:1: Do not use `_` in a file name
+ *   {"name": "mercury.md"}
  *
  * @example
- *   {"name": "README.md", "label": "output", "config": "\\.a-z0-9", "positionless": true}
+ *   {"label": "output", "name": "mercury_and_venus.md", "positionless": true}
  *
- *   1:1: Do not use `R` in a file name
+ *   1:1: Unexpected character `_` in file name
  *
  * @example
- *   {"name": "plug ins.md", "label": "output", "positionless": true}
+ *   {"config": "\\.a-z0-9", "label": "output", "name": "Readme.md", "positionless": true}
  *
- *   1:1: Do not use ` ` in a file name
+ *   1:1: Unexpected character `R` in file name
+ *
+ * @example
+ *   {"config": {"source": "[^\\.a-z0-9]"}, "label": "output", "name": "mercury_and_venus.md", "positionless": true}
+ *
+ *   1:1: Unexpected character `_` in file name
+ *
+ * @example
+ *   {"label": "output", "name": "mercury and venus.md", "positionless": true}
+ *
+ *   1:1: Unexpected character ` ` in file name
+ *
+ * @example
+ *   {"config": 1, "label": "output", "name": "not-ok-options.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `1` for `options`, expected `RegExp` or `string`
  */
 
 /**
@@ -61,7 +72,7 @@
 
 import {lintRule} from 'unified-lint-rule'
 
-const expression = /[^-.\dA-Za-z]/
+const defaultExpression = /[^-.\dA-Za-z]/
 
 const remarkLintNoFileNameIrregularCharacters = lintRule(
   {
@@ -73,22 +84,32 @@ const remarkLintNoFileNameIrregularCharacters = lintRule(
    *   Tree.
    * @param {RegExp | string | null | undefined} [options]
    *   Configuration (default: `/[^-.\dA-Za-z]/`),
-   *   when string wrapped in `new RegExp('[^' + x + ']')` so make sure to
+   *   when string wrapped in `new RegExp('[^' + x + ']', 'u')` so make sure to
    *   double escape regexp characters
    * @returns {undefined}
    *   Nothing.
    */
   function (_, file, options) {
-    let preferred = options || expression
+    let expected = defaultExpression
 
-    if (typeof preferred === 'string') {
-      preferred = new RegExp('[^' + preferred + ']')
+    if (options === null || options === undefined) {
+      // Empty.
+    } else if (typeof options === 'string') {
+      expected = new RegExp('[^' + options + ']', 'u')
+    } else if (typeof options === 'object' && 'source' in options) {
+      expected = new RegExp(options.source, options.flags ?? 'u')
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          '` for `options`, expected `RegExp` or `string`'
+      )
     }
 
-    const match = file.stem && file.stem.match(preferred)
+    const match = file.stem && file.stem.match(expected)
 
     if (match) {
-      file.message('Do not use `' + match[0] + '` in a file name')
+      file.message('Unexpected character `' + match[0] + '` in file name')
     }
   }
 )

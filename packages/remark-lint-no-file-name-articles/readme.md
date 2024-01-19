@@ -144,7 +144,7 @@ No messages.
 ###### Out
 
 ```text
-1:1: Do not start file names with `a`
+1:1: Unexpected file name starting with `a`, remove it
 ```
 
 ##### `the-title.md`
@@ -152,15 +152,7 @@ No messages.
 ###### Out
 
 ```text
-1:1: Do not start file names with `the`
-```
-
-##### `teh-title.md`
-
-###### Out
-
-```text
-1:1: Do not start file names with `teh`
+1:1: Unexpected file name starting with `the`, remove it
 ```
 
 ##### `an-article.md`
@@ -168,7 +160,7 @@ No messages.
 ###### Out
 
 ```text
-1:1: Do not start file names with `an`
+1:1: Unexpected file name starting with `an`, remove it
 ```
 
 ## Compatibility

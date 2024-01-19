@@ -32,6 +32,8 @@
  *
  * * `allow` (`Array<RegExp | string>`, optional)
  *   — list of values to allow between `[` and `]`
+ * * `allowShortcutLink` (`boolean`, default: `false`)
+ *   — allow shortcut references, which are just brackets such as `[text]`
  *
  * ## Recommendation
  *
@@ -49,7 +51,7 @@
  * but it might become one when an author later adds a definition:
  *
  * ```markdown
- * Some new text […][]
+ * Some new text […][].
  *
  * […]: #read-more
  * ```
@@ -65,115 +67,132 @@
  * @author Titus Wormer
  * @copyright 2016 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [foo][]
+ *   [Mercury][] is the first planet from the Sun and the smallest in the Solar
+ *   System.
  *
- *   Just a [ bracket.
+ *   Venus is the second planet from the [Sun.
  *
- *   Typically, you’d want to use escapes (with a backslash: \\) to escape what
- *   could turn into a \[reference otherwise].
+ *   Earth is the third planet from the \[Sun] and the only astronomical object
+ *   known to harbor life\.
  *
- *   Just two braces can’t link: [].
+ *   Mars is the fourth planet from the Sun: [].
  *
- *   [foo]: https://example.com
- *
- * @example
- *   {"config": {"allow": ["…"]}, "name": "ok-allow.md"}
- *
- *   > Eliding a portion of a quoted passage […] is acceptable.
- *
- * @example
- *   {"config": {"allow": ["a", {"source": "^b\\."}]}, "name": "ok-allow-source.md"}
- *
- *   [foo][b.c]
- *
- *   [bar][a]
- *
- *   Matching is case-insensitive: [bar][B.C]
+ *   [mercury]: https://example.com/mercury/
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}
  *
- *   [bar]
+ *   [Mercury] is the first planet from the Sun and the smallest in the Solar
+ *   System.
  *
- *   [baz][]
+ *   [Venus][] is the second planet from the Sun.
  *
- *   [text][qux]
+ *   [Earth][earth] is the third planet from the Sun and the only astronomical
+ *   object known to harbor life.
  *
- *   Spread [over
- *   lines][]
+ *   ![Mars] is the fourth planet from the Sun in the [Solar
+ *   System].
  *
- *   > in [a
- *   > block quote][]
+ *   > Jupiter is the fifth planet from the Sun and the largest in the [Solar
+ *   > System][].
  *
- *   [asd][a
+ *   [Saturn][ is the sixth planet from the Sun and the second-largest
+ *   in the Solar System, after Jupiter.
  *
- *   Can include [*emphasis*].
+ *   [*Uranus*][] is the seventh planet from the Sun.
  *
- *   Multiple pairs: [a][b][c].
+ *   [Neptune][neptune][more] is the eighth and farthest planet from the Sun.
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1-1:6: Found reference to undefined definition
- *   3:1-3:8: Found reference to undefined definition
- *   5:1-5:12: Found reference to undefined definition
- *   7:8-8:9: Found reference to undefined definition
- *   10:6-11:17: Found reference to undefined definition
- *   13:1-13:6: Found reference to undefined definition
- *   15:13-15:25: Found reference to undefined definition
- *   17:17-17:23: Found reference to undefined definition
- *   17:23-17:26: Found reference to undefined definition
+ *   1:1-1:10: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a link or escaped opening bracket (`\[`) for regular text
+ *   4:1-4:10: Unexpected reference to undefined definition, expected corresponding definition (`venus`) for a link or escaped opening bracket (`\[`) for regular text
+ *   6:1-6:15: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\[`) for regular text
+ *   9:2-9:8: Unexpected reference to undefined definition, expected corresponding definition (`mars`) for an image or escaped opening bracket (`\[`) for regular text
+ *   9:50-10:8: Unexpected reference to undefined definition, expected corresponding definition (`solar system`) for a link or escaped opening bracket (`\[`) for regular text
+ *   12:67-13:12: Unexpected reference to undefined definition, expected corresponding definition (`solar > system`) for a link or escaped opening bracket (`\[`) for regular text
+ *   15:1-15:9: Unexpected reference to undefined definition, expected corresponding definition (`saturn`) for a link or escaped opening bracket (`\[`) for regular text
+ *   18:1-18:13: Unexpected reference to undefined definition, expected corresponding definition (`*uranus*`) for a link or escaped opening bracket (`\[`) for regular text
+ *   20:1-20:19: Unexpected reference to undefined definition, expected corresponding definition (`neptune`) for a link or escaped opening bracket (`\[`) for regular text
+ *   20:19-20:25: Unexpected reference to undefined definition, expected corresponding definition (`more`) for a link or escaped opening bracket (`\[`) for regular text
  *
  * @example
- *   {"config": {"allow": ["a", {"source": "^b\\."}]}, "label": "input", "name": "not-ok-source.md"}
+ *   {"config": {"allow": ["…"]}, "name": "ok-allow.md"}
  *
- *   [foo][a.c]
+ *   Mercury is the first planet from the Sun and the smallest in the Solar
+ *   System. […]
  *
- *   [bar][b]
  * @example
- *   {"config": {"allow": ["a", {"source": "^b\\."}]}, "label": "output", "name": "not-ok-source.md"}
+ *   {"config": {"allow": [{"source": "^mer"}, "venus"]}, "name": "source.md"}
  *
- *   1:1-1:11: Found reference to undefined definition
- *   3:1-3:9: Found reference to undefined definition
+ *   [Mercury][] is the first planet from the Sun and the smallest in the Solar
+ *   System.
+ *
+ *   [Venus][] is the second planet from the Sun.
  *
  * @example
  *   {"gfm": true, "label": "input", "name": "gfm.md"}
  *
- *   GFM footnote calls are supported too.
+ *   Mercury[^mercury] is the first planet from the Sun and the smallest in the
+ *   Solar System.
  *
- *   Alpha[^a]
+ *   [^venus]:
+ *       **Venus** is the second planet from the Sun.
  * @example
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
- *   3:6-3:10: Found reference to undefined definition
+ *   1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
+ *
+ * @example
+ *   {"config": {"allowShortcutLink": true}, "label": "input", "name": "allow-shortcut-link.md"}
+ *
+ *   [Mercury] is the first planet from the Sun and the smallest in the Solar
+ *   System.
+ *
+ *   [Venus][] is the second planet from the Sun.
+ *
+ *   [Earth][earth] is the third planet from the Sun and the only astronomical object
+ *   known to harbor life.
+ * @example
+ *   {"config": {"allowShortcutLink": true}, "label": "output", "name": "allow-shortcut-link.md"}
+ *
+ *   4:1-4:10: Unexpected reference to undefined definition, expected corresponding definition (`venus`) for a link or escaped opening bracket (`\[`) for regular text
+ *   6:1-6:15: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\[`) for regular text
  */
 
 /**
- * @typedef {import('mdast').Heading} Heading
- * @typedef {import('mdast').Paragraph} Paragraph
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
 /**
  * @typedef Options
  *   Configuration.
- * @property {ReadonlyArray<{source: string} | RegExp | string> | null | undefined} [allow]
- *   Text or regexes to allow between `[` and `]` even though they’re not
- *   defined (optional).
+ * @property {ReadonlyArray<RegExp | string> | null | undefined} [allow]
+ *   List of values to allow between `[` and `]` (optional)
+ * @property {boolean | null | undefined} [allowShortcutLink]
+ *   Allow shortcut references, which are just brackets such as `[text]`
+ *   (`boolean`, default: `false`)
  */
 
+import {collapseWhiteSpace} from 'collapse-white-space'
+import {ok as assert} from 'devlop'
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 import {lintRule} from 'unified-lint-rule'
-import {pointEnd, pointStart, position} from 'unist-util-position'
-import {EXIT, SKIP, visit} from 'unist-util-visit'
+import {pointEnd, pointStart} from 'unist-util-position'
+import {visitParents} from 'unist-util-visit-parents'
 import {location} from 'vfile-location'
 
 /** @type {Readonly<Options>} */
 const emptyOptions = {}
-/** @type {ReadonlyArray<{source: string} | RegExp | string>} */
+/** @type {ReadonlyArray<RegExp | string>} */
 const emptyAllow = []
+
+const lineEndingExpression = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
 
 const remarkLintNoUndefinedReferences = lintRule(
   {
@@ -191,15 +210,19 @@ const remarkLintNoUndefinedReferences = lintRule(
   function (tree, file, options) {
     const settings = options || emptyOptions
     const allow = settings.allow || emptyAllow
-    const contents = String(file)
-    const loc = location(file)
-    const lineEnding = /(\r?\n|\r)[\t ]*(>[\t ]*)*/g
+    const allowShortcutLink = settings.allowShortcutLink || false
+    const value = String(file)
+    const toPoint = location(file).toPoint
     /** @type {Set<string>} */
-    const defined = new Set()
+    const definitionIdentifiers = new Set()
+    /** @type {Set<string>} */
+    const footnoteDefinitionIdentifiers = new Set()
     /** @type {Array<RegExp>} */
     const regexes = []
     /** @type {Set<string>} */
     const strings = new Set()
+    /** @type {Array<Array<Nodes>>} */
+    const phrasingStacks = []
 
     let index = -1
 
@@ -208,215 +231,229 @@ const remarkLintNoUndefinedReferences = lintRule(
 
       if (typeof value === 'string') {
         strings.add(normalizeIdentifier(value))
-      } else if (value instanceof RegExp) {
-        regexes.push(value)
-      } else {
-        regexes.push(new RegExp(value.source, 'i'))
+      } else if (typeof value === 'object' && 'source' in value) {
+        regexes.push(new RegExp(value.source, value.flags ?? 'i'))
       }
     }
 
-    visit(tree, function (node) {
-      if (node.type === 'definition' || node.type === 'footnoteDefinition') {
-        defined.add(normalizeIdentifier(node.identifier))
+    visitParents(tree, function (node, parents) {
+      if (node.type === 'definition') {
+        definitionIdentifiers.add(normalizeIdentifier(node.identifier))
       }
-    })
 
-    visit(tree, function (node) {
-      const place = position(node)
-
-      /* c8 ignore next 12 -- CM specifies that references only form when
-       * defined.
-       * Still, they could be added by plugins, so let’s keep it. */
-      if (
-        (node.type === 'imageReference' ||
-          node.type === 'linkReference' ||
-          node.type === 'footnoteReference') &&
-        place &&
-        !defined.has(normalizeIdentifier(node.identifier)) &&
-        !allowed(node.identifier)
-      ) {
-        file.message('Found reference to undefined definition', place)
+      if (node.type === 'footnoteDefinition') {
+        footnoteDefinitionIdentifiers.add(normalizeIdentifier(node.identifier))
       }
 
       if (node.type === 'heading' || node.type === 'paragraph') {
-        findInPhrasing(node)
-        return SKIP
+        phrasingStacks.push([...parents, node])
       }
     })
 
+    for (const ancestors of phrasingStacks) {
+      findInPhrasingContainer(ancestors)
+    }
+
     /**
-     * @param {Heading | Paragraph} node
-     *   Node.
+     * @param {Array<Nodes>} ancestors
+     *   Ancestors, the last of which a parent of phrasing nodes.
      * @returns {undefined}
      *   Nothing.
      */
-    function findInPhrasing(node) {
-      /** @type {Array<Array<number>>} */
-      let ranges = []
+    function findInPhrasingContainer(ancestors) {
+      /** @type {Array<[ancestors: Array<Nodes>, brackets: Array<number>]>} */
+      const bracketRanges = []
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      assert('children' in node) // Always defined.
 
-      visit(node, function (child) {
-        // Ignore the node itself.
-        if (child === node) return
-
-        // Can’t have links in links, so reset ranges.
-        if (child.type === 'link' || child.type === 'linkReference') {
-          ranges = []
-          return SKIP
+      for (const child of node.children) {
+        if (child.type === 'text') {
+          findRangesInText(bracketRanges, [...ancestors, child])
+        } else if ('children' in child) {
+          findInPhrasingContainer([...ancestors, child])
         }
+      }
 
-        // Enter non-text.
-        if (child.type !== 'text') return
+      // Remaining ranges.
+      for (const range of bracketRanges) {
+        handleRange(range)
+      }
+    }
 
-        const start = pointStart(child)
-        const end = pointEnd(child)
+    /**
+     * @param {Array<[ancestors: Array<Nodes>, brackets: Array<number>]>} ranges
+     * @param {Array<Nodes>} ancestors
+     */
+    function findRangesInText(ranges, ancestors) {
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      const end = pointEnd(node)
+      const start = pointStart(node)
 
-        // Bail if there’s no positional info.
-        if (
-          !start ||
-          !end ||
-          typeof start.offset !== 'number' ||
-          typeof end.offset !== 'number'
-        ) {
-          return EXIT
-        }
+      // Bail if there’s no positional info.
+      if (
+        !end ||
+        !start ||
+        typeof start.offset !== 'number' ||
+        typeof end.offset !== 'number'
+      ) {
+        return
+      }
 
-        const source = contents.slice(start.offset, end.offset)
-        /** @type {Array<[number, string]>} */
-        const lines = [[start.offset, '']]
-        let last = 0
+      const source = value.slice(start.offset, end.offset)
+      /** @type {Array<[number, string]>} */
+      const lines = [[start.offset, '']]
+      let last = 0
 
-        lineEnding.lastIndex = 0
-        let match = lineEnding.exec(source)
+      lineEndingExpression.lastIndex = 0
+      let match = lineEndingExpression.exec(source)
 
-        while (match) {
-          const index = match.index
-          lines[lines.length - 1][1] = source.slice(last, index)
-          last = index + match[0].length
-          lines.push([start.offset + last, ''])
-          match = lineEnding.exec(source)
-        }
+      while (match) {
+        const index = match.index
+        const lineTuple = lines.at(-1)
+        assert(lineTuple) // Always defined.
+        lineTuple[1] = source.slice(last, index)
 
-        lines[lines.length - 1][1] = source.slice(last)
-        let lineIndex = -1
+        last = index + match[0].length
+        lines.push([start.offset + last, ''])
+        match = lineEndingExpression.exec(source)
+      }
 
-        while (++lineIndex < lines.length) {
-          const line = lines[lineIndex][1]
-          let index = 0
+      const lineTuple = lines.at(-1)
+      assert(lineTuple) // Always defined.
+      lineTuple[1] = source.slice(last)
 
-          while (index < line.length) {
-            const code = line.charCodeAt(index)
+      for (const lineTuple of lines) {
+        const [lineStart, line] = lineTuple
+        let index = 0
 
-            // Skip past escaped brackets.
-            if (code === 92) {
-              const next = line.charCodeAt(index + 1)
-              index++
+        while (index < line.length) {
+          const code = line.charCodeAt(index)
 
-              if (next === 91 || next === 93) {
-                index++
-              }
-            }
-            // Opening bracket.
-            else if (code === 91) {
-              ranges.push([lines[lineIndex][0] + index])
-              index++
-            }
-            // Close bracket.
-            else if (code === 93) {
-              // No opening.
-              if (ranges.length === 0) {
-                index++
-              } else if (line.charCodeAt(index + 1) === 91) {
-                index++
+          // Opening bracket.
+          if (code === 91 /* `[` */) {
+            ranges.push([ancestors, [lineStart + index]])
+            index++
+          }
+          // Skip escaped brackets.
+          else if (code === 92 /* `\` */) {
+            const next = line.charCodeAt(index + 1)
 
-                // Collapsed or full.
-                let range = ranges.pop()
+            index++
 
-                // Range should always exist.
-                if (range) {
-                  range.push(lines[lineIndex][0] + index)
-
-                  // This is the end of a reference already.
-                  if (range.length === 4) {
-                    handleRange(range)
-                    range = []
-                  }
-
-                  range.push(lines[lineIndex][0] + index)
-                  ranges.push(range)
-                  index++
-                }
-              } else {
-                index++
-
-                // Shortcut or typical end of a reference.
-                const range = ranges.pop()
-
-                // Range should always exist.
-                if (range) {
-                  range.push(lines[lineIndex][0] + index)
-                  handleRange(range)
-                }
-              }
-            }
-            // Anything else.
-            else {
+            if (next === 91 /* `[` */ || next === 93 /* `]` */) {
               index++
             }
           }
-        }
-      })
+          // Close bracket.
+          else if (code === 93 /* `]` */) {
+            const bracketInfo = ranges.at(-1)
 
-      let index = -1
-
-      while (++index < ranges.length) {
-        handleRange(ranges[index])
-      }
-
-      /**
-       * @param {Array<number>} range
-       *   Range.
-       * @returns {undefined}
-       *   Nothing.
-       */
-      function handleRange(range) {
-        if (range.length === 1) return
-        if (range.length === 3) range.length = 2
-
-        // No need to warn for just `[]`.
-        if (range.length === 2 && range[0] + 2 === range[1]) return
-
-        const offset = range.length === 4 && range[2] + 2 !== range[3] ? 2 : 0
-        const id = contents
-          .slice(range[0 + offset] + 1, range[1 + offset] - 1)
-          .replace(lineEnding, ' ')
-        const start = loc.toPoint(range[0])
-        const end = loc.toPoint(range[range.length - 1])
-
-        if (
-          start &&
-          end &&
-          !defined.has(normalizeIdentifier(id)) &&
-          !allowed(id)
-        ) {
-          file.message('Found reference to undefined definition', {start, end})
+            // No opening, ignore.
+            if (!bracketInfo) {
+              index++
+            }
+            // `][`.
+            else if (
+              line.charCodeAt(index + 1) === 91 /* `[` */ &&
+              // That would be the end of a reference already.
+              bracketInfo[1].length !== 3
+            ) {
+              index++
+              bracketInfo[1].push(lineStart + index, lineStart + index)
+              index++
+            }
+            // `]` with earlier `[`.
+            else {
+              index++
+              bracketInfo[1].push(lineStart + index)
+              handleRange(bracketInfo)
+              ranges.pop()
+            }
+          }
+          // Anything else.
+          else {
+            index++
+          }
         }
       }
     }
 
     /**
-     * @param {string} id
-     *   Identifier.
-     * @returns {boolean}
-     *   Whether `id` is allowed.
+     * @param {[ancestors: Array<Nodes>, brackets: Array<number>]} bracketRange
+     *   Info.
+     * @returns {undefined}
+     *   Nothing.
      */
-    function allowed(id) {
-      const normalized = normalizeIdentifier(id)
-      return (
-        strings.has(normalized) ||
-        regexes.some(function (regex) {
-          return regex.test(normalized)
-        })
+    function handleRange(bracketRange) {
+      const [ancestors, range] = bracketRange
+
+      // `[`.
+      if (range.length === 1) return
+
+      // `[x][`.
+      if (range.length === 3) range.length = 2
+
+      // No need to warn for just `[]`.
+      if (range.length === 2 && range[0] + 2 === range[1]) return
+
+      const label =
+        value.charCodeAt(range[0] - 1) === 33 /* `!` */
+          ? 'image'
+          : value.charCodeAt(range[0] + 1) === 94 /* `^` */
+            ? 'footnote'
+            : 'link'
+
+      const offset = range.length === 4 && range[2] + 2 !== range[3] ? 2 : 0
+
+      let id = normalizeIdentifier(
+        collapseWhiteSpace(
+          value.slice(range[0 + offset] + 1, range[1 + offset] - 1),
+          {style: 'html', trim: true}
+        )
       )
+      let defined = definitionIdentifiers
+
+      if (label === 'footnote') {
+        // Footnotes can’t have spaces.
+        /* c8 ignore next -- bit superfluous to test. */
+        if (id.includes(' ')) return
+
+        defined = footnoteDefinitionIdentifiers
+        // Drop the `^`.
+        id = id.slice(1)
+      }
+
+      if (
+        (allowShortcutLink && range.length === 2) ||
+        defined.has(id) ||
+        strings.has(id) ||
+        regexes.some(function (regex) {
+          return regex.test(id)
+        })
+      ) {
+        return
+      }
+
+      const start = toPoint(range[0])
+      const end = toPoint(range[range.length - 1])
+
+      if (end && start) {
+        file.message(
+          'Unexpected reference to undefined definition, expected corresponding definition (`' +
+            id.toLowerCase() +
+            '`) for ' +
+            (label === 'image' ? 'an' : 'a') +
+            ' ' +
+            label +
+            ' or escaped opening bracket (`\\[`) for regular text',
+          {
+            ancestors,
+            place: {start, end}
+          }
+        )
+      }
     }
   }
 )

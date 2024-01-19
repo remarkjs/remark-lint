@@ -171,6 +171,23 @@ It’s recommended to use two tildes.
 
 ## Examples
 
+##### `not-ok.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+~Mercury~Venus and ~~Earth~~Mars.
+```
+
+###### Out
+
+```text
+1:20-1:29: Unexpected double tilde strikethrough sequences (`~~`), expected single tilde (`~`)
+```
+
 ##### `ok.md`
 
 When configured with `'~'`.
@@ -181,7 +198,7 @@ When configured with `'~'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-~foo~
+~Mercury~Venus.
 ```
 
 ###### Out
@@ -198,13 +215,13 @@ When configured with `'~'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-~~foo~~
+~~Mercury~~Venus.
 ```
 
 ###### Out
 
 ```text
-1:1-1:8: Strikethrough should use `~` as a marker
+1:1-1:12: Unexpected double tilde strikethrough sequences (`~~`), expected single tilde (`~`)
 ```
 
 ##### `ok.md`
@@ -217,7 +234,7 @@ When configured with `'~~'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-~~foo~~
+~~Mercury~~Venus.
 ```
 
 ###### Out
@@ -234,41 +251,23 @@ When configured with `'~~'`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-~foo~
+~Mercury~Venus.
 ```
 
 ###### Out
 
 ```text
-1:1-1:6: Strikethrough should use `~~` as a marker
+1:1-1:10: Unexpected single tilde strikethrough sequences (`~`), expected double tilde (`~~`)
 ```
 
 ##### `not-ok.md`
 
-###### In
-
-> 👉 **Note**: this example uses
-> GFM ([`remark-gfm`][github-remark-gfm]).
-
-```markdown
-~~foo~~
-~bar~
-```
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-2:1-2:6: Strikethrough should use `~~` as a marker
-```
-
-##### `not-ok.md`
-
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect strikethrough marker `💩`: use either `'consistent'`, `'~'`, or `'~~'`
+1:1: Unexpected value `🌍` for `options`, expected `'~~'`, `'~'`, or `'consistent'`
 ```
 
 ## Compatibility

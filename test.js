@@ -11,6 +11,7 @@ import test from 'node:test'
 import {controlPictures} from 'control-pictures'
 import {remark} from 'remark'
 import remarkDirective from 'remark-directive'
+import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
 import remarkLint from 'remark-lint'
 import remarkLintFinalNewline from 'remark-lint-final-newline'
@@ -49,8 +50,8 @@ test('remark-lint', async function (t) {
       .process({path: 'virtual.md', value: doc})
 
     assert.deepEqual(file.messages.map(String), [
-      'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-      'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
+      'virtual.md:3:1-3:24: Unexpected character `.` at end of heading, remove it',
+      'virtual.md:3:1-3:24: Unexpected duplicate toplevel heading, exected a single heading with rank `1`'
     ])
   })
 
@@ -62,8 +63,8 @@ test('remark-lint', async function (t) {
       .process({path: 'virtual.md', value: doc})
 
     assert.deepEqual(file.messages.map(String), [
-      'virtual.md:3:1-3:24: Don’t add a trailing `.` to headings',
-      'virtual.md:3:1-3:24: Don’t use multiple top level headings (1:1)'
+      'virtual.md:3:1-3:24: Unexpected character `.` at end of heading, remove it',
+      'virtual.md:3:1-3:24: Unexpected duplicate toplevel heading, exected a single heading with rank `1`'
     ])
   })
 
@@ -87,10 +88,12 @@ test('remark-lint', async function (t) {
         column: 2,
         fatal: true,
         line: 1,
-        message: 'Missing newline character at end of file',
+        message:
+          'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
         name: '1:2',
         place: {column: 2, line: 1, offset: 1},
-        reason: 'Missing newline character at end of file',
+        reason:
+          'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
         ruleId: 'final-newline',
         source: 'remark-lint',
         url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
@@ -102,7 +105,7 @@ test('remark-lint', async function (t) {
     const file = await remark().use(remarkLintFinalNewline, true).process('.')
 
     assert.deepEqual(file.messages.map(String), [
-      '1:2: Missing newline character at end of file'
+      '1:2: Unexpected missing final newline character, expected line feed (`\\n`) at end of file'
     ])
   })
 
@@ -120,7 +123,7 @@ test('remark-lint', async function (t) {
         .process('.')
 
       assert.deepEqual(file.messages.map(String), [
-        '1:2: Missing newline character at end of file'
+        '1:2: Unexpected missing final newline character, expected line feed (`\\n`) at end of file'
       ])
     }
   )
@@ -148,10 +151,12 @@ test('remark-lint', async function (t) {
           column: 2,
           fatal: true,
           line: 1,
-          message: 'Missing newline character at end of file',
+          message:
+            'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
           name: '1:2',
           place: {column: 2, line: 1, offset: 1},
-          reason: 'Missing newline character at end of file',
+          reason:
+            'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
           ruleId: 'final-newline',
           source: 'remark-lint',
           url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
@@ -172,10 +177,12 @@ test('remark-lint', async function (t) {
           column: 2,
           fatal: false,
           line: 1,
-          message: 'Missing newline character at end of file',
+          message:
+            'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
           name: '1:2',
           place: {column: 2, line: 1, offset: 1},
-          reason: 'Missing newline character at end of file',
+          reason:
+            'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
           ruleId: 'final-newline',
           source: 'remark-lint',
           url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
@@ -196,10 +203,12 @@ test('remark-lint', async function (t) {
           column: 2,
           fatal: false,
           line: 1,
-          message: 'Missing newline character at end of file',
+          message:
+            'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
           name: '1:2',
           place: {column: 2, line: 1, offset: 1},
-          reason: 'Missing newline character at end of file',
+          reason:
+            'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
           ruleId: 'final-newline',
           source: 'remark-lint',
           url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-newline#readme'
@@ -248,7 +257,7 @@ test('remark-lint', async function (t) {
         })
 
       assert.deepEqual(file.messages.map(String), [
-        'virtual.md:3:1-3:9: Found reference to undefined definition'
+        'virtual.md:3:1-3:9: Unexpected reference to undefined definition, expected corresponding definition (`b`) for a link or escaped opening bracket (`\\[`) for regular text'
       ])
     }
   )
@@ -281,8 +290,8 @@ test('remark-lint', async function (t) {
 
 test('plugins', async function (t) {
   for (const plugin of plugins) {
-    await t.test(plugin.name, async function () {
-      await assertPlugin(plugin)
+    await t.test(plugin.name, async function (t) {
+      await assertPlugin(plugin, t)
     })
   }
 })
@@ -290,16 +299,24 @@ test('plugins', async function (t) {
 /**
  * @param {PluginInfo} info
  *   Info.
+ * @param {any} t
+ *   Test context.
  * @returns {Promise<undefined>}
  *   Nothing.
  */
-async function assertPlugin(info) {
+// type-coverage:ignore-next-line -- `TestContext` not exposed from `node:test`.
+async function assertPlugin(info, t) {
   /** @type {{default: Plugin}} */
   const pluginMod = await import(info.name)
   const plugin = pluginMod.default
 
   for (const check of info.checks) {
-    await assertCheck(plugin, info, check)
+    const name = check.name + ':' + check.configuration
+
+    // type-coverage:ignore-next-line -- `TestContext` not exposed from `node:test`.
+    await t.test(name, async function () {
+      await assertCheck(plugin, info, check)
+    })
   }
 }
 
@@ -321,6 +338,7 @@ async function assertCheck(plugin, info, check) {
   const value = controlPictures(check.input)
 
   if (check.directive) extras.push(remarkDirective)
+  if (check.frontmatter) extras.push(remarkFrontmatter)
   if (check.gfm) extras.push(remarkGfm)
   if (check.math) extras.push(remarkMath)
   if (check.mdx) extras.push(remarkMdx)

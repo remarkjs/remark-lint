@@ -30,11 +30,11 @@
 
 ## What is this?
 
-This package checks the indent of headings.
+This package checks the spaces before headings.
 
 ## When should I use this?
 
-You can use this package to check that headings are consistent.
+You can use this rule to check markdown code style.
 
 ## Presets
 
@@ -136,15 +136,17 @@ markdown.
 While it is possible to use an indent to headings on their text:
 
 ```markdown
-   # One
-  ## Two
- ### Three
-#### Four
+   # Mercury
+  ## Venus
+ ### Earth
+#### Mars
 ```
 
-…such style is uncommon, a bit hard to maintain, and it’s impossible to add a
-heading with a rank of 5 as it would form indented code instead.
-Hence, it’s recommended to not indent headings and to turn this rule on.
+…such style is uncommon,
+a bit hard to maintain,
+and it’s impossible to add a heading with a rank of 5 as it would form
+indented code instead.
+So it’s recommended to not indent headings and to turn this rule on.
 
 ## Fix
 
@@ -157,15 +159,15 @@ Hence, it’s recommended to not indent headings and to turn this rule on.
 ###### In
 
 ```markdown
-#␠Hello world
+#␠Mercury
 
-Foo
+Venus
 -----
 
-#␠Hello world␠#
+#␠Earth␠#
 
-Bar
-=====
+Mars
+====
 ```
 
 ###### Out
@@ -177,24 +179,24 @@ No messages.
 ###### In
 
 ```markdown
-␠␠␠# Hello world
+␠␠␠# Mercury
 
-␠Foo
------
+␠Venus
+------
 
-␠# Hello world #
+␠# Earth #
 
-␠␠␠Bar
-=====
+␠␠␠Mars
+======
 ```
 
 ###### Out
 
 ```text
-1:4: Remove 3 spaces before this heading
-3:2: Remove 1 space before this heading
-6:2: Remove 1 space before this heading
-8:4: Remove 3 spaces before this heading
+1:4: Unexpected `3` spaces before heading, expected `0` spaces, remove `3` spaces
+3:2: Unexpected `1` space before heading, expected `0` spaces, remove `1` space
+6:2: Unexpected `1` space before heading, expected `0` spaces, remove `1` space
+8:4: Unexpected `3` spaces before heading, expected `0` spaces, remove `3` spaces
 ```
 
 ## Compatibility

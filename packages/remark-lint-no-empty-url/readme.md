@@ -143,13 +143,11 @@ It’s recommended to fill them out.
 ###### In
 
 ```markdown
-[alpha](http://bravo.com).
+[Mercury](http://example.com/mercury/).
 
-![charlie](http://delta.com/echo.png "foxtrot").
+![Venus](http://example.com/venus/ "Go to Venus").
 
-[golf][hotel].
-
-[india]: http://juliett.com
+[earth]: http://example.com/earth/
 ```
 
 ###### Out
@@ -161,19 +159,19 @@ No messages.
 ###### In
 
 ```markdown
-[alpha]().
+[Mercury]().
 
-![bravo](#).
+![Venus](#).
 
-[charlie]: <>
+[earth]: <>
 ```
 
 ###### Out
 
 ```text
-1:1-1:10: Don’t use links without URL
-3:1-3:12: Don’t use images without URL
-5:1-5:14: Don’t use definitions without URL
+1:1-1:12: Unexpected empty link URL referencing the current document, expected URL
+3:1-3:12: Unexpected empty image URL referencing the current document, expected URL
+5:1-5:12: Unexpected empty definition URL referencing the current document, expected URL
 ```
 
 ## Compatibility

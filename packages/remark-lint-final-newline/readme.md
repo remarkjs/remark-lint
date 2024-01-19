@@ -150,7 +150,7 @@ always adds final line endings.
 ###### In
 
 ```markdown
-Alpha␊
+Mercury␊
 ```
 
 ###### Out
@@ -162,13 +162,13 @@ No messages.
 ###### In
 
 ```markdown
-Bravo␀
+Mercury␀
 ```
 
 ###### Out
 
 ```text
-1:6: Missing newline character at end of file
+1:8: Unexpected missing final newline character, expected line feed (`\n`) at end of file
 ```
 
 ## Compatibility

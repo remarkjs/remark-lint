@@ -43,28 +43,31 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   # Alpha bravo charlie delta echo foxtrot golf hotel
- *
- *   # ![Alpha bravo charlie delta echo foxtrot golf hotel](http://example.com/nato.png)
+ *   # Mercury is the first planet from the Sun
  *
  * @example
- *   {"name": "not-ok.md", "config": 40, "label": "input"}
+ *   {"config": 30, "label": "input", "name": "not-ok.md"}
  *
- *   # Alpha bravo charlie delta echo foxtrot golf hotel
- *
- * @example
- *   {"name": "not-ok.md", "config": 40, "label": "output"}
- *
- *   1:1-1:52: Use headings shorter than `40`
+ *   # Mercury is the first planet from the Sun
  *
  * @example
- *   {"config": 30, "label": "input", "mdx": true, "name": "ok.mdx"}
+ *   {"config": 30, "label": "output", "name": "not-ok.md"}
  *
- *   <h1>In MDX, headings are checked too</h1>
+ *   1:1-1:43: Unexpected `40` characters in heading, expected at most `30` characters
+ *
  * @example
- *   {"config": 30, "label": "output", "mdx": true, "name": "ok.mdx"}
+ *   {"config": 30, "label": "input", "mdx": true, "name": "mdx.mdx"}
  *
- *   1:1-1:42: Use headings shorter than `30`
+ *   <h1>Mercury is the first planet from the Sun</h1>
+ * @example
+ *   {"config": 30, "label": "output", "mdx": true, "name": "mdx.mdx"}
+ *
+ *   1:1-1:50: Unexpected `40` characters in heading, expected at most `30` characters
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `number`
  */
 
 /**
@@ -76,7 +79,7 @@
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const jsxNameRe = /^h([1-6])$/
 
@@ -94,12 +97,22 @@ const remarkLintMaximumHeadingLength = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    const option = options || 60
+    let expected = 60
+
+    if (options === null || options === undefined) {
+      // Empty.
+    } else if (typeof options === 'number') {
+      expected = options
+    } else {
+      file.fail(
+        'Unexpected value `' + options + '` for `options`, expected `number`'
+      )
+    }
 
     // Note: HTML headings cannot properly be checked,
     // because for markdown, blocks are one single raw string.
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       if (
         node.type === 'heading' ||
         ((node.type === 'mdxJsxFlowElement' ||
@@ -108,10 +121,17 @@ const remarkLintMaximumHeadingLength = lintRule(
           jsxNameRe.test(node.name))
       ) {
         const place = position(node)
-        const codePoints = Array.from(toString(node, {includeHtml: false}))
+        const actual = Array.from(toString(node, {includeHtml: false})).length
 
-        if (place && codePoints.length > option) {
-          file.message('Use headings shorter than `' + option + '`', place)
+        if (place && actual > expected) {
+          file.message(
+            'Unexpected `' +
+              actual +
+              '` characters in heading, expected at most `' +
+              expected +
+              '` characters',
+            {ancestors: [...parents, node], place}
+          )
         }
       }
     })

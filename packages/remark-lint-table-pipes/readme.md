@@ -157,9 +157,9 @@ delimiters.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| A     | B     |
-| ----- | ----- |
-| Alpha | Bravo |
+| Planet | Mean anomaly (°) |
+| :- | -: |
+| Mercury | 174 796 |
 ```
 
 ###### Out
@@ -174,18 +174,99 @@ No messages.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-A     | B
------ | -----
-Alpha | Bravo
+Planet | Mean anomaly (°)
+:- | -:
+Mercury | 174 796
 ```
 
 ###### Out
 
 ```text
-1:1: Missing initial pipe in table fence
-1:10: Missing final pipe in table fence
-3:1: Missing initial pipe in table fence
-3:14: Missing final pipe in table fence
+1:1: Unexpected missing closing pipe in row, expected `|`
+1:26: Unexpected missing opening pipe in row, expected `|`
+2:1: Unexpected missing closing pipe in row, expected `|`
+2:8: Unexpected missing opening pipe in row, expected `|`
+3:1: Unexpected missing closing pipe in row, expected `|`
+3:18: Unexpected missing opening pipe in row, expected `|`
+```
+
+##### `missing-cells.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Planet | Symbol | Satellites
+:- | - | -
+Mercury
+Venus | ♀
+Earth | ♁ | 1
+Mars | ♂ | 2 | 19 412
+```
+
+###### Out
+
+```text
+1:1: Unexpected missing closing pipe in row, expected `|`
+1:29: Unexpected missing opening pipe in row, expected `|`
+2:1: Unexpected missing closing pipe in row, expected `|`
+2:11: Unexpected missing opening pipe in row, expected `|`
+3:1: Unexpected missing closing pipe in row, expected `|`
+3:8: Unexpected missing opening pipe in row, expected `|`
+4:1: Unexpected missing closing pipe in row, expected `|`
+4:10: Unexpected missing opening pipe in row, expected `|`
+5:1: Unexpected missing closing pipe in row, expected `|`
+5:14: Unexpected missing opening pipe in row, expected `|`
+6:1: Unexpected missing closing pipe in row, expected `|`
+6:22: Unexpected missing opening pipe in row, expected `|`
+```
+
+##### `trailing-spaces.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+␠␠Planet␠␠
+␠-:␠
+
+␠␠| Planet |␠␠
+␠| -: |␠
+```
+
+###### Out
+
+```text
+1:3: Unexpected missing closing pipe in row, expected `|`
+1:11: Unexpected missing opening pipe in row, expected `|`
+2:2: Unexpected missing closing pipe in row, expected `|`
+2:5: Unexpected missing opening pipe in row, expected `|`
+```
+
+##### `windows.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Mercury␍␊:-␍␊None
+```
+
+###### Out
+
+```text
+1:1: Unexpected missing closing pipe in row, expected `|`
+1:8: Unexpected missing opening pipe in row, expected `|`
+2:1: Unexpected missing closing pipe in row, expected `|`
+2:3: Unexpected missing opening pipe in row, expected `|`
+3:1: Unexpected missing closing pipe in row, expected `|`
+3:5: Unexpected missing opening pipe in row, expected `|`
 ```
 
 ## Compatibility

@@ -22,6 +22,7 @@
 * [API](#api)
   * [`unified().use(remarkLintOrderedListMarkerValue[, options])`](#unifieduseremarklintorderedlistmarkervalue-options)
   * [`Options`](#options)
+  * [`Style`](#style)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
 * [Examples](#examples)
@@ -118,8 +119,9 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports the [TypeScript][typescript] type
-[`Options`][api-options].
+It exports the [TypeScript][typescript] types
+[`Options`][api-options] and
+[`Style`][api-style].
 The default export is
 [`remarkLintOrderedListMarkerValue`][api-remark-lint-ordered-list-marker-value].
 
@@ -140,17 +142,30 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 Configuration (TypeScript type).
 
-* `'ordered'`
-  — values should increment by one from the first item
-* `'single'`
-  — values should stay the same as the first item
-* `'one'`
-  — values should always be exactly `1`
+`consistent` looks at the first list with two or more items, and
+infer `'single'` if both are the same, and `'ordered'` otherwise.
 
 ###### Type
 
 ```ts
-type Options = 'one' | 'ordered' | 'single'
+type Options = Style | 'consistent'
+```
+
+### `Style`
+
+Counter style (TypeScript type).
+
+* `'one'`
+  — values should always be exactly `1`
+* `'ordered'`
+  — values should increment by one from the first item
+* `'single'`
+  — values should stay the same as the first item
+
+###### Type
+
+```ts
+type Style = 'one' | 'ordered' | 'single'
 ```
 
 ## Recommendation
@@ -179,27 +194,61 @@ Pass `incrementListMarker: false` to not increment further items.
 ###### In
 
 ```markdown
-The default value is `ordered`, so unless changed, the below
-is OK.
+1. Mercury
+2. Venus
 
-1.  Foo
-2.  Bar
-3.  Baz
+***
 
-Paragraph.
+3. Earth
+4. Mars
 
-3.  Alpha
-4.  Bravo
-5.  Charlie
+***
 
-Unordered lists are not affected by this rule.
-
-*   Anton
+* Jupiter
 ```
 
 ###### Out
 
 No messages.
+
+##### `ok-infer-single.md`
+
+###### In
+
+```markdown
+2. Mercury
+2. Venus
+
+***
+
+3. Earth
+3. Mars
+```
+
+###### Out
+
+No messages.
+
+##### `nok-chaotic.md`
+
+###### In
+
+```markdown
+2. Mercury
+1. Venus
+
+***
+
+1. Earth
+1. Mars
+```
+
+###### Out
+
+```text
+2:2: Unexpected ordered list item value `1`, expected `3`
+7:2: Unexpected ordered list item value `1`, expected `2`
+```
 
 ##### `ok.md`
 
@@ -208,15 +257,33 @@ When configured with `'one'`.
 ###### In
 
 ```markdown
-1.  Foo
-1.  Bar
-1.  Baz
+1. Mercury
+1. Venus
+```
 
-Paragraph.
+###### Out
 
-1.  Alpha
-1.  Bravo
-1.  Charlie
+No messages.
+
+##### `ok.md`
+
+When configured with `'ordered'`.
+
+###### In
+
+```markdown
+1. Mercury
+2. Venus
+
+***
+
+3. Earth
+4. Mars
+
+***
+
+0. Jupiter
+1. Saturn
 ```
 
 ###### Out
@@ -230,49 +297,18 @@ When configured with `'single'`.
 ###### In
 
 ```markdown
-1.  Foo
-1.  Bar
-1.  Baz
+1. Mercury
+1. Venus
 
-Paragraph.
+***
 
-3.  Alpha
-3.  Bravo
-3.  Charlie
+3. Earth
+3. Mars
 
-Paragraph.
+***
 
-0.  Delta
-0.  Echo
-0.  Foxtrot
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
-
-When configured with `'ordered'`.
-
-###### In
-
-```markdown
-1.  Foo
-2.  Bar
-3.  Baz
-
-Paragraph.
-
-3.  Alpha
-4.  Bravo
-5.  Charlie
-
-Paragraph.
-
-0.  Delta
-1.  Echo
-2.  Foxtrot
+0. Jupiter
+0. Saturn
 ```
 
 ###### Out
@@ -286,31 +322,25 @@ When configured with `'one'`.
 ###### In
 
 ```markdown
-1.  Foo
-2.  Bar
+1. Mercury
+2. Venus
+
+***
+
+3. Earth
+
+***
+
+2. Mars
+1. Jupiter
 ```
 
 ###### Out
 
 ```text
-2:1-2:8: Marker should be `1`, was `2`
-```
-
-##### `also-not-ok.md`
-
-When configured with `'one'`.
-
-###### In
-
-```markdown
-2.  Foo
-1.  Bar
-```
-
-###### Out
-
-```text
-1:1-1:8: Marker should be `1`, was `2`
+2:2: Unexpected ordered list item value `2`, expected `1`
+6:2: Unexpected ordered list item value `3`, expected `1`
+10:2: Unexpected ordered list item value `2`, expected `1`
 ```
 
 ##### `not-ok.md`
@@ -320,24 +350,53 @@ When configured with `'ordered'`.
 ###### In
 
 ```markdown
-1.  Foo
-1.  Bar
+1. Mercury
+1. Venus
+
+***
+
+2. Mars
+1. Jupiter
 ```
 
 ###### Out
 
 ```text
-2:1-2:8: Marker should be `2`, was `1`
+2:2: Unexpected ordered list item value `1`, expected `2`
+7:2: Unexpected ordered list item value `1`, expected `3`
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'single'`.
+
+###### In
+
+```markdown
+1. Mercury
+2. Venus
+
+***
+
+2. Mars
+1. Jupiter
+```
 
 ###### Out
 
 ```text
-1:1: Incorrect ordered list item marker value `💩`: use either `'ordered'`, `'one'`, or `'single'`
+2:2: Unexpected ordered list item value `2`, expected `1`
+7:2: Unexpected ordered list item value `1`, expected `2`
+```
+
+##### `not-ok.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `'one'`, `'ordered'`, `'single'`, or `'consistent'`
 ```
 
 ## Compatibility
@@ -368,6 +427,8 @@ abide by its terms.
 [api-options]: #options
 
 [api-remark-lint-ordered-list-marker-value]: #unifieduseremarklintorderedlistmarkervalue-options
+
+[api-style]: #style
 
 [author]: https://wooorm.com
 

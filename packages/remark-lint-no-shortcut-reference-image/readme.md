@@ -148,9 +148,9 @@ So it’s recommended to use collapsed or full references instead.
 ###### In
 
 ```markdown
-![foo][]
+![Mercury][]
 
-[foo]: http://foo.bar/baz.png
+[mercury]: /mercury.png
 ```
 
 ###### Out
@@ -162,15 +162,15 @@ No messages.
 ###### In
 
 ```markdown
-![foo]
+![Mercury]
 
-[foo]: http://foo.bar/baz.png
+[mercury]: /mercury.png
 ```
 
 ###### Out
 
 ```text
-1:1-1:7: Use the trailing [] on reference images
+1:1-1:11: Unexpected shortcut reference image (`![text]`), expected collapsed reference (`![text][]`)
 ```
 
 ## Compatibility

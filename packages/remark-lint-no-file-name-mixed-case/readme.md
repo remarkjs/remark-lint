@@ -134,24 +134,24 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 ## Examples
 
-##### `README.md`
+##### `MERCURY.md`
 
 ###### Out
 
 No messages.
 
-##### `readme.md`
+##### `mercury.md`
 
 ###### Out
 
 No messages.
 
-##### `Readme.md`
+##### `Mercury.md`
 
 ###### Out
 
 ```text
-1:1: Do not mix casing in file names
+1:1: Unexpected mixed case in file name, expected either lowercase or uppercase
 ```
 
 ## Compatibility

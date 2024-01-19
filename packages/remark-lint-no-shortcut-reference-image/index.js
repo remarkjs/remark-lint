@@ -38,24 +38,24 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   ![foo][]
+ *   ![Mercury][]
  *
- *   [foo]: http://foo.bar/baz.png
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   ![foo]
- *
- *   [foo]: http://foo.bar/baz.png
+ *   [mercury]: /mercury.png
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:1-1:7: Use the trailing [] on reference images
+ *   ![Mercury]
+ *
+ *   [mercury]: /mercury.png
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:11: Unexpected shortcut reference image (`![text]`), expected collapsed reference (`![text][]`)
  */
 
 /**
@@ -63,8 +63,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoShortcutReferenceImage = lintRule(
   {
@@ -78,10 +77,12 @@ const remarkLintNoShortcutReferenceImage = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'imageReference', function (node) {
-      const place = position(node)
-      if (place && node.referenceType === 'shortcut') {
-        file.message('Use the trailing [] on reference images', place)
+    visitParents(tree, 'imageReference', function (node, parents) {
+      if (node.position && node.referenceType === 'shortcut') {
+        file.message(
+          'Unexpected shortcut reference image (`![text]`), expected collapsed reference (`![text][]`)',
+          {ancestors: [...parents, node], place: node.position}
+        )
       }
     })
   }

@@ -53,48 +53,159 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "gfm": true}
- *
- *   | A     | B     |
- *   | ----- | ----- |
- *   | Alpha | Bravo |
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"gfm": true, "name": "ok.md"}
  *
- *   | A | B |
- *   | -- | -- |
- *   | Alpha | Bravo |
+ *   | Planet  | Mean anomaly (°) |
+ *   | ------- | ---------------: |
+ *   | Mercury |          174 796 |
  *
- * @example
- *   {"name": "not-ok.md", "label": "output", "gfm": true}
- *
- *   3:9-3:10: Misaligned table fence
- *   3:17-3:18: Misaligned table fence
+ *   |Planet|Mean anomaly (°)|
+ *   |------|---------------:|
+ *   |Venus |         50 115 |
  *
  * @example
- *   {"name": "ok-empty-columns.md", "gfm": true}
+ *   {"gfm": true, "label": "input", "name": "not-ok.md"}
  *
- *   | | B     |   |
- *   |-| ----- | - |
- *   | | Bravo |   |
+ *   | Planet | Mean anomaly (°) |
+ *   | - | -: |
+ *   | Mercury | 174 796 |
  *
  * @example
- *   {"name": "ok-empty-cells.md", "gfm": true}
+ *   {"gfm": true, "label": "output", "name": "not-ok.md"}
  *
- *   |   |     |         |
- *   | - | --- | ------- |
- *   | A | Bra | Charlie |
+ *   1:10: Unexpected unaligned cell, expected aligned pipes, add `1` space
+ *   2:5: Unexpected unaligned cell, expected aligned pipes, add `6` spaces (or add `-` to pad alignment row cells)
+ *   2:7: Unexpected unaligned cell, expected aligned pipes, add `14` spaces (or add `-` to pad alignment row cells)
+ *   3:13: Unexpected unaligned cell, expected aligned pipes, add `9` spaces
+ *
+ * @example
+ *   {"gfm": true, "name": "empty.md"}
+ *
+ *   |         | Satellites |     |
+ *   | ------- | ---------- | --- |
+ *   | Mercury |            |     |
+ *
+ * @example
+ *   {"gfm": true, "name": "missing-cells.md"}
+ *
+ *   | Planet  | Symbol | Satellites |
+ *   | ------- | ------ | ---------- |
+ *   | Mercury |
+ *   | Venus   | ♀      |
+ *   | Earth   | ♁      | 1          |
+ *   | Mars    | ♂      | 2          | 19 412 |
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "alignment.md"}
+ *
+ *   | Planet | Symbol | Satellites | Mean anomaly (°) |
+ *   | - | :- | :-: | -: |
+ *   | Mercury | ☿ | None | 174 796 |
+ * @example
+ *   {"gfm": true, "label": "output", "name": "alignment.md"}
+ *
+ *   1:10: Unexpected unaligned cell, expected aligned pipes, add `1` space
+ *   2:5: Unexpected unaligned cell, expected aligned pipes, add `6` spaces (or add `-` to pad alignment row cells)
+ *   2:10: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+ *   2:12: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+ *   2:16: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+ *   2:18: Unexpected unaligned cell, expected aligned pipes, add `14` spaces (or add `-` to pad alignment row cells)
+ *   3:15: Unexpected unaligned cell, expected aligned pipes, add `5` spaces
+ *   3:17: Unexpected unaligned cell, expected aligned pipes, add `3` spaces
+ *   3:22: Unexpected unaligned cell, expected aligned pipes, add `3` spaces
+ *   3:24: Unexpected unaligned cell, expected aligned pipes, add `9` spaces
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "missing-fences.md"}
+ *
+ *   Planet | Satellites
+ *   -: | -
+ *   Mercury | ☿
+ * @example
+ *   {"gfm": true, "label": "output", "name": "missing-fences.md"}
+ *
+ *   1:1: Unexpected unaligned cell, expected aligned pipes, add `1` space
+ *   2:1: Unexpected unaligned cell, expected aligned pipes, add `5` spaces (or add `-` to pad alignment row cells)
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "trailing-spaces.md"}
+ *
+ *   | Planet |␠␠
+ *   | -: |␠
+ * @example
+ *   {"gfm": true, "label": "output", "name": "trailing-spaces.md"}
+ *
+ *   2:3: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "nothing.md"}
+ *
+ *   ||||
+ *   |-|-|-|
+ * @example
+ *   {"gfm": true, "label": "output", "name": "nothing.md"}
+ *
+ *   1:2: Unexpected unaligned cell, expected aligned pipes, add `1` space
+ *   1:3: Unexpected unaligned cell, expected aligned pipes, add `1` space
+ *   1:4: Unexpected unaligned cell, expected aligned pipes, add `1` space
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "more-weirdness.md"}
+ *
+ *   Mercury
+ *   |-
+ *
+ *   Venus
+ *   -|
+ * @example
+ *   {"gfm": true, "label": "output", "name": "more-weirdness.md"}
+ *
+ *   5:2: Unexpected unaligned cell, expected aligned pipes, add `4` spaces (or add `-` to pad alignment row cells)
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "containers.md"}
+ *
+ *   > | Mercury|
+ *   > | - |
+ *
+ *   * | Venus|
+ *     | - |
+ *
+ *   > * > | Earth|
+ *   >   > | - |
+ * @example
+ *   {"gfm": true, "label": "output", "name": "containers.md"}
+ *
+ *   2:5: Unexpected unaligned cell, expected aligned pipes, add `5` spaces (or add `-` to pad alignment row cells)
+ *   5:5: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+ *   8:5: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "windows.md"}
+ *
+ *   | Mercury|␍␊| --- |␍␊| None |
+ * @example
+ *   {"gfm": true, "label": "output", "name": "windows.md"}
+ *
+ *   2:7: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
+ *   3:8: Unexpected unaligned cell, expected aligned pipes, add `2` spaces
  */
 
 /**
+ * @typedef {import('mdast').AlignType} Align
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
+ *
+ * @typedef {import('unist').Point} Point
  */
 
+import {ok as assert} from 'devlop'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintTablePipeAlignment = lintRule(
   {
@@ -108,59 +219,348 @@ const remarkLintTablePipeAlignment = lintRule(
    *   Nothing.
    */
   function (tree, file) {
+    /**
+     * @typedef Entry
+     * @property {Align} align
+     * @property {Array<Nodes>} ancestors
+     * @property {number} column
+     * @property {number | undefined} row
+     * @property {Size | undefined} size
+     *
+     * @typedef Size
+     * @property {number | undefined} left
+     * @property {Point} leftPoint
+     * @property {number} middle
+     * @property {number | undefined} right
+     * @property {Point} rightPoint
+     */
+
     const value = String(file)
 
-    visit(tree, 'table', function (node) {
+    visitParents(tree, 'table', function (node, parents) {
+      const entries = inferTable([...parents, node])
+      // Find max column sizes.
       /** @type {Array<number>} */
-      const indices = []
-      let index = -1
+      const sizes = []
 
-      while (++index < node.children.length) {
-        const row = node.children[index]
-        const begin = pointStart(row)
-        let column = -2 // Start without a first cell.
+      for (const info of entries) {
+        if (info.size) {
+          let total = info.size.middle
+          if (info.size.left) total += info.size.left
+          if (info.size.right) total += info.size.right
 
-        while (++column < row.children.length) {
-          const cell = row.children[column]
-          const nextColumn = column + 1
-          const next = row.children[nextColumn]
-          let initial = cell
-            ? cell.children.length === 0
-              ? pointStart(cell)?.offset
-              : pointEnd(cell.children[cell.children.length - 1])?.offset
-            : pointStart(row)?.offset
-          let final = next
-            ? next.children.length === 0
-              ? pointEnd(next)?.offset
-              : pointStart(next.children[0])?.offset
-            : pointEnd(row)?.offset
-
-          if (
-            typeof initial !== 'number' ||
-            typeof final !== 'number' ||
-            typeof begin?.offset !== 'number'
-          ) {
-            continue
-          }
-
-          if (cell && cell.children.length === 0) initial++
-          if (next && next.children.length === 0) final--
-
-          const fence = value.slice(initial, final)
-          const pos = initial + fence.indexOf('|') - begin.offset + 1
-
-          // First cell at this column.
-          if (indices[nextColumn] === undefined) {
-            indices[nextColumn] = pos
-          } else if (pos !== indices[nextColumn]) {
-            file.message('Misaligned table fence', {
-              start: {line: begin.line, column: pos},
-              end: {line: begin.line, column: pos + 1}
-            })
+          if (sizes[info.column] === undefined || total > sizes[info.column]) {
+            sizes[info.column] = total
           }
         }
       }
+
+      for (const info of entries) {
+        if (!info.size) continue
+
+        let total = info.size.middle
+        if (info.size.left) total += info.size.left
+        if (info.size.right) total += info.size.right
+
+        const difference = sizes[info.column] - total
+        assert(difference >= 0) // Always positive.
+        let left = 0
+        let right = 0
+
+        if (info.align === 'right') {
+          left = difference
+        } else if (info.align === 'center') {
+          // Maximum number of spaces we would want on the left.
+          const max = Math.floor((sizes[info.column] - info.size.middle) / 2)
+
+          if (info.size.right !== undefined && max > info.size.right) {
+            right = max - info.size.right
+          }
+
+          left = difference - right
+        } else {
+          right = difference
+        }
+
+        warn(info, left, info.size.leftPoint)
+
+        // If there is no final pipe, we don’t ask for trailing spaces.
+        if (info.size.right !== undefined) {
+          warn(info, right, info.size.rightPoint)
+        }
+      }
+
+      return SKIP
     })
+
+    /**
+     * @param {Entry} info
+     *   Info.
+     * @param {number} add
+     *   Number of spaces to add.
+     * @param {Point} place
+     *   Place to add spaces.
+     * @returns {undefined}
+     *   Nothing.
+     */
+    function warn(info, add, place) {
+      if (add === 0) return
+      file.message(
+        'Unexpected unaligned cell, expected aligned pipes, add `' +
+          add +
+          '` ' +
+          pluralize('space', add) +
+          (info.row === undefined
+            ? ' (or add `-` to pad alignment row cells)'
+            : ''),
+        {ancestors: info.ancestors, place}
+      )
+    }
+
+    // Note: this code is also in `remark-lint-table-pipe-alignment`.
+    /**
+     * Get info about cells in a table.
+     *
+     * @param {Array<Nodes>} ancestors
+     *   Ancestors.
+     * @returns {Array<Entry>}
+     *   Entries.
+     */
+    function inferTable(ancestors) {
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      assert(node.type === 'table') // Always table.
+      /* c8 ignore next -- `align` is optional in AST. */
+      const align = node.align || []
+      /** @type {Array<Entry>} */
+      const result = []
+      let rowIndex = -1
+
+      // Regular rows.
+      while (++rowIndex < node.children.length) {
+        const row = node.children[rowIndex]
+        let column = -1
+
+        while (++column < row.children.length) {
+          const node = row.children[column]
+
+          result.push({
+            align: align[column],
+            ancestors: [...ancestors, row, node],
+            column,
+            row: rowIndex,
+            size: inferSize(
+              pointStart(node),
+              pointEnd(node),
+              column === row.children.length - 1
+            )
+          })
+        }
+
+        if (rowIndex === 0) {
+          const alignRow = inferAlignRow(ancestors, align)
+          if (alignRow) result.push(...alignRow)
+        }
+      }
+
+      return result
+    }
+
+    /**
+     * @param {Array<Nodes>} ancestors
+     * @param {Array<Align>} align
+     * @returns {Array<Entry> | undefined}
+     */
+    function inferAlignRow(ancestors, align) {
+      const node = ancestors.at(-1)
+      assert(node) // Always defined.
+      assert(node.type === 'table') // Always table.
+      const headEnd = pointEnd(node.children[0])
+
+      if (!headEnd || typeof headEnd.offset !== 'number') return
+
+      let index = headEnd.offset
+
+      if (value.charCodeAt(index) === 13 /* `\r` */) index++
+      /* c8 ignore next -- should never happen, alignment is needed. */
+      if (value.charCodeAt(index) !== 10 /* `\n` */) return
+
+      index++
+
+      /** @type {Array<Entry>} */
+      const result = []
+      const line = headEnd.line + 1
+      // Alignment row can only be on the second line,
+      // so containers can only indent with `>` or spaces.
+      let code = value.charCodeAt(index)
+      while (
+        code === 9 /* `\t` */ ||
+        code === 32 /* ` ` */ ||
+        code === 62 /* `>` */
+      ) {
+        index++
+        code = value.charCodeAt(index)
+      }
+
+      /* c8 ignore next 7 -- should always be found. */
+      if (
+        code !== 45 /* `-` */ &&
+        code !== 58 /* `:` */ &&
+        code !== 124 /* `|` */
+      ) {
+        return
+      }
+
+      let lineEndOffset = value.indexOf('\n', index)
+      if (lineEndOffset === -1) lineEndOffset = value.length
+      if (value.charCodeAt(lineEndOffset - 1) === 13 /* `\r` */) lineEndOffset--
+
+      let column = 0
+      let cellStart = index
+      let cellEnd = value.indexOf('|', index + (code === 124 ? 1 : 0))
+      if (cellEnd === -1 || cellEnd > lineEndOffset) {
+        cellEnd = lineEndOffset
+      }
+
+      while (cellStart !== cellEnd) {
+        let nextCellEnd = value.indexOf('|', cellEnd + 1)
+
+        if (nextCellEnd === -1 || nextCellEnd > lineEndOffset) {
+          nextCellEnd = lineEndOffset
+        }
+
+        // Check if the trail is empty,
+        // which means it’s a closing pipe with trailing whitespace.
+        if (nextCellEnd === lineEndOffset) {
+          let maybeEnd = lineEndOffset
+          let code = value.charCodeAt(maybeEnd - 1)
+          while (code === 9 /* `\t` */ || code === 32 /* ` ` */) {
+            maybeEnd--
+            code = value.charCodeAt(maybeEnd - 1)
+          }
+
+          if (cellEnd + 1 === maybeEnd) {
+            cellEnd = lineEndOffset
+          }
+        }
+
+        result.push({
+          align: align[column],
+          ancestors,
+          column,
+          row: undefined,
+          size: inferSize(
+            {
+              line,
+              column: cellStart - index + 1,
+              offset: cellStart
+            },
+            {line, column: cellEnd - index + 1, offset: cellEnd},
+            cellEnd === lineEndOffset
+          )
+        })
+
+        cellStart = cellEnd
+        cellEnd = nextCellEnd
+        column++
+      }
+
+      return result
+    }
+
+    /**
+     * @param {Point | undefined} start
+     *   Start point.
+     * @param {Point | undefined} end
+     *   End point.
+     * @param {boolean} tailCell
+     *   Whether this is the last cell in a row.
+     * @returns {Size | undefined}
+     *   Size info.
+     */
+    function inferSize(start, end, tailCell) {
+      if (
+        end &&
+        start &&
+        typeof end.offset === 'number' &&
+        typeof start.offset === 'number'
+      ) {
+        let leftIndex = start.offset
+        /** @type {number | undefined} */
+        let left
+        /** @type {number | undefined} */
+        let right
+
+        if (value.charCodeAt(leftIndex) === 124 /* `|` */) {
+          left = 0
+          leftIndex++
+
+          while (value.charCodeAt(leftIndex) === 32) {
+            left++
+            leftIndex++
+          }
+        }
+        // Else, A leading pipe can only be omitted in the first cell.
+        // Where we never want leading whitespace, as it’s seen as
+        // indentation, and could turn into an indented block.
+
+        let rightIndex = end.offset
+
+        // The final pipe, if it exists, is part of the last cell in a row
+        // according to positional info.
+        if (tailCell) {
+          while (value.charCodeAt(rightIndex - 1) === 32) {
+            rightIndex--
+          }
+
+          // Found a pipe: we expect more whitespace.
+          if (
+            rightIndex > leftIndex &&
+            value.charCodeAt(rightIndex - 1) === 124 /* `|` */
+          ) {
+            rightIndex--
+          }
+          // No pipe at the last cell: the trailing whitespace is part of
+          // the cell.
+          else {
+            rightIndex = end.offset
+          }
+        }
+
+        /** @type {number} */
+        const rightEdgeIndex = rightIndex
+
+        if (value.charCodeAt(rightIndex) === 124 /* `|` */) {
+          right = 0
+
+          while (
+            rightIndex - 1 > leftIndex &&
+            value.charCodeAt(rightIndex - 1) === 32
+          ) {
+            right++
+            rightIndex--
+          }
+        }
+        // Else, a trailing pipe can only be omitted in the last cell.
+        // Where we never want trailing whitespace.
+
+        return {
+          left,
+          leftPoint: {
+            line: start.line,
+            column: start.column + (leftIndex - start.offset),
+            offset: leftIndex
+          },
+          middle: rightIndex - leftIndex,
+          right,
+          rightPoint: {
+            line: end.line,
+            column: end.column - (end.offset - rightEdgeIndex),
+            offset: rightEdgeIndex
+          }
+        }
+      }
+    }
   }
 )
 

@@ -41,19 +41,29 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   Lorem ipsum␠␠
- *   dolor sit amet
+ *   **Mercury** is the first planet from the Sun␠␠
+ *   and the smallest in the Solar System.
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   Lorem ipsum␠␠␠
- *   dolor sit amet.
+ *   **Mercury** is the first planet from the Sun␠␠␠
+ *   and the smallest in the Solar System.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:45-2:1: Unexpected `3` spaces for hard break, expected `2` spaces
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"gfm": true, "label": "input", "name": "containers.md"}
  *
- *   1:12-2:1: Use two spaces for hard line breaks
+ *   [^mercury]:
+ *       > * > * **Mercury** is the first planet from the Sun␠␠␠
+ *       >   >   and the smallest in the Solar System.
+ * @example
+ *   {"gfm": true, "label": "output", "name": "containers.md"}
+ *
+ *   2:57-3:1: Unexpected `3` spaces for hard break, expected `2` spaces
  */
 
 /**
@@ -79,8 +89,8 @@ const remarkLintHardBreakSpaces = lintRule(
     const value = String(file)
 
     visit(tree, 'break', function (node) {
-      const start = pointStart(node)
       const end = pointEnd(node)
+      const start = pointStart(node)
 
       if (
         end &&
@@ -88,13 +98,18 @@ const remarkLintHardBreakSpaces = lintRule(
         typeof end.offset === 'number' &&
         typeof start.offset === 'number'
       ) {
-        const slice = value
-          .slice(start.offset, end.offset)
-          .split('\n', 1)[0]
-          .replace(/\r$/, '')
+        const slice = value.slice(start.offset, end.offset)
 
-        if (slice.length > 2) {
-          file.message('Use two spaces for hard line breaks', node)
+        let actual = 0
+        while (slice.charCodeAt(actual) === 32) actual++
+
+        if (actual > 2) {
+          file.message(
+            'Unexpected `' +
+              actual +
+              '` spaces for hard break, expected `2` spaces',
+            node
+          )
         }
       }
     })

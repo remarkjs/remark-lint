@@ -143,6 +143,8 @@ Configuration (TypeScript type).
 
 * `allow` (`Array<RegExp | string>`, optional)
   — list of values to allow between `[` and `]`
+* `allowShortcutLink` (`boolean`, default: `false`)
+  — allow shortcut references, which are just brackets such as `[text]`
 
 ## Recommendation
 
@@ -160,7 +162,7 @@ This isn’t a problem,
 but it might become one when an author later adds a definition:
 
 ```markdown
-Some new text […][]
+Some new text […][].
 
 […]: #read-more
 ```
@@ -175,48 +177,17 @@ but their changes also result in a link for the text by the first author.
 ###### In
 
 ```markdown
-[foo][]
+[Mercury][] is the first planet from the Sun and the smallest in the Solar
+System.
 
-Just a [ bracket.
+Venus is the second planet from the [Sun.
 
-Typically, you’d want to use escapes (with a backslash: \\) to escape what
-could turn into a \[reference otherwise].
+Earth is the third planet from the \[Sun] and the only astronomical object
+known to harbor life\.
 
-Just two braces can’t link: [].
+Mars is the fourth planet from the Sun: [].
 
-[foo]: https://example.com
-```
-
-###### Out
-
-No messages.
-
-##### `ok-allow.md`
-
-When configured with `{ allow: [ '…' ] }`.
-
-###### In
-
-```markdown
-> Eliding a portion of a quoted passage […] is acceptable.
-```
-
-###### Out
-
-No messages.
-
-##### `ok-allow-source.md`
-
-When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
-
-###### In
-
-```markdown
-[foo][b.c]
-
-[bar][a]
-
-Matching is case-insensitive: [bar][B.C]
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
@@ -228,57 +199,74 @@ No messages.
 ###### In
 
 ```markdown
-[bar]
+[Mercury] is the first planet from the Sun and the smallest in the Solar
+System.
 
-[baz][]
+[Venus][] is the second planet from the Sun.
 
-[text][qux]
+[Earth][earth] is the third planet from the Sun and the only astronomical
+object known to harbor life.
 
-Spread [over
-lines][]
+![Mars] is the fourth planet from the Sun in the [Solar
+System].
 
-> in [a
-> block quote][]
+> Jupiter is the fifth planet from the Sun and the largest in the [Solar
+> System][].
 
-[asd][a
+[Saturn][ is the sixth planet from the Sun and the second-largest
+in the Solar System, after Jupiter.
 
-Can include [*emphasis*].
+[*Uranus*][] is the seventh planet from the Sun.
 
-Multiple pairs: [a][b][c].
+[Neptune][neptune][more] is the eighth and farthest planet from the Sun.
 ```
 
 ###### Out
 
 ```text
-1:1-1:6: Found reference to undefined definition
-3:1-3:8: Found reference to undefined definition
-5:1-5:12: Found reference to undefined definition
-7:8-8:9: Found reference to undefined definition
-10:6-11:17: Found reference to undefined definition
-13:1-13:6: Found reference to undefined definition
-15:13-15:25: Found reference to undefined definition
-17:17-17:23: Found reference to undefined definition
-17:23-17:26: Found reference to undefined definition
+1:1-1:10: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a link or escaped opening bracket (`\[`) for regular text
+4:1-4:10: Unexpected reference to undefined definition, expected corresponding definition (`venus`) for a link or escaped opening bracket (`\[`) for regular text
+6:1-6:15: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\[`) for regular text
+9:2-9:8: Unexpected reference to undefined definition, expected corresponding definition (`mars`) for an image or escaped opening bracket (`\[`) for regular text
+9:50-10:8: Unexpected reference to undefined definition, expected corresponding definition (`solar system`) for a link or escaped opening bracket (`\[`) for regular text
+12:67-13:12: Unexpected reference to undefined definition, expected corresponding definition (`solar > system`) for a link or escaped opening bracket (`\[`) for regular text
+15:1-15:9: Unexpected reference to undefined definition, expected corresponding definition (`saturn`) for a link or escaped opening bracket (`\[`) for regular text
+18:1-18:13: Unexpected reference to undefined definition, expected corresponding definition (`*uranus*`) for a link or escaped opening bracket (`\[`) for regular text
+20:1-20:19: Unexpected reference to undefined definition, expected corresponding definition (`neptune`) for a link or escaped opening bracket (`\[`) for regular text
+20:19-20:25: Unexpected reference to undefined definition, expected corresponding definition (`more`) for a link or escaped opening bracket (`\[`) for regular text
 ```
 
-##### `not-ok-source.md`
+##### `ok-allow.md`
 
-When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
+When configured with `{ allow: [ '…' ] }`.
 
 ###### In
 
 ```markdown
-[foo][a.c]
-
-[bar][b]
+Mercury is the first planet from the Sun and the smallest in the Solar
+System. […]
 ```
 
 ###### Out
 
-```text
-1:1-1:11: Found reference to undefined definition
-3:1-3:9: Found reference to undefined definition
+No messages.
+
+##### `source.md`
+
+When configured with `{ allow: [ { source: '^mer' }, 'venus' ] }`.
+
+###### In
+
+```markdown
+[Mercury][] is the first planet from the Sun and the smallest in the Solar
+System.
+
+[Venus][] is the second planet from the Sun.
 ```
+
+###### Out
+
+No messages.
 
 ##### `gfm.md`
 
@@ -288,15 +276,40 @@ When configured with `{ allow: [ 'a', { source: '^b\\.' } ] }`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-GFM footnote calls are supported too.
+Mercury[^mercury] is the first planet from the Sun and the smallest in the
+Solar System.
 
-Alpha[^a]
+[^venus]:
+    **Venus** is the second planet from the Sun.
 ```
 
 ###### Out
 
 ```text
-3:6-3:10: Found reference to undefined definition
+1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
+```
+
+##### `allow-shortcut-link.md`
+
+When configured with `{ allowShortcutLink: true }`.
+
+###### In
+
+```markdown
+[Mercury] is the first planet from the Sun and the smallest in the Solar
+System.
+
+[Venus][] is the second planet from the Sun.
+
+[Earth][earth] is the third planet from the Sun and the only astronomical object
+known to harbor life.
+```
+
+###### Out
+
+```text
+4:1-4:10: Unexpected reference to undefined definition, expected corresponding definition (`venus`) for a link or escaped opening bracket (`\[`) for regular text
+6:1-6:15: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\[`) for regular text
 ```
 
 ## Compatibility

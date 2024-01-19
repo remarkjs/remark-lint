@@ -38,64 +38,83 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   Paragraph.
+ *   Mercury.
  *
- *   [example]: http://example.com "Example Domain"
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   Paragraph.
- *
- *   [example]: http://example.com "Example Domain"
- *
- *   Another paragraph.
+ *   [venus]: http://example.com
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"name": "ok.md"}
  *
- *   3:1-3:47: Move definitions to the end of the file (after `5:19`)
+ *   [mercury]: http://example.com/mercury/
+ *   [venus]: http://example.com/venus/
  *
  * @example
  *   {"name": "ok-html-comments.md"}
  *
- *   Paragraph.
+ *   Mercury.
  *
- *   [example-1]: http://example.com/one/
+ *   [venus]: http://example.com/venus/
  *
- *   <!-- Comments are fine between and after definitions. -->
+ *   <!-- HTML comments in markdown are ignored. -->
  *
- *   [example-2]: http://example.com/two/
+ *   [earth]: http://example.com/earth/
  *
  * @example
  *   {"name": "ok-mdx-comments.mdx", "mdx": true}
  *
- *   Paragraph.
+ *   Mercury.
  *
- *   [example-1]: http://example.com/one/
+ *   [venus]: http://example.com/venus/
  *
- *   {/* Comments are fine in MDX. *␀/}
+ *   {/* Comments in expressions in MDX are ignored. *␀/}
  *
- *   [example-2]: http://example.com/two/
+ *   [earth]: http://example.com/earth/
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok.md"}
+ *
+ *   Mercury.
+ *
+ *   [venus]: https://example.com/venus/
+ *
+ *   Earth.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   3:1-3:36: Unexpected definition before last content, expected definitions after line `5`
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm.md"}
+ *
+ *   Mercury.
+ *
+ *   [^venus]:
+ *       **Venus** is the second planet from
+ *       the Sun.
+ *
+ *   Earth.
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm.md"}
+ *
+ *   3:1-5:13: Unexpected footnote definition before last content, expected definitions after line `7`
  */
 
 /**
- * @typedef {import('mdast').Definition} Definition
- * @typedef {import('mdast').FootnoteDefinition} FootnoteDefinition
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
- *
- * @typedef {import('unist').Point} Point
  */
 
 /// <reference types="mdast-util-mdx" />
 
+import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {stringifyPosition} from 'unist-util-stringify-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintFinalDefinition = lintRule(
   {
@@ -109,14 +128,14 @@ const remarkLintFinalDefinition = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Array<Definition | FootnoteDefinition>} */
-    const definitions = []
-    /** @type {Point | undefined} */
-    let last
+    /** @type {Array<Array<Nodes>>} */
+    const definitionStacks = []
+    /** @type {Array<Nodes> | undefined} */
+    let contentAncestors
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       if (node.type === 'definition' || node.type === 'footnoteDefinition') {
-        definitions.push(node)
+        definitionStacks.push([...parents, node])
       } else if (
         node.type === 'root' ||
         // Ignore HTML comments.
@@ -128,24 +147,42 @@ const remarkLintFinalDefinition = lintRule(
       ) {
         // Empty.
       } else {
-        const place = pointEnd(node)
-
-        if (place) {
-          last = place
-        }
+        contentAncestors = [...parents, node]
       }
     })
 
-    for (const node of definitions) {
-      const point = pointStart(node)
+    const content = contentAncestors ? contentAncestors.at(-1) : undefined
+    const contentEnd = pointEnd(content)
 
-      if (point && last && point.line < last.line) {
-        file.message(
-          'Move definitions to the end of the file (after `' +
-            stringifyPosition(last) +
-            '`)',
-          node
-        )
+    if (contentEnd) {
+      assert(content) // Always defined.
+      assert(contentAncestors) // Always defined.
+
+      for (const definitionAncestors of definitionStacks) {
+        const definition = definitionAncestors.at(-1)
+        assert(definition) // Always defined.
+
+        const definitionStart = pointStart(definition)
+
+        if (definitionStart && definitionStart.line < contentEnd.line) {
+          file.message(
+            'Unexpected ' +
+              (definition.type === 'footnoteDefinition' ? 'footnote ' : '') +
+              'definition before last content, expected definitions after line `' +
+              contentEnd.line +
+              '`',
+            {
+              ancestors: definitionAncestors,
+              cause: new VFileMessage('Last content defined here', {
+                ancestors: contentAncestors,
+                place: content.position,
+                ruleId: 'final-definition',
+                source: 'remark-lint'
+              }),
+              place: definition.position
+            }
+          )
+        }
       }
     }
   }

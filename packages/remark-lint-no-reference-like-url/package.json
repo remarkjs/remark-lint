@@ -33,9 +33,11 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "devlop": "^1.0.0",
     "unified-lint-rule": "^2.0.0",
     "unist-util-position": "^5.0.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile-message": "^4.0.0"
   },
   "scripts": {},
   "typeCoverage": {

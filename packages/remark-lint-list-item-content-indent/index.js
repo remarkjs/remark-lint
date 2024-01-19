@@ -5,6 +5,8 @@
  * ## What is this?
  *
  * This package checks the indent of list item content.
+ * It checks the first thing in a list item and makes sure that all other
+ * children have the same indent.
  *
  * ## When should I use this?
  *
@@ -42,32 +44,76 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "gfm": true}
- *
- *   1.␠[x] Alpha
- *   ␠␠␠1. Bravo
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "gfm": true}
+ *   {"name": "ok.md"}
  *
- *   1.␠[x] Charlie
- *   ␠␠␠␠1. Delta
+ *   1.␠Mercury.
+ *   ␠␠␠***
+ *   ␠␠␠* Venus.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "gfm": true}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   2:5: Don’t use mixed indentation for children, remove 1 space
+ *   1.␠Mercury.
+ *   ␠␠␠␠␠***
+ *   ␠␠␠␠* Venus.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   2:6: Unexpected unaligned list item child, expected to align with first child, remove `2` spaces
+ *   3:5: Unexpected unaligned list item child, expected to align with first child, remove `1` space
+ *
+ * @example
+ *   {"name": "ok-more.md"}
+ *
+ *   *␠␠␠Mercury.
+ *   ␠␠␠␠***
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok-more.md"}
+ *
+ *   *␠␠␠Mercury.
+ *   ␠␠␠␠␠␠***
+ * @example
+ *   {"label": "output", "name": "not-ok-more.md"}
+ *
+ *   2:7: Unexpected unaligned list item child, expected to align with first child, remove `2` spaces
+ *
+ * @example
+ *   {"label": "input", "gfm": true, "name": "gfm-nok.md"}
+ *
+ *   1.␠[x] Mercury
+ *   ␠␠␠␠␠***
+ *   ␠␠␠␠* Venus
+ * @example
+ *   {"label": "output", "gfm": true, "name": "gfm-nok.md"}
+ *
+ *    2:6: Unexpected unaligned list item child, expected to align with first child, remove `2` spaces
+ *    3:5: Unexpected unaligned list item child, expected to align with first child, remove `1` space
+ *
+ * @example
+ *   {"label": "input", "name": "initial-blank.md"}
+ *
+ *   *
+ *   ␠␠␠␠␠asd
+ *
+ *   ␠␠***
+ * @example
+ *   {"label": "output", "name": "initial-blank.md"}
+ *
+ *    4:3: Unexpected unaligned list item child, expected to align with first child, add `3` spaces
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
-import plural from 'pluralize'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintListItemContentIndent = lintRule(
   {
@@ -82,57 +128,67 @@ const remarkLintListItemContentIndent = lintRule(
    */
   function (tree, file) {
     const value = String(file)
+    /** @type {VFileMessage | undefined} */
+    let cause
 
-    visit(tree, 'listItem', function (node) {
+    visitParents(tree, 'listItem', function (node, parents) {
       let index = -1
       /** @type {number | undefined} */
-      let style
+      let expected
 
       while (++index < node.children.length) {
-        const item = node.children[index]
-        const begin = pointStart(item)
+        const child = node.children[index]
+        const childStart = pointStart(child)
 
-        if (!begin || typeof begin.offset !== 'number') {
+        if (!childStart || typeof childStart.offset !== 'number') {
           continue
         }
 
-        let column = begin.column
+        let actual = childStart.column
 
         // Get indentation for the first child.
-        // Only the first item can have a checkbox, so here we remove that from
-        // the column.
-        if (index === 0) {
-          // If there’s a checkbox before the content, look backwards to find
-          // the start of that checkbox.
-          if (typeof node.checked === 'boolean') {
-            let char = begin.offset - 1
+        // Only the first item can have a checkbox,
+        // when it’s a paragraph,
+        // so here we remove that from the column.
+        if (index === 0 && typeof node.checked === 'boolean') {
+          let beforeIndex = childStart.offset - 1
 
-            while (char > 0 && value.charAt(char) !== '[') {
-              char--
-            }
-
-            column -= begin.offset - char
+          while (
+            beforeIndex > 0 &&
+            value.charCodeAt(beforeIndex) !== 91 /* `[` */
+          ) {
+            beforeIndex--
           }
 
-          style = column
-
-          continue
+          actual -= childStart.offset - beforeIndex
         }
 
-        // Warn for violating children.
-        if (style && column !== style) {
-          const diff = style - column
-          const abs = Math.abs(diff)
+        if (expected) {
+          // Warn for violating children.
+          if (actual !== expected) {
+            const difference = expected - actual
+            const differenceAbsolute = Math.abs(difference)
 
-          file.message(
-            'Don’t use mixed indentation for children, ' +
-              /* c8 ignore next -- hard to test, I couldn’t find it at least. */
-              (diff > 0 ? 'add' : 'remove') +
-              ' ' +
-              abs +
-              ' ' +
-              plural('space', abs),
-            {line: begin.line, column}
+            file.message(
+              'Unexpected unaligned list item child, expected to align with first child, ' +
+                (difference > 0 ? 'add' : 'remove') +
+                ' `' +
+                differenceAbsolute +
+                '` ' +
+                pluralize('space', differenceAbsolute),
+              {ancestors: [...parents, node, child], cause, place: childStart}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            'Alignment of first child first defined here',
+            {
+              ancestors: [...parents, node, child],
+              place: childStart,
+              ruleId: 'list-item-content-indent',
+              source: 'remark-lint'
+            }
           )
         }
       }

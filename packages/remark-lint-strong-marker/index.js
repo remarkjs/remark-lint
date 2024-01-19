@@ -47,13 +47,13 @@
  *
  * ## Recommendation
  *
- * Whether asterisks or underscores are used affects how and whether emphasis
+ * Whether asterisks or underscores are used affects how and whether strong
  * works.
  * Underscores are sometimes used to represent normal underscores inside words,
  * so there are extra rules in markdown to support that.
  * Asterisks are not used in natural language,
  * so they don’t need these rules,
- * and thus can form emphasis in more cases.
+ * and thus can form strong in more cases.
  * Asterisks can also be used as the marker of more constructs than underscores:
  * lists.
  * Due to having simpler parsing rules,
@@ -77,40 +77,51 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md"}
- *
- *   **foo** and **bar**.
  *
  * @example
- *   {"name": "also-ok.md"}
+ *   {"config": "*", "name": "ok-asterisk.md"}
  *
- *   __foo__ and __bar__.
- *
- * @example
- *   {"name": "ok.md", "config": "*"}
- *
- *   **foo**.
+ *   **Mercury**.
  *
  * @example
- *   {"name": "ok.md", "config": "_"}
+ *   {"config": "*", "label": "input", "name": "not-ok-asterisk.md"}
  *
- *   __foo__.
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   **foo** and __bar__.
+ *   __Mercury__.
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"config": "*", "label": "output", "name": "not-ok-asterisk.md"}
  *
- *   1:13-1:20: Strong should use `*` as a marker
+ *   1:1-1:12: Unexpected strong marker `_`, expected `*`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "💩", "positionless": true}
+ *   {"config": "_", "name": "ok-underscore.md"}
  *
- *   1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+ *   __Mercury__.
+ *
+ * @example
+ *   {"config": "_", "label": "input", "name": "not-ok-underscore.md"}
+ *
+ *   **Mercury**.
+ *
+ * @example
+ *   {"config": "_", "label": "output", "name": "not-ok-underscore.md"}
+ *
+ *   1:1-1:12: Unexpected strong marker `*`, expected `_`
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok-consistent.md"}
+ *
+ *   **Mercury** and __Venus__.
+ *
+ * @example
+ *   {"label": "output", "name": "not-ok-consistent.md"}
+ *
+ *   1:17-1:26: Unexpected strong marker `_`, expected `*`
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'*'`, `'_'`, or `'consistent'`
  */
 
 /**
@@ -127,7 +138,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintStrongMarker = lintRule(
   {
@@ -144,26 +156,56 @@ const remarkLintStrongMarker = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    let option = options || 'consistent'
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Marker | undefined} */
+    let expected
 
-    if (option !== '*' && option !== '_' && option !== 'consistent') {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === '*' || options === '_') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect strong marker `' +
-          option +
-          "`: use either `'consistent'`, `'*'`, or `'_'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'*'`, `'_'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'strong', function (node) {
+    visitParents(tree, 'strong', function (node, parents) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {
-        const marker = /** @type {Marker} */ (value.charAt(start.offset))
+        const actual = value.charAt(start.offset)
 
-        if (option === 'consistent') {
-          option = marker
-        } else if (marker !== option) {
-          file.message('Strong should use `' + option + '` as a marker', node)
+        /* c8 ignore next -- should not happen. */
+        if (actual !== '*' && actual !== '_') return
+
+        if (expected) {
+          if (actual !== expected) {
+            file.message(
+              'Unexpected strong marker `' +
+                actual +
+                '`, expected `' +
+                expected +
+                '`',
+              {ancestors: [...parents, node], cause, place: node.position}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            "Strong marker style `'" +
+              actual +
+              "'` first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place: node.position,
+              ruleId: 'strong-marker',
+              source: 'remark-lint'
+            }
+          )
         }
       }
     })

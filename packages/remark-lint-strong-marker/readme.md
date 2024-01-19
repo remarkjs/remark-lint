@@ -162,13 +162,13 @@ type Options = Marker | 'consistent'
 
 ## Recommendation
 
-Whether asterisks or underscores are used affects how and whether emphasis
+Whether asterisks or underscores are used affects how and whether strong
 works.
 Underscores are sometimes used to represent normal underscores inside words,
 so there are extra rules in markdown to support that.
 Asterisks are not used in natural language,
 so they don’t need these rules,
-and thus can form emphasis in more cases.
+and thus can form strong in more cases.
 Asterisks can also be used as the marker of more constructs than underscores:
 lists.
 Due to having simpler parsing rules,
@@ -184,80 +184,88 @@ Pass `strong: '_'` to always use underscores.
 
 ## Examples
 
-##### `ok.md`
-
-###### In
-
-```markdown
-**foo** and **bar**.
-```
-
-###### Out
-
-No messages.
-
-##### `also-ok.md`
-
-###### In
-
-```markdown
-__foo__ and __bar__.
-```
-
-###### Out
-
-No messages.
-
-##### `ok.md`
+##### `ok-asterisk.md`
 
 When configured with `'*'`.
 
 ###### In
 
 ```markdown
-**foo**.
+**Mercury**.
 ```
 
 ###### Out
 
 No messages.
 
-##### `ok.md`
+##### `not-ok-asterisk.md`
+
+When configured with `'*'`.
+
+###### In
+
+```markdown
+__Mercury__.
+```
+
+###### Out
+
+```text
+1:1-1:12: Unexpected strong marker `_`, expected `*`
+```
+
+##### `ok-underscore.md`
 
 When configured with `'_'`.
 
 ###### In
 
 ```markdown
-__foo__.
+__Mercury__.
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-underscore.md`
+
+When configured with `'_'`.
 
 ###### In
 
 ```markdown
-**foo** and __bar__.
+**Mercury**.
 ```
 
 ###### Out
 
 ```text
-1:13-1:20: Strong should use `*` as a marker
+1:1-1:12: Unexpected strong marker `*`, expected `_`
+```
+
+##### `not-ok-consistent.md`
+
+###### In
+
+```markdown
+**Mercury** and __Venus__.
+```
+
+###### Out
+
+```text
+1:17-1:26: Unexpected strong marker `_`, expected `*`
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect strong marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+1:1: Unexpected value `🌍` for `options`, expected `'*'`, `'_'`, or `'consistent'`
 ```
 
 ## Compatibility

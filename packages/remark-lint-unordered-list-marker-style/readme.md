@@ -21,8 +21,8 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintUnorderedListMarkerStyle[, options])`](#unifieduseremarklintunorderedlistmarkerstyle-options)
-  * [`Marker`](#marker)
   * [`Options`](#options)
+  * [`Style`](#style)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
 * [Examples](#examples)
@@ -120,8 +120,8 @@ On the CLI in a config file (here a `package.json`):
 
 This package exports no identifiers.
 It exports the [TypeScript][typescript] types
-[`Marker`][api-marker] and
-[`Options`][api-options].
+[`Options`][api-options] and
+[`Style`][api-style].
 The default export is
 [`remarkLintUnorderedListMarkerStyle`][api-remark-lint-unordered-list-marker-style].
 
@@ -139,16 +139,6 @@ Warn when unordered list markers are inconsistent.
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
-### `Marker`
-
-Marker (TypeScript type).
-
-###### Type
-
-```ts
-type Marker = '*' | '+' | '-'
-```
-
 ### `Options`
 
 Configuration (TypeScript type).
@@ -156,7 +146,17 @@ Configuration (TypeScript type).
 ###### Type
 
 ```ts
-type Options = Marker | 'consistent'
+type Options = Style | 'consistent'
+```
+
+### `Style`
+
+Style (TypeScript type).
+
+###### Type
+
+```ts
+type Style = '*' | '+' | '-'
 ```
 
 ## Recommendation
@@ -178,18 +178,11 @@ Pass `bullet: '+'` or `bullet: '-'` to use a different marker.
 ###### In
 
 ```markdown
-By default (`'consistent'`), if the file uses only one marker,
-that’s OK.
+* Mercury
 
-* Foo
-* Bar
-* Baz
+1. Venus
 
-Ordered lists are not affected.
-
-1. Foo
-2. Bar
-3. Baz
+* Earth
 ```
 
 ###### Out
@@ -203,7 +196,7 @@ When configured with `'*'`.
 ###### In
 
 ```markdown
-* Foo
+* Mercury
 ```
 
 ###### Out
@@ -217,7 +210,7 @@ When configured with `'-'`.
 ###### In
 
 ```markdown
-- Foo
+- Mercury
 ```
 
 ###### Out
@@ -231,7 +224,7 @@ When configured with `'+'`.
 ###### In
 
 ```markdown
-+ Foo
++ Mercury
 ```
 
 ###### Out
@@ -243,26 +236,28 @@ No messages.
 ###### In
 
 ```markdown
-* Foo
-- Bar
-+ Baz
+* Mercury
+
+- Venus
+
++ Earth
 ```
 
 ###### Out
 
 ```text
-2:1-2:6: Marker style should be `*`
-3:1-3:6: Marker style should be `*`
+3:1: Unexpected unordered list marker `-`, expected `*`
+5:1: Unexpected unordered list marker `+`, expected `*`
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect unordered list item marker style `💩`: use either `'-'`, `'*'`, or `'+'`
+1:1: Unexpected value `🌍` for `options`, expected `'*'`, `'+'`, `'-'`, or `'consistent'`
 ```
 
 ## Compatibility
@@ -290,11 +285,11 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-marker]: #marker
-
 [api-options]: #options
 
 [api-remark-lint-unordered-list-marker-style]: #unifieduseremarklintunorderedlistmarkerstyle-options
+
+[api-style]: #style
 
 [author]: https://wooorm.com
 

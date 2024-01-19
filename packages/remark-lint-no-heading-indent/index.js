@@ -3,11 +3,11 @@
  *
  * ## What is this?
  *
- * This package checks the indent of headings.
+ * This package checks the spaces before headings.
  *
  * ## When should I use this?
  *
- * You can use this package to check that headings are consistent.
+ * You can use this rule to check markdown code style.
  *
  * ## API
  *
@@ -30,15 +30,17 @@
  * While it is possible to use an indent to headings on their text:
  *
  * ```markdown
- *    # One
- *   ## Two
- *  ### Three
- * #### Four
+ *    # Mercury
+ *   ## Venus
+ *  ### Earth
+ * #### Mars
  * ```
  *
- * …such style is uncommon, a bit hard to maintain, and it’s impossible to add a
- * heading with a rank of 5 as it would form indented code instead.
- * Hence, it’s recommended to not indent headings and to turn this rule on.
+ * …such style is uncommon,
+ * a bit hard to maintain,
+ * and it’s impossible to add a heading with a rank of 5 as it would form
+ * indented code instead.
+ * So it’s recommended to not indent headings and to turn this rule on.
  *
  * ## Fix
  *
@@ -52,49 +54,49 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   #␠Hello world
+ *   #␠Mercury
  *
- *   Foo
+ *   Venus
  *   -----
  *
- *   #␠Hello world␠#
+ *   #␠Earth␠#
  *
- *   Bar
- *   =====
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   ␠␠␠# Hello world
- *
- *   ␠Foo
- *   -----
- *
- *   ␠# Hello world #
- *
- *   ␠␠␠Bar
- *   =====
+ *   Mars
+ *   ====
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:4: Remove 3 spaces before this heading
- *   3:2: Remove 1 space before this heading
- *   6:2: Remove 1 space before this heading
- *   8:4: Remove 3 spaces before this heading
+ *   ␠␠␠# Mercury
+ *
+ *   ␠Venus
+ *   ------
+ *
+ *   ␠# Earth #
+ *
+ *   ␠␠␠Mars
+ *   ======
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *    1:4: Unexpected `3` spaces before heading, expected `0` spaces, remove `3` spaces
+ *    3:2: Unexpected `1` space before heading, expected `0` spaces, remove `1` space
+ *    6:2: Unexpected `1` space before heading, expected `0` spaces, remove `1` space
+ *    8:4: Unexpected `3` spaces before heading, expected `0` spaces, remove `3` spaces
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
-import plural from 'pluralize'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoHeadingIndent = lintRule(
   {
@@ -108,25 +110,30 @@ const remarkLintNoHeadingIndent = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'heading', function (node, _, parent) {
+    visitParents(tree, 'heading', function (node, parents) {
+      const parent = parents[parents.length - 1]
       const start = pointStart(node)
 
       // Note: it’s rather complex to detect what the expected indent is in block
       // quotes and lists, so let’s only do directly in root for now.
-      if (!start || (parent && parent.type !== 'root')) {
+      if (!start || !parent || parent.type !== 'root') {
         return
       }
 
-      const diff = start.column - 1
+      const actual = start.column - 1
 
-      if (diff) {
+      if (actual) {
         file.message(
-          'Remove ' +
-            diff +
-            ' ' +
-            plural('space', diff) +
-            ' before this heading',
-          start
+          'Unexpected `' +
+            actual +
+            '` ' +
+            pluralize('space', actual) +
+            ' before heading, expected `0` spaces, remove' +
+            ' `' +
+            actual +
+            '` ' +
+            pluralize('space', actual),
+          {ancestors: [...parents, node], place: start}
         )
       }
     })

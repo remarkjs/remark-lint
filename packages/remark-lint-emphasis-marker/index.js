@@ -77,51 +77,51 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"config": "*", "name": "ok.md"}
- *
- *   *foo*
  *
  * @example
- *   {"config": "*", "name": "not-ok.md", "label": "input"}
+ *   {"config": "*", "name": "ok-asterisk.md"}
  *
- *   _foo_
- *
- * @example
- *   {"config": "*", "name": "not-ok.md", "label": "output"}
- *
- *   1:1-1:6: Emphasis should use `*` as a marker
+ *   *Mercury*.
  *
  * @example
- *   {"config": "_", "name": "ok.md"}
+ *   {"config": "*", "label": "input", "name": "not-ok-asterisk.md"}
  *
- *   _foo_
- *
- * @example
- *   {"config": "_", "name": "not-ok.md", "label": "input"}
- *
- *   *foo*
+ *   _Mercury_.
  *
  * @example
- *   {"config": "_", "name": "not-ok.md", "label": "output"}
+ *   {"config": "*", "label": "output", "name": "not-ok-asterisk.md"}
  *
- *   1:1-1:6: Emphasis should use `_` as a marker
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   *foo*
- *   _bar_
+ *   1:1-1:10: Unexpected emphasis marker `_`, expected `*`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"config": "_", "name": "ok-underscore.md"}
  *
- *   2:1-2:6: Emphasis should use `*` as a marker
+ *   _Mercury_.
  *
  * @example
- *   {"config": "💩", "name": "not-ok.md", "label": "output", "positionless": true}
+ *   {"config": "_", "label": "input", "name": "not-ok-underscore.md"}
  *
- *   1:1: Incorrect emphasis marker `💩`: use either `'consistent'`, `'*'`, or `'_'`
+ *   *Mercury*.
+ *
+ * @example
+ *   {"config": "_", "label": "output", "name": "not-ok-underscore.md"}
+ *
+ *   1:1-1:10: Unexpected emphasis marker `*`, expected `_`
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok-consistent.md"}
+ *
+ *   *Mercury* and _Venus_.
+ *
+ * @example
+ *   {"label": "output", "name": "not-ok-consistent.md"}
+ *
+ *   1:15-1:22: Unexpected emphasis marker `_`, expected `*`
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'*'`, `'_'`, or `'consistent'`
  */
 
 /**
@@ -138,7 +138,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintEmphasisMarker = lintRule(
   {
@@ -155,26 +156,56 @@ const remarkLintEmphasisMarker = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    let option = options || 'consistent'
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Marker | undefined} */
+    let expected
 
-    if (option !== '*' && option !== '_' && option !== 'consistent') {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === '*' || options === '_') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect emphasis marker `' +
-          option +
-          "`: use either `'consistent'`, `'*'`, or `'_'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'*'`, `'_'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'emphasis', function (node) {
+    visitParents(tree, 'emphasis', function (node, parents) {
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {
-        const marker = /** @type {Marker} */ (value.charAt(start.offset))
+        const actual = value.charAt(start.offset)
 
-        if (option === 'consistent') {
-          option = marker
-        } else if (marker !== option) {
-          file.message('Emphasis should use `' + option + '` as a marker', node)
+        /* c8 ignore next -- should not happen. */
+        if (actual !== '*' && actual !== '_') return
+
+        if (expected) {
+          if (actual !== expected) {
+            file.message(
+              'Unexpected emphasis marker `' +
+                actual +
+                '`, expected `' +
+                expected +
+                '`',
+              {ancestors: [...parents, node], cause, place: node.position}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            "Emphasis marker style `'" +
+              actual +
+              "'` first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place: node.position,
+              ruleId: 'emphasis-marker',
+              source: 'remark-lint'
+            }
+          )
         }
       }
     })

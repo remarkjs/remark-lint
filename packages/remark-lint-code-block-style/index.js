@@ -75,81 +75,79 @@
  * @license MIT
  *
  * @example
- *   {"config": "indented", "name": "ok.md"}
+ *   {"config": "indented", "name": "ok-indented.md"}
  *
- *       alpha()
+ *       venus()
  *
- *   Paragraph.
+ *   Mercury.
  *
- *       bravo()
- *
- * @example
- *   {"config": "indented", "name": "not-ok.md", "label": "input"}
- *
- *   ```
- *   alpha()
- *   ```
- *
- *   Paragraph.
- *
- *   ```
- *   bravo()
- *   ```
+ *       earth()
  *
  * @example
- *   {"config": "indented", "name": "not-ok.md", "label": "output"}
- *
- *   1:1-3:4: Code blocks should be indented
- *   7:1-9:4: Code blocks should be indented
- *
- * @example
- *   {"config": "fenced", "name": "ok.md"}
+ *   {"config": "fenced", "name": "ok-fenced.md"}
  *
  *   ```
- *   alpha()
+ *   venus()
  *   ```
  *
- *   Paragraph.
+ *   Mercury.
  *
  *   ```
- *   bravo()
+ *   earth()
  *   ```
  *
  * @example
- *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok-consistent.md"}
  *
- *       alpha()
+ *       venus()
  *
- *   Paragraph.
- *
- *       bravo()
- *
- * @example
- *   {"config": "fenced", "name": "not-ok-fenced.md", "label": "output"}
- *
- *   1:1-1:12: Code blocks should be fenced
- *   5:1-5:12: Code blocks should be fenced
- *
- * @example
- *   {"name": "not-ok-consistent.md", "label": "input"}
- *
- *       alpha()
- *
- *   Paragraph.
+ *   Mercury.
  *
  *   ```
- *   bravo()
+ *   earth()
+ *   ```
+ * @example
+ *   {"label": "output", "name": "not-ok-consistent.md"}
+ *
+ *   5:1-7:4: Unexpected fenced code block, expected indented code blocks
+ *
+ * @example
+ *   {"config": "indented", "label": "input", "name": "not-ok-indented.md"}
+ *
+ *   ```
+ *   venus()
  *   ```
  *
+ *   Mercury.
+ *
+ *   ```
+ *   earth()
+ *   ```
  * @example
- *   {"name": "not-ok-consistent.md", "label": "output"}
+ *   {"config": "indented", "label": "output", "name": "not-ok-indented.md"}
  *
- *   5:1-7:4: Code blocks should be indented
+ *   1:1-3:4: Unexpected fenced code block, expected indented code blocks
+ *   7:1-9:4: Unexpected fenced code block, expected indented code blocks
  *
  * @example
- *   {"config": "💩", "name": "not-ok-incorrect.md", "label": "output", "positionless": true}
+ *   {"config": "fenced", "label": "input", "name": "not-ok-fenced.md"}
  *
- *   1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
+ *       venus()
+ *
+ *   Mercury.
+ *
+ *       earth()
+ *
+ * @example
+ *   {"config": "fenced", "label": "output", "name": "not-ok-fenced.md"}
+ *
+ *   1:1-1:12: Unexpected indented code block, expected fenced code blocks
+ *   5:1-5:12: Unexpected indented code block, expected fenced code blocks
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok-options.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'fenced'`, `'indented'`, or `'consistent'`
  */
 
 /**
@@ -166,7 +164,8 @@
 
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintCodeBlockStyle = lintRule(
   {
@@ -182,22 +181,25 @@ const remarkLintCodeBlockStyle = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    let option = options || 'consistent'
     const value = String(file)
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Style | undefined} */
+    let expected
 
-    if (
-      option !== 'consistent' &&
-      option !== 'indented' &&
-      option !== 'fenced'
-    ) {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (options === 'indented' || options === 'fenced') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect code block style `' +
-          option +
-          "`: use either `'consistent'`, `'fenced'`, or `'indented'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'fenced'`, `'indented'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'code', function (node) {
+    visitParents(tree, 'code', function (node, parents) {
       const end = pointEnd(node)
       const start = pointStart(node)
 
@@ -210,16 +212,35 @@ const remarkLintCodeBlockStyle = lintRule(
         return
       }
 
-      const current =
-        node.lang ||
-        /^\s*([~`])\1{2,}/.test(value.slice(start.offset, end.offset))
+      const actual =
+        node.lang || /^ {0,3}([`~])/.test(value.slice(start.offset, end.offset))
           ? 'fenced'
           : 'indented'
 
-      if (option === 'consistent') {
-        option = current
-      } else if (option !== current) {
-        file.message('Code blocks should be ' + option, node)
+      if (expected) {
+        if (expected !== actual) {
+          file.message(
+            'Unexpected ' +
+              actual +
+              ' code block, expected ' +
+              expected +
+              ' code blocks',
+            {ancestors: [...parents, node], cause, place: {start, end}}
+          )
+        }
+      } else {
+        expected = actual
+        cause = new VFileMessage(
+          "Code block style `'" +
+            actual +
+            "'` first defined for `'consistent'` here",
+          {
+            ancestors: [...parents, node],
+            place: {start, end},
+            source: 'remark-lint',
+            ruleId: 'code-block-style'
+          }
+        )
       }
     })
   }

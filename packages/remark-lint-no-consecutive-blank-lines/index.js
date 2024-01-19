@@ -41,37 +41,207 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   Foo…␊␊…Bar.
+ *   # Planets
+ *
+ *   Mercury.
+ *
+ *   Venus.
+ *
+ * @example
+ *   {"label": "input", "name": "not-ok.md"}
+ *
+ *   # Planets
+ *
+ *
+ *   Mercury.
+ *
+ *
+ *
+ *   Venus.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   4:1: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+ *   8:1: Unexpected `3` blank lines before node, expected up to `1` blank line, remove `2` blank lines
+ *
+ * @example
+ *   {"label": "input", "name": "initial.md"}
+ *
+ *   ␊Mercury.
+ * @example
+ *   {"label": "output", "name": "initial.md"}
+ *
+ *   2:1: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+ *
+ * @example
+ *   {"name": "final-one.md"}
+ *
+ *   Mercury.␊
+ *
+ * @example
+ *   {"label": "input", "name": "final-more.md"}
+ *
+ *   Mercury.␊␊
+ * @example
+ *   {"label": "output", "name": "final-more.md"}
+ *
+ *   1:9: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
  *
  * @example
  *   {"name": "empty-document.md"}
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "block-quote.md"}
  *
- *   Foo…␊␊␊…Bar␊␊␊
+ *   > Mercury.
+ *
+ *   Venus.
+ *
+ *   >
+ *   > Earth.
+ *   >
+ * @example
+ *   {"label": "output", "name": "block-quote.md"}
+ *
+ *   6:3: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+ *   6:9: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"directive": true, "label": "input", "name": "directive.md"}
  *
- *   4:1: Remove 1 line before node
- *   4:5: Remove 2 lines after node
+ *   :::mercury
+ *   Venus.
+ *
+ *
+ *   Earth.
+ *   :::
+ * @example
+ *   {"directive": true, "label": "output", "name": "directive.md"}
+ *
+ *   5:1: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "footnote.md"}
+ *
+ *   [^x]:
+ *       Mercury.
+ *
+ *   Venus.
+ *
+ *   [^y]:
+ *
+ *       Earth.
+ *
+ *
+ *       Mars.
+ * @example
+ *   {"gfm": true, "label": "output", "name": "footnote.md"}
+ *
+ *   8:5: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+ *   11:5: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+ *
+ * @example
+ *   {"label": "input", "mdx": true, "name": "jsx.md"}
+ *
+ *   <Mercury>
+ *     Venus.
+ *
+ *
+ *     Earth.
+ *   </Mercury>
+ * @example
+ *   {"label": "output", "mdx": true, "name": "jsx.md"}
+ *
+ *   5:3: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+ *
+ * @example
+ *   {"label": "input", "name": "list.md"}
+ *
+ *   * Mercury.
+ *   * Venus.
+ *
+ *   ***
+ *
+ *   * Mercury.
+ *
+ *   * Venus.
+ *
+ *   ***
+ *
+ *   * Mercury.
+ *
+ *
+ *   * Venus.
+ * @example
+ *   {"label": "output", "name": "list.md"}
+ *
+ *   15:1: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+ *
+ * @example
+ *   {"label": "input", "name": "list-item.md"}
+ *
+ *   * Mercury.
+ *     Venus.
+ *
+ *   ***
+ *
+ *   * Mercury.
+ *
+ *     Venus.
+ *
+ *   ***
+ *
+ *   * Mercury.
+ *
+ *
+ *     Venus.
+ *
+ *   ***
+ *
+ *   *
+ *     Mercury.
+ * @example
+ *   {"label": "output", "name": "list-item.md"}
+ *
+ *   15:3: Unexpected `2` blank lines before node, expected up to `1` blank line, remove `1` blank line
+ *   20:3: Unexpected `1` blank line before node, expected `0` blank lines, remove `1` blank line
+ *
+ * @example
+ *   {"label": "input", "name": "deep-block-quote.md"}
+ *
+ *   * > * > # Venus␊␊
+ * @example
+ *   {"label": "output", "name": "deep-block-quote.md"}
+ *
+ *   1:16: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
+ *
+ * @example
+ *   {"label": "input", "name": "deep-list-item.md"}
+ *
+ *   > * > * # Venus␊␊
+ * @example
+ *   {"label": "output", "name": "deep-list-item.md"}
+ *
+ *   1:16: Unexpected `1` blank line after node, expected `0` blank lines, remove `1` blank line
  */
 
 /**
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
- * @typedef {import('unist').Point} Point
  */
 
-import plural from 'pluralize'
+/// <reference types="mdast-util-directive" />
+/// <reference types="mdast-util-mdx" />
+
+import {phrasing} from 'mdast-util-phrasing'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
-
-const unknownContainerSize = new Set(['mdxJsxFlowElement', 'mdxJsxTextElement'])
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoConsecutiveBlankLines = lintRule(
   {
@@ -85,79 +255,108 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, function (node) {
-      if ('children' in node) {
+    visitParents(tree, function (node, parents) {
+      const parent = parents.at(-1)
+
+      // Ignore phrasing nodes and non-parents.
+      if (!parent) return
+      if (phrasing(node)) return SKIP
+
+      const siblings = /** @type {Array<Nodes>} */ (parent.children)
+      const index = siblings.indexOf(node)
+
+      // Compare parent and first child.
+      if (
+        index === 0 &&
+        // Container directives and JSX have arbitrary opening length.
+        parent.type !== 'containerDirective' &&
+        parent.type !== 'mdxJsxFlowElement'
+      ) {
+        const parentStart = pointStart(parent)
         const start = pointStart(node)
-        const head = node.children[0]
-        const headStart = pointStart(head)
 
-        if (head && headStart && start) {
-          if (!unknownContainerSize.has(node.type)) {
-            // Compare parent and first child.
-            compare(start, headStart, 0)
-          }
+        if (parentStart && start) {
+          // For footnote definitions, the first line with the label can
+          // otherwise be empty.
+          const difference =
+            start.line -
+            parentStart.line -
+            (parent.type === 'footnoteDefinition' ? 1 : 0)
 
-          // Compare between each child.
-          let index = -1
-
-          while (++index < node.children.length) {
-            const previous = node.children[index - 1]
-            const child = node.children[index]
-            const previousEnd = pointEnd(previous)
-            const childStart = pointStart(child)
-
-            if (previous && previousEnd && childStart) {
-              compare(previousEnd, childStart, 2)
-            }
-          }
-
-          const end = pointEnd(node)
-          const tail = node.children[node.children.length - 1]
-          const tailEnd = pointEnd(tail)
-
-          // Compare parent and last child.
-          if (
-            end &&
-            tailEnd &&
-            tail !== head &&
-            !unknownContainerSize.has(node.type)
-          ) {
-            compare(end, tailEnd, 1)
+          if (difference > 0) {
+            file.message(
+              'Unexpected `' +
+                difference +
+                '` blank ' +
+                pluralize('line', difference) +
+                ' before node, expected `0` blank lines, remove `' +
+                difference +
+                '` blank ' +
+                pluralize('line', difference),
+              {ancestors: [...parents, node], place: start}
+            )
           }
         }
       }
-    })
 
-    /**
-     * Compare the difference between `start` and `end`, and warn when that
-     * difference exceeds `max`.
-     *
-     * @param {Point} start
-     *   Start.
-     * @param {Point} end
-     *   End.
-     * @param {0 | 1 | 2} max
-     *   Max.
-     * @returns {undefined}
-     *   Nothing.
-     */
-    function compare(start, end, max) {
-      const diff = end.line - start.line
-      const lines = Math.abs(diff) - max
+      const next = siblings[index + 1]
+      const end = pointEnd(node)
+      const nextStart = pointStart(next)
 
-      if (lines > 0) {
-        file.message(
-          'Remove ' +
-            lines +
-            ' ' +
-            plural('line', Math.abs(lines)) +
-            ' ' +
-            (diff > 0 ? 'before' : 'after') +
-            ' node',
-          end
-        )
+      // Compare child and next sibling.
+      if (end && nextStart) {
+        // `2` for line ending after node and optional line ending of blank
+        // line.
+        const difference = nextStart.line - end.line - 2
+
+        if (difference > 0) {
+          const actual = difference + 1
+
+          file.message(
+            'Unexpected `' +
+              actual +
+              '` blank ' +
+              pluralize('line', actual) +
+              ' before node, expected up to `1` blank line, remove `' +
+              difference +
+              '` blank ' +
+              pluralize('line', difference),
+            {ancestors: [...parents, next], place: nextStart}
+          )
+        }
       }
-    }
+
+      const parentEnd = pointEnd(parent)
+
+      // Compare parent and last child.
+      if (
+        !next &&
+        parentEnd &&
+        end &&
+        // Container directives and JSX have arbitrary closing length.
+        parent.type !== 'containerDirective' &&
+        parent.type !== 'mdxJsxFlowElement'
+      ) {
+        // Block quote can have extra blank lines in them if with `>`.
+        // Other containers cannot.
+        const difference =
+          parentEnd.line - end.line - (parent.type === 'blockquote' ? 0 : 1)
+
+        if (difference > 0) {
+          file.message(
+            'Unexpected `' +
+              difference +
+              '` blank ' +
+              pluralize('line', difference) +
+              ' after node, expected `0` blank lines, remove `' +
+              difference +
+              '` blank ' +
+              pluralize('line', difference),
+            {ancestors: [...parents, node], place: end}
+          )
+        }
+      }
+    })
   }
 )
 

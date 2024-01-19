@@ -218,17 +218,17 @@ No messages.
 ###### Out
 
 ```text
-3:1-3:6: Rules should use `***`
+3:1-3:6: Unexpected thematic rule `* * *`, expected `***`
 ```
 
 ##### `not-ok.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect preferred rule style: provide a correct markdown rule or `'consistent'`
+1:1: Unexpected value `🌍` for `options`, expected thematic rule or `'consistent'`
 ```
 
 ## Compatibility

@@ -41,31 +41,41 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [example domain]: http://example.com "Example Domain"
+ *   [planet mercury]: http://example.com
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok-consecutive.md"}
  *
- *   [example␠␠␠␠domain]: http://example.com "Example Domain"
+ *   [planet␠␠␠␠mercury]: http://example.com
+ * @example
+ *   {"label": "output", "name": "not-ok-consecutive.md"}
+ *
+ *   1:1-1:40: Unexpected `4` consecutive spaces in definition label, expected `1` space, remove `3` spaces
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok-non-space.md"}
  *
- *   1:1-1:57: Do not use consecutive whitespace in definition labels
+ *   [pla␉net␊mer␍cury]: http://e.com
+ * @example
+ *   {"label": "output", "name": "not-ok-non-space.md"}
+ *
+ *   1:1-3:20: Unexpected non-space whitespace character `\t` in definition label, expected `1` space, replace it
+ *   1:1-3:20: Unexpected non-space whitespace character `\n` in definition label, expected `1` space, replace it
+ *   1:1-3:20: Unexpected non-space whitespace character `\r` in definition label, expected `1` space, replace it
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+import {longestStreak} from 'longest-streak'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
-import {pointStart, pointEnd} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
-
-const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintDefinitionSpacing = lintRule(
   {
@@ -79,27 +89,35 @@ const remarkLintDefinitionSpacing = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    const value = String(file)
+    visitParents(tree, function (node, parents) {
+      if (node.type === 'definition' && node.position && node.label) {
+        const size = longestStreak(node.label, ' ')
 
-    visit(tree, function (node) {
-      if (node.type === 'definition') {
-        const end = pointEnd(node)
-        const start = pointStart(node)
+        if (size > 1) {
+          file.message(
+            'Unexpected `' +
+              size +
+              '` consecutive spaces in definition label, expected `1` space, remove `' +
+              (size - 1) +
+              '` ' +
+              pluralize('space', size - 1),
+            {ancestors: [...parents, node], place: node.position}
+          )
+        }
 
-        if (
-          end &&
-          start &&
-          typeof end.offset === 'number' &&
-          typeof start.offset === 'number'
-        ) {
-          const match = value.slice(start.offset, end.offset).match(label)
+        /** @type {Array<string>} */
+        const disallowed = []
+        if (node.label.includes('\t')) disallowed.push('\\t')
+        if (node.label.includes('\n')) disallowed.push('\\n')
+        if (node.label.includes('\r')) disallowed.push('\\r')
 
-          if (match && /[ \t\n]{2,}/.test(match[1])) {
-            file.message(
-              'Do not use consecutive whitespace in definition labels',
-              node
-            )
-          }
+        for (const disallow of disallowed) {
+          file.message(
+            'Unexpected non-space whitespace character `' +
+              disallow +
+              '` in definition label, expected `1` space, replace it',
+            {ancestors: [...parents, node], place: node.position}
+          )
         }
       }
     })

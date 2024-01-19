@@ -38,52 +38,49 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
  *   ```bash
- *   echo a
+ *   echo "Mercury and Venus"
  *   ```
  *
  *   ```sh
- *   echo a
- *   echo a > file
+ *   echo "Mercury and Venus"
+ *   echo "Earth and Mars" > file
  *   ```
  *
  *   ```zsh
- *   $ echo a
- *   a
- *   $ echo a > file
+ *   $ echo "Mercury and Venus"
+ *   Mercury and Venus
+ *   $ echo "Earth and Mars" > file
  *   ```
- *
- *   Some empty code:
  *
  *   ```command
  *   ```
- *
- *   It’s fine to use dollars in non-shell code.
  *
  *   ```js
  *   $('div').remove()
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
  *   ```sh
- *   $ echo a
+ *   $ echo "Mercury and Venus"
  *   ```
  *
  *   ```bash
- *   $ echo a
- *   $ echo a > file
+ *   $ echo "Mercury and Venus"
+ *   $ echo "Earth and Mars" > file
  *   ```
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1-3:4: Do not use dollar signs before shell commands
- *   5:1-8:4: Do not use dollar signs before shell commands
+ *   1:1-3:4: Unexpected shell code with every line prefixed by `$`, expected different code for input and output
+ *   5:1-8:4: Unexpected shell code with every line prefixed by `$`, expected different code for input and output
  */
 
 /**
@@ -92,8 +89,7 @@
 
 import {collapseWhiteSpace} from 'collapse-white-space'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 // See: <https://github.com/wooorm/starry-night/blob/a3e35db/lang/source.shell.js#L8>
 const flags = new Set([
@@ -136,33 +132,38 @@ const remarkLintNoShellDollars = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visit(tree, 'code', function (node) {
-      const place = position(node)
-
-      // Check known shell code.
-      if (place && node.lang && flags.has(node.lang)) {
+    visitParents(tree, 'code', function (node, parents) {
+      if (
+        node.position &&
+        // Check known shell code.
+        node.lang &&
+        flags.has(node.lang)
+      ) {
         const lines = node.value.split('\n')
         let index = -1
 
-        let hasLines = false
+        let some = false
 
         while (++index < lines.length) {
-          const line = collapseWhiteSpace(lines[index], {style: 'html'})
+          const line = collapseWhiteSpace(lines[index], {
+            style: 'html',
+            trim: true
+          })
 
           if (!line) continue
 
-          hasLines = true
+          // Unprefixed line is fine.
+          if (line.charCodeAt(0) !== 36 /* `$` */) return
 
-          if (!/^\$/.test(line)) {
-            return
-          }
+          some = true
         }
 
-        if (!hasLines) {
-          return
-        }
+        if (!some) return
 
-        file.message('Do not use dollar signs before shell commands', place)
+        file.message(
+          'Unexpected shell code with every line prefixed by `$`, expected different code for input and output',
+          {ancestors: [...parents, node], place: node.position}
+        )
       }
     })
   }

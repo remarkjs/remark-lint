@@ -45,50 +45,82 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   > Foo…
- *   > …bar…
- *   > …baz.
+ *   > Mercury,
+ *   > Venus,
+ *   > and Earth.
+ *
+ *   Mars.
  *
  * @example
  *   {"name": "ok-tabs.md"}
  *
- *   >␉Foo…
- *   >␉…bar…
- *   >␉…baz.
+ *   >␉Mercury,
+ *   >␉Venus,
+ *   >␉and Earth.
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   > Foo…
- *   …bar…
- *   > …baz.
+ *   > Mercury,
+ *   Venus,
+ *   > and Earth.
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   2:1: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "input", "name": "not-ok-tabs.md"}
  *
- *   2:1: Missing marker in block quote
+ *   >␉Mercury,
+ *   ␉Venus,
+ *   and Earth.
+ * @example
+ *   {"label": "output", "name": "not-ok-tabs.md"}
+ *
+ *   2:2: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+ *   3:1: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
  *
  * @example
- *   {"name": "not-ok-tabs.md", "label": "input"}
+ *   {"label": "input", "name": "containers.md"}
  *
- *   >␉Foo…
- *   ␉…bar…
- *   …baz.
+ *   * > Mercury and
+ *   Venus.
  *
+ *   > * Mercury and
+ *     Venus.
+ *
+ *   * > * Mercury and
+ *       Venus.
+ *
+ *   > * > Mercury and
+ *         Venus.
+ *
+ *   ***
+ *
+ *   > * > Mercury and
+ *   >     Venus.
  * @example
- *   {"name": "not-ok-tabs.md", "label": "output"}
+ *   {"label": "output", "name": "containers.md"}
  *
- *   2:1: Missing marker in block quote
- *   3:1: Missing marker in block quote
+ *   2:1: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+ *   5:3: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+ *   8:5: Unexpected `0` block quote markers before paragraph line, expected `1` marker, add `1` marker
+ *   11:7: Unexpected `0` block quote markers before paragraph line, expected `2` markers, add `2` markers
+ *   16:7: Unexpected `1` block quote marker before paragraph line, expected `2` markers, add `1` marker
  */
 
 /**
  * @typedef {import('mdast').Root} Root
  */
 
+/// <reference types="mdast-util-directive" />
+
+import {ok as assert} from 'devlop'
+import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {location} from 'vfile-location'
 
 const remarkLintNoBlockquoteWithoutMarker = lintRule(
@@ -106,35 +138,81 @@ const remarkLintNoBlockquoteWithoutMarker = lintRule(
     const value = String(file)
     const loc = location(file)
 
-    visit(tree, 'blockquote', function (node) {
-      let index = -1
+    // Only paragraphs can be lazy.
+    visitParents(tree, 'paragraph', function (node, parents) {
+      let expected = 0
 
-      while (++index < node.children.length) {
-        const child = node.children[index]
-        const start = pointStart(child)
-        const end = pointEnd(child)
+      for (const parent of parents) {
+        if (parent.type === 'blockquote') {
+          expected++
+        }
+        // All known parents that only use whitespace for indent.
+        else if (
+          parent.type === 'containerDirective' ||
+          parent.type === 'footnoteDefinition' ||
+          parent.type === 'list' ||
+          parent.type === 'listItem' ||
+          parent.type === 'root'
+        ) {
+          // Empty.
+          /* c8 ignore next 3 -- exit on unknown nodes. */
+        } else {
+          return SKIP
+        }
+      }
 
-        if (child.type === 'paragraph' && start && end) {
-          const column = start.column
-          let line = start.line
+      if (!expected) return SKIP
 
-          // Skip past the first line.
-          while (++line <= end.line) {
-            const offset = loc.toOffset({line, column})
+      const end = pointEnd(node)
+      const start = pointStart(node)
 
-            if (
-              typeof offset !== 'number' ||
-              />[\t ]+$/.test(value.slice(offset - 5, offset))
-            ) {
-              continue
-            }
+      if (!end || !start) return SKIP
 
-            // Roughly here.
-            file.message('Missing marker in block quote', {
-              line,
-              column: column - 2
-            })
+      let line = start.line
+
+      while (++line <= end.line) {
+        // Skip first line.
+        const lineStart = loc.toOffset({line, column: 1})
+        assert(lineStart !== undefined) // Always defined.
+        let actual = 0
+        let index = lineStart
+
+        while (index < value.length) {
+          const code = value.charCodeAt(index)
+
+          if (code === 9 || code === 32) {
+            // Fine.
+          } else if (code === 62 /* `>` */) {
+            actual++
+          } else {
+            break
           }
+
+          index++
+        }
+
+        const point = loc.toPoint(index)
+        assert(point) // Always defined.
+
+        const difference = expected - actual
+
+        // Roughly here.
+        if (difference) {
+          file.message(
+            'Unexpected `' +
+              actual +
+              '` block quote ' +
+              pluralize('marker', actual) +
+              ' before paragraph line, expected `' +
+              expected +
+              '` ' +
+              pluralize('marker', expected) +
+              ', add `' +
+              difference +
+              '` ' +
+              pluralize('marker', difference),
+            {ancestors: [...parents, node], place: point}
+          )
         }
       }
     })

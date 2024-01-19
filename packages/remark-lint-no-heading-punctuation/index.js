@@ -1,9 +1,9 @@
 /**
- * remark-lint rule to warn when headings end in punctuation.
+ * remark-lint rule to warn when headings end in irregular characters.
  *
  * ## What is this?
  *
- * This package checks the style of hedings.
+ * This package checks heading text.
  *
  * ## When should I use this?
  *
@@ -13,14 +13,14 @@
  *
  * ### `unified().use(remarkLintNoHeadingPunctuation[, options])`
  *
- * Warn when headings end in punctuation.
+ * Warn when headings end in irregular characters.
  *
  * ###### Parameters
  *
- * * `options` (`string`, default: `'!,.:;?'`)
+ * * `options` (`RegExp` or `string`, default: `/[!,.:;?]/u`)
  *   — configuration,
- *   wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to escape regexp
- *   characters
+ *   when string wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to
+ *   escape regexp characters
  *
  * ###### Returns
  *
@@ -33,49 +33,60 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   # Hello
+ *   # Mercury
  *
  * @example
- *   {"name": "ok.md", "config": ",;:!?"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   # Hello…
+ *   # Mercury:
+ *
+ *   # Venus?
+ *
+ *   # Earth!
+ *
+ *   # Mars,
+ *
+ *   # Jupiter;
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   1:1-1:11: Unexpected character `:` at end of heading, remove it
+ *   3:1-3:9: Unexpected character `?` at end of heading, remove it
+ *   5:1-5:9: Unexpected character `!` at end of heading, remove it
+ *   7:1-7:8: Unexpected character `,` at end of heading, remove it
+ *   9:1-9:11: Unexpected character `;` at end of heading, remove it
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"config": ",;:!?", "name": "ok.md"}
  *
- *   # Hello:
- *
- *   # Hello?
- *
- *   # Hello!
- *
- *   # Hello,
- *
- *   # Hello;
+ *   # Mercury…
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"config": {"source": "[^A-Za-z0-9]"}, "label": "input", "name": "regex.md"}
  *
- *   1:1-1:9: Don’t add a trailing `:` to headings
- *   3:1-3:9: Don’t add a trailing `?` to headings
- *   5:1-5:9: Don’t add a trailing `!` to headings
- *   7:1-7:9: Don’t add a trailing `,` to headings
- *   9:1-9:9: Don’t add a trailing `;` to headings
+ *   # Mercury!
+ * @example
+ *   {"config": {"source": "[^A-Za-z0-9]"}, "label": "output", "name": "regex.md"}
+ *
+ *   1:1-1:11: Unexpected character `!` at end of heading, remove it
  *
  * @example
- *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
+ *   {"label": "input", "mdx": true, "name": "example.mdx"}
  *
- *   MDX is supported <em>too</em>.
+ *   <h1>Mercury?</h1>
+ * @example
+ *   {"label": "output", "mdx": true, "name": "example.mdx"}
  *
- *   <h1>Hi?</h1>
+ *   1:1-1:18: Unexpected character `?` at end of heading, remove it
  *
  * @example
- *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
+ *   {"config": 1, "label": "output", "name": "not-ok-options.md", "positionless": true}
  *
- *   3:1-3:13: Don’t add a trailing `?` to headings
+ *   1:1: Unexpected value `1` for `options`, expected `RegExp` or `string`
  */
 
 /**
@@ -86,10 +97,10 @@
 
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
-import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
 
 const jsxNameRe = /^h([1-6])$/
+const defaultExpression = /[!,.:;?]/u
 
 const remarkLintNoHeadingPunctuation = lintRule(
   {
@@ -99,35 +110,47 @@ const remarkLintNoHeadingPunctuation = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {string | null | undefined} [options]
-   *   Configuration (default: `'!,.:;?'`),
+   * @param {RegExp | string | null | undefined} [options]
+   *   Configuration (default: `/[!,.:;?]/u`),
    *   wrapped in `new RegExp('[' + x + ']', 'u')` so make sure to double escape
    *   regexp characters.
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
-    const expression = new RegExp('[' + (options || '!,.:;?') + ']', 'u')
+    let expected = defaultExpression
 
-    visit(tree, function (node) {
+    if (options === null || options === undefined) {
+      // Empty.
+    } else if (typeof options === 'string') {
+      expected = new RegExp('[' + options + ']', 'u')
+    } else if (typeof options === 'object' && 'source' in options) {
+      expected = new RegExp(options.source, options.flags ?? 'u')
+    } else {
+      file.fail(
+        'Unexpected value `' +
+          options +
+          '` for `options`, expected `RegExp` or `string`'
+      )
+    }
+
+    visitParents(tree, function (node, parents) {
       if (
-        node.type === 'heading' ||
-        ((node.type === 'mdxJsxFlowElement' ||
-          node.type === 'mdxJsxTextElement') &&
-          node.name &&
-          jsxNameRe.test(node.name))
+        node.position && // Plain markdown.
+        (node.type === 'heading' ||
+          // MDX JSX.
+          ((node.type === 'mdxJsxFlowElement' ||
+            node.type === 'mdxJsxTextElement') &&
+            node.name &&
+            jsxNameRe.test(node.name)))
       ) {
-        const place = position(node)
+        const tail = Array.from(toString(node)).at(-1)
 
-        if (place) {
-          const tail = Array.from(toString(node)).at(-1)
-
-          if (tail && expression.test(tail)) {
-            file.message(
-              'Don’t add a trailing `' + tail + '` to headings',
-              place
-            )
-          }
+        if (tail && expected.test(tail)) {
+          file.message(
+            'Unexpected character `' + tail + '` at end of heading, remove it',
+            {ancestors: [...parents, node], place: node.position}
+          )
         }
       }
     })

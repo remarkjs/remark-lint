@@ -150,25 +150,41 @@ Due to this, it’s recommended to use one space and turn this rule on.
 ###### In
 
 ```markdown
-[example domain]: http://example.com "Example Domain"
+[planet mercury]: http://example.com
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-consecutive.md`
 
 ###### In
 
 ```markdown
-[example␠␠␠␠domain]: http://example.com "Example Domain"
+[planet␠␠␠␠mercury]: http://example.com
 ```
 
 ###### Out
 
 ```text
-1:1-1:57: Do not use consecutive whitespace in definition labels
+1:1-1:40: Unexpected `4` consecutive spaces in definition label, expected `1` space, remove `3` spaces
+```
+
+##### `not-ok-non-space.md`
+
+###### In
+
+```markdown
+[pla␉net␊mer␍cury]: http://e.com
+```
+
+###### Out
+
+```text
+1:1-3:20: Unexpected non-space whitespace character `\t` in definition label, expected `1` space, replace it
+1:1-3:20: Unexpected non-space whitespace character `\n` in definition label, expected `1` space, replace it
+1:1-3:20: Unexpected non-space whitespace character `\r` in definition label, expected `1` space, replace it
 ```
 
 ## Compatibility

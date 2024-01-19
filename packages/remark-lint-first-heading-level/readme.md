@@ -21,7 +21,6 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintFirstHeadingLevel[, options])`](#unifieduseremarklintfirstheadinglevel-options)
-  * [`Depth`](#depth)
   * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
@@ -115,8 +114,7 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports the [TypeScript][typescript] types
-[`Depth`][api-depth] and
+It exports the [TypeScript][typescript] type
 [`Options`][api-options].
 The default export is
 [`remarkLintFirstHeadingLevel`][api-remark-lint-first-heading-level].
@@ -134,16 +132,6 @@ Warn when the first heading has an unexpected rank.
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
-### `Depth`
-
-Depth (TypeScript type).
-
-###### Type
-
-```ts
-type Depth = 1 | 2 | 3 | 4 | 5 | 6
-```
-
 ### `Options`
 
 Configuration (TypeScript type).
@@ -151,7 +139,7 @@ Configuration (TypeScript type).
 ###### Type
 
 ```ts
-type Options = Depth
+type Options = 1 | 2 | 3 | 4 | 5 | 6
 ```
 
 ## Recommendation
@@ -171,35 +159,21 @@ off.
 ###### In
 
 ```markdown
-# The default is to expect a level one heading
+# Mercury
 ```
 
 ###### Out
 
 No messages.
 
-##### `ok-html.md`
+##### `ok-delay.md`
 
 ###### In
 
 ```markdown
-<h1>An HTML heading is also seen by this rule.</h1>
-```
+Mercury.
 
-###### Out
-
-No messages.
-
-##### `ok-delayed.md`
-
-###### In
-
-```markdown
-You can use markdown content before the heading.
-
-<div>Or non-heading HTML</div>
-
-<h1>So the first heading, be it HTML or markdown, is checked</h1>
+# Venus
 ```
 
 ###### Out
@@ -211,31 +185,15 @@ No messages.
 ###### In
 
 ```markdown
-## Bravo
+## Mercury
 
-Paragraph.
+Venus.
 ```
 
 ###### Out
 
 ```text
-1:1-1:9: First heading level should be `1`
-```
-
-##### `not-ok-html.md`
-
-###### In
-
-```markdown
-<h2>Charlie</h2>
-
-Paragraph.
-```
-
-###### Out
-
-```text
-1:1-1:17: First heading level should be `1`
+1:1-1:11: Unexpected first heading rank `2`, expected rank `1`
 ```
 
 ##### `ok.md`
@@ -245,9 +203,9 @@ When configured with `2`.
 ###### In
 
 ```markdown
-## Delta
+## Mercury
 
-Paragraph.
+Venus.
 ```
 
 ###### Out
@@ -256,57 +214,19 @@ No messages.
 
 ##### `ok-html.md`
 
-When configured with `2`.
-
 ###### In
 
 ```markdown
-<h2>Echo</h2>
+<div>Mercury.</div>
 
-Paragraph.
+<h1>Venus</h1>
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
-
-When configured with `2`.
-
-###### In
-
-```markdown
-# Foxtrot
-
-Paragraph.
-```
-
-###### Out
-
-```text
-1:1-1:10: First heading level should be `2`
-```
-
-##### `not-ok-html.md`
-
-When configured with `2`.
-
-###### In
-
-```markdown
-<h1>Golf</h1>
-
-Paragraph.
-```
-
-###### Out
-
-```text
-1:1-1:14: First heading level should be `2`
-```
-
-##### `ok.mdx`
+##### `ok-mdx.mdx`
 
 ###### In
 
@@ -314,14 +234,24 @@ Paragraph.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-In MDX, <b>JSX</b> is supported.
+<div>Mercury.</div>
 
-<h1>First heading</h1>
+<h1>Venus</h1>
 ```
 
 ###### Out
 
 No messages.
+
+##### `not-ok-options.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `1`, `2`, `3`, `4`, `5`, or `6`
+```
 
 ## Compatibility
 
@@ -347,8 +277,6 @@ abide by its terms.
 ## License
 
 [MIT][file-license] © [Titus Wormer][author]
-
-[api-depth]: #depth
 
 [api-options]: #options
 

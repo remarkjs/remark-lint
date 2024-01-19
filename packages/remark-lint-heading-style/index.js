@@ -81,55 +81,55 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "config": "atx"}
- *
- *   # Alpha
- *
- *   ## Bravo
- *
- *   ### Charlie
  *
  * @example
- *   {"name": "ok.md", "config": "atx-closed"}
+ *   {"config": "atx", "name": "ok.md"}
  *
- *   # Delta ##
+ *   # Mercury
  *
- *   ## Echo ##
+ *   ## Venus
  *
- *   ### Foxtrot ###
- *
- * @example
- *   {"name": "ok.md", "config": "setext"}
- *
- *   Golf
- *   ====
- *
- *   Hotel
- *   -----
- *
- *   ### India
+ *   ### Earth
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"config": "atx-closed", "name": "ok.md"}
  *
- *   Juliett
+ *   # Mercury ##
+ *
+ *   ## Venus ##
+ *
+ *   ### Earth ###
+ *
+ * @example
+ *   {"config": "setext", "name": "ok.md"}
+ *
+ *   Mercury
  *   =======
  *
- *   ## Kilo
+ *   Venus
+ *   -----
  *
- *   ### Lima ###
- *
- * @example
- *   {"name": "not-ok.md", "label": "output"}
- *
- *   4:1-4:8: Headings should use setext
- *   6:1-6:13: Headings should use setext
+ *   ### Earth
  *
  * @example
- *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   1:1: Incorrect heading style type `💩`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`
+ *   Mercury
+ *   =======
+ *
+ *   ## Venus
+ *
+ *   ### Earth ###
+ * @example
+ *   {"label": "output", "name": "not-ok.md"}
+ *
+ *   4:1-4:9: Unexpected ATX heading, expected setext
+ *   6:1-6:14: Unexpected ATX (closed) heading, expected setext
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'atx'`, `'atx-closed'`, `'setext'`, or `'consistent'`
  */
 
 /**
@@ -147,7 +147,8 @@
 import {headingStyle} from 'mdast-util-heading-style'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintHeadingStyle = lintRule(
   {
@@ -163,30 +164,55 @@ const remarkLintHeadingStyle = lintRule(
    *   Nothing.
    */
   function (tree, file, options) {
-    let option = options || 'consistent'
+    /** @type {VFileMessage | undefined} */
+    let cause
+    /** @type {Style | undefined} */
+    let expected
 
-    if (
-      option !== 'atx' &&
-      option !== 'atx-closed' &&
-      option !== 'consistent' &&
-      option !== 'setext'
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+    } else if (
+      options === 'atx' ||
+      options === 'atx-closed' ||
+      options === 'setext'
     ) {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect heading style type `' +
-          option +
-          "`: use either `'consistent'`, `'atx'`, `'atx-closed'`, or `'setext'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'atx'`, `'atx-closed'`, `'setext'`, or `'consistent'`"
       )
     }
 
-    visit(tree, 'heading', function (node) {
+    visitParents(tree, 'heading', function (node, parents) {
       const place = position(node)
+      const actual = headingStyle(node, expected)
 
-      if (place) {
-        if (option === 'consistent') {
-          /* c8 ignore next -- funky nodes perhaps cannot be detected. */
-          option = headingStyle(node) || 'consistent'
-        } else if (headingStyle(node, option) !== option) {
-          file.message('Headings should use ' + option, place)
+      if (actual) {
+        if (expected) {
+          if (place && actual !== expected) {
+            file.message(
+              'Unexpected ' +
+                displayStyle(actual) +
+                ' heading, expected ' +
+                displayStyle(expected),
+              {ancestors: [...parents, node], cause, place}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            'Heading style ' +
+              displayStyle(expected) +
+              " first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place,
+              ruleId: 'heading-style',
+              source: 'remark-lint'
+            }
+          )
         }
       }
     })
@@ -194,3 +220,17 @@ const remarkLintHeadingStyle = lintRule(
 )
 
 export default remarkLintHeadingStyle
+
+/**
+ * @param {Style} style
+ *   Style.
+ * @returns {string}
+ *   Display.
+ */
+function displayStyle(style) {
+  return style === 'atx'
+    ? 'ATX'
+    : style === 'atx-closed'
+      ? 'ATX (closed)'
+      : 'setext'
+}

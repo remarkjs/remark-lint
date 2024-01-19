@@ -165,8 +165,8 @@ It’s recommended to instead use a certain flag for plain text (such as
 ###### In
 
 ````markdown
-```alpha
-bravo()
+```markdown
+# Mercury
 ```
 ````
 
@@ -180,17 +180,17 @@ No messages.
 
 ````markdown
 ```
-alpha()
+mercury()
 ```
 ````
 
 ###### Out
 
 ```text
-1:1-3:4: Missing code language flag
+1:1-3:4: Unexpected missing fenced code language flag in info string, expected keyword
 ```
 
-##### `ok.md`
+##### `ok-allow-empty.md`
 
 When configured with `{ allowEmpty: true }`.
 
@@ -198,7 +198,7 @@ When configured with `{ allowEmpty: true }`.
 
 ````markdown
 ```
-alpha()
+mercury()
 ```
 ````
 
@@ -206,7 +206,7 @@ alpha()
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-allow-empty.md`
 
 When configured with `{ allowEmpty: false }`.
 
@@ -214,25 +214,25 @@ When configured with `{ allowEmpty: false }`.
 
 ````markdown
 ```
-alpha()
+mercury()
 ```
 ````
 
 ###### Out
 
 ```text
-1:1-3:4: Missing code language flag
+1:1-3:4: Unexpected missing fenced code language flag in info string, expected keyword
 ```
 
-##### `ok.md`
+##### `ok-array.md`
 
-When configured with `[ 'alpha' ]`.
+When configured with `[ 'markdown' ]`.
 
 ###### In
 
 ````markdown
-```alpha
-bravo()
+```markdown
+# Mercury
 ```
 ````
 
@@ -240,15 +240,15 @@ bravo()
 
 No messages.
 
-##### `ok.md`
+##### `ok-options.md`
 
-When configured with `{ flags: [ 'alpha' ] }`.
+When configured with `{ flags: [ 'markdown' ] }`.
 
 ###### In
 
 ````markdown
-```alpha
-bravo()
+```markdown
+# Mercury
 ```
 ````
 
@@ -256,22 +256,50 @@ bravo()
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-array.md`
 
-When configured with `[ 'charlie' ]`.
+When configured with `[ 'markdown' ]`.
 
 ###### In
 
 ````markdown
-```alpha
-bravo()
+```javascript
+mercury()
 ```
 ````
 
 ###### Out
 
 ```text
-1:1-3:4: Incorrect code language flag
+1:1-3:4: Unexpected fenced code language flag `javascript` in info string, expected `markdown`
+```
+
+##### `not-ok-long-array.md`
+
+When configured with `[ 'javascript', 'markdown', 'mdx', 'typescript' ]`.
+
+###### In
+
+````markdown
+```html
+<h1>Mercury</h1>
+```
+````
+
+###### Out
+
+```text
+1:1-3:4: Unexpected fenced code language flag `html` in info string, expected `javascript`, `markdown`, `mdx`, …
+```
+
+##### `not-ok-options.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected array or object
 ```
 
 ## Compatibility

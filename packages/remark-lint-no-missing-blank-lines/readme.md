@@ -10,7 +10,7 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when there are no blank lines between blocks.
+[`remark-lint`][github-remark-lint] rule to warn when blank lines are missing.
 
 ## Contents
 
@@ -121,7 +121,7 @@ The default export is
 
 ### `unified().use(remarkLintNoMissingBlankLines[, options])`
 
-Warn when there are no blank lines between blocks.
+Warn when blank lines are missing.
 
 ###### Parameters
 
@@ -159,15 +159,17 @@ It has a `join` function to customize such behavior.
 ###### In
 
 ```markdown
-# Foo
+# Mercury
 
-## Bar
+## Venus
 
-- Paragraph
+* Earth.
 
-  + List.
+  * Mars.
 
-Paragraph.
+> # Jupiter
+>
+> Saturn.
 ```
 
 ###### Out
@@ -179,20 +181,22 @@ No messages.
 ###### In
 
 ```markdown
-# Foo
-## Bar
+# Mercury
+## Venus
 
-- Paragraph
-  + List.
+* Earth
+  * Mars.
 
-Paragraph.
+> # Jupiter
+> Saturn.
 ```
 
 ###### Out
 
 ```text
-2:1-2:7: Missing blank line before block node
-5:3-5:10: Missing blank line before block node
+2:1-2:9: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+5:3-5:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+8:3-8:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
 ```
 
 ##### `tight.md`
@@ -202,41 +206,35 @@ When configured with `{ exceptTightLists: true }`.
 ###### In
 
 ```markdown
-# Foo
-## Bar
+* Venus.
 
-- Paragraph
-  + List.
-
-Paragraph.
+  * Mars.
 ```
 
 ###### Out
 
-```text
-2:1-2:7: Missing blank line before block node
-```
+No messages.
 
 ##### `containers.md`
 
 ###### In
 
 ```markdown
-> # Alpha
+> # Venus
 >
-> Bravo.
+> Mercury.
 
-- charlie.
-- delta.
+- earth.
+- mars.
 
-+ # Echo
-  Foxtrot.
+* # Jupiter
+  Saturn.
 ```
 
 ###### Out
 
 ```text
-9:3-9:11: Missing blank line before block node
+9:3-9:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
 ```
 
 ##### `gfm.md`
@@ -247,20 +245,21 @@ Paragraph.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-GFM tables and footnotes are also checked[^e]
+| Planet  | Diameter |
+| ------- | -------- |
+| Mercury | 4 880 km |
 
-| Alpha   | Bravo |
-| ------- | ----- |
-| Charlie | Delta |
-
-[^e]: Echo
-[^f]: Foxtrot.
+[^Mercury]:
+    **Mercury** is the first planet from the Sun and the smallest
+    in the Solar System.
+[^Venus]:
+    **Venus** is the second planet from the Sun.
 ```
 
 ###### Out
 
 ```text
-8:1-8:15: Missing blank line before block node
+8:1-9:49: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
 ```
 
 ##### `mdx.mdx`
@@ -271,11 +270,9 @@ GFM tables and footnotes are also checked[^e]
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-MDX JSX flow elements and expressions are also checked.
-
 <Tip kind="info">
-  # Alpha
-  Bravo.
+  # Venus
+  Mars.
 </Tip>
 {Math.PI}
 ```
@@ -283,8 +280,8 @@ MDX JSX flow elements and expressions are also checked.
 ###### Out
 
 ```text
-5:3-5:9: Missing blank line before block node
-7:1-7:10: Missing blank line before block node
+3:3-3:8: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
+5:1-5:10: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
 ```
 
 ##### `math.md`
@@ -295,8 +292,6 @@ MDX JSX flow elements and expressions are also checked.
 > math ([`remark-math`][github-remark-math]).
 
 ```markdown
-Math is also checked.
-
 $$
 \frac{1}{2}
 $$
@@ -308,7 +303,7 @@ $$
 ###### Out
 
 ```text
-6:1-8:3: Missing blank line before block node
+4:1-6:3: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
 ```
 
 ##### `directive.md`
@@ -321,16 +316,16 @@ $$
 ```markdown
 Directives are also checked.
 
-::video{#123}
-:::tip
-Tip!
+::video{#mercury}
+:::planet
+Venus.
 :::
 ```
 
 ###### Out
 
 ```text
-4:1-6:4: Missing blank line before block node
+4:1-6:4: Unexpected `0` blank lines between nodes, expected `1` or more blank lines, add `1` blank line
 ```
 
 ## Compatibility

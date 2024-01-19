@@ -151,38 +151,21 @@ Whether to wrap prose or not is a stylistic choice.
 
 ###### In
 
-> 👉 **Note**: this example uses
-> GFM ([`remark-gfm`][github-remark-gfm]).
-
 ```markdown
-This line is simply not toooooooooooooooooooooooooooooooooooooooooooo
-long.
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury mercury
+mercury.
 
-This is also fine: <http://this-long-url-with-a-long-domain.co.uk/a-long-path?query=variables>
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury `mercury()`.
 
-<http://this-link-is-fine.com>
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury <http://localhost>.
 
-`alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscarPapaQuebec.romeo()`
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury [mercury](http://localhost).
 
-[foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury ![mercury](http://localhost).
 
-<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
+<div>Mercury mercury mercury mercury mercury mercury mercury mercury mercury</div>
 
-![foo](http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables)
-
-| An | exception | is | line | length | in | long | tables | because | those | can’t | just |
-| -- | --------- | -- | ---- | ------ | -- | ---- | ------ | ------- | ----- | ----- | ---- |
-| be | helped    |    |      |        |    |      |        |         |       |       | .    |
-
-<a><b><i><p><q><s><u>alpha bravo charlie delta echo foxtrot golf</u></s></q></p></i></b></a>
-
-The following is also fine (note the `.`), because there is no whitespace.
-
-<http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>.
-
-In addition, definitions are also fine:
-
-[foo]: <http://this-long-url-with-a-long-domain-is-ok.co.uk/a-long-path?query=variables>
+[foo]: http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
 ```
 
 ###### Out
@@ -191,34 +174,122 @@ No messages.
 
 ##### `not-ok.md`
 
-When configured with `80`.
+When configured with `20`.
 
 ###### In
 
 ```markdown
-This line is simply not tooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-long.
+Mercury mercury mercury
+mercury.
 
-Just like thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiis one.
+Mercury mercury mercury `mercury()`.
 
-And this one is also very wrong: because the link starts aaaaaaafter the column: <http://line.com>
+Mercury mercury mercury <http://localhost>.
 
-<http://this-long-url-with-a-long-domain-is-not-ok.co.uk/a-long-path?query=variables> and such.
+Mercury mercury mercury [m](example.com).
 
-And this one is also very wrong: because the code starts aaaaaaafter the column: `alpha.bravo()`
+Mercury mercury mercury ![m](example.com).
 
-`alphaBravoCharlieDeltaEchoFoxtrotGolfHotelIndiaJuliettKiloLimaMikeNovemberOscar.papa()` and such.
+`mercury()` mercury mercury mercury.
+
+<http://localhost> mercury.
+
+[m](example.com) mercury.
+
+![m](example.com) mercury.
+
+Mercury mercury ![m](example.com) mercury.
 ```
 
 ###### Out
 
 ```text
-4:86: Line must be at most 80 characters
-6:99: Line must be at most 80 characters
-8:96: Line must be at most 80 characters
-10:97: Line must be at most 80 characters
-12:99: Line must be at most 80 characters
+1:24: Unexpected `23` character line, expected at most `20` characters, remove `3` characters
+4:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
+6:44: Unexpected `43` character line, expected at most `20` characters, remove `23` characters
+8:42: Unexpected `41` character line, expected at most `20` characters, remove `21` characters
+10:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
+12:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
+14:28: Unexpected `27` character line, expected at most `20` characters, remove `7` characters
+16:26: Unexpected `25` character line, expected at most `20` characters, remove `5` characters
+18:27: Unexpected `26` character line, expected at most `20` characters, remove `6` characters
+20:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
 ```
+
+##### `ok.md`
+
+When configured with `20`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> frontmatter ([`remark-frontmatter`][github-remark-frontmatter]).
+
+```markdown
+---
+description: Mercury mercury mercury mercury.
+---
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `20`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Mercury | Mercury | Mercury |
+| ------- | ------- | ------- |
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `20`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> math ([`remark-math`][github-remark-math]).
+
+```markdown
+$$
+L = \frac{1}{2} \rho v^2 S C_L
+$$
+```
+
+###### Out
+
+No messages.
+
+##### `ok.md`
+
+When configured with `20`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+export const description = 'Mercury mercury mercury mercury.'
+
+{description}
+```
+
+###### Out
+
+No messages.
 
 ##### `ok-mixed-line-endings.md`
 
@@ -247,10 +318,20 @@ When configured with `10`.
 ###### Out
 
 ```text
-1:13: Line must be at most 10 characters
-2:13: Line must be at most 10 characters
-3:12: Line must be at most 10 characters
-4:12: Line must be at most 10 characters
+1:13: Unexpected `12` character line, expected at most `10` characters, remove `2` characters
+2:13: Unexpected `12` character line, expected at most `10` characters, remove `2` characters
+3:12: Unexpected `11` character line, expected at most `10` characters, remove `1` character
+4:12: Unexpected `11` character line, expected at most `10` characters, remove `1` character
+```
+
+##### `not-ok.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `number`
 ```
 
 ## Compatibility
@@ -322,9 +403,15 @@ abide by its terms.
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
+[github-remark-frontmatter]: https://github.com/remarkjs/remark-frontmatter
+
 [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-math]: https://github.com/remarkjs/remark-math
+
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

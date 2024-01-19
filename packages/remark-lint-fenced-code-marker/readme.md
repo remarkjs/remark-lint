@@ -175,33 +175,33 @@ Pass `fence: '~'` to always use tildes.
 
 ## Examples
 
-##### `ok.md`
+##### `ok-indented.md`
 
 ###### In
 
 ```markdown
 Indented code blocks are not affected by this rule:
 
-    bravo()
+    mercury()
 ```
 
 ###### Out
 
 No messages.
 
-##### `ok.md`
+##### `ok-tick.md`
 
 When configured with ``'`'``.
 
 ###### In
 
 ````markdown
-```alpha
-bravo()
+```javascript
+mercury()
 ```
 
 ```
-charlie()
+venus()
 ```
 ````
 
@@ -209,19 +209,19 @@ charlie()
 
 No messages.
 
-##### `ok.md`
+##### `ok-tilde.md`
 
 When configured with `'~'`.
 
 ###### In
 
 ```markdown
-~~~alpha
-bravo()
+~~~javascript
+mercury()
 ~~~
 
 ~~~
-charlie()
+venus()
 ~~~
 ```
 
@@ -234,19 +234,19 @@ No messages.
 ###### In
 
 ````markdown
-```alpha
-bravo()
+```javascript
+mercury()
 ```
 
 ~~~
-charlie()
+venus()
 ~~~
 ````
 
 ###### Out
 
 ```text
-5:1-7:4: Fenced code should use `` ` `` as a marker
+5:1-7:4: Unexpected fenced code marker `~`, expected `` ` ``
 ```
 
 ##### `not-ok-consistent-tilde.md`
@@ -254,29 +254,29 @@ charlie()
 ###### In
 
 ````markdown
-~~~alpha
-bravo()
+~~~javascript
+mercury()
 ~~~
 
 ```
-charlie()
+venus()
 ```
 ````
 
 ###### Out
 
 ```text
-5:1-7:4: Fenced code should use `~` as a marker
+5:1-7:4: Unexpected fenced code marker `` ` ``, expected `~`
 ```
 
 ##### `not-ok-incorrect.md`
 
-When configured with `'💩'`.
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-1:1: Incorrect fenced code marker `💩`: use either `'consistent'`, `` '`' ``, or `'~'`
+1:1: Unexpected value `🌍` for `options`, expected ``'`'``, `'~'`, or `'consistent'`
 ```
 
 ## Compatibility

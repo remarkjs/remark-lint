@@ -37,30 +37,31 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "ok.md"}
  *
- *   [example]: http://example.com "Example Domain"
+ *   [mercury]: http://example.com "Mercury"
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   [Example]: http://example.com "Example Domain"
- *
+ *   [Mercury]: http://example.com "Mercury"
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1-1:47: Do not use uppercase characters in definition labels
+ *   1:1-1:40: Unexpected uppercase characters in definition label, expected lowercase
  *
  * @example
  *   {"gfm": true, "label": "input", "name": "gfm.md"}
  *
- *   [^X]: Footnote definitions (from GFM) are checked too.
- *
+ *   [^Mercury]:
+ *       **Mercury** is the first planet from the Sun and the smallest
+ *       in the Solar System.
  * @example
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
- *   1:1-1:55: Do not use uppercase characters in definition labels
+ *   1:1-3:25: Unexpected uppercase characters in footnote definition label, expected lowercase
  */
 
 /**
@@ -68,10 +69,7 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
-
-const label = /^\s*\[((?:\\[\s\S]|[^[\]])+)]/
+import {visitParents} from 'unist-util-visit-parents'
 
 const remarkLintDefinitionCase = lintRule(
   {
@@ -85,28 +83,19 @@ const remarkLintDefinitionCase = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    const value = String(file)
-
-    visit(tree, function (node) {
-      if (node.type === 'definition' || node.type === 'footnoteDefinition') {
-        const end = pointEnd(node)
-        const start = pointStart(node)
-
-        if (
-          end &&
-          start &&
-          typeof end.offset === 'number' &&
-          typeof start.offset === 'number'
-        ) {
-          const match = value.slice(start.offset, end.offset).match(label)
-
-          if (match && match[1] !== match[1].toLowerCase()) {
-            file.message(
-              'Do not use uppercase characters in definition labels',
-              node
-            )
-          }
-        }
+    visitParents(tree, function (node, parents) {
+      if (
+        (node.type === 'definition' || node.type === 'footnoteDefinition') &&
+        node.position &&
+        node.label &&
+        node.label !== node.label.toLowerCase()
+      ) {
+        file.message(
+          'Unexpected uppercase characters in ' +
+            (node.type === 'definition' ? '' : 'footnote ') +
+            'definition label, expected lowercase',
+          {ancestors: [...parents, node], place: node.position}
+        )
       }
     })
   }

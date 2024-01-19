@@ -165,7 +165,7 @@ used.
 
 ## Fix
 
-[`remark-stringify`][github-remark-stringify] always uses Unix linebreaks.
+[`remark-stringify`][github-remark-stringify] always uses Unix line endings.
 
 ## Examples
 
@@ -174,7 +174,7 @@ used.
 ###### In
 
 ```markdown
-Alpha␍␊Bravo␍␊
+Mercury␍␊and␍␊Venus.
 ```
 
 ###### Out
@@ -186,7 +186,7 @@ No messages.
 ###### In
 
 ```markdown
-Alpha␊Bravo␊
+Mercury␊and␊Venus.
 ```
 
 ###### Out
@@ -200,13 +200,13 @@ When configured with `'unix'`.
 ###### In
 
 ```markdown
-Alpha␍␊
+Mercury.␍␊
 ```
 
 ###### Out
 
 ```text
-1:7: Expected linebreaks to be unix (`\n`), not windows (`\r\n`)
+1:10: Unexpected windows (`\r\n`) line ending, expected unix (`\n`) line endings
 ```
 
 ##### `not-ok-windows.md`
@@ -216,13 +216,44 @@ When configured with `'windows'`.
 ###### In
 
 ```markdown
-Alpha␊
+Mercury.␊
 ```
 
 ###### Out
 
 ```text
-1:6: Expected linebreaks to be windows (`\r\n`), not unix (`\n`)
+1:9: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+```
+
+##### `not-ok-options.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `'unix'`, `'windows'`, or `'consistent'`
+```
+
+##### `many.md`
+
+When configured with `'windows'`.
+
+###### In
+
+```markdown
+Mercury.␊Venus.␊Earth.␊Mars.␊Jupiter.␊Saturn.␊Uranus.␊Neptune.␊
+```
+
+###### Out
+
+```text
+1:9: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+2:7: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+3:7: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+4:6: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+5:9: Unexpected unix (`\n`) line ending, expected windows (`\r\n`) line endings
+6:8: Unexpected large number of incorrect line endings, stopping
 ```
 
 ## Compatibility

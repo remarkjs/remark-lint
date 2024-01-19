@@ -140,8 +140,8 @@ identifiers.
 ###### In
 
 ```markdown
-[alpha]: alpha.com
-[bravo]: bravo.com
+[mercury]: https://example.com/mercury/
+[venus]: https://example.com/venus/
 ```
 
 ###### Out
@@ -153,14 +153,14 @@ No messages.
 ###### In
 
 ```markdown
-[alpha]: alpha.com
-[bravo]: alpha.com
+[mercury]: https://example.com/mercury/
+[venus]: https://example.com/mercury/
 ```
 
 ###### Out
 
 ```text
-2:1-2:19: Do not use different definitions with the same URL (1:1)
+2:1-2:38: Unexpected definition with an already defined URL (as `mercury`), expected unique URLs
 ```
 
 ## Compatibility

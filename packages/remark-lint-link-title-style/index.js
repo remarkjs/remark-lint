@@ -3,7 +3,8 @@
  *
  * ## What is this?
  *
- * This package checks the style of link title markers.
+ * This package checks the style of link (*and* image and definition) title
+ * markers.
  *
  * ## When should I use this?
  *
@@ -59,7 +60,7 @@
  *
  * ## Fix
  *
- * [`remark-stringify`][github-remark-stringify]  formats titles with double
+ * [`remark-stringify`][github-remark-stringify] formats titles with double
  * quotes by default.
  * Pass `quote: "'"` to use single quotes.
  * There is no option to use parens.
@@ -74,82 +75,90 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @example
- *   {"name": "ok.md", "config": "\""}
- *
- *   [Example](http://example.com#without-title)
- *   [Example](http://example.com "Example Domain")
- *   ![Example](http://example.com "Example Domain")
- *
- *   [Example]: http://example.com "Example Domain"
- *
- *   You can use parens in URLs if they’re not a title (see GH-166):
- *
- *   [Example](#Heading-(optional))
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "config": "\""}
+ *   {"name": "ok-consistent.md"}
  *
- *   [Example]: http://example.com 'Example Domain'
+ *   [Mercury](http://example.com/mercury/),
+ *   [Venus](http://example.com/venus/ "Go to Venus"), and
+ *   ![Earth](http://example.com/earth/ "Go to Earth").
  *
- * @example
- *   {"name": "not-ok.md", "label": "output", "config": "\""}
- *
- *   1:31-1:47: Titles should use `"` as a quote
- *
- * @example
- *   {"name": "ok.md", "config": "'"}
- *
- *   [Example](http://example.com#without-title)
- *   [Example](http://example.com 'Example Domain')
- *   ![Example](http://example.com 'Example Domain')
- *
- *   [Example]: http://example.com 'Example Domain'
+ *   [Mars]: http://example.com/mars/ "Go to Mars"
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "config": "'"}
+ *   {"label": "input", "name": "not-ok-consistent.md"}
  *
- *   [Example]: http://example.com "Example Domain"
+ *   [Mercury](http://example.com/mercury/ "Go to Mercury") and
+ *   ![Venus](http://example.com/venus/ 'Go to Venus').
+ *
+ *   [Earth]: http://example.com/earth/ (Go to Earth)
+ * @example
+ *   {"label": "output", "name": "not-ok-consistent.md"}
+ *
+ *   2:1-2:50: Unexpected title markers `'`, expected `"`
+ *   4:1-4:49: Unexpected title markers `'('` and `')'`, expected `"`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "'"}
+ *   {"config": "\"", "name": "ok-double.md"}
  *
- *   1:31-1:47: Titles should use `'` as a quote
- *
- * @example
- *   {"name": "ok.md", "config": "()"}
- *
- *   [Example](http://example.com#without-title)
- *   [Example](http://example.com (Example Domain))
- *   ![Example](http://example.com (Example Domain))
- *
- *   [Example]: http://example.com (Example Domain)
+ *   [Mercury](http://example.com/mercury/ "Go to Mercury").
  *
  * @example
- *   {"name": "not-ok.md", "label": "input", "config": "()"}
+ *   {"config": "\"", "label": "input", "name": "not-ok-double.md"}
  *
- *   [Example](http://example.com 'Example Domain')
+ *   [Mercury](http://example.com/mercury/ 'Go to Mercury').
+ * @example
+ *   {"config": "\"", "label": "output", "name": "not-ok-double.md"}
+ *
+ *   1:1-1:55: Unexpected title markers `'`, expected `"`
  *
  * @example
- *   {"name": "not-ok.md", "label": "output", "config": "()"}
+ *   {"config": "'", "name": "ok-single.md"}
  *
- *   1:30-1:46: Titles should use `()` as a quote
- *
- * @example
- *   {"name": "not-ok.md", "label": "input"}
- *
- *   [Example](http://example.com "Example Domain")
- *   [Example](http://example.com 'Example Domain')
+ *   [Mercury](http://example.com/mercury/ 'Go to Mercury').
  *
  * @example
- *   {"name": "not-ok.md", "label": "output"}
+ *   {"config": "'", "label": "input", "name": "not-ok-single.md"}
  *
- *   2:30-2:46: Titles should use `"` as a quote
+ *   [Mercury](http://example.com/mercury/ "Go to Mercury").
+ * @example
+ *   {"config": "'", "label": "output", "name": "not-ok-single.md"}
+ *
+ *   1:1-1:55: Unexpected title markers `"`, expected `'`
  *
  * @example
- *   {"name": "not-ok.md", "config": "💩", "label": "output", "positionless": true}
+ *   {"config": "()", "name": "ok-paren.md"}
  *
- *   1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
+ *   [Mercury](http://example.com/mercury/ (Go to Mercury)).
+ *
+ * @example
+ *   {"config": "()", "label": "input", "name": "not-ok-paren.md"}
+ *
+ *   [Mercury](http://example.com/mercury/ "Go to Mercury").
+ * @example
+ *   {"config": "()", "label": "output", "name": "not-ok-paren.md"}
+ *
+ *   1:1-1:55: Unexpected title markers `"`, expected `'('` and `')'`
+ *
+ * @example
+ *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
+ *
+ *   1:1: Unexpected value `🌍` for `options`, expected `'"'`, `"'"`, `'()'`, or `'consistent'`
+ *
+ * @example
+ *   {"config": "\"", "name": "ok-parens-in-url.md"}
+ *
+ *   Parens in URLs work correctly:
+ *
+ *   [Mercury](http://example.com/(mercury) "Go to Mercury") and
+ *   [Venus](http://example.com/(venus)).
+ *
+ * @example
+ *   {"config": "\"", "name": "ok-whitespace.md"}
+ *
+ *   Trailing whitespace works correctly:
+ *
+ *   [Mercury](http://example.com/mercury/␠"Go to Mercury"␠).
  */
 
 /**
@@ -165,15 +174,9 @@
  */
 
 import {lintRule} from 'unified-lint-rule'
-import {pointEnd, pointStart} from 'unist-util-position'
-import {visit} from 'unist-util-visit'
-import {location} from 'vfile-location'
-
-const markers = {
-  '"': '"',
-  "'": "'",
-  ')': '('
-}
+import {pointEnd} from 'unist-util-position'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const remarkLintLinkTitleStyle = lintRule(
   {
@@ -190,78 +193,88 @@ const remarkLintLinkTitleStyle = lintRule(
    */
   function (tree, file, options) {
     const value = String(file)
-    const loc = location(file)
-    const option = options || 'consistent'
-    // @ts-expect-error: allow `(` too, even though untyped.
-    let look = option === '()' || option === '(' ? ')' : option
+    /** @type {Style | undefined} */
+    let expected
+    /** @type {VFileMessage | undefined} */
+    let cause
 
-    if (look !== 'consistent' && !Object.hasOwn(markers, look)) {
+    if (options === null || options === undefined || options === 'consistent') {
+      // Empty.
+      /* c8 ignore next 3 */
+      // @ts-expect-error: to do: remove.
+    } else if (options === '(') {
+      expected = '()'
+    } else if (options === '"' || options === "'" || options === '()') {
+      expected = options
+    } else {
       file.fail(
-        'Incorrect link title style marker `' +
-          look +
-          "`: use either `'consistent'`, `'\"'`, `'\\''`, or `'()'`"
+        'Unexpected value `' +
+          options +
+          "` for `options`, expected `'\"'`, `\"'\"`, `'()'`, or `'consistent'`"
       )
     }
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       if (
         node.type === 'definition' ||
         node.type === 'image' ||
         node.type === 'link'
       ) {
-        const tail =
-          'children' in node
-            ? node.children[node.children.length - 1]
-            : undefined
-        const begin = tail ? pointEnd(tail) : pointStart(node)
+        // Exit w/o title.
+        if (!node.title) return
+
         const end = pointEnd(node)
+        let endIndex = end ? end.offset : undefined
 
-        if (
-          !begin ||
-          !end ||
-          typeof begin.offset !== 'number' ||
-          typeof end.offset !== 'number'
-        ) {
-          return
+        // Exit w/o position.
+        if (!endIndex) return
+
+        // `)`
+        if (node.type !== 'definition') endIndex--
+
+        // Whitespace.
+        let before = value.charCodeAt(endIndex - 1)
+        while (before === 9 || before === 32) {
+          endIndex--
+          before = value.charCodeAt(endIndex - 1)
         }
 
-        let last = end.offset - 1
+        /** @type {Style | undefined} */
+        const actual =
+          before === 34 /* `"` */
+            ? '"'
+            : before === 39 /* `'` */
+              ? "'"
+              : before === 41 /* `)` */
+                ? '()'
+                : /* c8 ignore next -- we should find a correct marker. */
+                  undefined
 
-        if (node.type !== 'definition') {
-          last--
-        }
+        /* c8 ignore next -- we should find a correct marker. */
+        if (!actual) return
 
-        const final = /** @type {keyof markers} */ (value.charAt(last))
-
-        // Exit if the final marker is not a known marker.
-        if (!(final in markers)) {
-          return
-        }
-
-        const initial = markers[final]
-
-        // Find the starting delimiter
-        const first = value.lastIndexOf(initial, last - 1)
-
-        // Exit if there’s no starting delimiter, the starting delimiter is before
-        // the start of the node, or if it’s not preceded by whitespace.
-        if (first <= begin.offset || !/\s/.test(value.charAt(first - 1))) {
-          return
-        }
-
-        if (look === 'consistent') {
-          look = final
-        } else if (look !== final) {
-          const start = loc.toPoint(first)
-          const end = loc.toPoint(last + 1)
-          /* c8 ignore next -- we get here if we have offsets. */
-          const place = start && end ? {start, end} : undefined
-
-          file.message(
-            'Titles should use `' +
-              (look === ')' ? '()' : look) +
-              '` as a quote',
-            place
+        if (expected) {
+          if (actual !== expected) {
+            file.message(
+              'Unexpected title markers ' +
+                displayStyle(actual) +
+                ', expected ' +
+                displayStyle(expected),
+              {ancestors: [...parents, node], cause, place: node.position}
+            )
+          }
+        } else {
+          expected = actual
+          cause = new VFileMessage(
+            'Title marker style ' +
+              displayStyle(expected) +
+              " first defined for `'consistent'` here",
+            {
+              ancestors: [...parents, node],
+              place: node.position,
+              ruleId: 'link-title-style',
+              source: 'remark-lint'
+            }
           )
         }
       }
@@ -270,3 +283,13 @@ const remarkLintLinkTitleStyle = lintRule(
 )
 
 export default remarkLintLinkTitleStyle
+
+/**
+ * @param {Style} style
+ *   Style.
+ * @returns {string}
+ *   Display.
+ */
+function displayStyle(style) {
+  return style === '"' ? '`"`' : style === "'" ? "`'`" : "`'('` and `')'`"
+}

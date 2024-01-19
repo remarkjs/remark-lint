@@ -140,9 +140,9 @@ There is no specific handling of indented list items in markdown.
 While it is possible to use an indent to align ordered lists on their marker:
 
 ```markdown
-  1. One
- 10. Ten
-100. Hundred
+  1. Mercury
+ 10. Venus
+100. Earth
 ```
 
 …such a style is uncommon and hard to maintain as adding a 10th item
@@ -162,10 +162,10 @@ indent.
 ###### In
 
 ```markdown
-Paragraph.
+Mercury.
 
-* List item
-* List item
+* Venus.
+* Earth.
 ```
 
 ###### Out
@@ -177,17 +177,17 @@ No messages.
 ###### In
 
 ```markdown
-Paragraph.
+Mercury.
 
-␠* List item
-␠* List item
+␠* Venus.
+␠* Earth.
 ```
 
 ###### Out
 
 ```text
-3:2: Incorrect indentation before bullet: remove 1 space
-4:2: Incorrect indentation before bullet: remove 1 space
+3:2: Unexpected `1` space before list item, expected `0` spaces, remove them
+4:2: Unexpected `1` space before list item, expected `0` spaces, remove them
 ```
 
 ## Compatibility

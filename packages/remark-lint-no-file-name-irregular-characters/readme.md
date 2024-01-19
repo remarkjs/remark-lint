@@ -136,42 +136,62 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 ## Examples
 
-##### `plug-ins.md`
+##### `mercury-and-venus.md`
 
 ###### Out
 
 No messages.
 
-##### `plugins.md`
+##### `mercury.md`
 
 ###### Out
 
 No messages.
 
-##### `plug_ins.md`
+##### `mercury_and_venus.md`
 
 ###### Out
 
 ```text
-1:1: Do not use `_` in a file name
+1:1: Unexpected character `_` in file name
 ```
 
-##### `README.md`
+##### `Readme.md`
 
 When configured with `'\\.a-z0-9'`.
 
 ###### Out
 
 ```text
-1:1: Do not use `R` in a file name
+1:1: Unexpected character `R` in file name
 ```
 
-##### `plug ins.md`
+##### `mercury_and_venus.md`
+
+When configured with `{ source: '[^\\.a-z0-9]' }`.
 
 ###### Out
 
 ```text
-1:1: Do not use ` ` in a file name
+1:1: Unexpected character `_` in file name
+```
+
+##### `mercury and venus.md`
+
+###### Out
+
+```text
+1:1: Unexpected character ` ` in file name
+```
+
+##### `not-ok-options.md`
+
+When configured with `1`.
+
+###### Out
+
+```text
+1:1: Unexpected value `1` for `options`, expected `RegExp` or `string`
 ```
 
 ## Compatibility

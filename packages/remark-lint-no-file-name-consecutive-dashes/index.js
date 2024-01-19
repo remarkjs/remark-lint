@@ -30,13 +30,14 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "plug-ins.md"}
  *
  * @example
  *   {"name": "plug--ins.md", "label": "output", "positionless": true}
  *
- *   1:1: Do not use consecutive dashes in a file name
+ *   1:1: Unexpected consecutive dashes in a file name, expected `-`
  */
 
 /**
@@ -58,7 +59,7 @@ const remarkLintNoFileNameConsecutiveDashes = lintRule(
    */
   function (_, file) {
     if (file.stem && /-{2,}/.test(file.stem)) {
-      file.message('Do not use consecutive dashes in a file name')
+      file.message('Unexpected consecutive dashes in a file name, expected `-`')
     }
   }
 )

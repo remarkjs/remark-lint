@@ -180,50 +180,25 @@ language and as indented code otherwise.
 
 ## Examples
 
-##### `ok.md`
+##### `ok-indented.md`
 
 When configured with `'indented'`.
 
 ###### In
 
 ```markdown
-    alpha()
+    venus()
 
-Paragraph.
+Mercury.
 
-    bravo()
+    earth()
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
-
-When configured with `'indented'`.
-
-###### In
-
-````markdown
-```
-alpha()
-```
-
-Paragraph.
-
-```
-bravo()
-```
-````
-
-###### Out
-
-```text
-1:1-3:4: Code blocks should be indented
-7:1-9:4: Code blocks should be indented
-```
-
-##### `ok.md`
+##### `ok-fenced.md`
 
 When configured with `'fenced'`.
 
@@ -231,19 +206,64 @@ When configured with `'fenced'`.
 
 ````markdown
 ```
-alpha()
+venus()
 ```
 
-Paragraph.
+Mercury.
 
 ```
-bravo()
+earth()
 ```
 ````
 
 ###### Out
 
 No messages.
+
+##### `not-ok-consistent.md`
+
+###### In
+
+````markdown
+    venus()
+
+Mercury.
+
+```
+earth()
+```
+````
+
+###### Out
+
+```text
+5:1-7:4: Unexpected fenced code block, expected indented code blocks
+```
+
+##### `not-ok-indented.md`
+
+When configured with `'indented'`.
+
+###### In
+
+````markdown
+```
+venus()
+```
+
+Mercury.
+
+```
+earth()
+```
+````
+
+###### Out
+
+```text
+1:1-3:4: Unexpected fenced code block, expected indented code blocks
+7:1-9:4: Unexpected fenced code block, expected indented code blocks
+```
 
 ##### `not-ok-fenced.md`
 
@@ -252,48 +272,28 @@ When configured with `'fenced'`.
 ###### In
 
 ```markdown
-    alpha()
+    venus()
 
-Paragraph.
+Mercury.
 
-    bravo()
+    earth()
 ```
 
 ###### Out
 
 ```text
-1:1-1:12: Code blocks should be fenced
-5:1-5:12: Code blocks should be fenced
+1:1-1:12: Unexpected indented code block, expected fenced code blocks
+5:1-5:12: Unexpected indented code block, expected fenced code blocks
 ```
 
-##### `not-ok-consistent.md`
+##### `not-ok-options.md`
 
-###### In
-
-````markdown
-    alpha()
-
-Paragraph.
-
-```
-bravo()
-```
-````
+When configured with `'🌍'`.
 
 ###### Out
 
 ```text
-5:1-7:4: Code blocks should be indented
-```
-
-##### `not-ok-incorrect.md`
-
-When configured with `'💩'`.
-
-###### Out
-
-```text
-1:1: Incorrect code block style `💩`: use either `'consistent'`, `'fenced'`, or `'indented'`
+1:1: Unexpected value `🌍` for `options`, expected `'fenced'`, `'indented'`, or `'consistent'`
 ```
 
 ## Compatibility

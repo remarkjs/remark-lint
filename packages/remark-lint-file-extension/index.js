@@ -62,6 +62,7 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
+ *
  * @example
  *   {"name": "readme.md"}
  *
@@ -74,18 +75,23 @@
  * @example
  *   {"config": {"allowExtensionless": false}, "label": "output", "name": "readme", "positionless": true}
  *
- *   1:1: Incorrect extension: use `mdx` or `md`
+ *   1:1: Unexpected missing file extension, expected `mdx` or `md`
  *
  * @example
  *   {"label": "output", "name": "readme.mkd", "positionless": true}
  *
- *   1:1: Incorrect extension: use `mdx` or `md`
+ *   1:1: Unexpected file extension `mkd`, expected `mdx` or `md`
  *
  * @example
  *   {"config": "mkd", "name": "readme.mkd"}
  *
  * @example
- *   {"config": ["mkd"], "name": "readme.mkd"}
+ *   {"config": ["markdown", "md", "mdown", "mdwn", "mdx", "mkd", "mkdn", "mkdown", "ron"], "label": "input", "name": "readme.css", "positionless": true}
+ *
+ * @example
+ *   {"config": ["markdown", "md", "mdown", "mdwn", "mdx", "mkd", "mkdn", "mkdown", "ron"], "label": "output", "name": "readme.css"}
+ *
+ *   1:1: Unexpected file extension `css`, expected `markdown`, `md`, `mdown`, …
  */
 
 /**
@@ -93,24 +99,25 @@
  */
 
 /**
- * @typedef {ReadonlyArray<string> | string} Extensions
+ * @typedef {Array<string> | string} Extensions
  *   File extension(s).
  *
  * @typedef Options
  *   Configuration.
  * @property {boolean | null | undefined} [allowExtensionless=true]
  *   Allow no file extension such as `AUTHORS` or `LICENSE` (default: `true`).
- * @property {Extensions | null | undefined} [extensions=['mdx', 'md']]
+ * @property {Readonly<Extensions> | null | undefined} [extensions=['mdx', 'md']]
  *   Allowed file extension(s) (default: `['mdx', 'md']`).
  */
 
-import {lintRule} from 'unified-lint-rule'
 import {quotation} from 'quotation'
+import {lintRule} from 'unified-lint-rule'
 
 /** @type {ReadonlyArray<string>} */
 const defaultExtensions = ['mdx', 'md']
 
 const listFormat = new Intl.ListFormat('en', {type: 'disjunction'})
+const listFormatUnit = new Intl.ListFormat('en', {type: 'unit'})
 
 const remarkLintFileExtension = lintRule(
   {
@@ -126,7 +133,7 @@ const remarkLintFileExtension = lintRule(
    *   Nothing.
    */
   function (_, file, options) {
-    let extensions = defaultExtensions
+    let expected = defaultExtensions
     let allowExtensionless = true
     /** @type {Readonly<Extensions> | null | undefined} */
     let extensionsValue
@@ -147,18 +154,25 @@ const remarkLintFileExtension = lintRule(
     }
 
     if (Array.isArray(extensionsValue)) {
-      extensions = /** @type {ReadonlyArray<string>} */ (extensionsValue)
+      expected = /** @type {ReadonlyArray<string>} */ (extensionsValue)
     } else if (typeof extensionsValue === 'string') {
-      extensions = [extensionsValue]
+      expected = [extensionsValue]
     }
 
     const extname = file.extname
-    const extension = extname ? extname.slice(1) : undefined
+    const actual = extname ? extname.slice(1) : undefined
+    const expectedDisplay =
+      expected.length > 3
+        ? listFormatUnit.format([...quotation(expected.slice(0, 3), '`'), '…'])
+        : listFormat.format(quotation(expected, '`'))
 
-    if (extension ? !extensions.includes(extension) : !allowExtensionless) {
+    if (actual ? !expected.includes(actual) : !allowExtensionless) {
       file.message(
-        'Incorrect extension: use ' +
-          listFormat.format(quotation(extensions, '`'))
+        (actual
+          ? 'Unexpected file extension `' + actual + '`'
+          : 'Unexpected missing file extension') +
+          ', expected ' +
+          expectedDisplay
       )
     }
   }

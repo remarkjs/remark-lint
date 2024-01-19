@@ -147,45 +147,40 @@ If you prefer that, turn on this rule.
 ###### In
 
 ```markdown
-Paragraph.
+Mercury.
 
-[example]: http://example.com "Example Domain"
+[venus]: http://example.com
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `ok.md`
 
 ###### In
 
 ```markdown
-Paragraph.
-
-[example]: http://example.com "Example Domain"
-
-Another paragraph.
+[mercury]: http://example.com/mercury/
+[venus]: http://example.com/venus/
 ```
 
 ###### Out
 
-```text
-3:1-3:47: Move definitions to the end of the file (after `5:19`)
-```
+No messages.
 
 ##### `ok-html-comments.md`
 
 ###### In
 
 ```markdown
-Paragraph.
+Mercury.
 
-[example-1]: http://example.com/one/
+[venus]: http://example.com/venus/
 
-<!-- Comments are fine between and after definitions. -->
+<!-- HTML comments in markdown are ignored. -->
 
-[example-2]: http://example.com/two/
+[earth]: http://example.com/earth/
 ```
 
 ###### Out
@@ -200,18 +195,59 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-Paragraph.
+Mercury.
 
-[example-1]: http://example.com/one/
+[venus]: http://example.com/venus/
 
-{/* Comments are fine in MDX. */}
+{/* Comments in expressions in MDX are ignored. */}
 
-[example-2]: http://example.com/two/
+[earth]: http://example.com/earth/
 ```
 
 ###### Out
 
 No messages.
+
+##### `not-ok.md`
+
+###### In
+
+```markdown
+Mercury.
+
+[venus]: https://example.com/venus/
+
+Earth.
+```
+
+###### Out
+
+```text
+3:1-3:36: Unexpected definition before last content, expected definitions after line `5`
+```
+
+##### `gfm.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Mercury.
+
+[^venus]:
+    **Venus** is the second planet from
+    the Sun.
+
+Earth.
+```
+
+###### Out
+
+```text
+3:1-5:13: Unexpected footnote definition before last content, expected definitions after line `7`
+```
 
 ## Compatibility
 
@@ -281,6 +317,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

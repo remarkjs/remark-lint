@@ -39,80 +39,83 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   ## Alpha
+ *   # Planets
  *
- *   ### Bravo
+ *   ## Venus
  *
- *   ## Charlie
+ *   ### Discovery
  *
- *   ### Bravo
+ *   ## Mars
  *
- *   ### Delta
+ *   ### Discovery
  *
- *   #### Bravo
+ *   ### Phobos
  *
- *   #### Echo
- *
- *   ##### Bravo
+ *   #### Discovery
  *
  * @example
- *   {"name": "not-ok.md", "label": "input"}
+ *   {"label": "input", "name": "not-ok.md"}
  *
- *   ## Foxtrot
+ *   # Planets
  *
- *   ### Golf
+ *   ## Mars
  *
- *   ### Golf
+ *   ### Discovery
  *
- * @example
- *   {"name": "not-ok.md", "label": "output"}
- *
- *   5:1-5:9: Do not use headings with similar content per section (3:1)
+ *   ### Discovery
  *
  * @example
- *   {"name": "not-ok-tolerant-heading-increment.md", "label": "input"}
+ *   {"label": "output", "name": "not-ok.md"}
  *
- *   # Alpha
- *
- *   #### Bravo
- *
- *   ###### Charlie
- *
- *   #### Bravo
- *
- *   ###### Delta
+ *   7:1-7:14: Unexpected heading with equivalent text in section, expected unique headings
  *
  * @example
- *   {"name": "not-ok-tolerant-heading-increment.md", "label": "output"}
+ *   {"label": "input", "name": "tolerant-heading-increment.md"}
  *
- *   7:1-7:11: Do not use headings with similar content per section (3:1)
+ *   # Planets
+ *
+ *   #### Discovery
+ *
+ *   ###### Phobos
+ *
+ *   #### Discovery
+ *
+ *   ###### Deimos
+ *
+ * @example
+ *   {"label": "output", "name": "tolerant-heading-increment.md"}
+ *
+ *   7:1-7:15: Unexpected heading with equivalent text in section, expected unique headings
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
  *
  *   MDX is supported <em>too</em>.
  *
- *   <h2>Alpha</h2>
- *   <h2>Alpha</h2>
+ *   <h1>Planets</h1>
+ *   <h2>Mars</h2>
+ *   <h3>Discovery</h3>
+ *   <h3>Discovery</h3>
  *
  * @example
  *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
  *
- *   4:1-4:15: Do not use headings with similar content per section (3:1)
+ *   6:1-6:19: Unexpected heading with equivalent text in section, expected unique headings
  */
 
 /**
  * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('mdast').Nodes} Nodes
  * @typedef {import('mdast').Root} Root
  */
 
 /// <reference types="mdast-util-mdx" />
 
+import {ok as assert} from 'devlop'
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'
-import {pointStart, position} from 'unist-util-position'
-import {stringifyPosition} from 'unist-util-stringify-position'
-import {visit} from 'unist-util-visit'
+import {visitParents} from 'unist-util-visit-parents'
+import {VFileMessage} from 'vfile-message'
 
 const jsxNameRe = /^h([1-6])$/
 
@@ -128,10 +131,10 @@ const remarkLintNoDuplicateHeadingsInSection = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    /** @type {Array<Map<string, string>>} */
+    /** @type {Array<Map<string, Array<Nodes>>>} */
     const stack = []
 
-    visit(tree, function (node) {
+    visitParents(tree, function (node, parents) {
       /** @type {Heading['depth'] | undefined} */
       let rank
 
@@ -149,23 +152,32 @@ const remarkLintNoDuplicateHeadingsInSection = lintRule(
       }
 
       if (rank) {
+        const ancestors = [...parents, node]
         const value = toString(node).toLowerCase()
         const index = rank - 1
-        const scope = stack[index] || (stack[index] = new Map())
-        const duplicate = scope.get(value)
-        const place = position(node)
-        const start = pointStart(node)
+        const map = stack[index] || (stack[index] = new Map())
+        const duplicateAncestors = map.get(value)
 
-        if (place && duplicate) {
+        if (node.position && duplicateAncestors) {
+          const duplicate = duplicateAncestors.at(-1)
+          assert(duplicate) // Always defined.
+
           file.message(
-            'Do not use headings with similar content per section (' +
-              duplicate +
-              ')',
-            place
+            'Unexpected heading with equivalent text in section, expected unique headings',
+            {
+              ancestors,
+              cause: new VFileMessage('Equivalent heading text defined here', {
+                ancestors: duplicateAncestors,
+                place: duplicate.position,
+                source: 'remark-lint',
+                ruleId: 'no-duplicate-headings-in-section'
+              }),
+              place: node.position
+            }
           )
         }
 
-        scope.set(value, stringifyPosition(start))
+        map.set(value, ancestors)
         // Drop things after it.
         stack.length = rank
       }

@@ -32,7 +32,8 @@
 
 ## What is this?
 
-This package checks the style of link title markers.
+This package checks the style of link (*and* image and definition) title
+markers.
 
 ## When should I use this?
 
@@ -174,143 +175,179 @@ markdown, so it’s recommended to configure this rule with `'"'`.
 
 ## Fix
 
-[`remark-stringify`][github-remark-stringify]  formats titles with double
+[`remark-stringify`][github-remark-stringify] formats titles with double
 quotes by default.
 Pass `quote: "'"` to use single quotes.
 There is no option to use parens.
 
 ## Examples
 
-##### `ok.md`
+##### `ok-consistent.md`
+
+###### In
+
+```markdown
+[Mercury](http://example.com/mercury/),
+[Venus](http://example.com/venus/ "Go to Venus"), and
+![Earth](http://example.com/earth/ "Go to Earth").
+
+[Mars]: http://example.com/mars/ "Go to Mars"
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok-consistent.md`
+
+###### In
+
+```markdown
+[Mercury](http://example.com/mercury/ "Go to Mercury") and
+![Venus](http://example.com/venus/ 'Go to Venus').
+
+[Earth]: http://example.com/earth/ (Go to Earth)
+```
+
+###### Out
+
+```text
+2:1-2:50: Unexpected title markers `'`, expected `"`
+4:1-4:49: Unexpected title markers `'('` and `')'`, expected `"`
+```
+
+##### `ok-double.md`
 
 When configured with `'"'`.
 
 ###### In
 
 ```markdown
-[Example](http://example.com#without-title)
-[Example](http://example.com "Example Domain")
-![Example](http://example.com "Example Domain")
-
-[Example]: http://example.com "Example Domain"
-
-You can use parens in URLs if they’re not a title (see GH-166):
-
-[Example](#Heading-(optional))
+[Mercury](http://example.com/mercury/ "Go to Mercury").
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-double.md`
 
 When configured with `'"'`.
 
 ###### In
 
 ```markdown
-[Example]: http://example.com 'Example Domain'
+[Mercury](http://example.com/mercury/ 'Go to Mercury').
 ```
 
 ###### Out
 
 ```text
-1:31-1:47: Titles should use `"` as a quote
+1:1-1:55: Unexpected title markers `'`, expected `"`
 ```
 
-##### `ok.md`
+##### `ok-single.md`
 
 When configured with `"'"`.
 
 ###### In
 
 ```markdown
-[Example](http://example.com#without-title)
-[Example](http://example.com 'Example Domain')
-![Example](http://example.com 'Example Domain')
-
-[Example]: http://example.com 'Example Domain'
+[Mercury](http://example.com/mercury/ 'Go to Mercury').
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-single.md`
 
 When configured with `"'"`.
 
 ###### In
 
 ```markdown
-[Example]: http://example.com "Example Domain"
+[Mercury](http://example.com/mercury/ "Go to Mercury").
 ```
 
 ###### Out
 
 ```text
-1:31-1:47: Titles should use `'` as a quote
+1:1-1:55: Unexpected title markers `"`, expected `'`
 ```
 
-##### `ok.md`
+##### `ok-paren.md`
 
 When configured with `'()'`.
 
 ###### In
 
 ```markdown
-[Example](http://example.com#without-title)
-[Example](http://example.com (Example Domain))
-![Example](http://example.com (Example Domain))
-
-[Example]: http://example.com (Example Domain)
+[Mercury](http://example.com/mercury/ (Go to Mercury)).
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.md`
+##### `not-ok-paren.md`
 
 When configured with `'()'`.
 
 ###### In
 
 ```markdown
-[Example](http://example.com 'Example Domain')
+[Mercury](http://example.com/mercury/ "Go to Mercury").
 ```
 
 ###### Out
 
 ```text
-1:30-1:46: Titles should use `()` as a quote
+1:1-1:55: Unexpected title markers `"`, expected `'('` and `')'`
 ```
 
 ##### `not-ok.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected `'"'`, `"'"`, `'()'`, or `'consistent'`
+```
+
+##### `ok-parens-in-url.md`
+
+When configured with `'"'`.
 
 ###### In
 
 ```markdown
-[Example](http://example.com "Example Domain")
-[Example](http://example.com 'Example Domain')
+Parens in URLs work correctly:
+
+[Mercury](http://example.com/(mercury) "Go to Mercury") and
+[Venus](http://example.com/(venus)).
 ```
 
 ###### Out
 
-```text
-2:30-2:46: Titles should use `"` as a quote
+No messages.
+
+##### `ok-whitespace.md`
+
+When configured with `'"'`.
+
+###### In
+
+```markdown
+Trailing whitespace works correctly:
+
+[Mercury](http://example.com/mercury/␠"Go to Mercury"␠).
 ```
-
-##### `not-ok.md`
-
-When configured with `'💩'`.
 
 ###### Out
 
-```text
-1:1: Incorrect link title style marker `💩`: use either `'consistent'`, `'"'`, `'\''`, or `'()'`
-```
+No messages.
 
 ## Compatibility
 

@@ -36,6 +36,7 @@ import remarkLintHeadingStyle from 'remark-lint-heading-style'
 import remarkLintLinkTitleStyle from 'remark-lint-link-title-style'
 import remarkLintListItemContentIndent from 'remark-lint-list-item-content-indent'
 import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
+import remarkLintOrderedListMarkerValue from 'remark-lint-ordered-list-marker-value'
 import remarkLintRuleStyle from 'remark-lint-rule-style'
 import remarkLintStrongMarker from 'remark-lint-strong-marker'
 import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
@@ -53,6 +54,7 @@ const remarkPresetLintConsistent = {
     [remarkLintLinkTitleStyle, 'consistent'],
     remarkLintListItemContentIndent,
     [remarkLintOrderedListMarkerStyle, 'consistent'],
+    [remarkLintOrderedListMarkerValue, 'consistent'],
     [remarkLintRuleStyle, 'consistent'],
     [remarkLintStrongMarker, 'consistent'],
     [remarkLintTableCellPadding, 'consistent']

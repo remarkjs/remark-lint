@@ -17,7 +17,7 @@
  *
  * ###### Parameters
  *
- * * `options` ([`Options`][api-options], default: `'ordered'`)
+ * * `options` ([`Options`][api-options], default: `'consistent'`)
  *   — preferred style
  *
  * ###### Returns
@@ -253,7 +253,7 @@ const remarkLintOrderedListMarkerValue = lintRule(
    * @param {Root} tree
    *   Tree.
    * @param {Options | null | undefined} [options='consistent']
-   *   Configuration (default: `'ordered'`).
+   *   Configuration (default: `'consistent'`).
    * @returns {undefined}
    *   Nothing.
    */

@@ -44,6 +44,7 @@ This plugin is included in the following presets:
 
 | Preset | Options |
 | - | - |
+| [`remark-preset-lint-consistent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent) | `'consistent'` |
 | [`remark-preset-lint-markdown-style-guide`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide) | `'one'` |
 
 ## Install
@@ -131,7 +132,7 @@ Warn when ordered list values are inconsistent.
 
 ###### Parameters
 
-* `options` ([`Options`][api-options], default: `'ordered'`)
+* `options` ([`Options`][api-options], default: `'consistent'`)
   — preferred style
 
 ###### Returns

@@ -5,7 +5,8 @@
 
 /**
  * @typedef {'error' | 'on' | 'off' | 'warn'} Label
- *   Severity label (`'off'`: `0`, `'on'`: `1`, `'error'`: `2`).
+ *   Severity label;
+ *   `'off'`: `0`, `'on'` and `warn`: `1`, `'error'`: `2`.
  *
  * @typedef Meta
  *   Rule metadata.
@@ -15,7 +16,8 @@
  *   Link to documentation (optional).
  *
  * @typedef {0 | 1 | 2} Severity
- *   Numeric severity (`0`: `'off'`, `1`: `'on'`, `2`: `'error'`).
+ *   Severity number;
+ *   `0`: `'off'`, `1`: `'on'` and `warn`, `2`: `'error'`.
  *
  * @typedef {[severity: Severity, ...parameters: Array<unknown>]} SeverityTuple
  *   Parsed severty and options.
@@ -65,7 +67,7 @@ export function lintRule(meta, rule) {
   return plugin
 
   /**
-   * @param {Option | [level: Label | Severity, option?: Option]} [config]
+   * @param {[level: Label | Severity, option?: Option] | Label | Option | Severity} [config]
    *   Config.
    * @returns
    *   Transform, if on.

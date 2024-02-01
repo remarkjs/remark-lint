@@ -46,6 +46,17 @@
  *
  * Plugin ([`Plugin` from `unified`][github-unified-plugin]).
  *
+ * ### `Label`
+ *
+ * Severity label (TypeScript type);
+ * `'off'`: `0`, `'on'` and `warn`: `1`, `'error'`: `2`.
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Label = 'error' | 'on' | 'off' | 'warn'
+ * ```
+ *
  * ### `Meta`
  *
  * Rule metadata (TypeScript type).
@@ -74,8 +85,21 @@
  *
  * Nothing (`Promise<undefined>` or `undefined`).
  *
+ * ### `Severity`
+ *
+ * Severity number (TypeScript type);
+ * `0`: `'off'`, `1`: `'on'` and `warn`, `2`: `'error'`.
+ *
+ * ###### Type
+ *
+ * ```ts
+ * type Severity = 0 | 1 | 2
+ * ```
+ *
+ * [api-label]: #label
  * [api-meta]: #meta
  * [api-rule]: #rule
+ * [api-severity]: #severity
  * [api-lint-rule]: #lintrulemeta-rule
  * [github-unist-node]: https://github.com/syntax-tree/unist#node
  * [github-unified-plugin]: https://github.com/unifiedjs/unified#plugin
@@ -87,7 +111,9 @@
  */
 
 /**
+ * @typedef {import('./lib/index.js').Label} Label
  * @typedef {import('./lib/index.js').Meta} Meta
+ * @typedef {import('./lib/index.js').Severity} Severity
  */
 
 /**

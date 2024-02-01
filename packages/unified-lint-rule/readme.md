@@ -20,8 +20,10 @@
 * [Use](#use)
 * [API](#api)
   * [`lintRule(meta, rule)`](#lintrulemeta-rule)
+  * [`Label`](#label)
   * [`Meta`](#meta)
   * [`Rule`](#rule)
+  * [`Severity`](#severity)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
 * [License](#license)
@@ -82,8 +84,10 @@ export default remarkLintFileExtension
 
 This package exports the identifier
 [`lintRule`][api-lint-rule].
-It exports the [TypeScript][typescript] type
-[`Meta`][api-meta].
+It exports the [TypeScript][typescript] types
+[`Label`][api-label],
+[`Meta`][api-meta], and
+[`Severity`][api-severity].
 There is no default export.
 
 ### `lintRule(meta, rule)`
@@ -100,6 +104,17 @@ Create a plugin.
 ###### Returns
 
 Plugin ([`Plugin` from `unified`][github-unified-plugin]).
+
+### `Label`
+
+Severity label (TypeScript type);
+`'off'`: `0`, `'on'` and `warn`: `1`, `'error'`: `2`.
+
+###### Type
+
+```ts
+type Label = 'error' | 'on' | 'off' | 'warn'
+```
 
 ### `Meta`
 
@@ -129,6 +144,17 @@ Rule (TypeScript type).
 
 Nothing (`Promise<undefined>` or `undefined`).
 
+### `Severity`
+
+Severity number (TypeScript type);
+`0`: `'off'`, `1`: `'on'` and `warn`, `2`: `'error'`.
+
+###### Type
+
+```ts
+type Severity = 0 | 1 | 2
+```
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -154,11 +180,15 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
+[api-label]: #label
+
 [api-lint-rule]: #lintrulemeta-rule
 
 [api-meta]: #meta
 
 [api-rule]: #rule
+
+[api-severity]: #severity
 
 [author]: https://wooorm.com
 

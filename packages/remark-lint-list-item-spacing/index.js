@@ -151,10 +151,11 @@
  *   preference (default: `false`).
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 /** @type {Readonly<Options>} */
@@ -178,7 +179,13 @@ const remarkLintListItemSpacing = lintRule(
     // To do: change options. Maybe to `Style = 'markdown' | 'markdown-style-guide'`?
     const checkBlanks = settings.checkBlanks || false
 
-    visitParents(tree, 'list', function (list, parents) {
+    visitParents(tree, function (list, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(list)) {
+        return SKIP
+      }
+
+      if (list.type !== 'list') return
       /** @type {VFileMessage | undefined} */
       let spacedCause
 

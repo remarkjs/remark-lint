@@ -45,6 +45,8 @@
  * @example
  *   {"name": "ok.md"}
  *
+ *   The first planet is [planet mercury][].
+ *
  *   [planet mercury]: http://example.com
  *
  * @example
@@ -73,9 +75,10 @@
  */
 
 import {longestStreak} from 'longest-streak'
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintDefinitionSpacing = lintRule(
   {
@@ -90,6 +93,11 @@ const remarkLintDefinitionSpacing = lintRule(
    */
   function (tree, file) {
     visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
       if (node.type === 'definition' && node.position && node.label) {
         const size = longestStreak(node.label, ' ')
 

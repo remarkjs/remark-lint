@@ -145,9 +145,10 @@
  */
 
 import {headingStyle} from 'mdast-util-heading-style'
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {position} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintHeadingStyle = lintRule(
@@ -185,7 +186,14 @@ const remarkLintHeadingStyle = lintRule(
       )
     }
 
-    visitParents(tree, 'heading', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'heading') return
+
       const place = position(node)
       const actual = headingStyle(node, expected)
 

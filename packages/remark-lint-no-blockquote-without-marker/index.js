@@ -117,6 +117,7 @@
 /// <reference types="mdast-util-directive" />
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
@@ -139,7 +140,14 @@ const remarkLintNoBlockquoteWithoutMarker = lintRule(
     const loc = location(file)
 
     // Only paragraphs can be lazy.
-    visitParents(tree, 'paragraph', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'paragraph') return
+
       let expected = 0
 
       for (const parent of parents) {

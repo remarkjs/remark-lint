@@ -260,7 +260,11 @@ const remarkLintNoConsecutiveBlankLines = lintRule(
 
       // Ignore phrasing nodes and non-parents.
       if (!parent) return
-      if (phrasing(node)) return SKIP
+
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
 
       const siblings = /** @type {Array<Nodes>} */ (parent.children)
       const index = siblings.indexOf(node)

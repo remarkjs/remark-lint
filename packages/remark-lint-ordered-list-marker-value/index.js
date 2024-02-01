@@ -237,10 +237,11 @@
 */
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import {asciiDigit} from 'micromark-util-character'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintOrderedListMarkerValue = lintRule(
@@ -282,7 +283,14 @@ const remarkLintOrderedListMarkerValue = lintRule(
     /** @type {Array<{ancestors: Array<Nodes>, counters: Array<string | undefined>}>} */
     const lists = []
 
-    visitParents(tree, 'list', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'list') return
+
       if (!node.ordered) return
 
       /** @type {Array<string | undefined>} */

@@ -150,6 +150,8 @@ Due to this, it’s recommended to use one space and turn this rule on.
 ###### In
 
 ```markdown
+The first planet is [planet mercury][].
+
 [planet mercury]: http://example.com
 ```
 

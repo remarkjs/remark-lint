@@ -164,6 +164,8 @@ in which case this rule must be turned off.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
+This rule is only about the alignment of pipes across rows:
+
 | Planet  | Mean anomaly (°) |
 | ------- | ---------------: |
 | Mercury |          174 796 |

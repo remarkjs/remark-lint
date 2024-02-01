@@ -118,10 +118,11 @@
  *   Style.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {asciiDigit} from 'micromark-util-character'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintOrderedListMarkerStyle = lintRule(
@@ -156,7 +157,14 @@ const remarkLintOrderedListMarkerStyle = lintRule(
       )
     }
 
-    visitParents(tree, 'listItem', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'listItem') return
+
       const parent = parents.at(-1)
 
       if (!parent || parent.type !== 'list' || !parent.ordered) return

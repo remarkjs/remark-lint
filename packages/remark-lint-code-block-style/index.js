@@ -162,9 +162,10 @@
  *   Styles.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintCodeBlockStyle = lintRule(
@@ -199,7 +200,14 @@ const remarkLintCodeBlockStyle = lintRule(
       )
     }
 
-    visitParents(tree, 'code', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'code') return
+
       const end = pointEnd(node)
       const start = pointStart(node)
 

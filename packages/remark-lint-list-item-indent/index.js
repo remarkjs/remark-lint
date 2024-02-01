@@ -301,10 +301,11 @@
  *   Configuration.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintListItemIndent = lintRule(
   {
@@ -347,21 +348,28 @@ const remarkLintListItemIndent = lintRule(
       )
     }
 
-    visitParents(tree, 'list', function (list, parents) {
-      let loose = list.spread
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'list') return
+
+      let loose = node.spread
 
       if (!loose) {
-        for (const item of list.children) {
-          if (item.spread) {
+        for (const child of node.children) {
+          if (child.spread) {
             loose = true
             break
           }
         }
       }
 
-      for (const item of list.children) {
-        const head = item.children[0]
-        const itemStart = pointStart(item)
+      for (const child of node.children) {
+        const head = child.children[0]
+        const itemStart = pointStart(child)
         const headStart = pointStart(head)
 
         if (
@@ -420,7 +428,7 @@ const remarkLintListItemIndent = lintRule(
                 differenceAbsolute +
                 '` ' +
                 pluralize('space', differenceAbsolute),
-              {ancestors: [...parents, list, item], place: headStart}
+              {ancestors: [...parents, node, child], place: headStart}
             )
           }
         }

@@ -406,6 +406,7 @@
  */
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
@@ -459,7 +460,14 @@ const remarkLintTableCellPadding = lintRule(
       )
     }
 
-    visitParents(tree, 'table', function (table, parents) {
+    visitParents(tree, function (table, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(table)) {
+        return SKIP
+      }
+
+      if (table.type !== 'table') return
+
       const entries = inferTable([...parents, table])
 
       // Find max column sizes.

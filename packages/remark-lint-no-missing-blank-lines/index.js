@@ -234,9 +234,12 @@ const remarkLintNoMissingBlankLines = lintRule(
     visitParents(tree, function (node, parents) {
       const parent = parents[parents.length - 1]
 
-      // Ignore phrasing nodes and non-parents.
-      if (phrasing(node)) return SKIP
       if (!parent) return
+
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
 
       if (
         // Children of list items are normally checked.

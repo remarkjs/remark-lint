@@ -75,8 +75,9 @@
  */
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 /** @type {ReadonlyArray<never>} */
@@ -100,6 +101,11 @@ const remarkLintNoDuplicateDefinitions = lintRule(
     const footnoteDefinitions = new Map()
 
     visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
       const [map, identifier] =
         node.type === 'definition'
           ? [definitions, node.identifier]

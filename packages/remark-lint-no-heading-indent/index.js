@@ -93,10 +93,11 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoHeadingIndent = lintRule(
   {
@@ -110,13 +111,23 @@ const remarkLintNoHeadingIndent = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visitParents(tree, 'heading', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
       const parent = parents[parents.length - 1]
       const start = pointStart(node)
 
       // Note: it’s rather complex to detect what the expected indent is in block
       // quotes and lists, so let’s only do directly in root for now.
-      if (!start || !parent || parent.type !== 'root') {
+      if (
+        !start ||
+        !parent ||
+        node.type !== 'heading' ||
+        parent.type !== 'root'
+      ) {
         return
       }
 

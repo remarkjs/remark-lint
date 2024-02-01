@@ -59,10 +59,11 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const max = 6
 
@@ -78,7 +79,14 @@ const remarkLintNoHeadingLikeParagraph = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visitParents(tree, 'paragraph', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'paragraph') return
+
       const head = node.children[0]
 
       if (head && head.type === 'text') {

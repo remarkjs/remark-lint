@@ -59,6 +59,8 @@
  * @example
  *   {"name": "ok.md"}
  *
+ *   Some markdown:
+ *
  *   ```markdown
  *   # Mercury
  *   ```
@@ -149,9 +151,10 @@
  */
 
 import {quotation} from 'quotation'
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const fence = /^ {0,3}([~`])\1{2,}/
 
@@ -212,7 +215,14 @@ const remarkLintFencedCodeFlag = lintRule(
       allowedDisplay = 'keyword'
     }
 
-    visitParents(tree, 'code', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'code') return
+
       const end = pointEnd(node)
       const start = pointStart(node)
 

@@ -122,10 +122,11 @@
  *   Configuration.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintBlockquoteIndentation = lintRule(
   {
@@ -156,7 +157,14 @@ const remarkLintBlockquoteIndentation = lintRule(
       )
     }
 
-    visitParents(tree, 'blockquote', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'blockquote') return
+
       const start = pointStart(node)
       const headStart = pointStart(node.children[0])
 

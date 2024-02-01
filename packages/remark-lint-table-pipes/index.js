@@ -50,6 +50,8 @@
  * @example
  *   {"name": "ok.md", "gfm": true}
  *
+ *   Small table:
+ *
  *   | Planet | Mean anomaly (°) |
  *   | :- | -: |
  *   | Mercury | 174 796 |
@@ -133,9 +135,10 @@
  * @typedef {import('unist').Point} Point
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintTablePipes = lintRule(
   {
@@ -151,7 +154,14 @@ const remarkLintTablePipes = lintRule(
   function (tree, file) {
     const value = String(file)
 
-    visitParents(tree, 'table', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'table') return
+
       let index = -1
 
       while (++index < node.children.length) {
@@ -216,6 +226,9 @@ const remarkLintTablePipes = lintRule(
           }
         }
       }
+
+      // No tables in tables.
+      return SKIP
     })
 
     /**

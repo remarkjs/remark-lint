@@ -88,6 +88,7 @@
  */
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
@@ -110,7 +111,14 @@ const remarkLintNoParagraphContentIndent = lintRule(
     const locations = location(value)
 
     // Note: this code is very similar to `remark-lint-no-table-indentation`.
-    visitParents(tree, 'paragraph', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'paragraph') return
+
       const parent = parents.at(-1)
       const end = pointEnd(node)
       const start = pointStart(node)

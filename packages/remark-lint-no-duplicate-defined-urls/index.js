@@ -39,6 +39,8 @@
  * @example
  *   {"name": "ok.md"}
  *
+ *   The first planet is [mercury][].
+ *
  *   [mercury]: https://example.com/mercury/
  *   [venus]: https://example.com/venus/
  *
@@ -59,8 +61,9 @@
  */
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintNoDuplicateDefinedUrls = lintRule(
@@ -78,7 +81,13 @@ const remarkLintNoDuplicateDefinedUrls = lintRule(
     /** @type {Map<string, Array<Nodes>>} */
     const map = new Map()
 
-    visitParents(tree, 'definition', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'definition') return
       const ancestors = [...parents, node]
 
       if (node.position && node.url) {

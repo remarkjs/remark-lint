@@ -88,10 +88,11 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoHeadingContentIndent = lintRule(
   {
@@ -107,7 +108,13 @@ const remarkLintNoHeadingContentIndent = lintRule(
   function (tree, file) {
     const value = String(file)
 
-    visitParents(tree, 'heading', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'heading') return
       const start = pointStart(node)
       const end = pointEnd(node)
 

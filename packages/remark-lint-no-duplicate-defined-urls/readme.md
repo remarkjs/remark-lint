@@ -140,6 +140,8 @@ identifiers.
 ###### In
 
 ```markdown
+The first planet is [mercury][].
+
 [mercury]: https://example.com/mercury/
 [venus]: https://example.com/venus/
 ```

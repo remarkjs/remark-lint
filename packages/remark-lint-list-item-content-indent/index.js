@@ -109,10 +109,11 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintListItemContentIndent = lintRule(
@@ -131,7 +132,14 @@ const remarkLintListItemContentIndent = lintRule(
     /** @type {VFileMessage | undefined} */
     let cause
 
-    visitParents(tree, 'listItem', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'listItem') return
+
       let index = -1
       /** @type {number | undefined} */
       let expected

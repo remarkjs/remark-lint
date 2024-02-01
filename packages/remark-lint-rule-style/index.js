@@ -69,7 +69,9 @@
  * @license MIT
  *
  * @example
- *   {"config": "* * *", "name": "ok.md"}
+ *   {"name": "ok.md"}
+ *
+ *   Two rules:
  *
  *   * * *
  *
@@ -108,9 +110,10 @@
  *   Configuration.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintRuleStyle = lintRule(
@@ -150,7 +153,14 @@ const remarkLintRuleStyle = lintRule(
       expected = options
     }
 
-    visitParents(tree, 'thematicBreak', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'thematicBreak') return
+
       const end = pointEnd(node)
       const start = pointStart(node)
 

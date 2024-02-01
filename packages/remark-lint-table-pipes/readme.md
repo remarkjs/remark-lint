@@ -157,6 +157,8 @@ delimiters.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
+Small table:
+
 | Planet | Mean anomaly (°) |
 | :- | -: |
 | Mercury | 174 796 |

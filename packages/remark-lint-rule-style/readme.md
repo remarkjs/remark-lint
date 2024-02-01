@@ -175,11 +175,11 @@ There are three settings to control rules:
 
 ##### `ok.md`
 
-When configured with `'* * *'`.
-
 ###### In
 
 ```markdown
+Two rules:
+
 * * *
 
 * * *

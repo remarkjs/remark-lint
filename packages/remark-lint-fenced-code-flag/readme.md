@@ -165,6 +165,8 @@ It’s recommended to instead use a certain flag for plain text (such as
 ###### In
 
 ````markdown
+Some markdown:
+
 ```markdown
 # Mercury
 ```

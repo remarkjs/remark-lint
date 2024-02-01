@@ -156,6 +156,8 @@ echo "Mercury and Venus"
 echo "Earth and Mars" > file
 ```
 
+Mixed dollars for input lines and without for output is also OK:
+
 ```zsh
 $ echo "Mercury and Venus"
 Mercury and Venus

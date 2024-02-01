@@ -68,8 +68,9 @@
  * @typedef {import('mdast').Root} Root
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintDefinitionCase = lintRule(
   {
@@ -84,6 +85,11 @@ const remarkLintDefinitionCase = lintRule(
    */
   function (tree, file) {
     visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
       if (
         (node.type === 'definition' || node.type === 'footnoteDefinition') &&
         node.position &&

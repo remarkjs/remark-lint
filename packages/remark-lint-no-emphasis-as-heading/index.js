@@ -70,8 +70,9 @@
  * @typedef {import('mdast').RootContent} RootContent
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 const remarkLintNoEmphasisAsHeading = lintRule(
   {
@@ -85,7 +86,14 @@ const remarkLintNoEmphasisAsHeading = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visitParents(tree, 'paragraph', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'paragraph') return
+
       const parent = parents.at(-1)
 
       if (!node.position || !parent) {

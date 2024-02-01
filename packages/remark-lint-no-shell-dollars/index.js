@@ -51,6 +51,8 @@
  *   echo "Earth and Mars" > file
  *   ```
  *
+ *   Mixed dollars for input lines and without for output is also OK:
+ *
  *   ```zsh
  *   $ echo "Mercury and Venus"
  *   Mercury and Venus
@@ -88,8 +90,9 @@
  */
 
 import {collapseWhiteSpace} from 'collapse-white-space'
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 
 // See: <https://github.com/wooorm/starry-night/blob/a3e35db/lang/source.shell.js#L8>
 const flags = new Set([
@@ -132,8 +135,14 @@ const remarkLintNoShellDollars = lintRule(
    *   Nothing.
    */
   function (tree, file) {
-    visitParents(tree, 'code', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
       if (
+        node.type === 'code' &&
         node.position &&
         // Check known shell code.
         node.lang &&

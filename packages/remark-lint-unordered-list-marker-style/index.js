@@ -123,9 +123,10 @@
  *   Styles.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintUnorderedListMarkerStyle = lintRule(
@@ -148,8 +149,6 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
     /** @type {VFileMessage | undefined} */
     let cause
 
-    console.log('check:', file.path)
-
     if (options === null || options === undefined || options === 'consistent') {
       // Empty.
     } else if (options === '*' || options === '+' || options === '-') {
@@ -162,7 +161,14 @@ const remarkLintUnorderedListMarkerStyle = lintRule(
       )
     }
 
-    visitParents(tree, 'listItem', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'listItem') return
+
       const parent = parents.at(-1)
 
       if (!parent || parent.type !== 'list' || parent.ordered) return

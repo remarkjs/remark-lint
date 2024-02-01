@@ -146,9 +146,10 @@
  *   Configuration.
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintFencedCodeMarker = lintRule(
@@ -183,7 +184,14 @@ const remarkLintFencedCodeMarker = lintRule(
       )
     }
 
-    visitParents(tree, 'code', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'code') return
+
       const start = pointStart(node)
 
       if (start && typeof start.offset === 'number') {

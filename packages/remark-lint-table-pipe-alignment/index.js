@@ -57,6 +57,8 @@
  * @example
  *   {"gfm": true, "name": "ok.md"}
  *
+ *   This rule is only about the alignment of pipes across rows:
+ *
  *   | Planet  | Mean anomaly (°) |
  *   | ------- | ---------------: |
  *   | Mercury |          174 796 |
@@ -202,6 +204,7 @@
  */
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
@@ -237,7 +240,14 @@ const remarkLintTablePipeAlignment = lintRule(
 
     const value = String(file)
 
-    visitParents(tree, 'table', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'table') return
+
       const entries = inferTable([...parents, node])
       // Find max column sizes.
       /** @type {Array<number>} */

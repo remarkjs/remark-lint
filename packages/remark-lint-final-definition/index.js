@@ -111,9 +111,10 @@
 /// <reference types="mdast-util-mdx" />
 
 import {ok as assert} from 'devlop'
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointEnd, pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintFinalDefinition = lintRule(
@@ -134,6 +135,11 @@ const remarkLintFinalDefinition = lintRule(
     let contentAncestors
 
     visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
       if (node.type === 'definition' || node.type === 'footnoteDefinition') {
         definitionStacks.push([...parents, node])
       } else if (
@@ -141,9 +147,7 @@ const remarkLintFinalDefinition = lintRule(
         // Ignore HTML comments.
         (node.type === 'html' && /^[\t ]*<!--/.test(node.value)) ||
         // Ignore MDX comments.
-        ((node.type === 'mdxFlowExpression' ||
-          node.type === 'mdxTextExpression') &&
-          /^\s*\/\*/.test(node.value))
+        (node.type === 'mdxFlowExpression' && /^\s*\/\*/.test(node.value))
       ) {
         // Empty.
       } else {

@@ -145,9 +145,10 @@
  *   Preferred style to use for unchecked checkboxes (default: `'consistent'`).
  */
 
+import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'
 import {pointStart} from 'unist-util-position'
-import {visitParents} from 'unist-util-visit-parents'
+import {SKIP, visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
 const remarkLintCheckboxCharacterStyle = lintRule(
@@ -204,7 +205,14 @@ const remarkLintCheckboxCharacterStyle = lintRule(
       )
     }
 
-    visitParents(tree, 'listItem', function (node, parents) {
+    visitParents(tree, function (node, parents) {
+      // Do not walk into phrasing.
+      if (phrasing(node)) {
+        return SKIP
+      }
+
+      if (node.type !== 'listItem') return
+
       const head = node.children[0]
       const headStart = pointStart(head)
 

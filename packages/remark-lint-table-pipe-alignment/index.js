@@ -89,6 +89,17 @@
  *   | ------- | ---------- | --- |
  *   | Mercury |            |     |
  *
+ *   | aaa | bbb | ccc | ddd |
+ *   | --- | :-- | :-: | --: |
+ *   |     |     |     |     |
+ *
+ * @example
+ *   {"gfm": true, "name": "aligned-pipes-but-weird-content.md"}
+ *
+ *   | Planet | Moon | Mercury | Venus | Sun | Mars | Jupiter | Saturn |
+ *   | ------ | ---- | :------ | :---- | --: | ---: | :-----: | :----: |
+ *   | Symbol |    ☾ | ☿       |   ♀   | ☉   |   ♂  | ♃       |      ♄ |
+ *
  * @example
  *   {"gfm": true, "name": "missing-cells.md"}
  *
@@ -277,9 +288,8 @@ const remarkLintTablePipeAlignment = lintRule(
         let left = 0
         let right = 0
 
-        if (info.align === 'right') {
-          left = difference
-        } else if (info.align === 'center') {
+        // Center if there is something to center.
+        if (info.align === 'center' && info.size.middle && difference > 0) {
           // Maximum number of spaces we would want on the left.
           const max = Math.floor((sizes[info.column] - info.size.middle) / 2)
 
@@ -288,6 +298,8 @@ const remarkLintTablePipeAlignment = lintRule(
           }
 
           left = difference - right
+        } else if (info.align === 'right') {
+          left = difference
         } else {
           right = difference
         }

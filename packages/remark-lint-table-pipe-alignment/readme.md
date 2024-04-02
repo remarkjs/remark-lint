@@ -212,6 +212,27 @@ No messages.
 |         | Satellites |     |
 | ------- | ---------- | --- |
 | Mercury |            |     |
+
+| aaa | bbb | ccc | ddd |
+| --- | :-- | :-: | --: |
+|     |     |     |     |
+```
+
+###### Out
+
+No messages.
+
+##### `aligned-pipes-but-weird-content.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Planet | Moon | Mercury | Venus | Sun | Mars | Jupiter | Saturn |
+| ------ | ---- | :------ | :---- | --: | ---: | :-----: | :----: |
+| Symbol |    ☾ | ☿       |   ♀   | ☉   |   ♂  | ♃       |      ♄ |
 ```
 
 ###### Out

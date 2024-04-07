@@ -32,7 +32,7 @@ test('remark-lint', async function (t) {
     ])
   })
 
-  const doc = [
+  const value = [
     '# A heading',
     '',
     '# Another main heading.',
@@ -47,7 +47,7 @@ test('remark-lint', async function (t) {
       .use(remarkLintNoHeadingPunctuation)
       .use(remarkLintNoMultipleToplevelHeadings)
       .use(remarkLint)
-      .process({path: 'virtual.md', value: doc})
+      .process({path: 'virtual.md', value})
 
     assert.deepEqual(file.messages.map(String), [
       'virtual.md:3:1-3:24: Unexpected character `.` at end of heading, remove it',
@@ -60,7 +60,7 @@ test('remark-lint', async function (t) {
       .use(remarkLint)
       .use(remarkLintNoHeadingPunctuation)
       .use(remarkLintNoMultipleToplevelHeadings)
-      .process({path: 'virtual.md', value: doc})
+      .process({path: 'virtual.md', value})
 
     assert.deepEqual(file.messages.map(String), [
       'virtual.md:3:1-3:24: Unexpected character `.` at end of heading, remove it',
@@ -307,8 +307,8 @@ test('plugins', async function (t) {
 // type-coverage:ignore-next-line -- `TestContext` not exposed from `node:test`.
 async function assertPlugin(info, t) {
   /** @type {{default: Plugin}} */
-  const pluginMod = await import(info.name)
-  const plugin = pluginMod.default
+  const pluginModule = await import(info.name)
+  const plugin = pluginModule.default
 
   for (const check of info.checks) {
     const name = check.name + ':' + check.configuration

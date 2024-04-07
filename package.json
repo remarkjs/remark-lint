@@ -144,7 +144,7 @@
     "to-vfile": "^8.0.0",
     "type-coverage": "^2.0.0",
     "type-fest": "^4.0.0",
-    "typescript": "^5.4.0-beta",
+    "typescript": "^5.4.0",
     "unified": "^11.0.0",
     "unist-builder": "^4.0.0",
     "unist-util-remove-position": "^5.0.0",
@@ -152,7 +152,7 @@
     "vfile-find-down": "^7.0.0",
     "vfile-reporter": "^8.0.0",
     "vfile-sort": "^4.0.0",
-    "xo": "^0.56.0"
+    "xo": "^0.58.0"
   },
   "scripts": {
     "generate": "node --conditions development script/build-packages.js",

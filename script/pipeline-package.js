@@ -331,7 +331,7 @@ async function generateReadme(state) {
 
   const description = stripIndent(fileInfo.description || '').trim()
 
-  const explicitDocs = fromMarkdown(description, {
+  const explicitDescription = fromMarkdown(description, {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()]
   })
@@ -341,9 +341,9 @@ async function generateReadme(state) {
   let category = 'intro'
   let contentIndex = -1
 
-  while (++contentIndex < explicitDocs.children.length) {
+  while (++contentIndex < explicitDescription.children.length) {
     const node = /** @type {TopLevelContent} */ (
-      explicitDocs.children[contentIndex]
+      explicitDescription.children[contentIndex]
     )
 
     if (node.type === 'heading' && node.depth === 2) {

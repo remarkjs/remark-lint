@@ -50,7 +50,8 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "capitalized-comments": "off"
+      "capitalized-comments": "off",
+      "logical-assignment-operators": "off"
     }
   }
 }

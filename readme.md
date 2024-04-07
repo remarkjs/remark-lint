@@ -50,11 +50,12 @@ We would get a report like this:
 
 ```txt
 doc/example.md
-   1:1-1:35  warning  Marker style should be `.`               ordered-list-marker-style  remark-lint
-        1:4  warning  Incorrect list-item indent: add 1 space  list-item-indent           remark-lint
-  1:25-1:34  warning  Emphasis should use `_` as a marker      emphasis-marker            remark-lint
+1:2           warning Unexpected ordered list marker `)`, expected `.`                  ordered-list-marker-style remark-lint
+1:25-1:34     warning Unexpected emphasis marker `*`, expected `_`                      emphasis-marker           remark-lint
+  [cause]:
+    1:11-1:20 info    Emphasis marker style `'_'` first defined for `'consistent'` here emphasis-marker           remark-lint
 
-⚠ 3 warnings
+⚠ 2 warnings
 ```
 
 This GitHub repository is a monorepo that contains ±70 plugins (each a rule that
@@ -379,10 +380,10 @@ const file = await remark()
   .use(remarkPresetLintConsistent)
   // Few recommended rules.
   .use(remarkPresetLintRecommended)
-  // `remark-lint-list-item-indent` is configured with `tab-size` in the
+  // `remark-lint-list-item-indent` is configured with `one` in the
   // recommended preset, but if we’d prefer something else, it can be
   // reconfigured:
-  .use(remarkLintListItemIndent, 'space')
+  .use(remarkLintListItemIndent, 'tab')
   .process('1) Hello, _Jupiter_ and *Neptune*!')
 
 console.error(reporter(file))
@@ -391,11 +392,14 @@ console.error(reporter(file))
 Running that with `node example.js` yields:
 
 ```txt
-        1:1  warning  Missing newline character at end of file  final-newline              remark-lint
-   1:1-1:35  warning  Marker style should be `.`                ordered-list-marker-style  remark-lint
-  1:25-1:34  warning  Emphasis should use `_` as a marker       emphasis-marker            remark-lint
+1:2           warning Unexpected ordered list marker `)`, expected `.`                                              ordered-list-marker-style remark-lint
+1:4           warning Unexpected `1` space between list item marker and content, expected `2` spaces, add `1` space list-item-indent          remark-lint
+1:25-1:34     warning Unexpected emphasis marker `*`, expected `_`                                                  emphasis-marker           remark-lint
+  [cause]:
+    1:11-1:20 info    Emphasis marker style `'_'` first defined for `'consistent'` here                             emphasis-marker           remark-lint
+1:35          warning Unexpected missing final newline character, expected line feed (`\n`) at end of file          final-newline             remark-lint
 
-⚠ 3 warnings
+⚠ 4 warnings
 ```
 
 ### Example: check and format markdown on the API
@@ -478,12 +482,12 @@ Now add a `remarkConfig` to your `package.json` to configure remark:
     "plugins": [
       "remark-preset-lint-consistent", // Check that markdown is consistent.
       "remark-preset-lint-recommended", // Few recommended rules.
-      // `remark-lint-list-item-indent` is configured with `tab-size` in the
+      // `remark-lint-list-item-indent` is configured with `one` in the
       // recommended preset, but if we’d prefer something else, it can be
       // reconfigured:
       [
         "remark-lint-list-item-indent",
-        "space"
+        "tab"
       ]
     ]
   },
@@ -512,7 +516,7 @@ change the npm script:
   /* … */
   "scripts": {
     /* … */
-    "format": "remark . --quiet --frail --output",
+    "format": "remark . --frail --output --quiet",
     /* … */
   },
   /* … */
@@ -534,7 +538,7 @@ Update `remarkConfig`:
     "plugins": [
       "remark-preset-lint-consistent",
       "remark-preset-lint-recommended",
-      ["remark-lint-list-item-indent", "space"]
+      ["remark-lint-list-item-indent", "tab"]
       ["remark-lint-emphasis-marker", "*"],
       ["remark-lint-strong-marker", "*"]
     ]

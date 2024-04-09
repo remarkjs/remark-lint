@@ -1457,7 +1457,7 @@ function generateReadmeTail(state) {
         },
         {
           type: 'text',
-          value: ',\ncompatible with Node.js 12.'
+          value: ',\ncompatible with Node.js 16.'
         }
       ]
     },

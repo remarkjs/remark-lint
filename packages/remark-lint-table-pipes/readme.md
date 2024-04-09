@@ -280,7 +280,7 @@ When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
 `remark-lint-table-pipes@4`,
-compatible with Node.js 12.
+compatible with Node.js 16.
 
 ## Contribute
 

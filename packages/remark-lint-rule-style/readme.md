@@ -60,14 +60,14 @@ npm install remark-lint-rule-style
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintRuleStyle from 'https://esm.sh/remark-lint-rule-style@3'
+import remarkLintRuleStyle from 'https://esm.sh/remark-lint-rule-style@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintRuleStyle from 'https://esm.sh/remark-lint-rule-style@3?bundle'
+  import remarkLintRuleStyle from 'https://esm.sh/remark-lint-rule-style@4?bundle'
 </script>
 ```
 
@@ -239,7 +239,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-rule-style@3`,
+`remark-lint-rule-style@4`,
 compatible with Node.js 16.
 
 ## Contribute

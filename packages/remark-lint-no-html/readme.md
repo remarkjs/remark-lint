@@ -52,14 +52,14 @@ npm install remark-lint-no-html
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoHtml from 'https://esm.sh/remark-lint-no-html@3'
+import remarkLintNoHtml from 'https://esm.sh/remark-lint-no-html@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoHtml from 'https://esm.sh/remark-lint-no-html@3?bundle'
+  import remarkLintNoHtml from 'https://esm.sh/remark-lint-no-html@4?bundle'
 </script>
 ```
 
@@ -193,7 +193,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-html@3`,
+`remark-lint-no-html@4`,
 compatible with Node.js 16.
 
 ## Contribute

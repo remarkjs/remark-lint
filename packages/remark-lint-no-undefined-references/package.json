@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-undefined-references",
-  "version": "4.2.1",
+  "version": "5.0.0",
   "description": "remark-lint rule to warn when references to undefined definitions are found",
   "license": "MIT",
   "keywords": [
@@ -37,7 +37,7 @@
     "collapse-white-space": "^2.0.0",
     "devlop": "^1.0.0",
     "micromark-util-normalize-identifier": "^2.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-location": "^5.0.0"

@@ -68,14 +68,14 @@ npm install remark-preset-lint-consistent
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkPresetLintConsistent from 'https://esm.sh/remark-preset-lint-consistent@5'
+import remarkPresetLintConsistent from 'https://esm.sh/remark-preset-lint-consistent@6'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkPresetLintConsistent from 'https://esm.sh/remark-preset-lint-consistent@5?bundle'
+  import remarkPresetLintConsistent from 'https://esm.sh/remark-preset-lint-consistent@6?bundle'
 </script>
 ```
 
@@ -144,7 +144,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-preset-lint-consistent@5`,
+`remark-preset-lint-consistent@6`,
 compatible with Node.js 16.
 
 ## Contribute

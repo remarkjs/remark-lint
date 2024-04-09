@@ -55,14 +55,14 @@ npm install remark-lint-no-file-name-consecutive-dashes
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoFileNameConsecutiveDashes from 'https://esm.sh/remark-lint-no-file-name-consecutive-dashes@2'
+import remarkLintNoFileNameConsecutiveDashes from 'https://esm.sh/remark-lint-no-file-name-consecutive-dashes@3'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoFileNameConsecutiveDashes from 'https://esm.sh/remark-lint-no-file-name-consecutive-dashes@2?bundle'
+  import remarkLintNoFileNameConsecutiveDashes from 'https://esm.sh/remark-lint-no-file-name-consecutive-dashes@3?bundle'
 </script>
 ```
 
@@ -155,7 +155,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-file-name-consecutive-dashes@2`,
+`remark-lint-no-file-name-consecutive-dashes@3`,
 compatible with Node.js 16.
 
 ## Contribute

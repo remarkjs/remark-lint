@@ -61,14 +61,14 @@ npm install remark-lint
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLint from 'https://esm.sh/remark-lint@9'
+import remarkLint from 'https://esm.sh/remark-lint@10'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLint from 'https://esm.sh/remark-lint@9?bundle'
+  import remarkLint from 'https://esm.sh/remark-lint@10?bundle'
 </script>
 ```
 
@@ -140,7 +140,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint@9`,
+`remark-lint@10`,
 compatible with Node.js 16.
 
 ## Contribute

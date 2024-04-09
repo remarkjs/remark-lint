@@ -60,14 +60,14 @@ npm install remark-lint-emphasis-marker
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintEmphasisMarker from 'https://esm.sh/remark-lint-emphasis-marker@3'
+import remarkLintEmphasisMarker from 'https://esm.sh/remark-lint-emphasis-marker@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintEmphasisMarker from 'https://esm.sh/remark-lint-emphasis-marker@3?bundle'
+  import remarkLintEmphasisMarker from 'https://esm.sh/remark-lint-emphasis-marker@4?bundle'
 </script>
 ```
 
@@ -276,7 +276,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-emphasis-marker@3`,
+`remark-lint-emphasis-marker@4`,
 compatible with Node.js 16.
 
 ## Contribute

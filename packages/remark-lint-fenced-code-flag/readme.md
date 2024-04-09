@@ -61,14 +61,14 @@ npm install remark-lint-fenced-code-flag
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintFencedCodeFlag from 'https://esm.sh/remark-lint-fenced-code-flag@3'
+import remarkLintFencedCodeFlag from 'https://esm.sh/remark-lint-fenced-code-flag@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintFencedCodeFlag from 'https://esm.sh/remark-lint-fenced-code-flag@3?bundle'
+  import remarkLintFencedCodeFlag from 'https://esm.sh/remark-lint-fenced-code-flag@4?bundle'
 </script>
 ```
 
@@ -312,7 +312,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-fenced-code-flag@3`,
+`remark-lint-fenced-code-flag@4`,
 compatible with Node.js 16.
 
 ## Contribute

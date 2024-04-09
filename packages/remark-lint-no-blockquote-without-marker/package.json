@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-blockquote-without-marker",
-  "version": "5.1.2",
+  "version": "6.0.0",
   "description": "remark-lint rule to warn when blank lines without markers (`>`) are found in a block quote",
   "license": "MIT",
   "keywords": [
@@ -37,7 +37,7 @@
     "mdast-util-directive": "^3.0.0",
     "mdast-util-phrasing": "^4.0.0",
     "pluralize": "^8.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-location": "^5.0.0"

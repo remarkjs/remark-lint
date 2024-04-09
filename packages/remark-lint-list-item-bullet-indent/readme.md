@@ -58,14 +58,14 @@ npm install remark-lint-list-item-bullet-indent
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintListItemBulletIndent from 'https://esm.sh/remark-lint-list-item-bullet-indent@4'
+import remarkLintListItemBulletIndent from 'https://esm.sh/remark-lint-list-item-bullet-indent@5'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintListItemBulletIndent from 'https://esm.sh/remark-lint-list-item-bullet-indent@4?bundle'
+  import remarkLintListItemBulletIndent from 'https://esm.sh/remark-lint-list-item-bullet-indent@5?bundle'
 </script>
 ```
 
@@ -198,7 +198,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-list-item-bullet-indent@4`,
+`remark-lint-list-item-bullet-indent@5`,
 compatible with Node.js 16.
 
 ## Contribute

@@ -68,14 +68,14 @@ npm install remark-preset-lint-recommended
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkPresetLintRecommended from 'https://esm.sh/remark-preset-lint-recommended@6'
+import remarkPresetLintRecommended from 'https://esm.sh/remark-preset-lint-recommended@7'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkPresetLintRecommended from 'https://esm.sh/remark-preset-lint-recommended@6?bundle'
+  import remarkPresetLintRecommended from 'https://esm.sh/remark-preset-lint-recommended@7?bundle'
 </script>
 ```
 
@@ -144,7 +144,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-preset-lint-recommended@6`,
+`remark-preset-lint-recommended@7`,
 compatible with Node.js 16.
 
 ## Contribute

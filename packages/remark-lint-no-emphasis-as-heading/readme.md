@@ -57,14 +57,14 @@ npm install remark-lint-no-emphasis-as-heading
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoEmphasisAsHeading from 'https://esm.sh/remark-lint-no-emphasis-as-heading@3'
+import remarkLintNoEmphasisAsHeading from 'https://esm.sh/remark-lint-no-emphasis-as-heading@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoEmphasisAsHeading from 'https://esm.sh/remark-lint-no-emphasis-as-heading@3?bundle'
+  import remarkLintNoEmphasisAsHeading from 'https://esm.sh/remark-lint-no-emphasis-as-heading@4?bundle'
 </script>
 ```
 
@@ -187,7 +187,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-emphasis-as-heading@3`,
+`remark-lint-no-emphasis-as-heading@4`,
 compatible with Node.js 16.
 
 ## Contribute

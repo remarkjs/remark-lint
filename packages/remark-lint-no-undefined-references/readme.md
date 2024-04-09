@@ -57,14 +57,14 @@ npm install remark-lint-no-undefined-references
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoUndefinedReferences from 'https://esm.sh/remark-lint-no-undefined-references@4'
+import remarkLintNoUndefinedReferences from 'https://esm.sh/remark-lint-no-undefined-references@5'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoUndefinedReferences from 'https://esm.sh/remark-lint-no-undefined-references@4?bundle'
+  import remarkLintNoUndefinedReferences from 'https://esm.sh/remark-lint-no-undefined-references@5?bundle'
 </script>
 ```
 
@@ -320,7 +320,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-undefined-references@4`,
+`remark-lint-no-undefined-references@5`,
 compatible with Node.js 16.
 
 ## Contribute

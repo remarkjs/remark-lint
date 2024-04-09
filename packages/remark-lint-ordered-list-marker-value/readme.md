@@ -60,14 +60,14 @@ npm install remark-lint-ordered-list-marker-value
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintOrderedListMarkerValue from 'https://esm.sh/remark-lint-ordered-list-marker-value@3'
+import remarkLintOrderedListMarkerValue from 'https://esm.sh/remark-lint-ordered-list-marker-value@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintOrderedListMarkerValue from 'https://esm.sh/remark-lint-ordered-list-marker-value@3?bundle'
+  import remarkLintOrderedListMarkerValue from 'https://esm.sh/remark-lint-ordered-list-marker-value@4?bundle'
 </script>
 ```
 
@@ -408,7 +408,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-ordered-list-marker-value@3`,
+`remark-lint-ordered-list-marker-value@4`,
 compatible with Node.js 16.
 
 ## Contribute

@@ -52,14 +52,14 @@ npm install remark-lint-no-duplicate-defined-urls
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoDuplicateDefinedUrls from 'https://esm.sh/remark-lint-no-duplicate-defined-urls@2'
+import remarkLintNoDuplicateDefinedUrls from 'https://esm.sh/remark-lint-no-duplicate-defined-urls@3'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoDuplicateDefinedUrls from 'https://esm.sh/remark-lint-no-duplicate-defined-urls@2?bundle'
+  import remarkLintNoDuplicateDefinedUrls from 'https://esm.sh/remark-lint-no-duplicate-defined-urls@3?bundle'
 </script>
 ```
 
@@ -173,7 +173,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-duplicate-defined-urls@2`,
+`remark-lint-no-duplicate-defined-urls@3`,
 compatible with Node.js 16.
 
 ## Contribute

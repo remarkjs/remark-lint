@@ -59,14 +59,14 @@ npm install remark-lint-no-blockquote-without-marker
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoBlockquoteWithoutMarker from 'https://esm.sh/remark-lint-no-blockquote-without-marker@5'
+import remarkLintNoBlockquoteWithoutMarker from 'https://esm.sh/remark-lint-no-blockquote-without-marker@6'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoBlockquoteWithoutMarker from 'https://esm.sh/remark-lint-no-blockquote-without-marker@5?bundle'
+  import remarkLintNoBlockquoteWithoutMarker from 'https://esm.sh/remark-lint-no-blockquote-without-marker@6?bundle'
 </script>
 ```
 
@@ -251,7 +251,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-blockquote-without-marker@5`,
+`remark-lint-no-blockquote-without-marker@6`,
 compatible with Node.js 16.
 
 ## Contribute

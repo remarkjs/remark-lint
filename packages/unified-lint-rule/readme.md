@@ -49,14 +49,14 @@ npm install unified-lint-rule
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import {lintRule} from 'https://esm.sh/unified-lint-rule@2'
+import {lintRule} from 'https://esm.sh/unified-lint-rule@3'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import {lintRule} from 'https://esm.sh/unified-lint-rule@2?bundle'
+  import {lintRule} from 'https://esm.sh/unified-lint-rule@3?bundle'
 </script>
 ```
 
@@ -163,7 +163,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`unified-lint-rule@2`,
+`unified-lint-rule@3`,
 compatible with Node.js 16.
 
 ## Contribute

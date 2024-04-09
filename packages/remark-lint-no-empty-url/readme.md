@@ -53,14 +53,14 @@ npm install remark-lint-no-empty-url
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintNoEmptyUrl from 'https://esm.sh/remark-lint-no-empty-url@3'
+import remarkLintNoEmptyUrl from 'https://esm.sh/remark-lint-no-empty-url@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintNoEmptyUrl from 'https://esm.sh/remark-lint-no-empty-url@3?bundle'
+  import remarkLintNoEmptyUrl from 'https://esm.sh/remark-lint-no-empty-url@4?bundle'
 </script>
 ```
 
@@ -182,7 +182,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-no-empty-url@3`,
+`remark-lint-no-empty-url@4`,
 compatible with Node.js 16.
 
 ## Contribute

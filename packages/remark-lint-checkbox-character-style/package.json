@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-checkbox-character-style",
-  "version": "4.1.2",
+  "version": "5.0.0",
   "description": "remark-lint rule to warn when list item checkboxes violate a given style",
   "license": "MIT",
   "keywords": [
@@ -35,7 +35,7 @@
   "dependencies": {
     "@types/mdast": "^4.0.0",
     "mdast-util-phrasing": "^4.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"

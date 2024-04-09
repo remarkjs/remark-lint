@@ -54,14 +54,14 @@ npm install remark-lint-first-heading-level
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintFirstHeadingLevel from 'https://esm.sh/remark-lint-first-heading-level@3'
+import remarkLintFirstHeadingLevel from 'https://esm.sh/remark-lint-first-heading-level@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintFirstHeadingLevel from 'https://esm.sh/remark-lint-first-heading-level@3?bundle'
+  import remarkLintFirstHeadingLevel from 'https://esm.sh/remark-lint-first-heading-level@4?bundle'
 </script>
 ```
 
@@ -261,7 +261,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-first-heading-level@3`,
+`remark-lint-first-heading-level@4`,
 compatible with Node.js 16.
 
 ## Contribute

@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-definition-case",
-  "version": "3.1.2",
+  "version": "4.0.0",
   "description": "remark-lint rule to warn when definition labels are not lowercase",
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/mdast": "^4.0.0",
     "mdast-util-phrasing": "^4.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },
   "scripts": {},

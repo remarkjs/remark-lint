@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-strikethrough-marker",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "remark-lint rule to warn when strikethrough markers violate the given style",
   "license": "MIT",
   "keywords": [
@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"

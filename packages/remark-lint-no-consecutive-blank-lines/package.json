@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-consecutive-blank-lines",
-  "version": "4.1.3",
+  "version": "5.0.0",
   "description": "remark-lint rule to warn for too many consecutive blank lines",
   "license": "MIT",
   "keywords": [
@@ -36,7 +36,7 @@
     "mdast-util-mdx": "^3.0.0",
     "mdast-util-phrasing": "^4.0.0",
     "pluralize": "^8.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },

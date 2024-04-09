@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-no-duplicate-headings",
-  "version": "3.1.2",
+  "version": "4.0.0",
   "description": "remark-lint rule to warn on duplicate headings",
   "license": "MIT",
   "keywords": [
@@ -35,7 +35,7 @@
     "devlop": "^1.0.0",
     "mdast-util-mdx": "^3.0.0",
     "mdast-util-to-string": "^4.0.0",
-    "unified-lint-rule": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"
   },

@@ -60,14 +60,14 @@ npm install remark-lint-heading-style
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintHeadingStyle from 'https://esm.sh/remark-lint-heading-style@3'
+import remarkLintHeadingStyle from 'https://esm.sh/remark-lint-heading-style@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintHeadingStyle from 'https://esm.sh/remark-lint-heading-style@3?bundle'
+  import remarkLintHeadingStyle from 'https://esm.sh/remark-lint-heading-style@4?bundle'
 </script>
 ```
 
@@ -282,7 +282,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-heading-style@3`,
+`remark-lint-heading-style@4`,
 compatible with Node.js 16.
 
 ## Contribute

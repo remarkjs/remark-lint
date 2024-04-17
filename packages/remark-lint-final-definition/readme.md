@@ -226,7 +226,7 @@ Earth.
 3:1-3:36: Unexpected definition before last content, expected definitions after line `5`
 ```
 
-##### `gfm.md`
+##### `gfm-nok.md`
 
 ###### In
 
@@ -248,6 +248,27 @@ Earth.
 ```text
 3:1-5:13: Unexpected footnote definition before last content, expected definitions after line `7`
 ```
+
+##### `gfm-ok.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Mercury.
+
+Earth.
+
+[^venus]:
+    **Venus** is the second planet from
+    the Sun.
+```
+
+###### Out
+
+No messages.
 
 ## Compatibility
 

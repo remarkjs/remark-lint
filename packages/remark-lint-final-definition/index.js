@@ -88,7 +88,7 @@
  *   3:1-3:36: Unexpected definition before last content, expected definitions after line `5`
  *
  * @example
- *   {"gfm": true, "label": "input", "name": "gfm.md"}
+ *   {"gfm": true, "label": "input", "name": "gfm-nok.md"}
  *
  *   Mercury.
  *
@@ -98,9 +98,20 @@
  *
  *   Earth.
  * @example
- *   {"gfm": true, "label": "output", "name": "gfm.md"}
+ *   {"gfm": true, "label": "output", "name": "gfm-nok.md"}
  *
  *   3:1-5:13: Unexpected footnote definition before last content, expected definitions after line `7`
+ *
+ * @example
+ *   {"gfm": true, "name": "gfm-ok.md"}
+ *
+ *   Mercury.
+ *
+ *   Earth.
+ *
+ *   [^venus]:
+ *       **Venus** is the second planet from
+ *       the Sun.
  */
 
 /**
@@ -142,17 +153,21 @@ const remarkLintFinalDefinition = lintRule(
 
       if (node.type === 'definition' || node.type === 'footnoteDefinition') {
         definitionStacks.push([...parents, node])
-      } else if (
+        // Do not enter footnote definitions.
+        return SKIP
+      }
+
+      if (
         node.type === 'root' ||
         // Ignore HTML comments.
         (node.type === 'html' && /^[\t ]*<!--/.test(node.value)) ||
         // Ignore MDX comments.
         (node.type === 'mdxFlowExpression' && /^\s*\/\*/.test(node.value))
       ) {
-        // Empty.
-      } else {
-        contentAncestors = [...parents, node]
+        return
       }
+
+      contentAncestors = [...parents, node]
     })
 
     const content = contentAncestors ? contentAncestors.at(-1) : undefined

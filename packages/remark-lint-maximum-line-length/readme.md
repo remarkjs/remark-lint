@@ -165,6 +165,10 @@ Mercury mercury mercury mercury mercury mercury mercury mercury mercury ![mercur
 
 <div>Mercury mercury mercury mercury mercury mercury mercury mercury mercury</div>
 
+Mercury
+<http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury>
+mercury mercury.
+
 [foo]: http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
 ```
 

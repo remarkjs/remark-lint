@@ -60,6 +60,10 @@
  *
  *   <div>Mercury mercury mercury mercury mercury mercury mercury mercury mercury</div>
  *
+ *   Mercury
+ *   <http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury>
+ *   mercury mercury.
+ *
  *   [foo]: http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
  *
  * @example
@@ -238,12 +242,15 @@ const remarkLintMaximumLineLength = lintRule(
 
           const next = parent.children[index + 1]
           const nextStart = pointStart(next)
+          const nextEnd = pointEnd(next)
 
           // Not allowing when there’s a following child.
           if (
             next &&
             nextStart &&
             nextStart.line === start.line &&
+            nextEnd &&
+            nextEnd.line === start.line &&
             // Either something with children:
             (!('value' in next) ||
               // Or with whitespace:

@@ -165,10 +165,6 @@ Mercury mercury mercury mercury mercury mercury mercury mercury mercury ![mercur
 
 <div>Mercury mercury mercury mercury mercury mercury mercury mercury mercury</div>
 
-Mercury
-<http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury>
-mercury mercury.
-
 [foo]: http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
 ```
 
@@ -218,6 +214,63 @@ Mercury mercury ![m](example.com) mercury.
 16:26: Unexpected `25` character line, expected at most `20` characters, remove `5` characters
 18:27: Unexpected `26` character line, expected at most `20` characters, remove `6` characters
 20:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
+```
+
+##### `long-autolinks-ok.md`
+
+When configured with `20`.
+
+###### In
+
+```markdown
+<http://localhost/mercury/>
+
+<http://localhost/mercury/>
+mercury.
+
+Mercury
+<http://localhost/mercury/>.
+
+Mercury
+<http://localhost/mercury/>
+mercury.
+
+Mercury
+<http://localhost/mercury/>
+mercury mercury.
+
+Mercury mercury
+<http://localhost/mercury/>
+mercury mercury.
+```
+
+###### Out
+
+No messages.
+
+##### `long-autolinks-nok.md`
+
+When configured with `20`.
+
+###### In
+
+```markdown
+<http://localhost/mercury/> mercury.
+
+Mercury <http://localhost/mercury/>.
+
+Mercury
+<http://localhost/mercury/> mercury.
+
+Mercury <http://localhost/mercury/>
+mercury.
+```
+
+###### Out
+
+```text
+1:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
+6:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
 ```
 
 ##### `ok.md`

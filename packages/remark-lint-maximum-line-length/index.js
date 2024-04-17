@@ -60,10 +60,6 @@
  *
  *   <div>Mercury mercury mercury mercury mercury mercury mercury mercury mercury</div>
  *
- *   Mercury
- *   <http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury>
- *   mercury mercury.
- *
  *   [foo]: http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
  *
  * @example
@@ -103,6 +99,47 @@
  *   16:26: Unexpected `25` character line, expected at most `20` characters, remove `5` characters
  *   18:27: Unexpected `26` character line, expected at most `20` characters, remove `6` characters
  *   20:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
+ *
+ * @example
+ *   {"config": 20, "name": "long-autolinks-ok.md", "positionless": true}
+ *
+ *   <http://localhost/mercury/>
+ *
+ *   <http://localhost/mercury/>
+ *   mercury.
+ *
+ *   Mercury
+ *   <http://localhost/mercury/>.
+ *
+ *   Mercury
+ *   <http://localhost/mercury/>
+ *   mercury.
+ *
+ *   Mercury
+ *   <http://localhost/mercury/>
+ *   mercury mercury.
+ *
+ *   Mercury mercury
+ *   <http://localhost/mercury/>
+ *   mercury mercury.
+ *
+ * @example
+ *   {"config": 20, "label": "input", "name": "long-autolinks-nok.md", "positionless": true}
+ *
+ *   <http://localhost/mercury/> mercury.
+ *
+ *   Mercury <http://localhost/mercury/>.
+ *
+ *   Mercury
+ *   <http://localhost/mercury/> mercury.
+ *
+ *   Mercury <http://localhost/mercury/>
+ *   mercury.
+ * @example
+ *   {"config": 20, "label": "output", "name": "long-autolinks-nok.md"}
+ *
+ *   1:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
+ *   6:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
  *
  * @example
  *   {"config": 20, "frontmatter": true, "name": "ok.md", "positionless": true}
@@ -242,19 +279,17 @@ const remarkLintMaximumLineLength = lintRule(
 
           const next = parent.children[index + 1]
           const nextStart = pointStart(next)
-          const nextEnd = pointEnd(next)
 
-          // Not allowing when there’s a following child.
+          // Not allowing when there’s a following child with a break
+          // opportunity on the line.
           if (
             next &&
             nextStart &&
             nextStart.line === start.line &&
-            nextEnd &&
-            nextEnd.line === start.line &&
             // Either something with children:
             (!('value' in next) ||
               // Or with whitespace:
-              /[ \t]/.test(next.value))
+              /^([^\r\n]*)[ \t]/.test(next.value))
           ) {
             return
           }

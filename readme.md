@@ -195,9 +195,13 @@ The following rules are maintained by the community:
   — ensure a specific number of lines between blocks
 * [`remark-lint-books-links`](https://github.com/vhf/remark-lint-books-links)
   — ensure links in lists of books follow a standard format
+* [`remark-lint-check-toc`](https://github.com/ilyatitovich/remark-lint-check-toc)
+  — ensure TOC is correct
 * [`remark-lint-code`](https://github.com/Qard/remark-lint-code)
   — lint fenced code blocks by corresponding language tags,
   currently supporting [ESLint](https://github.com/Qard/remark-lint-code-eslint)
+* [`remark-lint-code-block-split-list`](https://github.com/ilyatitovich/remark-lint-code-block-split-list)
+  — ensure code block inside list doesn't split the list
 * [`remark-lint-double-link`](https://github.com/Scrum/remark-lint-double-link)
   — ensure the same URL is not linked multiple times.
 * [`remark-lint-emoji-limit`](https://github.com/zerok/remark-lint-emoji-limit)
@@ -206,6 +210,8 @@ The following rules are maintained by the community:
   — warn when fenced code blocks have improperly cased language flags
 * [`remark-lint-frontmatter-schema`](https://github.com/JulianCataldo/remark-lint-frontmatter-schema)
   — validate YAML frontmatter against a JSON schema
+* [`remark-lint-heading-capitalization`](https://github.com/ilyatitovich/remark-lint-heading-capitalization)
+  — ensure headings capitalization is correct
 * [`remark-lint-heading-length`](https://github.com/zerok/remark-lint-heading-length)
   — ensure headings have the appropriate length
 * [`remark-lint-heading-whitespace`](https://github.com/vhf/remark-lint-heading-whitespace)

@@ -232,6 +232,7 @@ test('remark-lint', async function (t) {
     'should fail on incorrect severities (too high)',
     async function () {
       assert.throws(function () {
+        // @ts-expect-error This tests an incorrect severity.
         remark().use(remarkLintFinalNewline, [3]).freeze()
       }, /^Error: Incorrect severity `3` for `final-newline`, expected 0, 1, or 2$/)
     }
@@ -241,6 +242,7 @@ test('remark-lint', async function (t) {
     'should fail on incorrect severities (too low)',
     async function () {
       assert.throws(function () {
+        // @ts-expect-error This tests an incorrect severity.
         remark().use(remarkLintFinalNewline, [-1]).freeze()
       }, /^Error: Incorrect severity `-1` for `final-newline`, expected 0, 1, or 2$/)
     }

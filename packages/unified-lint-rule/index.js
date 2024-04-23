@@ -111,15 +111,41 @@
  */
 
 /**
- * @typedef {import('./lib/index.js').Label} Label
- * @typedef {import('./lib/index.js').Meta} Meta
- * @typedef {import('./lib/index.js').Severity} Severity
+ * @typedef {'error' | 'on' | 'off' | 'warn' | boolean} Label
+ *   Severity label;
+ *   `'off'`: `0`, `'on'` and `warn`: `1`, `'error'`: `2`.
+ */
+
+/**
+ * @typedef Meta
+ *   Rule metadata.
+ * @property {string} origin
+ *   Name of the lint rule.
+ * @property {string | null | undefined} [url]
+ *   Link to documentation (optional).
+ */
+
+/**
+ * @typedef {0 | 1 | 2} Severity
+ *   Severity number;
+ *   `0`: `'off'`, `1`: `'on'` and `warn`, `2`: `'error'`.
  */
 
 /**
  * @template {Node} [Tree=Node]
- * @template {any} [Options=unknown]
- * @typedef {import('./lib/index.js').Rule<Tree, Options>} Rule
+ *   Node kind (optional).
+ * @template {any} [Option=unknown]
+ *   Parameter kind (optional).
+ * @callback Rule
+ *   Rule.
+ * @param {Tree} tree
+ *   Tree.
+ * @param {import('vfile').VFile} file
+ *   File.
+ * @param {Option} option
+ *   Parameter.
+ * @returns {Promise<undefined | void> | undefined | void}
+ *   Nothing.
  */
 
 export {lintRule} from './lib/index.js'

@@ -134,7 +134,7 @@
 /**
  * @template {Node} [Tree=Node]
  *   Node kind (optional).
- * @template {any} [Option=unknown]
+ * @template {any} [Options=unknown]
  *   Parameter kind (optional).
  * @callback Rule
  *   Rule.
@@ -142,7 +142,7 @@
  *   Tree.
  * @param {import('vfile').VFile} file
  *   File.
- * @param {Option} option
+ * @param {Options} option
  *   Parameter.
  * @returns {Promise<undefined | void> | undefined | void}
  *   Nothing.

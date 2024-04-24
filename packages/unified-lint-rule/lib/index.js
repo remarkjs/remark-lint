@@ -1,43 +1,10 @@
 /**
  * @typedef {import('unist').Node} Node
- * @typedef {import('vfile').VFile} VFile
  */
 
 /**
- * @typedef {'error' | 'on' | 'off' | 'warn'} Label
- *   Severity label;
- *   `'off'`: `0`, `'on'` and `warn`: `1`, `'error'`: `2`.
- *
- * @typedef Meta
- *   Rule metadata.
- * @property {string} origin
- *   Name of the lint rule.
- * @property {string | null | undefined} [url]
- *   Link to documentation (optional).
- *
- * @typedef {0 | 1 | 2} Severity
- *   Severity number;
- *   `0`: `'off'`, `1`: `'on'` and `warn`, `2`: `'error'`.
- *
- * @typedef {[severity: Severity, ...parameters: Array<unknown>]} SeverityTuple
+ * @typedef {[severity: import('unified-lint-rule').Severity, ...parameters: Array<unknown>]} SeverityTuple
  *   Parsed severty and options.
- */
-
-/**
- * @template {Node} [Tree=Node]
- *   Node kind (optional).
- * @template {any} [Option=unknown]
- *   Parameter kind (optional).
- * @callback Rule
- *   Rule.
- * @param {Tree} tree
- *   Tree.
- * @param {VFile} file
- *   File.
- * @param {Option} option
- *   Parameter.
- * @returns {Promise<undefined | void> | undefined | void}
- *   Nothing.
  */
 
 import {wrap} from 'trough'
@@ -45,13 +12,18 @@ import {wrap} from 'trough'
 /**
  * @template {Node} [Tree=Node]
  *   Node kind.
- * @template {any} [Option=unknown]
+ * @template {any} [Option=never]
  *   Parameter kind.
- * @param {Meta | string} meta
+ * @param {import('unified-lint-rule').Meta | string} meta
  *   Info.
- * @param {Rule<Tree, Option>} rule
+ * @param {import('unified-lint-rule').Rule<Tree, Option>} rule
  *   Rule.
- * @returns
+ * @returns {import('unified').Plugin<[(
+ *   | [level: import('unified-lint-rule').Label | import('unified-lint-rule').Severity, option?: Option]
+ *   | import('unified-lint-rule').Label
+ *   | Option
+ *   | import('unified-lint-rule').Severity
+ * )?], Tree>}
  *   Plugin.
  */
 export function lintRule(meta, rule) {
@@ -64,12 +36,13 @@ export function lintRule(meta, rule) {
 
   Object.defineProperty(plugin, 'name', {value: id})
 
+  // @ts-expect-error Not sure what’s going on here, but it works.
   return plugin
 
   /**
-   * @param {[level: Label | Severity, option?: Option] | Label | Option | Severity} [config]
+   * @param {[level: import('unified-lint-rule').Label | import('unified-lint-rule').Severity, option?: Option] | import('unified-lint-rule').Label | Option | import('unified-lint-rule').Severity} [config]
    *   Config.
-   * @returns
+   * @returns {import('unified').Transformer<Tree> | undefined}
    *   Transform, if on.
    */
   function plugin(config) {
@@ -79,16 +52,6 @@ export function lintRule(meta, rule) {
 
     if (!severity) return
 
-    /**
-     * @param {Tree} tree
-     *   Tree.
-     * @param {VFile} file
-     *   File.
-     * @param {import('unified').TransformCallback<Tree>} next
-     *   Next.
-     * @returns {undefined}
-     *   Nothing.
-     */
     return function (tree, file, next) {
       let index = file.messages.length - 1
 

@@ -3,7 +3,7 @@
  */
 
 /**
- * @typedef {[severity: import('../index.js').Severity, ...parameters: Array<unknown>]} SeverityTuple
+ * @typedef {[severity: import('unified-lint-rule').Severity, ...parameters: Array<unknown>]} SeverityTuple
  *   Parsed severty and options.
  */
 
@@ -14,15 +14,15 @@ import {wrap} from 'trough'
  *   Node kind.
  * @template {any} [Option=never]
  *   Parameter kind.
- * @param {import('../index.js').Meta | string} meta
+ * @param {import('unified-lint-rule').Meta | string} meta
  *   Info.
- * @param {import('../index.js').Rule<Tree, Option>} rule
+ * @param {import('unified-lint-rule').Rule<Tree, Option>} rule
  *   Rule.
  * @returns {import('unified').Plugin<[(
- *   | [level: import('../index.js').Label | import('../index.js').Severity, option?: Option]
- *   | import('../index.js').Label
+ *   | [level: import('unified-lint-rule').Label | import('unified-lint-rule').Severity, option?: Option]
+ *   | import('unified-lint-rule').Label
  *   | Option
- *   | import('../index.js').Severity
+ *   | import('unified-lint-rule').Severity
  * )?], Tree>}
  *   Plugin.
  */
@@ -40,7 +40,7 @@ export function lintRule(meta, rule) {
   return plugin
 
   /**
-   * @param {[level: import('../index.js').Label | import('../index.js').Severity, option?: Option] | import('../index.js').Label | Option | import('../index.js').Severity} [config]
+   * @param {[level: import('unified-lint-rule').Label | import('unified-lint-rule').Severity, option?: Option] | import('unified-lint-rule').Label | Option | import('unified-lint-rule').Severity} [config]
    *   Config.
    * @returns {import('unified').Transformer<Tree> | undefined}
    *   Transform, if on.

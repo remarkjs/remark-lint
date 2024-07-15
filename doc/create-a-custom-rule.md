@@ -59,7 +59,7 @@ touch .remarkrc.js
 ```js
 // .remarkrc.js
 /**
- * @typedef {import('unified').Preset} Preset
+ * @import {Preset} from 'unified'
  */
 
 /** @type {Preset} */
@@ -200,7 +200,7 @@ nodes that we have generated ourselves and do not belong to the `doc.md`.
 
 ```js
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
  */
 
 import {lintRule} from 'unified-lint-rule'
@@ -247,7 +247,7 @@ You can do that by importing your rule and adding it in `plugins` array:
 ```js
 // .remarkrc.js
 /**
- * @typedef {import('unified').Preset} Preset
+ * @import {Preset} from 'unified'
  */
 
 import remarkLintNoGifAllowed from './rules/no-gif-allowed.js'

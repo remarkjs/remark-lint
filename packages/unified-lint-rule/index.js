@@ -107,9 +107,10 @@
  */
 
 /**
- * @typedef {import('unist').Node} Node
+ * @import {Node} from 'unist'
  */
 
+// To do: define somewhere else.
 /**
  * @typedef {import('./lib/index.js').Label} Label
  * @typedef {import('./lib/index.js').Meta} Meta

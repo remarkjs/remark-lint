@@ -91,7 +91,7 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
  */
 
 import {ok as assert} from 'devlop'

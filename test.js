@@ -1,9 +1,6 @@
 /**
- * @typedef {import('unified').PluggableList} PluggableList
- * @typedef {import('unified').Plugin<[unknown]>} Plugin
- *
- * @typedef {import('./script/info.js').Check} Check
- * @typedef {import('./script/info.js').PluginInfo} PluginInfo
+ * @import {PluggableList, Plugin} from 'unified'
+ * @import {Check, PluginInfo} from './script/info.js'
  */
 
 import assert from 'node:assert/strict'
@@ -306,7 +303,7 @@ test('plugins', async function (t) {
  */
 // type-coverage:ignore-next-line -- `TestContext` not exposed from `node:test`.
 async function assertPlugin(info, t) {
-  /** @type {{default: Plugin}} */
+  /** @type {{default: Plugin<[unknown]>}} */
   const pluginModule = await import(info.name)
   const plugin = pluginModule.default
 
@@ -321,7 +318,7 @@ async function assertPlugin(info, t) {
 }
 
 /**
- * @param {Plugin} plugin
+ * @param {Plugin<[unknown]>} plugin
  *   Plugin.
  * @param {PluginInfo} info
  *   info.

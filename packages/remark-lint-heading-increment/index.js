@@ -115,12 +115,9 @@
  */
 
 /**
- * @typedef {import('mdast').Heading} Heading
- * @typedef {import('mdast').Nodes} Nodes
- * @typedef {import('mdast').Root} Root
+ * @import {Heading, Nodes, Root} from 'mdast'
+ * @import {} from 'mdast-util-mdx'
  */
-
-/// <reference types="mdast-util-mdx" />
 
 import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'

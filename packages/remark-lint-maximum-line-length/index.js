@@ -193,10 +193,9 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
+ * @import {} from 'mdast-util-mdx'
  */
-
-/// <reference types="mdast-util-mdx" />
 
 import pluralize from 'pluralize'
 import {lintRule} from 'unified-lint-rule'

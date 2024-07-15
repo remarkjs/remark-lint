@@ -172,8 +172,10 @@
  */
 
 /**
- * @typedef {import('mdast').Nodes} Nodes
- * @typedef {import('mdast').Root} Root
+ * @import {Nodes, Root} from 'mdast'
+ * @import {} from 'mdast-util-directive'
+ * @import {} from 'mdast-util-math'
+ * @import {} from 'mdast-util-mdx'
  */
 
 /**
@@ -182,10 +184,6 @@
  * @property {boolean | null | undefined} [exceptTightLists=false]
  *   Allow tight list items (default: `false`).
  */
-
-/// <reference types="mdast-util-directive" />
-/// <reference types="mdast-util-math" />
-/// <reference types="mdast-util-mdx" />
 
 import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'

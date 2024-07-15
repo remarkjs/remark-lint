@@ -115,7 +115,7 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
  */
 
 /**

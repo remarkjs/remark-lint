@@ -23,7 +23,7 @@
  */
 
 /**
- * @typedef {import('unified').Preset} Preset
+ * @import {Preset} from 'unified'
  */
 
 import remarkLint from 'remark-lint'

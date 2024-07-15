@@ -129,10 +129,8 @@
  */
 
 /**
- * @typedef {import('mdast').Nodes} Nodes
- * @typedef {import('mdast').Root} Root
- *
- * @typedef {import('unist').Point} Point
+ * @import {Nodes, Root} from 'mdast'
+ * @import {Point} from 'unist'
  */
 
 import {phrasing} from 'mdast-util-phrasing'

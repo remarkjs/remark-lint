@@ -115,11 +115,9 @@
  */
 
 /**
- * @typedef {import('mdast').Nodes} Nodes
- * @typedef {import('mdast').Root} Root
+ * @import {Nodes, Root} from 'mdast'
+ * @import {} from 'mdast-util-mdx'
  */
-
-/// <reference types="mdast-util-mdx" />
 
 import {ok as assert} from 'devlop'
 import {phrasing} from 'mdast-util-phrasing'

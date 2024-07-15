@@ -1,6 +1,6 @@
 /**
- * @typedef {import('unified').Preset} Preset
- * @typedef {import('type-fest').PackageJson} PackageJson
+ * @import {PluginTuple, Plugin, Preset} from 'unified'
+ * @import {PackageJson} from 'type-fest'
  */
 
 /**
@@ -278,14 +278,13 @@ async function addPreset(name) {
 
   while (++index < plugins.length) {
     const plugin = plugins[index]
-    /** @type {import('unified').Plugin<[unknown]>} */
+    /** @type {Plugin<[unknown]>} */
     let pluginFunction
     /** @type {unknown} */
     let option
 
     if (Array.isArray(plugin)) {
-      ;[pluginFunction, option] =
-        /** @type {import('unified').PluginTuple<[unknown]>} */ (plugin)
+      ;[pluginFunction, option] = /** @type {PluginTuple<[unknown]>} */ (plugin)
     } else {
       assert(typeof plugin === 'function')
       pluginFunction = plugin

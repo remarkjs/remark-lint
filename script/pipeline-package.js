@@ -1,11 +1,7 @@
 /**
- * @typedef {import('mdast').Paragraph} Paragraph
- * @typedef {import('mdast').PhrasingContent} PhrasingContent
- * @typedef {import('mdast').Root} Root
- * @typedef {import('mdast').TableContent} TableContent
- * @typedef {import('mdast').TopLevelContent} TopLevelContent
- * @typedef {import('parse-author').Author} Author
- * @typedef {import('type-fest').PackageJson} PackageJson
+ * @import {Paragraph, PhrasingContent, Root, TableContent, TopLevelContent} from 'mdast'
+ * @import {Author} from 'parse-author'
+ * @import {PackageJson} from 'type-fest'
  */
 
 /**

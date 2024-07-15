@@ -1,6 +1,7 @@
 /**
- * @typedef {import('unist').Node} Node
- * @typedef {import('vfile').VFile} VFile
+ * @import {TransformCallback} from 'unified'
+ * @import {Node} from 'unist'
+ * @import {VFile} from 'vfile'
  */
 
 /**
@@ -84,7 +85,7 @@ export function lintRule(meta, rule) {
      *   Tree.
      * @param {VFile} file
      *   File.
-     * @param {import('unified').TransformCallback<Tree>} next
+     * @param {TransformCallback<Tree>} next
      *   Next.
      * @returns {undefined}
      *   Nothing.

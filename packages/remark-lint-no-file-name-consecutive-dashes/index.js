@@ -41,7 +41,7 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
  */
 
 import {lintRule} from 'unified-lint-rule'

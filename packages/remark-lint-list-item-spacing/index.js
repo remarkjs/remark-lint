@@ -139,8 +139,7 @@
  */
 
 /**
- * @typedef {import('mdast').ListItem} ListItem
- * @typedef {import('mdast').Root} Root
+ * @import {ListItem, Root} from 'mdast'
  */
 
 /**

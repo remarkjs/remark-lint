@@ -230,12 +230,10 @@
  */
 
 /**
- * @typedef {import('mdast').Nodes} Nodes
- * @typedef {import('mdast').Root} Root
+ * @import {Nodes, Root} from 'mdast'
+ * @import {} from 'mdast-util-directive'
+ * @import {} from 'mdast-util-mdx'
  */
-
-/// <reference types="mdast-util-directive" />
-/// <reference types="mdast-util-mdx" />
 
 import {phrasing} from 'mdast-util-phrasing'
 import pluralize from 'pluralize'

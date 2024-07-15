@@ -390,11 +390,8 @@
  */
 
 /**
- * @typedef {import('mdast').AlignType} Align
- * @typedef {import('mdast').Nodes} Nodes
- * @typedef {import('mdast').Root} Root
- *
- * @typedef {import('unist').Point} Point
+ * @import {AlignType, Nodes, Root} from 'mdast'
+ * @import {Point} from 'unist'
  */
 
 /**
@@ -429,7 +426,7 @@ const remarkLintTableCellPadding = lintRule(
   function (tree, file, options) {
     /**
      * @typedef Entry
-     * @property {Align} align
+     * @property {AlignType} align
      * @property {Array<Nodes>} ancestors
      * @property {number} column
      * @property {Size | undefined} size
@@ -651,7 +648,7 @@ const remarkLintTableCellPadding = lintRule(
 
     /**
      * @param {Array<Nodes>} ancestors
-     * @param {Array<Align>} align
+     * @param {Array<AlignType>} align
      * @returns {Array<Entry> | undefined}
      */
     function inferAlignRow(ancestors, align) {

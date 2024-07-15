@@ -71,7 +71,7 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
  */
 
 import {longestStreak} from 'longest-streak'

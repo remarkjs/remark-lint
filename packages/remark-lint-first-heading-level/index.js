@@ -105,16 +105,14 @@
  */
 
 /**
- * @typedef {import('mdast').Heading} Heading
- * @typedef {import('mdast').Root} Root
+ * @import {Heading, Root} from 'mdast'
+ * @import {} from 'mdast-util-mdx'
  */
 
 /**
  * @typedef {1 | 2 | 3 | 4 | 5 | 6} Options
  *   Configuration.
  */
-
-/// <reference types="mdast-util-mdx" />
 
 import {lintRule} from 'unified-lint-rule'
 import {EXIT, visitParents} from 'unist-util-visit-parents'

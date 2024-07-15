@@ -66,8 +66,7 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
- * @typedef {import('mdast').RootContent} RootContent
+ * @import {RootContent, Root} from 'mdast'
  */
 
 import {phrasing} from 'mdast-util-phrasing'

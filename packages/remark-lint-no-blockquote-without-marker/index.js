@@ -111,10 +111,9 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
+ * @import {} from 'mdast-util-directive'
  */
-
-/// <reference types="mdast-util-directive" />
 
 import {ok as assert} from 'devlop'
 import {phrasing} from 'mdast-util-phrasing'

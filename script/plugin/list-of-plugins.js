@@ -1,9 +1,6 @@
 /**
- * @typedef {import('mdast').List} List
- * @typedef {import('mdast').ListItem} ListItem
- * @typedef {import('mdast').Root} Root
- *
- * @typedef {import('type-fest').PackageJson} PackageJson
+ * @import {ListItem, List, Root} from 'mdast'
+ * @import {PackageJson} from 'type-fest'
  */
 
 import assert from 'node:assert/strict'

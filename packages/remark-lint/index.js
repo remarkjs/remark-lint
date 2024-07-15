@@ -31,6 +31,10 @@
  * [mono-ignore]: https://github.com/remarkjs/remark-lint#ignore-warnings
  */
 
+/**
+ * @import {Processor} from 'unified'
+ */
+
 import remarkMessageControl from 'remark-message-control'
 
 /**
@@ -39,7 +43,7 @@ import remarkMessageControl from 'remark-message-control'
  * This adds support for ignoring stuff from messages (`<!--lint ignore-->`).
  * All rules are in their own packages and presets.
  *
- * @this {import('unified').Processor}
+ * @this {Processor}
  */
 export default function remarkLint() {
   this.use(lintMessageControl)

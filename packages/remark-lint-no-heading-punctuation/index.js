@@ -90,10 +90,9 @@
  */
 
 /**
- * @typedef {import('mdast').Root} Root
+ * @import {Root} from 'mdast'
+ * @import {} from 'mdast-util-mdx'
  */
-
-/// <reference types="mdast-util-mdx" />
 
 import {toString} from 'mdast-util-to-string'
 import {lintRule} from 'unified-lint-rule'

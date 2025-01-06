@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         node:
-          - lts/gallium
+          - lts/hydrogen
           - node
         os:
           - ubuntu-latest

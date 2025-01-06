@@ -36,7 +36,7 @@
 
 import assert from 'node:assert/strict'
 import {exec as execCallback} from 'node:child_process'
-import {relative, sep} from 'node:path'
+import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {inspect, promisify} from 'node:util'
 import {parse} from 'comment-parser'
@@ -130,7 +130,7 @@ export async function pipelinePackage(name) {
  */
 async function generatePackageJson(name) {
   const packageUrl = new URL(name + '/', packagesUrl)
-  const folderPath = relative(
+  const folderPath = path.relative(
     fileURLToPath(new URL('../', packagesUrl)),
     fileURLToPath(packageUrl)
   )
@@ -142,7 +142,7 @@ async function generatePackageJson(name) {
   ])
 
   const codePaths = files.map(function (file) {
-    return relative(fileURLToPath(packageUrl), file.path)
+    return path.relative(fileURLToPath(packageUrl), file.path)
   })
 
   /** @type {PackageJson} */
@@ -175,7 +175,7 @@ async function generatePackageJson(name) {
     exports: './index.js',
     files: codePaths
       .map((d) => {
-        const index = d.indexOf(sep)
+        const index = d.indexOf(path.sep)
         return index === -1 ? d : d.slice(0, index + 1)
       })
       .filter(function (d, index, all) {

@@ -1,4 +1,4 @@
-import {relative} from 'node:path'
+import path from 'node:path'
 import {reporter} from 'vfile-reporter'
 import {compareFile} from 'vfile-sort'
 import {write} from 'to-vfile'
@@ -31,7 +31,7 @@ await Promise.all(
 
 // Clean paths and report.
 for (const file of files) {
-  file.path = relative(file.cwd, file.path)
+  file.path = path.relative(file.cwd, file.path)
   file.history = [file.path]
 }
 

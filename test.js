@@ -384,5 +384,6 @@ async function assertCheck(plugin, info, check) {
  *   Cloned value.
  */
 function jsonClone(d) {
+  // eslint-disable-next-line unicorn/prefer-structured-clone -- casting as JSON drops instance info.
   return JSON.parse(JSON.stringify(d))
 }

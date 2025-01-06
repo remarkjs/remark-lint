@@ -107,7 +107,9 @@
  */
 
 /**
+ * @import {TransformCallback} from 'unified'
  * @import {Node} from 'unist'
+ * @import {VFile} from 'vfile'
  */
 
 // To do: define somewhere else.
@@ -119,8 +121,27 @@
 
 /**
  * @template {Node} [Tree=Node]
- * @template {any} [Options=unknown]
- * @typedef {import('./lib/index.js').Rule<Tree, Options>} Rule
+ *   Node kind (optional).
+ * @template {any} [Option=unknown]
+ *   Parameter kind (optional).
+ * @callback Rule
+ *   Rule.
+ * @param {Tree} tree
+ *   Tree.
+ * @param {VFile} file
+ *   File.
+ * @param {Option} option
+ *   Parameter.
+ * @returns {Promise<undefined | void> | undefined | void}
+ *   Nothing.
+ */
+
+/**
+ * @template {Node} [Tree=Node]
+ *   Node kind (optional).
+ * @template {any} [Option=unknown]
+ *   Parameter kind (optional).
+ * @typedef {(config?: [level: Label | Severity, option?: Option] | Label | Option | Severity) => ((tree: Tree, file: VFile, next: TransformCallback<Tree>) => undefined) | undefined} Plugin
  */
 
 export {lintRule} from './lib/index.js'

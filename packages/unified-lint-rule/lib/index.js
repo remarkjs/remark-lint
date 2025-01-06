@@ -1,5 +1,6 @@
 /**
  * @import {TransformCallback} from 'unified'
+ * @import {Plugin, Rule} from 'unified-lint-rule'
  * @import {Node} from 'unist'
  * @import {VFile} from 'vfile'
  */
@@ -24,23 +25,6 @@
  *   Parsed severty and options.
  */
 
-/**
- * @template {Node} [Tree=Node]
- *   Node kind (optional).
- * @template {any} [Option=unknown]
- *   Parameter kind (optional).
- * @callback Rule
- *   Rule.
- * @param {Tree} tree
- *   Tree.
- * @param {VFile} file
- *   File.
- * @param {Option} option
- *   Parameter.
- * @returns {Promise<undefined | void> | undefined | void}
- *   Nothing.
- */
-
 import {wrap} from 'trough'
 
 /**
@@ -52,7 +36,7 @@ import {wrap} from 'trough'
  *   Info.
  * @param {Rule<Tree, Option>} rule
  *   Rule.
- * @returns
+ * @returns {Plugin<Tree, Option>}
  *   Plugin.
  */
 export function lintRule(meta, rule) {

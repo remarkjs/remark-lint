@@ -22,6 +22,7 @@ are not used.
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintFencedCodeFlag[, options])`](#unifieduseremarklintfencedcodeflag-options)
+  * [`CheckFlag`](#checkflag)
   * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
@@ -121,7 +122,8 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports the [TypeScript][typescript] type
+It exports the [TypeScript][typescript] types
+[`CheckFlag`][api-check-flag] and
 [`Options`][api-options].
 The default export is
 [`remarkLintFencedCodeFlag`][api-remark-lint-fenced-code-flag].
@@ -138,6 +140,20 @@ Warn when language flags of fenced code are not used.
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `CheckFlag`
+
+Custom check (TypeScript type).
+
+###### Parameters
+
+* `value` (`string`)
+  — language flag to check
+
+###### Returns
+
+Whether the flag is valid (`undefined`),
+or a message to warn about (`string`).
 
 ### `Options`
 
@@ -328,6 +344,8 @@ abide by its terms.
 ## License
 
 [MIT][file-license] © [Titus Wormer][author]
+
+[api-check-flag]: #checkflag
 
 [api-options]: #options
 

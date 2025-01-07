@@ -28,6 +28,20 @@
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
+ * ### `CheckFlag`
+ *
+ * Custom check (TypeScript type).
+ *
+ * ###### Parameters
+ *
+ * * `value` (`string`)
+ *   — language flag to check
+ *
+ * ###### Returns
+ *
+ * Whether the flag is valid (`undefined`),
+ * or a message to warn about (`string`).
+ *
  * ### `Options`
  *
  * Configuration (TypeScript type).
@@ -47,6 +61,7 @@
  * It’s recommended to instead use a certain flag for plain text (such as
  * `txt`) and to turn this rule on.
  *
+ * [api-check-flag]: #checkflag
  * [api-options]: #options
  * [api-remark-lint-fenced-code-flag]: #unifieduseremarklintfencedcodeflag-options
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
@@ -141,6 +156,14 @@
  */
 
 /**
+ * @callback CheckFlag
+ *   Custom check.
+ * @param {string} value
+ *   Language flag to check.
+ * @returns {string | undefined}
+ *   Whether the flag is valid (`undefined`),
+ *   or a message to warn about (`string`).
+ *
  * @typedef Options
  *   Configuration.
  * @property {boolean | null | undefined} [allowEmpty=false]
@@ -169,50 +192,26 @@ const remarkLintFencedCodeFlag = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {Readonly<Options> | ReadonlyArray<string> | null | undefined} [options]
+   * @param {CheckFlag | Readonly<Options> | ReadonlyArray<string> | null | undefined} [options]
    *   Configuration or flags to allow (optional).
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
     const value = String(file)
-    let allowEmpty = false
-    /** @type {ReadonlyArray<string> | undefined} */
-    let allowed
+    /** @type {CheckFlag} */
+    let check
 
-    if (options === null || options === undefined) {
-      // Empty.
-    } else if (typeof options === 'object') {
-      // Note: casts because `isArray` and `readonly` don’t mix.
-      if (Array.isArray(options)) {
-        const flags = /** @type {ReadonlyArray<string>} */ (options)
-        allowed = flags
-      } else {
-        const settings = /** @type {Options} */ (options)
-        allowEmpty = settings.allowEmpty === true
-
-        if (settings.flags) {
-          allowed = settings.flags
-        }
-      }
+    if (typeof options === 'function') {
+      check = options
+    } else if (typeof options === 'object' || options === undefined) {
+      check = createCheck(options || {})
     } else {
       file.fail(
         'Unexpected value `' +
           options +
           '` for `options`, expected array or object'
       )
-    }
-
-    /** @type {string} */
-    let allowedDisplay
-
-    if (allowed) {
-      allowedDisplay =
-        allowed.length > 3
-          ? listFormatUnit.format([...quotation(allowed.slice(0, 3), '`'), '…'])
-          : listFormat.format(quotation(allowed, '`'))
-    } else {
-      allowedDisplay = 'keyword'
     }
 
     visitParents(tree, function (node, parents) {
@@ -223,6 +222,7 @@ const remarkLintFencedCodeFlag = lintRule(
 
       if (node.type !== 'code') return
 
+      const language = node.lang || ''
       const end = pointEnd(node)
       const start = pointStart(node)
 
@@ -232,25 +232,30 @@ const remarkLintFencedCodeFlag = lintRule(
         typeof end.offset === 'number' &&
         typeof start.offset === 'number'
       ) {
-        if (node.lang) {
-          if (allowed && !allowed.includes(node.lang)) {
-            file.message(
-              'Unexpected fenced code language flag `' +
-                node.lang +
-                '` in info string, expected ' +
-                allowedDisplay,
-              {ancestors: [...parents, node], place: node.position}
-            )
+        if (language) {
+          const reason = check(language)
+          if (reason) {
+            file.message(reason, {
+              ancestors: [...parents, node],
+              place: node.position
+            })
           }
-        } else if (!allowEmpty) {
+        }
+        // Empty, no flag.
+        else {
           const slice = value.slice(start.offset, end.offset)
 
+          // To do: indented code shouldn’t be ok either?
+          // Then, we can simplify this check.
           if (fence.test(slice)) {
-            file.message(
-              'Unexpected missing fenced code language flag in info string, expected ' +
-                allowedDisplay,
-              {ancestors: [...parents, node], place: node.position}
-            )
+            const reason = check(language)
+
+            if (reason) {
+              file.message(reason, {
+                ancestors: [...parents, node],
+                place: node.position
+              })
+            }
           }
         }
       }
@@ -259,3 +264,57 @@ const remarkLintFencedCodeFlag = lintRule(
 )
 
 export default remarkLintFencedCodeFlag
+
+/**
+ * @param {Readonly<Options> | ReadonlyArray<string>} options
+ * @returns {CheckFlag}
+ */
+function createCheck(options) {
+  let allowEmpty = false
+  /** @type {ReadonlyArray<string> | undefined} */
+  let allowed
+
+  // Note: casts because `isArray` and `readonly` don’t mix.
+  if (Array.isArray(options)) {
+    const flags = /** @type {ReadonlyArray<string>} */ (options)
+    allowed = flags
+  } else {
+    const settings = /** @type {Options} */ (options)
+    allowEmpty = settings.allowEmpty === true
+
+    if (settings.flags) {
+      allowed = settings.flags
+    }
+  }
+
+  /** @type {string} */
+  let allowedDisplay
+
+  if (allowed) {
+    allowedDisplay =
+      allowed.length > 3
+        ? listFormatUnit.format([...quotation(allowed.slice(0, 3), '`'), '…'])
+        : listFormat.format(quotation(allowed, '`'))
+  } else {
+    allowedDisplay = 'keyword'
+  }
+
+  /** @type {CheckFlag} */
+  return function (value) {
+    if (value) {
+      if (allowed && !allowed.includes(value)) {
+        return (
+          'Unexpected fenced code language flag `' +
+          value +
+          '` in info string, expected ' +
+          allowedDisplay
+        )
+      }
+    } else if (!allowEmpty) {
+      return (
+        'Unexpected missing fenced code language flag in info string, expected ' +
+        allowedDisplay
+      )
+    }
+  }
+}

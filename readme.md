@@ -48,7 +48,7 @@ npx remark doc/ --use remark-preset-lint-consistent --use remark-preset-lint-rec
 
 We would get a report like this:
 
-```txt
+```text
 doc/example.md
 1:2           warning Unexpected ordered list marker `)`, expected `.`                  ordered-list-marker-style remark-lint
 1:25-1:34     warning Unexpected emphasis marker `*`, expected `_`                      emphasis-marker           remark-lint
@@ -397,7 +397,7 @@ console.error(reporter(file))
 
 Running that with `node example.js` yields:
 
-```txt
+```text
 1:2           warning Unexpected ordered list marker `)`, expected `.`                                              ordered-list-marker-style remark-lint
 1:4           warning Unexpected `1` space between list item marker and content, expected `2` spaces, add `1` space list-item-indent          remark-lint
 1:25-1:34     warning Unexpected emphasis marker `*`, expected `_`                                                  emphasis-marker           remark-lint
@@ -435,7 +435,7 @@ console.log(String(file))
 
 Yields:
 
-```txt
+```text
     1:1-1:8  warning  Emphasis should use `*` as a marker  emphasis-marker  remark-lint
   1:10-1:19  warning  Strong should use `*` as a marker    strong-marker    remark-lint
 

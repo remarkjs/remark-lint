@@ -11,7 +11,7 @@
 [![Chat][badge-chat-image]][badge-chat-url]
 
 [`remark-lint`][github-remark-lint] rule to warn when language flags of fenced code
-are not used.
+are not used or used incorrectly.
 
 ## Contents
 
@@ -22,6 +22,7 @@ are not used.
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintFencedCodeFlag[, options])`](#unifieduseremarklintfencedcodeflag-options)
+  * [`checkGithubLinguistFlag(value)`](#checkgithublinguistflagvalue)
   * [`CheckFlag`](#checkflag)
   * [`Options`](#options)
 * [Recommendation](#recommendation)
@@ -36,10 +37,16 @@ This package checks the language flags of fenced code blocks,
 whether they exist,
 and optionally what values they hold.
 
+Particularly,
+it provides a check according to GitHub Linguist.
+Which is what GitHub uses to highlight code.
+So you can make sure that the language flags you use are recognized by
+GitHub (or [`starry-night`][github-starry-night])
+
 ## When should I use this?
 
 You can use this package to check that the style of language flags of fenced
-code blocks is consistent.
+code blocks is consistent and known.
 
 ## Presets
 
@@ -62,14 +69,14 @@ npm install remark-lint-fenced-code-flag
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintFencedCodeFlag from 'https://esm.sh/remark-lint-fenced-code-flag@4'
+import remarkLintFencedCodeFlag, {checkGithubLinguistFlag} from 'https://esm.sh/remark-lint-fenced-code-flag@4'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintFencedCodeFlag from 'https://esm.sh/remark-lint-fenced-code-flag@4?bundle'
+  import remarkLintFencedCodeFlag, {checkGithubLinguistFlag} from 'https://esm.sh/remark-lint-fenced-code-flag@4?bundle'
 </script>
 ```
 
@@ -121,7 +128,8 @@ On the CLI in a config file (here a `package.json`):
 
 ## API
 
-This package exports no identifiers.
+This package exports the identifier
+[`checkGithubLinguistFlag`][api-check-github-linguist-flag].
 It exports the [TypeScript][typescript] types
 [`CheckFlag`][api-check-flag] and
 [`Options`][api-options].
@@ -134,8 +142,27 @@ Warn when language flags of fenced code are not used.
 
 ###### Parameters
 
-* `options` ([`Options`][api-options] or `Array<string>`, optional)
-  — configuration or flags to allow
+* `options` (`Array<string>`, [`CheckFlag`][api-check-flag], or
+  [`Options`][api-options], optional)
+  — check, configuration, or flags to allow
+
+###### Returns
+
+Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `checkGithubLinguistFlag(value)`
+
+Check according to GitHub Linguist.
+
+###### Parameters
+
+* `value` (`string`)
+  — language flag to check
+
+###### Returns
+
+Whether the flag is valid (`undefined`),
+or a message to warn about (`string`).
 
 ###### Returns
 
@@ -347,6 +374,8 @@ abide by its terms.
 
 [api-check-flag]: #checkflag
 
+[api-check-github-linguist-flag]: #checkgithublinguistflagvalue
+
 [api-options]: #options
 
 [api-remark-lint-fenced-code-flag]: #unifieduseremarklintfencedcodeflag-options
@@ -394,6 +423,8 @@ abide by its terms.
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-starry-night]: https://github.com/wooorm/starry-night
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

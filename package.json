@@ -114,6 +114,7 @@
     "@types/pluralize": "^0.0.33",
     "@types/ungap__structured-clone": "^1.0.0",
     "@ungap/structured-clone": "^1.0.0",
+    "@wooorm/starry-night": "^3.0.0",
     "c8": "^10.0.0",
     "comment-parser": "^1.0.0",
     "control-pictures": "^2.0.0",
@@ -155,7 +156,7 @@
     "xo": "^0.60.0"
   },
   "scripts": {
-    "generate": "node --conditions development script/build-packages.js",
+    "generate": "node --conditions development script/build-github-code-flag.js && node --conditions development script/build-packages.js",
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
     "test": "npm run build && npm run generate && npm run format && npm run test-coverage",
@@ -169,33 +170,6 @@
     "tabWidth": 2,
     "trailingComma": "none",
     "useTabs": false
-  },
-  "remarkConfig": {
-    "plugins": [
-      "remark-comment-config",
-      [
-        "remark-gfm",
-        {
-          "tablePipeAlign": false
-        }
-      ],
-      "remark-github",
-      "remark-preset-lint-consistent",
-      "remark-preset-lint-recommended",
-      [
-        "remark-toc",
-        {
-          "maxDepth": 3
-        }
-      ],
-      "remark-validate-links",
-      [
-        "remark-lint-list-item-indent",
-        "one"
-      ],
-      "./script/plugin/list-of-plugins.js",
-      "./script/plugin/list-of-presets.js"
-    ]
   },
   "typeCoverage": {
     "atLeast": 100,

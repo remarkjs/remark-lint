@@ -41,6 +41,8 @@ import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references
 import remarkLintNoUnusedDefinitions from 'remark-lint-no-unused-definitions'
 import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
 
+// To do: next major: add `remark-lint-fenced-code-flag` with the GH check.
+
 /** @type {Preset} */
 const remarkPresetLintRecommended = {
   plugins: [

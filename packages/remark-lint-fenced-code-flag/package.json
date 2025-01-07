@@ -28,6 +28,9 @@
   "type": "module",
   "exports": "./index.js",
   "files": [
+    "github-linguist-info.d.ts",
+    "github-linguist-info.d.ts.map",
+    "github-linguist-info.js",
     "index.d.ts",
     "index.d.ts.map",
     "index.js"

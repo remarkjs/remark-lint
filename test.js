@@ -15,6 +15,9 @@ import remarkLintFinalNewline from 'remark-lint-final-newline'
 import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
 import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
+import remarkLintFencedCodeFlag, {
+  checkGithubLinguistFlag
+} from 'remark-lint-fenced-code-flag'
 import remarkMath from 'remark-math'
 import remarkMdx from 'remark-mdx'
 import {lintRule} from 'unified-lint-rule'
@@ -255,6 +258,25 @@ test('remark-lint', async function (t) {
 
       assert.deepEqual(file.messages.map(String), [
         'virtual.md:3:1-3:9: Unexpected reference to undefined definition, expected corresponding definition (`b`) for a link or escaped opening bracket (`\\[`) for regular text'
+      ])
+    }
+  )
+
+  await t.test(
+    'should support `checkGithubLinguistFlag` as an option for (remark-lint-fenced-code-flag)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintFencedCodeFlag, checkGithubLinguistFlag)
+        .process(
+          '```foo\n```\n```.workbook\n``````workbook\n```\n```.md\n```\n```md\n```\n```mdown\n```\n```Markdown\n```\n```text\n```\n'
+        )
+
+      assert.deepEqual(file.messages.map(String), [
+        '1:1-2:4: Unexpected unknown fenced code language flag `foo` in info string, expected a known language name',
+        '3:1-5:4: Unexpected unknown fenced code language flag `.workbook` in info string, expected a known language name such as `markdown`, `md`, `pandoc`, or `rmarkdown`',
+        '6:1-7:4: Unexpected unknown fenced code language flag `.md` in info string, expected a known language name such as `gcc-machine-description`, `lfe`, `netlogo`, `newlisp`, `picolisp`, …',
+        '10:1-11:4: Unexpected unknown fenced code language flag `mdown` in info string, expected a known language name such as `markdown`, `md`, `pandoc`, or `rmarkdown`',
+        '12:1-13:4: Unexpected fenced code language flag `Markdown` in info string, expected a known language name such as `markdown`, `md`, `pandoc`, or `rmarkdown`'
       ])
     }
   )

@@ -200,6 +200,8 @@ While omitting language flags is fine to signal that code is plain text,
 it *could* point to a mistake.
 It’s recommended to instead use a certain flag for plain text (such as
 `txt`) and to turn this rule on.
+If possible,
+stick with what is supported by GitHub.
 
 ## Examples
 

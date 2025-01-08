@@ -178,6 +178,7 @@ import {pointEnd} from 'unist-util-position'
 import {visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
 
+// To do: next major: rename `remark-lint-title-style` or so?
 const remarkLintLinkTitleStyle = lintRule(
   {
     origin: 'remark-lint:link-title-style',

@@ -176,6 +176,7 @@ const remarkLintListItemSpacing = lintRule(
   function (tree, file, options) {
     const settings = options || emptyOptions
     // To do: change options. Maybe to `Style = 'markdown' | 'markdown-style-guide'`?
+    // To do: default to “markdown” instead of weird archaic “markdown-style-guide”.
     const checkBlanks = settings.checkBlanks || false
 
     visitParents(tree, function (list, parents) {

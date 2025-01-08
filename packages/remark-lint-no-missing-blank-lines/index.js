@@ -239,7 +239,9 @@ const remarkLintNoMissingBlankLines = lintRule(
         return SKIP
       }
 
+      // To do: add `exceptDefinitions` option?
       if (
+        // To do: next major: allow tight lists by default.
         // Children of list items are normally checked.
         (!exceptTightLists || parent.type !== 'listItem') &&
         // Known block:

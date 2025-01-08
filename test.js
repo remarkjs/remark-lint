@@ -1,5 +1,11 @@
 /**
  * @import {PluggableList, Plugin} from 'unified'
+ * @import {Nodes, Root} from 'mdast'
+ * @import {
+ *   MdxJsxAttribute,
+ *   MdxJsxAttributeValueExpression,
+ *   MdxJsxExpressionAttribute
+ * } from 'mdast-util-mdx-jsx'
  * @import {Check, PluginInfo} from './script/info.js'
  */
 
@@ -22,6 +28,7 @@ import remarkMath from 'remark-math'
 import remarkMdx from 'remark-mdx'
 import {lintRule} from 'unified-lint-rule'
 import {removePosition} from 'unist-util-remove-position'
+import {visit} from 'unist-util-visit'
 import {VFile} from 'vfile'
 import {plugins} from './script/info.js'
 
@@ -387,8 +394,13 @@ async function assertCheck(plugin, info, check) {
   if (!check.positionless) {
     const file = await remark()
       .use(function () {
+        /**
+         * @param {Root} tree
+         * @returns {undefined}
+         */
         return function (tree) {
-          removePosition(tree)
+          removePosition(tree, {force: true})
+          visit(tree, cleanUnistNode)
         }
       })
       .use(plugin, config)
@@ -397,6 +409,37 @@ async function assertCheck(plugin, info, check) {
 
     assert.deepEqual(file.messages, [])
   }
+}
+
+/**
+ * @param {Nodes | MdxJsxAttribute | MdxJsxAttributeValueExpression | MdxJsxExpressionAttribute} node
+ *   Node.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function cleanUnistNode(node) {
+  if (
+    node.type === 'mdxJsxAttribute' &&
+    'value' in node &&
+    node.value &&
+    typeof node.value === 'object'
+  ) {
+    cleanUnistNode(node.value)
+  }
+
+  if (
+    'attributes' in node &&
+    node.attributes &&
+    Array.isArray(node.attributes)
+  ) {
+    for (const attribute of node.attributes) {
+      removePosition(attribute, {force: true})
+      cleanUnistNode(attribute)
+    }
+  }
+
+  // Note: could clean `estree`.
+  // <https://github.com/mdx-js/mdx/blob/873650c665700de99e38ec9d1daddd732c415f94/docs/_asset/editor.jsx#L653>
 }
 
 /**

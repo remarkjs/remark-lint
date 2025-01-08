@@ -1,0 +1,59 @@
+{
+  "name": "remark-lint-mdx-jsx-quote-style",
+  "version": "0.0.0",
+  "description": "remark-lint rule to check mdx jsx quotes",
+  "license": "MIT",
+  "keywords": [
+    "attribute",
+    "jsx",
+    "lint",
+    "mdx",
+    "quote",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
+  ],
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-quote-style",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "micromark-util-character": "^2.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-position": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile-message": "^4.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "unicorn/prefer-code-point": "off",
+      "unicorn/prefer-switch": "off"
+    }
+  }
+}

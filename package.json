@@ -62,6 +62,7 @@
     "packages/remark-lint-list-item-spacing/",
     "packages/remark-lint-maximum-heading-length/",
     "packages/remark-lint-maximum-line-length/",
+    "packages/remark-lint-mdx-jsx-quote-style/",
     "packages/remark-lint-no-blockquote-without-marker/",
     "packages/remark-lint-no-consecutive-blank-lines/",
     "packages/remark-lint-no-duplicate-defined-urls/",

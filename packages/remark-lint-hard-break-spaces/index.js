@@ -179,8 +179,6 @@ const remarkLintHardBreakSpaces = lintRule(
         let actual = 0
         while (slice.charCodeAt(actual) === 32) actual++
 
-        console.log('xxx', allowSpaces, actual)
-
         if (allowSpaces ? actual > 2 : actual) {
           file.message(
             'Unexpected `' +

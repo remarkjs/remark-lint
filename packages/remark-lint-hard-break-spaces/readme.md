@@ -10,8 +10,9 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when more spaces are used than needed
-for hard breaks.
+[`remark-lint`][github-remark-lint] rule to warn when spaces are used for hard breaks.
+Either optionally spaces at all,
+or more spaces than the needed 2.
 
 ## Contents
 
@@ -21,7 +22,8 @@ for hard breaks.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintHardBreakSpaces)`](#unifieduseremarklinthardbreakspaces)
+  * [`unified().use(remarkLintHardBreakSpaces[, options])`](#unifieduseremarklinthardbreakspaces-options)
+  * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
@@ -30,12 +32,12 @@ for hard breaks.
 
 ## What is this?
 
-This package checks the whitespace of hard breaks.
+This package checks whitespace hard breaks.
 
 ## When should I use this?
 
-You can use this package to check that the number of spaces in hard breaks
-are consistent.
+You can use this package to check that the spaces in hard breaks are
+consistent.
 
 ## Presets
 
@@ -119,27 +121,45 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports no additional [TypeScript][typescript] types.
+It exports the [TypeScript][typescript] type
+[`Options`][api-options].
 The default export is
 [`remarkLintHardBreakSpaces`][api-remark-lint-hard-break-spaces].
 
-### `unified().use(remarkLintHardBreakSpaces)`
+### `unified().use(remarkLintHardBreakSpaces[, options])`
 
 Warn when more spaces are used than needed for hard breaks.
 
 ###### Parameters
 
-There are no options.
+* `options` ([`Options`][api-options], default: `'consistent'`)
+  — either a preferred indent or whether to detect the first style
+  and warn for further differences
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+* `allowSpaces` (`boolean`, default: `true`)
+  — allow trailing space hard breaks at all;
+  use escape hard breaks otherwise
 
 ## Recommendation
 
 Less than two spaces do not create a hard breaks and more than two spaces
 have no effect.
 Due to this, it’s recommended to turn this rule on.
+
+With CommonMark,
+it is now possible to use a backslash (`\`) at the end of a line to create a
+hard break.
+It is now recommended to pass `allowSpaces: false`.
 
 ## Examples
 
@@ -150,6 +170,8 @@ Due to this, it’s recommended to turn this rule on.
 ```markdown
 **Mercury** is the first planet from the Sun␠␠
 and the smallest in the Solar System.
+**Venus** is the second planet from\
+the Sun.
 ```
 
 ###### Out
@@ -171,6 +193,25 @@ and the smallest in the Solar System.
 1:45-2:1: Unexpected `3` spaces for hard break, expected `2` spaces
 ```
 
+##### `escape.md`
+
+When configured with `{ allowSpaces: false }`.
+
+###### In
+
+```markdown
+**Mercury** is the first planet from the Sun␠␠
+and the smallest in the Solar System.
+**Venus** is the second planet from the\
+Sun.
+```
+
+###### Out
+
+```text
+1:45-2:1: Unexpected `2` spaces for hard break, expected escape
+```
+
 ##### `containers.md`
 
 ###### In
@@ -188,6 +229,26 @@ and the smallest in the Solar System.
 
 ```text
 2:57-3:1: Unexpected `3` spaces for hard break, expected `2` spaces
+```
+
+##### `not-ok-options.md`
+
+When configured with `'🌍'`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options`, expected object
+```
+
+##### `not-ok-options-field.md`
+
+When configured with `{ allowSpaces: '🌍' }`.
+
+###### Out
+
+```text
+1:1: Unexpected value `🌍` for `options.allowSpaces`, expected `boolean`
 ```
 
 ## Compatibility
@@ -215,7 +276,9 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-hard-break-spaces]: #unifieduseremarklinthardbreakspaces
+[api-options]: #options
+
+[api-remark-lint-hard-break-spaces]: #unifieduseremarklinthardbreakspaces-options
 
 [author]: https://wooorm.com
 

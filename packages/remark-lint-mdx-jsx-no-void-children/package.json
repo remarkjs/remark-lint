@@ -1,10 +1,12 @@
 {
-  "name": "remark-lint-mdx-jsx-self-close",
+  "name": "remark-lint-mdx-jsx-no-void-children",
   "version": "0.0.0",
-  "description": "remark-lint rule to check that self-closing tags are used when possible",
+  "description": "remark-lint rule to check mdx jsx quotes",
   "license": "MIT",
   "keywords": [
-    "close",
+    "children",
+    "closing",
+    "empty",
     "jsx",
     "lint",
     "mdx",
@@ -15,7 +17,7 @@
     "self",
     "void"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-self-close",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-no-void-children",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -23,7 +25,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "sideEffects": false,
   "type": "module",
@@ -35,11 +37,10 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "html-void-elements": "^3.0.0",
     "mdast-util-mdx": "^3.0.0",
-    "micromark-util-character": "^2.0.0",
     "unified-lint-rule": "^3.0.0",
-    "unist-util-visit-parents": "^6.0.0",
-    "vfile-message": "^4.0.0"
+    "unist-util-visit-parents": "^6.0.0"
   },
   "scripts": {},
   "typeCoverage": {

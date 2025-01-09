@@ -1,17 +1,19 @@
 /**
- * @import {PluggableList, Plugin} from 'unified'
+ * @import {Node as EstreeNode} from 'estree'
  * @import {Nodes, Root} from 'mdast'
  * @import {
  *   MdxJsxAttribute,
  *   MdxJsxAttributeValueExpression,
  *   MdxJsxExpressionAttribute
  * } from 'mdast-util-mdx-jsx'
+ * @import {PluggableList, Plugin} from 'unified'
  * @import {Check, PluginInfo} from './script/info.js'
  */
 
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {controlPictures} from 'control-pictures'
+import {visit as visitEstree} from 'estree-util-visit'
 import {remark} from 'remark'
 import remarkDirective from 'remark-directive'
 import remarkFrontmatter from 'remark-frontmatter'
@@ -438,8 +440,9 @@ function cleanUnistNode(node) {
     }
   }
 
-  // Note: could clean `estree`.
-  // <https://github.com/mdx-js/mdx/blob/873650c665700de99e38ec9d1daddd732c415f94/docs/_asset/editor.jsx#L653>
+  if (node.data && 'estree' in node.data && node.data.estree) {
+    visitEstree(node.data.estree, removeFromEstree)
+  }
 }
 
 /**
@@ -451,4 +454,19 @@ function cleanUnistNode(node) {
 function jsonClone(d) {
   // eslint-disable-next-line unicorn/prefer-structured-clone -- casting as JSON drops instance info.
   return JSON.parse(JSON.stringify(d))
+}
+
+/**
+ * @param {EstreeNode} node
+ *   estree node.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function removeFromEstree(node) {
+  delete node.loc
+  // @ts-expect-error: acorn.
+  delete node.start
+  // @ts-expect-error: acorn.
+  delete node.end
+  delete node.range
 }

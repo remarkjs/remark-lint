@@ -99,7 +99,7 @@ const names = await fs.readdir(packagesUrl)
 for (const name of names) {
   if (name.startsWith('remark-preset-lint-')) {
     await addPreset(name)
-  } else if (name === 'unified-lint-rule') {
+  } else if (name === 'unified-lint-rule' || name.charAt(0) === '.') {
     // Empty.
   } else {
     await addPlugin(name)

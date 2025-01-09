@@ -41,7 +41,9 @@ import remarkLintRuleStyle from 'remark-lint-rule-style'
 import remarkLintStrongMarker from 'remark-lint-strong-marker'
 import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
 
-// To do: next major: add `remark-lint-mdx-jsx-quote-style`.
+// To do: next major:
+// - add `remark-lint-mdx-jsx-quote-style`.
+// - add `remark-lint-mdx-jsx-unique-attribute-name`.
 
 /** @type {Preset} */
 const remarkPresetLintConsistent = {

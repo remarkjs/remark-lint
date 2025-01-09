@@ -63,6 +63,7 @@
     "packages/remark-lint-maximum-heading-length/",
     "packages/remark-lint-maximum-line-length/",
     "packages/remark-lint-mdx-jsx-quote-style/",
+    "packages/remark-lint-mdx-jsx-unique-attribute-name/",
     "packages/remark-lint-no-blockquote-without-marker/",
     "packages/remark-lint-no-consecutive-blank-lines/",
     "packages/remark-lint-no-duplicate-defined-urls/",

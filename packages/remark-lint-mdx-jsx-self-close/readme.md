@@ -1,6 +1,6 @@
 <!--This file is generated-->
 
-# remark-lint-mdx-jsx-unique-attribute-name
+# remark-lint-mdx-jsx-self-close
 
 [![Build][badge-build-image]][badge-build-url]
 [![Coverage][badge-coverage-image]][badge-coverage-url]
@@ -10,8 +10,8 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when MDX JSX attribute names
-are reused.
+[`remark-lint`][github-remark-lint] rule to warn when closing tags are used without
+children.
 
 ## Contents
 
@@ -21,7 +21,7 @@ are reused.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintMdxJsxUniqueAttributeName)`](#unifieduseremarklintmdxjsxuniqueattributename)
+  * [`unified().use(remarkLintMdxJsxSelfClose)`](#unifieduseremarklintmdxjsxselfclose)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
@@ -29,12 +29,13 @@ are reused.
 
 ## What is this?
 
-This package check that MDX JSX attribute names are unique.
+This package check that self-closing MDX JSX tags are used
+when possible.
 
 ## When should I use this?
 
-You can use this package to check that MDX JSX attribute names
-are unique.
+You can use this package to check that self-closing MDX JSX
+tags are used when possible.
 
 ## Presets
 
@@ -47,20 +48,20 @@ In Node.js (version 16+),
 install with [npm][npm-install]:
 
 ```sh
-npm install remark-lint-mdx-jsx-unique-attribute-name
+npm install remark-lint-mdx-jsx-self-close
 ```
 
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintMdxJsxUniqueAttributeName from 'https://esm.sh/remark-lint-mdx-jsx-unique-attribute-name@0'
+import remarkLintMdxJsxSelfClose from 'https://esm.sh/remark-lint-mdx-jsx-self-close@0'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintMdxJsxUniqueAttributeName from 'https://esm.sh/remark-lint-mdx-jsx-unique-attribute-name@0?bundle'
+  import remarkLintMdxJsxSelfClose from 'https://esm.sh/remark-lint-mdx-jsx-self-close@0?bundle'
 </script>
 ```
 
@@ -70,7 +71,7 @@ On the API:
 
 ```js
 import remarkLint from 'remark-lint'
-import remarkLintMdxJsxUniqueAttributeName from 'remark-lint-mdx-jsx-unique-attribute-name'
+import remarkLintMdxJsxSelfClose from 'remark-lint-mdx-jsx-self-close'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
@@ -82,7 +83,7 @@ const file = await read('example.md')
 await unified()
   .use(remarkParse)
   .use(remarkLint)
-  .use(remarkLintMdxJsxUniqueAttributeName)
+  .use(remarkLintMdxJsxSelfClose)
   .use(remarkStringify)
   .process(file)
 
@@ -92,7 +93,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --frail --use remark-lint --use remark-lint-mdx-jsx-unique-attribute-name .
+remark --frail --use remark-lint --use remark-lint-mdx-jsx-self-close .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -103,7 +104,7 @@ On the CLI in a config file (here a `package.json`):
    "plugins": [
      …
      "remark-lint",
-+    "remark-lint-mdx-jsx-unique-attribute-name",
++    "remark-lint-mdx-jsx-self-close",
      …
    ]
  }
@@ -115,11 +116,11 @@ On the CLI in a config file (here a `package.json`):
 This package exports no identifiers.
 It exports no additional [TypeScript][typescript] types.
 The default export is
-[`remarkLintMdxJsxUniqueAttributeName`][api-remark-lint-mdx-jsx-unique-attribute-name].
+[`remarkLintMdxJsxSelfClose`][api-remark-lint-mdx-jsx-self-close].
 
-### `unified().use(remarkLintMdxJsxUniqueAttributeName)`
+### `unified().use(remarkLintMdxJsxSelfClose)`
 
-Warn when MDX JSX attribute names are reused.
+Warn when closing tags are used without children.
 
 ###### Parameters
 
@@ -139,7 +140,8 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<Component id="mercury" value="Mercury" />
+<strong>Venus</strong> and
+<strong children={'Earth'} />.
 ```
 
 ###### Out
@@ -154,16 +156,16 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<Component id="mercury" id="venus" value="Planet" />
+<a href="http://example.com/venus/"></a>.
 ```
 
 ###### Out
 
 ```text
-1:25-1:35: Unexpected attribute name with equal text, expected unique attribute names
+1:1-1:41: Unexpected closing tag on empty element, expected self-closing opening tag
 ```
 
-##### `other-attributes.mdx`
+##### `whitespace.mdx`
 
 ###### In
 
@@ -171,9 +173,8 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<Mercury closest />,
-<Venus aphelion={0.728213} />, and
-<Earth {...people} />.
+Whitespace in tags <Icon / > and whitespace
+in elements <code> </code>.
 ```
 
 ###### Out
@@ -188,7 +189,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-mdx-jsx-unique-attribute-name@0`,
+`remark-lint-mdx-jsx-self-close@0`,
 compatible with Node.js 16.
 
 ## Contribute
@@ -205,7 +206,7 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-mdx-jsx-unique-attribute-name]: #unifieduseremarklintmdxjsxuniqueattributename
+[api-remark-lint-mdx-jsx-self-close]: #unifieduseremarklintmdxjsxselfclose
 
 [author]: https://wooorm.com
 
@@ -221,9 +222,9 @@ abide by its terms.
 
 [badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
 
-[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-unique-attribute-name.svg
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-self-close.svg
 
-[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-unique-attribute-name
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-self-close
 
 [badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
 
@@ -231,9 +232,9 @@ abide by its terms.
 
 [badge-funding-url]: https://opencollective.com/unified
 
-[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-unique-attribute-name
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-self-close
 
-[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-unique-attribute-name
+[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-self-close
 
 [esm-sh]: https://esm.sh
 

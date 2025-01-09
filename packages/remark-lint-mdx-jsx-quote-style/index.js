@@ -64,7 +64,7 @@
  * [api-remark-lint-mdx-jsx-quote-style]: #unifieduseremarklintmdxjsxquotestyle-options
  * [api-style]: #style
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
- * [github-remark-mdx]: https://github.com/mdx-js/mdx/tree/main/packages/remark-mdx
+ * [github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
  *
  * @module mdx-jsx-quote-style
  * @author Titus Wormer

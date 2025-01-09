@@ -1,21 +1,21 @@
 {
-  "name": "remark-lint-mdx-jsx-unique-attribute-name",
+  "name": "remark-lint-mdx-jsx-self-close",
   "version": "0.0.0",
-  "description": "remark-lint rule to check that mdx jsx attributes are unique",
+  "description": "remark-lint rule to check that self-closing tags are used when possible",
   "license": "MIT",
   "keywords": [
-    "attribute",
+    "close",
     "jsx",
     "lint",
     "mdx",
-    "name",
     "remark",
     "remark-lint",
     "remark-lint-rule",
     "rule",
-    "unique"
+    "self",
+    "void"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-unique-attribute-name",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-self-close",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -23,7 +23,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "sideEffects": false,
   "type": "module",
@@ -35,8 +35,8 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
-    "devlop": "^1.0.0",
     "mdast-util-mdx": "^3.0.0",
+    "micromark-util-character": "^2.0.0",
     "unified-lint-rule": "^3.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"

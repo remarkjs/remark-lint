@@ -365,7 +365,7 @@ abide by its terms.
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 
-[github-remark-mdx]: https://github.com/mdx-js/mdx/tree/main/packages/remark-mdx
+[github-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
 

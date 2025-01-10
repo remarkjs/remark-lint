@@ -131,6 +131,7 @@ The rules that are maintained here:
 * [`remark-lint-mdx-jsx-no-void-children`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-no-void-children) — check mdx jsx quotes
 * [`remark-lint-mdx-jsx-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-quote-style) — check mdx jsx quotes
 * [`remark-lint-mdx-jsx-self-close`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-self-close) — check that self-closing tags are used when possible
+* [`remark-lint-mdx-jsx-shorthand-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-shorthand-attribute) — check that shorthand attributes are used when possible in MDX JSX
 * [`remark-lint-mdx-jsx-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-unique-attribute-name) — check that mdx jsx attributes are unique
 * [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
 * [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines

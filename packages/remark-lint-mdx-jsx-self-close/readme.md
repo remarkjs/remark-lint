@@ -29,7 +29,7 @@ children.
 
 ## What is this?
 
-This package check that self-closing MDX JSX tags are used
+This package checks that self-closing MDX JSX tags are used
 when possible.
 
 ## When should I use this?

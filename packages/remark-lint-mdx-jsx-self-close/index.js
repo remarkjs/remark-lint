@@ -4,7 +4,7 @@
  *
  * ## What is this?
  *
- * This package check that self-closing MDX JSX tags are used
+ * This package checks that self-closing MDX JSX tags are used
  * when possible.
  *
  * ## When should I use this?
@@ -31,7 +31,7 @@
  *
  * @module mdx-jsx-self-close
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer
+ * @copyright 2025 Titus Wormer
  * @license MIT
  *
  * @example

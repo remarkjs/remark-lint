@@ -34,7 +34,7 @@
  *
  * @module mdx-jsx-no-void-children
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer
+ * @copyright 2025 Titus Wormer
  * @license MIT
  *
  * @example

@@ -1,6 +1,6 @@
 <!--This file is generated-->
 
-# remark-lint-mdx-jsx-unique-attribute-name
+# remark-lint-mdx-jsx-shorthand-attribute
 
 [![Build][badge-build-image]][badge-build-url]
 [![Coverage][badge-coverage-image]][badge-coverage-url]
@@ -10,8 +10,7 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when MDX JSX attribute names
-are reused.
+[`remark-lint`][github-remark-lint] rule to warn when verbose attribute values are used.
 
 ## Contents
 
@@ -21,7 +20,7 @@ are reused.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintMdxJsxUniqueAttributeName)`](#unifieduseremarklintmdxjsxuniqueattributename)
+  * [`unified().use(remarkLintMdxJsxShorthandAttribute)`](#unifieduseremarklintmdxjsxshorthandattribute)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
@@ -29,12 +28,19 @@ are reused.
 
 ## What is this?
 
-This package checks that MDX JSX attribute names are unique.
+This package checks that shorthand attributes are used when
+possible in MDX JSX.
 
 ## When should I use this?
 
-You can use this package to check that MDX JSX attribute names
-are unique.
+You can use this package to check that shorthand attributes are used
+when possible in MDX JSX.
+
+This package does assume JavaScript:
+that `planet` and `planet={true}` are equal.
+JavaScript is almost always what is used with MDX.
+But if you use other programming languages embedded in MDX
+this package should not be used.
 
 ## Presets
 
@@ -47,20 +53,20 @@ In Node.js (version 16+),
 install with [npm][npm-install]:
 
 ```sh
-npm install remark-lint-mdx-jsx-unique-attribute-name
+npm install remark-lint-mdx-jsx-shorthand-attribute
 ```
 
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintMdxJsxUniqueAttributeName from 'https://esm.sh/remark-lint-mdx-jsx-unique-attribute-name@0'
+import remarkLintMdxJsxShorthandAttribute from 'https://esm.sh/remark-lint-mdx-jsx-shorthand-attribute@0'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintMdxJsxUniqueAttributeName from 'https://esm.sh/remark-lint-mdx-jsx-unique-attribute-name@0?bundle'
+  import remarkLintMdxJsxShorthandAttribute from 'https://esm.sh/remark-lint-mdx-jsx-shorthand-attribute@0?bundle'
 </script>
 ```
 
@@ -70,7 +76,7 @@ On the API:
 
 ```js
 import remarkLint from 'remark-lint'
-import remarkLintMdxJsxUniqueAttributeName from 'remark-lint-mdx-jsx-unique-attribute-name'
+import remarkLintMdxJsxShorthandAttribute from 'remark-lint-mdx-jsx-shorthand-attribute'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
@@ -82,7 +88,7 @@ const file = await read('example.md')
 await unified()
   .use(remarkParse)
   .use(remarkLint)
-  .use(remarkLintMdxJsxUniqueAttributeName)
+  .use(remarkLintMdxJsxShorthandAttribute)
   .use(remarkStringify)
   .process(file)
 
@@ -92,7 +98,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --frail --use remark-lint --use remark-lint-mdx-jsx-unique-attribute-name .
+remark --frail --use remark-lint --use remark-lint-mdx-jsx-shorthand-attribute .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -103,7 +109,7 @@ On the CLI in a config file (here a `package.json`):
    "plugins": [
      …
      "remark-lint",
-+    "remark-lint-mdx-jsx-unique-attribute-name",
++    "remark-lint-mdx-jsx-shorthand-attribute",
      …
    ]
  }
@@ -115,11 +121,11 @@ On the CLI in a config file (here a `package.json`):
 This package exports no identifiers.
 It exports no additional [TypeScript][typescript] types.
 The default export is
-[`remarkLintMdxJsxUniqueAttributeName`][api-remark-lint-mdx-jsx-unique-attribute-name].
+[`remarkLintMdxJsxShorthandAttribute`][api-remark-lint-mdx-jsx-shorthand-attribute].
 
-### `unified().use(remarkLintMdxJsxUniqueAttributeName)`
+### `unified().use(remarkLintMdxJsxShorthandAttribute)`
 
-Warn when MDX JSX attribute names are reused.
+Warn when verbose attribute values are used.
 
 ###### Parameters
 
@@ -139,7 +145,7 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<Component id="mercury" value="Mercury" />
+<Jupiter largest />
 ```
 
 ###### Out
@@ -154,31 +160,14 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<Component id="mercury" id="venus" value="Planet" />
+<Jupiter largest={true} />
 ```
 
 ###### Out
 
 ```text
-1:25-1:35: Unexpected attribute name with equal text, expected unique attribute names
+1:10-1:24: Unexpected verbose attribute value, expected shorthand boolean attribute
 ```
-
-##### `other-attributes.mdx`
-
-###### In
-
-> 👉 **Note**: this example uses
-> MDX ([`remark-mdx`][github-remark-mdx]).
-
-```mdx
-<Mercury closest />,
-<Venus aphelion={0.728213} />, and
-<Earth {...people} />.
-```
-
-###### Out
-
-No messages.
 
 ## Compatibility
 
@@ -188,7 +177,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-mdx-jsx-unique-attribute-name@0`,
+`remark-lint-mdx-jsx-shorthand-attribute@0`,
 compatible with Node.js 16.
 
 ## Contribute
@@ -205,7 +194,7 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-mdx-jsx-unique-attribute-name]: #unifieduseremarklintmdxjsxuniqueattributename
+[api-remark-lint-mdx-jsx-shorthand-attribute]: #unifieduseremarklintmdxjsxshorthandattribute
 
 [author]: https://wooorm.com
 
@@ -221,9 +210,9 @@ abide by its terms.
 
 [badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
 
-[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-unique-attribute-name.svg
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-shorthand-attribute.svg
 
-[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-unique-attribute-name
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-shorthand-attribute
 
 [badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
 
@@ -231,9 +220,9 @@ abide by its terms.
 
 [badge-funding-url]: https://opencollective.com/unified
 
-[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-unique-attribute-name
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-shorthand-attribute
 
-[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-unique-attribute-name
+[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-shorthand-attribute
 
 [esm-sh]: https://esm.sh
 

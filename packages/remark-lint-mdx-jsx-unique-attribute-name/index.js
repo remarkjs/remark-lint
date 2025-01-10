@@ -4,7 +4,7 @@
  *
  * ## What is this?
  *
- * This package check that MDX JSX attribute names are unique.
+ * This package checks that MDX JSX attribute names are unique.
  *
  * ## When should I use this?
  *
@@ -30,7 +30,7 @@
  *
  * @module mdx-jsx-unique-attribute-name
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer
+ * @copyright 2025 Titus Wormer
  * @license MIT
  *
  * @example

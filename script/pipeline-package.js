@@ -184,12 +184,7 @@ async function generatePackageJson(name) {
       .sort(),
     dependencies: previousPackage.dependencies,
     scripts: {},
-    typeCoverage: {
-      atLeast: 100,
-      detail: true,
-      ignoreCatch: true,
-      strict: true
-    },
+    typeCoverage: {atLeast: 100, strict: true},
     xo: previousPackage.xo || {
       prettier: true,
       rules: {'capitalized-comments': 'off'}

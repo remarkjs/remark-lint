@@ -149,7 +149,7 @@ If you prefer that, turn on this rule.
 ```markdown
 Mercury.
 
-[venus]: http://example.com
+[venus]: https://example.com
 ```
 
 ###### Out
@@ -161,8 +161,8 @@ No messages.
 ###### In
 
 ```markdown
-[mercury]: http://example.com/mercury/
-[venus]: http://example.com/venus/
+[mercury]: https://example.com/mercury/
+[venus]: https://example.com/venus/
 ```
 
 ###### Out
@@ -176,11 +176,11 @@ No messages.
 ```markdown
 Mercury.
 
-[venus]: http://example.com/venus/
+[venus]: https://example.com/venus/
 
 <!-- HTML comments in markdown are ignored. -->
 
-[earth]: http://example.com/earth/
+[earth]: https://example.com/earth/
 ```
 
 ###### Out
@@ -197,11 +197,11 @@ No messages.
 ```mdx
 Mercury.
 
-[venus]: http://example.com/venus/
+[venus]: https://example.com/venus/
 
 {/* Comments in expressions in MDX are ignored. */}
 
-[earth]: http://example.com/earth/
+[earth]: https://example.com/earth/
 ```
 
 ###### Out

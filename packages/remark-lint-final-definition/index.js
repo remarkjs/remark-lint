@@ -44,35 +44,35 @@
  *
  *   Mercury.
  *
- *   [venus]: http://example.com
+ *   [venus]: https://example.com
  *
  * @example
  *   {"name": "ok.md"}
  *
- *   [mercury]: http://example.com/mercury/
- *   [venus]: http://example.com/venus/
+ *   [mercury]: https://example.com/mercury/
+ *   [venus]: https://example.com/venus/
  *
  * @example
  *   {"name": "ok-html-comments.md"}
  *
  *   Mercury.
  *
- *   [venus]: http://example.com/venus/
+ *   [venus]: https://example.com/venus/
  *
  *   <!-- HTML comments in markdown are ignored. -->
  *
- *   [earth]: http://example.com/earth/
+ *   [earth]: https://example.com/earth/
  *
  * @example
  *   {"name": "ok-mdx-comments.mdx", "mdx": true}
  *
  *   Mercury.
  *
- *   [venus]: http://example.com/venus/
+ *   [venus]: https://example.com/venus/
  *
  *   {/* Comments in expressions in MDX are ignored. *␀/}
  *
- *   [earth]: http://example.com/earth/
+ *   [earth]: https://example.com/earth/
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}

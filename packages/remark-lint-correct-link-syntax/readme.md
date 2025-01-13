@@ -137,8 +137,8 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/) and
-![Venus](http://example.com/venus.png).
+[Mercury](https://example.com/mercury/) and
+![Venus](https://example.com/venus.png).
 ```
 
 ###### Out
@@ -150,8 +150,8 @@ No messages.
 ###### In
 
 ```markdown
-(Mercury)[http://example.com/mercury/] and
-!(Venus)[http://example.com/venus.png].
+(Mercury)[https://example.com/mercury/] and
+!(Venus)[https://example.com/venus.png].
 ```
 
 ###### Out

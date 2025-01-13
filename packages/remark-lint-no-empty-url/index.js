@@ -42,11 +42,11 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   [Mercury](http://example.com/mercury/).
+ *   [Mercury](https://example.com/mercury/).
  *
- *   ![Venus](http://example.com/venus/ "Go to Venus").
+ *   ![Venus](https://example.com/venus/ "Go to Venus").
  *
- *   [earth]: http://example.com/earth/
+ *   [earth]: https://example.com/earth/
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}

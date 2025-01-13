@@ -156,13 +156,13 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<a href="http://example.com/venus/"></a>.
+<a href="https://example.com/venus/"></a>.
 ```
 
 ###### Out
 
 ```text
-1:1-1:41: Unexpected closing tag on empty element, expected self-closing opening tag
+1:1-1:42: Unexpected closing tag on empty element, expected self-closing opening tag
 ```
 
 ##### `whitespace.mdx`

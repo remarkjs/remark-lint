@@ -150,7 +150,7 @@ So it’s recommended to use collapsed or full references instead.
 ```markdown
 [Mercury][]
 
-[mercury]: http://example.com/mercury/
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out
@@ -164,7 +164,7 @@ No messages.
 ```markdown
 [Mercury]
 
-[mercury]: http://example.com/mercury/
+[mercury]: https://example.com/mercury/
 ```
 
 ###### Out

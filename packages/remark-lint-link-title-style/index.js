@@ -79,66 +79,66 @@
  * @example
  *   {"name": "ok-consistent.md"}
  *
- *   [Mercury](http://example.com/mercury/),
- *   [Venus](http://example.com/venus/ "Go to Venus"), and
- *   ![Earth](http://example.com/earth/ "Go to Earth").
+ *   [Mercury](https://example.com/mercury/),
+ *   [Venus](https://example.com/venus/ "Go to Venus"), and
+ *   ![Earth](https://example.com/earth/ "Go to Earth").
  *
- *   [Mars]: http://example.com/mars/ "Go to Mars"
+ *   [Mars]: https://example.com/mars/ "Go to Mars"
  *
  * @example
  *   {"label": "input", "name": "not-ok-consistent.md"}
  *
- *   [Mercury](http://example.com/mercury/ "Go to Mercury") and
- *   ![Venus](http://example.com/venus/ 'Go to Venus').
+ *   [Mercury](https://example.com/mercury/ "Go to Mercury") and
+ *   ![Venus](https://example.com/venus/ 'Go to Venus').
  *
- *   [Earth]: http://example.com/earth/ (Go to Earth)
+ *   [Earth]: https://example.com/earth/ (Go to Earth)
  * @example
  *   {"label": "output", "name": "not-ok-consistent.md"}
  *
- *   2:1-2:50: Unexpected title markers `'`, expected `"`
- *   4:1-4:49: Unexpected title markers `'('` and `')'`, expected `"`
+ *   2:1-2:51: Unexpected title markers `'`, expected `"`
+ *   4:1-4:50: Unexpected title markers `'('` and `')'`, expected `"`
  *
  * @example
  *   {"config": "\"", "name": "ok-double.md"}
  *
- *   [Mercury](http://example.com/mercury/ "Go to Mercury").
+ *   [Mercury](https://example.com/mercury/ "Go to Mercury").
  *
  * @example
  *   {"config": "\"", "label": "input", "name": "not-ok-double.md"}
  *
- *   [Mercury](http://example.com/mercury/ 'Go to Mercury').
+ *   [Mercury](https://example.com/mercury/ 'Go to Mercury').
  * @example
  *   {"config": "\"", "label": "output", "name": "not-ok-double.md"}
  *
- *   1:1-1:55: Unexpected title markers `'`, expected `"`
+ *   1:1-1:56: Unexpected title markers `'`, expected `"`
  *
  * @example
  *   {"config": "'", "name": "ok-single.md"}
  *
- *   [Mercury](http://example.com/mercury/ 'Go to Mercury').
+ *   [Mercury](https://example.com/mercury/ 'Go to Mercury').
  *
  * @example
  *   {"config": "'", "label": "input", "name": "not-ok-single.md"}
  *
- *   [Mercury](http://example.com/mercury/ "Go to Mercury").
+ *   [Mercury](https://example.com/mercury/ "Go to Mercury").
  * @example
  *   {"config": "'", "label": "output", "name": "not-ok-single.md"}
  *
- *   1:1-1:55: Unexpected title markers `"`, expected `'`
+ *   1:1-1:56: Unexpected title markers `"`, expected `'`
  *
  * @example
  *   {"config": "()", "name": "ok-paren.md"}
  *
- *   [Mercury](http://example.com/mercury/ (Go to Mercury)).
+ *   [Mercury](https://example.com/mercury/ (Go to Mercury)).
  *
  * @example
  *   {"config": "()", "label": "input", "name": "not-ok-paren.md"}
  *
- *   [Mercury](http://example.com/mercury/ "Go to Mercury").
+ *   [Mercury](https://example.com/mercury/ "Go to Mercury").
  * @example
  *   {"config": "()", "label": "output", "name": "not-ok-paren.md"}
  *
- *   1:1-1:55: Unexpected title markers `"`, expected `'('` and `')'`
+ *   1:1-1:56: Unexpected title markers `"`, expected `'('` and `')'`
  *
  * @example
  *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
@@ -150,15 +150,15 @@
  *
  *   Parens in URLs work correctly:
  *
- *   [Mercury](http://example.com/(mercury) "Go to Mercury") and
- *   [Venus](http://example.com/(venus)).
+ *   [Mercury](https://example.com/(mercury) "Go to Mercury") and
+ *   [Venus](https://example.com/(venus)).
  *
  * @example
  *   {"config": "\"", "name": "ok-whitespace.md"}
  *
  *   Trailing whitespace works correctly:
  *
- *   [Mercury](http://example.com/mercury/␠"Go to Mercury"␠).
+ *   [Mercury](https://example.com/mercury/␠"Go to Mercury"␠).
  */
 
 /**

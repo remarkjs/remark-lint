@@ -146,7 +146,7 @@ Due to this, it’s recommended to use lowercase and turn this rule on.
 ###### In
 
 ```markdown
-[mercury]: http://example.com "Mercury"
+[mercury]: https://example.com "Mercury"
 ```
 
 ###### Out
@@ -158,13 +158,13 @@ No messages.
 ###### In
 
 ```markdown
-[Mercury]: http://example.com "Mercury"
+[Mercury]: https://example.com "Mercury"
 ```
 
 ###### Out
 
 ```text
-1:1-1:40: Unexpected uppercase characters in definition label, expected lowercase
+1:1-1:41: Unexpected uppercase characters in definition label, expected lowercase
 ```
 
 ##### `gfm.md`

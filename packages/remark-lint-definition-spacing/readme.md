@@ -152,7 +152,7 @@ Due to this, it’s recommended to use one space and turn this rule on.
 ```markdown
 The first planet is [planet mercury][].
 
-[planet mercury]: http://example.com
+[planet mercury]: https://example.com
 ```
 
 ###### Out
@@ -164,13 +164,13 @@ No messages.
 ###### In
 
 ```markdown
-[planet␠␠␠␠mercury]: http://example.com
+[planet␠␠␠␠mercury]: https://example.com
 ```
 
 ###### Out
 
 ```text
-1:1-1:40: Unexpected `4` consecutive spaces in definition label, expected `1` space, remove `3` spaces
+1:1-1:41: Unexpected `4` consecutive spaces in definition label, expected `1` space, remove `3` spaces
 ```
 
 ##### `not-ok-non-space.md`
@@ -178,15 +178,15 @@ No messages.
 ###### In
 
 ```markdown
-[pla␉net␊mer␍cury]: http://e.com
+[pla␉net␊mer␍cury]: https://e.com
 ```
 
 ###### Out
 
 ```text
-1:1-3:20: Unexpected non-space whitespace character `\t` in definition label, expected `1` space, replace it
-1:1-3:20: Unexpected non-space whitespace character `\n` in definition label, expected `1` space, replace it
-1:1-3:20: Unexpected non-space whitespace character `\r` in definition label, expected `1` space, replace it
+1:1-3:21: Unexpected non-space whitespace character `\t` in definition label, expected `1` space, replace it
+1:1-3:21: Unexpected non-space whitespace character `\n` in definition label, expected `1` space, replace it
+1:1-3:21: Unexpected non-space whitespace character `\r` in definition label, expected `1` space, replace it
 ```
 
 ## Compatibility

@@ -180,8 +180,8 @@ Pass `quote: "'"` to use single quotes.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<a href="http://example.com/venus/">Venus</a> and
-<a href="http://example.com/earth/">Earth</a>.
+<a href="https://example.com/venus/">Venus</a> and
+<a href="https://example.com/earth/">Earth</a>.
 ```
 
 ###### Out
@@ -196,14 +196,14 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<a href="http://example.com/venus/">Venus</a> and
-<a href='http://example.com/earth/'>Earth</a>.
+<a href="https://example.com/venus/">Venus</a> and
+<a href='https://example.com/earth/'>Earth</a>.
 ```
 
 ###### Out
 
 ```text
-2:4-2:36: Unexpected JSX quote markers `'`, expected `"`
+2:4-2:37: Unexpected JSX quote markers `'`, expected `"`
 ```
 
 ##### `double-quote.mdx`
@@ -216,14 +216,14 @@ When configured with `'"'`.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<a href="http://example.com/venus/">Venus</a> and
-<a href='http://example.com/earth/'>Earth</a>.
+<a href="https://example.com/venus/">Venus</a> and
+<a href='https://example.com/earth/'>Earth</a>.
 ```
 
 ###### Out
 
 ```text
-2:4-2:36: Unexpected JSX quote markers `'`, expected `"`
+2:4-2:37: Unexpected JSX quote markers `'`, expected `"`
 ```
 
 ##### `single-quote.mdx`
@@ -236,14 +236,14 @@ When configured with `"'"`.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<a href="http://example.com/venus/">Venus</a> and
-<a href='http://example.com/earth/'>Earth</a>.
+<a href="https://example.com/venus/">Venus</a> and
+<a href='https://example.com/earth/'>Earth</a>.
 ```
 
 ###### Out
 
 ```text
-1:4-1:36: Unexpected JSX quote markers `"`, expected `'`
+1:4-1:37: Unexpected JSX quote markers `"`, expected `'`
 ```
 
 ##### `other-attributes.mdx`

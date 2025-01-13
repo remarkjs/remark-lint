@@ -143,11 +143,11 @@ It’s recommended to fill them out.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/).
+[Mercury](https://example.com/mercury/).
 
-![Venus](http://example.com/venus/ "Go to Venus").
+![Venus](https://example.com/venus/ "Go to Venus").
 
-[earth]: http://example.com/earth/
+[earth]: https://example.com/earth/
 ```
 
 ###### Out

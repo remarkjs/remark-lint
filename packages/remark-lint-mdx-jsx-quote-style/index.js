@@ -74,38 +74,38 @@
  * @example
  *   {"mdx": true, "name": "ok-consistent.mdx"}
  *
- *   <a href="http://example.com/venus/">Venus</a> and
- *   <a href="http://example.com/earth/">Earth</a>.
+ *   <a href="https://example.com/venus/">Venus</a> and
+ *   <a href="https://example.com/earth/">Earth</a>.
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "not-ok-consistent.mdx"}
  *
- *   <a href="http://example.com/venus/">Venus</a> and
- *   <a href='http://example.com/earth/'>Earth</a>.
+ *   <a href="https://example.com/venus/">Venus</a> and
+ *   <a href='https://example.com/earth/'>Earth</a>.
  * @example
  *   {"label": "output", "mdx": true, "name": "not-ok-consistent.mdx"}
  *
- *   2:4-2:36: Unexpected JSX quote markers `'`, expected `"`
+ *   2:4-2:37: Unexpected JSX quote markers `'`, expected `"`
  *
  * @example
  *   {"config": "\"", "label": "input", "mdx": true, "name": "double-quote.mdx"}
  *
- *   <a href="http://example.com/venus/">Venus</a> and
- *   <a href='http://example.com/earth/'>Earth</a>.
+ *   <a href="https://example.com/venus/">Venus</a> and
+ *   <a href='https://example.com/earth/'>Earth</a>.
  * @example
  *   {"config": "\"", "label": "output", "mdx": true, "name": "double-quote.mdx"}
  *
- *   2:4-2:36: Unexpected JSX quote markers `'`, expected `"`
+ *   2:4-2:37: Unexpected JSX quote markers `'`, expected `"`
  *
  * @example
  *   {"config": "'", "label": "input", "mdx": true, "name": "single-quote.mdx"}
  *
- *   <a href="http://example.com/venus/">Venus</a> and
- *   <a href='http://example.com/earth/'>Earth</a>.
+ *   <a href="https://example.com/venus/">Venus</a> and
+ *   <a href='https://example.com/earth/'>Earth</a>.
  * @example
  *   {"config": "'", "label": "output", "mdx": true, "name": "single-quote.mdx"}
  *
- *   1:4-1:36: Unexpected JSX quote markers `"`, expected `'`
+ *   1:4-1:37: Unexpected JSX quote markers `"`, expected `'`
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "other-attributes.mdx"}

@@ -43,11 +43,11 @@
  * @example
  *   {"label": "input", "mdx": true, "name": "not-ok.mdx"}
  *
- *   <a href="http://example.com/venus/"></a>.
+ *   <a href="https://example.com/venus/"></a>.
  * @example
  *   {"label": "output", "mdx": true, "name": "not-ok.mdx"}
  *
- *   1:1-1:41: Unexpected closing tag on empty element, expected self-closing opening tag
+ *   1:1-1:42: Unexpected closing tag on empty element, expected self-closing opening tag
  *
  * @example
  *   {"mdx": true, "name": "whitespace.mdx"}

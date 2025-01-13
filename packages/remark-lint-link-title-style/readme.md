@@ -187,11 +187,11 @@ There is no option to use parens.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/),
-[Venus](http://example.com/venus/ "Go to Venus"), and
-![Earth](http://example.com/earth/ "Go to Earth").
+[Mercury](https://example.com/mercury/),
+[Venus](https://example.com/venus/ "Go to Venus"), and
+![Earth](https://example.com/earth/ "Go to Earth").
 
-[Mars]: http://example.com/mars/ "Go to Mars"
+[Mars]: https://example.com/mars/ "Go to Mars"
 ```
 
 ###### Out
@@ -203,17 +203,17 @@ No messages.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ "Go to Mercury") and
-![Venus](http://example.com/venus/ 'Go to Venus').
+[Mercury](https://example.com/mercury/ "Go to Mercury") and
+![Venus](https://example.com/venus/ 'Go to Venus').
 
-[Earth]: http://example.com/earth/ (Go to Earth)
+[Earth]: https://example.com/earth/ (Go to Earth)
 ```
 
 ###### Out
 
 ```text
-2:1-2:50: Unexpected title markers `'`, expected `"`
-4:1-4:49: Unexpected title markers `'('` and `')'`, expected `"`
+2:1-2:51: Unexpected title markers `'`, expected `"`
+4:1-4:50: Unexpected title markers `'('` and `')'`, expected `"`
 ```
 
 ##### `ok-double.md`
@@ -223,7 +223,7 @@ When configured with `'"'`.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ "Go to Mercury").
+[Mercury](https://example.com/mercury/ "Go to Mercury").
 ```
 
 ###### Out
@@ -237,13 +237,13 @@ When configured with `'"'`.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ 'Go to Mercury').
+[Mercury](https://example.com/mercury/ 'Go to Mercury').
 ```
 
 ###### Out
 
 ```text
-1:1-1:55: Unexpected title markers `'`, expected `"`
+1:1-1:56: Unexpected title markers `'`, expected `"`
 ```
 
 ##### `ok-single.md`
@@ -253,7 +253,7 @@ When configured with `"'"`.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ 'Go to Mercury').
+[Mercury](https://example.com/mercury/ 'Go to Mercury').
 ```
 
 ###### Out
@@ -267,13 +267,13 @@ When configured with `"'"`.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ "Go to Mercury").
+[Mercury](https://example.com/mercury/ "Go to Mercury").
 ```
 
 ###### Out
 
 ```text
-1:1-1:55: Unexpected title markers `"`, expected `'`
+1:1-1:56: Unexpected title markers `"`, expected `'`
 ```
 
 ##### `ok-paren.md`
@@ -283,7 +283,7 @@ When configured with `'()'`.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ (Go to Mercury)).
+[Mercury](https://example.com/mercury/ (Go to Mercury)).
 ```
 
 ###### Out
@@ -297,13 +297,13 @@ When configured with `'()'`.
 ###### In
 
 ```markdown
-[Mercury](http://example.com/mercury/ "Go to Mercury").
+[Mercury](https://example.com/mercury/ "Go to Mercury").
 ```
 
 ###### Out
 
 ```text
-1:1-1:55: Unexpected title markers `"`, expected `'('` and `')'`
+1:1-1:56: Unexpected title markers `"`, expected `'('` and `')'`
 ```
 
 ##### `not-ok.md`
@@ -325,8 +325,8 @@ When configured with `'"'`.
 ```markdown
 Parens in URLs work correctly:
 
-[Mercury](http://example.com/(mercury) "Go to Mercury") and
-[Venus](http://example.com/(venus)).
+[Mercury](https://example.com/(mercury) "Go to Mercury") and
+[Venus](https://example.com/(venus)).
 ```
 
 ###### Out
@@ -342,7 +342,7 @@ When configured with `'"'`.
 ```markdown
 Trailing whitespace works correctly:
 
-[Mercury](http://example.com/mercury/␠"Go to Mercury"␠).
+[Mercury](https://example.com/mercury/␠"Go to Mercury"␠).
 ```
 
 ###### Out

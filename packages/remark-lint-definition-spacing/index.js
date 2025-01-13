@@ -47,27 +47,27 @@
  *
  *   The first planet is [planet mercury][].
  *
- *   [planet mercury]: http://example.com
+ *   [planet mercury]: https://example.com
  *
  * @example
  *   {"label": "input", "name": "not-ok-consecutive.md"}
  *
- *   [planet␠␠␠␠mercury]: http://example.com
+ *   [planet␠␠␠␠mercury]: https://example.com
  * @example
  *   {"label": "output", "name": "not-ok-consecutive.md"}
  *
- *   1:1-1:40: Unexpected `4` consecutive spaces in definition label, expected `1` space, remove `3` spaces
+ *   1:1-1:41: Unexpected `4` consecutive spaces in definition label, expected `1` space, remove `3` spaces
  *
  * @example
  *   {"label": "input", "name": "not-ok-non-space.md"}
  *
- *   [pla␉net␊mer␍cury]: http://e.com
+ *   [pla␉net␊mer␍cury]: https://e.com
  * @example
  *   {"label": "output", "name": "not-ok-non-space.md"}
  *
- *   1:1-3:20: Unexpected non-space whitespace character `\t` in definition label, expected `1` space, replace it
- *   1:1-3:20: Unexpected non-space whitespace character `\n` in definition label, expected `1` space, replace it
- *   1:1-3:20: Unexpected non-space whitespace character `\r` in definition label, expected `1` space, replace it
+ *   1:1-3:21: Unexpected non-space whitespace character `\t` in definition label, expected `1` space, replace it
+ *   1:1-3:21: Unexpected non-space whitespace character `\n` in definition label, expected `1` space, replace it
+ *   1:1-3:21: Unexpected non-space whitespace character `\r` in definition label, expected `1` space, replace it
  */
 
 /**

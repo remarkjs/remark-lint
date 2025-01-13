@@ -41,16 +41,16 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   [mercury]: http://example.com "Mercury"
+ *   [mercury]: https://example.com "Mercury"
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}
  *
- *   [Mercury]: http://example.com "Mercury"
+ *   [Mercury]: https://example.com "Mercury"
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
- *   1:1-1:40: Unexpected uppercase characters in definition label, expected lowercase
+ *   1:1-1:41: Unexpected uppercase characters in definition label, expected lowercase
  *
  * @example
  *   {"gfm": true, "label": "input", "name": "gfm.md"}

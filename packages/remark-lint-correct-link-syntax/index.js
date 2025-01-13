@@ -37,14 +37,14 @@
  * @example
  *   {"name": "ok.md"}
  *
- *   [Mercury](http://example.com/mercury/) and
- *   ![Venus](http://example.com/venus.png).
+ *   [Mercury](https://example.com/mercury/) and
+ *   ![Venus](https://example.com/venus.png).
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}
  *
- *   (Mercury)[http://example.com/mercury/] and
- *   !(Venus)[http://example.com/venus.png].
+ *   (Mercury)[https://example.com/mercury/] and
+ *   !(Venus)[https://example.com/venus.png].
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *

@@ -57,12 +57,12 @@
  *
  *   ## Mercury
  *
- *   ## [Mercury](http://example.com/mercury/)
+ *   ## [Mercury](https://example.com/mercury/)
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
  *   3:1-3:11: Unexpected heading with equivalent text, expected unique headings
- *   5:1-5:42: Unexpected heading with equivalent text, expected unique headings
+ *   5:1-5:43: Unexpected heading with equivalent text, expected unique headings
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "mdx.mdx"}

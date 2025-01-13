@@ -157,15 +157,15 @@ mercury.
 
 Mercury mercury mercury mercury mercury mercury mercury mercury mercury `mercury()`.
 
-Mercury mercury mercury mercury mercury mercury mercury mercury mercury <http://localhost>.
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury <https://localhost>.
 
-Mercury mercury mercury mercury mercury mercury mercury mercury mercury [mercury](http://localhost).
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury [mercury](https://localhost).
 
-Mercury mercury mercury mercury mercury mercury mercury mercury mercury ![mercury](http://localhost).
+Mercury mercury mercury mercury mercury mercury mercury mercury mercury ![mercury](https://localhost).
 
 <div>Mercury mercury mercury mercury mercury mercury mercury mercury mercury</div>
 
-[foo]: http://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
+[foo]: https://localhost/mercury/mercury/mercury/mercury/mercury/mercury/mercury/mercury
 ```
 
 ###### Out
@@ -184,7 +184,7 @@ mercury.
 
 Mercury mercury mercury `mercury()`.
 
-Mercury mercury mercury <http://localhost>.
+Mercury mercury mercury <https://localhost>.
 
 Mercury mercury mercury [m](example.com).
 
@@ -192,7 +192,7 @@ Mercury mercury mercury ![m](example.com).
 
 `mercury()` mercury mercury mercury.
 
-<http://localhost> mercury.
+<https://localhost> mercury.
 
 [m](example.com) mercury.
 
@@ -206,11 +206,11 @@ Mercury mercury ![m](example.com) mercury.
 ```text
 1:24: Unexpected `23` character line, expected at most `20` characters, remove `3` characters
 4:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
-6:44: Unexpected `43` character line, expected at most `20` characters, remove `23` characters
+6:45: Unexpected `44` character line, expected at most `20` characters, remove `24` characters
 8:42: Unexpected `41` character line, expected at most `20` characters, remove `21` characters
 10:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
 12:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
-14:28: Unexpected `27` character line, expected at most `20` characters, remove `7` characters
+14:29: Unexpected `28` character line, expected at most `20` characters, remove `8` characters
 16:26: Unexpected `25` character line, expected at most `20` characters, remove `5` characters
 18:27: Unexpected `26` character line, expected at most `20` characters, remove `6` characters
 20:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
@@ -223,24 +223,24 @@ When configured with `20`.
 ###### In
 
 ```markdown
-<http://localhost/mercury/>
+<https://localhost/mercury/>
 
-<http://localhost/mercury/>
+<https://localhost/mercury/>
 mercury.
 
 Mercury
-<http://localhost/mercury/>.
+<https://localhost/mercury/>.
 
 Mercury
-<http://localhost/mercury/>
+<https://localhost/mercury/>
 mercury.
 
 Mercury
-<http://localhost/mercury/>
+<https://localhost/mercury/>
 mercury mercury.
 
 Mercury mercury
-<http://localhost/mercury/>
+<https://localhost/mercury/>
 mercury mercury.
 ```
 
@@ -255,22 +255,22 @@ When configured with `20`.
 ###### In
 
 ```markdown
-<http://localhost/mercury/> mercury.
+<https://localhost/mercury/> mercury.
 
-Mercury <http://localhost/mercury/>.
+Mercury <https://localhost/mercury/>.
 
 Mercury
-<http://localhost/mercury/> mercury.
+<https://localhost/mercury/> mercury.
 
-Mercury <http://localhost/mercury/>
+Mercury <https://localhost/mercury/>
 mercury.
 ```
 
 ###### Out
 
 ```text
-1:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
-6:37: Unexpected `36` character line, expected at most `20` characters, remove `16` characters
+1:38: Unexpected `37` character line, expected at most `20` characters, remove `17` characters
+6:38: Unexpected `37` character line, expected at most `20` characters, remove `17` characters
 ```
 
 ##### `ok.md`

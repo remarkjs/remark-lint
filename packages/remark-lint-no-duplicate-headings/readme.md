@@ -169,14 +169,14 @@ No messages.
 
 ## Mercury
 
-## [Mercury](http://example.com/mercury/)
+## [Mercury](https://example.com/mercury/)
 ```
 
 ###### Out
 
 ```text
 3:1-3:11: Unexpected heading with equivalent text, expected unique headings
-5:1-5:42: Unexpected heading with equivalent text, expected unique headings
+5:1-5:43: Unexpected heading with equivalent text, expected unique headings
 ```
 
 ##### `mdx.mdx`

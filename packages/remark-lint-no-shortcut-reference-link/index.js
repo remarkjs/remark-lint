@@ -44,14 +44,14 @@
  *
  *   [Mercury][]
  *
- *   [mercury]: http://example.com/mercury/
+ *   [mercury]: https://example.com/mercury/
  *
  * @example
  *   {"label": "input", "name": "not-ok.md"}
  *
  *   [Mercury]
  *
- *   [mercury]: http://example.com/mercury/
+ *   [mercury]: https://example.com/mercury/
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *

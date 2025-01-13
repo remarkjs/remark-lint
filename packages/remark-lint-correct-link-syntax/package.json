@@ -1,0 +1,57 @@
+{
+  "name": "remark-lint-correct-link-syntax",
+  "version": "0.0.0",
+  "description": "remark-lint rule to check for accidental bracket and paren mixup for images and links",
+  "license": "MIT",
+  "keywords": [
+    "bracket",
+    "image",
+    "link",
+    "lint",
+    "parenthesis",
+    "reference",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "resource",
+    "rule",
+    "syntax"
+  ],
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-link-syntax",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-position": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile-location": "^5.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "unicorn/prefer-code-point": "off"
+    }
+  }
+}

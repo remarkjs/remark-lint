@@ -42,6 +42,7 @@ import remarkLintNoUnusedDefinitions from 'remark-lint-no-unused-definitions'
 import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-style'
 
 // To do: next major: add `remark-lint-fenced-code-flag` with the GH check.
+// To do: next major: add `remark-lint-correct-link-syntax`.
 
 /** @type {Preset} */
 const remarkPresetLintRecommended = {
@@ -56,6 +57,7 @@ const remarkPresetLintRecommended = {
     remarkLintNoLiteralUrls,
     [remarkLintOrderedListMarkerStyle, '.'],
     // Mistakes.
+    // To do: next major: change to `allowSpaces: false`.
     remarkLintHardBreakSpaces,
     remarkLintNoDuplicateDefinitions,
     remarkLintNoHeadingContentIndent,

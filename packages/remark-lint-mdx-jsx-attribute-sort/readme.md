@@ -1,6 +1,6 @@
 <!--This file is generated-->
 
-# remark-lint-mdx-jsx-no-void-children
+# remark-lint-mdx-jsx-attribute-sort
 
 [![Build][badge-build-image]][badge-build-url]
 [![Coverage][badge-coverage-image]][badge-coverage-url]
@@ -10,8 +10,7 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when void HTML elements (such as `<br>`)
-are seen with children.
+[`remark-lint`][github-remark-lint] rule to warn attributes are not sorted.
 
 ## Contents
 
@@ -21,7 +20,7 @@ are seen with children.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintMdxJsxNoVoidChildren[, options])`](#unifieduseremarklintmdxjsxnovoidchildren-options)
+  * [`unified().use(remarkLintMdxJsxAttributeSort)`](#unifieduseremarklintmdxjsxattributesort)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
@@ -29,20 +28,11 @@ are seen with children.
 
 ## What is this?
 
-This package checks that HTML void elements are without children.
+This package checks MDX JSX attribute order.
 
 ## When should I use this?
 
-You can use this package to check that HTML void elements are
-without children.
-
-This package assumes semantics from HTML.
-If you use MDX in a place without HTML you should not use this.
-
-This package also checks `children` and `dangerouslySetInnerHTML` as it
-assumes the semantics that React applies to these names.
-If how you use JSX conflicts with the React semantics this package may not
-work for you.
+You can use this package to check MDX JSX attribute order.
 
 ## Presets
 
@@ -55,20 +45,20 @@ In Node.js (version 16+),
 install with [npm][npm-install]:
 
 ```sh
-npm install remark-lint-mdx-jsx-no-void-children
+npm install remark-lint-mdx-jsx-attribute-sort
 ```
 
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintMdxJsxNoVoidChildren from 'https://esm.sh/remark-lint-mdx-jsx-no-void-children@0'
+import remarkLintMdxJsxAttributeSort from 'https://esm.sh/remark-lint-mdx-jsx-attribute-sort@0'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintMdxJsxNoVoidChildren from 'https://esm.sh/remark-lint-mdx-jsx-no-void-children@0?bundle'
+  import remarkLintMdxJsxAttributeSort from 'https://esm.sh/remark-lint-mdx-jsx-attribute-sort@0?bundle'
 </script>
 ```
 
@@ -78,7 +68,7 @@ On the API:
 
 ```js
 import remarkLint from 'remark-lint'
-import remarkLintMdxJsxNoVoidChildren from 'remark-lint-mdx-jsx-no-void-children'
+import remarkLintMdxJsxAttributeSort from 'remark-lint-mdx-jsx-attribute-sort'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
@@ -90,7 +80,7 @@ const file = await read('example.md')
 await unified()
   .use(remarkParse)
   .use(remarkLint)
-  .use(remarkLintMdxJsxNoVoidChildren)
+  .use(remarkLintMdxJsxAttributeSort)
   .use(remarkStringify)
   .process(file)
 
@@ -100,7 +90,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --frail --use remark-lint --use remark-lint-mdx-jsx-no-void-children .
+remark --frail --use remark-lint --use remark-lint-mdx-jsx-attribute-sort .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -111,7 +101,7 @@ On the CLI in a config file (here a `package.json`):
    "plugins": [
      …
      "remark-lint",
-+    "remark-lint-mdx-jsx-no-void-children",
++    "remark-lint-mdx-jsx-attribute-sort",
      …
    ]
  }
@@ -123,11 +113,16 @@ On the CLI in a config file (here a `package.json`):
 This package exports no identifiers.
 It exports no additional [TypeScript][typescript] types.
 The default export is
-[`remarkLintMdxJsxNoVoidChildren`][api-remark-lint-mdx-jsx-no-void-children].
+[`remarkLintMdxJsxAttributeSort`][api-remark-lint-mdx-jsx-attribute-sort].
 
-### `unified().use(remarkLintMdxJsxNoVoidChildren[, options])`
+### `unified().use(remarkLintMdxJsxAttributeSort)`
 
-Warn when void HTML elements (such as `<br>`) are seen with children.
+Warn when attributes are not sorted.
+
+This package does not differentiate between what values attributes have,
+or whether they are shorthand or not.
+
+Spreads must come first.
 
 ###### Parameters
 
@@ -147,8 +142,12 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<b>Mercury</b> is the first planet from the Sun<br />
-and the smallest in the Solar System.
+<Saturn
+  aphelion={1514.50}
+  largest={false}
+  perihelion={1352.55}
+  satellites={146}
+/>
 ```
 
 ###### Out
@@ -163,22 +162,42 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-**Mercury** is the first planet from<br>the</br>
-Sun and the smallest in the Solar System.
-
-<hr children={'***'} />
-
-**Venus** is the second planet
-from <br dangerouslySetInnerHTML={{__html: 'the'}} />
-Sun.
+<Saturn
+  largest={false}
+  perihelion={1352.55}
+  satellites={146}
+  aphelion={1514.50}
+/>
 ```
 
 ###### Out
 
 ```text
-1:41-1:44: Unexpected children in known HTML void element, expected nothing
-4:5-4:21: Unexpected children in known HTML void element, expected nothing
-7:10-7:51: Unexpected children in known HTML void element, expected nothing
+2:3-2:18: Unexpected attribute `largest` in 1st place, expected alphabetically sorted attributes, move it to 2nd place
+3:3-3:23: Unexpected attribute `perihelion` in 2nd place, expected alphabetically sorted attributes, move it to 3rd place
+4:3-4:19: Unexpected attribute `satellites` in 3rd place, expected alphabetically sorted attributes, move it to 4th place
+5:3-5:21: Unexpected attribute `aphelion` in 4th place, expected alphabetically sorted attributes, move it to 1st place
+```
+
+##### `spread.mdx`
+
+###### In
+
+> 👉 **Note**: this example uses
+> MDX ([`remark-mdx`][github-remark-mdx]).
+
+```mdx
+<Earth
+  {...animals}
+  symbol="🜨"
+  {...humans}
+/>
+```
+
+###### Out
+
+```text
+4:3-4:14: Unexpected spread attribute after named attribute, expected spread attributes to come first
 ```
 
 ## Compatibility
@@ -189,7 +208,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-mdx-jsx-no-void-children@0`,
+`remark-lint-mdx-jsx-attribute-sort@0`,
 compatible with Node.js 16.
 
 ## Contribute
@@ -206,7 +225,7 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-mdx-jsx-no-void-children]: #unifieduseremarklintmdxjsxnovoidchildren-options
+[api-remark-lint-mdx-jsx-attribute-sort]: #unifieduseremarklintmdxjsxattributesort
 
 [author]: https://wooorm.com
 
@@ -222,9 +241,9 @@ abide by its terms.
 
 [badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
 
-[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-no-void-children.svg
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-attribute-sort.svg
 
-[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-no-void-children
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-attribute-sort
 
 [badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
 
@@ -232,9 +251,9 @@ abide by its terms.
 
 [badge-funding-url]: https://opencollective.com/unified
 
-[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-no-void-children
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-attribute-sort
 
-[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-no-void-children
+[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-attribute-sort
 
 [esm-sh]: https://esm.sh
 

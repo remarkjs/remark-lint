@@ -128,6 +128,7 @@ The rules that are maintained here:
 * [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
 * [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 * [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
+* [`remark-lint-mdx-jsx-attribute-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-attribute-sort) — check mdx jsx attribute order
 * [`remark-lint-mdx-jsx-no-void-children`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-no-void-children) — check mdx jsx quotes
 * [`remark-lint-mdx-jsx-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-quote-style) — check mdx jsx quotes
 * [`remark-lint-mdx-jsx-self-close`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-self-close) — check that self-closing tags are used when possible

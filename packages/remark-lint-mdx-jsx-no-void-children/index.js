@@ -14,6 +14,11 @@
  * This package assumes semantics from HTML.
  * If you use MDX in a place without HTML you should not use this.
  *
+ * This package also checks `children` and `dangerouslySetInnerHTML` as it
+ * assumes the semantics that React applies to these names.
+ * If how you use JSX conflicts with the React semantics this package may not
+ * work for you.
+ *
  * ## API
  *
  * ### `unified().use(remarkLintMdxJsxNoVoidChildren[, options])`

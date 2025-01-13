@@ -1,20 +1,22 @@
 {
-  "name": "remark-lint-mdx-jsx-shorthand-attribute",
+  "name": "remark-lint-mdx-jsx-attribute-sort",
   "version": "0.0.0",
-  "description": "remark-lint rule to check that shorthand attributes are used when possible in MDX JSX",
+  "description": "remark-lint rule to check mdx jsx attribute order",
   "license": "MIT",
   "keywords": [
     "attribute",
+    "compare",
     "jsx",
     "lint",
     "mdx",
+    "order",
     "remark",
     "remark-lint",
     "remark-lint-rule",
     "rule",
-    "shorthand"
+    "sort"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-shorthand-attribute",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-attribute-sort",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -34,9 +36,11 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "devlop": "^1.0.0",
     "mdast-util-mdx": "^3.0.0",
     "unified-lint-rule": "^3.0.0",
-    "unist-util-visit-parents": "^6.0.0"
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile-message": "^4.0.0"
   },
   "scripts": {},
   "typeCoverage": {
@@ -47,6 +51,7 @@
     "prettier": true,
     "rules": {
       "capitalized-comments": "off",
+      "max-depth": "off",
       "unicorn/prefer-code-point": "off",
       "unicorn/prefer-switch": "off"
     }

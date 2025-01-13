@@ -1,22 +1,21 @@
 {
-  "name": "remark-lint-no-hidden-table-cell",
+  "name": "remark-lint-definition-sort",
   "version": "0.0.0",
-  "description": "remark-lint rule to check superfluous table cells",
+  "description": "remark-lint rule to check definition order",
   "license": "MIT",
   "keywords": [
-    "align",
-    "cell",
-    "gfm",
-    "github",
+    "compare",
+    "definition",
+    "footnote",
     "lint",
+    "order",
     "remark",
     "remark-lint",
     "remark-lint-rule",
-    "row",
     "rule",
-    "table"
+    "sort"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-hidden-table-cell",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-sort",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -24,7 +23,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "sideEffects": false,
   "type": "module",
@@ -36,6 +35,8 @@
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
+    "devlop": "^1.0.0",
+    "mdast-util-phrasing": "^4.0.0",
     "unified-lint-rule": "^3.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },

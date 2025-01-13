@@ -1,6 +1,6 @@
 <!--This file is generated-->
 
-# remark-lint-mdx-jsx-attribute-sort
+# remark-lint-definition-sort
 
 [![Build][badge-build-image]][badge-build-url]
 [![Coverage][badge-coverage-image]][badge-coverage-url]
@@ -10,7 +10,7 @@
 [![Backers][badge-funding-backers-image]][badge-funding-url]
 [![Chat][badge-chat-image]][badge-chat-url]
 
-[`remark-lint`][github-remark-lint] rule to warn when attributes are not sorted.
+[`remark-lint`][github-remark-lint] rule to warn when definitions are not sorted.
 
 ## Contents
 
@@ -20,7 +20,7 @@
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintMdxJsxAttributeSort)`](#unifieduseremarklintmdxjsxattributesort)
+  * [`unified().use(remarkLintDefinitionSort)`](#unifieduseremarklintdefinitionsort)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
@@ -28,11 +28,11 @@
 
 ## What is this?
 
-This package checks MDX JSX attribute order.
+This package checks definition order.
 
 ## When should I use this?
 
-You can use this package to check MDX JSX attribute order.
+You can use this package to check definition order.
 
 ## Presets
 
@@ -45,20 +45,20 @@ In Node.js (version 16+),
 install with [npm][npm-install]:
 
 ```sh
-npm install remark-lint-mdx-jsx-attribute-sort
+npm install remark-lint-definition-sort
 ```
 
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintMdxJsxAttributeSort from 'https://esm.sh/remark-lint-mdx-jsx-attribute-sort@0'
+import remarkLintDefinitionSort from 'https://esm.sh/remark-lint-definition-sort@0'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintMdxJsxAttributeSort from 'https://esm.sh/remark-lint-mdx-jsx-attribute-sort@0?bundle'
+  import remarkLintDefinitionSort from 'https://esm.sh/remark-lint-definition-sort@0?bundle'
 </script>
 ```
 
@@ -68,7 +68,7 @@ On the API:
 
 ```js
 import remarkLint from 'remark-lint'
-import remarkLintMdxJsxAttributeSort from 'remark-lint-mdx-jsx-attribute-sort'
+import remarkLintDefinitionSort from 'remark-lint-definition-sort'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
@@ -80,7 +80,7 @@ const file = await read('example.md')
 await unified()
   .use(remarkParse)
   .use(remarkLint)
-  .use(remarkLintMdxJsxAttributeSort)
+  .use(remarkLintDefinitionSort)
   .use(remarkStringify)
   .process(file)
 
@@ -90,7 +90,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --frail --use remark-lint --use remark-lint-mdx-jsx-attribute-sort .
+remark --frail --use remark-lint --use remark-lint-definition-sort .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -101,7 +101,7 @@ On the CLI in a config file (here a `package.json`):
    "plugins": [
      …
      "remark-lint",
-+    "remark-lint-mdx-jsx-attribute-sort",
++    "remark-lint-definition-sort",
      …
    ]
  }
@@ -113,16 +113,11 @@ On the CLI in a config file (here a `package.json`):
 This package exports no identifiers.
 It exports no additional [TypeScript][typescript] types.
 The default export is
-[`remarkLintMdxJsxAttributeSort`][api-remark-lint-mdx-jsx-attribute-sort].
+[`remarkLintDefinitionSort`][api-remark-lint-definition-sort].
 
-### `unified().use(remarkLintMdxJsxAttributeSort)`
+### `unified().use(remarkLintDefinitionSort)`
 
-Warn when attributes are not sorted.
-
-This package does not differentiate between what values attributes have,
-or whether they are shorthand or not.
-
-Spreads must come first.
+Warn when when definitions are not sorted.
 
 ###### Parameters
 
@@ -134,27 +129,107 @@ Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
 ## Examples
 
-##### `ok.mdx`
+##### `ok.md`
 
 ###### In
 
-> 👉 **Note**: this example uses
-> MDX ([`remark-mdx`][github-remark-mdx]).
+```markdown
+[mercury]: https://example.com/mercury/
 
-```mdx
-<Saturn
-  aphelion={1514.50}
-  largest={false}
-  perihelion={1352.55}
-  satellites={146}
-/>
+[venus]: https://example.com/venus/
 ```
 
 ###### Out
 
 No messages.
 
-##### `not-ok.mdx`
+##### `gfm-ok.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+[^mercury]:
+    **Mercury** is the first planet from the Sun and the smallest
+    in the Solar System.
+
+[^venus]:
+    **Venus** is the second planet from
+    the Sun.
+```
+
+###### Out
+
+No messages.
+
+##### `together.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Definitions and footnote definitions are sorted separately.
+
+[mercury]: https://example.com/mercury/
+[venus]: https://example.com/venus/
+
+[^mercury]:
+    **Mercury** is the first planet from the Sun and the smallest
+    in the Solar System.
+
+[^venus]:
+    **Venus** is the second planet from
+    the Sun.
+```
+
+###### Out
+
+No messages.
+
+##### `together.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+Definitions are sorted per “group”.
+
+[mercury]: https://example.com/mercury/
+[venus]: https://example.com/venus/
+
+This paragraph introduces another group.
+
+[earth]: https://example.com/earth/
+[mars]: https://example.com/mars/
+```
+
+###### Out
+
+No messages.
+
+##### `comment.md`
+
+###### In
+
+```markdown
+[earth]: https://example.com/earth/
+
+<!-- HTML comments are ignored. -->
+
+[mars]: https://example.com/mars/
+```
+
+###### Out
+
+No messages.
+
+##### `comment.mdx`
 
 ###### In
 
@@ -162,42 +237,62 @@ No messages.
 > MDX ([`remark-mdx`][github-remark-mdx]).
 
 ```mdx
-<Saturn
-  largest={false}
-  perihelion={1352.55}
-  satellites={146}
-  aphelion={1514.50}
-/>
+[earth]: https://example.com/earth/
+
+{/* Comments in expressions in MDX are ignored. */}
+
+[mars]: https://example.com/mars/
+```
+
+###### Out
+
+No messages.
+
+##### `not-ok.md`
+
+###### In
+
+```markdown
+[venus]: https://example.com/venus/
+
+[mercury]: https://example.com/mercury/
+
+[earth]: https://example.com/earth/
+
+[mars]: https://example.com/mars/
 ```
 
 ###### Out
 
 ```text
-2:3-2:18: Unexpected attribute `largest` in 1st place, expected alphabetically sorted attributes, move it to 2nd place
-3:3-3:23: Unexpected attribute `perihelion` in 2nd place, expected alphabetically sorted attributes, move it to 3rd place
-4:3-4:19: Unexpected attribute `satellites` in 3rd place, expected alphabetically sorted attributes, move it to 4th place
-5:3-5:21: Unexpected attribute `aphelion` in 4th place, expected alphabetically sorted attributes, move it to 1st place
+1:1-1:36: Unexpected definition `venus` in 1st place, expected alphabetically sorted definitions, move it to 4th place
+3:1-3:40: Unexpected definition `mercury` in 2nd place, expected alphabetically sorted definitions, move it to 3rd place
+5:1-5:36: Unexpected definition `earth` in 3rd place, expected alphabetically sorted definitions, move it to 1st place
+7:1-7:34: Unexpected definition `mars` in 4th place, expected alphabetically sorted definitions, move it to 2nd place
 ```
 
-##### `spread.mdx`
+##### `not-ok-gfm.md`
 
 ###### In
 
 > 👉 **Note**: this example uses
-> MDX ([`remark-mdx`][github-remark-mdx]).
+> GFM ([`remark-gfm`][github-remark-gfm]).
 
-```mdx
-<Earth
-  {...animals}
-  symbol="🜨"
-  {...humans}
-/>
+```markdown
+[^venus]:
+    **Venus** is the second planet from
+    the Sun.
+
+[^mercury]:
+    **Mercury** is the first planet from the Sun and the smallest
+    in the Solar System.
 ```
 
 ###### Out
 
 ```text
-4:3-4:14: Unexpected spread attribute after named attribute, expected spread attributes to come first
+1:1-3:13: Unexpected footnote definition `venus` in 1st place, expected alphabetically sorted definitions, move it to 2nd place
+5:1-7:25: Unexpected footnote definition `mercury` in 2nd place, expected alphabetically sorted definitions, move it to 1st place
 ```
 
 ## Compatibility
@@ -208,7 +303,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-mdx-jsx-attribute-sort@0`,
+`remark-lint-definition-sort@0`,
 compatible with Node.js 16.
 
 ## Contribute
@@ -225,7 +320,7 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-mdx-jsx-attribute-sort]: #unifieduseremarklintmdxjsxattributesort
+[api-remark-lint-definition-sort]: #unifieduseremarklintdefinitionsort
 
 [author]: https://wooorm.com
 
@@ -241,9 +336,9 @@ abide by its terms.
 
 [badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
 
-[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-mdx-jsx-attribute-sort.svg
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-definition-sort.svg
 
-[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-mdx-jsx-attribute-sort
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-definition-sort
 
 [badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
 
@@ -251,9 +346,9 @@ abide by its terms.
 
 [badge-funding-url]: https://opencollective.com/unified
 
-[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-mdx-jsx-attribute-sort
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-definition-sort
 
-[badge-size-url]: https://bundlejs.com/?q=remark-lint-mdx-jsx-attribute-sort
+[badge-size-url]: https://bundlejs.com/?q=remark-lint-definition-sort
 
 [esm-sh]: https://esm.sh
 
@@ -268,6 +363,8 @@ abide by its terms.
 [github-dotfiles-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
 [github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
 
 [github-remark-lint]: https://github.com/remarkjs/remark-lint
 

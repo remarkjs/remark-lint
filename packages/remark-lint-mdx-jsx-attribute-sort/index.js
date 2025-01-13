@@ -1,5 +1,5 @@
 /**
- * remark-lint rule to warn attributes are not sorted.
+ * remark-lint rule to warn when attributes are not sorted.
  *
  * ## What is this?
  *

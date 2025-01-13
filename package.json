@@ -86,6 +86,7 @@
     "packages/remark-lint-no-heading-indent/",
     "packages/remark-lint-no-heading-like-paragraph/",
     "packages/remark-lint-no-heading-punctuation/",
+    "packages/remark-lint-no-hidden-table-cell/",
     "packages/remark-lint-no-html/",
     "packages/remark-lint-no-literal-urls/",
     "packages/remark-lint-no-missing-blank-lines/",

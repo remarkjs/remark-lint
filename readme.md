@@ -152,6 +152,7 @@ The rules that are maintained here:
 * [`remark-lint-no-heading-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-indent) — warn when headings are indented
 * [`remark-lint-no-heading-like-paragraph`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-like-paragraph) — for too many hashes (h7+ “headings”)
 * [`remark-lint-no-heading-punctuation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-heading-punctuation) — warn when headings end in illegal characters
+* [`remark-lint-no-hidden-table-cell`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-hidden-table-cell) — check superfluous table cells
 * [`remark-lint-no-html`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-html) — warn when HTML nodes are used
 * [`remark-lint-no-literal-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls) — warn when URLs without angle brackets are used
 * [`remark-lint-no-missing-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-missing-blank-lines) — warn when missing blank lines

@@ -1,23 +1,22 @@
 {
-  "name": "remark-lint-correct-link-syntax",
+  "name": "remark-lint-no-hidden-table-cell",
   "version": "0.0.0",
-  "description": "remark-lint rule to check for accidental bracket and paren mixup for images and links",
+  "description": "remark-lint rule to check superfluous table cells",
   "license": "MIT",
   "keywords": [
-    "bracket",
-    "image",
-    "link",
+    "align",
+    "cell",
+    "gfm",
+    "github",
     "lint",
-    "parenthesis",
-    "reference",
     "remark",
     "remark-lint",
     "remark-lint-rule",
-    "resource",
+    "row",
     "rule",
-    "syntax"
+    "table"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-link-syntax",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-hidden-table-cell",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -25,7 +24,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "sideEffects": false,
   "type": "module",
@@ -38,9 +37,7 @@
   "dependencies": {
     "@types/mdast": "^4.0.0",
     "unified-lint-rule": "^3.0.0",
-    "unist-util-position": "^5.0.0",
-    "unist-util-visit-parents": "^6.0.0",
-    "vfile-location": "^5.0.0"
+    "unist-util-visit-parents": "^6.0.0"
   },
   "scripts": {},
   "typeCoverage": {
@@ -50,8 +47,7 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "capitalized-comments": "off",
-      "unicorn/prefer-code-point": "off"
+      "capitalized-comments": "off"
     }
   }
 }

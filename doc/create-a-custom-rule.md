@@ -32,9 +32,9 @@ Now we can start installing our dependencies:
 npm install remark-lint remark-cli
 ```
 
-* [`remark-lint`][remark-lint]
+* [`remark-lint`][github-remark-lint]
   — core lint plugin
-* [`remark-cli`][remark-cli]
+* [`remark-cli`][github-remark-cli]
   — command line interface
 
 We will also use some utilities:
@@ -50,7 +50,8 @@ These will help us creating and managing our custom rules.
 With everything installed, we can now create a `.remarkrc.js` that will contain
 the plugins we’ll use.
 
-For more info on configuration, see [Examples in `remark-lint`][examples].
+For more info on configuration, see
+[Examples in `remark-lint`][github-remark-lint-examples].
 
 ```sh
 touch .remarkrc.js
@@ -183,20 +184,22 @@ Your rule function will receive three arguments:
 function rule(tree, file, options) {}
 ```
 
-* `tree` (*required*): [mdast][]
-* `file` (*required*): [virtual file][vfile]
+* `tree` (*required*): [mdast][github-mdast]
+* `file` (*required*): [virtual file][github-vfile]
 * `options` (*optional*): additional info passed to the rule by users
 
 ## Rule implementation
 
-Because we will be inspecting [mdast][], which is a markdown abstract syntax
-tree built upon [unist][], we can take advantage of the many existing
-[unist utilities][unist-util] to inspect our tree’s nodes.
+Because we will be inspecting [mdast][github-mdast],
+which is a markdown abstract syntax tree built upon [unist][github-unist],
+we can take advantage of the many existing
+[unist utilities][github-unist-utilities] to inspect our tree’s nodes.
 
-For this example, we will use [`unist-util-visit`][unist-util-visit] to
-recursively inspect all the image nodes, and
-[`unist-util-generated`][unist-util-generated] to ensure we are not inspecting
-nodes that we have generated ourselves and do not belong to the `doc.md`.
+For this example, we will use [`unist-util-visit`][github-unist-util-visit]
+to recursively inspect all the image nodes, and
+[`unist-util-generated`][github-unist-util-generated] to ensure we are not
+inspecting nodes that we have generated ourselves and do not belong to the
+`doc.md`.
 
 ```js
 /**
@@ -269,22 +272,22 @@ If you run `npm run lint`, you should see the following message in the terminal:
 **Congratulations!
 The rule works!**
 
+[github-mdast]: https://github.com/syntax-tree/mdast
+
+[github-remark-cli]: https://github.com/remarkjs/remark/tree/main/packages/remark-cli
+
+[github-remark-lint]: https://github.com/remarkjs/remark-lint
+
+[github-remark-lint-examples]: https://github.com/remarkjs/remark-lint#examples
+
+[github-unist]: https://github.com/syntax-tree/unist
+
+[github-unist-util-generated]: https://github.com/syntax-tree/unist-util-generated
+
+[github-unist-util-visit]: https://github.com/syntax-tree/unist-util-visit
+
+[github-unist-utilities]: https://github.com/syntax-tree/unist#utilities
+
+[github-vfile]: https://github.com/vfile/vfile
+
 [tutorial]: https://dev.to/floroz/how-to-create-a-custom-lint-rule-for-markdown-and-mdx-using-remark-and-eslint-2jim
-
-[remark-lint]: https://github.com/remarkjs/remark-lint
-
-[remark-cli]: https://github.com/remarkjs/remark/tree/main/packages/remark-cli
-
-[examples]: https://github.com/remarkjs/remark-lint#examples
-
-[mdast]: https://github.com/syntax-tree/mdast
-
-[vfile]: https://github.com/vfile/vfile
-
-[unist]: https://github.com/syntax-tree/unist
-
-[unist-util]: https://github.com/syntax-tree/unist#utilities
-
-[unist-util-visit]: https://github.com/syntax-tree/unist-util-visit
-
-[unist-util-generated]: https://github.com/syntax-tree/unist-util-generated

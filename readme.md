@@ -1,13 +1,14 @@
-# ![remark-lint][logo]
+# ![remark-lint][file-logo]
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Chat][chat-badge]][chat]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
+[![Sponsors][badge-sponsors-image]][badge-collective-url]
+[![Backers][badge-backers-image]][badge-collective-url]
+[![Chat][badge-chat-image]][badge-chat-url]
 
-**[remark][]** plugins to check (lint) markdown code style.
+**[remark][github-remark]** plugins to check (lint) markdown code style.
 
 ## Contents
 
@@ -62,7 +63,8 @@ This GitHub repository is a monorepo that contains ±70 plugins (each a rule tha
 checks one specific thing) and 3 presets (combinations of rules configured to
 check for certain styles).
 
-These packages are build on [unified][] ([remark][]).
+These packages are build on [unified][github-unified]
+([remark][github-remark]).
 **unified** is a project that inspects and transforms content with abstract
 syntax trees (ASTs).
 **remark** adds support for markdown to unified.
@@ -76,7 +78,8 @@ documentation in markdown and you want to ensure that the markdown is
 consistent, free of bugs, and works well across different markdown parsers.
 
 These packages are quite good at checking markdown.
-They especially shine when combined with other [remark plugins][remark-plugin]
+They especially shine when combined with other
+[remark plugins][github-remark-plugin]
 and at letting you make your own rules.
 
 ## Presets
@@ -254,7 +257,7 @@ The following rules are maintained by the community:
   — wrapper for `write-good`
 
 For help creating your own rule, it’s suggested to look at existing rules and to
-[follow this tutorial][tutorial].
+[follow this tutorial][file-create-a-custom-rule].
 
 ## Configure
 
@@ -299,7 +302,7 @@ remark()
   .use(remarkLintMaximumLineLength, [1, 72])
 ```
 
-See [`use()` in `unified`s readme][unified-use] for more info on how to use
+See [`use()` in `unified`s readme][github-unified-use] for more info on how to use
 plugins.
 
 > 🧑‍🏫 **Info**: messages in `remark-lint` are warnings instead of errors.
@@ -360,9 +363,9 @@ You can ignore a message in the next block with `<!--lint ignore-->`:
 > 👉 **Note**: you’ll typically need blank lines between HTML comments and other
 > constructs.
 > More info is available at the package that handles comments,
-> [`remark-message-control`][remark-message-control].
+> [`remark-message-control`][github-remark-message-control].
 
-> 💡 **Tip**: MDX comments are supported when [`remark-mdx`][remark-mdx] is
+> 💡 **Tip**: MDX comments are supported when [`remark-mdx`][mdx-remark-mdx] is
 > used:
 >
 > ```mdx
@@ -421,7 +424,8 @@ Running that with `node example.js` yields:
 ### Example: check and format markdown on the API
 
 remark lint rules *check* markdown.
-[`remark-stringify`][remark-stringify] (used in remark) *formats* markdown.
+[`remark-stringify`][github-remark-stringify]
+(used in remark) *formats* markdown.
 When you configure lint rules and use remark to format markdown, you must
 manually synchronize their configuration:
 
@@ -462,7 +466,7 @@ If that output was given the the processor, the lint rules would be satisfied.
 
 ### Example: check markdown on the CLI
 
-This example checks markdown with [`remark-cli`][remark-cli].
+This example checks markdown with [`remark-cli`][github-remark-cli].
 It assumes you’re in a Node.js package.
 First install dependencies:
 
@@ -563,7 +567,7 @@ Update `remarkConfig`:
 ```
 
 This now includes `settings`, which configures
-[`remark-stringify`][remark-stringify], and explicitly prefers asterisks
+[`remark-stringify`][github-remark-stringify], and explicitly prefers asterisks
 for emphasis and strong.
 Install the new dependencies:
 
@@ -599,15 +603,16 @@ npm run format
 
 ## Syntax
 
-Markdown is parsed by [`remark-parse`][remark-parse] (included in `remark`)
+Markdown is parsed by [`remark-parse`][github-remark-parse]
+(included in `remark`)
 according to CommonMark.
 You can combine it with other plugins to add syntax extensions.
 Notable examples that deeply integrate with it are
-[`remark-gfm`][remark-gfm],
-[`remark-mdx`][remark-mdx],
-[`remark-frontmatter`][remark-frontmatter],
-[`remark-math`][remark-math], and
-[`remark-directive`][remark-directive].
+[`remark-gfm`][github-remark-gfm],
+[`remark-mdx`][mdx-remark-mdx],
+[`remark-frontmatter`][github-remark-frontmatter],
+[`remark-math`][github-remark-math], and
+[`remark-directive`][github-remark-directive].
 
 ## Compatibility
 
@@ -622,88 +627,93 @@ with Node.js 16.
 ## Security
 
 Use of `remark-lint` does not change the tree so there are no openings for
-[cross-site scripting (XSS)][xss] attacks.
+[cross-site scripting (XSS)][wikipedia-xss] attacks.
 Messages from linting rules may be hidden from user content though, causing
 builds to fail or pass.
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
-to get started.
-See [`support.md`][support] for ways to get help.
+See [`contributing.md`][health-contributing]
+in [`remarkjs/.github`][health]
+for ways to get started.
+See [`support.md`][health-support] for ways to get help.
 
-This project has a [code of conduct][coc].
+This project has a [code of conduct][health-coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][wooorm]
 
 <!-- Definitions -->
 
-[build-badge]: https://github.com/remarkjs/remark-lint/workflows/main/badge.svg
+[badge-backers-image]: https://opencollective.com/unified/backers/badge.svg
 
-[build]: https://github.com/remarkjs/remark-lint/actions
+[badge-build-image]: https://github.com/remarkjs/remark-lint/actions/workflows/main.yml/badge.svg
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
+[badge-build-url]: https://github.com/remarkjs/remark-lint/actions
 
-[coverage]: https://codecov.io/github/remarkjs/remark-lint
+[badge-chat-image]: https://img.shields.io/badge/chat-discussions-success.svg
 
-[downloads-badge]: https://img.shields.io/npm/dm/remark-lint.svg
+[badge-chat-url]: https://github.com/remarkjs/remark/discussions
 
-[downloads]: https://www.npmjs.com/package/remark-lint
+[badge-collective-url]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/remarkjs/remark-lint.svg
 
-[chat]: https://github.com/remarkjs/remark/discussions
+[badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
 
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint.svg
 
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint
 
-[collective]: https://opencollective.com/unified
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint
+
+[badge-size-url]: https://bundlejs.com/?q=remark-lint
+
+[badge-sponsors-image]: https://opencollective.com/unified/sponsors/badge.svg
+
+[file-create-a-custom-rule]: doc/create-a-custom-rule.md
+
+[file-license]: license
+
+[file-logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/014fca7/logo.svg?sanitize=true
+
+[github-remark]: https://github.com/remarkjs/remark
+
+[github-remark-cli]: https://github.com/remarkjs/remark/tree/main/packages/remark-cli
+
+[github-remark-directive]: https://github.com/remarkjs/remark-directive
+
+[github-remark-frontmatter]: https://github.com/remarkjs/remark-frontmatter
+
+[github-remark-gfm]: https://github.com/remarkjs/remark-gfm
+
+[github-remark-math]: https://github.com/remarkjs/remark-math
+
+[github-remark-message-control]: https://github.com/remarkjs/remark-message-control
+
+[github-remark-parse]: https://github.com/remarkjs/remark/tree/main/packages/remark-parse
+
+[github-remark-plugin]: https://github.com/remarkjs/remark#plugins
+
+[github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
+
+[github-unified]: https://github.com/unifiedjs/unified
+
+[github-unified-use]: https://github.com/unifiedjs/unified#processoruseplugin-options
 
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
+[health-coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
-[support]: https://github.com/remarkjs/.github/blob/main/support.md
+[health-contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+[health-support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[license]: license
+[mdx-remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
-[author]: https://wooorm.com
+[wikipedia-xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 
-[unified]: https://github.com/unifiedjs/unified
-
-[unified-use]: https://github.com/unifiedjs/unified#processoruseplugin-options
-
-[remark]: https://github.com/remarkjs/remark
-
-[remark-cli]: https://github.com/remarkjs/remark/tree/main/packages/remark-cli
-
-[remark-parse]: https://github.com/remarkjs/remark/tree/main/packages/remark-parse
-
-[remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
-
-[remark-plugin]: https://github.com/remarkjs/remark#plugins
-
-[remark-message-control]: https://github.com/remarkjs/remark-message-control
-
-[remark-gfm]: https://github.com/remarkjs/remark-gfm
-
-[remark-frontmatter]: https://github.com/remarkjs/remark-frontmatter
-
-[remark-math]: https://github.com/remarkjs/remark-math
-
-[remark-directive]: https://github.com/remarkjs/remark-directive
-
-[remark-mdx]: https://mdxjs.com/packages/remark-mdx/
-
-[logo]: https://raw.githubusercontent.com/remarkjs/remark-lint/014fca7/logo.svg?sanitize=true
-
-[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
-
-[tutorial]: doc/create-a-custom-rule.md
+[wooorm]: https://wooorm.com

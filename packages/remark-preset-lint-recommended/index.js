@@ -43,7 +43,7 @@ import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-st
 
 // To do: next major:
 // * add `remark-lint-fenced-code-flag` w/ GH check
-// * add `remark-lint-correct-link-syntax`
+// * add `remark-lint-correct-media-syntax`
 // * add `remark-lint-no-hidden-table-cell`
 
 /** @type {Preset} */

@@ -1,6 +1,6 @@
 <!--This file is generated-->
 
-# remark-lint-correct-link-syntax
+# remark-lint-correct-media-syntax
 
 [![Build][badge-build-image]][badge-build-url]
 [![Coverage][badge-coverage-image]][badge-coverage-url]
@@ -21,7 +21,7 @@ mixup for images and links.
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintCorrectLinkSyntax)`](#unifieduseremarklintcorrectlinksyntax)
+  * [`unified().use(remarkLintCorrectMediaSyntax)`](#unifieduseremarklintcorrectmediasyntax)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
 * [Contribute](#contribute)
@@ -48,20 +48,20 @@ In Node.js (version 16+),
 install with [npm][npm-install]:
 
 ```sh
-npm install remark-lint-correct-link-syntax
+npm install remark-lint-correct-media-syntax
 ```
 
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintCorrectLinkSyntax from 'https://esm.sh/remark-lint-correct-link-syntax@0'
+import remarkLintCorrectMediaSyntax from 'https://esm.sh/remark-lint-correct-media-syntax@0'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintCorrectLinkSyntax from 'https://esm.sh/remark-lint-correct-link-syntax@0?bundle'
+  import remarkLintCorrectMediaSyntax from 'https://esm.sh/remark-lint-correct-media-syntax@0?bundle'
 </script>
 ```
 
@@ -71,7 +71,7 @@ On the API:
 
 ```js
 import remarkLint from 'remark-lint'
-import remarkLintCorrectLinkSyntax from 'remark-lint-correct-link-syntax'
+import remarkLintCorrectMediaSyntax from 'remark-lint-correct-media-syntax'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import {read} from 'to-vfile'
@@ -83,7 +83,7 @@ const file = await read('example.md')
 await unified()
   .use(remarkParse)
   .use(remarkLint)
-  .use(remarkLintCorrectLinkSyntax)
+  .use(remarkLintCorrectMediaSyntax)
   .use(remarkStringify)
   .process(file)
 
@@ -93,7 +93,7 @@ console.error(reporter(file))
 On the CLI:
 
 ```sh
-remark --frail --use remark-lint --use remark-lint-correct-link-syntax .
+remark --frail --use remark-lint --use remark-lint-correct-media-syntax .
 ```
 
 On the CLI in a config file (here a `package.json`):
@@ -104,7 +104,7 @@ On the CLI in a config file (here a `package.json`):
    "plugins": [
      …
      "remark-lint",
-+    "remark-lint-correct-link-syntax",
++    "remark-lint-correct-media-syntax",
      …
    ]
  }
@@ -116,9 +116,9 @@ On the CLI in a config file (here a `package.json`):
 This package exports no identifiers.
 It exports no additional [TypeScript][typescript] types.
 The default export is
-[`remarkLintCorrectLinkSyntax`][api-remark-lint-correct-link-syntax].
+[`remarkLintCorrectMediaSyntax`][api-remark-lint-correct-media-syntax].
 
-### `unified().use(remarkLintCorrectLinkSyntax)`
+### `unified().use(remarkLintCorrectMediaSyntax)`
 
 Warn for accidental bracket and paren mixup for images and links.
 
@@ -169,7 +169,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-correct-link-syntax@0`,
+`remark-lint-correct-media-syntax@0`,
 compatible with Node.js 16.
 
 ## Contribute
@@ -186,7 +186,7 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-correct-link-syntax]: #unifieduseremarklintcorrectlinksyntax
+[api-remark-lint-correct-media-syntax]: #unifieduseremarklintcorrectmediasyntax
 
 [author]: https://wooorm.com
 
@@ -202,9 +202,9 @@ abide by its terms.
 
 [badge-coverage-url]: https://codecov.io/github/remarkjs/remark-lint
 
-[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-correct-link-syntax.svg
+[badge-downloads-image]: https://img.shields.io/npm/dm/remark-lint-correct-media-syntax.svg
 
-[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-correct-link-syntax
+[badge-downloads-url]: https://www.npmjs.com/package/remark-lint-correct-media-syntax
 
 [badge-funding-backers-image]: https://opencollective.com/unified/backers/badge.svg
 
@@ -212,9 +212,9 @@ abide by its terms.
 
 [badge-funding-url]: https://opencollective.com/unified
 
-[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-correct-link-syntax
+[badge-size-image]: https://img.shields.io/bundlejs/size/remark-lint-correct-media-syntax
 
-[badge-size-url]: https://bundlejs.com/?q=remark-lint-correct-link-syntax
+[badge-size-url]: https://bundlejs.com/?q=remark-lint-correct-media-syntax
 
 [esm-sh]: https://esm.sh
 

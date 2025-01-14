@@ -108,7 +108,7 @@ The rules that are maintained here:
 * [`remark-lint-checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
 * [`remark-lint-checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
 * [`remark-lint-code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) — warn when code blocks do not adhere to a given style
-* [`remark-lint-correct-link-syntax`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-link-syntax) — check for accidental bracket and paren mixup for images and links
+* [`remark-lint-correct-media-syntax`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-media-syntax) — check for accidental bracket and paren mixup for images and links
 * [`remark-lint-definition-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
 * [`remark-lint-definition-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-sort) — check definition order
 * [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition

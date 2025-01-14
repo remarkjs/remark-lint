@@ -42,7 +42,7 @@
     "packages/remark-lint-checkbox-character-style/",
     "packages/remark-lint-checkbox-content-indent/",
     "packages/remark-lint-code-block-style/",
-    "packages/remark-lint-correct-link-syntax/",
+    "packages/remark-lint-correct-media-syntax/",
     "packages/remark-lint-definition-case/",
     "packages/remark-lint-definition-sort/",
     "packages/remark-lint-definition-spacing/",

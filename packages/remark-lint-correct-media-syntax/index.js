@@ -14,7 +14,7 @@
  *
  * ## API
  *
- * ### `unified().use(remarkLintCorrectLinkSyntax)`
+ * ### `unified().use(remarkLintCorrectMediaSyntax)`
  *
  * Warn for accidental bracket and paren mixup for images and links.
  *
@@ -26,10 +26,10 @@
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
- * [api-remark-lint-correct-link-syntax]: #unifieduseremarklintcorrectlinksyntax
+ * [api-remark-lint-correct-media-syntax]: #unifieduseremarklintcorrectmediasyntax
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
- * @module correct-link-syntax
+ * @module correct-media-syntax
  * @author Titus Wormer
  * @copyright 2025 Titus Wormer
  * @license MIT
@@ -61,10 +61,10 @@ import {pointEnd, pointStart} from 'unist-util-position'
 import {visitParents} from 'unist-util-visit-parents'
 import {location} from 'vfile-location'
 
-const remarkLintCorrectLinkSyntax = lintRule(
+const remarkLintCorrectMediaSyntax = lintRule(
   {
-    origin: 'remark-lint:correct-link-syntax',
-    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-link-syntax#readme'
+    origin: 'remark-lint:correct-media-syntax',
+    url: 'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-media-syntax#readme'
   },
   /**
    * @param {Root} tree
@@ -112,4 +112,4 @@ const remarkLintCorrectLinkSyntax = lintRule(
   }
 )
 
-export default remarkLintCorrectLinkSyntax
+export default remarkLintCorrectMediaSyntax

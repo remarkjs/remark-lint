@@ -1,5 +1,5 @@
 {
-  "name": "remark-lint-correct-link-syntax",
+  "name": "remark-lint-correct-media-syntax",
   "version": "0.0.0",
   "description": "remark-lint rule to check for accidental bracket and paren mixup for images and links",
   "license": "MIT",
@@ -8,6 +8,7 @@
     "image",
     "link",
     "lint",
+    "media",
     "parenthesis",
     "reference",
     "remark",
@@ -17,7 +18,7 @@
     "rule",
     "syntax"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-link-syntax",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-media-syntax",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -25,7 +26,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "sideEffects": false,
   "type": "module",

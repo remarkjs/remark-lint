@@ -136,6 +136,7 @@ The rules that are maintained here:
 * [`remark-lint-mdx-jsx-self-close`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-self-close) — check that self-closing tags are used when possible
 * [`remark-lint-mdx-jsx-shorthand-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-shorthand-attribute) — check that shorthand attributes are used when possible in MDX JSX
 * [`remark-lint-mdx-jsx-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-unique-attribute-name) — check that mdx jsx attributes are unique
+* [`remark-lint-media-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-media-style) — check for media (image and link) style: whether references or resources are used
 * [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
 * [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
 * [`remark-lint-no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls

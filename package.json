@@ -70,6 +70,7 @@
     "packages/remark-lint-mdx-jsx-self-close/",
     "packages/remark-lint-mdx-jsx-unique-attribute-name/",
     "packages/remark-lint-mdx-jsx-shorthand-attribute/",
+    "packages/remark-lint-media-style/",
     "packages/remark-lint-no-blockquote-without-marker/",
     "packages/remark-lint-no-consecutive-blank-lines/",
     "packages/remark-lint-no-duplicate-defined-urls/",

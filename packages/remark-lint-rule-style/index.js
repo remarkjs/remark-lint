@@ -22,6 +22,10 @@
  *   — preferred style or whether to detect the first style and warn for
  *   further differences
  *
+ * ###### Returns
+ *
+ * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
  * ### `Options`
  *
  * Configuration (TypeScript type).

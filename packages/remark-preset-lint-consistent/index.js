@@ -45,6 +45,7 @@ import remarkLintTableCellPadding from 'remark-lint-table-cell-padding'
 // - add `remark-lint-mdx-jsx-quote-style`.
 // - add `remark-lint-mdx-jsx-unique-attribute-name`.
 // - add `remark-lint-media-style`
+// - add `remark-lint-directive-quote-style`
 
 /** @type {Preset} */
 const remarkPresetLintConsistent = {

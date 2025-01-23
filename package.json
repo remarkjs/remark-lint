@@ -46,6 +46,7 @@
     "packages/remark-lint-definition-case/",
     "packages/remark-lint-definition-sort/",
     "packages/remark-lint-definition-spacing/",
+    "packages/remark-lint-directive-quote-style/",
     "packages/remark-lint-emphasis-marker/",
     "packages/remark-lint-fenced-code-flag/",
     "packages/remark-lint-fenced-code-marker/",

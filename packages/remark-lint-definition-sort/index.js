@@ -135,7 +135,6 @@
  * @import {DefinitionContent, Parents, Root} from 'mdast'
  */
 
-// To do: check.
 import {ok as assert} from 'devlop'
 import {phrasing} from 'mdast-util-phrasing'
 import {lintRule} from 'unified-lint-rule'

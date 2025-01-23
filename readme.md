@@ -116,6 +116,7 @@ The rules that are maintained here:
 * [`remark-lint-definition-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-sort) — check definition order
 * [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 * [`remark-lint-directive-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-quote-style) — check quotes of directive attributes
+* [`remark-lint-directive-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-unique-attribute-name) — check that attribute names are unique
 * [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
 * [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
 * [`remark-lint-fenced-code-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-marker) — warn when fenced code markers violate the given style

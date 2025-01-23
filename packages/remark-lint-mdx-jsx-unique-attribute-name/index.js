@@ -48,7 +48,7 @@
  *   1:25-1:35: Unexpected attribute name with equal text, expected unique attribute names
  *
  * @example
- *   {"label": "input", "mdx": true, "name": "other-attributes.mdx"}
+ *   {"mdx": true, "name": "other-attributes.mdx"}
  *
  *   <Mercury closest />,
  *   <Venus aphelion={0.728213} />, and
@@ -56,11 +56,10 @@
  */
 
 /**
- * @import {Nodes, Root} from 'mdast'
  * @import {MdxJsxAttribute} from 'mdast-util-mdx'
+ * @import {Root} from 'mdast'
  */
 
-import {ok as assert} from 'devlop'
 import {lintRule} from 'unified-lint-rule'
 import {visitParents} from 'unist-util-visit-parents'
 import {VFileMessage} from 'vfile-message'
@@ -82,38 +81,32 @@ const remarkLintMdxJsxUniqueAttributeName = lintRule(
         node.type === 'mdxJsxFlowElement' ||
         node.type === 'mdxJsxTextElement'
       ) {
-        /** @type {Map<string, Array<MdxJsxAttribute | Nodes>>} */
+        /** @type {Map<string, MdxJsxAttribute>} */
         const map = new Map()
-        const ancestors = [...parents, node]
 
         for (const attribute of node.attributes) {
           // Ignore shorthand booleans and expressions using braces.
           if (attribute.type !== 'mdxJsxAttribute') continue
 
-          const nodes = map.get(attribute.name)
+          const duplicate = map.get(attribute.name)
 
-          if (attribute.position && nodes) {
-            const duplicateAncestors = [...nodes]
-            const duplicate = duplicateAncestors.pop()
-            assert(duplicate) // Always defined.
-            assert(duplicate.type === 'mdxJsxAttribute')
-
+          if (attribute.position && duplicate) {
             file.message(
               'Unexpected attribute name with equal text, expected unique attribute names',
               {
-                ancestors,
+                ancestors: [...parents, node],
                 cause: new VFileMessage('Equal attribute name defined here', {
-                  ancestors: duplicateAncestors,
+                  ancestors: [...parents, node],
                   place: duplicate.position,
                   source: 'remark-lint',
-                  ruleId: 'no-duplicate-headings'
+                  ruleId: 'mdx-jsx-unique-attribute-name'
                 }),
                 place: attribute.position
               }
             )
           }
 
-          map.set(attribute.name, [...ancestors, attribute])
+          map.set(attribute.name, attribute)
         }
       }
     })

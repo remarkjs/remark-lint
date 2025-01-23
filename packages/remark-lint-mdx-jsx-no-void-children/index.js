@@ -72,7 +72,6 @@
  * @import {MdxJsxAttribute} from 'mdast-util-mdx'
  */
 
-// To do: check.
 import {htmlVoidElements} from 'html-void-elements'
 import {lintRule} from 'unified-lint-rule'
 import {visitParents} from 'unist-util-visit-parents'

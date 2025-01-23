@@ -21,7 +21,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com>"
   ],
   "sideEffects": false,
   "type": "module",
@@ -55,8 +55,7 @@
       "complexity": "off",
       "logical-assignment-operators": "off",
       "max-depth": "off",
-      "unicorn/prefer-code-point": "off",
-      "#unicorn/prefer-switch": "off"
+      "unicorn/prefer-code-point": "off"
     }
   }
 }

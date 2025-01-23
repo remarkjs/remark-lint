@@ -33,7 +33,7 @@
  *
  * @module no-unneeded-full-reference-image
  * @author Titus Wormer
- * @copyright 2019 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

@@ -31,7 +31,7 @@
  *
  * @module mdx-jsx-self-close
  * @author Titus Wormer
- * @copyright 2025 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

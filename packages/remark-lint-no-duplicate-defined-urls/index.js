@@ -33,7 +33,7 @@
  *
  * @module no-duplicate-defined-urls
  * @author Titus Wormer
- * @copyright 2020 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

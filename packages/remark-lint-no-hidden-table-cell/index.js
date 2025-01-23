@@ -28,7 +28,7 @@
  *
  * @module no-hidden-table-cell
  * @author Titus Wormer
- * @copyright 2025 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

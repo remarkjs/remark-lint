@@ -44,7 +44,7 @@
  *
  * @module table-pipes
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

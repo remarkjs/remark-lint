@@ -38,7 +38,7 @@
  *
  * @module no-reference-like-url
  * @author Titus Wormer
- * @copyright 2016 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

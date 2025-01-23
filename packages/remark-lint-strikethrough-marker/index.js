@@ -68,7 +68,7 @@
  *
  * @module strikethrough-marker
  * @author Denis Augsburger
- * @copyright 2021 Denis Augsburger
+ * @copyright Denis Augsburger
  * @license MIT
  *
  * @example

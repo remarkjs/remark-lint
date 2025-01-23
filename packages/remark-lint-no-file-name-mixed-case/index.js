@@ -29,7 +29,7 @@
  *
  * @module no-file-name-mixed-case
  * @author Titus Wormer
- * @copyright 2015 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

@@ -65,7 +65,7 @@
  *
  * @module no-undefined-references
  * @author Titus Wormer
- * @copyright 2016 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

@@ -30,7 +30,7 @@
  *
  * @module mdx-jsx-unique-attribute-name
  * @author Titus Wormer
- * @copyright 2025 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

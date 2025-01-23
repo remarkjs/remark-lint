@@ -65,7 +65,7 @@
  *
  * @module linebreak-style
  * @author Titus Wormer
- * @copyright 2017 Titus Wormer
+ * @copyright Titus Wormer
  * @license MIT
  *
  * @example

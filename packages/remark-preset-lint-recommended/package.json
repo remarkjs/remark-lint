@@ -1,32 +1,8 @@
 {
-  "name": "remark-preset-lint-recommended",
-  "version": "7.0.0",
-  "description": "remark preset to configure remark-lint with rules that prevent mistakes or stuff that fails across vendors.",
-  "license": "MIT",
-  "keywords": [
-    "preset",
-    "recommended",
-    "remark",
-    "remark-lint",
-    "remark-preset"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "remark-lint": "^10.0.0",
@@ -45,11 +21,35 @@
     "remark-lint-ordered-list-marker-style": "^4.0.0",
     "unified": "^11.0.0"
   },
+  "description": "remark preset to configure remark-lint with rules that prevent mistakes or stuff that fails across vendors.",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "preset",
+    "recommended",
+    "remark",
+    "remark-lint",
+    "remark-preset"
+  ],
+  "license": "MIT",
+  "name": "remark-preset-lint-recommended",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-recommended",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "7.0.0",
   "xo": {
     "prettier": true,
     "rules": {

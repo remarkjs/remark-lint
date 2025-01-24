@@ -1,8 +1,26 @@
 {
-  "name": "remark-lint-hard-break-spaces",
-  "version": "4.0.0",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-position": "^5.0.0",
+    "unist-util-visit": "^5.0.0"
+  },
   "description": "remark-lint rule to warn when too many spaces are used to create a hard break",
-  "license": "MIT",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "keywords": [
     "break",
     "hard",
@@ -14,35 +32,17 @@
     "size",
     "spaces"
   ],
+  "license": "MIT",
+  "name": "remark-lint-hard-break-spaces",
   "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-hard-break-spaces",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
-  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-  "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
-  ],
-  "dependencies": {
-    "@types/mdast": "^4.0.0",
-    "unified-lint-rule": "^3.0.0",
-    "unist-util-position": "^5.0.0",
-    "unist-util-visit": "^5.0.0"
-  },
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

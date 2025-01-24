@@ -1,36 +1,9 @@
 {
-  "name": "remark-lint-ordered-list-marker-value",
-  "version": "4.0.0",
-  "description": "remark-lint rule to warn when the marker value of ordered lists violates a given style",
-  "license": "MIT",
-  "keywords": [
-    "lint",
-    "list",
-    "marker",
-    "ordered",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus <tituswormer@gmail.com>",
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -42,11 +15,38 @@
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"
   },
+  "description": "remark-lint rule to check the marker value of ordered lists",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "lint",
+    "list",
+    "marker",
+    "ordered",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-ordered-list-marker-value",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

@@ -1,35 +1,8 @@
 {
-  "name": "remark-lint-final-definition",
-  "version": "4.0.1",
-  "description": "remark-lint rule to warn when definitions are not placed at the end of the file",
-  "license": "MIT",
-  "keywords": [
-    "definition",
-    "final",
-    "lint",
-    "position",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -41,11 +14,38 @@
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"
   },
+  "description": "remark-lint rule to warn when definitions are not placed at the end of the file",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "definition",
+    "final",
+    "lint",
+    "position",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-final-definition",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-final-definition",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.1",
   "xo": {
     "prettier": true,
     "rules": {

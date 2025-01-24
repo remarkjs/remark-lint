@@ -159,19 +159,12 @@ async function generatePackageJson(name) {
   // @ts-expect-error: `type-fest` has bugs.
   /** @satisfies {Partial<PackageJson>} */
   const packageJson = {
-    name,
-    version: previousPackage.version,
-    description: previousPackage.description,
-    license: ancestorPackage.license,
-    keywords: (previousPackage.keywords || []).sort(),
-    repository: ancestorPackage.repository + '/tree/main/' + folderPath,
-    bugs: ancestorPackage.bugs,
-    funding: ancestorPackage.funding,
     author: ancestorPackage.author,
+    bugs: ancestorPackage.bugs,
     contributors:
       gitContributors.length > 0 ? gitContributors : [ancestorPackage.author],
-    sideEffects: false,
-    type: 'module',
+    dependencies: previousPackage.dependencies,
+    description: previousPackage.description,
     exports: './index.js',
     files: codePaths
       .map((d) => {
@@ -182,9 +175,16 @@ async function generatePackageJson(name) {
         return all.indexOf(d) === index
       })
       .sort(),
-    dependencies: previousPackage.dependencies,
+    funding: ancestorPackage.funding,
+    keywords: (previousPackage.keywords || []).sort(),
+    license: ancestorPackage.license,
+    name,
+    repository: ancestorPackage.repository + '/tree/main/' + folderPath,
     scripts: {},
+    sideEffects: false,
     typeCoverage: {atLeast: 100, strict: true},
+    type: 'module',
+    version: previousPackage.version,
     xo: previousPackage.xo || {
       prettier: true,
       rules: {'capitalized-comments': 'off'}

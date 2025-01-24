@@ -1,34 +1,8 @@
 {
-  "name": "remark-lint-no-duplicate-headings",
-  "version": "4.0.0",
-  "description": "remark-lint rule to warn on duplicate headings",
-  "license": "MIT",
-  "keywords": [
-    "duplicate",
-    "heading",
-    "lint",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -39,11 +13,37 @@
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"
   },
+  "description": "remark-lint rule to warn on duplicate headings",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "duplicate",
+    "heading",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-no-duplicate-headings",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-headings",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

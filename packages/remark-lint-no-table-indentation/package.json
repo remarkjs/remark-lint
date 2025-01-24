@@ -1,34 +1,8 @@
 {
-  "name": "remark-lint-no-table-indentation",
-  "version": "5.0.0",
-  "description": "remark-lint rule to warn when tables are indented",
-  "license": "MIT",
-  "keywords": [
-    "indent",
-    "lint",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule",
-    "table"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -40,11 +14,37 @@
     "unist-util-visit-parents": "^6.0.0",
     "vfile-location": "^5.0.0"
   },
+  "description": "remark-lint rule to warn when tables are indented",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "indent",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "table"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-no-table-indentation",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "5.0.0",
   "xo": {
     "prettier": true,
     "rules": {

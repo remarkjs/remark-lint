@@ -1,34 +1,8 @@
 {
-  "name": "remark-lint-definition-spacing",
-  "version": "4.0.0",
-  "description": "remark-lint rule to warn when consecutive whitespace is used in a definition",
-  "license": "MIT",
-  "keywords": [
-    "definition",
-    "lint",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule",
-    "spacing"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -38,11 +12,37 @@
     "unified-lint-rule": "^3.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },
+  "description": "remark-lint rule to warn when consecutive whitespace is used in a definition",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "definition",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "spacing"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-definition-spacing",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

@@ -1,33 +1,8 @@
 {
-  "name": "remark-preset-lint-consistent",
-  "version": "6.0.0",
-  "description": "remark preset to configure remark-lint with rules that enforce consistency",
-  "license": "MIT",
-  "keywords": [
-    "consistency",
-    "consistent",
-    "preset",
-    "remark",
-    "remark-lint",
-    "remark-preset"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "remark-lint": "^10.0.0",
@@ -46,11 +21,36 @@
     "remark-lint-table-cell-padding": "^5.0.0",
     "unified": "^11.0.0"
   },
+  "description": "remark preset to configure remark-lint with rules that enforce consistency",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "consistency",
+    "consistent",
+    "preset",
+    "remark",
+    "remark-lint",
+    "remark-preset"
+  ],
+  "license": "MIT",
+  "name": "remark-preset-lint-consistent",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-consistent",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "6.0.0",
   "xo": {
     "prettier": true,
     "rules": {

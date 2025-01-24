@@ -1,41 +1,126 @@
 {
-  "private": true,
-  "license": "MIT",
-  "repository": "https://github.com/remarkjs/remark-lint",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-    "Stephan Schneider <stephanschndr@gmail.com>",
-    "Merlijn Vos <hello@murderlon.me>",
+    "Ben Balter <ben.balter@github.com>",
+    "Bob “Wombat” Hogg <wombat@rwhogg.site>",
+    "Burak Yiğit Kaya <ben@byk.im>",
+    "Danny Arnold <despair.blue@gmail.com>",
+    "David Chambers <dc@davidchambers.me>",
+    "David Clark <dclark@mapbox.com>",
+    "Denis Augsburger <denis.augsburger@simpleen.io> (https://simpleen.io)",
+    "Emeric Fermas <emeric.fermas@gmail.com>",
     "John Vandenberg <jayvdb@gmail.com>",
+    "Merlijn Vos <hello@murderlon.me>",
     "Michael Mior <michael.mior@gmail.com>",
     "Nikita Sobolev <mail@sobolevn.me>",
     "Patrick Gilday <pcgilday@gmail.com>",
     "Philipp Burckhardt <pburckhardt@outlook.com>",
     "Piotr Kuczynski <piotr.kuczynski@gmail.com>",
     "Richard Littauer <richard.littauer@gmail.com>",
+    "Stephan Schneider <stephanschndr@gmail.com>",
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
     "Tony Brix <tbrix13@gmail.com>",
-    "YJ Yang <chcokr@gmail.com>",
-    "Yoshua Wuyts <yoshuawuyts@gmail.com>",
-    "Emeric Fermas <emeric.fermas@gmail.com>",
     "Victor Felder <victor@draft.li>",
+    "YJ Yang <chcokr@gmail.com>",
     "Yash Nisar <yash.nisar@somaiya.edu>",
-    "Ben Balter <ben.balter@github.com>",
-    "Сковорода Никита Андреевич <chalkerx@gmail.com>",
-    "Burak Yiğit Kaya <ben@byk.im>",
-    "Danny Arnold <despair.blue@gmail.com>",
-    "David Clark <dclark@mapbox.com>",
+    "Yoshua Wuyts <yoshuawuyts@gmail.com>",
     "Саша Черных <SashaChernykhEmpressOfUniverse@kristinita.ru>",
-    "Bob “Wombat” Hogg <wombat@rwhogg.site>",
-    "David Chambers <dc@davidchambers.me>",
-    "Denis Augsburger <denis.augsburger@simpleen.io> (https://simpleen.io)"
+    "Сковорода Никита Андреевич <chalkerx@gmail.com>"
   ],
+  "devDependencies": {
+    "@types/mdast": "^4.0.0",
+    "@types/parse-author": "^2.0.0",
+    "@types/pluralize": "^0.0.33",
+    "@types/ungap__structured-clone": "^1.0.0",
+    "@ungap/structured-clone": "^1.0.0",
+    "@wooorm/starry-night": "^3.0.0",
+    "c8": "^10.0.0",
+    "comment-parser": "^1.0.0",
+    "control-pictures": "^2.0.0",
+    "estree-util-is-identifier-name": "^3.0.0",
+    "estree-util-visit": "^2.0.0",
+    "github-slugger": "^2.0.0",
+    "mdast-util-find-and-replace": "^3.0.0",
+    "mdast-util-from-markdown": "^2.0.0",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-to-markdown": "^2.0.0",
+    "mdast-util-to-string": "^4.0.0",
+    "mdast-zone": "^6.0.0",
+    "micromark-extension-gfm": "^3.0.0",
+    "micromark-util-normalize-identifier": "^2.0.0",
+    "parse-author": "^2.0.0",
+    "prettier": "^3.0.0",
+    "remark": "^15.0.0",
+    "remark-cli": "^12.0.0",
+    "remark-comment-config": "^8.0.0",
+    "remark-directive": "^3.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-github": "^12.0.0",
+    "remark-math": "^6.0.0",
+    "remark-mdx": "^3.0.0",
+    "remark-toc": "^9.0.0",
+    "remark-validate-links": "^13.0.0",
+    "strip-indent": "^4.0.0",
+    "to-vfile": "^8.0.0",
+    "type-coverage": "^2.0.0",
+    "type-fest": "^4.0.0",
+    "typescript": "^5.4.0",
+    "unified": "^11.0.0",
+    "unist-builder": "^4.0.0",
+    "unist-util-remove-position": "^5.0.0",
+    "vfile": "^6.0.0",
+    "vfile-find-down": "^7.0.0",
+    "vfile-reporter": "^8.0.0",
+    "vfile-sort": "^4.0.0",
+    "xo": "^0.60.0"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "license": "MIT",
+  "prettier": {
+    "bracketSpacing": false,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "private": true,
+  "repository": "https://github.com/remarkjs/remark-lint",
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark --frail --output --quiet -- . && prettier --log-level warn --write -- . && xo --fix",
+    "generate": "node --conditions development script/build-github-code-flag.js && node --conditions development script/build-packages.js",
+    "test-api": "node --conditions development test.js",
+    "test-coverage": "c8 --100 --reporter lcov -- npm run test-api",
+    "test": "npm run build && npm run generate && npm run format && npm run test-coverage"
+  },
+  "typeCoverage": {
+    "atLeast": 100,
+    "strict": true
+  },
   "type": "module",
+  "xo": {
+    "overrides": [
+      {
+        "files": [
+          "script/**/*.js",
+          "test.js"
+        ],
+        "rules": {
+          "max-depth": "off",
+          "no-await-in-loop": "off",
+          "unicorn/no-array-callback-reference": "off",
+          "unicorn/prefer-string-replace-all": "off"
+        }
+      }
+    ],
+    "prettier": true
+  },
   "workspaces": [
     "packages/remark-lint/",
     "packages/remark-lint-blockquote-indentation/",
@@ -122,92 +207,5 @@
     "packages/remark-preset-lint-markdown-style-guide/",
     "packages/remark-preset-lint-recommended/",
     "packages/unified-lint-rule/"
-  ],
-  "devDependencies": {
-    "@types/mdast": "^4.0.0",
-    "@types/parse-author": "^2.0.0",
-    "@types/pluralize": "^0.0.33",
-    "@types/ungap__structured-clone": "^1.0.0",
-    "@ungap/structured-clone": "^1.0.0",
-    "@wooorm/starry-night": "^3.0.0",
-    "c8": "^10.0.0",
-    "comment-parser": "^1.0.0",
-    "control-pictures": "^2.0.0",
-    "estree-util-is-identifier-name": "^3.0.0",
-    "estree-util-visit": "^2.0.0",
-    "github-slugger": "^2.0.0",
-    "mdast-util-find-and-replace": "^3.0.0",
-    "mdast-util-from-markdown": "^2.0.0",
-    "mdast-util-gfm": "^3.0.0",
-    "mdast-util-to-markdown": "^2.0.0",
-    "mdast-util-to-string": "^4.0.0",
-    "mdast-zone": "^6.0.0",
-    "micromark-extension-gfm": "^3.0.0",
-    "micromark-util-normalize-identifier": "^2.0.0",
-    "parse-author": "^2.0.0",
-    "prettier": "^3.0.0",
-    "remark": "^15.0.0",
-    "remark-cli": "^12.0.0",
-    "remark-comment-config": "^8.0.0",
-    "remark-directive": "^3.0.0",
-    "remark-frontmatter": "^5.0.0",
-    "remark-gfm": "^4.0.0",
-    "remark-github": "^12.0.0",
-    "remark-math": "^6.0.0",
-    "remark-mdx": "^3.0.0",
-    "remark-toc": "^9.0.0",
-    "remark-validate-links": "^13.0.0",
-    "strip-indent": "^4.0.0",
-    "to-vfile": "^8.0.0",
-    "type-coverage": "^2.0.0",
-    "type-fest": "^4.0.0",
-    "typescript": "^5.4.0",
-    "unified": "^11.0.0",
-    "unist-builder": "^4.0.0",
-    "unist-util-remove-position": "^5.0.0",
-    "vfile": "^6.0.0",
-    "vfile-find-down": "^7.0.0",
-    "vfile-reporter": "^8.0.0",
-    "vfile-sort": "^4.0.0",
-    "xo": "^0.60.0"
-  },
-  "scripts": {
-    "generate": "node --conditions development script/build-github-code-flag.js && node --conditions development script/build-packages.js",
-    "build": "tsc --build --clean && tsc --build && type-coverage",
-    "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
-    "test": "npm run build && npm run generate && npm run format && npm run test-coverage",
-    "test-api": "node --conditions development test.js",
-    "test-coverage": "c8 --100 --check-coverage --reporter lcov npm run test-api"
-  },
-  "prettier": {
-    "bracketSpacing": false,
-    "semi": false,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "none",
-    "useTabs": false
-  },
-  "typeCoverage": {
-    "atLeast": 100,
-    "strict": true
-  },
-  "xo": {
-    "overrides": [
-      {
-        "files": [
-          "test.js",
-          "script/**/*.js"
-        ],
-        "rules": {
-          "max-depth": "off",
-          "no-await-in-loop": "off",
-          "unicorn/no-array-callback-reference": "off"
-        }
-      }
-    ],
-    "prettier": true,
-    "rules": {
-      "unicorn/prefer-string-replace-all": "off"
-    }
-  }
+  ]
 }

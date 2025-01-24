@@ -1,35 +1,8 @@
 {
-  "name": "remark-lint-no-paragraph-content-indent",
-  "version": "5.0.0",
-  "description": "remark-lint rule to warn when the content in paragraphs are indented",
-  "license": "MIT",
-  "keywords": [
-    "content",
-    "indent",
-    "lint",
-    "paragraph",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -41,11 +14,38 @@
     "unist-util-visit-parents": "^6.0.0",
     "vfile-location": "^5.0.0"
   },
+  "description": "remark-lint rule to warn when the content in paragraphs are indented",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "content",
+    "indent",
+    "lint",
+    "paragraph",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-no-paragraph-content-indent",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-paragraph-content-indent",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "5.0.0",
   "xo": {
     "prettier": true,
     "rules": {

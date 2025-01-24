@@ -1,8 +1,26 @@
 {
-  "name": "remark-lint-no-emphasis-as-heading",
-  "version": "4.0.0",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "mdast-util-phrasing": "^4.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-visit-parents": "^6.0.0"
+  },
   "description": "remark-lint rule to warn when emphasis or importance is used instead of a heading",
-  "license": "MIT",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "keywords": [
     "emphasis",
     "heading",
@@ -12,35 +30,17 @@
     "remark-lint-rule",
     "rule"
   ],
+  "license": "MIT",
+  "name": "remark-lint-no-emphasis-as-heading",
   "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-emphasis-as-heading",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
-  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-  "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
-  ],
-  "dependencies": {
-    "@types/mdast": "^4.0.0",
-    "mdast-util-phrasing": "^4.0.0",
-    "unified-lint-rule": "^3.0.0",
-    "unist-util-visit-parents": "^6.0.0"
-  },
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

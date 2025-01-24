@@ -1,35 +1,8 @@
 {
-  "name": "remark-lint-table-cell-padding",
-  "version": "5.0.0",
-  "description": "remark-lint rule to warn when table cells are incorrectly padded",
-  "license": "MIT",
-  "keywords": [
-    "cell",
-    "lint",
-    "padding",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule",
-    "table"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -42,11 +15,38 @@
     "unist-util-visit-parents": "^6.0.0",
     "vfile-message": "^4.0.0"
   },
+  "description": "remark-lint rule to warn when table cells are incorrectly padded",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "cell",
+    "lint",
+    "padding",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "table"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-table-cell-padding",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-cell-padding",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "5.0.0",
   "xo": {
     "prettier": true,
     "rules": {

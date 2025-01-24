@@ -1,36 +1,8 @@
 {
-  "name": "remark-lint-table-pipe-alignment",
-  "version": "4.0.0",
-  "description": "remark-lint rule to warn when table pipes are not aligned",
-  "license": "MIT",
-  "keywords": [
-    "align",
-    "cell",
-    "lint",
-    "pipe",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule",
-    "table"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -42,11 +14,39 @@
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },
+  "description": "remark-lint rule to warn when table pipes are not aligned",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "align",
+    "cell",
+    "lint",
+    "pipe",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "table"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-table-pipe-alignment",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-table-pipe-alignment",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

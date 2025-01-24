@@ -1,8 +1,28 @@
 {
-  "name": "unified-lint-rule",
-  "version": "3.0.0",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "contributors": [
+    "Remco Haszing <remcohaszing@gmail.com>",
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "dependencies": {
+    "@types/unist": "^3.0.0",
+    "trough": "^2.0.0",
+    "unified": "^11.0.0",
+    "vfile": "^6.0.0"
+  },
   "description": "unified plugin to make it a bit easier to create linting rules",
-  "license": "MIT",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js",
+    "lib/"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "keywords": [
     "lint",
     "plugin",
@@ -11,37 +31,17 @@
     "unified",
     "unified-plugin"
   ],
+  "license": "MIT",
+  "name": "unified-lint-rule",
   "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/unified-lint-rule",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
-  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-  "contributors": [
-    "Remco Haszing <remcohaszing@gmail.com>",
-    "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js",
-    "lib/"
-  ],
-  "dependencies": {
-    "@types/unist": "^3.0.0",
-    "trough": "^2.0.0",
-    "unified": "^11.0.0",
-    "vfile": "^6.0.0"
-  },
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "3.0.0",
   "xo": {
     "prettier": true,
     "rules": {

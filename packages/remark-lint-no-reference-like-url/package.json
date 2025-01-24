@@ -1,8 +1,28 @@
 {
-  "name": "remark-lint-no-reference-like-url",
-  "version": "4.0.0",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "devlop": "^1.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-position": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile-message": "^4.0.0"
+  },
   "description": "remark-lint rule to warn when URLs are also defined identifiers",
-  "license": "MIT",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "keywords": [
     "definition",
     "lint",
@@ -13,37 +33,17 @@
     "rule",
     "url"
   ],
+  "license": "MIT",
+  "name": "remark-lint-no-reference-like-url",
   "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-reference-like-url",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
-  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-  "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
-  ],
-  "dependencies": {
-    "@types/mdast": "^4.0.0",
-    "devlop": "^1.0.0",
-    "unified-lint-rule": "^3.0.0",
-    "unist-util-position": "^5.0.0",
-    "unist-util-visit-parents": "^6.0.0",
-    "vfile-message": "^4.0.0"
-  },
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

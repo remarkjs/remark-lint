@@ -118,7 +118,7 @@ The rules that are maintained here:
 * [`remark-lint-directive-attribute-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-attribute-sort) — check directive attribute order
 * [`remark-lint-directive-collapsed-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute) — check that collapsed attributes are used in directives
 * [`remark-lint-directive-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-quote-style) — check quotes of directive attributes
-* [`remark-lint-directive-shortcut-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-shortcut-attribute) — check that shortcut attributes are used when possible in directives
+* [`remark-lint-directive-shortcut-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-shortcut-attribute) — check that shortcut attributes are used in directives
 * [`remark-lint-directive-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-unique-attribute-name) — check that attribute names are unique
 * [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
 * [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag
@@ -145,7 +145,7 @@ The rules that are maintained here:
 * [`remark-lint-mdx-jsx-shorthand-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-shorthand-attribute) — check that shorthand attributes are used in MDX JSX
 * [`remark-lint-mdx-jsx-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-unique-attribute-name) — check that mdx jsx attributes are unique
 * [`remark-lint-media-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-media-style) — check whether references or resources are used
-* [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
+* [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when block quotes have blank lines without markers
 * [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
 * [`remark-lint-no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls
 * [`remark-lint-no-duplicate-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-definitions) — warn on duplicate definitions
@@ -175,11 +175,11 @@ The rules that are maintained here:
 * [`remark-lint-no-table-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-table-indentation) — warn when tables are indented
 * [`remark-lint-no-tabs`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-tabs) — warn when hard tabs are used instead of spaces
 * [`remark-lint-no-undefined-references`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references) — warn when references to undefined definitions are found
-* [`remark-lint-no-unneeded-full-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image) — warn when full reference images are used if they can be collapsed
-* [`remark-lint-no-unneeded-full-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link) — warn when full reference links are used if they can be collapsed
+* [`remark-lint-no-unneeded-full-reference-image`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-image) — check that full reference images can be collapsed
+* [`remark-lint-no-unneeded-full-reference-link`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unneeded-full-reference-link) — check that full reference links can be collapsed
 * [`remark-lint-no-unused-definitions`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-unused-definitions) — warn when unused definitions are found
 * [`remark-lint-ordered-list-marker-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-style) — warn when the markers of ordered lists violate a given style
-* [`remark-lint-ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) — warn when the marker value of ordered lists violates a given style
+* [`remark-lint-ordered-list-marker-value`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-ordered-list-marker-value) — check the marker value of ordered lists
 * [`remark-lint-rule-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-rule-style) — warn when horizontal rules violate a given style
 * [`remark-lint-strikethrough-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strikethrough-marker) — warn when strikethrough markers violate the given style
 * [`remark-lint-strong-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-strong-marker) — warn when importance (strong) markers violate the given style

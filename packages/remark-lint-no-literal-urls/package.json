@@ -1,34 +1,8 @@
 {
-  "name": "remark-lint-no-literal-urls",
-  "version": "4.0.0",
-  "description": "remark-lint rule to warn when URLs without angle brackets are used",
-  "license": "MIT",
-  "keywords": [
-    "lint",
-    "literal",
-    "remark",
-    "remark-lint",
-    "remark-lint-rule",
-    "rule",
-    "url"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "@types/mdast": "^4.0.0",
@@ -38,11 +12,37 @@
     "unist-util-position": "^5.0.0",
     "unist-util-visit-parents": "^6.0.0"
   },
+  "description": "remark-lint rule to warn when URLs without angle brackets are used",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "lint",
+    "literal",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "url"
+  ],
+  "license": "MIT",
+  "name": "remark-lint-no-literal-urls",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-literal-urls",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "4.0.0",
   "xo": {
     "prettier": true,
     "rules": {

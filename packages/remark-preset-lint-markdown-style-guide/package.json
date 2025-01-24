@@ -1,34 +1,8 @@
 {
-  "name": "remark-preset-lint-markdown-style-guide",
-  "version": "6.0.0",
-  "description": "remark preset to configure remark-lint with rules that enforce the markdown style guide",
-  "license": "MIT",
-  "keywords": [
-    "guide",
-    "markdown",
-    "preset",
-    "remark",
-    "remark-lint",
-    "remark-preset",
-    "style"
-  ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide",
-  "bugs": "https://github.com/remarkjs/remark-lint/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com>"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "index.d.ts",
-    "index.d.ts.map",
-    "index.js"
   ],
   "dependencies": {
     "remark-lint": "^10.0.0",
@@ -76,11 +50,37 @@
     "remark-lint-unordered-list-marker-style": "^4.0.0",
     "unified": "^11.0.0"
   },
+  "description": "remark preset to configure remark-lint with rules that enforce the markdown style guide",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "guide",
+    "markdown",
+    "preset",
+    "remark",
+    "remark-lint",
+    "remark-preset",
+    "style"
+  ],
+  "license": "MIT",
+  "name": "remark-preset-lint-markdown-style-guide",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-preset-lint-markdown-style-guide",
   "scripts": {},
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
     "strict": true
   },
+  "type": "module",
+  "version": "6.0.0",
   "xo": {
     "prettier": true,
     "rules": {

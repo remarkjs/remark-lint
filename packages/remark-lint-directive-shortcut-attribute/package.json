@@ -1,19 +1,19 @@
 {
-  "name": "remark-lint-directive-collapsed-attribute",
+  "name": "remark-lint-directive-shortcut-attribute",
   "version": "0.0.0",
-  "description": "remark-lint rule to check that collapsed attributes are used when possible in directives",
+  "description": "remark-lint rule to check that shortcut attributes are used when possible in directives",
   "license": "MIT",
   "keywords": [
     "attribute",
-    "collapsed",
     "directive",
     "lint",
     "remark",
     "remark-lint",
     "remark-lint-rule",
-    "rule"
+    "rule",
+    "shortcut"
   ],
-  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute",
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-shortcut-attribute",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "funding": {
     "type": "opencollective",
@@ -21,7 +21,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com>"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "sideEffects": false,
   "type": "module",

@@ -49,6 +49,7 @@
     "packages/remark-lint-directive-attribute-sort/",
     "packages/remark-lint-directive-collapsed-attribute/",
     "packages/remark-lint-directive-quote-style/",
+    "packages/remark-lint-directive-shortcut-attribute/",
     "packages/remark-lint-directive-unique-attribute-name/",
     "packages/remark-lint-emphasis-marker/",
     "packages/remark-lint-fenced-code-flag/",

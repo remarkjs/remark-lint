@@ -118,6 +118,7 @@ The rules that are maintained here:
 * [`remark-lint-directive-attribute-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-attribute-sort) — check directive attribute order
 * [`remark-lint-directive-collapsed-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute) — check that collapsed attributes are used when possible in directives
 * [`remark-lint-directive-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-quote-style) — check quotes of directive attributes
+* [`remark-lint-directive-shortcut-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-shortcut-attribute) — check that shortcut attributes are used when possible in directives
 * [`remark-lint-directive-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-unique-attribute-name) — check that attribute names are unique
 * [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style
 * [`remark-lint-fenced-code-flag`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-fenced-code-flag) — warn when fenced code blocks occur without language flag

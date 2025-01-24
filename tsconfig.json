@@ -2,8 +2,8 @@
   "compilerOptions": {
     "checkJs": true,
     "customConditions": ["development"],
-    "declaration": true,
     "declarationMap": true,
+    "declaration": true,
     "emitDeclarationOnly": true,
     "exactOptionalPropertyTypes": true,
     "lib": ["dom", "es2022"],

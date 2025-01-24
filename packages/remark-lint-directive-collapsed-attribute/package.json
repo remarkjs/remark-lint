@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-directive-collapsed-attribute",
   "version": "0.0.0",
-  "description": "remark-lint rule to check that collapsed attributes are used when possible in directives",
+  "description": "remark-lint rule to check that collapsed attributes are used in directives",
   "license": "MIT",
   "keywords": [
     "attribute",

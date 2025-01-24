@@ -107,16 +107,16 @@ The rules that are maintained here:
 
 <!--rules start-->
 
-* [`remark-lint-blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation) — warn when block quotes are either indented too much or too little
-* [`remark-lint-checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) — warn when list item checkboxes violate a given style
-* [`remark-lint-checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent) — warn when list item checkboxes are followed by too much whitespace
+* [`remark-lint-blockquote-indentation`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-blockquote-indentation) — check whitespace after block quote markers
+* [`remark-lint-checkbox-character-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-character-style) — check list item checkbox characters
+* [`remark-lint-checkbox-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-checkbox-content-indent) — warn when too much whitespace follows list item checkboxes
 * [`remark-lint-code-block-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-code-block-style) — warn when code blocks do not adhere to a given style
 * [`remark-lint-correct-media-syntax`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-correct-media-syntax) — check for accidental bracket and paren mixup for images and links
 * [`remark-lint-definition-case`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-case) — warn when definition labels are not lowercase
 * [`remark-lint-definition-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-sort) — check definition order
 * [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 * [`remark-lint-directive-attribute-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-attribute-sort) — check directive attribute order
-* [`remark-lint-directive-collapsed-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute) — check that collapsed attributes are used when possible in directives
+* [`remark-lint-directive-collapsed-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute) — check that collapsed attributes are used in directives
 * [`remark-lint-directive-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-quote-style) — check quotes of directive attributes
 * [`remark-lint-directive-shortcut-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-shortcut-attribute) — check that shortcut attributes are used when possible in directives
 * [`remark-lint-directive-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-unique-attribute-name) — check that attribute names are unique
@@ -134,7 +134,7 @@ The rules that are maintained here:
 * [`remark-lint-link-title-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-link-title-style) — warn when link and definition titles occur with incorrect quotes
 * [`remark-lint-list-item-bullet-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-bullet-indent) — warn when list item bullets are indented
 * [`remark-lint-list-item-content-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-content-indent) — warn when the content of a list item has mixed indentation
-* [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — warn when the spacing between a list item’s bullet and its content violates a given style
+* [`remark-lint-list-item-indent`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent) — check the spacing between list item bullets and content
 * [`remark-lint-list-item-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-spacing) — warn when list looseness is incorrect
 * [`remark-lint-maximum-heading-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-heading-length) — warn when headings are too long
 * [`remark-lint-maximum-line-length`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-maximum-line-length) — warn when lines are too long
@@ -142,9 +142,9 @@ The rules that are maintained here:
 * [`remark-lint-mdx-jsx-no-void-children`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-no-void-children) — check mdx jsx quotes
 * [`remark-lint-mdx-jsx-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-quote-style) — check mdx jsx quotes
 * [`remark-lint-mdx-jsx-self-close`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-self-close) — check that self-closing tags are used when possible
-* [`remark-lint-mdx-jsx-shorthand-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-shorthand-attribute) — check that shorthand attributes are used when possible in MDX JSX
+* [`remark-lint-mdx-jsx-shorthand-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-shorthand-attribute) — check that shorthand attributes are used in MDX JSX
 * [`remark-lint-mdx-jsx-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-mdx-jsx-unique-attribute-name) — check that mdx jsx attributes are unique
-* [`remark-lint-media-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-media-style) — check for media (image and link) style: whether references or resources are used
+* [`remark-lint-media-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-media-style) — check whether references or resources are used
 * [`remark-lint-no-blockquote-without-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-blockquote-without-marker) — warn when blank lines without markers (\`>\`) are found in a block quote
 * [`remark-lint-no-consecutive-blank-lines`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-consecutive-blank-lines) — warn for too many consecutive blank lines
 * [`remark-lint-no-duplicate-defined-urls`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-duplicate-defined-urls) — warn on definitions that define the same urls

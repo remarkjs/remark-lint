@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-mdx-jsx-shorthand-attribute",
   "version": "0.0.0",
-  "description": "remark-lint rule to check that shorthand attributes are used when possible in MDX JSX",
+  "description": "remark-lint rule to check that shorthand attributes are used in MDX JSX",
   "license": "MIT",
   "keywords": [
     "attribute",

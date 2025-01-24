@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-checkbox-character-style",
   "version": "5.0.0",
-  "description": "remark-lint rule to warn when list item checkboxes violate a given style",
+  "description": "remark-lint rule to check list item checkbox characters",
   "license": "MIT",
   "keywords": [
     "checkbox",

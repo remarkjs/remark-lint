@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-media-style",
   "version": "0.0.0",
-  "description": "remark-lint rule to check for media (image and link) style: whether references or resources are used",
+  "description": "remark-lint rule to check whether references or resources are used",
   "license": "MIT",
   "keywords": [
     "image",

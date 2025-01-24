@@ -43,8 +43,11 @@ import remarkLintOrderedListMarkerStyle from 'remark-lint-ordered-list-marker-st
 
 // To do: next major:
 // * add `remark-lint-fenced-code-flag` w/ GH check
+// * add `remark-lint-mdx-jsx-self-close`
+// * add `remark-lint-mdx-jsx-unique-attribute-name`.
 // * add `remark-lint-correct-media-syntax`
 // * add `remark-lint-no-hidden-table-cell`
+// * add `remark-lint-directive-unique-attribute-name`
 
 /** @type {Preset} */
 const remarkPresetLintRecommended = {

@@ -45,7 +45,8 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "capitalized-comments": "off"
+      "capitalized-comments": "off",
+      "unicorn/prefer-type-error": "off"
     }
   }
 }

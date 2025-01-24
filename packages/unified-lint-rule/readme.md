@@ -156,7 +156,7 @@ Rule (TypeScript type).
   — tree
 * `file` ([`VFile`][github-vfile])
   — file
-* `options` (`any`, optional)
+* `options` (`unknown`, optional)
   — parameter
 
 ###### Returns

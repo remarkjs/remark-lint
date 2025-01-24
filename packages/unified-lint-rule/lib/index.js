@@ -20,9 +20,6 @@
  * @typedef {0 | 1 | 2} Severity
  *   Severity number;
  *   `0`: `'off'`, `1`: `'on'` and `warn`, `2`: `'error'`.
- *
- * @typedef {[severity: Severity, ...parameters: Array<unknown>]} SeverityTuple
- *   Parsed severty and options.
  */
 
 import {wrap} from 'trough'
@@ -30,7 +27,7 @@ import {wrap} from 'trough'
 /**
  * @template {Node} [Tree=Node]
  *   Node kind.
- * @template {any} [Option=unknown]
+ * @template {unknown} [Option=unknown]
  *   Parameter kind.
  * @param {Meta | string} meta
  *   Info.
@@ -52,7 +49,7 @@ export function lintRule(meta, rule) {
   return plugin
 
   /**
-   * @param {[level: Label | Severity, option?: Option] | Label | Option | Severity} [config]
+   * @param {[level: Label | Severity | boolean, option?: Option] | Label | Option | Severity} [config]
    *   Config.
    * @returns
    *   Transform, if on.
@@ -103,52 +100,57 @@ export function lintRule(meta, rule) {
 /**
  * Coerce a value to a severity--options tuple.
  *
+ * @template {unknown} [Option=unknown]
+ *   Parameter kind.
  * @param {string} name
  *   Rule name.
- * @param {unknown} config
+ * @param {[level: Label | Severity | boolean, option?: Option] | Option} config
  *   Configuration.
- * @returns {SeverityTuple}
+ * @returns {[severity: Severity, parameter: Option | undefined]}
  *   Severity and options.
  */
 function coerce(name, config) {
-  if (!Array.isArray(config)) {
-    return [1, config]
-  }
+  if (Array.isArray(config)) {
+    const [severity, option] = config
 
-  /** @type {Array<unknown>} */
-  const [severity, ...options] = config
-  switch (severity) {
-    case false:
-    case 0:
-    case 'off': {
-      return [0, ...options]
-    }
-
-    case true:
-    case 1:
-    case 'on':
-    case 'warn': {
-      return [1, ...options]
-    }
-
-    case 2:
-    case 'error': {
-      return [2, ...options]
-    }
-
-    default: {
-      if (typeof severity !== 'number') {
-        return [1, config]
+    switch (severity) {
+      case false:
+      case 0:
+      case 'off': {
+        return [0, option]
       }
 
-      throw new Error(
-        'Incorrect severity `' +
-          severity +
-          '` for `' +
-          name +
-          '`, ' +
-          'expected 0, 1, or 2'
-      )
+      case true:
+      case 1:
+      case 'on':
+      case 'warn': {
+        return [1, option]
+      }
+
+      case 2:
+      case 'error': {
+        return [2, option]
+      }
+
+      default: {
+        if (typeof severity === 'number') {
+          throw new Error(
+            'Incorrect severity `' +
+              severity +
+              '` for `' +
+              name +
+              '`, ' +
+              'expected 0, 1, or 2'
+          )
+        }
+
+        // If we do not know the 1st item of the array,
+        // and it’s not a number,
+        // assume `config` is *meant* as an array.
+        return [1, /** @type {Option} */ (config)]
+      }
     }
   }
+
+  return [1, config]
 }

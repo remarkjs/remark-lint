@@ -95,7 +95,7 @@
  *   — tree
  * * `file` ([`VFile`][github-vfile])
  *   — file
- * * `options` (`any`, optional)
+ * * `options` (`unknown`, optional)
  *   — parameter
  *
  * ###### Returns
@@ -153,7 +153,7 @@
 /**
  * @template {Node} [Tree=Node]
  *   Node kind (optional).
- * @template {any} [Option=unknown]
+ * @template {unknown} [Option=unknown]
  *   Parameter kind (optional).
  * @callback Rule
  *   Rule.
@@ -172,9 +172,9 @@
 /**
  * @template {Node} [Tree=Node]
  *   Node kind (optional).
- * @template {any} [Option=unknown]
+ * @template {unknown} [Option=unknown]
  *   Parameter kind (optional).
- * @typedef {(config?: [level: Label | Severity, option?: Option] | Label | Option | Severity) => ((tree: Tree, file: VFile, next: TransformCallback<Tree>) => undefined) | undefined} Plugin
+ * @typedef {(config?: [level: Label | Severity | boolean, option?: Option] | Label | Option | Severity) => ((tree: Tree, file: VFile, next: TransformCallback<Tree>) => undefined) | undefined} Plugin
  */
 
 export {lintRule} from './lib/index.js'

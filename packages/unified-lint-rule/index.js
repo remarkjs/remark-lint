@@ -68,6 +68,23 @@
  * * `url` (`string`, optional)
  *   — link to documentation
  *
+ * ### `Next`
+ *
+ * Callback passed to rules (TypeScript type).
+ *
+ * If the signature of a rule accepts a fourth argument,
+ * the rule may perform asynchronous operations,
+ * and must call it.
+ *
+ * ###### Parameters
+ *
+ * * `error` (`Error`, optional)
+ *   — fatal error to stop linting
+ *
+ * ###### Returns
+ *
+ * Nothing (`undefined`).
+ *
  * ### `Rule`
  *
  * Rule (TypeScript type).
@@ -98,6 +115,7 @@
  *
  * [api-label]: #label
  * [api-meta]: #meta
+ * [api-next]: #next
  * [api-rule]: #rule
  * [api-severity]: #severity
  * [api-lint-rule]: #lintrulemeta-rule
@@ -120,6 +138,19 @@
  */
 
 /**
+ * @callback Next
+ *   Callback passed to rules.
+ *
+ *   If the signature of a rule accepts a fourth argument,
+ *   the rule may perform asynchronous operations,
+ *   and must call it.
+ * @param {Error | undefined} [error]
+ *   Fatal error to stop linting (optional).
+ * @returns {undefined}
+ *   Nothing.
+ */
+
+/**
  * @template {Node} [Tree=Node]
  *   Node kind (optional).
  * @template {any} [Option=unknown]
@@ -131,6 +162,8 @@
  * @param {VFile} file
  *   File.
  * @param {Option} option
+ *   Parameter.
+ * @param {Next} next
  *   Parameter.
  * @returns {Promise<undefined | void> | undefined | void}
  *   Nothing.

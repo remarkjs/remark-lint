@@ -22,6 +22,7 @@
   * [`lintRule(meta, rule)`](#lintrulemeta-rule)
   * [`Label`](#label)
   * [`Meta`](#meta)
+  * [`Next`](#next)
   * [`Rule`](#rule)
   * [`Severity`](#severity)
 * [Compatibility](#compatibility)
@@ -86,7 +87,8 @@ This package exports the identifier
 [`lintRule`][api-lint-rule].
 It exports the [TypeScript][typescript] types
 [`Label`][api-label],
-[`Meta`][api-meta], and
+[`Meta`][api-meta],
+[`Next`][api-next], and
 [`Severity`][api-severity].
 There is no default export.
 
@@ -126,6 +128,23 @@ Rule metadata (TypeScript type).
   — name of the lint rule
 * `url` (`string`, optional)
   — link to documentation
+
+### `Next`
+
+Callback passed to rules (TypeScript type).
+
+If the signature of a rule accepts a fourth argument,
+the rule may perform asynchronous operations,
+and must call it.
+
+###### Parameters
+
+* `error` (`Error`, optional)
+  — fatal error to stop linting
+
+###### Returns
+
+Nothing (`undefined`).
 
 ### `Rule`
 
@@ -185,6 +204,8 @@ abide by its terms.
 [api-lint-rule]: #lintrulemeta-rule
 
 [api-meta]: #meta
+
+[api-next]: #next
 
 [api-rule]: #rule
 

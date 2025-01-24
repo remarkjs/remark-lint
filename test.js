@@ -89,6 +89,38 @@ test('remark-lint', async function (t) {
     assert.deepEqual(file.messages, [])
   })
 
+  await t.test('should support async rules with promises', async function () {
+    const file = await remark()
+      .use(
+        lintRule('test:rule', function (_, file) {
+          return new Promise(function (resolve) {
+            setTimeout(function () {
+              file.message('Test')
+              resolve()
+            }, 4)
+          })
+        })
+      )
+      .process('')
+
+    assert.deepEqual(file.messages.map(String), ['1:1: Test'])
+  })
+
+  await t.test('should support async rules with callbacks', async function () {
+    const file = await remark()
+      .use(
+        lintRule('test:rule', function (_, file, _options, next) {
+          setTimeout(function () {
+            file.message('Test')
+            next()
+          }, 4)
+        })
+      )
+      .process('')
+
+    assert.deepEqual(file.messages.map(String), ['1:1: Test'])
+  })
+
   await t.test('should support a list with a severity', async function () {
     const file = await remark().use(remarkLintFinalNewline, [2]).process('.')
 

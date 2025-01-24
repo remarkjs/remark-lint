@@ -158,7 +158,6 @@ const remarkLintMdxJsxAttributeSort = lintRule(
           assert(attribute) // Always defined.
 
           if (actualIndex !== expectedIndex && attribute.position) {
-            // assert(attribute)
             file.message(
               'Unexpected attribute `' +
                 name +

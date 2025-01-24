@@ -1,0 +1,57 @@
+{
+  "name": "remark-lint-directive-attribute-sort",
+  "version": "0.0.0",
+  "description": "remark-lint rule to check directive attribute order",
+  "license": "MIT",
+  "keywords": [
+    "attribute",
+    "compare",
+    "directive",
+    "lint",
+    "order",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule",
+    "sort"
+  ],
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-attribute-sort",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "@types/unist": "^3.0.0",
+    "devlop": "^1.0.0",
+    "mdast-util-directive": "^3.0.0",
+    "remark-lint-directive-quote-style": "^0.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-visit-parents": "^6.0.0",
+    "vfile-location": "^5.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off"
+    }
+  }
+}

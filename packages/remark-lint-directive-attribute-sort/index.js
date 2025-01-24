@@ -85,7 +85,6 @@ const remarkLintDirectiveAttributeSort = lintRule(
   function (tree, file) {
     const value = String(file)
     const toPoint = location(file).toPoint
-    console.log('xxx:', file.path)
 
     visitParents(tree, function (node, parents) {
       if (
@@ -100,7 +99,6 @@ const remarkLintDirectiveAttributeSort = lintRule(
         const current = []
 
         for (const attribute of attributes) {
-          console.log('xxx:attr:', attribute)
           const start = toPoint(attribute.key[1])
           const end = toPoint(attribute.key[2])
           if (start && end) {

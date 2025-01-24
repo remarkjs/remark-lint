@@ -116,6 +116,7 @@ The rules that are maintained here:
 * [`remark-lint-definition-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-sort) — check definition order
 * [`remark-lint-definition-spacing`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-definition-spacing) — warn when consecutive whitespace is used in a definition
 * [`remark-lint-directive-attribute-sort`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-attribute-sort) — check directive attribute order
+* [`remark-lint-directive-collapsed-attribute`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute) — check that collapsed attributes are used when possible in directives
 * [`remark-lint-directive-quote-style`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-quote-style) — check quotes of directive attributes
 * [`remark-lint-directive-unique-attribute-name`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-unique-attribute-name) — check that attribute names are unique
 * [`remark-lint-emphasis-marker`](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-emphasis-marker) — warn when emphasis markers violate the given style

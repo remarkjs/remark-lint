@@ -1,0 +1,53 @@
+{
+  "name": "remark-lint-directive-collapsed-attribute",
+  "version": "0.0.0",
+  "description": "remark-lint rule to check that collapsed attributes are used when possible in directives",
+  "license": "MIT",
+  "keywords": [
+    "attribute",
+    "collapsed",
+    "directive",
+    "lint",
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "rule"
+  ],
+  "repository": "https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-directive-collapsed-attribute",
+  "bugs": "https://github.com/remarkjs/remark-lint/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/mdast": "^4.0.0",
+    "mdast-util-directive": "^3.0.0",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-visit-parents": "^6.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "unicorn/prefer-code-point": "off",
+      "unicorn/prefer-switch": "off"
+    }
+  }
+}

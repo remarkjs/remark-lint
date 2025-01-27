@@ -7,6 +7,7 @@
  *   MdxJsxExpressionAttribute
  * } from 'mdast-util-mdx-jsx'
  * @import {PluggableList, Plugin} from 'unified'
+ * @import {VFileMessage} from 'vfile-message'
  * @import {Check, PluginInfo} from './script/info.js'
  */
 
@@ -410,6 +411,14 @@ async function assertCheck(plugin, info, check) {
 
   for (const message of file.messages) {
     assert.equal(message.ruleId, info.ruleId)
+    assert.equal(message.source, 'remark-lint')
+
+    if (message.cause) {
+      const cause = /** @type {VFileMessage} */ (message.cause)
+      assert.equal(cause.ruleId, info.ruleId)
+      assert.equal(cause.source, 'remark-lint')
+    }
+
     assert.equal(
       message.url,
       'https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-' +

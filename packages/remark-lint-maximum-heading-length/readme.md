@@ -21,6 +21,7 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintMaximumHeadingLength[, options])`](#unifieduseremarklintmaximumheadinglength-options)
+  * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
@@ -116,7 +117,8 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports no additional [TypeScript][typescript] types.
+It exports the [TypeScript][typescript] type
+[`Options`][api-options].
 The default export is
 [`remarkLintMaximumHeadingLength`][api-remark-lint-maximum-heading-length].
 
@@ -126,12 +128,23 @@ Warn when headings are too long.
 
 ###### Parameters
 
-* `options` (`number`, default: `60`)
-  — preferred max size
+* `options` ([`Options`][api-options] or `number`, optional)
+  — configuration
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Properties
+
+* `size` (`number`, default: `60`)
+  — preferred max size
+* `stringLength` (`(value: string) => number`, optional)
+  — function to detect text size
 
 ## Recommendation
 
@@ -141,6 +154,9 @@ headings),
 visual users (headings are typically displayed quite large),
 and users of screen readers (who use “jump to heading” features that read
 every heading out loud to navigate within a page).
+
+To better represent how long headings “look”,
+you can pass a `stringLength` function.
 
 ## Examples
 
@@ -172,6 +188,36 @@ When configured with `30`.
 1:1-1:43: Unexpected `40` characters in heading, expected at most `30` characters
 ```
 
+##### `string-length-default.md`
+
+When configured with `30`.
+
+###### In
+
+```markdown
+# 水星是太陽系的八大行星中最小和最靠近太陽的行星
+```
+
+###### Out
+
+No messages.
+
+##### `string-length-custom.md`
+
+When configured with `{ size: 30, stringLength: [Function: stringWidth] }`.
+
+###### In
+
+```markdown
+# 水星是太陽系的八大行星中最小和最靠近太陽的行星
+```
+
+###### Out
+
+```text
+1:1-1:26: Unexpected `46` characters in heading, expected at most `30` characters
+```
+
 ##### `mdx.mdx`
 
 When configured with `30`.
@@ -198,7 +244,7 @@ When configured with `'🌍'`.
 ###### Out
 
 ```text
-1:1: Unexpected value `🌍` for `options`, expected `number`
+1:1: Unexpected value `🌍` for `size`, expected `number`
 ```
 
 ## Compatibility
@@ -225,6 +271,8 @@ abide by its terms.
 ## License
 
 [MIT][file-license] © [Titus Wormer][author]
+
+[api-options]: #options
 
 [api-remark-lint-maximum-heading-length]: #unifieduseremarklintmaximumheadinglength-options
 

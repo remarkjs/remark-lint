@@ -17,12 +17,23 @@
  *
  * ###### Parameters
  *
- * * `options` (`number`, default: `60`)
- *   — preferred max size
+ * * `options` ([`Options`][api-options] or `number`, optional)
+ *   — configuration
  *
  * ###### Returns
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Properties
+ *
+ * * `size` (`number`, default: `60`)
+ *   — preferred max size
+ * * `stringLength` (`(value: string) => number`, optional)
+ *   — function to detect text size
  *
  * ## Recommendation
  *
@@ -33,6 +44,10 @@
  * and users of screen readers (who use “jump to heading” features that read
  * every heading out loud to navigate within a page).
  *
+ * To better represent how long headings “look”,
+ * you can pass a `stringLength` function.
+ *
+ * [api-options]: #options
  * [api-remark-lint-maximum-heading-length]: #unifieduseremarklintmaximumheadinglength-options
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
@@ -49,11 +64,24 @@
  *   {"config": 30, "label": "input", "name": "not-ok.md"}
  *
  *   # Mercury is the first planet from the Sun
- *
  * @example
  *   {"config": 30, "label": "output", "name": "not-ok.md"}
  *
  *   1:1-1:43: Unexpected `40` characters in heading, expected at most `30` characters
+ *
+ * @example
+ *   {"config": 30, "name": "string-length-default.md"}
+ *
+ *   # 水星是太陽系的八大行星中最小和最靠近太陽的行星
+ *
+ * @example
+ *   {"config": {"size": 30, "stringLength": "__STRING_WIDTH__"}, "label": "input", "name": "string-length-custom.md"}
+ *
+ *   # 水星是太陽系的八大行星中最小和最靠近太陽的行星
+ * @example
+ *   {"config": {"size": 30, "stringLength": "__STRING_WIDTH__"}, "label": "output", "name": "string-length-custom.md"}
+ *
+ *   1:1-1:26: Unexpected `46` characters in heading, expected at most `30` characters
  *
  * @example
  *   {"config": 30, "label": "input", "mdx": true, "name": "mdx.mdx"}
@@ -67,12 +95,21 @@
  * @example
  *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
  *
- *   1:1: Unexpected value `🌍` for `options`, expected `number`
+ *   1:1: Unexpected value `🌍` for `size`, expected `number`
  */
 
 /**
  * @import {Root} from 'mdast'
  * @import {} from 'mdast-util-mdx'
+ */
+
+/**
+ * @typedef Options
+ *   Configuration.
+ * @property {number | null | undefined} [size=60]
+ *   Preferred max size (default: `60`).
+ * @property {((value: string) => number) | null | undefined} [stringLength]
+ *   Function to detect text size (optional).
  */
 
 import {toString} from 'mdast-util-to-string'
@@ -90,22 +127,31 @@ const remarkLintMaximumHeadingLength = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {number | null | undefined} [options=60]
+   * @param {Options | number | null | undefined} [options=60]
    *   Configuration (default: `60`).
    * @returns {undefined}
    *   Nothing.
    */
   function (tree, file, options) {
     let expected = 60
+    /** @type {Options['size']} */
+    let size
+    /** @type {Options['stringLength']} */
+    let stringLength
 
-    if (options === null || options === undefined) {
-      // Empty.
-    } else if (typeof options === 'number') {
-      expected = options
+    if (options && typeof options === 'object') {
+      size = options.size
+      stringLength = options.stringLength
     } else {
-      file.fail(
-        'Unexpected value `' + options + '` for `options`, expected `number`'
-      )
+      size = options
+    }
+
+    if (size === null || size === undefined) {
+      // Empty.
+    } else if (typeof size === 'number') {
+      expected = size
+    } else {
+      file.fail('Unexpected value `' + size + '` for `size`, expected `number`')
     }
 
     // Note: HTML headings cannot properly be checked,
@@ -120,7 +166,10 @@ const remarkLintMaximumHeadingLength = lintRule(
           jsxNameRe.test(node.name))
       ) {
         const place = position(node)
-        const actual = Array.from(toString(node, {includeHtml: false})).length
+        const value = toString(node, {includeHtml: false})
+        const actual = stringLength
+          ? stringLength(value)
+          : Array.from(value).length
 
         if (place && actual > expected) {
           file.message(

@@ -425,8 +425,8 @@
  *   Configuration.
  * @property {((value: string) => number) | null | undefined} [stringLength]
  *   Function to detect cell size (optional).
- * @property {Style | 'consistent' | null | undefined} [style]
- *   Preferred style or whether to detect the first style
+ * @property {Style | 'consistent' | null | undefined} [style='consistent']
+ *   Preferred style or whether to detect the first style (default: `'consistent'`).
  *
  * @typedef {'compact' | 'padded'} Style
  *   Styles.

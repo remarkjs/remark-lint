@@ -430,10 +430,10 @@ Venus
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| Alpha          | Bravo   |
-| -------------- | ------- |
-| 你好世界           | Charlie |
-| 🧑‍🧑‍🧒‍🧒    | Delta   |
+| Alpha | Bravo   |
+| ----- | ------- |
+| 冥王星   | Charlie |
+| 🪐    | Delta   |
 ```
 
 ###### Out
@@ -450,10 +450,10 @@ When configured with `{ stringLength: [Function: stringWidth] }`.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| Alpha    | Bravo   |
-| -------- | ------- |
-| 你好世界 | Charlie |
-| 🧑‍🧑‍🧒       | Delta   |
+| Alpha  | Bravo   |
+| ------ | ------- |
+| 冥王星 | Charlie |
+| 🪐     | Delta   |
 ```
 
 ###### Out

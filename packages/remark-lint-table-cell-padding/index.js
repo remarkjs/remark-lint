@@ -18,13 +18,25 @@
  *
  * ###### Parameters
  *
- * * `options` ([`Options`][api-options], optional)
- *   — preferred style or whether to detect the first style and warn for
- *   further differences
+ * * `options`
+ *   ([`Options`][api-options], [`Style`][api-style], or `'consistent'`,
+ *   default: `'consistent'`)
+ *   — configuration
  *
  * ###### Returns
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Properties
+ *
+ * * `stringLength` (`(value: string) => number`, optional)
+ *   — function to detect cell size
+ * * `style` ([`Style`][api-style] or `'consistent'`, optional)
+ *   — preferred style or whether to detect the first style
  *
  * ### `Style`
  *
@@ -41,16 +53,6 @@
  * type Style = 'compact' | 'padded'
  * ```
  *
- * ### `Options`
- *
- * Configuration (TypeScript type).
- *
- * ###### Type
- *
- * ```ts
- * type Options = Style | 'consistent'
- * ```
- *
  * ## Recommendation
  *
  * It’s recommended to use at least one space between pipes and content for
@@ -63,9 +65,17 @@
  * default.
  * Pass `tableCellPadding: false` to use a more compact style.
  *
+ * Aligning perfectly in all cases is not possible because whether characters
+ * look aligned or not depends on where the markup is shown.
+ * Some characters (such as emoji or Chinese characters) show smaller or bigger
+ * in different places.
+ * You can pass a `stringLength` function to `remark-gfm`,
+ * to align better for your use case,
+ * in which case this rule must be configured with the same `stringLength`.
+ *
  * [api-options]: #options
- * [api-style]: #style
  * [api-remark-lint-table-cell-padding]: #unifieduseremarklinttablecellpadding-options
+ * [api-style]: #style
  * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
  * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
@@ -194,6 +204,22 @@
  *   | | Satellites |
  *   | - | - |
  *   | Mercury | |
+ *
+ * @example
+ *   {"config": "compact", "gfm": true, "name": "string-length-default.md"}
+ *
+ *   |Alpha|Bravo  |
+ *   |-----|-------|
+ *   |冥王星 |Charlie|
+ *   |🪐   |Delta  |
+ *
+ * @example
+ *   {"config": {"style": "compact", "stringLength": "__STRING_WIDTH__"}, "gfm": true, "name": "string-length-custom.md"}
+ *
+ *   |Alpha|Bravo  |
+ *   |-----|-------|
+ *   |冥王星|Charlie|
+ *   |🪐    |Delta  |
  *
  * @example
  *   {"gfm": true, "name": "missing-cells.md"}
@@ -386,7 +412,7 @@
  * @example
  *   {"config": "🌍", "gfm": true, "label": "output", "name": "not-ok.md", "positionless": true}
  *
- *   1:1: Unexpected value `🌍` for `options`, expected `'compact'`, `'padded'`, or `'consistent'`
+ *   1:1: Unexpected value `🌍` for `style`, expected `'compact'`, `'padded'`, or `'consistent'`
  */
 
 /**
@@ -395,8 +421,12 @@
  */
 
 /**
- * @typedef {Style | 'consistent'} Options
+ * @typedef Options
  *   Configuration.
+ * @property {((value: string) => number) | null | undefined} [stringLength]
+ *   Function to detect cell size (optional).
+ * @property {Style | 'consistent' | null | undefined} [style]
+ *   Preferred style or whether to detect the first style
  *
  * @typedef {'compact' | 'padded'} Style
  *   Styles.
@@ -418,7 +448,7 @@ const remarkLintTableCellPadding = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {Options | null | undefined} [options='consistent']
+   * @param {Options | Style | 'consistent' | null | undefined} [options='consistent']
    *   Configuration (default: `'consistent'`).
    * @returns {undefined}
    *   Nothing.
@@ -444,16 +474,27 @@ const remarkLintTableCellPadding = lintRule(
     let expected
     /** @type {VFileMessage | undefined} */
     let cause
+    /** @type {Options['stringLength']} */
+    let stringLength
+    /** @type {Options['style']} */
+    let style
 
-    if (options === null || options === undefined || options === 'consistent') {
+    if (options && typeof options === 'object') {
+      stringLength = options.stringLength
+      style = options.style
+    } else {
+      style = options
+    }
+
+    if (style === null || style === undefined || style === 'consistent') {
       // Empty.
-    } else if (options === 'compact' || options === 'padded') {
-      expected = options
+    } else if (style === 'compact' || style === 'padded') {
+      expected = style
     } else {
       file.fail(
         'Unexpected value `' +
-          options +
-          "` for `options`, expected `'compact'`, `'padded'`, or `'consistent'`"
+          style +
+          "` for `style`, expected `'compact'`, `'padded'`, or `'consistent'`"
       )
     }
 
@@ -823,6 +864,10 @@ const remarkLintTableCellPadding = lintRule(
         // Else, a trailing pipe can only be omitted in the last cell.
         // Where we never want trailing whitespace.
 
+        const middle = stringLength
+          ? stringLength(value.slice(leftIndex, rightIndex))
+          : rightIndex - leftIndex
+
         return {
           left,
           leftPoint: {
@@ -830,7 +875,7 @@ const remarkLintTableCellPadding = lintRule(
             column: start.column + (leftIndex - start.offset),
             offset: leftIndex
           },
-          middle: rightIndex - leftIndex,
+          middle,
           right,
           rightPoint: {
             line: end.line,

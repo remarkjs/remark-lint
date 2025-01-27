@@ -21,8 +21,8 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintTableCellPadding[, options])`](#unifieduseremarklinttablecellpadding-options)
-  * [`Style`](#style)
   * [`Options`](#options)
+  * [`Style`](#style)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
 * [Examples](#examples)
@@ -133,13 +133,25 @@ Warn when GFM table cells are padded inconsistently.
 
 ###### Parameters
 
-* `options` ([`Options`][api-options], optional)
-  — preferred style or whether to detect the first style and warn for
-  further differences
+* `options`
+  ([`Options`][api-options], [`Style`][api-style], or `'consistent'`,
+  default: `'consistent'`)
+  — configuration
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Properties
+
+* `stringLength` (`(value: string) => number`, optional)
+  — function to detect cell size
+* `style` ([`Style`][api-style] or `'consistent'`, optional)
+  — preferred style or whether to detect the first style
 
 ### `Style`
 
@@ -156,16 +168,6 @@ Style (TypeScript type).
 type Style = 'compact' | 'padded'
 ```
 
-### `Options`
-
-Configuration (TypeScript type).
-
-###### Type
-
-```ts
-type Options = Style | 'consistent'
-```
-
 ## Recommendation
 
 It’s recommended to use at least one space between pipes and content for
@@ -177,6 +179,14 @@ legibility of the markup (`'padded'`).
 [`remark-gfm`][github-remark-gfm] formats all table cells as padded by
 default.
 Pass `tableCellPadding: false` to use a more compact style.
+
+Aligning perfectly in all cases is not possible because whether characters
+look aligned or not depends on where the markup is shown.
+Some characters (such as emoji or Chinese characters) show smaller or bigger
+in different places.
+You can pass a `stringLength` function to `remark-gfm`,
+to align better for your use case,
+in which case this rule must be configured with the same `stringLength`.
 
 ## Examples
 
@@ -384,6 +394,46 @@ No messages.
 | | Satellites |
 | - | - |
 | Mercury | |
+```
+
+###### Out
+
+No messages.
+
+##### `string-length-default.md`
+
+When configured with `'compact'`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+|Alpha|Bravo  |
+|-----|-------|
+|冥王星 |Charlie|
+|🪐   |Delta  |
+```
+
+###### Out
+
+No messages.
+
+##### `string-length-custom.md`
+
+When configured with `{ style: 'compact', stringLength: [Function: stringWidth] }`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+|Alpha|Bravo  |
+|-----|-------|
+|冥王星|Charlie|
+|🪐    |Delta  |
 ```
 
 ###### Out
@@ -675,7 +725,7 @@ When configured with `'🌍'`.
 ###### Out
 
 ```text
-1:1: Unexpected value `🌍` for `options`, expected `'compact'`, `'padded'`, or `'consistent'`
+1:1: Unexpected value `🌍` for `style`, expected `'compact'`, `'padded'`, or `'consistent'`
 ```
 
 ## Compatibility

@@ -219,18 +219,18 @@
  * @example
  *   {"gfm": true, "name": "string-length-default.md"}
  *
- *   | Alpha          | Bravo   |
- *   | -------------- | ------- |
- *   | 你好世界           | Charlie |
- *   | 🧑‍🧑‍🧒‍🧒    | Delta   |
+ *   | Alpha | Bravo   |
+ *   | ----- | ------- |
+ *   | 冥王星   | Charlie |
+ *   | 🪐    | Delta   |
  *
  * @example
  *   {"config": {"stringLength": "__STRING_WIDTH__"}, "gfm": true, "name": "string-length-custom.md"}
  *
- *   | Alpha    | Bravo   |
- *   | -------- | ------- |
- *   | 你好世界 | Charlie |
- *   | 🧑‍🧑‍🧒       | Delta   |
+ *   | Alpha  | Bravo   |
+ *   | ------ | ------- |
+ *   | 冥王星 | Charlie |
+ *   | 🪐     | Delta   |
  */
 
 /**
@@ -373,7 +373,7 @@ const remarkLintTablePipeAlignment = lintRule(
       )
     }
 
-    // Note: this code is also in `remark-lint-table-pipe-alignment`.
+    // Note: this code is also in `remark-lint-table-cell-padding`.
     /**
      * Get info about cells in a table.
      *

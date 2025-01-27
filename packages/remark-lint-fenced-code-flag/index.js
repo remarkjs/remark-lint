@@ -276,7 +276,7 @@ const remarkLintFencedCodeFlag = lintRule(
         else {
           const slice = value.slice(start.offset, end.offset)
 
-          // To do: indented code shouldn’t be ok either?
+          // To do: next major: indented code shouldn’t be ok either?
           // Then, we can simplify this check.
           if (fence.test(slice)) {
             const reason = check(language)

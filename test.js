@@ -29,6 +29,7 @@ import remarkLintFencedCodeFlag, {
 } from 'remark-lint-fenced-code-flag'
 import remarkMath from 'remark-math'
 import remarkMdx from 'remark-mdx'
+import stringWidth from 'string-width'
 import {lintRule} from 'unified-lint-rule'
 import {removePosition} from 'unist-util-remove-position'
 import {visit} from 'unist-util-visit'
@@ -403,6 +404,19 @@ async function assertCheck(plugin, info, check) {
   if (check.gfm) extras.push(remarkGfm)
   if (check.math) extras.push(remarkMath)
   if (check.mdx) extras.push(remarkMdx)
+
+  if (config && typeof config === 'object') {
+    const record = /** @type {Record<string, unknown>} */ (config)
+    /** @type {string} */
+    let key
+
+    for (key in record) {
+      // Replace the magic value with a function.
+      if (record[key] === '__STRING_WIDTH__') {
+        record[key] = stringWidth
+      }
+    }
+  }
 
   const file = await remark()
     .use(plugin, config)

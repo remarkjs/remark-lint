@@ -43,10 +43,10 @@
  *   Whether to use math.
  * @property {boolean} [mdx]
  *   Whether to use MDX (optional).
- * @property {boolean} [positionless]
- *   Whether this check also applies without positions (optional).
  * @property {string} name
  *   Name.
+ * @property {boolean} [positionless]
+ *   Whether this check also applies without positions (optional).
  *
  * @typedef PluginInfo
  *   Plugin.

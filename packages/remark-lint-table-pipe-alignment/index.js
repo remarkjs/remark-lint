@@ -12,17 +12,27 @@
  *
  * ## API
  *
- * ### `unified().use(remarkLintTablePipeAlignment)`
+ * ### `unified().use(remarkLintTablePipeAlignment[, options])`
  *
  * Warn when GFM table cells are aligned inconsistently.
  *
  * ###### Parameters
  *
- * There are no options.
+ * * `options` ([`Options`][api-options], optional)
+ *   — configuration
  *
  * ###### Returns
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
+ *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Properties
+ *
+ * * `stringLength` (`(value: string) => number`, optional)
+ *   — function to detect cell size
  *
  * ## Recommendation
  *
@@ -42,9 +52,10 @@
  * in different places.
  * You can pass a `stringLength` function to `remark-gfm`,
  * to align better for your use case,
- * in which case this rule must be turned off.
+ * in which case this rule must be configured with the same `stringLength`.
  *
- * [api-remark-lint-table-pipe-alignment]: #unifieduseremarklinttablepipealignment
+ * [api-options]: #options
+ * [api-remark-lint-table-pipe-alignment]: #unifieduseremarklinttablepipealignment-options
  * [github-remark-gfm]: https://github.com/remarkjs/remark-gfm
  * [github-remark-stringify]: https://github.com/remarkjs/remark/tree/main/packages/remark-stringify
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
@@ -204,11 +215,34 @@
  *
  *   2:7: Unexpected unaligned cell, expected aligned pipes, add `3` spaces (or add `-` to pad alignment row cells)
  *   3:8: Unexpected unaligned cell, expected aligned pipes, add `2` spaces
+ *
+ * @example
+ *   {"gfm": true, "name": "string-length-default.md"}
+ *
+ *   | Alpha          | Bravo   |
+ *   | -------------- | ------- |
+ *   | 你好世界           | Charlie |
+ *   | 🧑‍🧑‍🧒‍🧒    | Delta   |
+ *
+ * @example
+ *   {"config": {"stringLength": "__STRING_WIDTH__"}, "gfm": true, "name": "string-length-custom.md"}
+ *
+ *   | Alpha    | Bravo   |
+ *   | -------- | ------- |
+ *   | 你好世界 | Charlie |
+ *   | 🧑‍🧑‍🧒       | Delta   |
  */
 
 /**
  * @import {AlignType, Nodes, Root} from 'mdast'
  * @import {Point} from 'unist'
+ */
+
+/**
+ * @typedef Options
+ *   Configuration.
+ * @property {((value: string) => number) | null | undefined} [stringLength]
+ *   Function to detect cell size (optional).
  */
 
 import {ok as assert} from 'devlop'
@@ -226,10 +260,12 @@ const remarkLintTablePipeAlignment = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (optional).
    * @returns {undefined}
    *   Nothing.
    */
-  function (tree, file) {
+  function (tree, file, options) {
     /**
      * @typedef Entry
      * @property {AlignType} align
@@ -246,6 +282,7 @@ const remarkLintTablePipeAlignment = lintRule(
      * @property {Point} rightPoint
      */
 
+    const stringLength = options ? options.stringLength : undefined
     const value = String(file)
 
     visitParents(tree, function (node, parents) {
@@ -563,6 +600,10 @@ const remarkLintTablePipeAlignment = lintRule(
         // Else, a trailing pipe can only be omitted in the last cell.
         // Where we never want trailing whitespace.
 
+        const middle = stringLength
+          ? stringLength(value.slice(leftIndex, rightIndex))
+          : rightIndex - leftIndex
+
         return {
           left,
           leftPoint: {
@@ -570,7 +611,7 @@ const remarkLintTablePipeAlignment = lintRule(
             column: start.column + (leftIndex - start.offset),
             offset: leftIndex
           },
-          middle: rightIndex - leftIndex,
+          middle,
           right,
           rightPoint: {
             line: end.line,

@@ -20,7 +20,8 @@
 * [Install](#install)
 * [Use](#use)
 * [API](#api)
-  * [`unified().use(remarkLintTablePipeAlignment)`](#unifieduseremarklinttablepipealignment)
+  * [`unified().use(remarkLintTablePipeAlignment[, options])`](#unifieduseremarklinttablepipealignment-options)
+  * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Fix](#fix)
 * [Examples](#examples)
@@ -118,21 +119,32 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports no additional [TypeScript][typescript] types.
+It exports the [TypeScript][typescript] type
+[`Options`][api-options].
 The default export is
 [`remarkLintTablePipeAlignment`][api-remark-lint-table-pipe-alignment].
 
-### `unified().use(remarkLintTablePipeAlignment)`
+### `unified().use(remarkLintTablePipeAlignment[, options])`
 
 Warn when GFM table cells are aligned inconsistently.
 
 ###### Parameters
 
-There are no options.
+* `options` ([`Options`][api-options], optional)
+  — configuration
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Properties
+
+* `stringLength` (`(value: string) => number`, optional)
+  — function to detect cell size
 
 ## Recommendation
 
@@ -152,7 +164,7 @@ Some characters (such as emoji or Chinese characters) show smaller or bigger
 in different places.
 You can pass a `stringLength` function to `remark-gfm`,
 to align better for your use case,
-in which case this rule must be turned off.
+in which case this rule must be configured with the same `stringLength`.
 
 ## Examples
 
@@ -410,6 +422,44 @@ Venus
 3:8: Unexpected unaligned cell, expected aligned pipes, add `2` spaces
 ```
 
+##### `string-length-default.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Alpha          | Bravo   |
+| -------------- | ------- |
+| 你好世界           | Charlie |
+| 🧑‍🧑‍🧒‍🧒    | Delta   |
+```
+
+###### Out
+
+No messages.
+
+##### `string-length-custom.md`
+
+When configured with `{ stringLength: [Function: stringWidth] }`.
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| Alpha    | Bravo   |
+| -------- | ------- |
+| 你好世界 | Charlie |
+| 🧑‍🧑‍🧒       | Delta   |
+```
+
+###### Out
+
+No messages.
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -435,7 +485,9 @@ abide by its terms.
 
 [MIT][file-license] © [Titus Wormer][author]
 
-[api-remark-lint-table-pipe-alignment]: #unifieduseremarklinttablepipealignment
+[api-options]: #options
+
+[api-remark-lint-table-pipe-alignment]: #unifieduseremarklinttablepipealignment-options
 
 [author]: https://wooorm.com
 

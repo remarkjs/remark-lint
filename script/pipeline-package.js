@@ -50,6 +50,7 @@ import {toString} from 'mdast-util-to-string'
 import {gfm} from 'micromark-extension-gfm'
 import {normalizeIdentifier} from 'micromark-util-normalize-identifier'
 import parseAuthor from 'parse-author'
+import stringWidth from 'string-width'
 import stripIndent from 'strip-indent'
 import {read} from 'to-vfile'
 import {visit} from 'unist-util-visit'
@@ -737,7 +738,7 @@ function generateReadmeIncludes(state) {
                 {
                   type: 'tableCell',
                   children: options
-                    ? [{type: 'inlineCode', value: inspect(options)}]
+                    ? [{type: 'inlineCode', value: inspectOptions(options)}]
                     : []
                 }
               ]
@@ -817,7 +818,7 @@ function generateReadmeIncludes(state) {
                   {
                     type: 'tableCell',
                     children: options
-                      ? [{type: 'inlineCode', value: inspect(options)}]
+                      ? [{type: 'inlineCode', value: inspectOptions(options)}]
                       : []
                   }
                 ]
@@ -1235,7 +1236,7 @@ function generateReadmeExample(state) {
         type: 'paragraph',
         children: [
           {type: 'text', value: 'When configured with '},
-          {type: 'inlineCode', value: inspect(config)},
+          {type: 'inlineCode', value: inspectOptions(config)},
           {type: 'text', value: '.'}
         ]
       })
@@ -1541,4 +1542,27 @@ function dashCase(value) {
   function replacer($0) {
     return '-' + $0.toLowerCase()
   }
+}
+
+/**
+ * @param {unknown} options
+ * @returns {string}
+ */
+function inspectOptions(options) {
+  if (options && typeof options === 'object' && !Array.isArray(options)) {
+    const record = /** @type {Record<string, unknown>} */ ({...options})
+    /** @type {string} */
+    let key
+
+    for (key in record) {
+      // Replace the magic value with a function.
+      if (record[key] === '__STRING_WIDTH__') {
+        record[key] = stringWidth
+      }
+    }
+
+    return inspect(record)
+  }
+
+  return inspect(options)
 }

@@ -62,6 +62,7 @@
     "remark-mdx": "^3.0.0",
     "remark-toc": "^9.0.0",
     "remark-validate-links": "^13.0.0",
+    "string-width": "^7.0.0",
     "strip-indent": "^4.0.0",
     "to-vfile": "^8.0.0",
     "type-coverage": "^2.0.0",

@@ -15,8 +15,8 @@
  *
  * Warn when lines are too long.
  *
- * Nodes that cannot be wrapped are ignored, such as JSX, HTML, code (flow),
- * definitions, headings, and tables.
+ * Nodes that cannot be wrapped are ignored,
+ * such as JSX, HTML, code (flow), definitions, headings, and tables.
  *
  * When code (phrasing), images, and links start before the wrap,
  * end after the wrap,
@@ -25,17 +25,32 @@
  *
  * ###### Parameters
  *
- * * `options` (`number`, default: `80`)
- *   — preferred max size
+ * * `options` ([`Options`][api-options] or `number`, optional)
+ *   — configuration
  *
  * ###### Returns
  *
  * Transform ([`Transformer` from `unified`][github-unified-transformer]).
  *
+ * ### `Options`
+ *
+ * Configuration (TypeScript type).
+ *
+ * ###### Properties
+ *
+ * * `size` (`number`, default: `60`)
+ *   — preferred max size
+ * * `stringLength` (`(value: string) => number`, optional)
+ *   — function to detect text size
+ *
  * ## Recommendation
  *
  * Whether to wrap prose or not is a stylistic choice.
  *
+ * To better represent how long lines “look”,
+ * you can pass a `stringLength` function.
+ *
+ * [api-options]: #options
  * [api-remark-lint-maximum-line-length]: #unifieduseremarklintmaximumlinelength-options
  * [github-unified-transformer]: https://github.com/unifiedjs/unified#transformer
  *
@@ -85,7 +100,6 @@
  *   ![m](example.com) mercury.
  *
  *   Mercury mercury ![m](example.com) mercury.
- *
  * @example
  *   {"config": 20, "label": "output", "name": "not-ok.md", "positionless": true}
  *
@@ -99,6 +113,20 @@
  *   16:26: Unexpected `25` character line, expected at most `20` characters, remove `5` characters
  *   18:27: Unexpected `26` character line, expected at most `20` characters, remove `6` characters
  *   20:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
+ *
+ * @example
+ *   {"config": 40, "name": "string-length-default.md"}
+ *
+ *   水星是太陽系的八大行星中最小和最靠近太陽的行星。
+ *
+ * @example
+ *   {"config": {"size": 40, "stringLength": "__STRING_WIDTH__"}, "label": "input", "name": "string-length-custom.md", "positionless": true}
+ *
+ *   水星是太陽系的八大行星中最小和最靠近太陽的行星。
+ * @example
+ *   {"config": {"size": 40, "stringLength": "__STRING_WIDTH__"}, "label": "output", "name": "string-length-custom.md", "positionless": true}
+ *
+ *   1:25: Unexpected `48` character line, expected at most `40` characters, remove `8` characters
  *
  * @example
  *   {"config": 20, "name": "long-autolinks-ok.md", "positionless": true}
@@ -189,12 +217,21 @@
  * @example
  *   {"config": "🌍", "label": "output", "name": "not-ok.md", "positionless": true}
  *
- *   1:1: Unexpected value `🌍` for `options`, expected `number`
+ *   1:1: Unexpected value `🌍` for `size`, expected `number`
  */
 
 /**
  * @import {Root} from 'mdast'
  * @import {} from 'mdast-util-mdx'
+ */
+
+/**
+ * @typedef Options
+ *   Configuration.
+ * @property {number | null | undefined} [size=80]
+ *   Preferred max size (default: `80`).
+ * @property {((value: string) => number) | null | undefined} [stringLength]
+ *   Function to detect text size (optional).
  */
 
 import pluralize from 'pluralize'
@@ -210,7 +247,7 @@ const remarkLintMaximumLineLength = lintRule(
   /**
    * @param {Root} tree
    *   Tree.
-   * @param {number | null | undefined} [options=80]
+   * @param {Options | number | null | undefined} [options=80]
    *   Configuration (default: `80`).
    * @returns {undefined}
    *   Nothing.
@@ -220,14 +257,24 @@ const remarkLintMaximumLineLength = lintRule(
     const lines = value.split(/\r?\n/)
     let expected = 80
 
-    if (options === null || options === undefined) {
-      // Empty.
-    } else if (typeof options === 'number') {
-      expected = options
+    /** @type {Options['size']} */
+    let size
+    /** @type {Options['stringLength']} */
+    let stringLength
+
+    if (options && typeof options === 'object') {
+      size = options.size
+      stringLength = options.stringLength
     } else {
-      file.fail(
-        'Unexpected value `' + options + '` for `options`, expected `number`'
-      )
+      size = options
+    }
+
+    if (size === null || size === undefined) {
+      // Empty.
+    } else if (typeof size === 'number') {
+      expected = size
+    } else {
+      file.fail('Unexpected value `' + size + '` for `size`, expected `number`')
     }
 
     // eslint-disable-next-line complexity
@@ -305,8 +352,11 @@ const remarkLintMaximumLineLength = lintRule(
     let index = -1
 
     while (++index < lines.length) {
-      const actualBytes = lines[index].length
-      const actualCharacters = Array.from(lines[index]).length
+      const line = lines[index]
+      const actualBytes = line.length
+      const actualCharacters = stringLength
+        ? stringLength(line)
+        : Array.from(line).length
       const difference = actualCharacters - expected
 
       if (difference > 0) {

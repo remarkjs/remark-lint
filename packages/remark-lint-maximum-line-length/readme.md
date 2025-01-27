@@ -21,6 +21,7 @@
 * [Use](#use)
 * [API](#api)
   * [`unified().use(remarkLintMaximumLineLength[, options])`](#unifieduseremarklintmaximumlinelength-options)
+  * [`Options`](#options)
 * [Recommendation](#recommendation)
 * [Examples](#examples)
 * [Compatibility](#compatibility)
@@ -116,7 +117,8 @@ On the CLI in a config file (here a `package.json`):
 ## API
 
 This package exports no identifiers.
-It exports no additional [TypeScript][typescript] types.
+It exports the [TypeScript][typescript] type
+[`Options`][api-options].
 The default export is
 [`remarkLintMaximumLineLength`][api-remark-lint-maximum-line-length].
 
@@ -124,8 +126,8 @@ The default export is
 
 Warn when lines are too long.
 
-Nodes that cannot be wrapped are ignored, such as JSX, HTML, code (flow),
-definitions, headings, and tables.
+Nodes that cannot be wrapped are ignored,
+such as JSX, HTML, code (flow), definitions, headings, and tables.
 
 When code (phrasing), images, and links start before the wrap,
 end after the wrap,
@@ -134,16 +136,30 @@ they are also ignored.
 
 ###### Parameters
 
-* `options` (`number`, default: `80`)
-  — preferred max size
+* `options` ([`Options`][api-options] or `number`, optional)
+  — configuration
 
 ###### Returns
 
 Transform ([`Transformer` from `unified`][github-unified-transformer]).
 
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Properties
+
+* `size` (`number`, default: `60`)
+  — preferred max size
+* `stringLength` (`(value: string) => number`, optional)
+  — function to detect text size
+
 ## Recommendation
 
 Whether to wrap prose or not is a stylistic choice.
+
+To better represent how long lines “look”,
+you can pass a `stringLength` function.
 
 ## Examples
 
@@ -214,6 +230,36 @@ Mercury mercury ![m](example.com) mercury.
 16:26: Unexpected `25` character line, expected at most `20` characters, remove `5` characters
 18:27: Unexpected `26` character line, expected at most `20` characters, remove `6` characters
 20:43: Unexpected `42` character line, expected at most `20` characters, remove `22` characters
+```
+
+##### `string-length-default.md`
+
+When configured with `40`.
+
+###### In
+
+```markdown
+水星是太陽系的八大行星中最小和最靠近太陽的行星。
+```
+
+###### Out
+
+No messages.
+
+##### `string-length-custom.md`
+
+When configured with `{ size: 40, stringLength: [Function: stringWidth] }`.
+
+###### In
+
+```markdown
+水星是太陽系的八大行星中最小和最靠近太陽的行星。
+```
+
+###### Out
+
+```text
+1:25: Unexpected `48` character line, expected at most `40` characters, remove `8` characters
 ```
 
 ##### `long-autolinks-ok.md`
@@ -388,7 +434,7 @@ When configured with `'🌍'`.
 ###### Out
 
 ```text
-1:1: Unexpected value `🌍` for `options`, expected `number`
+1:1: Unexpected value `🌍` for `size`, expected `number`
 ```
 
 ## Compatibility
@@ -415,6 +461,8 @@ abide by its terms.
 ## License
 
 [MIT][file-license] © [Titus Wormer][author]
+
+[api-options]: #options
 
 [api-remark-lint-maximum-line-length]: #unifieduseremarklintmaximumlinelength-options
 

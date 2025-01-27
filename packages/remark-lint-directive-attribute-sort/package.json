@@ -9,7 +9,7 @@
     "@types/unist": "^3.0.0",
     "devlop": "^1.0.0",
     "mdast-util-directive": "^3.0.0",
-    "remark-lint-directive-quote-style": "^0.0.0",
+    "remark-lint-directive-quote-style": "^1.0.0",
     "unified-lint-rule": "^3.0.0",
     "unist-util-visit-parents": "^6.0.0",
     "vfile-location": "^5.0.0"

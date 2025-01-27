@@ -80,7 +80,7 @@
     "strict": true
   },
   "type": "module",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "xo": {
     "prettier": true,
     "rules": {

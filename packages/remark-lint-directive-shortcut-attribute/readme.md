@@ -53,14 +53,14 @@ npm install remark-lint-directive-shortcut-attribute
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintDirectiveShortcutAttribute from 'https://esm.sh/remark-lint-directive-shortcut-attribute@0'
+import remarkLintDirectiveShortcutAttribute from 'https://esm.sh/remark-lint-directive-shortcut-attribute@1'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintDirectiveShortcutAttribute from 'https://esm.sh/remark-lint-directive-shortcut-attribute@0?bundle'
+  import remarkLintDirectiveShortcutAttribute from 'https://esm.sh/remark-lint-directive-shortcut-attribute@1?bundle'
 </script>
 ```
 
@@ -172,7 +172,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-directive-shortcut-attribute@0`,
+`remark-lint-directive-shortcut-attribute@1`,
 compatible with Node.js 16.
 
 ## Contribute

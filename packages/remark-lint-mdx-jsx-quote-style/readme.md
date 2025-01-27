@@ -57,14 +57,14 @@ npm install remark-lint-mdx-jsx-quote-style
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintMdxJsxQuoteStyle from 'https://esm.sh/remark-lint-mdx-jsx-quote-style@0'
+import remarkLintMdxJsxQuoteStyle from 'https://esm.sh/remark-lint-mdx-jsx-quote-style@1'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintMdxJsxQuoteStyle from 'https://esm.sh/remark-lint-mdx-jsx-quote-style@0?bundle'
+  import remarkLintMdxJsxQuoteStyle from 'https://esm.sh/remark-lint-mdx-jsx-quote-style@1?bundle'
 </script>
 ```
 
@@ -298,7 +298,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-mdx-jsx-quote-style@0`,
+`remark-lint-mdx-jsx-quote-style@1`,
 compatible with Node.js 16.
 
 ## Contribute

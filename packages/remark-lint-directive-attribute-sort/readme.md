@@ -51,14 +51,14 @@ npm install remark-lint-directive-attribute-sort
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintDirectiveAttributeSort from 'https://esm.sh/remark-lint-directive-attribute-sort@0'
+import remarkLintDirectiveAttributeSort from 'https://esm.sh/remark-lint-directive-attribute-sort@1'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintDirectiveAttributeSort from 'https://esm.sh/remark-lint-directive-attribute-sort@0?bundle'
+  import remarkLintDirectiveAttributeSort from 'https://esm.sh/remark-lint-directive-attribute-sort@1?bundle'
 </script>
 ```
 
@@ -190,7 +190,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-directive-attribute-sort@0`,
+`remark-lint-directive-attribute-sort@1`,
 compatible with Node.js 16.
 
 ## Contribute

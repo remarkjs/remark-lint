@@ -51,14 +51,14 @@ npm install remark-lint-definition-sort
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintDefinitionSort from 'https://esm.sh/remark-lint-definition-sort@0'
+import remarkLintDefinitionSort from 'https://esm.sh/remark-lint-definition-sort@1'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintDefinitionSort from 'https://esm.sh/remark-lint-definition-sort@0?bundle'
+  import remarkLintDefinitionSort from 'https://esm.sh/remark-lint-definition-sort@1?bundle'
 </script>
 ```
 
@@ -303,7 +303,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-definition-sort@0`,
+`remark-lint-definition-sort@1`,
 compatible with Node.js 16.
 
 ## Contribute

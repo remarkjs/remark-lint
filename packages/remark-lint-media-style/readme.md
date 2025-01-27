@@ -56,14 +56,14 @@ npm install remark-lint-media-style
 In Deno with [`esm.sh`][esm-sh]:
 
 ```js
-import remarkLintMediaStyle from 'https://esm.sh/remark-lint-media-style@0'
+import remarkLintMediaStyle from 'https://esm.sh/remark-lint-media-style@1'
 ```
 
 In browsers with [`esm.sh`][esm-sh]:
 
 ```html
 <script type="module">
-  import remarkLintMediaStyle from 'https://esm.sh/remark-lint-media-style@0?bundle'
+  import remarkLintMediaStyle from 'https://esm.sh/remark-lint-media-style@1?bundle'
 </script>
 ```
 
@@ -321,7 +321,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`remark-lint-media-style@0`,
+`remark-lint-media-style@1`,
 compatible with Node.js 16.
 
 ## Contribute

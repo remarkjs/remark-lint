@@ -244,7 +244,11 @@ const remarkLintNoUndefinedReferences = lintRule(
         footnoteDefinitionIdentifiers.add(normalizeIdentifier(node.identifier))
       }
 
-      if (node.type === 'heading' || node.type === 'paragraph') {
+      if (
+        node.type === 'heading' ||
+        node.type === 'paragraph' ||
+        node.type === 'tableCell'
+      ) {
         phrasingStacks.push([...parents, node])
       }
     })

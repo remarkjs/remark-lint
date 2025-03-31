@@ -306,6 +306,81 @@ test('remark-lint', async function (t) {
   )
 
   await t.test(
+    'should capture a variety of references (remark-lint-no-undefined-references)',
+    async function () {
+      const file = await remark()
+        .use(remarkLintNoUndefinedReferences, {allow: [/^b\./i]})
+        .process({
+          path: 'virtual.md',
+          value: [
+            '[Mercury] is the first planet from the Sun and the smallest in the Solar',
+            'System.',
+            '',
+            '[Venus][] is the second planet from the Sun.',
+            '',
+            '[Earth][earth] is the third planet from the Sun and the only astronomical',
+            'object known to harbor life.',
+            '',
+            '![Mars] is the fourth planet from the Sun in the [Solar',
+            'System].',
+            '',
+            '> Jupiter is the fifth planet from the Sun and the largest in the [Solar',
+            '> System][].',
+            '',
+            '[Saturn][ is the sixth planet from the Sun and the second-largest',
+            'in the Solar System, after Jupiter.',
+            '',
+            '[*Uranus*][] is the seventh planet from the Sun.',
+            '',
+            '[Neptune][neptune][more] is the eighth and farthest planet from the Sun.',
+            '',
+            '- [Pluto], once considered the ninth planet, is now classified as a [dwarf planet][Pluto].'
+          ].join('\n')
+        })
+
+      assert.deepEqual(file.messages.map(String), [
+        'virtual.md:1:1-1:10: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:4:1-4:10: Unexpected reference to undefined definition, expected corresponding definition (`venus`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:6:1-6:15: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:9:2-9:8: Unexpected reference to undefined definition, expected corresponding definition (`mars`) for an image or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:9:50-10:8: Unexpected reference to undefined definition, expected corresponding definition (`solar system`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:12:67-13:12: Unexpected reference to undefined definition, expected corresponding definition (`solar > system`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:15:1-15:9: Unexpected reference to undefined definition, expected corresponding definition (`saturn`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:18:1-18:13: Unexpected reference to undefined definition, expected corresponding definition (`*uranus*`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:20:1-20:19: Unexpected reference to undefined definition, expected corresponding definition (`neptune`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:20:19-20:25: Unexpected reference to undefined definition, expected corresponding definition (`more`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:22:3-22:10: Unexpected reference to undefined definition, expected corresponding definition (`pluto`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:22:69-22:90: Unexpected reference to undefined definition, expected corresponding definition (`pluto`) for a link or escaped opening bracket (`\\[`) for regular text'
+      ])
+    }
+  )
+
+  await t.test(
+    'should support GFM tables (remark-lint-no-undefined-references)',
+    async function () {
+      const file = await remark()
+        .use(remarkGfm)
+        .use(remarkLintNoUndefinedReferences)
+        .process({
+          path: 'virtual.md',
+          value: [
+            '| [Header 1] | [Header 2] |',
+            '|------------|------------|',
+            '| [foo][a]   | [bar]      |',
+            '',
+            '[header 1]: https://example.com',
+            '[a]: https://example.com'
+          ].join('\n')
+        })
+
+      assert.deepEqual(file.messages.map(String), [
+        'virtual.md:1:16-1:26: Unexpected reference to undefined definition, expected corresponding definition (`header 2`) for a link or escaped opening bracket (`\\[`) for regular text',
+        'virtual.md:3:16-3:21: Unexpected reference to undefined definition, expected corresponding definition (`bar`) for a link or escaped opening bracket (`\\[`) for regular text'
+      ])
+    }
+  )
+
+  await t.test(
     'should support `checkGithubLinguistFlag` as an option for (remark-lint-fenced-code-flag)',
     async function () {
       const file = await remark()

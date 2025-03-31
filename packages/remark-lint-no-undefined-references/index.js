@@ -106,6 +106,8 @@
  *   [*Uranus*][] is the seventh planet from the Sun.
  *
  *   [Neptune][neptune][more] is the eighth and farthest planet from the Sun.
+ *
+ *   - [Pluto], once considered the ninth planet, is now classified as a [dwarf planet][Pluto].
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
@@ -119,6 +121,8 @@
  *   18:1-18:13: Unexpected reference to undefined definition, expected corresponding definition (`*uranus*`) for a link or escaped opening bracket (`\[`) for regular text
  *   20:1-20:19: Unexpected reference to undefined definition, expected corresponding definition (`neptune`) for a link or escaped opening bracket (`\[`) for regular text
  *   20:19-20:25: Unexpected reference to undefined definition, expected corresponding definition (`more`) for a link or escaped opening bracket (`\[`) for regular text
+ *   22:3-22:10: Unexpected reference to undefined definition, expected corresponding definition (`pluto`) for a link or escaped opening bracket (`\[`) for regular text
+ *   22:69-22:90: Unexpected reference to undefined definition, expected corresponding definition (`pluto`) for a link or escaped opening bracket (`\[`) for regular text
  *
  * @example
  *   {"config": {"allow": ["…"]}, "name": "ok-allow.md"}
@@ -146,6 +150,26 @@
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
  *   1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm-table.md"}
+ *
+ *   | [Planet]            | [Radius]   |
+ *   |---------------------|------------|
+ *   | [Mercury]           | 2,439.7 km |
+ *   | [Venus][venus-docs] | 6,051.8 km |
+ *   | [Earth]             | 6,378 km   |
+ *
+ *   [Planet]: https://example.com/planet/
+ *   [Mercury]: https://example.com/mercury/
+ *   [Venus]: https://example.com/venus/
+ *
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm-table.md"}
+ *
+ *   1:25-1:33: Unexpected reference to undefined definition, expected corresponding definition (`radius`) for a link or escaped opening bracket (`\[`) for regular text
+ *   4:3-4:22: Unexpected reference to undefined definition, expected corresponding definition (`venus-docs`) for a link or escaped opening bracket (`\[`) for regular text
+ *   5:3-5:10: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\[`) for regular text
  *
  * @example
  *   {"config": {"allowShortcutLink": true}, "label": "input", "name": "allow-shortcut-link.md"}

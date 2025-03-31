@@ -219,6 +219,8 @@ in the Solar System, after Jupiter.
 [*Uranus*][] is the seventh planet from the Sun.
 
 [Neptune][neptune][more] is the eighth and farthest planet from the Sun.
+
+- [Pluto], once considered the ninth planet, is now classified as a [dwarf planet][Pluto].
 ```
 
 ###### Out
@@ -234,6 +236,8 @@ in the Solar System, after Jupiter.
 18:1-18:13: Unexpected reference to undefined definition, expected corresponding definition (`*uranus*`) for a link or escaped opening bracket (`\[`) for regular text
 20:1-20:19: Unexpected reference to undefined definition, expected corresponding definition (`neptune`) for a link or escaped opening bracket (`\[`) for regular text
 20:19-20:25: Unexpected reference to undefined definition, expected corresponding definition (`more`) for a link or escaped opening bracket (`\[`) for regular text
+22:3-22:10: Unexpected reference to undefined definition, expected corresponding definition (`pluto`) for a link or escaped opening bracket (`\[`) for regular text
+22:69-22:90: Unexpected reference to undefined definition, expected corresponding definition (`pluto`) for a link or escaped opening bracket (`\[`) for regular text
 ```
 
 ##### `ok-allow.md`
@@ -289,7 +293,7 @@ Solar System.
 1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
 ```
 
-#### `gfm-table.md`
+##### `gfm-table.md`
 
 ###### In
 
@@ -297,19 +301,23 @@ Solar System.
 > GFM ([`remark-gfm`][github-remark-gfm]).
 
 ```markdown
-| [Header 1] | [Header 2] |
-|------------|------------|
-| [foo][a]   | [bar]      |
+| [Planet]            | [Radius]   |
+|---------------------|------------|
+| [Mercury]           | 2,439.7 km |
+| [Venus][venus-docs] | 6,051.8 km |
+| [Earth]             | 6,378 km   |
 
-[header 1]: https://example.com
-[a]: https://example.com
+[Planet]: https://example.com/planet/
+[Mercury]: https://example.com/mercury/
+[Venus]: https://example.com/venus/
 ```
 
 ###### Out
 
 ```text
-1:16-1:26: Unexpected reference to undefined definition, expected corresponding definition (`header 2`) for a link or escaped opening bracket (`\[`) for regular text
-3:16-3:21: Unexpected reference to undefined definition, expected corresponding definition (`bar`) for a link or escaped opening bracket (`\[`) for regular text
+1:25-1:33: Unexpected reference to undefined definition, expected corresponding definition (`radius`) for a link or escaped opening bracket (`\[`) for regular text
+4:3-4:22: Unexpected reference to undefined definition, expected corresponding definition (`venus-docs`) for a link or escaped opening bracket (`\[`) for regular text
+5:3-5:10: Unexpected reference to undefined definition, expected corresponding definition (`earth`) for a link or escaped opening bracket (`\[`) for regular text
 ```
 
 ##### `allow-shortcut-link.md`

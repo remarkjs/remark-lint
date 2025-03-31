@@ -289,6 +289,29 @@ Solar System.
 1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
 ```
 
+#### `gfm-table.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| [Header 1] | [Header 2] |
+|------------|------------|
+| [foo][a]   | [bar]      |
+
+[header 1]: https://example.com
+[a]: https://example.com
+```
+
+###### Out
+
+```text
+1:16-1:26: Unexpected reference to undefined definition, expected corresponding definition (`header 2`) for a link or escaped opening bracket (`\[`) for regular text
+3:16-3:21: Unexpected reference to undefined definition, expected corresponding definition (`bar`) for a link or escaped opening bracket (`\[`) for regular text
+```
+
 ##### `allow-shortcut-link.md`
 
 When configured with `{ allowShortcutLink: true }`.

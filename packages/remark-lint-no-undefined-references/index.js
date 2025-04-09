@@ -106,6 +106,7 @@
  *   [*Uranus*][] is the seventh planet from the Sun.
  *
  *   [Neptune][neptune][more] is the eighth and farthest planet from the Sun.
+ *
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
@@ -146,6 +147,21 @@
  *   {"gfm": true, "label": "output", "name": "gfm.md"}
  *
  *   1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
+ *
+ * @example
+ *   {"gfm": true, "label": "input", "name": "gfm-table.md"}
+ *
+ *   | [Planet]          | [Radius]  |
+ *   | ----------------- | --------- |
+ *   | [Mercury]         | 2439.7 km |
+ *
+ *   [planet]: https://example.com/planet/
+ *
+ * @example
+ *   {"gfm": true, "label": "output", "name": "gfm-table.md"}
+ *
+ *   1:23-1:31: Unexpected reference to undefined definition, expected corresponding definition (`radius`) for a link or escaped opening bracket (`\[`) for regular text
+ *   3:3-3:12: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a link or escaped opening bracket (`\[`) for regular text
  *
  * @example
  *   {"config": {"allowShortcutLink": true}, "label": "input", "name": "allow-shortcut-link.md"}
@@ -244,7 +260,11 @@ const remarkLintNoUndefinedReferences = lintRule(
         footnoteDefinitionIdentifiers.add(normalizeIdentifier(node.identifier))
       }
 
-      if (node.type === 'heading' || node.type === 'paragraph') {
+      if (
+        node.type === 'heading' ||
+        node.type === 'paragraph' ||
+        node.type === 'tableCell'
+      ) {
         phrasingStacks.push([...parents, node])
       }
     })

@@ -289,6 +289,28 @@ Solar System.
 1:8-1:18: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a footnote or escaped opening bracket (`\[`) for regular text
 ```
 
+##### `gfm-table.md`
+
+###### In
+
+> 👉 **Note**: this example uses
+> GFM ([`remark-gfm`][github-remark-gfm]).
+
+```markdown
+| [Planet]          | [Radius]  |
+| ----------------- | --------- |
+| [Mercury]         | 2439.7 km |
+
+[planet]: https://example.com/planet/
+```
+
+###### Out
+
+```text
+1:23-1:31: Unexpected reference to undefined definition, expected corresponding definition (`radius`) for a link or escaped opening bracket (`\[`) for regular text
+3:3-3:12: Unexpected reference to undefined definition, expected corresponding definition (`mercury`) for a link or escaped opening bracket (`\[`) for regular text
+```
+
 ##### `allow-shortcut-link.md`
 
 When configured with `{ allowShortcutLink: true }`.

@@ -46,7 +46,7 @@
     "strict": true
   },
   "type": "module",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "xo": {
     "prettier": true,
     "rules": {

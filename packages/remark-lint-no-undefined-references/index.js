@@ -106,7 +106,6 @@
  *   [*Uranus*][] is the seventh planet from the Sun.
  *
  *   [Neptune][neptune][more] is the eighth and farthest planet from the Sun.
- *
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
@@ -156,7 +155,6 @@
  *   | [Mercury]         | 2439.7 km |
  *
  *   [planet]: https://example.com/planet/
- *
  * @example
  *   {"gfm": true, "label": "output", "name": "gfm-table.md"}
  *

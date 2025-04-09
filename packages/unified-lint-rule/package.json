@@ -2,7 +2,6 @@
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
-    "Remco Haszing <remcohaszing@gmail.com>",
     "Titus Wormer <tituswormer@gmail.com>"
   ],
   "dependencies": {

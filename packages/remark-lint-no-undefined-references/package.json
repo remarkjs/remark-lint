@@ -2,7 +2,6 @@
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "bugs": "https://github.com/remarkjs/remark-lint/issues",
   "contributors": [
-    "Aaron Moat <2937187+AaronMoat@users.noreply.github.com>",
     "Merlijn Vos <merlijn@soverin.net>",
     "Murderlon <merlijn@soverin.net>",
     "Titus Wormer <tituswormer@gmail.com>"

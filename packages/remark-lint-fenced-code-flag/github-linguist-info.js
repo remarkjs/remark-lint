@@ -134,6 +134,10 @@ export const githubLinguistInfo = [
     names: ['angelscript']
   },
   {
+    extensions: ['.lp'],
+    names: ['answer-set-programming']
+  },
+  {
     extensions: ['.g4'],
     names: ['antlr']
   },
@@ -142,7 +146,11 @@ export const githubLinguistInfo = [
     names: ['apacheconf', 'aconf', 'apache']
   },
   {
-    extensions: ['.cls', '.trigger'],
+    extensions: ['.apacheconf', '.vhost'],
+    names: ['apacheconf', 'aconf', 'apache']
+  },
+  {
+    extensions: ['.cls', '.apex', '.trigger'],
     names: ['apex']
   },
   {
@@ -171,7 +179,7 @@ export const githubLinguistInfo = [
   },
   {
     extensionsWithDot: ['.inc'],
-    extensions: ['.asm', '.a51', '.i', '.nas', '.nasm'],
+    extensions: ['.asm', '.a51', '.i', '.nas', '.nasm', '.s'],
     names: ['assembly', 'asm', 'nasm']
   },
   {
@@ -268,6 +276,10 @@ export const githubLinguistInfo = [
     names: ['1c-enterprise']
   },
   {
+    extensions: ['.bst'],
+    names: ['bibtex-style']
+  },
+  {
     extensions: ['.bsv'],
     names: ['bluespec', 'bluespec-bsv', 'bsv']
   },
@@ -319,6 +331,7 @@ export const githubLinguistInfo = [
       '.c',
       '.cats',
       '.h',
+      '.h.in',
       '.idc',
       '.opencl',
       '.upc',
@@ -342,6 +355,10 @@ export const githubLinguistInfo = [
       'xpm',
       'xs'
     ]
+  },
+  {
+    extensions: ['.ld', '.lds', '.x'],
+    names: ['linker-script']
   },
   {
     extensions: ['.nss'],
@@ -1045,8 +1062,16 @@ export const githubLinguistInfo = [
     names: ['isabelle']
   },
   {
+    extensions: ['.ispc'],
+    names: ['ispc']
+  },
+  {
     extensions: ['.ijs'],
     names: ['j']
+  },
+  {
+    extensions: ['.jai'],
+    names: ['jai']
   },
   {
     extensions: ['.janet'],
@@ -1096,8 +1121,6 @@ export const githubLinguistInfo = [
       '._js',
       '.bones',
       '.cjs',
-      '.code-snippets',
-      '.code-workspace',
       '.cy',
       '.es6',
       '.jake',
@@ -1110,7 +1133,6 @@ export const githubLinguistInfo = [
       '.jslib',
       '.jsm',
       '.json5',
-      '.jsonc',
       '.jsonld',
       '.jspre',
       '.jss',
@@ -1120,6 +1142,29 @@ export const githubLinguistInfo = [
       '.pac',
       '.sjs',
       '.ssjs',
+      '.xsjs',
+      '.xsjslib'
+    ],
+    names: [
+      'cycript',
+      'javascript',
+      'javascript+erb',
+      'js',
+      'json5',
+      'jsonld',
+      'node',
+      'qt-script'
+    ]
+  },
+  {
+    extensions: ['.sj'],
+    names: ['objective-j', 'obj-j', 'objectivej', 'objj']
+  },
+  {
+    extensions: [
+      '.jsonc',
+      '.code-snippets',
+      '.code-workspace',
       '.sublime-build',
       '.sublime-color-scheme',
       '.sublime-commands',
@@ -1133,26 +1178,9 @@ export const githubLinguistInfo = [
       '.sublime-theme',
       '.sublime-workspace',
       '.sublime_metrics',
-      '.sublime_session',
-      '.xsjs',
-      '.xsjslib'
+      '.sublime_session'
     ],
-    names: [
-      'cycript',
-      'javascript',
-      'javascript+erb',
-      'js',
-      'json-with-comments',
-      'json5',
-      'jsonc',
-      'jsonld',
-      'node',
-      'qt-script'
-    ]
-  },
-  {
-    extensions: ['.sj'],
-    names: ['objective-j', 'obj-j', 'objectivej', 'objj']
+    names: ['json-with-comments', 'jsonc']
   },
   {
     extensionsWithDot: ['.tact'],
@@ -1227,6 +1255,10 @@ export const githubLinguistInfo = [
     names: ['kakounescript', 'kak', 'kakscript']
   },
   {
+    extensions: ['.kdl'],
+    names: ['kdl']
+  },
+  {
     extensions: ['.ks'],
     names: ['kerboscript']
   },
@@ -1297,7 +1329,7 @@ export const githubLinguistInfo = [
     names: ['llvm']
   },
   {
-    extensions: ['.xm', '.x', '.xi'],
+    extensions: ['.xm', '.xi'],
     names: ['logos']
   },
   {
@@ -1344,7 +1376,7 @@ export const githubLinguistInfo = [
     names: ['autoconf', 'm4', 'm4sugar']
   },
   {
-    extensions: ['.s', '.x68'],
+    extensions: ['.x68'],
     names: ['motorola-68k-assembly', 'm68k']
   },
   {
@@ -1466,7 +1498,7 @@ export const githubLinguistInfo = [
   },
   {
     extensions: ['.msg'],
-    names: ['omnetpp-msg']
+    names: ['omnet++-msg', 'omnetpp-msg']
   },
   {
     extensions: ['.mrc'],
@@ -1475,6 +1507,10 @@ export const githubLinguistInfo = [
   {
     extensions: ['.mu'],
     names: ['mupad']
+  },
+  {
+    extensions: ['.dzn', '.mzn'],
+    names: ['minizinc', 'minizinc-data']
   },
   {
     extensions: ['.nanorc'],
@@ -1496,7 +1532,7 @@ export const githubLinguistInfo = [
   },
   {
     extensions: ['.ned'],
-    names: ['omnetpp-ned']
+    names: ['omnet++-ned', 'omnetpp-ned']
   },
   {
     extensions: ['.n'],
@@ -1600,6 +1636,10 @@ export const githubLinguistInfo = [
   },
   {
     names: ['option-list', 'opts', 'ackrc']
+  },
+  {
+    extensions: ['.overpassql'],
+    names: ['overpassql']
   },
   {
     extensions: ['.ox', '.oxh', '.oxo'],
@@ -2006,6 +2046,9 @@ export const githubLinguistInfo = [
     names: ['scilab']
   },
   {
+    names: ['tree-sitter-query', 'tsq']
+  },
+  {
     extensions: ['.sed'],
     names: ['sed']
   },
@@ -2067,6 +2110,10 @@ export const githubLinguistInfo = [
   },
   {
     names: ['singularity']
+  },
+  {
+    extensions: ['.slang'],
+    names: ['slang']
   },
   {
     names: ['slice']
@@ -2453,6 +2500,9 @@ export const githubLinguistInfo = [
     names: ['xc']
   },
   {
+    names: ['xmake']
+  },
+  {
     extensions: [
       '.xojo_code',
       '.xojo_menu',
@@ -2650,7 +2700,7 @@ export const githubLinguistInfo = [
     names: ['edge']
   },
   {
-    extensions: ['.eex', '.html.heex', '.html.leex'],
+    extensions: ['.html.eex', '.heex', '.leex'],
     names: ['html+eex', 'eex', 'heex', 'leex']
   },
   {
@@ -2953,6 +3003,7 @@ export const githubLinguistInfo = [
       '.fxml',
       '.glade',
       '.gmx',
+      '.gpx',
       '.grxml',
       '.hzp',
       '.iml',

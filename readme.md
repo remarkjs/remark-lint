@@ -258,6 +258,8 @@ The following rules are maintained by the community:
   — ensures there are spaces around number and Chinese.
 * [`remark-lint-spaces-around-word`](https://github.com/laysent/remark-lint-plugins/tree/HEAD/packages/remark-lint-spaces-around-word)
   — ensures there are spaces around English word and Chinese.
+* [`remark-lint-word-case`](https://github.com/Bugg4/remark-lint-word-case)
+  — enforces the specified casing on a list of user-defined words.
 * [`remark-lint-write-good`](https://github.com/zerok/remark-lint-write-good)
   — wrapper for `write-good`
 

@@ -191,7 +191,7 @@ No messages.
 ###### Out
 
 ```text
-3:1-3:10: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+3:1-3:10: Unexpected duplicate toplevel heading, expected a single heading with rank `1`
 ```
 
 ##### `not-ok.md`
@@ -209,7 +209,7 @@ When configured with `2`.
 ###### Out
 
 ```text
-3:1-3:11: Unexpected duplicate toplevel heading, exected a single heading with rank `2`
+3:1-3:11: Unexpected duplicate toplevel heading, expected a single heading with rank `2`
 ```
 
 ##### `html.md`
@@ -227,7 +227,7 @@ Venus <b>and</b> mercury.
 ###### Out
 
 ```text
-5:1-5:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+5:1-5:14: Unexpected duplicate toplevel heading, expected a single heading with rank `1`
 ```
 
 ##### `mdx.mdx`
@@ -247,7 +247,7 @@ Venus <b>and</b> mercury.
 ###### Out
 
 ```text
-4:1-4:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+4:1-4:14: Unexpected duplicate toplevel heading, expected a single heading with rank `1`
 ```
 
 ## Compatibility

@@ -62,7 +62,7 @@ test('remark-lint', async function (t) {
 
     assert.deepEqual(file.messages.map(String), [
       'virtual.md:3:1-3:24: Unexpected character `.` at end of heading, remove it',
-      'virtual.md:3:1-3:24: Unexpected duplicate toplevel heading, exected a single heading with rank `1`'
+      'virtual.md:3:1-3:24: Unexpected duplicate toplevel heading, expected a single heading with rank `1`'
     ])
   })
 
@@ -75,7 +75,7 @@ test('remark-lint', async function (t) {
 
     assert.deepEqual(file.messages.map(String), [
       'virtual.md:3:1-3:24: Unexpected character `.` at end of heading, remove it',
-      'virtual.md:3:1-3:24: Unexpected duplicate toplevel heading, exected a single heading with rank `1`'
+      'virtual.md:3:1-3:24: Unexpected duplicate toplevel heading, expected a single heading with rank `1`'
     ])
   })
 

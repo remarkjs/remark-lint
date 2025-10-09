@@ -76,7 +76,7 @@
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
- *   3:1-3:10: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+ *   3:1-3:10: Unexpected duplicate toplevel heading, expected a single heading with rank `1`
  *
  * @example
  *   {"config": 2, "label": "input", "name": "not-ok.md"}
@@ -87,7 +87,7 @@
  * @example
  *   {"config": 2, "label": "output", "name": "not-ok.md"}
  *
- *   3:1-3:11: Unexpected duplicate toplevel heading, exected a single heading with rank `2`
+ *   3:1-3:11: Unexpected duplicate toplevel heading, expected a single heading with rank `2`
  *
  * @example
  *   {"label": "input", "name": "html.md"}
@@ -100,7 +100,7 @@
  * @example
  *   {"label": "output", "name": "html.md"}
  *
- *   5:1-5:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+ *   5:1-5:14: Unexpected duplicate toplevel heading, expected a single heading with rank `1`
  *
  * @example
  *   {"label": "input", "mdx": true, "name": "mdx.mdx"}
@@ -112,7 +112,7 @@
  * @example
  *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
  *
- *   4:1-4:14: Unexpected duplicate toplevel heading, exected a single heading with rank `1`
+ *   4:1-4:14: Unexpected duplicate toplevel heading, expected a single heading with rank `1`
  */
 
 /**
@@ -181,7 +181,7 @@ const remarkLintNoMultipleToplevelHeadings = lintRule(
             assert(duplicate) // Always defined.
 
             file.message(
-              'Unexpected duplicate toplevel heading, exected a single heading with rank `' +
+              'Unexpected duplicate toplevel heading, expected a single heading with rank `' +
                 rank +
                 '`',
               {

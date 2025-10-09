@@ -77,9 +77,9 @@
  * @example
  *   {"label": "output", "name": "not-ok.md"}
  *
- *   3:1-3:23: Unexpected heading rank `3`, exected rank `2`
- *   5:1-5:20: Unexpected heading rank `3`, exected rank `2`
- *   9:1-9:16: Unexpected heading rank `4`, exected rank `3`
+ *   3:1-3:23: Unexpected heading rank `3`, expected rank `2`
+ *   5:1-5:20: Unexpected heading rank `3`, expected rank `2`
+ *   9:1-9:16: Unexpected heading rank `4`, expected rank `3`
  *
  * @example
  *   {"label": "input", "name": "html.md"}
@@ -95,7 +95,7 @@
  * @example
  *   {"label": "output", "name": "html.md"}
  *
- *   6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+ *   6:1-6:28: Unexpected heading rank `3`, expected rank `2`
  *
  * @example
  *   {"mdx": true, "name": "mdx.mdx"}
@@ -111,7 +111,7 @@
  * @example
  *   {"label": "output", "mdx": true, "name": "mdx.mdx"}
  *
- *   6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+ *   6:1-6:28: Unexpected heading rank `3`, expected rank `2`
  */
 
 /**
@@ -167,7 +167,7 @@ const remarkLintHeadingIncrement = lintRule(
             file.message(
               'Unexpected heading rank `' +
                 rank +
-                '`, exected rank `' +
+                '`, expected rank `' +
                 (parentRank + 1) +
                 '`',
               {

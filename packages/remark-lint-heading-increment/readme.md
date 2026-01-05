@@ -197,9 +197,9 @@ No messages.
 ###### Out
 
 ```text
-3:1-3:23: Unexpected heading rank `3`, exected rank `2`
-5:1-5:20: Unexpected heading rank `3`, exected rank `2`
-9:1-9:16: Unexpected heading rank `4`, exected rank `3`
+3:1-3:23: Unexpected heading rank `3`, expected rank `2`
+5:1-5:20: Unexpected heading rank `3`, expected rank `2`
+9:1-9:16: Unexpected heading rank `4`, expected rank `3`
 ```
 
 ##### `html.md`
@@ -220,7 +220,7 @@ in the Solar System.
 ###### Out
 
 ```text
-6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+6:1-6:28: Unexpected heading rank `3`, expected rank `2`
 ```
 
 ##### `mdx.mdx`
@@ -244,7 +244,7 @@ in the Solar System.
 ###### Out
 
 ```text
-6:1-6:28: Unexpected heading rank `3`, exected rank `2`
+6:1-6:28: Unexpected heading rank `3`, expected rank `2`
 ```
 
 ## Compatibility

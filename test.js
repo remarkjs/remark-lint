@@ -130,6 +130,7 @@ test('remark-lint', async function (t) {
       {
         column: 2,
         fatal: true,
+        file: '',
         line: 1,
         message:
           'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
@@ -193,6 +194,7 @@ test('remark-lint', async function (t) {
         {
           column: 2,
           fatal: true,
+          file: '',
           line: 1,
           message:
             'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
@@ -219,6 +221,7 @@ test('remark-lint', async function (t) {
         {
           column: 2,
           fatal: false,
+          file: '',
           line: 1,
           message:
             'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
@@ -245,6 +248,7 @@ test('remark-lint', async function (t) {
         {
           column: 2,
           fatal: false,
+          file: '',
           line: 1,
           message:
             'Unexpected missing final newline character, expected line feed (`\\n`) at end of file',
@@ -339,6 +343,7 @@ test('remark-lint', async function (t) {
       assert.deepEqual(file.messages.map(jsonClone), [
         {
           fatal: false,
+          file: '',
           message: 'Test message',
           name: '1:1',
           reason: 'Test message',

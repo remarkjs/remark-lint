@@ -118,6 +118,10 @@ export const githubLinguistInfo = [
     names: ['aidl']
   },
   {
+    extensions: ['.ak'],
+    names: ['aiken']
+  },
+  {
     extensions: ['.al'],
     names: ['al']
   },
@@ -298,6 +302,7 @@ export const githubLinguistInfo = [
       '.gml',
       '.h++',
       '.hh',
+      '.hip',
       '.hpp',
       '.hxx',
       '.inl',
@@ -318,6 +323,7 @@ export const githubLinguistInfo = [
       'cpp',
       'edje-data-collection',
       'game-maker-language',
+      'hip',
       'metal',
       'swig'
     ]
@@ -449,6 +455,10 @@ export const githubLinguistInfo = [
     names: ['clojure', 'edn', 'rouge', 'wisp']
   },
   {
+    extensions: ['.clue'],
+    names: ['clue']
+  },
+  {
     extensions: ['.cmake', '.cmake.in'],
     names: ['cmake']
   },
@@ -487,7 +497,7 @@ export const githubLinguistInfo = [
   {
     extensionsWithDot: ['.v'],
     extensions: ['.coq'],
-    names: ['coq']
+    names: ['rocq-prover', 'coq', 'rocq']
   },
   {
     extensions: ['.cr'],
@@ -587,6 +597,10 @@ export const githubLinguistInfo = [
   {
     extensions: ['.dart'],
     names: ['dart']
+  },
+  {
+    extensions: ['.das'],
+    names: ['daslang']
   },
   {
     extensions: ['.dwl'],
@@ -776,6 +790,10 @@ export const githubLinguistInfo = [
   },
   {
     names: ['gdscript']
+  },
+  {
+    extensions: ['.gdshader', '.gdshaderinc'],
+    names: ['gdshader']
   },
   {
     extensions: ['.ged'],
@@ -1020,6 +1038,7 @@ export const githubLinguistInfo = [
     extensions: [
       '.cnf',
       '.dof',
+      '.frm',
       '.ini',
       '.lektorproject',
       '.outjob',
@@ -1270,6 +1289,10 @@ export const githubLinguistInfo = [
     names: ['kickstart']
   },
   {
+    extensions: ['.kk'],
+    names: ['koka']
+  },
+  {
     extensions: ['.gradle.kts', '.kt', '.ktm', '.kts'],
     names: ['gradle-kotlin-dsl', 'kotlin']
   },
@@ -1287,6 +1310,10 @@ export const githubLinguistInfo = [
   },
   {
     names: ['lean-4']
+  },
+  {
+    extensions: ['.leo'],
+    names: ['leo']
   },
   {
     extensions: ['.lex'],
@@ -1370,6 +1397,10 @@ export const githubLinguistInfo = [
   {
     extensions: ['.m2'],
     names: ['macaulay2', 'm2']
+  },
+  {
+    extensions: ['.m3u', '.m3u8'],
+    names: ['m3u', 'hls-playlist', 'm3u-playlist']
   },
   {
     extensions: ['.m4', '.m4', '.mc'],
@@ -1681,7 +1712,7 @@ export const githubLinguistInfo = [
     names: ['kicad-legacy-layout']
   },
   {
-    extensions: ['.kicad_sch'],
+    extensions: ['.kicad_sch', '.kicad_sym'],
     names: ['kicad-schematic', 'eeschema-schematic']
   },
   {
@@ -1952,7 +1983,7 @@ export const githubLinguistInfo = [
     names: ["ren'py", 'renpy']
   },
   {
-    extensions: ['.res'],
+    extensions: ['.res', '.resi'],
     names: ['rescript']
   },
   {
@@ -2012,6 +2043,10 @@ export const githubLinguistInfo = [
   {
     extensions: ['.rs', '.rs.in'],
     names: ['rust', 'rs']
+  },
+  {
+    extensions: ['.sail'],
+    names: ['sail']
   },
   {
     extensions: ['.sas'],
@@ -2139,7 +2174,7 @@ export const githubLinguistInfo = [
     names: ['smpl', 'coccinelle']
   },
   {
-    extensions: ['.smt2', '.smt'],
+    extensions: ['.smt2', '.smt', '.z3'],
     names: ['smt']
   },
   {
@@ -2298,6 +2333,9 @@ export const githubLinguistInfo = [
     names: ['toml']
   },
   {
+    names: ['tor-config', 'torrc']
+  },
+  {
     extensions: ['.ts', '.cts', '.mts'],
     names: ['typescript', 'ts']
   },
@@ -2329,6 +2367,10 @@ export const githubLinguistInfo = [
     names: ['typst', 'typ']
   },
   {
+    extensions: ['.uplc'],
+    names: ['untyped-plutus-core']
+  },
+  {
     extensions: ['.ur', '.urs'],
     names: ['urweb', 'ur/web', 'ur']
   },
@@ -2345,16 +2387,7 @@ export const githubLinguistInfo = [
     names: ['vcl']
   },
   {
-    extensions: [
-      '.bas',
-      '.bas',
-      '.bas',
-      '.ctl',
-      '.dsr',
-      '.frm',
-      '.frm',
-      '.vba'
-    ],
+    extensions: ['.bas', '.bas', '.bas', '.ctl', '.dsr', '.vba'],
     names: [
       'b4x',
       'basic-for-android',
@@ -2399,6 +2432,10 @@ export const githubLinguistInfo = [
   {
     extensions: ['.vtl'],
     names: ['velocity-template-language', 'vtl', 'velocity']
+  },
+  {
+    extensions: ['.vto'],
+    names: ['vento']
   },
   {
     extensions: ['.veo'],
@@ -2547,6 +2584,7 @@ export const githubLinguistInfo = [
       '.yml.mysql'
     ],
     names: [
+      'buildstream',
       'jar-manifest',
       'kaitai-struct',
       'ksy',
@@ -2598,6 +2636,10 @@ export const githubLinguistInfo = [
   {
     extensions: ['.zil', '.mud'],
     names: ['zil']
+  },
+  {
+    extensions: ['.zmodel'],
+    names: ['zmodel']
   },
   {
     extensions: ['.txt'],
@@ -3040,6 +3082,7 @@ export const githubLinguistInfo = [
       '.scxml',
       '.sfproj',
       '.shproj',
+      '.slnx',
       '.srdf',
       '.storyboard',
       '.sublime-snippet',

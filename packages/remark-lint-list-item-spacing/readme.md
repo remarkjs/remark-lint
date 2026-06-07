@@ -187,6 +187,27 @@ all items must be loose.
 
 No messages.
 
+##### `block-quote.md`
+
+###### In
+
+```markdown
+Blank lines between items use a `>` marker inside a block quote, so the
+spacing is correct.
+
+> * Mercury.
+>   * Venus.
+>   * Earth.
+>
+> * Mars.
+>   * Jupiter.
+>   * Saturn.
+```
+
+###### Out
+
+No messages.
+
 ##### `ok-check-blanks.md`
 
 When configured with `{ checkBlanks: true }`.

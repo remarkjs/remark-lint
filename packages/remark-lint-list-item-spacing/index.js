@@ -78,6 +78,20 @@
  *   +   Earth.
  *
  * @example
+ *   {"name": "block-quote.md"}
+ *
+ *   Blank lines between items use a `>` marker inside a block quote, so the
+ *   spacing is correct.
+ *
+ *   > * Mercury.
+ *   >   * Venus.
+ *   >   * Earth.
+ *   >
+ *   > * Mars.
+ *   >   * Jupiter.
+ *   >   * Saturn.
+ *
+ * @example
  *   {"config": {"checkBlanks": true}, "name": "ok-check-blanks.md"}
  *
  *   * Mercury.
@@ -139,7 +153,8 @@
  */
 
 /**
- * @import {ListItem, Root} from 'mdast'
+ * @import {ListItem, Nodes, Root} from 'mdast'
+ * @import {Point} from 'unist'
  */
 
 /**
@@ -159,6 +174,34 @@ import {VFileMessage} from 'vfile-message'
 
 /** @type {Readonly<Options>} */
 const emptyOptions = {}
+
+/**
+ * Get the true content end point of a node.
+ *
+ * A list inside a block quote can have its own `end` extended onto a trailing
+ * blank `>` line (a list item with a nested list inherits that).
+ * Descend through lists and list items to the real content end; other nodes
+ * keep their own end, which matters for directives and JSX whose closing
+ * delimiter sits past their last child.
+ *
+ * @param {Nodes | undefined} node
+ *   Node.
+ * @returns {Point | undefined}
+ *   Point (or `undefined`).
+ */
+function contentEnd(node) {
+  let tail = node
+
+  while (
+    tail &&
+    (tail.type === 'list' || tail.type === 'listItem') &&
+    tail.children.length > 0
+  ) {
+    tail = tail.children.at(-1)
+  }
+
+  return pointEnd(tail)
+}
 
 const remarkLintListItemSpacing = lintRule(
   {
@@ -196,8 +239,7 @@ const remarkLintListItemSpacing = lintRule(
         if (checkBlanks) {
           spaced = item.spread
         } else {
-          const tail = item.children.at(-1)
-          const end = pointEnd(tail)
+          const end = contentEnd(item)
           const start = pointStart(item)
           spaced = end && start && end.line - start.line > 0
         }
@@ -221,7 +263,7 @@ const remarkLintListItemSpacing = lintRule(
       let previous
 
       for (const item of list.children) {
-        const previousEnd = pointEnd(previous)
+        const previousEnd = contentEnd(previous)
         const itemStart = pointStart(item)
 
         if (previousEnd && itemStart) {

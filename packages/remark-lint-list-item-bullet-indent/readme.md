@@ -172,6 +172,20 @@ Mercury.
 
 No messages.
 
+##### `ok-nested.md`
+
+###### In
+
+```markdown
+* Mercury.
+␠␠* Venus.
+␠␠* Earth.
+```
+
+###### Out
+
+No messages.
+
 ##### `not-ok.md`
 
 ###### In

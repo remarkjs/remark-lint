@@ -62,6 +62,13 @@
  *   * Earth.
  *
  * @example
+ *   {"name": "ok-nested.md"}
+ *
+ *   * Mercury.
+ *   ␠␠* Venus.
+ *   ␠␠* Earth.
+ *
+ * @example
  *   {"label": "input", "name": "not-ok.md"}
  *
  *   Mercury.

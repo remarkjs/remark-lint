@@ -36,7 +36,7 @@
     "@ungap/structured-clone": "^1.0.0",
     "@wooorm/starry-night": "^3.0.0",
     "c8": "^10.0.0",
-    "comment-parser": "^1.0.0",
+    "comment-parser": "^1.0.0 <1.4.2",
     "control-pictures": "^2.0.0",
     "estree-util-is-identifier-name": "^3.0.0",
     "estree-util-visit": "^2.0.0",

@@ -176,6 +176,32 @@ It has a `join` function to customize such behavior.
 
 No messages.
 
+##### `block-quote.md`
+
+###### In
+
+```markdown
+Blank lines inside a block quote use a `>` marker, so they are not
+missing.
+
+> * Mercury.
+> * Venus.
+>
+> Earth.
+>
+> ~~~js
+> mars()
+> ~~~
+>
+> > Jupiter.
+>
+> Saturn.
+```
+
+###### Out
+
+No messages.
+
 ##### `not-ok.md`
 
 ###### In

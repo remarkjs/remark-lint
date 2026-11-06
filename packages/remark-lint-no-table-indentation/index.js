@@ -166,7 +166,7 @@ const remarkLintNoTableIndentation = lintRule(
       while (line <= end.line) {
         let index = locations.toOffset({line, column})
 
-        // An invalid position can put the column past the line end.
+        // Advance to the next line when the requested column is out of range.
         if (typeof index !== 'number') {
           line++
           continue

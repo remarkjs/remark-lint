@@ -159,7 +159,7 @@ const remarkLintNoParagraphContentIndent = lintRule(
       while (line <= end.line) {
         let index = locations.toOffset({line, column})
 
-        // A lazy continuation can end before the expected container column.
+        // Advance to the next line when the requested column is out of range.
         if (typeof index !== 'number') {
           line++
           continue

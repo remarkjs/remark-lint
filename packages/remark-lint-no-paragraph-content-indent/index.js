@@ -159,8 +159,11 @@ const remarkLintNoParagraphContentIndent = lintRule(
       while (line <= end.line) {
         let index = locations.toOffset({line, column})
 
-        /* c8 ignore next -- out of range somehow. */
-        if (typeof index !== 'number') continue
+        // Advance to the next line when the requested column is out of range.
+        if (typeof index !== 'number') {
+          line++
+          continue
+        }
 
         const expected = index
 

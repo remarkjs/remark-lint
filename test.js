@@ -23,6 +23,8 @@ import remarkLint from 'remark-lint'
 import remarkLintFinalNewline from 'remark-lint-final-newline'
 import remarkLintNoHeadingPunctuation from 'remark-lint-no-heading-punctuation'
 import remarkLintNoMultipleToplevelHeadings from 'remark-lint-no-multiple-toplevel-headings'
+import remarkLintNoParagraphContentIndent from 'remark-lint-no-paragraph-content-indent'
+import remarkLintNoTableIndentation from 'remark-lint-no-table-indentation'
 import remarkLintNoUndefinedReferences from 'remark-lint-no-undefined-references'
 import remarkLintFencedCodeFlag, {
   checkGithubLinguistFlag
@@ -353,6 +355,27 @@ test('remark-lint', async function (t) {
       ])
     }
   )
+})
+
+test('indent rules finish after a short line', function () {
+  const paragraph = remark()
+    .use(remarkLintNoParagraphContentIndent)
+    .processSync('> foo\nx')
+
+  assert.deepEqual(paragraph.messages, [])
+
+  const value = '> | a |\n> | - |\nx'
+  const processor = remark().use(remarkGfm).use(remarkLintNoTableIndentation)
+  const tree = processor.parse(value)
+  const blockquote = tree.children[0]
+  assert(blockquote.type === 'blockquote')
+  const table = blockquote.children[0]
+  assert(table.type === 'table' && table.position)
+  table.position.end.line = 3
+
+  const file = new VFile({path: 'table.md', value})
+  processor.runSync(tree, file)
+  assert.deepEqual(file.messages, [])
 })
 
 test('plugins', async function (t) {
